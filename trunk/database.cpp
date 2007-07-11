@@ -1,3 +1,22 @@
+//////////////////////////////////////////////////////////////////////
+// Yet Another Tibia Client
+//////////////////////////////////////////////////////////////////////
+// 
+//////////////////////////////////////////////////////////////////////
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software Foundation,
+// Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+//////////////////////////////////////////////////////////////////////
 
 #ifdef WIN32
 	#include <windows.h>
@@ -16,8 +35,9 @@ sqlite3 *dbUser;
 char* dbLoadSettingReturnValue;
 static int dbLoadSettingFunc(void *NotUsed, int argc, char **argv, char **azColName);
 
-void DBInit() {
-    int rc;
+void DBInit()
+{
+	int rc;
 
     if (dbUser) {
         sqlite3_close(dbUser);
@@ -53,17 +73,20 @@ void DBInit() {
     return;
 }
 
-bool dbTableExists(sqlite3 *db, const char *tablename) {
+bool dbTableExists(sqlite3 *db, const char *tablename)
+{
     return (dbExecPrintf(db, NULL, 0, NULL, "select * from %s;", tablename) == SQLITE_OK);
 }
 
-void dbSaveSetting(const char* settingname, const char* value) {
+void dbSaveSetting(const char* settingname, const char* value)
+{
     dbExecPrintf(dbUser, NULL, 0, NULL, "update settings set `value` = '%q' where `field`='%s';", value, settingname);
     //dbExecPrintf(dbUser, NULL, 0, NULL, "delete from settings where `field`='%s';", settingname);
     //dbExecPrintf(dbUser, NULL, 0, NULL, "insert into settings (`field`, `value`) values ('%q', '%q');", settingname, value);
 }
 
-bool dbLoadSetting(const char* settingname, char* valuetarget, int maxlen, const char *defaultval) {
+bool dbLoadSetting(const char* settingname, char* valuetarget, int maxlen, const char *defaultval)
+{
     dbLoadSettingReturnValue = NULL;
     if (dbExecPrintf(dbUser, dbLoadSettingFunc, 0, NULL, "select `value` from settings where `field` = '%q';", settingname) == SQLITE_OK) {
 
@@ -101,7 +124,9 @@ bool dbLoadSetting(const char* settingname, char* valuetarget, int maxlen, const
     ASSERTFRIENDLY(false, "Unexpected codeflow");
 
 }
-static int dbLoadSettingFunc(void *NotUsed, int argc, char **argv, char **azColName) {
+
+static int dbLoadSettingFunc(void *NotUsed, int argc, char **argv, char **azColName)
+{
     dbLoadSettingReturnValue = (char*)malloc(strlen(argv[0])+2);
     //DEBUGPRINT(DEBUGPRINT_LEVEL_JUNK, DEBUGPRINT_NORMAL, "%s\n", argv[0]);
     if (!dbLoadSettingReturnValue) {
@@ -114,13 +139,16 @@ static int dbLoadSettingFunc(void *NotUsed, int argc, char **argv, char **azColN
     //system("pause");
     return 0;
 }
-int dbExecPrintf(
+
+int dbExecPrintf
+(
   sqlite3* db,                     /* An open database */
   sqlite3_callback cb,             /* Callback function */
   void *arg,                       /* 1st argument to callback function */
   char **errmsg,                   /* Error msg written here */
   const char *sql,                 /* SQL to be executed */
-  ...) {
+  ...)
+{
 
 	va_list vl;
 	va_start(vl, sql);
@@ -144,8 +172,8 @@ int dbExecPrintf(
 	return rc;
 }
 
-
-const char* dbProcessRC(int rc) {
+const char* dbProcessRC(int rc)
+{
       switch (rc) {
            case SQLITE_OK:
                 return "Successful result";
