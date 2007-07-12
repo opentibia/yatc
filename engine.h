@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -21,6 +21,7 @@
 #ifndef __ENGINE_H
 #define __ENGINE_H
 
+#include <SDL/SDL.h>
 #include "debugprint.h"
 
 class Engine
@@ -34,8 +35,19 @@ public:
 	}
 	virtual bool Supported() {
 		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::Supported(): Function not overloaded");
-	return false;
+		return false;
 	}
+	void Flip() {
+		SDL_Flip(screen);
+	}
+
+protected:
+
+	int videoflags;
+	int width;
+	int height;
+	int video_bpp;
+	SDL_Surface* screen;
 };
 
 #include "enginesdl.h"

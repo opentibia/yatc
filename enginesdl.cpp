@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,14 +18,26 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+
 #include "enginesdl.h"
 
 EngineSDL::EngineSDL()
 {
-	
+	videoflags = SDL_HWSURFACE|SDL_ANYFORMAT | SDL_DOUBLEBUF | SDL_RESIZABLE;
+	width = 640;
+	height = 480;
+	video_bpp = 8;
+
+	screen = SDL_SetVideoMode(width, height, video_bpp, videoflags);
+
+	if (!screen){
+		fprintf(stderr, "Could not set %dx%d video mode: %s\n", width, height, SDL_GetError());
+		exit(1);
+	}
+
 }
 
 EngineSDL::~EngineSDL()
 {
-	
+
 }

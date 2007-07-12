@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -21,6 +21,7 @@
 #ifndef __ENGINESDL_H
 #define __ENGINESDL_H
 
+
 #include "engine.h"
 
 class EngineSDL : public Engine
@@ -28,8 +29,11 @@ class EngineSDL : public Engine
 public:
     EngineSDL();
     ~EngineSDL();
-    
+
     void BlitRect(){};
+private:
+
+
 };
 
 #endif

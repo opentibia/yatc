@@ -44,7 +44,9 @@
 		<Unit filename="debugprint.h" />
 		<Unit filename="engine.cpp" />
 		<Unit filename="engine.h" />
+		<Unit filename="enginedx.cpp" />
 		<Unit filename="enginedx.h" />
+		<Unit filename="enginegl.cpp" />
 		<Unit filename="enginegl.h" />
 		<Unit filename="enginesdl.cpp" />
 		<Unit filename="enginesdl.h" />
