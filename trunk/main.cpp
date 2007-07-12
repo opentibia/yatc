@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -41,9 +41,9 @@ int main(int argc, char *argv[])
 		fprintf(stderr,"Couldn't initialize SDL: %s\n", SDL_GetError());
 		exit(1);
 	}
-	
+
 	atexit(SDL_Quit);
-	
+
 	switch(options.engine) {
 		case ENGINE_SDL:
 				engine = new EngineSDL;
@@ -58,19 +58,20 @@ int main(int argc, char *argv[])
 				engine = new EngineSDL;
 			break;
 	}
-	
-	SDL_Surface* screen = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
-	
-	if(!screen){
+
+	SDL_WM_SetCaption ("YATC v0.1", NULL);
+	//SDL_Surface* screen = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
+
+	/*if(!screen){
 		fprintf(stderr,"Couldn't initialize SDL: %s\n", SDL_GetError());
 		exit(1);
-	}
-	
-	SDL_WM_SetCaption ("YATC - Yet Another Tibia Client v0.1", NULL);
-	
+	}*/
+
+
+
 	bool running = true;
 	SDL_Event event;
-	
+
 	while(running){
 		while(SDL_PollEvent(&event)){
 			switch (event.type){
@@ -84,9 +85,10 @@ int main(int argc, char *argv[])
 					break;
 			}
 		}
-		
-		SDL_Flip(screen);
+
+
+		engine->Flip();
 	}
-	
+
 	return 0;
 }
