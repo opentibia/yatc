@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	
+	atexit(SDL_Quit);
+	
 	switch(options.engine) {
 		case ENGINE_SDL:
 				engine = new EngineSDL;
@@ -57,7 +59,7 @@ int main(int argc, char *argv[])
 			break;
 	}
 	
-	SDL_Surface* screen = SDL_SetVideoMode(640, 480, 24, SDL_SWSURFACE | SDL_DOUBLEBUF);
+	SDL_Surface* screen = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
 	
 	if(!screen){
 		fprintf(stderr,"Couldn't initialize SDL: %s\n", SDL_GetError());
