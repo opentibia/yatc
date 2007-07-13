@@ -45,29 +45,19 @@ int main(int argc, char *argv[])
 	atexit(SDL_Quit);
 
 	switch(options.engine) {
-		case ENGINE_SDL:
-				engine = new EngineSDL;
-			break;
 		case ENGINE_OPENGL:
 				engine = new EngineGL;
 			break;
 		case ENGINE_DIRECTX:
 				engine = new EngineDX;
 			break;
+		case ENGINE_SDL:
 		default:
 				engine = new EngineSDL;
 			break;
 	}
 
 	SDL_WM_SetCaption ("YATC v0.1", NULL);
-	//SDL_Surface* screen = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE);
-
-	/*if(!screen){
-		fprintf(stderr,"Couldn't initialize SDL: %s\n", SDL_GetError());
-		exit(1);
-	}*/
-
-
 
 	bool running = true;
 	SDL_Event event;
@@ -77,6 +67,9 @@ int main(int argc, char *argv[])
 			switch (event.type){
 				case SDL_KEYDOWN:
 						//
+					break;
+				case SDL_VIDEORESIZE:
+						engine->doResize(event.resize.w, event.resize.h);
 					break;
 				case SDL_QUIT:
 						running = false;
