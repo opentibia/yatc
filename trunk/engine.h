@@ -45,9 +45,9 @@ public:
 	virtual void Flip() {
 		SDL_Flip(screen);
 	}
-	
 	virtual void doResize(int w, int h){width = w; height = h;};
 
+	virtual void drawRectangle(int x, int y, int width, int height, oRGBA color){ };
 protected:
 
 	int videoflags;

@@ -33,6 +33,8 @@ public:
 	
 	void initEngine();
 	void doResize(int h, int w);
+	
+	void drawRectangle(int x, int y, int width, int height, oRGBA color);
 };
 
 #endif
