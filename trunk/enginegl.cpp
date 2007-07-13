@@ -18,14 +18,52 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <GL/GL.h>
 #include "enginegl.h"
 
 EngineGL::EngineGL()
 {
-	
+	videoflags = SDL_OPENGL | SDL_RESIZABLE;
+	width = 640;
+	height = 480;
+	video_bpp = 8;
+
+	screen = SDL_SetVideoMode(width, height, video_bpp, videoflags);
+
+	if(!screen){
+		fprintf(stderr, "Could not set %dx%d video mode: %s\n", width, height, SDL_GetError());
+		exit(1);
+	}
+		
+	initEngine();
+	doResize(width, height);
 }
 
 EngineGL::~EngineGL()
 {
 	
+}
+
+void EngineGL::initEngine()
+{
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glShadeModel(GL_SMOOTH);
+	glClearDepth(1.0);
+	glDepthFunc(GL_LEQUAL);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void EngineGL::doResize(int w, int h)
+{
+	width = w;
+	height = h;
+	
+	glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0.0f, w, h, 0.0f, -1.0f, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }

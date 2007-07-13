@@ -28,6 +28,11 @@ class EngineGL : public Engine
 public:
 	EngineGL();
 	~EngineGL();
+	
+	void Flip(){SDL_GL_SwapBuffers();};
+	
+	void initEngine();
+	void doResize(int h, int w);
 };
 
 #endif

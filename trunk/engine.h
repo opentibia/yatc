@@ -23,6 +23,7 @@
 
 #include <SDL/SDL.h>
 #include "debugprint.h"
+#include "defines.h"
 
 class Engine
 {
@@ -37,9 +38,15 @@ public:
 		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::Supported(): Function not overloaded");
 		return false;
 	}
-	void Flip() {
+	
+	int getWindowWidth(){return width;};
+	int getWindowHeight(){return height;};
+	
+	virtual void Flip() {
 		SDL_Flip(screen);
 	}
+	
+	virtual void doResize(int w, int h){width = w; height = h;};
 
 protected:
 
