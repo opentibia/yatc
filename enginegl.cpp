@@ -59,11 +59,20 @@ void EngineGL::doResize(int w, int h)
 {
 	width = w;
 	height = h;
-	
+		
 	glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(0.0f, w, h, 0.0f, -1.0f, 1.0f);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0f, w, h, 0.0f, -1.0f, 1.0f);
 	glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+	glLoadIdentity();
+}
+
+void EngineGL::drawRectangle(int x, int y, int width, int height, oRGBA color)
+{	
+	glColor4f(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f);
+	
+	glRectf(x, y, x+width, y+height);
+
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);	
 }
