@@ -23,6 +23,7 @@
 #include "database.h"
 #include "options.h"
 #include "engine.h"
+#include "objects.h"
 
 Engine* engine;
 
@@ -35,6 +36,13 @@ int main(int argc, char *argv[])
 	DBInit();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading options...\n");
 	options.Load();
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file...\n");
+	
+	if(!Objects::getInstance()->loadDat("tibia.dat")){ //TODO, inform the user with a messagebox
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[FAILED]");
+		exit(1);	
+	}
+	
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing windowing...\n");
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -69,6 +77,7 @@ int main(int argc, char *argv[])
 						//
 					break;
 				case SDL_VIDEORESIZE:
+					event.resize.w = 100;
 						engine->doResize(event.resize.w, event.resize.h);
 					break;
 				case SDL_QUIT:
@@ -79,9 +88,10 @@ int main(int argc, char *argv[])
 			}
 		}
 
-
 		engine->Flip();
 	}
+	
+	Objects::getInstance()->unloadDat();
 
 	return 0;
 }
