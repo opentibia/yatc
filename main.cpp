@@ -77,7 +77,6 @@ int main(int argc, char *argv[])
 						//
 					break;
 				case SDL_VIDEORESIZE:
-					event.resize.w = 100;
 						engine->doResize(event.resize.w, event.resize.h);
 					break;
 				case SDL_QUIT:
