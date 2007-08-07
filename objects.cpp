@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -77,10 +77,10 @@ ObjectType::ObjectType(unsigned short _id)
 
 ObjectType::~ObjectType()
 {
-	
+
 }
 
-Objects::Objects() : m_item(8192), m_outfit(256), 
+Objects::Objects() : m_item(8192), m_outfit(256),
 	m_effect(32), m_distance(32)
 {
 	m_datLoaded = false;
@@ -88,14 +88,14 @@ Objects::Objects() : m_item(8192), m_outfit(256),
 
 Objects::~Objects()
 {
-	
+
 }
 
 Objects* Objects::getInstance()
 {
 	if(!m_instance)
 		m_instance = new Objects();
-		
+
 	return m_instance;
 }
 
@@ -125,7 +125,7 @@ bool Objects::unloadDat()
 				oType->imageData = NULL;
 			}
 			++i;
-		}		
+		}
 		i = 0;
 		while(ObjectType* oType = m_distance.getElement(i)){
 			if(oType->imageData != NULL){
@@ -134,9 +134,10 @@ bool Objects::unloadDat()
 			}
 			++i;
 		}
-		
+
 		m_datLoaded = false;
 	}
+	return true;
 }
 
 bool Objects::loadDat(const char* filename)
@@ -153,7 +154,7 @@ bool Objects::loadDat(const char* filename)
 	if(!fp){
 		return false;
 	}
-	
+
 	fseek(fp,0,SEEK_END);
 	size = ftell(fp);
 
@@ -172,17 +173,17 @@ bool Objects::loadDat(const char* filename)
 	fread(&read_short, 2, 1, fp);
 	ObjectType::minEffectId = 0;
 	ObjectType::maxEffectId = read_short;
-	maxObjects += ObjectType::maxEffectId;	
-	//Distance	
+	maxObjects += ObjectType::maxEffectId;
+	//Distance
 	fread(&read_short, 2, 1, fp);
-	ObjectType::minDistanceId = 0;	
+	ObjectType::minDistanceId = 0;
 	ObjectType::maxDistanceId = read_short;
 	maxObjects += ObjectType::maxDistanceId;
-	
-	
+
+
 	while(ftell(fp) < size && id <= maxObjects){
 		ObjectType* oType = new ObjectType(id);
-	
+
 		int optbyte;
 		bool colorTemplate = false;
 		while(((optbyte = fgetc(fp)) >= 0) && (optbyte != 0xFF)){
@@ -212,7 +213,7 @@ bool Objects::loadDat(const char* filename)
 						oType->stackable = true;
 					break;
 				case 0x06: //Ladders?
-						
+
 					break;
 				case 0x07: //Useable
 						oType->useable = true;
@@ -224,7 +225,7 @@ bool Objects::loadDat(const char* filename)
 						oType->readable = true;
 						fread(&read_short2, sizeof(read_short2), 1, fp); //unknown, values like 80, 200, 512, 1024, 2000
 					break;
-				case 0x0A: //Writtable Objectss that can't be edited 
+				case 0x0A: //Writtable Objectss that can't be edited
 						oType->readable = true;
 						fread(&read_short2, sizeof(read_short2), 1, fp); //unknown, all have the value 1024
 					break;
@@ -268,7 +269,7 @@ bool Objects::loadDat(const char* filename)
 						oType->lightColor = read_short;
 					break;
 				case 0x17:  //Floor change?
-						
+
 					break;
 				case 0x18: //??
 						optbyte = optbyte;
@@ -284,10 +285,10 @@ bool Objects::loadDat(const char* filename)
 						fread(&read_short, sizeof(read_short), 1, fp); //?
 					break;
 				case 0x1B://draw with height offset for all parts (2x2) of the sprite
-						
+
 					break;
 				case 0x1C://some monsters
-						
+
 					break;
 				case 0x1D:
 						fread(&read_short, sizeof(read_short), 1, fp);
@@ -295,14 +296,14 @@ bool Objects::loadDat(const char* filename)
 					break;
 				case 0x1E:  //line spot
 						int tmp;
-						tmp = fgetc(fp); // 86 -> openable holes, 77-> can be used to go down, 76 can be used to go up, 82 -> stairs up, 79 switch,    
+						tmp = fgetc(fp); // 86 -> openable holes, 77-> can be used to go down, 76 can be used to go up, 82 -> stairs up, 79 switch,
 						if(tmp == 0x58)
 							oType->readable = true;
-							
+
 						fgetc(fp); // always 4
 					break;
 				case 0x1F: //?
-						
+
 					break;
 				default:
 						optbyte = optbyte;
@@ -311,27 +312,27 @@ bool Objects::loadDat(const char* filename)
 					break;
 			}
 		}
-		
+
 		oType->width  = fgetc(fp);
 		oType->height = fgetc(fp);
 		if((oType->width > 1) || (oType->height > 1)){
 			fgetc(fp);
 		}
-		
+
 		oType->blendframes = fgetc(fp);
 		oType->xdiv        = fgetc(fp);
 		oType->ydiv        = fgetc(fp);
 		oType->unk1 	   = fgetc(fp);
 		oType->animcount   = fgetc(fp);
-		
+
 		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->unk1;
-	
+
 		oType->imageData = new unsigned short[oType->numsprites];
-		
+
 		for(unsigned int i = 0; i < oType->numsprites; i++) {
 			fread(&oType->imageData[i], sizeof(unsigned short), 1, fp);
-		}		
-	
+		}
+
 		if(id <= ObjectType::maxItemId){
 			m_item.addElement(oType, id);
 		}
@@ -344,13 +345,13 @@ bool Objects::loadDat(const char* filename)
 		else if(id <= (ObjectType::maxItemId + ObjectType::maxOutfitId + ObjectType::maxEffectId + ObjectType::maxDistanceId)){
 			m_distance.addElement(oType, id - ObjectType::maxItemId - ObjectType::maxOutfitId + ObjectType::maxDistanceId);
 		}
-				
+
 		id++;
 	}
-	
+
 	fclose(fp);
 	m_datLoaded = true;
-	
+
 	return true;
 }
 
@@ -372,4 +373,4 @@ ObjectType* Objects::getEffectType(unsigned short id)
 ObjectType* Objects::getDistanceType(unsigned short id)
 {
 	return m_distance.getElement(id);
-} 
+}

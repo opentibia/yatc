@@ -18,8 +18,16 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-/// \file engine.cpp
-/// Contains no code at the moment. It will contain generic code for all
-/// engines.
+#ifndef __SPRITESDL_H
+#define __SPRITESDL_H
 
-#include "engine.h"
+#include <string>
+#include "sprite.h"
+class SpriteSDL : public Sprite
+{
+	SpriteSDL(std::string);
+	SpriteSDL(std::string, int);
+};
+
+#endif
+

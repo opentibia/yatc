@@ -18,8 +18,16 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-/// \file engine.cpp
-/// Contains no code at the moment. It will contain generic code for all
-/// engines.
+#ifndef __SPRITEDX_H
+#define __SPRITEDX_H
 
-#include "engine.h"
+#include <string>
+#include "sprite.h"
+class SpriteDX : public Sprite
+{
+	SpriteDX(std::string);
+	SpriteDX(std::string, int);
+};
+
+#endif
+

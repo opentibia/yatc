@@ -14,9 +14,6 @@
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
-				<Linker>
-					<Add library="sqlite3" />
-				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="./yatc" prefix_auto="1" extension_auto="1" />
@@ -37,11 +34,15 @@
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
+			<Add library="GL" />
+			<Add library="sqlite3" />
 		</Linker>
+		<Unit filename="assert.h" />
 		<Unit filename="database.cpp" />
 		<Unit filename="database.h" />
 		<Unit filename="debugprint.cpp" />
 		<Unit filename="debugprint.h" />
+		<Unit filename="defines.h" />
 		<Unit filename="engine.cpp" />
 		<Unit filename="engine.h" />
 		<Unit filename="enginedx.cpp" />
@@ -50,9 +51,23 @@
 		<Unit filename="enginegl.h" />
 		<Unit filename="enginesdl.cpp" />
 		<Unit filename="enginesdl.h" />
+		<Unit filename="gamemode.cpp" />
+		<Unit filename="gamemode.h" />
+		<Unit filename="gm_mainmenu.cpp" />
+		<Unit filename="gm_mainmenu.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="objects.cpp" />
+		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
 		<Unit filename="options.h" />
+		<Unit filename="sprite.cpp" />
+		<Unit filename="sprite.h" />
+		<Unit filename="spritedx.cpp" />
+		<Unit filename="spritedx.h" />
+		<Unit filename="spritegl.cpp" />
+		<Unit filename="spritegl.h" />
+		<Unit filename="spritesdl.cpp" />
+		<Unit filename="spritesdl.h" />
 		<Extensions>
 			<code_completion />
 		</Extensions>

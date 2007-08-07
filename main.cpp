@@ -18,6 +18,9 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+/// \file main.cpp
+/// This file contains the main(int,char*) function.
+
 #include <SDL/SDL.h>
 #include "debugprint.h"
 #include "database.h"
@@ -26,6 +29,14 @@
 #include "objects.h"
 
 Engine* engine;
+
+
+/// \brief Main program function
+///
+/// This function does very little on its own. It manages some output to
+/// player's console, directs subsystems to initialize themselves and makes
+/// choice of rendering engine. Then it runs the main game loop, processing
+/// events and sending them further into the game.
 
 int main(int argc, char *argv[])
 {
@@ -37,12 +48,12 @@ int main(int argc, char *argv[])
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading options...\n");
 	options.Load();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file...\n");
-	
+
 	if(!Objects::getInstance()->loadDat("tibia.dat")){ //TODO, inform the user with a messagebox
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[FAILED]");
-		exit(1);	
+		exit(1);
 	}
-	
+
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing windowing...\n");
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -89,7 +100,7 @@ int main(int argc, char *argv[])
 
 		engine->Flip();
 	}
-	
+
 	Objects::getInstance()->unloadDat();
 
 	return 0;
