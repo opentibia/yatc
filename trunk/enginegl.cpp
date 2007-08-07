@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,7 +18,13 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include <GL/GL.h>
+/// \file enginegl.cpp
+///
+/// Contains the code for OpenGL rendering engine.
+///
+/// \sa EngineGL
+
+#include <GL/gl.h>
 #include "enginegl.h"
 
 EngineGL::EngineGL()
@@ -34,14 +40,14 @@ EngineGL::EngineGL()
 		fprintf(stderr, "Could not set %dx%d video mode: %s\n", width, height, SDL_GetError());
 		exit(1);
 	}
-		
+
 	initEngine();
 	doResize(width, height);
 }
 
 EngineGL::~EngineGL()
 {
-	
+
 }
 
 void EngineGL::initEngine()
@@ -50,7 +56,7 @@ void EngineGL::initEngine()
 	glShadeModel(GL_SMOOTH);
 	glClearDepth(1.0);
 	glDepthFunc(GL_LEQUAL);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -59,7 +65,7 @@ void EngineGL::doResize(int w, int h)
 {
 	width = w;
 	height = h;
-		
+
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -69,10 +75,10 @@ void EngineGL::doResize(int w, int h)
 }
 
 void EngineGL::drawRectangle(int x, int y, int width, int height, oRGBA color)
-{	
+{
 	glColor4f(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f);
-	
+
 	glRectf(x, y, x+width, y+height);
 
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);	
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }

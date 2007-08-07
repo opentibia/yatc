@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,14 +18,19 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+/// \file enginedx.cpp
+/// Contains code for the DirectX rendering engine.
+/// \sa EngineDX
+
+
 #include "enginedx.h"
 
 EngineDX::EngineDX()
 {
-	
+
 }
 
 EngineDX::~EngineDX()
 {
-	
+
 }

@@ -18,6 +18,9 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+/// \file enginesdl.cpp
+/// Contains code for SDL rendering engine.
+/// \sa EngineSDL
 
 #include "enginesdl.h"
 

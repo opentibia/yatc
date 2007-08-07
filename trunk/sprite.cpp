@@ -18,8 +18,30 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-/// \file engine.cpp
-/// Contains no code at the moment. It will contain generic code for all
-/// engines.
+#include "sprite.h"
 
-#include "engine.h"
+/// \brief Argumentless constructor, used only when constructing derived
+///        classes
+Sprite::Sprite()
+{
+
+}
+Sprite::Sprite(std::string filename)
+{
+
+}
+
+Sprite::Sprite(std::string filename, int index)
+{
+
+}
+
+Sprite::Sprite(const Sprite& original)
+{
+
+}
+
+Sprite::~Sprite()
+{
+
+}

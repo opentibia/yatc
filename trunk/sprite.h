@@ -18,8 +18,21 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-/// \file engine.cpp
-/// Contains no code at the moment. It will contain generic code for all
-/// engines.
+#ifndef __SPRITE_H
+#define __SPRITE_H
 
-#include "engine.h"
+#include <string>
+class Sprite
+{
+	public:
+		Sprite();
+		Sprite(std::string);
+		Sprite(std::string, int);
+		Sprite(const Sprite&);
+		virtual ~Sprite();
+	private:
+
+
+};
+
+#endif
