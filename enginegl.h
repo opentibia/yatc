@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -28,13 +28,14 @@ class EngineGL : public Engine
 public:
 	EngineGL();
 	~EngineGL();
-	
+
+	bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
+
 	void Flip(){SDL_GL_SwapBuffers();};
-	
-	void initEngine();
 	void doResize(int h, int w);
-	
 	void drawRectangle(int x, int y, int width, int height, oRGBA color);
+private:
+	void initEngine();
 };
 
 #endif

@@ -18,3 +18,25 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include "gm_mainmenu.h"
+#include "defines.h"
+#include "engine.h"
+GM_MainMenu::GM_MainMenu()
+{
+	desktop.AddObject(&winLogin.login);
+
+	desktop.AddObject(&btnExit);
+	btnExit.SetBGColor(1,0,0,1);
+
+
+}
+GM_MainMenu::~GM_MainMenu()
+{
+
+}
+
+void GM_MainMenu::renderScene()
+{
+	engine->drawRectangle(0,0,200,200,oRGBA(255,255,255,255));
+	desktop.Paint();
+}
