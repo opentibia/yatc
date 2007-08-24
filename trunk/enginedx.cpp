@@ -27,10 +27,10 @@
 
 EngineDX::EngineDX()
 {
-
+	printf("Starting DirectX engine\n");
 }
 
 EngineDX::~EngineDX()
 {
-
+	printf("Closing DirectX engine\n");
 }

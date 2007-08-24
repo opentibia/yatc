@@ -29,6 +29,7 @@
 
 EngineGL::EngineGL()
 {
+	printf("Starting OpenGL engine\n");
 	videoflags = SDL_OPENGL | SDL_RESIZABLE;
 	width = 640;
 	height = 480;
@@ -47,7 +48,7 @@ EngineGL::EngineGL()
 
 EngineGL::~EngineGL()
 {
-
+	printf("Closing OpenGL engine\n");
 }
 
 void EngineGL::initEngine()

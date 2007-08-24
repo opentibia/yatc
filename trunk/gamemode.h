@@ -22,13 +22,14 @@
 #ifndef __GAMEMODE_H
 #define __GAMEMODE_H
 
-class GameMode {
-	public:
-		GameMode();
-		virtual ~GameMode();
+class GameMode
+{
+public:
+	GameMode();
+	virtual ~GameMode();
 
-		virtual void renderScene();
+	virtual void renderScene();
 };
 
-
+extern GameMode* game;
 #endif

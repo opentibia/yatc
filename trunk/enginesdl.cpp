@@ -24,8 +24,20 @@
 
 #include "enginesdl.h"
 
+
+// first define callbacks, and after that go on with class
+
+static void enginesdl_font_render(const char* txt, const void* font, float x, float y) {
+}
+static float enginesdl_font_size(const char* txt, const void* font) {
+	return 0;
+}
+
+
+
 EngineSDL::EngineSDL()
 {
+	printf("Starting SDL engine\n");
 	videoflags = SDL_HWSURFACE|SDL_ANYFORMAT | SDL_DOUBLEBUF | SDL_RESIZABLE;
 	width = 640;
 	height = 480;
@@ -34,13 +46,27 @@ EngineSDL::EngineSDL()
 	screen = SDL_SetVideoMode(width, height, video_bpp, videoflags);
 
 	if (!screen){
-		fprintf(stderr, "Could not set %dx%d video mode: %s\n", width, height, SDL_GetError());
-		exit(1);
+		fprintf(stderr, "Could not set %dx%d video mode: %s\n", width, height, SDL_GetError()); // FIXME (Khaos#3#) Should report to user via msgbox
+		exit(1); // this is perfectly valid, since it's really not believable that any other engine would be supported in case SDL fails to init
 	}
+
+
+
+	sysfont = glictCreateFont("system");
+	sysfont->SetRenderFunc(enginesdl_font_render);
+	sysfont->SetSizeFunc(enginesdl_font_size);
 
 }
 
 EngineSDL::~EngineSDL()
 {
+	printf("Closing SDL engine\n");
+	glictDeleteFont ("system");
+}
 
+void EngineSDL::drawRectangle(int x, int y, int width, int height, oRGBA color)
+{
+	static const SDL_VideoInfo* vi = SDL_GetVideoInfo();
+	SDL_Rect r={x,y,width,height};
+	SDL_FillRect(screen, &r, SDL_MapRGBA(vi->vfmt, (unsigned char)color.r, (unsigned char)color.g, (unsigned char)color.b, (unsigned char)color.a));
 }

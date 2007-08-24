@@ -30,7 +30,9 @@ public:
     EngineSDL();
     ~EngineSDL();
 
-    void BlitRect(){};
+    bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
+
+    void drawRectangle(int x, int y, int width, int height, oRGBA color);
 private:
 
 
