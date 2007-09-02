@@ -21,21 +21,21 @@
 #include "objects.h"
 #include <iostream>
 
-unsigned short ObjectType::minItemId = 0;
-unsigned short ObjectType::maxItemId = 0;
+uint16_t ObjectType::minItemId = 0;
+uint16_t ObjectType::maxItemId = 0;
 
-unsigned short ObjectType::minOutfitId = 0;
-unsigned short ObjectType::maxOutfitId = 0;
+uint16_t ObjectType::minOutfitId = 0;
+uint16_t ObjectType::maxOutfitId = 0;
 
-unsigned short ObjectType::minEffectId = 0;
-unsigned short ObjectType::maxEffectId = 0;
+uint16_t ObjectType::minEffectId = 0;
+uint16_t ObjectType::maxEffectId = 0;
 
-unsigned short ObjectType::minDistanceId = 0;
-unsigned short ObjectType::maxDistanceId = 0;
+uint16_t ObjectType::minDistanceId = 0;
+uint16_t ObjectType::maxDistanceId = 0;
 
 Objects* Objects::m_instance = NULL;
 
-ObjectType::ObjectType(unsigned short _id)
+ObjectType::ObjectType(uint16_t _id)
 {
 	id = _id;
 	imageData = NULL;
@@ -93,6 +93,7 @@ Objects::~Objects()
 
 Objects* Objects::getInstance()
 {
+	// TODO (mips_act#3#): Choose Object instance depending on selected version
 	if(!m_instance)
 		m_instance = new Objects();
 
@@ -145,10 +146,10 @@ bool Objects::loadDat(const char* filename)
 	if(m_datLoaded)
 		return false;
 
-	unsigned short id = 100;
-	unsigned long size;
-	unsigned short read_short, read_short2;
-	unsigned long maxObjects = 0;
+	uint16_t id = 100;
+	uint32_t size;
+	uint16_t read_short, read_short2;
+	uint32_t maxObjects = 0;
 
 	FILE *fp = fopen(filename, "rb");
 	if(!fp){
@@ -307,7 +308,7 @@ bool Objects::loadDat(const char* filename)
 					break;
 				default:
 						optbyte = optbyte;
-						//std::cout << "unknown byte: " << (unsigned short)optbyte << std::endl;
+						//std::cout << "unknown byte: " << (uint16_t)optbyte << std::endl;
 						return false;
 					break;
 			}
@@ -327,10 +328,10 @@ bool Objects::loadDat(const char* filename)
 
 		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->unk1;
 
-		oType->imageData = new unsigned short[oType->numsprites];
+		oType->imageData = new uint16_t[oType->numsprites];
 
 		for(unsigned int i = 0; i < oType->numsprites; i++) {
-			fread(&oType->imageData[i], sizeof(unsigned short), 1, fp);
+			fread(&oType->imageData[i], sizeof(uint16_t), 1, fp);
 		}
 
 		if(id <= ObjectType::maxItemId){
@@ -355,22 +356,22 @@ bool Objects::loadDat(const char* filename)
 	return true;
 }
 
-ObjectType* Objects::getItemType(unsigned short id)
+ObjectType* Objects::getItemType(uint16_t id)
 {
 	return m_item.getElement(id);
 }
 
-ObjectType* Objects::getOutfitType(unsigned short id)
+ObjectType* Objects::getOutfitType(uint16_t id)
 {
 	return m_outfit.getElement(id);
 }
 
-ObjectType* Objects::getEffectType(unsigned short id)
+ObjectType* Objects::getEffectType(uint16_t id)
 {
 	return m_effect.getElement(id);
 }
 
-ObjectType* Objects::getDistanceType(unsigned short id)
+ObjectType* Objects::getDistanceType(uint16_t id)
 {
 	return m_distance.getElement(id);
 }
