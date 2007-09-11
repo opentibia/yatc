@@ -21,8 +21,9 @@
 #ifndef __ENGINEGL_H
 #define __ENGINEGL_H
 
+#include <GLICT/fonts.h>
 #include "engine.h"
-
+#include "spritegl.h"
 class EngineGL : public Engine
 {
 public:
@@ -33,7 +34,12 @@ public:
 
 	void Flip(){SDL_GL_SwapBuffers();};
 	void doResize(int h, int w);
-	void drawRectangle(int x, int y, int width, int height, oRGBA color);
+	void drawRectangle(float x, float y, float width, float height, oRGBA color);
+
+	Sprite* createSprite(std::string filename, int index=0) {
+		printf("SpriteGL\n");
+		return new SpriteGL(filename, index);
+	}
 private:
 	void initEngine();
 };

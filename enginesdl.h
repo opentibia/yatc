@@ -21,9 +21,8 @@
 #ifndef __ENGINESDL_H
 #define __ENGINESDL_H
 
-
 #include "engine.h"
-
+#include "spritesdl.h"
 class EngineSDL : public Engine
 {
 public:
@@ -32,9 +31,14 @@ public:
 
     bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
 
-    void drawRectangle(int x, int y, int width, int height, oRGBA color);
-private:
+    void drawRectangle(float x, float y, float width, float height, oRGBA color);
 
+	Sprite* createSprite(std::string filename, int index=0) {
+		printf("createsprite sdl\n");
+		return new SpriteSDL(filename, index);
+	}
+private:
+	friend void SpriteSDL::Blit(float,float,float,float,float,float);
 
 };
 

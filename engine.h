@@ -25,7 +25,8 @@
 #include <SDL/SDL.h>
 #include "debugprint.h"
 #include "defines.h"
-
+#include "sprite.h"
+#include "spritesdl.h"
 class Engine
 {
 public:
@@ -40,12 +41,17 @@ public:
 
 
 	virtual void doResize(int w, int h){width = w; height = h;};
-	virtual void drawRectangle(int x, int y, int width, int height, oRGBA color){
+	virtual void drawRectangle(float x, float y, float width, float height, oRGBA color){
 		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::drawRectangle(): Function not overloaded");
 	};
 
 	int getWindowWidth(){return width;};
 	int getWindowHeight(){return height;};
+
+	virtual Sprite* createSprite(std::string filename, int index=0) {
+		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::createSprite(): Function not overloaded");
+		return NULL;
+	}
 
 	virtual void Flip() {
 		SDL_Flip(screen);
@@ -58,6 +64,7 @@ protected:
 	int video_bpp;
 	SDL_Surface* screen;
 	glictFont* sysfont;
+	friend void SpriteSDL::Blit(float,float,float,float,float,float);
 };
 
 #include "enginesdl.h"

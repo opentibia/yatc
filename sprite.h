@@ -22,17 +22,29 @@
 #define __SPRITE_H
 
 #include <string>
+#include <SDL/SDL.h>
+#include "debugprint.h"
 class Sprite
 {
 	public:
 		Sprite();
-		Sprite(std::string);
-		Sprite(std::string, int);
+		Sprite(std::string, int = 0);
 		Sprite(const Sprite&);
 		virtual ~Sprite();
-	private:
 
+		void Blit(float destx, float desty) {
+			Blit(destx,desty,0,0,image->w,image->h);
+		}
 
+		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) {
+			DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Sprite::Blit(float,float): Function not overloaded");
+		}
+
+		void loadSurface();
+	protected:
+		SDL_Surface *image;
+		std::string filename;
+		int index;
 };
 
 #endif

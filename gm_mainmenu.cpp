@@ -21,6 +21,7 @@
 #include "gm_mainmenu.h"
 #include "defines.h"
 #include "engine.h"
+#include "sprite.h"
 GM_MainMenu::GM_MainMenu()
 {
 	desktop.AddObject(&winLogin.login);
@@ -28,15 +29,23 @@ GM_MainMenu::GM_MainMenu()
 	desktop.AddObject(&btnExit);
 	btnExit.SetBGColor(1,0,0,1);
 
+	if (engine) {
+		printf("Createsprite...\n");
+		background = engine->createSprite("yatc.bmp");
+	}
+	else
+		background = NULL;
 
 }
 GM_MainMenu::~GM_MainMenu()
 {
 
 }
-
+#include "spritegl.h"
 void GM_MainMenu::renderScene()
 {
-	engine->drawRectangle(0,0,200,200,oRGBA(255,255,255,255));
+	if (background) background->Blit(0,0);
+	engine->drawRectangle(150,150,200,200,oRGBA(255,255,255,255));
 	desktop.Paint();
+
 }

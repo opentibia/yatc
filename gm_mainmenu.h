@@ -25,7 +25,7 @@
 #include <GLICT/button.h>
 #include <GLICT/window.h>
 #include "gamemode.h"
-
+#include "sprite.h"
 class GM_MainMenu : public GameMode
 {
 public:
@@ -39,6 +39,8 @@ private:
 	struct {
 		glictWindow login;
 	} winLogin;
+
+	Sprite* background;
 };
 
 #endif

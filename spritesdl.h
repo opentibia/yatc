@@ -25,8 +25,10 @@
 #include "sprite.h"
 class SpriteSDL : public Sprite
 {
-	SpriteSDL(std::string);
-	SpriteSDL(std::string, int);
+	public:
+		SpriteSDL(std::string, int = 0);
+
+		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
 };
 
 #endif

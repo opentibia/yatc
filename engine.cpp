@@ -32,14 +32,14 @@
 Engine* engine;
 
 
-// first we'll define all the callbacks
+// first we'll define all the C-style callbacks we'll use elsewhere
 static void engine_draw_rectangle(float left, float right, float top, float bottom, glictColor &col) {
-	engine->drawRectangle((int)left, (int)top, (int)(right-left), (int)(bottom-top), oRGBA(col.r * 255, col.g * 255, col.b * 255));
+	engine->drawRectangle((int)left, (int)top, (int)(right-left), (int)(bottom-top), oRGBA(col.r * 255, col.g * 255, col.b * 255, col.a * 255));
 }
 
-// set the callbacks up
+// set the callbacks up in the constructor
 Engine::Engine() {
 	glictGlobals.paintrectCallback = engine_draw_rectangle;
 	glictGlobals.enableGlTranslate = false;
-	sysfont = 0;
+	sysfont = NULL;
 }

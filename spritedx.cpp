@@ -19,7 +19,5 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "spritedx.h"
-SpriteDX::SpriteDX(std::string filename) {
-}
 SpriteDX::SpriteDX(std::string filename, int index) {
 }

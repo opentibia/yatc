@@ -55,8 +55,6 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps this status should be moved in a constructor?
-	game = new GM_MainMenu();
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing windowing...\n");
 
@@ -67,59 +65,74 @@ int main(int argc, char *argv[])
 
 
 
-	atexit(SDL_Quit);
 
-	switch(options.engine) {
-		case ENGINE_OPENGL:
-				engine = new EngineGL;
-			break;
-		case ENGINE_DIRECTX:
-				engine = new EngineDX;
-			break;
-		default:
-				DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Unknown engine was selected. Falling back to SDL.");
-				options.engine = ENGINE_SDL;
-		case ENGINE_SDL:
-				engine = new EngineSDL;
-			break;
-	}
 
-	if (!engine->isSupported()) {
-		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "The selected graphics engine is not supported. Falling back to SDL.");
-		delete engine;
-		options.engine = ENGINE_SDL;
-		engine = new EngineSDL;
-	}
+	try {
 
-	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
-	SDL_WM_SetCaption ("YATC v0.1", NULL);
-
-	bool running = true;
-	SDL_Event event;
-
-	while(running){
-		while(SDL_PollEvent(&event)){
-			switch (event.type){
-				case SDL_KEYDOWN:
-						//
-					break;
-				case SDL_VIDEORESIZE:
-						engine->doResize(event.resize.w, event.resize.h);
-					break;
-				case SDL_QUIT:
-						running = false;
-					break;
-				default:
-					break;
-			}
+		switch(options.engine) {
+			case ENGINE_OPENGL:
+					engine = new EngineGL;
+				break;
+			case ENGINE_DIRECTX:
+					engine = new EngineDX;
+				break;
+			default:
+					DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Unknown engine was selected. Falling back to SDL.");
+					options.engine = ENGINE_SDL;
+			case ENGINE_SDL:
+					engine = new EngineSDL;
+				break;
 		}
-		game->renderScene();
-		engine->Flip();
+
+		if (!engine->isSupported()) {
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "The selected graphics engine is not supported. Falling back to SDL.");
+			delete engine;
+			options.engine = ENGINE_SDL;
+			engine = new EngineSDL;
+		}
+
+
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps these statuses should be moved in a constructor?
+		game = new GM_MainMenu();
+
+
+		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
+		SDL_WM_SetCaption ("YATC v0.1", NULL);
+
+		bool running = true;
+		SDL_Event event;
+
+
+		while(running){
+			while(SDL_PollEvent(&event)){
+				switch (event.type){
+					case SDL_KEYDOWN:
+							//
+						break;
+					case SDL_VIDEORESIZE:
+							engine->doResize(event.resize.w, event.resize.h);
+						break;
+					case SDL_QUIT:
+							running = false;
+						break;
+					default:
+						break;
+				}
+			}
+			game->renderScene();
+			engine->Flip();
+		}
+	} catch (std::string errtext) {
+		printf("ERROR: %s\n", errtext.c_str());
 	}
 
 	printf("Game over\n");
 	printf("Unloading data...\n");
 	Objects::getInstance()->unloadDat();
+	printf("Shutting down SDL...\n");
+	SDL_Quit();
+	printf("Shutting down database...\n");
+	DBDeinit();
 	printf("\n");
 	printf("Thanks for playing!\n");
 	return 0;

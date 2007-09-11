@@ -33,8 +33,6 @@ static float enginesdl_font_size(const char* txt, const void* font) {
 	return 0;
 }
 
-
-
 EngineSDL::EngineSDL()
 {
 	printf("Starting SDL engine\n");
@@ -64,9 +62,9 @@ EngineSDL::~EngineSDL()
 	glictDeleteFont ("system");
 }
 
-void EngineSDL::drawRectangle(int x, int y, int width, int height, oRGBA color)
+void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)
 {
 	static const SDL_VideoInfo* vi = SDL_GetVideoInfo();
-	SDL_Rect r={x,y,width,height};
+	SDL_Rect r={(int)x,(int)y,(int)width,(int)height};
 	SDL_FillRect(screen, &r, SDL_MapRGBA(vi->vfmt, (unsigned char)color.r, (unsigned char)color.g, (unsigned char)color.b, (unsigned char)color.a));
 }
