@@ -18,41 +18,31 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifndef __DEFINES_H
-#define __DEFINES_H
+#include <sstream>
+#include "util.h"
 
-#define APPTITLE "The Outcast"
-#define PI 3.14159
-#ifndef min
-    #define min(a,b) (a > b ? b : a)
-    #define max(a,b) (a < b ? b : a)
-#endif
-#define FINGERPRINT_TIBIADAT 0
-#define FINGERPRINT_TIBIASPR 1
-#define FINGERPRINT_TIBIAPIC 2
-#include <stdio.h>
 
-// FIXME (Khaos#5#) Perhaps this one should move to "utils.h" or sth ... but it'd suck if it'd be there alone. So find some more functions to go there
 
-struct oRGBA
-{
-	oRGBA(float _r = 0.0f, float _g = 0.0f, float _b = 0.0f, float _a = 0.0f){ //Should contain values from 0.0f->255.0f where 255.0f = max
-		r = _r;
-		g = _g;
-		b = _b;
-		a = _a;
-	}
-
-	float r, g, b, a;
-};
-
-inline bool fileexists(const char* filename){
-    FILE *f;
-    if ((f = fopen(filename, "r"))) {
-        fclose(f);
-        return true;
-    } else
-        return false;
+void str_replace(std::string &s, const std::string& what, const std::string& with) {
+    std::string::size_type p, l;
+    for (l = 0; (p = s.find(what, l)) != std::string::npos; l = p + with.size()) {
+        s.replace(p, what.size(), with);
+    }
 }
 
-#endif
+
+void NativeGUIError(const char* text, const char *title) {
+	#ifdef WIN32
+		MessageBox(HWND_DESKTOP, text, title, MB_ICONSTOP);
+	#else
+		std::string texts=text, titles=title;
+		str_replace(texts, "\\", "\\\\");
+		str_replace(texts, "\"", "\\\"");
+
+		std::stringstream cmd;
+		cmd << "xmessage -title \"" << title << "\" -center \"" << texts << "\"";
+
+		system(cmd.str().c_str());
+	#endif
+}
+

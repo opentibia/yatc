@@ -18,8 +18,20 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include "enginesdl.h"
 #include "spritesdl.h"
-SpriteSDL::SpriteSDL(std::string) {
+SpriteSDL::SpriteSDL(std::string fn, int ind) : Sprite(fn,ind) {
 }
-SpriteSDL::SpriteSDL(std::string, int) {
+void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h) {
+	// code is like this because of dx5.0 ... see docs/html/sdlrect.html in SDL documentation for more info
+	SDL_Rect src = {(int)sx,(int)sy,(int)(sx+w),(int)(sy+h)};
+	SDL_Rect dst = {(int)dx,(int)dy,(int)(dx+w),(int)(dy+h)};
+	while ( SDL_BlitSurface(image, &src, engine->screen, &dst) == -2 ) {
+		while ( SDL_LockSurface(image) < 0 )
+				SDL_Delay(10);
+
+		SDL_UnlockSurface(image);
+
+		loadSurface();
+	}
 }

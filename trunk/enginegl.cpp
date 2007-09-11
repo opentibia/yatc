@@ -27,6 +27,12 @@
 #include <GL/gl.h>
 #include "enginegl.h"
 
+static void enginegl_font_render(const char* txt, const void* font, float x, float y) {
+}
+static float enginegl_font_size(const char* txt, const void* font) {
+	return 0;
+}
+
 EngineGL::EngineGL()
 {
 	printf("Starting OpenGL engine\n");
@@ -44,6 +50,11 @@ EngineGL::EngineGL()
 
 	initEngine();
 	doResize(width, height);
+
+	sysfont = glictCreateFont("system");
+	sysfont->SetRenderFunc(enginegl_font_render);
+	sysfont->SetSizeFunc(enginegl_font_size);
+
 }
 
 EngineGL::~EngineGL()
@@ -75,8 +86,10 @@ void EngineGL::doResize(int w, int h)
 	glLoadIdentity();
 }
 
-void EngineGL::drawRectangle(int x, int y, int width, int height, oRGBA color)
+void EngineGL::drawRectangle(float x, float y, float width, float height, oRGBA color)
 {
+	glDisable(GL_TEXTURE_2D);
+
 	glColor4f(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f);
 
 	glRectf(x, y, x+width, y+height);

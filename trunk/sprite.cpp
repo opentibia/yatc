@@ -24,24 +24,33 @@
 ///        classes
 Sprite::Sprite()
 {
-
-}
-Sprite::Sprite(std::string filename)
-{
-
+	throw std::string("Sprite::Sprite(): Incorrect constructor\n");
 }
 
 Sprite::Sprite(std::string filename, int index)
 {
-
+	this->filename = filename;
+	this->index = index;
+	loadSurface();
 }
 
 Sprite::Sprite(const Sprite& original)
 {
-
+	// this should be a copy constructor
 }
 
 Sprite::~Sprite()
 {
+	SDL_FreeSurface(image);
+}
 
+void Sprite::loadSurface() {
+	int extbegins = filename.rfind(".")+1;
+	std::string extension = filename.substr(extbegins, filename.length() - extbegins);
+
+	if (extension == "bmp") {
+		image = SDL_LoadBMP(filename.c_str());
+	} else {
+		throw std::string("Sprite::Sprite(string,int): Unknown format\n");
+	}
 }

@@ -25,8 +25,8 @@
 #include "sprite.h"
 class SpriteDX : public Sprite
 {
-	SpriteDX(std::string);
-	SpriteDX(std::string, int);
+	public:
+		SpriteDX(std::string, int = 0);
 };
 
 #endif

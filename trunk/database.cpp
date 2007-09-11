@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -72,7 +72,12 @@ void DBInit()
 
     return;
 }
-
+void DBDeinit() {
+    if (dbUser) {
+        sqlite3_close(dbUser);
+        dbUser=NULL;
+    }
+}
 bool dbTableExists(sqlite3 *db, const char *tablename)
 {
     return (dbExecPrintf(db, NULL, 0, NULL, "select * from %s;", tablename) == SQLITE_OK);

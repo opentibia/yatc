@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@
 	#include <sqlite3.h>
 #else
 	#include <sqlite.h>
-  
+
 	#define sqlite3 sqlite
 	#define sqlite3_callback sqlite_callback
 	#define sqlite3_exec sqlite_exec
@@ -38,6 +38,7 @@
 #endif
 
 void DBInit();
+void DBDeinit();
 bool dbTableExists(sqlite3 *db, const char *tablename);
 int dbExecPrintf(
   sqlite3*,                     /* An open database */

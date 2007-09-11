@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,12 +22,16 @@
 #define __ENGINEDX_H
 
 #include "engine.h"
-
+#include "spritedx.h"
 class EngineDX : public Engine
 {
 public:
 	EngineDX();
 	~EngineDX();
+
+	Sprite* createSprite(std::string filename, int index=0) {
+		return new SpriteDX(filename, index);
+	}
 };
 
 #endif
