@@ -25,23 +25,46 @@
 GM_MainMenu::GM_MainMenu()
 {
 	desktop.AddObject(&winLogin.login);
-
+	winLogin.login.SetPos(50,50);
+	winLogin.login.SetHeight(100);
+	winLogin.login.SetWidth(100);
 	desktop.AddObject(&btnExit);
 	btnExit.SetBGColor(1,0,0,1);
+	desktop.SetWidth(640);
+	desktop.SetHeight(480);
 
 	background = engine->createSprite("yatc.bmp");
-
-
 }
+
 GM_MainMenu::~GM_MainMenu()
 {
 
 }
-#include "spritegl.h"
+
 void GM_MainMenu::renderScene()
 {
-	if (background) background->Blit(0,0);
-	engine->drawRectangle(150,150,200,200,oRGBA(255,255,255,255));
-	desktop.Paint();
+	if (background)
+		background->Blit(0,0);
 
+	desktop.Paint();
 }
+
+void GM_MainMenu::mouseEvent(SDL_Event& event)
+{
+	glictPos pos;
+	pos.x = ptrx;
+	pos.y = ptry;
+	desktop.TransformScreenCoords(&pos);
+	if (event.button.state == SDL_PRESSED)
+		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
+	if (event.button.state != SDL_PRESSED)
+		desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+
+	printf("Casting click on %g %g\n", pos.x, pos.y);
+}
+
+void GM_MainMenu::keyPress (char key)
+{
+	desktop.CastEvent(GLICT_KEYPRESS, 0, key);
+}
+
