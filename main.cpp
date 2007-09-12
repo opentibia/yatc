@@ -161,9 +161,6 @@ int main(int argc, char *argv[])
 					case SDL_MOUSEMOTION: {
 							ptrx = event.motion.x;
 							ptry = event.motion.y;
-							std::stringstream s;
-							s << ptrx << " " << ptry;
-
 						}
 						break;
 					default:
