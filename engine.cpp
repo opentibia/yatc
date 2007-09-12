@@ -37,9 +37,17 @@ static void engine_draw_rectangle(float left, float right, float top, float bott
 	engine->drawRectangle((int)left, (int)top, (int)(right-left), (int)(bottom-top), oRGBA(col.r * 255, col.g * 255, col.b * 255, col.a * 255));
 }
 
+
+
 // set the callbacks up in the constructor
 Engine::Engine() {
 	glictGlobals.paintrectCallback = engine_draw_rectangle;
 	glictGlobals.enableGlTranslate = false;
-	sysfont = NULL;
+
+
+}
+
+Engine::~Engine() {
+	delete (Sprite*)sysfont->GetFontParam();
+	glictDeleteFont("system");
 }
