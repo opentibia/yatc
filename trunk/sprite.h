@@ -33,6 +33,7 @@ class Sprite
 		virtual ~Sprite();
 
 		void Blit(float destx, float desty) {
+			if (!image) throw(std::string("Sprite::Blit(): Invalid image"));
 			Blit(destx,desty,0,0,image->w,image->h);
 		}
 

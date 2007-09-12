@@ -84,7 +84,7 @@ void Options::Load()
 
 
 	// integers
-	dbLoadSetting("engine", tmp, 256, "0");
+	dbLoadSetting("engine", tmp, 256, "1");
 	engine = (enginelist_t)atoi(tmp);
 
 	// strings

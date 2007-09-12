@@ -31,9 +31,7 @@ class Engine
 {
 public:
 	Engine();
-	virtual ~Engine() {
-		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::~Engine(): Function not overloaded");
-	}
+	virtual ~Engine();
 	virtual bool isSupported() {
 		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::isSupported(): Function not overloaded");
 		return false;
@@ -66,6 +64,7 @@ protected:
 	glictFont* sysfont;
 	friend void SpriteSDL::Blit(float,float,float,float,float,float);
 };
+
 
 #include "enginesdl.h"
 #include "enginegl.h"

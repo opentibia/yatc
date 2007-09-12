@@ -29,12 +29,8 @@ GM_MainMenu::GM_MainMenu()
 	desktop.AddObject(&btnExit);
 	btnExit.SetBGColor(1,0,0,1);
 
-	if (engine) {
-		printf("Createsprite...\n");
-		background = engine->createSprite("yatc.bmp");
-	}
-	else
-		background = NULL;
+	background = engine->createSprite("yatc.bmp");
+
 
 }
 GM_MainMenu::~GM_MainMenu()

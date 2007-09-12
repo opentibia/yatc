@@ -25,13 +25,51 @@
 #include "enginesdl.h"
 
 
-// first define callbacks, and after that go on with class
+static void engine_font_drawchar(char t, SpriteSDL* img, int x1, int y1) {
+	t -= 32;
+    int x = (int)(t % 32)*16.;
+    int y = (int)(t / 32)*16.;
 
-static void enginesdl_font_render(const char* txt, const void* font, float x, float y) {
+    float w = 10;
+    float h = 10;
+
+
+
+	img->Blit(x1, y1, x, y, w, h);
+
 }
-static float enginesdl_font_size(const char* txt, const void* font) {
-	return 0;
+
+static void engine_font_render(const char* txt, const void* font, float x, float y) {
+	SpriteSDL *img = (SpriteSDL*)font;
+
+	float cx=x*10,cy=y*10;
+
+	volatile register float sizesofar = 0.;
+	volatile register float linessofar = 0.;
+	for (volatile register unsigned char *t = (unsigned char*)txt; *t; ++t) {
+		switch (*t) {
+			default:
+				engine_font_drawchar(*t, img, cx, cy);
+				cx += 10;
+				sizesofar += 10;
+				break;
+			case '\n':
+			case '\r':
+				cx -= sizesofar;
+				cy += 10;
+				linessofar += 1.;
+				sizesofar = 0;
+				if (*t == '\n' && *(t+1)=='\r' || *t == '\r' && *(t+1)=='\n' ) t++;
+		                break;
+
+		}
+	}
+
 }
+static float engine_font_size(const char* txt, const void* font) {
+	return strlen(txt);
+}
+
 
 EngineSDL::EngineSDL()
 {
@@ -51,15 +89,16 @@ EngineSDL::EngineSDL()
 
 
 	sysfont = glictCreateFont("system");
-	sysfont->SetRenderFunc(enginesdl_font_render);
-	sysfont->SetSizeFunc(enginesdl_font_size);
+	sysfont->SetRenderFunc(engine_font_render);
+	sysfont->SetSizeFunc(engine_font_size);
+	sysfont->SetFontParam(createSprite("font.bmp"));
+
 
 }
 
 EngineSDL::~EngineSDL()
 {
 	printf("Closing SDL engine\n");
-	glictDeleteFont ("system");
 }
 
 void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)

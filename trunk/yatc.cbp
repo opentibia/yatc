@@ -35,11 +35,16 @@
 		<Linker>
 			<Add library="SDL" />
 			<Add library="GL" />
+			<Add library="GLU" />
 			<Add library="sqlite3" />
 			<Add library="GLICT" />
 		</Linker>
 		<Unit filename="README" />
 		<Unit filename="assert.h" />
+		<Unit filename="container.cpp" />
+		<Unit filename="container.h" />
+		<Unit filename="creature.cpp" />
+		<Unit filename="creature.h" />
 		<Unit filename="database.cpp" />
 		<Unit filename="database.h" />
 		<Unit filename="debugprint.cpp" />
@@ -57,7 +62,13 @@
 		<Unit filename="gamemode.h" />
 		<Unit filename="gm_mainmenu.cpp" />
 		<Unit filename="gm_mainmenu.h" />
+		<Unit filename="inventory.cpp" />
+		<Unit filename="inventory.h" />
+		<Unit filename="item.cpp" />
+		<Unit filename="item.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="map.cpp" />
+		<Unit filename="map.h" />
 		<Unit filename="objects.cpp" />
 		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
@@ -70,6 +81,9 @@
 		<Unit filename="spritegl.h" />
 		<Unit filename="spritesdl.cpp" />
 		<Unit filename="spritesdl.h" />
+		<Unit filename="thing.h" />
+		<Unit filename="util.cpp" />
+		<Unit filename="util.h" />
 		<Extensions>
 			<code_completion />
 		</Extensions>
