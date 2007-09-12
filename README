@@ -20,11 +20,18 @@ Copyright (C) 2007 OpenTibia Team
 Programming
   Ivan Vucica - Khaos
   Magnus K.L. - Smygflik
-  
+              - mips
+
+Authors mentioned in no particular order.
 ================================
 
 YATC is a client for any game that uses Tibia-compatible protocol. It is being
 developed as a part of the OpenTibia project. We have chosen the name YATC
 since name OpenTibia Client was already taken by a project by another author.  
 
-It is currently in planning phase.
+It is currently in planning phase, and we are doing some basic coding. We plan
+support for SDL, OpenGL and DirectX based drawing engines. GLICT is planned to
+be used as the user interface. 
+
+Currently there are no more plans to announce. Stay tuned!
+
