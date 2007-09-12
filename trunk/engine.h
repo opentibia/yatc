@@ -65,7 +65,7 @@ protected:
 	friend void SpriteSDL::Blit(float,float,float,float,float,float);
 };
 
-
+extern int ptrx, ptry;
 #include "enginesdl.h"
 #include "enginegl.h"
 #include "enginedx.h"

@@ -24,6 +24,8 @@
 #include <vector> // FIXME (ivucica#5#) aug24/07: for some odd reason, vector has to be #included here, since something in engine.h causes it to be no longer includable after that. someone should inspect that
 
 #include <SDL/SDL.h>
+#include <GLICT/globals.h>
+#include <sstream>
 #include "debugprint.h"
 #include "database.h"
 #include "options.h"
@@ -100,20 +102,69 @@ int main(int argc, char *argv[])
 		SDL_WM_SetCaption ("YATC v0.1", NULL);
 
 		bool running = true;
+		int keymods=0;
 		SDL_Event event;
 
+
+		glictGlobals.w = 640;
+		glictGlobals.h = 480;
 
 		while(running){
 			while(SDL_PollEvent(&event)){
 				switch (event.type){
-					case SDL_KEYDOWN:
-							//
-						break;
 					case SDL_VIDEORESIZE:
 							engine->doResize(event.resize.w, event.resize.h);
 						break;
 					case SDL_QUIT:
 							running = false;
+						break;
+					case SDL_KEYUP:
+							if (event.key.keysym.sym == SDLK_LSHIFT || event.key.keysym.sym == SDLK_RSHIFT && keymods & KMOD_SHIFT)
+								keymods ^= KMOD_SHIFT;
+						break;
+					case SDL_KEYDOWN:
+							if (event.key.keysym.sym == SDLK_ESCAPE) {
+								running = 0;
+							}
+							if (event.key.keysym.sym == SDLK_LSHIFT || event.key.keysym.sym == SDLK_RSHIFT && !(keymods & KMOD_SHIFT))
+								keymods ^= KMOD_SHIFT;
+
+							// TODO (Khaos#1#) Add pageup, pagedown, home, end below
+							if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
+								// TODO (Khaos#1#) Pass special keys to a different function
+							} else {
+
+								// glict expects what glut usually serves: completely prepared keys, with shift already parsed and all that
+								// we'll try to do the parsing here or elsewhere
+								int key = event.key.keysym.sym;
+
+								if (key==SDLK_LSHIFT || key==SDLK_RSHIFT)
+									break;
+
+								if (event.key.keysym.mod & KMOD_SHIFT) {
+									if (key >= 'a' && key <='z') {
+										key-=32;
+									} else if (key >= '0' && key <='9') {
+										key-=16;
+									}
+								}
+								if (key < 32 && key != 8 && key != 27 && key != 13 && key != 10) // most keys won't be passed here
+									break;
+								game->keyPress (key);
+							}
+
+						break;
+					case SDL_MOUSEBUTTONUP:
+					case SDL_MOUSEBUTTONDOWN:
+							game->mouseEvent (event);
+						break;
+					case SDL_MOUSEMOTION: {
+							ptrx = event.motion.x;
+							ptry = event.motion.y;
+							std::stringstream s;
+							s << ptrx << " " << ptry;
+
+						}
 						break;
 					default:
 						break;

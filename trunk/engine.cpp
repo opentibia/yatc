@@ -30,7 +30,7 @@
 #include "defines.h"
 #include "engine.h"
 Engine* engine;
-
+int ptrx, ptry;
 
 // first we'll define all the C-style callbacks we'll use elsewhere
 static void engine_draw_rectangle(float left, float right, float top, float bottom, glictColor &col) {

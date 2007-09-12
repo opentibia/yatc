@@ -33,6 +33,8 @@ public:
 	~GM_MainMenu();
 
 	void renderScene();
+	void mouseEvent (SDL_Event&);
+	void keyPress (char key);
 private:
 	glictContainer desktop;
 	glictButton btnExit;

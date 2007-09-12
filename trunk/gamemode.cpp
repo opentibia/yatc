@@ -29,5 +29,15 @@ GameMode::~GameMode()
 {
 }
 
-void GameMode::renderScene() {
+void GameMode::renderScene()
+{
 }
+
+void GameMode::mouseEvent(SDL_Event&)
+{
+}
+
+void GameMode::keyPress (char key)
+{
+}
+
