@@ -25,21 +25,28 @@
 #include "spritesdl.h"
 class EngineSDL : public Engine
 {
-public:
-    EngineSDL();
-    ~EngineSDL();
+	public:
+    	EngineSDL();
+    	~EngineSDL();
 
-    bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
+    	bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
 
-    void drawRectangle(float x, float y, float width, float height, oRGBA color);
+    	void drawRectangle(float x, float y, float width, float height, oRGBA color);
 
-	Sprite* createSprite(std::string filename, int index=0) {
-		printf("createsprite sdl\n");
-		return new SpriteSDL(filename, index);
-	}
-private:
-	friend void SpriteSDL::Blit(float,float,float,float,float,float);
+		virtual Sprite* createSprite(const std::string& filename, int index = 0)
+		{
+			return new SpriteSDL(filename, index);
+		}
 
+		virtual void Flip(){
+			SDL_Flip(m_screen);
+		}
+
+	protected:
+
+		static void font_render(const char* txt, const void* font, float x, float y);
+		static void font_drawchar(char t, SpriteSDL* img, int x1, int y1);
+		static float font_size(const char* txt, const void* font);
 };
 
 #endif

@@ -28,7 +28,8 @@ Options::Options()
 {
 	maptrack = 0;
 	fullscreen = 0;
-	engine = ENGINE_SDL;
+	engine = ENGINE_OPENGL;
+	//engine = ENGINE_SDL;
 	os_cursor = 0;
 	skin = "default";
 }
@@ -40,6 +41,7 @@ Options::~Options()
 
 void Options::Save()
 {
+	/*
 	dbExecPrintf(dbUser, 0, 0, 0, "begin transaction;");
 
 	// bools
@@ -57,10 +59,12 @@ void Options::Save()
 	dbSaveSetting("skin", skin.c_str());
 
 	dbExecPrintf(dbUser, 0, 0, 0, "end transaction;");
+	*/
 }
 
 void Options::Load()
 {
+	/*
 	char tmp[256];
 
 	// bools
@@ -90,4 +94,5 @@ void Options::Load()
 	// strings
 	dbLoadSetting("skin", tmp, 256, "default");
 	skin = tmp;
+	*/
 }

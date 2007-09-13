@@ -26,6 +26,7 @@
 #include <GLICT/window.h>
 #include "gamemode.h"
 #include "sprite.h"
+
 class GM_MainMenu : public GameMode
 {
 public:

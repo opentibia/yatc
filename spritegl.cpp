@@ -17,50 +17,95 @@
 // along with this program; if not, write to the Free Software Foundation,
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
-#include <GL/glu.h>
-#include "spritegl.h"
-SpriteGL::SpriteGL(std::string filename, int index)  : Sprite(filename, index) {
 
-	int extbegins = filename.rfind(".")+1;
-	std::string extension = filename.substr(extbegins, filename.length() - extbegins);
-	GLuint pixelformat = GL_RGBA;
-	if (extension == "bmp") {
-		pixelformat = GL_BGR;
+#include <GL/gl.h>
+#include <GL/glu.h>
+#ifdef WIN32
+#include <GL/glext.h>
+#endif
+#include "spritegl.h"
+
+SpriteGL::SpriteGL(const std::string& filename, int index) :
+Sprite(index)
+{
+	m_texture = GL_INVALID_VALUE;
+	SpriteGL::loadFromFile(filename);
+}
+
+SpriteGL::~SpriteGL()
+{
+	if(m_texture != GL_INVALID_VALUE){
+		glDeleteTextures(1, &m_texture);
+	}
+}
+
+void SpriteGL::loadFromFile(const std::string& filename)
+{
+	if(m_texture != GL_INVALID_VALUE){
+		glDeleteTextures(1, &m_texture);
 	}
 
-	glGenTextures(1, &texture);
-	SDL_LockSurface(image);
+	if(!loadSurfaceFromFile(filename)){
+		return;
+	}
 
-	glBindTexture(GL_TEXTURE_2D, texture);
+	SDL_LockSurface(getImage());
+
+	//TODO : Do not create an openGL texture for every sprite!!
+	glGenTextures(1, &m_texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	gluBuild2DMipmaps(GL_TEXTURE_2D,
 			 GL_RGBA,
-			 image->w, image->h,
-			 pixelformat,
+			 getImage()->w, getImage()->h,
+			 getPixelFormat(),
 			 GL_UNSIGNED_BYTE,
-			 image->pixels);
+			 getImage()->pixels);
 
-	SDL_UnlockSurface(image);
+	SDL_UnlockSurface(getImage());
 }
 
-SpriteGL::~SpriteGL() {
-	glDeleteTextures(1, &texture);
-}
-
-void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float width, float height) {
+void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float width, float height)
+{
+	// TODO (mips_act#3#): Configure glict to dont enable/disable all the time
+	// GL_TEXTURE_2D
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+
+	float spriteWidth = getImage()->w;
+	float spriteHeight = getImage()->h;
+
 	glBegin(GL_QUADS);
-		glTexCoord2f(0,0);
+		glTexCoord2f(srcx/spriteWidth, srcy/spriteHeight);
 		glVertex2f(destx, desty);
-		glTexCoord2f(0,height/image->h);
-		glVertex2f(destx, desty+height);
-		glTexCoord2f(width/image->w,height/image->h);
-		glVertex2f(destx+width, desty+height);
-		glTexCoord2f(width/image->w,0);
-		glVertex2f(destx+width, desty);
+
+		glTexCoord2f(srcx/spriteWidth, (srcy + height)/spriteHeight);
+		glVertex2f(destx, desty + height);
+
+		glTexCoord2f((srcx + width)/spriteWidth, (srcy + height)/spriteHeight);
+		glVertex2f(destx + width, desty + height);
+
+		glTexCoord2f((srcx + width)/spriteWidth, srcy/spriteHeight);
+		glVertex2f(destx + width, desty);
 	glEnd();
 
-
+	glPopMatrix();
+	/*
+	glBegin(GL_QUADS);
+		glTexCoord2f(0, 0);
+		glVertex2f(destx, desty);
+		glTexCoord2f(0, height/m_image->h);
+		glVertex2f(destx, desty + height);
+		glTexCoord2f(width/m_image->w, height/m_image->h);
+		glVertex2f(destx + width, desty + height);
+		glTexCoord2f(width/m_image->w, 0);
+		glVertex2f(destx + width, desty);
+	glEnd();
+	*/
 }

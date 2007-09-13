@@ -26,13 +26,14 @@
 class GameMode
 {
 public:
-	GameMode();
-	virtual ~GameMode();
+	GameMode() {}
+	virtual ~GameMode() {}
 
-	virtual void renderScene();
-	virtual void mouseEvent (SDL_Event&);
-	virtual void keyPress (char key);
+	virtual void renderScene() = 0;
+	virtual void mouseEvent (SDL_Event&) {}
+	virtual void keyPress (char key) {}
 };
 
-extern GameMode* game;
+extern GameMode* g_game;
+
 #endif

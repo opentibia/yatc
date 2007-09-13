@@ -26,22 +26,28 @@
 #include "spritegl.h"
 class EngineGL : public Engine
 {
-public:
-	EngineGL();
-	~EngineGL();
+	public:
+		EngineGL();
+		~EngineGL();
 
-	bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
+		bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
 
-	void Flip(){SDL_GL_SwapBuffers();};
-	void doResize(int h, int w);
-	void drawRectangle(float x, float y, float width, float height, oRGBA color);
+		void Flip(){SDL_GL_SwapBuffers();};
+		void doResize(int h, int w);
+		void drawRectangle(float x, float y, float width, float height, oRGBA color);
 
-	Sprite* createSprite(std::string filename, int index=0) {
-		printf("SpriteGL\n");
-		return new SpriteGL(filename, index);
-	}
-private:
-	void initEngine();
+		virtual Sprite* createSprite(const std::string& filename, int index = 0)
+		{
+			return new SpriteGL(filename, index);
+		}
+
+	protected:
+
+		static void font_render(const char* txt, const void* font, float x, float y);
+		static void font_drawchar(char t, Sprite* img, int x1, int y1);
+		static float font_size(const char* txt, const void* font);
+
+		void initEngine();
 };
 
 #endif

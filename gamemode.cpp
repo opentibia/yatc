@@ -19,25 +19,4 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "gamemode.h"
-GameMode* game;
-
-GameMode::GameMode()
-{
-}
-
-GameMode::~GameMode()
-{
-}
-
-void GameMode::renderScene()
-{
-}
-
-void GameMode::mouseEvent(SDL_Event&)
-{
-}
-
-void GameMode::keyPress (char key)
-{
-}
-
+GameMode* g_game;
