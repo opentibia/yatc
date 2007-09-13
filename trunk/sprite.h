@@ -21,31 +21,42 @@
 #ifndef __SPRITE_H
 #define __SPRITE_H
 
+#include <GL/glu.h>
 #include <string>
 #include <SDL/SDL.h>
-#include "debugprint.h"
+
+class SDL_Surface;
+
 class Sprite
 {
 	public:
-		Sprite();
-		Sprite(std::string, int = 0);
-		Sprite(const Sprite&);
 		virtual ~Sprite();
 
-		void Blit(float destx, float desty) {
-			if (!image) throw(std::string("Sprite::Blit(): Invalid image"));
-			Blit(destx,desty,0,0,image->w,image->h);
+		virtual float getWidth() const { return m_image->w; }
+		virtual float getHeight() const { return m_image->h; }
+
+		virtual void loadFromFile(const std::string& filename) = 0;
+
+		void Blit(float destx, float desty){
+			Blit(destx, desty, 0, 0, getWidth(), getHeight());
 		}
 
-		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) {
-			DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Sprite::Blit(float,float): Function not overloaded");
-		}
+		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) = 0;
 
-		void loadSurface();
 	protected:
-		SDL_Surface *image;
-		std::string filename;
-		int index;
+		Sprite(uint32_t index) : m_index(index),m_image(NULL),m_pixelformat(GL_NONE) {}
+		Sprite(const Sprite& original);
+
+		bool loadSurfaceFromFile(const std::string& filename);
+
+		SDL_Surface* getImage() { return m_image; }
+		GLuint getPixelFormat() { return m_pixelformat; }
+
+		uint32_t m_index;
+
+	private:
+		SDL_Surface* m_image;
+		GLuint m_pixelformat;
 };
 
 #endif

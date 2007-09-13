@@ -21,18 +21,58 @@
 /// \file main.cpp
 /// This file contains the main(int,char*) function.
 
-#include <vector> // FIXME (ivucica#5#) aug24/07: for some odd reason, vector has to be #included here, since something in engine.h causes it to be no longer includable after that. someone should inspect that
 
 #include <SDL/SDL.h>
 #include <GLICT/globals.h>
 #include <sstream>
 #include "debugprint.h"
-#include "database.h"
 #include "options.h"
 #include "engine.h"
 #include "objects.h"
 #include "gamemode.h"
 #include "gm_mainmenu.h"
+
+bool running = true;
+uint32_t keymods = 0;
+
+void onKeyDown(const SDL_Event& event)
+{
+	switch(event.key.keysym.sym){
+	case SDLK_ESCAPE:
+		running = false;
+		break;
+	case SDLK_LSHIFT:
+	case SDLK_RSHIFT:
+		keymods = keymods | KMOD_SHIFT;
+		break;
+	// TODO (Khaos#1#) Add pageup, pagedown, home, end below
+	case SDLK_LEFT:
+	case SDLK_RIGHT:
+	case SDLK_UP:
+	case SDLK_DOWN:
+		// TODO (Khaos#1#) Pass special keys to a different function
+		break;
+	default:
+		// glict expects what glut usually serves: completely prepared keys,
+		// with shift already parsed and all that
+		// we'll try to do the parsing here or elsewhere
+		int key = event.key.keysym.sym;
+
+		if(event.key.keysym.mod & KMOD_SHIFT){
+			if(key >= 'a' && key <='z'){
+				key = key - 32;
+			}
+			else if(key >= '0' && key <='9'){
+				key = key - 16;
+			}
+		}
+		// TODO (mips_act#1#) Use SDLK_ constants instead of numeric values
+		if(key < 32 && key != 8 && key != 27 && key != 13 && key != 10) // most keys won't be passed here
+			return;
+
+		g_game->keyPress(key);
+	}
+}
 
 /// \brief Main program function
 ///
@@ -40,14 +80,11 @@
 /// player's console, directs subsystems to initialize themselves and makes
 /// choice of rendering engine. Then it runs the main game loop, processing
 /// events and sending them further into the game.
-
 int main(int argc, char *argv[])
 {
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "YATC -- YET ANOTHER TIBIA CLIENT\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.1\n");
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing database...\n"); // we should consider if each of the function calls during init should print out "[OK]", perhaps even their own "Initializing [thing]" text?
-	DBInit();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading options...\n");
 	options.Load();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file...\n");
@@ -65,110 +102,79 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-
-
-
-
 	try {
 
 		switch(options.engine) {
 			case ENGINE_OPENGL:
-					engine = new EngineGL;
+				g_engine = new EngineGL;
 				break;
+			/*
 			case ENGINE_DIRECTX:
-					engine = new EngineDX;
+				g_engine = new EngineDX;
 				break;
+			*/
 			default:
-					DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Unknown engine was selected. Falling back to SDL.");
-					options.engine = ENGINE_SDL;
+				DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Unknown engine was selected. Falling back to SDL.");
+				options.engine = ENGINE_SDL;
 			case ENGINE_SDL:
-					engine = new EngineSDL;
+				g_engine = new EngineSDL;
 				break;
 		}
 
-		if (!engine->isSupported()) {
+		if(!g_engine->isSupported()){
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "The selected graphics engine is not supported. Falling back to SDL.");
-			delete engine;
+			delete g_engine;
 			options.engine = ENGINE_SDL;
-			engine = new EngineSDL;
+			g_engine = new EngineSDL;
 		}
 
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps these statuses should be moved in a constructor?
-		game = new GM_MainMenu();
+		g_game = new GM_MainMenu();
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
-		SDL_WM_SetCaption ("YATC v0.1", NULL);
+		SDL_WM_SetCaption("YATC v0.1", NULL);
 
-		bool running = true;
-		int keymods=0;
 		SDL_Event event;
-
-
-		glictGlobals.w = 640;
-		glictGlobals.h = 480;
-
 		while(running){
+			SDL_Delay(100); //limit to 10fps
 			while(SDL_PollEvent(&event)){
 				switch (event.type){
 					case SDL_VIDEORESIZE:
-							engine->doResize(event.resize.w, event.resize.h);
+						g_engine->doResize(event.resize.w, event.resize.h);
 						break;
+
 					case SDL_QUIT:
-							running = false;
+						running = false;
 						break;
+
 					case SDL_KEYUP:
-							if (event.key.keysym.sym == SDLK_LSHIFT || event.key.keysym.sym == SDLK_RSHIFT && keymods & KMOD_SHIFT)
-								keymods ^= KMOD_SHIFT;
+						if(event.key.keysym.sym == SDLK_LSHIFT ||
+							event.key.keysym.sym == SDLK_RSHIFT){
+							keymods = keymods & ~(uint32_t)KMOD_SHIFT;
+						}
 						break;
+
 					case SDL_KEYDOWN:
-							if (event.key.keysym.sym == SDLK_ESCAPE) {
-								running = 0;
-							}
-							if (event.key.keysym.sym == SDLK_LSHIFT || event.key.keysym.sym == SDLK_RSHIFT && !(keymods & KMOD_SHIFT))
-								keymods ^= KMOD_SHIFT;
-
-							// TODO (Khaos#1#) Add pageup, pagedown, home, end below
-							if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_DOWN) {
-								// TODO (Khaos#1#) Pass special keys to a different function
-							} else {
-
-								// glict expects what glut usually serves: completely prepared keys, with shift already parsed and all that
-								// we'll try to do the parsing here or elsewhere
-								int key = event.key.keysym.sym;
-
-								if (key==SDLK_LSHIFT || key==SDLK_RSHIFT)
-									break;
-
-								if (event.key.keysym.mod & KMOD_SHIFT) {
-									if (key >= 'a' && key <='z') {
-										key-=32;
-									} else if (key >= '0' && key <='9') {
-										key-=16;
-									}
-								}
-								if (key < 32 && key != 8 && key != 27 && key != 13 && key != 10) // most keys won't be passed here
-									break;
-								game->keyPress (key);
-							}
-
+						onKeyDown(event);
 						break;
+
 					case SDL_MOUSEBUTTONUP:
 					case SDL_MOUSEBUTTONDOWN:
-							game->mouseEvent (event);
+						g_game->mouseEvent(event);
 						break;
-					case SDL_MOUSEMOTION: {
-							ptrx = event.motion.x;
-							ptry = event.motion.y;
-						}
+
+					case SDL_MOUSEMOTION:
+						ptrx = event.motion.x;
+						ptry = event.motion.y;
 						break;
 					default:
 						break;
 				}
 			}
-			game->renderScene();
-			engine->Flip();
+			g_game->renderScene();
+			g_engine->Flip();
 		}
 	} catch (std::string errtext) {
 		printf("ERROR: %s\n", errtext.c_str());
@@ -179,9 +185,6 @@ int main(int argc, char *argv[])
 	Objects::getInstance()->unloadDat();
 	printf("Shutting down SDL...\n");
 	SDL_Quit();
-	printf("Shutting down database...\n");
-	DBDeinit();
-	printf("\n");
 	printf("Thanks for playing!\n");
 	return 0;
 }

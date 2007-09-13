@@ -22,18 +22,19 @@
 #define __SPRITEGL_H
 
 #include <string>
-#include <GL/gl.h>
 #include "sprite.h"
+
 class SpriteGL : public Sprite
 {
 	public:
-		SpriteGL(std::string, int = 0);
-		~SpriteGL();
+		SpriteGL(const std::string& filename, int index = 0);
+		virtual ~SpriteGL();
 
 		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
+		virtual void loadFromFile(const std::string& filename);
 
 	private:
-		GLuint texture;
+		GLuint m_texture;
 };
 
 #endif

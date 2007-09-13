@@ -23,13 +23,16 @@
 
 #include <string>
 #include "sprite.h"
+
 class SpriteSDL : public Sprite
 {
-	public:
-		SpriteSDL(std::string, int = 0);
+public:
+	SpriteSDL(const std::string& filename, uint32_t index = 0);
 
-		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
+	virtual ~SpriteSDL();
+
+	virtual void Blit(float dx, float dy, float sx, float sy, float w, float h);
+	virtual void loadFromFile(const std::string& filename);
 };
 
 #endif
-

@@ -18,39 +18,42 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <GL/gl.h>
 #include "sprite.h"
-
-/// \brief Argumentless constructor, used only when constructing derived
-///        classes
-Sprite::Sprite()
-{
-	throw std::string("Sprite::Sprite(): Incorrect constructor\n");
-}
-
-Sprite::Sprite(std::string filename, int index)
-{
-	this->filename = filename;
-	this->index = index;
-	loadSurface();
-}
-
-Sprite::Sprite(const Sprite& original)
-{
-	// this should be a copy constructor
-}
+#ifdef WIN32
+#include <GL/glext.h>
+#endif
 
 Sprite::~Sprite()
 {
-	SDL_FreeSurface(image);
+	if(m_image){
+		SDL_FreeSurface(m_image);
+	}
 }
 
-void Sprite::loadSurface() {
-	int extbegins = filename.rfind(".")+1;
-	std::string extension = filename.substr(extbegins, filename.length() - extbegins);
-
-	if (extension == "bmp") {
-		image = SDL_LoadBMP(filename.c_str());
-	} else {
-		throw std::string("Sprite::Sprite(string,int): Unknown format\n");
+bool Sprite::loadSurfaceFromFile(const std::string& filename)
+{
+	if(m_image){
+		SDL_FreeSurface(m_image);
+		m_image = NULL;
 	}
+
+	size_t extbegins = filename.rfind(".") + 1;
+	std::string extension;
+	if(extbegins != std::string::npos){
+		extension = filename.substr(extbegins, filename.length() - extbegins);
+	}
+
+	if(extension == "bmp"){
+		m_image = SDL_LoadBMP(filename.c_str());
+		if(!m_image){
+			printf("Error [Sprite::loadSurfaceFromFile] SDL_LoadBMP file: %s\n", filename.c_str());
+			return false;
+		}
+		m_pixelformat = GL_BGR;
+	}
+	else{
+		return false;
+	}
+	return true;
 }

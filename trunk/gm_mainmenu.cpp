@@ -22,6 +22,7 @@
 #include "defines.h"
 #include "engine.h"
 #include "sprite.h"
+
 GM_MainMenu::GM_MainMenu()
 {
 	desktop.AddObject(&winLogin.login);
@@ -33,7 +34,13 @@ GM_MainMenu::GM_MainMenu()
 	desktop.SetWidth(640);
 	desktop.SetHeight(480);
 
-	background = engine->createSprite("yatc.bmp");
+	if(g_engine){
+		printf("Createsprite...\n");
+		background = g_engine->createSprite("yatc.bmp");
+	}
+	else{
+		background = NULL;
+	}
 }
 
 GM_MainMenu::~GM_MainMenu()

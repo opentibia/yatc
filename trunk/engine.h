@@ -26,48 +26,48 @@
 #include "debugprint.h"
 #include "defines.h"
 #include "sprite.h"
-#include "spritesdl.h"
+
+struct glictColor;
+
 class Engine
 {
-public:
-	Engine();
-	virtual ~Engine();
-	virtual bool isSupported() {
-		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::isSupported(): Function not overloaded");
-		return false;
-	}
+	public:
+		virtual ~Engine();
 
+		virtual bool isSupported() = 0;
 
-	virtual void doResize(int w, int h){width = w; height = h;};
-	virtual void drawRectangle(float x, float y, float width, float height, oRGBA color){
-		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::drawRectangle(): Function not overloaded");
-	};
+		virtual void doResize(int w, int h){m_width = w; m_height = h;};
+		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
 
-	int getWindowWidth(){return width;};
-	int getWindowHeight(){return height;};
+		int getWindowWidth() const {return m_width;};
+		int getWindowHeight() const {return m_height;};
 
-	virtual Sprite* createSprite(std::string filename, int index=0) {
-		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_DEBUGGING, "Engine::createSprite(): Function not overloaded");
-		return NULL;
-	}
+		virtual Sprite* createSprite(const std::string& filename, int index = 0) = 0;
 
-	virtual void Flip() {
-		SDL_Flip(screen);
-	}
-protected:
+		virtual void Flip() = 0;
 
-	int videoflags;
-	int width;
-	int height;
-	int video_bpp;
-	SDL_Surface* screen;
-	glictFont* sysfont;
-	friend void SpriteSDL::Blit(float,float,float,float,float,float);
+		SDL_Surface* getScreen() { return m_screen;}
+
+	protected:
+		Engine();
+
+		static void draw_rectangle(float left, float right, float top, float bottom, glictColor &col);
+		static void font_render(const char* txt, const void* font, float x, float y);
+		static void font_drawchar(char t, Sprite* img, int x1, int y1);
+		static float font_size(const char* txt, const void* font);
+
+		int m_width;
+		int m_height;
+		int m_video_bpp;
+
+		glictFont* m_sysfont;
+		SDL_Surface* m_screen;
+		int m_videoflags;
 };
 
 extern int ptrx, ptry;
 #include "enginesdl.h"
 #include "enginegl.h"
-#include "enginedx.h"
-extern Engine* engine;
+extern Engine* g_engine;
+
 #endif
