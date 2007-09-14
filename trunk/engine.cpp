@@ -89,11 +89,9 @@ Engine::Engine()
 	glictGlobals.paintrectCallback = Engine::draw_rectangle;
 	glictGlobals.enableGlTranslate = false;
 
-	m_width = 640;
-	m_height = 480;
+	doResize(640, 480);
+
 	m_video_bpp = 8;
-	glictGlobals.w = 640;
-	glictGlobals.h = 480;
 
 	m_screen = NULL;
 	m_sysfont = glictCreateFont("system");
@@ -107,4 +105,12 @@ Engine::Engine()
 Engine::~Engine()
 {
 	glictDeleteFont("system");
+}
+
+void Engine::doResize(int w, int h)
+{
+	m_width = w;
+	m_height = h;
+	glictGlobals.w = w;
+	glictGlobals.h = h;
 }

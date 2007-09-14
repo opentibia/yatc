@@ -35,7 +35,7 @@ class Sprite
 		virtual float getWidth() const { return m_image->w; }
 		virtual float getHeight() const { return m_image->h; }
 
-		virtual void loadFromFile(const std::string& filename) = 0;
+		virtual void loadFromFile(const std::string& filename, int index) = 0;
 
 		void Blit(float destx, float desty){
 			Blit(destx, desty, 0, 0, getWidth(), getHeight());
@@ -44,15 +44,13 @@ class Sprite
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) = 0;
 
 	protected:
-		Sprite(uint32_t index) : m_index(index),m_image(NULL),m_pixelformat(GL_NONE) {}
+		Sprite() : m_image(NULL),m_pixelformat(GL_NONE) {}
 		Sprite(const Sprite& original);
 
-		bool loadSurfaceFromFile(const std::string& filename);
+		bool loadSurfaceFromFile(const std::string& filename, int index);
 
 		SDL_Surface* getImage() { return m_image; }
 		GLuint getPixelFormat() { return m_pixelformat; }
-
-		uint32_t m_index;
 
 	private:
 		SDL_Surface* m_image;

@@ -26,6 +26,7 @@
 #include "debugprint.h"
 #include "defines.h"
 #include "sprite.h"
+#include "spritesdl.h"
 
 struct glictColor;
 
@@ -36,7 +37,7 @@ class Engine
 
 		virtual bool isSupported() = 0;
 
-		virtual void doResize(int w, int h){m_width = w; m_height = h;};
+		virtual void doResize(int w, int h);
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
 
 		int getWindowWidth() const {return m_width;};
@@ -46,10 +47,10 @@ class Engine
 
 		virtual void Flip() = 0;
 
-		SDL_Surface* getScreen() { return m_screen;}
-
 	protected:
 		Engine();
+
+		friend void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h);
 
 		static void draw_rectangle(float left, float right, float top, float bottom, glictColor &col);
 		static void font_render(const char* txt, const void* font, float x, float y);

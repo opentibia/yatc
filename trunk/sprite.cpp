@@ -31,7 +31,7 @@ Sprite::~Sprite()
 	}
 }
 
-bool Sprite::loadSurfaceFromFile(const std::string& filename)
+bool Sprite::loadSurfaceFromFile(const std::string& filename, int index)
 {
 	if(m_image){
 		SDL_FreeSurface(m_image);
