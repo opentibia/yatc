@@ -36,7 +36,6 @@
 			<Add library="SDL" />
 			<Add library="GL" />
 			<Add library="GLU" />
-			<Add library="sqlite3" />
 			<Add library="GLICT" />
 		</Linker>
 		<Unit filename="README" />
@@ -45,15 +44,11 @@
 		<Unit filename="container.h" />
 		<Unit filename="creature.cpp" />
 		<Unit filename="creature.h" />
-		<Unit filename="database.cpp" />
-		<Unit filename="database.h" />
 		<Unit filename="debugprint.cpp" />
 		<Unit filename="debugprint.h" />
 		<Unit filename="defines.h" />
 		<Unit filename="engine.cpp" />
 		<Unit filename="engine.h" />
-		<Unit filename="enginedx.cpp" />
-		<Unit filename="enginedx.h" />
 		<Unit filename="enginegl.cpp" />
 		<Unit filename="enginegl.h" />
 		<Unit filename="enginesdl.cpp" />
@@ -75,8 +70,6 @@
 		<Unit filename="options.h" />
 		<Unit filename="sprite.cpp" />
 		<Unit filename="sprite.h" />
-		<Unit filename="spritedx.cpp" />
-		<Unit filename="spritedx.h" />
 		<Unit filename="spritegl.cpp" />
 		<Unit filename="spritegl.h" />
 		<Unit filename="spritesdl.cpp" />
