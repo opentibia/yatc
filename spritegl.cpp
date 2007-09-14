@@ -26,10 +26,10 @@
 #include "spritegl.h"
 
 SpriteGL::SpriteGL(const std::string& filename, int index) :
-Sprite(index)
+Sprite()
 {
 	m_texture = GL_INVALID_VALUE;
-	SpriteGL::loadFromFile(filename);
+	SpriteGL::loadFromFile(filename, index);
 }
 
 SpriteGL::~SpriteGL()
@@ -39,13 +39,13 @@ SpriteGL::~SpriteGL()
 	}
 }
 
-void SpriteGL::loadFromFile(const std::string& filename)
+void SpriteGL::loadFromFile(const std::string& filename, int index)
 {
 	if(m_texture != GL_INVALID_VALUE){
 		glDeleteTextures(1, &m_texture);
 	}
 
-	if(!loadSurfaceFromFile(filename)){
+	if(!loadSurfaceFromFile(filename, index)){
 		return;
 	}
 

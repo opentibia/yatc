@@ -65,8 +65,7 @@ void EngineGL::initEngine()
 
 void EngineGL::doResize(int w, int h)
 {
-	m_width = w;
-	m_height = h;
+	Engine::doResize(w, h);
 
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);

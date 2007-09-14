@@ -27,12 +27,12 @@
 class SpriteSDL : public Sprite
 {
 public:
-	SpriteSDL(const std::string& filename, uint32_t index = 0);
+	SpriteSDL(const std::string& filename, int index = 0);
 
 	virtual ~SpriteSDL();
 
 	virtual void Blit(float dx, float dy, float sx, float sy, float w, float h);
-	virtual void loadFromFile(const std::string& filename);
+	virtual void loadFromFile(const std::string& filename, int index);
 };
 
 #endif

@@ -21,10 +21,10 @@
 #include "enginesdl.h"
 #include "spritesdl.h"
 
-SpriteSDL::SpriteSDL(const std::string& filename, uint32_t index) :
-Sprite(index)
+SpriteSDL::SpriteSDL(const std::string& filename, int index) :
+Sprite()
 {
-	SpriteSDL::loadFromFile(filename);
+	SpriteSDL::loadFromFile(filename, index);
 }
 
 SpriteSDL::~SpriteSDL()
@@ -32,9 +32,9 @@ SpriteSDL::~SpriteSDL()
 	//
 }
 
-void SpriteSDL::loadFromFile(const std::string& filename)
+void SpriteSDL::loadFromFile(const std::string& filename, int index)
 {
-	loadSurfaceFromFile(filename);
+	loadSurfaceFromFile(filename, index);
 }
 
 void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
@@ -42,7 +42,7 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
 	// code is like this because of dx5.0 ... see docs/html/sdlrect.html in SDL documentation for more info
 	SDL_Rect src = {(int)sx,(int)sy,(int)(w),(int)(h)};
 	SDL_Rect dst = {(int)dx,(int)dy,(int)(w),(int)(h)};
-	while(SDL_BlitSurface(getImage(), &src, g_engine->getScreen(), &dst) == -2){
+	while(SDL_BlitSurface(getImage(), &src, g_engine->m_screen, &dst) == -2){
 		while(SDL_LockSurface(getImage()) < 0 ){
 				SDL_Delay(10);
 		}
