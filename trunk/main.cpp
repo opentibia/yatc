@@ -31,7 +31,7 @@
 #include "objects.h"
 #include "gamemode.h"
 #include "gm_mainmenu.h"
-
+#include "gm_debug.h"
 bool running = true;
 uint32_t keymods = 0;
 
@@ -130,7 +130,10 @@ int main(int argc, char *argv[])
 
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps these statuses should be moved in a constructor?
-		g_game = new GM_MainMenu();
+
+
+//		g_game = new GM_MainMenu();
+		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
