@@ -55,6 +55,12 @@
 		<Unit filename="enginesdl.h" />
 		<Unit filename="gamemode.cpp" />
 		<Unit filename="gamemode.h" />
+		<Unit filename="gm_debug.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="gm_debug.h">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="gm_mainmenu.cpp" />
 		<Unit filename="gm_mainmenu.h" />
 		<Unit filename="inventory.cpp" />
