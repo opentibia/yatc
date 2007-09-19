@@ -34,16 +34,21 @@ public:
 	GM_Debug();
 	~GM_Debug();
 
+
 	void renderScene();
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
+
 private:
+
+	static void ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void ExitOnClick(glictPos* relmousepos, glictContainer* callerclass);
+
 	glictContainer desktop;
 	glictButton btnButton;
 	glictButton btnExit;
 
 	Sprite* background;
 };
-
 
 #endif

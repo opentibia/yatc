@@ -23,13 +23,24 @@
 #include "engine.h"
 #include "sprite.h"
 
-static void ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass) {
-	printf("Hello!\n");
-}
-static void ExitOnClick(glictPos* relmousepos, glictContainer* callerclass) {
-	exit(0); // this should be done a bit smarter like terminating loop in "main"...
+#include "net/connection.h"
+#include "net/protocollogin.h"
+#include "net/protocolgame80.h"
+
+extern Connection* g_connection;
+
+void GM_Debug::ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	EncXTEA* crypto = new EncXTEA;
+	//Protocol* protocol = new ProtocolLogin(1000, "test");
+	Protocol* protocol = new ProtocolGame80(1000, "test", "Player", 0);
+	g_connection = new Connection("localhost", 7171, crypto, protocol);
 }
 
+void GM_Debug::ExitOnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	exit(0); // this should be done a bit smarter like terminating loop in "main"...
+}
 
 GM_Debug::GM_Debug()
 {
@@ -44,15 +55,15 @@ GM_Debug::GM_Debug()
 	btnButton.SetHeight(16);
 	btnButton.SetCaption("Button");
 	btnButton.SetBGColor(.75,.75,.75,1);
-	btnButton.SetOnClick(ButtonOnClick);
+	btnButton.SetOnClick(GM_Debug::ButtonOnClick);
+
 	desktop.AddObject(&btnExit);
 	btnExit.SetPos(100,116);
 	btnExit.SetWidth(128);
 	btnExit.SetHeight(16);
 	btnExit.SetCaption("Exit");
 	btnExit.SetBGColor(1,0,0,1);
-	btnExit.SetOnClick(ExitOnClick);
-
+	btnExit.SetOnClick(GM_Debug::ExitOnClick);
 
 	if(g_engine){
 		background = g_engine->createSprite("yatc.bmp");
@@ -69,7 +80,7 @@ GM_Debug::~GM_Debug()
 
 void GM_Debug::renderScene()
 {
-	if (background)
+	if(background)
 		background->Blit(0,0);
 
 	desktop.Paint();
@@ -93,5 +104,3 @@ void GM_Debug::keyPress (char key)
 {
 	desktop.CastEvent(GLICT_KEYPRESS, 0, key);
 }
-
-

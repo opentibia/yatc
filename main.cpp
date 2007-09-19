@@ -21,7 +21,6 @@
 /// \file main.cpp
 /// This file contains the main(int,char*) function.
 
-
 #include <SDL/SDL.h>
 #include <GLICT/globals.h>
 #include <sstream>
@@ -32,8 +31,20 @@
 #include "gamemode.h"
 #include "gm_mainmenu.h"
 #include "gm_debug.h"
+
+#include "net/rsa.h"
+#include "net/connection.h"
+#include "net/protocollogin.h"
+#include "net/protocolgame.h"
+
+const char RSAKey_otserv[] = "109120132967399429278860960508995541528237502902798129123468757937266291492576446330739696001110603907230888610072655818825358503429057592827629436413108566029093628212635953836686562675849720620786279431090218017681061521755056710823876476444260558147179707119674283982419152118103759076030616683978566631413";
+const char RSAKey_cip[]    = "124710459426827943004376449897985582167801707960697037164044904862948569380850421396904597686953877022394604239428185498284169068581802277612081027966724336319448537811441719076484340922854929273517308661370727105382899118999403808045846444647284499123164879035103627004668521005328367415259939915284902061793";
+
 bool running = true;
 uint32_t keymods = 0;
+
+Connection* g_connection = NULL;
+
 
 void onKeyDown(const SDL_Event& event)
 {
@@ -82,6 +93,23 @@ void onKeyDown(const SDL_Event& event)
 /// events and sending them further into the game.
 int main(int argc, char *argv[])
 {
+#ifdef WIN32
+	WORD wVersionRequested;
+	WSADATA wsaData;
+	wVersionRequested = MAKEWORD( 2, 2 );
+
+	if(WSAStartup(wVersionRequested, &wsaData) != 0){
+		printf("Winsock startup failed!!");
+		return -1;
+	}
+
+	if((LOBYTE(wsaData.wVersion) != 2) || (HIBYTE(wsaData.wVersion) != 2)){
+		WSACleanup( );
+		printf("No Winsock 2.2 found!");
+		return -1;
+	}
+#endif
+
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "YATC -- YET ANOTHER TIBIA CLIENT\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.1\n");
@@ -132,6 +160,7 @@ int main(int argc, char *argv[])
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps these statuses should be moved in a constructor?
 
 
+		RSA::getInstance()->setPublicKey(RSAKey_otserv, "65537");
 //		g_game = new GM_MainMenu();
 		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
@@ -176,6 +205,9 @@ int main(int argc, char *argv[])
 						break;
 				}
 			}
+			if(g_connection){
+				g_connection->executeNetwork();
+			}
 			g_game->renderScene();
 			g_engine->Flip();
 		}
@@ -188,6 +220,12 @@ int main(int argc, char *argv[])
 	Objects::getInstance()->unloadDat();
 	printf("Shutting down SDL...\n");
 	SDL_Quit();
+	
+#ifdef WIN32
+	WSACleanup();
+#endif
+
 	printf("Thanks for playing!\n");
+
 	return 0;
 }
