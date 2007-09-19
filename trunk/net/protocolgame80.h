@@ -18,5 +18,26 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "gamemode.h"
-GameMode* g_game = NULL;
+
+#ifndef __PROTOCOLGAME80_H
+#define __PROTOCOLGAME80_H
+
+#include "protocolgame.h"
+
+class ProtocolGame80 : public ProtocolGame
+{
+	public:
+		ProtocolGame80(int account, const std::string& password, const std::string& name, bool isGM);
+		virtual ~ProtocolGame80() {};
+
+		virtual bool onRecv(NetworkMessage& msg);
+
+		//send functions impl
+
+	protected:
+
+};
+
+#endif
+
+

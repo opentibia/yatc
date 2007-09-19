@@ -18,5 +18,26 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "gamemode.h"
-GameMode* g_game = NULL;
+#ifndef __PROTOCOLLOGIN_H
+#define __PROTOCOLLOGIN_H
+
+#include <string>
+#include "connection.h"
+
+class ProtocolLogin : public Protocol
+{
+	public:
+		ProtocolLogin(int account, const std::string& password);
+		virtual ~ProtocolLogin() {};
+
+		void setCallback(void*);
+
+		virtual void onConnect();
+		virtual bool onRecv(NetworkMessage& msg);
+
+	protected:
+		std::string m_password;
+		int m_account;
+};
+
+#endif

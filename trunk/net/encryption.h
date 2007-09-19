@@ -18,5 +18,47 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "gamemode.h"
-GameMode* g_game = NULL;
+#ifndef __ENCRYPTION_H
+#define __ENCRYPTION_H
+
+#include "stdint.h"
+#include "memory.h"
+
+class NetworkMessage;
+
+class Encryption
+{
+	public:
+		Encryption(){}
+		virtual ~Encryption(){}
+
+		virtual bool encrypt(NetworkMessage& msg) = 0;
+		virtual bool decrypt(NetworkMessage& msg) = 0;
+		virtual bool setKey(char* key, int size) = 0;
+};
+
+
+class EncXTEA : public Encryption
+{
+	public:
+		EncXTEA();
+		virtual ~EncXTEA(){}
+
+		virtual bool encrypt(NetworkMessage& msg);
+		virtual bool decrypt(NetworkMessage& msg);
+
+		virtual bool setKey(char* key, int size)
+		{
+			if(size != sizeof(uint32_t)*4){
+				return false;
+			}
+
+			memcpy(m_key, key, sizeof(uint32_t)*4);
+			return true;
+		}
+
+	private:
+		uint32_t m_key[4];
+};
+
+#endif

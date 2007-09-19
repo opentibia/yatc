@@ -18,5 +18,18 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "gamemode.h"
-GameMode* g_game = NULL;
+#include "../fassert.h"
+#include "protocolgame80.h"
+
+ProtocolGame80::ProtocolGame80(int account, const std::string& password, const std::string& name, bool isGM) :
+ProtocolGame(account, password, name, isGM)
+{
+	ASSERT(ProtocolConfig::getInstance()->clientVersion == 800);
+}
+
+
+bool ProtocolGame80::onRecv(NetworkMessage& msg)
+{
+	printf("P80 recv %02X\n", msg.getU8());
+	return true;
+}
