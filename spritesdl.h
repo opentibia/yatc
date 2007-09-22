@@ -32,7 +32,6 @@ public:
 	virtual ~SpriteSDL();
 
 	virtual void Blit(float dx, float dy, float sx, float sy, float w, float h);
-	virtual void loadFromFile(const std::string& filename, int index);
 };
 
 #endif

@@ -31,7 +31,6 @@ class SpriteGL : public Sprite
 		virtual ~SpriteGL();
 
 		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
-		virtual void loadFromFile(const std::string& filename, int index);
 
 	private:
 		GLuint m_texture;
