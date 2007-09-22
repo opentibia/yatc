@@ -23,6 +23,7 @@
 
 #include <GLICT/container.h>
 #include <GLICT/button.h>
+#include <GLICT/panel.h>
 #include <GLICT/window.h>
 #include "gamemode.h"
 #include "sprite.h"
@@ -38,10 +39,10 @@ public:
 	void keyPress (char key);
 private:
 	glictContainer desktop;
-	glictButton btnExit;
 	struct {
-		glictWindow login;
-	} winLogin;
+		glictPanel mainmenu;
+		glictButton btnLogIn, btnOptions, btnAbout, btnExit;
+	} pnlMainMenu;
 
 	Sprite* background;
 };

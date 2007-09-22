@@ -157,10 +157,12 @@ int main(int argc, char *argv[])
 		}
 
 
+
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Setting up RSA key...\n");
+		RSA::getInstance()->setPublicKey(RSAKey_otserv, "65537");
+
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps these statuses should be moved in a constructor?
 
-
-		RSA::getInstance()->setPublicKey(RSAKey_otserv, "65537");
 //		g_game = new GM_MainMenu();
 		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
@@ -220,7 +222,7 @@ int main(int argc, char *argv[])
 	Objects::getInstance()->unloadDat();
 	printf("Shutting down SDL...\n");
 	SDL_Quit();
-	
+
 #ifdef WIN32
 	WSACleanup();
 #endif
