@@ -21,10 +21,9 @@
 #include "enginesdl.h"
 #include "spritesdl.h"
 
-SpriteSDL::SpriteSDL(const std::string& filename, int index) :
-Sprite()
+SpriteSDL::SpriteSDL(const std::string& filename, int index) : Sprite(filename, index)
 {
-	SpriteSDL::loadFromFile(filename, index);
+
 }
 
 SpriteSDL::~SpriteSDL()
@@ -32,10 +31,6 @@ SpriteSDL::~SpriteSDL()
 	//
 }
 
-void SpriteSDL::loadFromFile(const std::string& filename, int index)
-{
-	loadSurfaceFromFile(filename, index);
-}
 
 void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
 {

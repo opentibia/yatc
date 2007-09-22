@@ -24,19 +24,13 @@
 #include <GL/glext.h>
 #endif
 
-Sprite::~Sprite()
-{
-	if(m_image){
-		SDL_FreeSurface(m_image);
-	}
-}
+Sprite::Sprite(const std::string& filename, int index) {
+	m_pixelformat = GL_NONE;
 
-bool Sprite::loadSurfaceFromFile(const std::string& filename, int index)
-{
-	if(m_image){
-		SDL_FreeSurface(m_image);
 		m_image = NULL;
-	}
+
+
+
 
 	size_t extbegins = filename.rfind(".") + 1;
 	std::string extension;
@@ -48,12 +42,18 @@ bool Sprite::loadSurfaceFromFile(const std::string& filename, int index)
 		m_image = SDL_LoadBMP(filename.c_str());
 		if(!m_image){
 			printf("Error [Sprite::loadSurfaceFromFile] SDL_LoadBMP file: %s\n", filename.c_str());
-			return false;
+			return;
 		}
 		m_pixelformat = GL_BGR;
 	}
 	else{
-		return false;
+		// m_image is already marked as NULL, so we're over
 	}
-	return true;
+}
+
+Sprite::~Sprite()
+{
+	if(m_image){
+		SDL_FreeSurface(m_image);
+	}
 }

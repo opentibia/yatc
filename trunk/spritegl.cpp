@@ -25,33 +25,15 @@
 #endif
 #include "spritegl.h"
 
-SpriteGL::SpriteGL(const std::string& filename, int index) :
-Sprite()
+SpriteGL::SpriteGL(const std::string& filename, int index) : Sprite(filename, index)
 {
-	m_texture = GL_INVALID_VALUE;
-	SpriteGL::loadFromFile(filename, index);
-}
 
-SpriteGL::~SpriteGL()
-{
 	if(m_texture != GL_INVALID_VALUE){
 		glDeleteTextures(1, &m_texture);
-	}
-}
-
-void SpriteGL::loadFromFile(const std::string& filename, int index)
-{
-	if(m_texture != GL_INVALID_VALUE){
-		glDeleteTextures(1, &m_texture);
-	}
-
-	if(!loadSurfaceFromFile(filename, index)){
-		return;
 	}
 
 	SDL_LockSurface(getImage());
 
-	//TODO : Do not create an openGL texture for every sprite!!
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -64,6 +46,14 @@ void SpriteGL::loadFromFile(const std::string& filename, int index)
 			 getImage()->pixels);
 
 	SDL_UnlockSurface(getImage());
+
+}
+
+SpriteGL::~SpriteGL()
+{
+	if(m_texture != GL_INVALID_VALUE){
+		glDeleteTextures(1, &m_texture);
+	}
 }
 
 void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float width, float height)
