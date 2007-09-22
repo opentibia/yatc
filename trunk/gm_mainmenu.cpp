@@ -18,6 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <GLICT/globals.h>
 #include "gm_mainmenu.h"
 #include "defines.h"
 #include "engine.h"
@@ -25,18 +26,54 @@
 
 GM_MainMenu::GM_MainMenu()
 {
-	desktop.AddObject(&winLogin.login);
-	winLogin.login.SetPos(50,50);
-	winLogin.login.SetHeight(100);
-	winLogin.login.SetWidth(100);
-	desktop.AddObject(&btnExit);
-	btnExit.SetBGColor(1,0,0,1);
-	desktop.SetWidth(640);
-	desktop.SetHeight(480);
+	desktop.AddObject(&pnlMainMenu.mainmenu);
+
+	pnlMainMenu.mainmenu.SetWidth(118);
+	pnlMainMenu.mainmenu.SetHeight(170);
+	pnlMainMenu.mainmenu.SetBGColor(.4,.4,.4,1.);
+
+
+	pnlMainMenu.mainmenu.AddObject(&pnlMainMenu.btnLogIn);
+	pnlMainMenu.mainmenu.AddObject(&pnlMainMenu.btnOptions);
+	pnlMainMenu.mainmenu.AddObject(&pnlMainMenu.btnAbout);
+	pnlMainMenu.mainmenu.AddObject(&pnlMainMenu.btnExit);
+
+	pnlMainMenu.btnLogIn.SetWidth(84);
+	pnlMainMenu.btnLogIn.SetHeight(20);
+	pnlMainMenu.btnLogIn.SetCaption("Enter Game");
+	//pnlMainMenu.btnLogIn.SetOnClick(GM_MainMenu_LogIn);
+	pnlMainMenu.btnLogIn.SetPos(16,16);
+
+	pnlMainMenu.btnOptions.SetWidth(84);
+	pnlMainMenu.btnOptions.SetHeight(20);
+	pnlMainMenu.btnOptions.SetCaption("Options");
+	//pnlMainMenu.btnOptions.SetOnClick(GM_MainMenu_Options);
+	pnlMainMenu.btnOptions.SetPos(16,76);
+
+	pnlMainMenu.btnAbout.SetWidth(84);
+	pnlMainMenu.btnAbout.SetHeight(20);
+	pnlMainMenu.btnAbout.SetCaption("Info");
+	//pnlMainMenu.btnAbout.SetOnClick(GM_MainMenu_About);
+	pnlMainMenu.btnAbout.SetPos(16,106);
+
+	pnlMainMenu.btnExit.SetWidth(84);
+	pnlMainMenu.btnExit.SetHeight(20);
+	pnlMainMenu.btnExit.SetCaption("Exit Game");
+	//pnlMainMenu.btnExit.SetOnClick(GM_MainMenu_Exit);
+	pnlMainMenu.btnExit.SetPos(16,136);
+
+
+
+
+	// TODO (Khaos#1#) These should be moved to an "onresize" function which should be called here, but we don't catch a window resize event yet...
+	pnlMainMenu.mainmenu.SetPos(60, glictGlobals.h - 240);
+	desktop.SetWidth(glictGlobals.w);
+	desktop.SetHeight(glictGlobals.h);
 	desktop.ResetTransformations();
 
+
+
 	if(g_engine){
-		printf("Createsprite...\n");
 		background = g_engine->createSprite("yatc.bmp");
 	}
 	else{
@@ -64,8 +101,6 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 	pos.y = ptry;
 
 	desktop.TransformScreenCoords(&pos);
-
-	printf("Casting click on %g %g (%d %d)\n", pos.x, pos.y, ptrx, ptry);
 
 	if (event.button.state == SDL_PRESSED)
 		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
