@@ -47,7 +47,7 @@ GM_Debug::GM_Debug()
 
 	desktop.SetWidth(640);
 	desktop.SetHeight(480);
-
+	desktop.ResetTransformations();
 
 	desktop.AddObject(&btnButton);
 	btnButton.SetPos(100,100);
@@ -83,7 +83,9 @@ void GM_Debug::renderScene()
 	if(background)
 		background->Blit(0,0);
 
+	desktop.RememberTransformations();
 	desktop.Paint();
+
 }
 
 void GM_Debug::mouseEvent(SDL_Event& event)
@@ -91,13 +93,17 @@ void GM_Debug::mouseEvent(SDL_Event& event)
 	glictPos pos;
 	pos.x = ptrx;
 	pos.y = ptry;
+
 	desktop.TransformScreenCoords(&pos);
+
+	printf("Casting click on %g %g (%d %d)\n", pos.x, pos.y, ptrx, ptry);
+
 	if (event.button.state == SDL_PRESSED)
 		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
 	if (event.button.state != SDL_PRESSED)
 		desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
 
-	printf("Casting click on %g %g\n", pos.x, pos.y);
+
 }
 
 void GM_Debug::keyPress (char key)
