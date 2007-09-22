@@ -33,6 +33,7 @@ GM_MainMenu::GM_MainMenu()
 	btnExit.SetBGColor(1,0,0,1);
 	desktop.SetWidth(640);
 	desktop.SetHeight(480);
+	desktop.ResetTransformations();
 
 	if(g_engine){
 		printf("Createsprite...\n");
@@ -61,13 +62,17 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 	glictPos pos;
 	pos.x = ptrx;
 	pos.y = ptry;
+
 	desktop.TransformScreenCoords(&pos);
+
+	printf("Casting click on %g %g (%d %d)\n", pos.x, pos.y, ptrx, ptry);
+
 	if (event.button.state == SDL_PRESSED)
 		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
 	if (event.button.state != SDL_PRESSED)
 		desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
 
-	printf("Casting click on %g %g\n", pos.x, pos.y);
+
 }
 
 void GM_MainMenu::keyPress (char key)
