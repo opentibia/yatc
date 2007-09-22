@@ -37,6 +37,7 @@
 			<Add library="GL" />
 			<Add library="GLU" />
 			<Add library="GLICT" />
+			<Add library="gmp" />
 		</Linker>
 		<Unit filename="README" />
 		<Unit filename="assert.h" />
@@ -70,6 +71,20 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="map.cpp" />
 		<Unit filename="map.h" />
+		<Unit filename="net/connection.cpp" />
+		<Unit filename="net/connection.h" />
+		<Unit filename="net/encryption.cpp" />
+		<Unit filename="net/encryption.h" />
+		<Unit filename="net/networkmessage.cpp" />
+		<Unit filename="net/networkmessage.h" />
+		<Unit filename="net/protocolgame.cpp" />
+		<Unit filename="net/protocolgame.h" />
+		<Unit filename="net/protocolgame80.cpp" />
+		<Unit filename="net/protocolgame80.h" />
+		<Unit filename="net/protocollogin.cpp" />
+		<Unit filename="net/protocollogin.h" />
+		<Unit filename="net/rsa.cpp" />
+		<Unit filename="net/rsa.h" />
 		<Unit filename="objects.cpp" />
 		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
