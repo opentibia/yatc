@@ -26,11 +26,7 @@
 
 Sprite::Sprite(const std::string& filename, int index) {
 	m_pixelformat = GL_NONE;
-
-		m_image = NULL;
-
-
-
+	m_image = NULL;
 
 	size_t extbegins = filename.rfind(".") + 1;
 	std::string extension;
@@ -46,9 +42,12 @@ Sprite::Sprite(const std::string& filename, int index) {
 		}
 		m_pixelformat = GL_BGR;
 	}
-	else{
+	else {
 		// m_image is already marked as NULL, so we're over
+		return;
 	}
+
+	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magneta is transparent
 }
 
 Sprite::~Sprite()

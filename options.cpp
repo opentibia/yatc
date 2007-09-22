@@ -28,8 +28,8 @@ Options::Options()
 {
 	maptrack = 0;
 	fullscreen = 0;
-	engine = ENGINE_OPENGL;
-	//engine = ENGINE_SDL;
+	//engine = ENGINE_OPENGL;
+	engine = ENGINE_SDL;
 	os_cursor = 0;
 	skin = "default";
 }
