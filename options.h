@@ -38,7 +38,6 @@ public:
 	void Save();
 	void Load();
 
-	bool maptrack;
 	bool fullscreen;
 	bool os_cursor;
 	std::string skin;

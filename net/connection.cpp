@@ -18,9 +18,11 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <SDL/SDL.h>
+
 #include "connection.h"
 #include "encryption.h"
-
+#include "notifications.h"
 
 ProtocolConfig::ProtocolConfig()
 {
@@ -31,7 +33,65 @@ ProtocolConfig::ProtocolConfig()
 	picSignature = 0;
 }
 
+//****************************************************
+
+void Protocol::addServerCmd(uint8_t type)
+{
+	if(m_lastServerCmd.size() >= 10){
+		m_lastServerCmd.pop_back();
+	}
+	m_lastServerCmd.push_front(type);
+}
+
 //*****************************************************
+
+const char* Connection::getErrorDesc(int message)
+{
+	switch(message){
+	case ERROR_CANNOT_RESOLVE_HOST:
+		return "ERROR_CANNOT_RESOLVE_HOST";
+	case ERROR_WRONG_HOST_ADDR_TYPE:
+		return "ERROR_WRONG_HOST_ADDR_TYPE";
+	case ERROR_CANNOT_CREATE_SOCKET:
+		return "ERROR_CANNOT_CREATE_SOCKET";
+	case ERROR_CANNOT_SET_NOBLOCKING_SOCKET:
+		return "ERROR_CANNOT_SET_NOBLOCKING_SOCKET";
+	case ERROR_CANNOT_CONNECT:
+		return "ERROR_CANNOT_CONNECT";
+	case ERROR_CONNECT_TIMEOUT:
+		return "ERROR_CONNECT_TIMEOUT";
+	case ERROR_SELECT_FAIL_CONNECTED:
+		return "ERROR_SELECT_FAIL_CONNECTED";
+	case ERROR_SELECT_FAIL_CONNECTING:
+		return "ERROR_SELECT_FAIL_CONNECTING";
+	case ERROR_UNSUCCESSFULL_CONNECTION:
+		return "ERROR_UNSUCCESSFULL_CONNECTION";
+	case ERROR_GETSOCKTOPT_FAIL:
+		return "ERROR_GETSOCKTOPT_FAIL";
+	case ERROR_UNEXPECTED_SELECT_RETURN_VALUE:
+		return "ERROR_UNEXPECTED_SELECT_RETURN_VALUE";
+	case ERROR_CANNOT_GET_PENDING_SIZE:
+		return "ERROR_CANNOT_GET_PENDING_SIZE";
+	case ERROR_RECV_FAIL:
+		return "ERROR_RECV_FAIL";
+	case ERROR_UNEXPECTED_RECV_ERROR:
+		return "ERROR_UNEXPECTED_RECV_ERROR";
+	case ERROR_DECRYPT_FAIL:
+		return "ERROR_DECRYPT_FAIL";
+	case ERROR_WRONG_MSG_SIZE:
+		return "ERROR_WRONG_MSG_SIZE";
+	case ERROR_SEND_FAIL:
+		return "ERROR_SEND_FAIL";
+	case ERROR_PROTOCOL_ONRECV:
+		return "ERROR_PROTOCOL_ONRECV";
+	case ERROR_CONNECTED_SOCKET_ERROR:
+		return "ERROR_CONNECTED_SOCKET_ERROR";
+	case ERROR_TOO_BIG_MESSAGE:
+		return "ERROR_TOO_BIG_MESSAGE";
+	default:
+		return "Error without description.";
+	}
+}
 
 Connection::Connection(const std::string& host, uint16_t port, Encryption* crypto, Protocol* protocol) :
 m_inputMessage(NetworkMessage::CAN_READ)
@@ -50,7 +110,7 @@ m_inputMessage(NetworkMessage::CAN_READ)
 	m_cryptoEnable = false;
 
 	m_socket = INVALID_SOCKET;
-	m_callback = NULL;
+	m_ticks = 0;
 }
 
 Connection::~Connection()
@@ -60,16 +120,9 @@ Connection::~Connection()
 	delete m_crypto;
 }
 
-void Connection::setCallback(ConnectionCallback* callback)
-{
-	m_callback = callback;
-}
-
 void Connection::callCallback(int message)
 {
-	if(m_callback){
-		m_callback(message);
-	}
+	Notifications::onConnectionError(message);
 }
 
 int Connection::getSocketError()
@@ -159,6 +212,7 @@ void Connection::executeNetwork()
 		else{
 			//waiting non blocking connect
 			m_state = STATE_CONNECTING;
+			m_ticks = SDL_GetTicks();
 		}
 
 		break;
@@ -174,6 +228,10 @@ void Connection::executeNetwork()
 		int ret = select(m_socket + 1, NULL, &write_set, NULL, &tv);
 		if(ret == 0){
 			//time expired, socket not connected yet
+			if(SDL_GetTicks() - m_ticks > 20*1000){
+				//waitnig 20 seconds? -> timeout
+				closeConnectionError(ERROR_CONNECT_TIMEOUT);
+			}
 		}
 		else if(ret == 1 && FD_ISSET(m_socket, &write_set)){
 			//Check if it was a successful connection
@@ -210,44 +268,57 @@ void Connection::executeNetwork()
 	case STATE_CONNECTED:
 	{
 		//Try to read messages
-		while(getPendingInput() > 0){
+		while(m_state == STATE_CONNECTED && getPendingInput() > 0){
 			switch(m_readState){
 				case READING_SIZE:
 				{
-					int ret = internalRead(2);
+					int ret = internalRead(2, true);
 					if(ret != 2){
-						break;
+						checkSocketReadState();
+						return;
 					}
-					m_msgSize = m_inputMessage.getU16();
-
+					if(!m_inputMessage.getU16(m_msgSize)){
+						closeConnectionError(ERROR_UNEXPECTED_RECV_ERROR);
+						return;
+					}
+					if(m_msgSize > NETWORK_MESSAGE_SIZE){
+						closeConnectionError(ERROR_TOO_BIG_MESSAGE);
+						return;
+					}
 					m_readState = READING_MESSAGE;
 				}
 				case READING_MESSAGE:
 				{
-					int ret = internalRead(m_msgSize);
-					if(ret != m_msgSize){
-						break;
+					int ret = internalRead(m_msgSize, false);
+					if(ret <= 0){
+						checkSocketReadState();
+						return;
 					}
+					else if(ret != m_msgSize){
+						m_msgSize -= ret;
+						checkSocketReadState();
+						return;
+					}
+
 					//decrypt incoming message if needed
 					if(m_cryptoEnable && m_crypto){
 						if(!m_crypto->decrypt(m_inputMessage)){
 							closeConnectionError(ERROR_DECRYPT_FAIL);
-							break;
+							return;
 						}
 					}
 					//raise onRecv event
 					if(!m_protocol->onRecv(m_inputMessage)){
 						closeConnectionError(ERROR_PROTOCOL_ONRECV);
-						break;
+						return;
 					}
 					//resets input message state
 					m_readState = READING_SIZE;
-					m_inputMessage.Reset();
+					m_inputMessage.reset();
 					break;
 				}
 			}
 		}
-		//Check socket state
 		checkSocketReadState();
 		break;
 	}
@@ -261,8 +332,8 @@ void Connection::executeNetwork()
 void Connection::closeConnectionError(int error)
 {
 	closeConnection();
-	callCallback(error);
 	m_state = STATE_ERROR;
+	callCallback(error);
 }
 
 unsigned long Connection::getPendingInput()
@@ -285,7 +356,7 @@ unsigned long Connection::getPendingInput()
 
 void Connection::checkSocketReadState()
 {
-	if(getPendingInput() != 0)
+	if(m_state != STATE_CONNECTED)
 		return;
 
 	timeval tv =  {0, 0}; //non-blocking select
@@ -293,36 +364,49 @@ void Connection::checkSocketReadState()
 	FD_ZERO(&read_set);
 	FD_SET(m_socket, &read_set);
 
+	//TODO. Change this code
 	int ret = select(m_socket + 1, &read_set, NULL, NULL, &tv);
 	if(ret == 1){
-		//Connection closed or error?
-		closeConnectionError(ERROR_CONNECTED_SOCKET_ERROR);
+		//TODO. Connection closed or error?
+		if(getPendingInput() == 0){
+			closeConnectionError(ERROR_CONNECTED_SOCKET_ERROR);
+		}
 	}
 	else if(ret == SOCKET_ERROR){
 		closeConnectionError(ERROR_SELECT_FAIL_CONNECTED);
 	}
 }
 
-int Connection::internalRead(unsigned int n)
+int Connection::internalRead(unsigned int n, bool all)
 {
-	//Check that we can read n bytes
-	if(getPendingInput() < n){
+	unsigned long bytesToRead = getPendingInput();
+	//If all is set check that we can read n bytes
+	if(all && bytesToRead < n){
 		return 0;
+	}
+	//we will read a max of n bytes
+	if(bytesToRead > n){
+		bytesToRead = n;
 	}
 
 	//read them
-	socketret_t ret = recv(m_socket, m_inputMessage.getReadBuffer(), n, 0);
+	socketret_t ret = recv(m_socket,
+		m_inputMessage.getReadBuffer() + m_inputMessage.getReadSize(),
+		bytesToRead, 0);
 
-	if(ret != SOCKET_ERROR && ret == (int)n){
+	if(ret != SOCKET_ERROR && ret == (int)bytesToRead){
 		//we have read n bytes, so we resize inputMessage
-		m_inputMessage.setReadSize(n);
-		return n;
+		m_inputMessage.setReadSize(m_inputMessage.getReadSize() + bytesToRead);
+		return bytesToRead;
 	}
 	else if(ret == 0){
 		//peer has performed an orderly shutdown
 		return 0;
 	}
 	else{
+		if(getSocketError() == EWOULDBLOCK){
+			return 0;
+		}
 		closeConnectionError(ERROR_RECV_FAIL);
 		return -1;
 	}

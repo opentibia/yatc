@@ -165,6 +165,7 @@ bool Objects::loadDat(const char* filename)
 	fread(&read_short, 2, 1, fp);
 	ObjectType::minItemId = 100;
 	ObjectType::maxItemId = read_short;
+	maxObjects += ObjectType::maxItemId;
 	//Outfits
 	fread(&read_short, 2, 1, fp);
 	ObjectType::minOutfitId = 0;

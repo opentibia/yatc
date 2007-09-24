@@ -22,7 +22,9 @@
 #define __NETMESSAGE_H
 #include <string>
 
-#define NETWORK_MESSAGE_SIZE 8192
+#define NETWORK_MESSAGE_SIZE 16384
+
+class Position;
 
 class NetworkMessage
 {
@@ -30,12 +32,21 @@ class NetworkMessage
 		NetworkMessage(int accessType);
 		~NetworkMessage() {}
 
-		void Reset();
+		void reset();
 
 		uint32_t getU32();
 		uint16_t getU16();
+		uint16_t inspectU16();
 		uint8_t getU8();
 		std::string getString();
+		Position getPosition();
+
+		bool getU32(uint32_t& v);
+		bool getU16(uint16_t& v);
+		bool inspectU16(uint16_t& v);
+		bool getU8(uint8_t& v);
+		bool getString(std::string& v);
+		bool getPosition(Position& p);
 
 		void addU32(uint32_t value);
 		void addU16(uint16_t value);
@@ -50,7 +61,11 @@ class NetworkMessage
 		}
 
 		char* getBuffer(){ return m_buffer + m_start; }
+		const char* getBuffer() const { return m_buffer + m_start; }
 		char* getReadBuffer(){ return m_buffer + m_readPos; }
+		const char* getReadBuffer() const { return m_buffer + m_readPos; }
+
+		int getStart() const { return m_start;}
 
 		int getReadPos() const { return m_readPos; }
 		void setReadPos(int pos) { m_readPos = pos; }
@@ -62,6 +77,8 @@ class NetworkMessage
 
 		bool canRead(int bytes) const;
 		bool canWrite(int bytes) const;
+
+		bool eof(){ return !canRead(1);}
 
 		enum{
 			CAN_READ = 1,

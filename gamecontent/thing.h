@@ -18,58 +18,35 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "inventory.h"
-#include "item.h"
 
-Inventory::Inventory()
-{
-	for(uint32_t i = SLOT_FIRST; i < SLOT_LAST; ++i){
-		m_inventory[i] = NULL;
-	}
-}
+#ifndef __YATC_THING_H__
+#define __YATC_THING_H__
 
-Inventory::~Inventory()
-{
-	clear();
-}
+#include <stdlib.h>
+#include <stdint.h>
 
-void Inventory::clear()
-{
-	for(uint32_t i = SLOT_FIRST; i < SLOT_LAST; ++i){
-		delete m_inventory[i];
-	}
-}
+class Item;
+class Creature;
 
-Item* Inventory::getItem(uint32_t slot)
-{
-	if(slot < SLOT_FIRST || slot >= SLOT_LAST){
-		// TODO (mips_act#3#): Handle error...
-		return NULL;
-	}
-	return m_inventory[slot];
-}
+class Thing{
+public:
+	Thing(){};
+	virtual ~Thing(){};
 
-bool Inventory::addItem(uint32_t slot, Item* item)
-{
-	if(slot < SLOT_FIRST || slot >= SLOT_LAST){
-		// TODO (mips_act#3#): Handle error...
-		return false;
-	}
-	if(m_inventory[slot]){
-		delete m_inventory[slot];
+	static void deleteThing(Thing* thing){
+		if(!thing->getCreature()){
+			delete thing;
+		}
 	}
 
-	m_inventory[slot] = item;
-	return true;
-}
+	virtual uint32_t getID() const = 0;
+	virtual uint32_t getOrder() const = 0;
 
-bool Inventory::removeItem(uint32_t slot)
-{
-	if(slot < SLOT_FIRST || slot >= SLOT_LAST){
-		// TODO (mips_act#3#): Handle error...
-		return false;
-	}
-	delete m_inventory[slot];
-	m_inventory[slot] = NULL;
-	return true;
-}
+	virtual Item* getItem(){return NULL;}
+	virtual Creature* getCreature(){return NULL;}
+
+	virtual const Item* getItem() const {return NULL;}
+	virtual const Creature* getCreature() const {return NULL;}
+};
+
+#endif

@@ -23,6 +23,7 @@
 #include "map.h"
 #include "item.h"
 #include "creature.h"
+#include "globalvars.h"
 
 Tile::Tile()
 {
@@ -77,11 +78,10 @@ const Item* Tile::getGround() const
 void Tile::clear()
 {
 	delete m_ground;
-
 	m_ground = NULL;
 
 	for(ThingVector::iterator it = m_objects.begin(); it != m_objects.end(); ++it){
-		delete *it;
+		Thing::deleteThing(*it);
 	}
 
 	m_objects.clear();
@@ -168,6 +168,7 @@ bool Tile::addThing(Thing *thing)
 		if(!removeThing(pushThing)){
 			return false;
 		}
+		Thing::deleteThing(pushThing);
 	}
 
 	Item* item = thing->getItem();
@@ -205,12 +206,20 @@ void Tile::addEffect(uint32_t effect, double time)
 }
 
 //*************** Map **************************
+
+#define POS2INDEX(x, y, z) ((uint64_t)(x & 0xFFFF) << 24 | (y & 0xFFFF) << 8 | (z & 0xFF))
+
 Map::Map()
 {
 	//
 }
 
 Map::~Map()
+{
+	clear();
+}
+
+void Map::clear()
 {
 	for(uint32_t i = 0; i < TILES_CACHE; ++i){
 		m_tiles[i].clear();
@@ -219,23 +228,27 @@ Map::~Map()
 	m_coordinates.clear();
 }
 
-Tile* Map::setTile(const Position& pos)
-{
-	return setTile(pos.x, pos.y, pos.z);
-}
-
 Tile* Map::setTile(uint32_t x, uint32_t y, uint32_t z)
 {
 	Tile* tile = getTile(x, y, z);
 	if(!tile){
 		//search unused tile
-		for(unsigned int i = 0; i < TILES_CACHE; ++i){
+		for(uint32_t i = 0; i < TILES_CACHE; ++i){
 			if(m_tiles[i].m_used == false){
-				uint64_t posIndex =
-					(x & 0xFFFF) << 24 | (y & 0xFFFF) << 8 | (z & 0xFF);
-				m_coordinates[posIndex] = i;
-				m_tiles[i].m_used = true;
+				internalPrepareTile(i, x, y, z);
 				return &m_tiles[i];
+			}
+			else{
+				const Position& tilePos = m_tiles[i].getPosition();
+				if(!playerCanSee(tilePos.x, tilePos.y, tilePos.z)){
+					uint64_t oldPosIndex = POS2INDEX(tilePos.x, tilePos.y, tilePos.z);
+					CoordMap::iterator it = m_coordinates.find(oldPosIndex);
+					if(it != m_coordinates.end()){
+						m_coordinates.erase(it);
+					}
+					internalPrepareTile(i, x, y, z);
+					return &m_tiles[i];
+				}
 			}
 		}
 		// TODO (mips_act#3#): Handle error, trying to create a tile but there isnt any free slot for it!
@@ -246,15 +259,17 @@ Tile* Map::setTile(uint32_t x, uint32_t y, uint32_t z)
 	}
 }
 
-Tile* Map::getTile(const Position& pos)
+void Map::internalPrepareTile(uint32_t i, uint32_t x, uint32_t y, uint32_t z)
 {
-	return getTile(pos.x, pos.y, pos.z);
+	uint64_t posIndex = POS2INDEX(x, y, z);
+	m_coordinates[posIndex] = i;
+	m_tiles[i].setPosition(x, y, z);
+	m_tiles[i].m_used = true;
 }
 
 Tile* Map::getTile(uint32_t x, uint32_t y, uint32_t z)
 {
-	uint64_t posIndex =
-		(x & 0xFFFF) << 24 | (y & 0xFFFF) << 8 | (z & 0xFF);
+	uint64_t posIndex = POS2INDEX(x, y, z);
 	CoordMap::iterator it = m_coordinates.find(posIndex);
 	if(it != m_coordinates.end()){
 		return &m_tiles[it->second];
@@ -266,8 +281,7 @@ Tile* Map::getTile(uint32_t x, uint32_t y, uint32_t z)
 
 const Tile* Map::getTile(uint32_t x, uint32_t y, uint32_t z) const
 {
-	uint64_t posIndex =
-		(x & 0xFFFF) << 24 | (y & 0xFFFF) << 8 | (z & 0xFF);
+	uint64_t posIndex = POS2INDEX(x, y, z);
 	CoordMap::const_iterator it = m_coordinates.find(posIndex);
 	if(it != m_coordinates.end()){
 		return &m_tiles[it->second];
@@ -277,26 +291,31 @@ const Tile* Map::getTile(uint32_t x, uint32_t y, uint32_t z) const
 	}
 }
 
-void Map::cleanMap()
+bool Map::playerCanSee(int32_t x, int32_t y, int32_t z)
 {
-	// TODO (mips_act#3#): Implement getPlayerPos()
-	/*
-	const Position& playerPos = getPlayerPos();
-	CoordMap::iterator it;
-	for(it = m_coordinates.begin(); it != m_coordinates.end(); ){
-		int32_t x, y, z;
-		x = (it->first >> 24) & 0xFFFF;
-		y = (it->first >> 8) & 0xFFFF;
-		z = (it->first & 0xFF);
-		if(std::abs(x - (int32_t)playerPos.x - (z - (int32_t)playerPos.z)) > 18 ||
-		  std::abs(y - (int32_t)playerPos.y - (z - (int32_t)playerPos.z)) > 14){
-			m_tiles[it->second].clear();
-			m_tiles[it->second].m_used = false;
-			m_coordinates.erase(it++);
-		}
-		else{
-			++it;
+	const Position& playerPos = GlobalVariables::getPlayerPosition();
+	if(playerPos.z <= 7){
+		//we are on ground level or above (7 -> 0)
+		//view is from 7 -> 0
+		if(z > 7){
+			return false;
 		}
 	}
-	*/
+	else if(playerPos.z >= 8){
+		//we are underground (8 -> 15)
+		//view is +/- 2 from the floor we stand on
+		if(std::abs((int32_t)playerPos.z - z) > 2){
+			return false;
+		}
+	}
+
+	//negative offset means that the action taken place is on a lower floor than ourself
+	int offsetz = playerPos.z - z;
+
+	if((x >= (int32_t)playerPos.x - 9 + offsetz) && (x <= (int32_t)playerPos.x + 10 + offsetz) &&
+		(y >= (int32_t)playerPos.y - 7 + offsetz) && (y <= (int32_t)playerPos.y + 8 + offsetz)){
+		return true;
+	}
+
+	return false;
 }

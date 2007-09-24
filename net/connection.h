@@ -65,6 +65,7 @@ extern int h_errno;
 
 #endif
 
+#include <list>
 
 class Connection;
 
@@ -89,10 +90,56 @@ class ProtocolConfig
 		ProtocolConfig();
 };
 
+#define RAISE_PROTOCOL_WARNING(message) \
+setErrorDesc(message"."); \
+Notifications::onProtocolError(false); \
+return true;
+
+#define RAISE_PROTOCOL_ERROR(message) \
+setErrorDesc(message"."); \
+Notifications::onProtocolError(true); \
+return false;
+
+#define MSG_READ_U8(name) \
+uint8_t name; \
+if(!msg.getU8(name)){ \
+	RAISE_PROTOCOL_ERROR("Error reading U8: ""name") \
+}
+
+#define MSG_READ_U16(name) \
+uint16_t name; \
+if(!msg.getU16(name)){ \
+	RAISE_PROTOCOL_ERROR("Error reading U16: ""name") \
+}
+
+#define MSG_INSPECT_U16(name) \
+uint16_t name; \
+if(!msg.inspectU16(name)){ \
+	RAISE_PROTOCOL_ERROR("Error reading U16: ""name") \
+}
+
+#define MSG_READ_U32(name) \
+uint32_t name; \
+if(!msg.getU32(name)){ \
+	RAISE_PROTOCOL_ERROR("Error reading U32: ""name") \
+}
+
+#define MSG_READ_STRING(name) \
+std::string name; \
+if(!msg.getString(name)){ \
+	RAISE_PROTOCOL_ERROR("Error reading String: ""name") \
+}
+
+#define MSG_READ_POSITION(name) \
+Position name; \
+if(!msg.getPosition(name)){ \
+	RAISE_PROTOCOL_ERROR("Error reading Position: ""name") \
+}
+
 class Protocol
 {
 	public:
-		Protocol() : m_connection(NULL) {}
+		Protocol() : m_connection(NULL),m_currentMsg(NULL),m_currentMsgN(0) {}
 		virtual ~Protocol() {}
 
 		virtual void onConnect() = 0;
@@ -100,11 +147,27 @@ class Protocol
 
 		void setConnection(Connection* con) { m_connection = con; }
 
-	protected:
-		Connection* m_connection;
-};
+		std::string getErrorDesc(){ return getProtocolName() + std::string(": ") + m_errorMessage;}
+		const std::list<uint8_t>& getLastServerCmd() { return m_lastServerCmd; }
 
-typedef void (ConnectionCallback)(int message);
+		const NetworkMessage* getCurrentMsg(){ return m_currentMsg;}
+		uint32_t getCurrentMsgN(){ return m_currentMsgN;}
+
+	protected:
+		void setErrorDesc(const std::string& message){ setErrorDesc(message.c_str());}
+		void setErrorDesc(const char* message){ m_errorMessage = message;}
+		void addServerCmd(uint8_t type);
+
+		virtual const char* getProtocolName() = 0;
+
+		Connection* m_connection;
+		NetworkMessage* m_currentMsg;
+		uint32_t m_currentMsgN;
+
+	private:
+		std::string m_errorMessage;
+		std::list<uint8_t> m_lastServerCmd;
+};
 
 class Connection
 {
@@ -127,6 +190,7 @@ class Connection
 			ERROR_CANNOT_CREATE_SOCKET,
 			ERROR_CANNOT_SET_NOBLOCKING_SOCKET,
 			ERROR_CANNOT_CONNECT,
+			ERROR_CONNECT_TIMEOUT,
 			ERROR_SELECT_FAIL_CONNECTED,
 			ERROR_SELECT_FAIL_CONNECTING,
 			ERROR_UNSUCCESSFULL_CONNECTION,
@@ -134,15 +198,17 @@ class Connection
 			ERROR_UNEXPECTED_SELECT_RETURN_VALUE,
 			ERROR_CANNOT_GET_PENDING_SIZE,
 			ERROR_RECV_FAIL,
+			ERROR_UNEXPECTED_RECV_ERROR,
 			ERROR_DECRYPT_FAIL,
 			ERROR_WRONG_MSG_SIZE,
 			ERROR_SEND_FAIL,
 			ERROR_PROTOCOL_ONRECV,
-			ERROR_CONNECTED_SOCKET_ERROR
+			ERROR_CONNECTED_SOCKET_ERROR,
+			ERROR_TOO_BIG_MESSAGE
 		};
+		static const char* getErrorDesc(int message);
 
 		void executeNetwork();
-		void setCallback(ConnectionCallback*);
 
 		void closeConnection();
 		STATE getState(){ return m_state; }
@@ -158,11 +224,13 @@ class Connection
 			}
 		}
 
+		Protocol* getProtocol(){ return m_protocol;}
+
 	private:
 		//functions
 		void callCallback(int error);
 		unsigned long getPendingInput();
-		int internalRead(unsigned int n);
+		int internalRead(unsigned int n, bool all);
 		void closeConnectionError(int error);
 		void checkSocketReadState();
 
@@ -186,11 +254,11 @@ class Connection
 
 		STATE m_state;
 		READSTATE m_readState;
-		int m_msgSize;
+		uint16_t m_msgSize;
 
 		//
 		SOCKET m_socket;
-		ConnectionCallback* m_callback;
+		uint32_t m_ticks;
 };
 
 #endif

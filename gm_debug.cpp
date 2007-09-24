@@ -29,12 +29,18 @@
 
 extern Connection* g_connection;
 
+#include "gamecontent/container.h"
+#include "gamecontent/creature.h"
+#include "gamecontent/globalvars.h"
+#include "gamecontent/inventory.h"
+#include "gamecontent/map.h"
+
+
 void GM_Debug::ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	EncXTEA* crypto = new EncXTEA;
-	//Protocol* protocol = new ProtocolLogin(1000, "test");
-	Protocol* protocol = new ProtocolGame80(1000, "test", "Player", 0);
-	g_connection = new Connection("localhost", 7171, crypto, protocol);
+	Protocol* protocol = new ProtocolLogin(1000, "test");
+	g_connection = new Connection("localhost", 7172, crypto, protocol);
 }
 
 void GM_Debug::ExitOnClick(glictPos* relmousepos, glictContainer* callerclass)

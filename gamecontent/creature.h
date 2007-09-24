@@ -39,6 +39,16 @@ enum Direction
 
 class Tile;
 
+struct Outfit_t{
+	uint32_t m_looktype;
+	uint32_t m_lookhead;
+	uint32_t m_lookbody;
+	uint32_t m_looklegs;
+	uint32_t m_lookfeet;
+	uint32_t m_lookitem;
+	uint32_t m_addons;
+};
+
 class Creature : public Thing
 {
 public:
@@ -63,15 +73,8 @@ public:
 	std::string m_name;
 	uint32_t m_health;
 	Direction m_lookdir;
-	uint32_t m_looktype;
-	uint32_t m_lookhead;
-	uint32_t m_lookbody;
-	uint32_t m_looklegs;
-	uint32_t m_lookfeet;
-	uint32_t m_lookitem;
 
-	bool m_addon1;
-	bool m_addon2;
+	Outfit_t m_outfit;
 
 	uint32_t m_lightLevel;
 	uint32_t m_lightColor;
@@ -87,7 +90,11 @@ class Creatures
 public:
 	~Creatures() {}
 
-	static Creatures* getInstance(){return &m_instance;}
+	static Creatures& getInstance(){
+		static Creatures instance;
+		return instance;
+	}
+	void clear();
 
 	Creature* getCreature(uint32_t id);
 
@@ -95,8 +102,6 @@ public:
 	void removeCreature(uint32_t id);
 
 	static uint32_t OutfitLookupTable[];
-
-	void clear();
 
 private:
 
@@ -106,8 +111,6 @@ private:
 	static Creature m_creaturesArray[CREATURES_ARRAY];
 
 	Creatures() {}
-
-	static Creatures m_instance;
 
 	typedef std::map<uint32_t, uint16_t> CreatureMap;
 	CreatureMap m_creaturesId;

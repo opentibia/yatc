@@ -18,11 +18,12 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "../fassert.h"
+#include "fassert.h"
 #include "protocolgame.h"
 #include "rsa.h"
 
-ProtocolGame::ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM)
+ProtocolGame::ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM) :
+m_outputMessage(NetworkMessage::CAN_WRITE)
 {
 	m_password = password;
 	m_name = name;
@@ -30,9 +31,9 @@ ProtocolGame::ProtocolGame(int account, const std::string& password, const std::
 	m_isGM = isGM;
 }
 
-void ProtocolGame::setCallback(void*)
+ProtocolGame::~ProtocolGame()
 {
-	//
+	//TODO. clear game state variables
 }
 
 void ProtocolGame::onConnect()
@@ -68,7 +69,7 @@ void ProtocolGame::onConnect()
 	output.addPaddingBytes(128 - rsaSize);
 
 	char* rsaBuffer = output.getBuffer() + sizeBefore;
-	ASSERT(RSA::getInstance()->encrypt(rsaBuffer, 128));
+	RSA::getInstance()->encrypt(rsaBuffer, 128);
 
 	m_connection->sendMessage(output);
 	m_connection->setKey((char*)k, 4*sizeof(uint32_t));

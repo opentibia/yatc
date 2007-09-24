@@ -27,7 +27,6 @@ Container::Container()
 	m_itemid = 0;
 	m_capacity = 20;
 	m_hasParent = false;
-	m_size = 0;
 }
 
 Container::~Container()
@@ -116,15 +115,17 @@ bool Container::updateItem(uint32_t slot, Item* newitem)
 
 //**********Containers**************
 
-Containers::Containers() :
-m_containers(MAX_ALLOWED_CONTAINERS)
+Containers::Containers()
 {
-	//
+	for(uint32_t i = 0; i < MAX_ALLOWED_CONTAINERS; ++i){
+		m_containers[i] = NULL;
+	}
+	m_tradeContainer = NULL;
 }
 
 Containers::~Containers()
 {
-	//
+	clear();
 }
 
 Container* Containers::getContainer(uint32_t id)
@@ -134,7 +135,7 @@ Container* Containers::getContainer(uint32_t id)
 		return NULL;
 	}
 
-	return m_containers.getElement(id);
+	return m_containers[id];
 }
 
 Container* Containers::createContainer(uint32_t id)
@@ -144,12 +145,12 @@ Container* Containers::createContainer(uint32_t id)
 		return NULL;
 	}
 
-	if(m_containers.getElement(id) != NULL){
+	if(m_containers[id] != NULL){
 		// TODO (mips_act#3#): Handle error...?
-		delete m_containers.getElement(id);
+		delete m_containers[id];
 	}
 	Container* container = new Container;
-	m_containers.addElement(container, id);
+	m_containers[id] = container;
 	return container;
 }
 
@@ -159,16 +160,33 @@ bool Containers::deleteContainer(uint32_t id)
 		// TODO (mips_act#3#): Handle error...
 		return false;
 	}
-	delete m_containers.getElement(id);
-	m_containers.addElement(NULL, id);
+	delete m_containers[id];
+	m_containers[id] = NULL;
 	return true;
 }
 
+Container* Containers::newTradeContainer()
+{
+	if(m_tradeContainer){
+		// TODO (mips_act#3#): Handle error...
+		delete m_tradeContainer;
+	}
+	m_tradeContainer = new Container();
+	return m_tradeContainer;
+}
+
+void Containers::closeTradeContainer()
+{
+	delete m_tradeContainer;
+	m_tradeContainer = NULL;
+}
 
 void Containers::clear()
 {
 	for(uint32_t i = 0; i < MAX_ALLOWED_CONTAINERS; ++i){
-		delete m_containers.getElement(i);
-		m_containers.addElement(NULL, i);
+		delete m_containers[i];
+		m_containers[i] = NULL;
 	}
+	delete m_tradeContainer;
+	m_tradeContainer = NULL;
 }

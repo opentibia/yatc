@@ -45,20 +45,22 @@ class Inventory{
 public:
 	~Inventory();
 
-	static Inventory* getInstance() { return &m_instance; }
+	static Inventory& getInstance() {
+		static Inventory instance;
+		return instance;
+	}
+
+	void clear();
 
 	Item* getItem(uint32_t slot);
 	bool addItem(uint32_t slot, Item* item);
 	bool removeItem(uint32_t slot);
 
-	void clear();
 
 protected:
 	Inventory();
 
 	Item* m_inventory[SLOT_LAST];
-
-	static Inventory m_instance;
 };
 
 

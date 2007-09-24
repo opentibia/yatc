@@ -32,22 +32,36 @@ class Container
 public:
 	~Container();
 
-	uint32_t m_itemid;
-	std::string m_name;
-	uint32_t m_capacity;
-	bool m_hasParent;
-	uint32_t m_size;
-
 	Item* getItem(uint32_t slot);
 	bool addItem(Item* item);
 	bool removeItem(uint32_t slot);
 	bool updateItem(uint32_t slot, Item* newitem);
 
+	void setItemId(uint16_t itemid) { m_itemid = itemid;}
+	uint16_t getItemId() { return m_itemid;}
+
+	void setName(const std::string& name){ m_name = name;}
+	std::string getName() { return m_name;}
+
+	void setCapacity(uint32_t cap){ m_capacity = cap;}
+	uint32_t getCapacity(){ return m_capacity;}
+
+	void setHasParent(bool v){ m_hasParent = v;}
+	bool getHasParent() { return m_hasParent;}
+
+	int32_t getSize(){ return m_items.size();}
+
 private:
+
 	Container();
 
 	typedef std::list<Item*> ItemList;
 	ItemList m_items;
+
+	uint16_t m_itemid;
+	uint32_t m_capacity;
+	std::string m_name;
+	bool m_hasParent;
 
 	friend class Containers;
 };
@@ -58,19 +72,28 @@ class Containers
 public:
 	#define MAX_ALLOWED_CONTAINERS 32
 	~Containers();
-	static Containers* getInstance(){ return &m_instance; }
+	static Containers& getInstance(){
+		static Containers instance;
+		return instance;
+	}
+
+	void clear();
 
 	Container* getContainer(uint32_t id);
 	Container* createContainer(uint32_t id);
 	bool deleteContainer(uint32_t id);
 
-	void clear();
+
+	Container* newTradeContainer();
+	void closeTradeContainer();
+	Container* getTradeContainer() { return m_tradeContainer;}
 
 private:
 
-	Array<Container*> m_containers;
+	Container* m_tradeContainer;
+	Container* m_containers[MAX_ALLOWED_CONTAINERS];
+
 	Containers();
-	static Containers m_instance;
 };
 
 #endif

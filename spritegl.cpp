@@ -27,11 +27,6 @@
 
 SpriteGL::SpriteGL(const std::string& filename, int index) : Sprite(filename, index)
 {
-
-	if(m_texture != GL_INVALID_VALUE){
-		glDeleteTextures(1, &m_texture);
-	}
-
 	SDL_LockSurface(getImage());
 
 	glGenTextures(1, &m_texture);
