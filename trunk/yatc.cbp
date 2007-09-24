@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="./yatc" prefix_auto="1" extension_auto="1" />
+				<Option output="" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="./yatc" prefix_auto="1" extension_auto="1" />
+				<Option output="" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objsrelease/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
+			<Add directory="." />
 		</Compiler>
 		<Linker>
 			<Add library="SDL" />
@@ -40,11 +41,6 @@
 			<Add library="gmp" />
 		</Linker>
 		<Unit filename="README" />
-		<Unit filename="assert.h" />
-		<Unit filename="container.cpp" />
-		<Unit filename="container.h" />
-		<Unit filename="creature.cpp" />
-		<Unit filename="creature.h" />
 		<Unit filename="debugprint.cpp" />
 		<Unit filename="debugprint.h" />
 		<Unit filename="defines.h" />
@@ -54,6 +50,20 @@
 		<Unit filename="enginegl.h" />
 		<Unit filename="enginesdl.cpp" />
 		<Unit filename="enginesdl.h" />
+		<Unit filename="fassert.h" />
+		<Unit filename="gamecontent/container.cpp" />
+		<Unit filename="gamecontent/container.h" />
+		<Unit filename="gamecontent/creature.cpp" />
+		<Unit filename="gamecontent/creature.h" />
+		<Unit filename="gamecontent/globalvars.cpp" />
+		<Unit filename="gamecontent/globalvars.h" />
+		<Unit filename="gamecontent/inventory.cpp" />
+		<Unit filename="gamecontent/inventory.h" />
+		<Unit filename="gamecontent/item.cpp" />
+		<Unit filename="gamecontent/item.h" />
+		<Unit filename="gamecontent/map.cpp" />
+		<Unit filename="gamecontent/map.h" />
+		<Unit filename="gamecontent/thing.h" />
 		<Unit filename="gamemode.cpp" />
 		<Unit filename="gamemode.h" />
 		<Unit filename="gm_debug.cpp">
@@ -64,13 +74,7 @@
 		</Unit>
 		<Unit filename="gm_mainmenu.cpp" />
 		<Unit filename="gm_mainmenu.h" />
-		<Unit filename="inventory.cpp" />
-		<Unit filename="inventory.h" />
-		<Unit filename="item.cpp" />
-		<Unit filename="item.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="map.cpp" />
-		<Unit filename="map.h" />
 		<Unit filename="net/connection.cpp" />
 		<Unit filename="net/connection.h" />
 		<Unit filename="net/encryption.cpp" />
@@ -85,6 +89,8 @@
 		<Unit filename="net/protocollogin.h" />
 		<Unit filename="net/rsa.cpp" />
 		<Unit filename="net/rsa.h" />
+		<Unit filename="notifications.cpp" />
+		<Unit filename="notifications.h" />
 		<Unit filename="objects.cpp" />
 		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
@@ -95,11 +101,12 @@
 		<Unit filename="spritegl.h" />
 		<Unit filename="spritesdl.cpp" />
 		<Unit filename="spritesdl.h" />
-		<Unit filename="thing.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Extensions>
 			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -18,10 +18,11 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "../fassert.h"
+#include "fassert.h"
 #include "protocollogin.h"
 #include "networkmessage.h"
 #include "rsa.h"
+#include "notifications.h"
 
 ProtocolLogin::ProtocolLogin(int account, const std::string& password)
 {
@@ -63,7 +64,7 @@ void ProtocolLogin::onConnect()
 	output.addPaddingBytes(128 - rsaSize);
 
 	char* rsaBuffer = output.getBuffer() + sizeBefore;
-	ASSERT(RSA::getInstance()->encrypt(rsaBuffer, 128));
+	RSA::getInstance()->encrypt(rsaBuffer, 128);
 
 	m_connection->sendMessage(output);
 	m_connection->setKey((char*)k, 4*sizeof(uint32_t));
@@ -72,34 +73,66 @@ void ProtocolLogin::onConnect()
 
 bool ProtocolLogin::onRecv(NetworkMessage& msg)
 {
+	m_currentMsg = &msg;
+	m_currentMsgN++;
 	while(msg.getReadSize() > 0){
-		uint8_t cmd = msg.getU8();
+		MSG_READ_U8(cmd);
+		addServerCmd(cmd);
 		switch(cmd){
-		case 0x0A: //message
-			printf("Message: %s\n", msg.getString().c_str());
+		case 0x0A: //Error message
+		{
+			MSG_READ_STRING(errorMessage);
+			Notifications::openMessageWindow(MESSAGE_ERROR, errorMessage);
 			break;
+		}
+		case 0x0B: //For your information
+		{
+			MSG_READ_STRING(infoMessage);
+			Notifications::openMessageWindow(MESSAGE_INFORMATION, infoMessage);
+			break;
+		}
 		case 0x14: //MOTD
-			printf("MOTD: %s\n", msg.getString().c_str());
+		{
+			MSG_READ_STRING(motd);
+			Notifications::openMessageWindow(MESSAGE_MOTD, motd);
 			break;
+		}
+		case 0x1E: //Patching exe/dat/spr messages
+		case 0x1F:
+		case 0x20:
+		{
+			Notifications::openMessageWindow(MESSAGE_ERROR, "Patching is not supported.");
+			RAISE_PROTOCOL_ERROR("Patching is not supported");
+			break;
+		}
+		case 0x28: //Select other login server
+		{
+			Notifications::changeLoginServer();
+			break;
+		}
 		case 0x64: //character list
 		{
-			uint8_t chars = msg.getU8();
-			printf("Chars: %d\n", chars);
-			for(uint32_t i = 0; i < chars; ++i){
-				std::string name = msg.getString();
-				std::string world = msg.getString();
-				uint32_t world_ip = msg.getU32();
-				uint16_t port = msg.getU16();
-				printf("Char %d: %s(%s) %d:%d\n",
-					i, name.c_str(), world.c_str(), world_ip, port);
+			std::list<CharacterList_t> charactersList;
+			MSG_READ_U8(nchars);
+			for(uint32_t i = 0; i < nchars; ++i){
+				MSG_READ_STRING(charName);
+				MSG_READ_STRING(world);
+				MSG_READ_U32(ip);
+				MSG_READ_U16(port);
+
+				CharacterList_t tmp;
+				tmp.name = charName;
+				tmp.world = world;
+				tmp.ip = ip;
+				tmp.port = port;
+				charactersList.push_back(tmp);
 			}
-			uint16_t prem = msg.getU16();
-			printf("Premium: %d\n", prem);
+			MSG_READ_U16(premiumDays);
+			Notifications::openCharactersList(charactersList, premiumDays);
 			break;
 		}
 		default:
-			printf("ERROR: Unk login packet type\n");
-			return false;
+			RAISE_PROTOCOL_ERROR("Unknown packet type");
 			break;
 		}
 	}

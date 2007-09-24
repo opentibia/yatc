@@ -26,13 +26,12 @@ Creature::Creature()
 	m_id = 0;
 	m_health = 0;
 	m_lookdir = DIRECTION_NORTH;
-	m_looktype = 0;
-	m_lookhead = 0;
-	m_lookbody = 0;
-	m_looklegs = 0;
-	m_lookfeet = 0;
-	m_addon1 = false;
-	m_addon2 = false;
+	m_outfit.m_looktype = 0;
+	m_outfit.m_lookhead = 0;
+	m_outfit.m_lookbody = 0;
+	m_outfit.m_looklegs = 0;
+	m_outfit.m_lookfeet = 0;
+	m_outfit.m_addons = 0;
 
 	m_lightLevel = 0;
 	m_lightColor = 0;
@@ -42,7 +41,6 @@ Creature::Creature()
 }
 
 //*********** Creatures *************
-Creatures Creatures::m_instance;
 // 133 outfit colors on this table
 uint32_t Creatures::OutfitLookupTable[] = {
 	0xFFFFFF, 0xFFD4BF, 0xFFE9BF, 0xFFFFBF, 0xE9FFBF, 0xD4FFBF,
@@ -98,7 +96,7 @@ Creature* Creatures::getCreature(uint32_t id)
 Creature* Creatures::addCreature(uint32_t id)
 {
 	int16_t i = reserveCreature(id);
-	if(i > 0){
+	if(i >= 0){
 		m_creaturesId[id] = i;
 		return &m_creaturesArray[i];
 	}
@@ -110,6 +108,10 @@ Creature* Creatures::addCreature(uint32_t id)
 
 void Creatures::removeCreature(uint32_t id)
 {
+	if(id == 0){
+		return;
+	}
+
 	CreatureMap::iterator it = m_creaturesId.find(id);
 	if(it != m_creaturesId.end()){
 		m_creaturesArray[it->second].m_id = 0;

@@ -23,6 +23,10 @@
 #define __PROTOCOLGAME80_H
 
 #include "protocolgame.h"
+#include "notifications.h"
+
+class Thing;
+class Item;
 
 class ProtocolGame80 : public ProtocolGame
 {
@@ -32,10 +36,19 @@ class ProtocolGame80 : public ProtocolGame
 
 		virtual bool onRecv(NetworkMessage& msg);
 
+		const char* getProtocolName() { return "Protocol80";}
+
 		//send functions impl
 
 	protected:
+		bool setMapDescription(NetworkMessage& msg, int x, int y, int z, int width, int height);
+		bool setFloorDescription(NetworkMessage& msg, int x, int y, int z, int width, int height, int offset);
+		bool setTileDescription(NetworkMessage& msg, const Position& pos);
+		Thing* internalGetThing(NetworkMessage& msg);
+		Item* internalGetItem(NetworkMessage& msg, uint32_t itemid);
+		bool internalSetOutfit(NetworkMessage& msg, Outfit_t& outfit);
 
+		int16_t m_skipTiles;
 };
 
 #endif

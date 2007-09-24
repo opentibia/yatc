@@ -36,6 +36,9 @@ class ProtocolLogin : public Protocol
 		virtual bool onRecv(NetworkMessage& msg);
 
 	protected:
+
+		const char* getProtocolName() { return "Protocol Login"; }
+
 		std::string m_password;
 		int m_account;
 };

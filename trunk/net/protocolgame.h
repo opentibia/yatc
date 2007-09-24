@@ -25,24 +25,25 @@
 #include <string>
 #include "connection.h"
 
+class NetworkMessage;
+
 class ProtocolGame : public Protocol
 {
 	public:
 		ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM);
-		virtual ~ProtocolGame() {};
-
-		void setCallback(void*);
+		virtual ~ProtocolGame();
 
 		virtual void onConnect();
 		virtual bool onRecv(NetworkMessage& msg) = 0;
 
-		//send functions pure virtual
+		//send functions - pure virtual
 
 	protected:
 		std::string m_password;
 		std::string m_name;
 		int m_account;
 		bool m_isGM;
+		NetworkMessage m_outputMessage;
 };
 
 #endif

@@ -20,14 +20,15 @@
 
 #include "networkmessage.h"
 #include "stdio.h"
+#include "gamecontent/map.h"
 
 NetworkMessage::NetworkMessage(int type)
 {
-	Reset();
+	reset();
 	m_accessType = type;
 }
 
-void NetworkMessage::Reset()
+void NetworkMessage::reset()
 {
 	m_readPos = 0;
 	m_size = 0;
@@ -42,7 +43,6 @@ bool NetworkMessage::canRead(int bytes) const
 		return true;
 	}
 	else{
-		printf("Error: cant read\n");
 		return false;
 	}
 }
@@ -53,7 +53,6 @@ bool NetworkMessage::canWrite(int bytes) const
 		return true;
 	}
 	else{
-		printf("Error: cant write\n");
 		return false;
 	}
 }
@@ -104,6 +103,89 @@ std::string NetworkMessage::getString()
 	else{
 		return "";
 	}
+}
+
+
+bool NetworkMessage::getU32(uint32_t& v)
+{
+	if(canRead(4)){
+		v = (((uint8_t)m_buffer[m_readPos]            | ((uint8_t)m_buffer[m_readPos + 1] <<  8) |
+			((uint8_t)m_buffer[m_readPos + 2] << 16) | ((uint8_t)m_buffer[m_readPos + 3] << 24)));
+		m_readPos += 4;
+
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+bool NetworkMessage::getU16(uint16_t& v)
+{
+	if(canRead(2)){
+		v = ((uint8_t)m_buffer[m_readPos] | ((uint8_t)m_buffer[m_readPos + 1] << 8));
+		m_readPos += 2;
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool NetworkMessage::inspectU16(uint16_t& v)
+{
+	if(canRead(2)){
+		v = ((uint8_t)m_buffer[m_readPos] | ((uint8_t)m_buffer[m_readPos + 1] << 8));
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool NetworkMessage::getU8(uint8_t& v)
+{
+	if(canRead(1)){
+		v = m_buffer[m_readPos++];
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool NetworkMessage::getString(std::string& v)
+{
+	uint16_t stringSize;
+	if(getU16(stringSize) && canRead(stringSize)){
+		const char* cstr = (const char*)(m_buffer + m_readPos);
+		m_readPos += stringSize;
+		v = std::string(cstr, stringSize);
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool NetworkMessage::getPosition(Position& p)
+{
+	uint16_t u16;
+	if(!getU16(u16)){
+		return false;
+	}
+	p.x = u16;
+
+	if(!getU16(u16)){
+		return false;
+	}
+	p.y = u16;
+
+	uint8_t u8;
+	if(!getU8(u8)){
+		return false;
+	}
+	p.z = u8;
+	return true;
 }
 
 void NetworkMessage::addU32(uint32_t value)

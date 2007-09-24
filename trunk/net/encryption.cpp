@@ -63,7 +63,7 @@ bool EncXTEA::encrypt(NetworkMessage& msg)
 bool EncXTEA::decrypt(NetworkMessage& msg)
 {
 	if(msg.getReadSize() % 8 != 0){
-		printf("Error: [EncXTEA::decrypt]. Not valid encrypted message size\n");
+		fprintf(stderr, "[EncXTEA::decrypt]. Not valid encrypted message size\n");
 		return false;
 	}
 
@@ -88,9 +88,13 @@ bool EncXTEA::decrypt(NetworkMessage& msg)
 		read_pos = read_pos + 2;
 	}
 	//
-	int newSize = msg.getU16();
+	uint16_t newSize;
+	if(!msg.getU16(newSize)){
+		fprintf(stderr, "[EncXTEA::decrypt]. Cant read unencrypted message size\n");
+		return false;
+	}
 	if(newSize > msg.getReadSize()){
-		printf("Failure: [EncXTEA::decrypt]. Not valid unencrypted message size\n");
+		fprintf(stderr, "[EncXTEA::decrypt]. Not valid unencrypted message size\n");
 		return false;
 	}
 
