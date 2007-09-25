@@ -73,9 +73,11 @@ GM_Debug::GM_Debug()
 
 	if(g_engine){
 		background = g_engine->createSprite("yatc.bmp");
+		spr = g_engine->createSprite("tibia.spr", 365);
 	}
-	else{
+	else{  // i think that if g_engine does not exist, we might as well crash. what do you think, guys? ivucica
 		background = NULL;
+		spr = NULL;
 	}
 }
 
@@ -88,6 +90,8 @@ void GM_Debug::renderScene()
 {
 	if(background)
 		background->Blit(0,0);
+	if(spr)
+		spr->Blit(0,0);
 
 	desktop.RememberTransformations();
 	desktop.Paint();

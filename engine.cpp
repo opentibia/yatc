@@ -49,13 +49,13 @@ void Engine::font_render(const char* txt, const void* font, float x, float y)
 		switch(*t) {
 			default:
 				Engine::font_drawchar(*t, img, (int)cx, (int)cy);
-				cx += 10;
-				sizesofar += 10;
+				cx += 7;
+				sizesofar += 7;
 				break;
 			case '\n':
 			case '\r':
 				cx -= sizesofar;
-				cy += 10;
+				cy += 16;
 				linessofar += 1.;
 				sizesofar = 0;
 				if (*t == '\n' && *(t + 1) == '\r' ||
@@ -80,7 +80,20 @@ void Engine::font_drawchar(char t, Sprite* img, int x1, int y1)
 
 float Engine::font_size(const char* txt, const void* font)
 {
-	return strlen(txt);
+    int size=0, len=strlen(txt);
+    int maxsize=0;
+    for (int i=0;i<len;i++) {
+        size++;
+        if (txt[i]=='\n' || txt[i]=='\r') {
+            if (size>maxsize) maxsize=size;
+            if (i < len && (txt[i]=='\n' && txt[i+1]=='\r' || txt[i]=='\r' && txt[i+1]=='\n')) i++;
+            size=0;
+        }
+
+    }
+    if (size>maxsize) maxsize=size;
+
+	return maxsize*.7;
 }
 
 // set the callbacks up in the constructor

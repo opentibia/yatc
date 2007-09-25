@@ -29,7 +29,7 @@
 
 #include <stdio.h>
 
-// FIXME (Khaos#5#) Perhaps this one should move to "utils.h" or sth ... but it'd suck if it'd be there alone. So find some more functions to go there
+// FIXME (ivucica#5#) Perhaps this one should move to "utils.h" or sth ... but it'd suck if it'd be there alone. So find some more functions to go there
 
 struct oRGBA
 {
