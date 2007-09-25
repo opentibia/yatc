@@ -27,8 +27,8 @@ Options options;
 Options::Options()
 {
 	fullscreen = 0;
-	//engine = ENGINE_OPENGL;
-	engine = ENGINE_SDL;
+	engine = ENGINE_OPENGL;
+	//engine = ENGINE_SDL;
 	os_cursor = 0;
 	skin = "default";
 }
