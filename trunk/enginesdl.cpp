@@ -32,7 +32,7 @@ EngineSDL::EngineSDL()
 	m_screen = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
 
 	if(!m_screen){
-		fprintf(stderr, "Could not set %dx%d video mode: %s\n", m_width, m_height, SDL_GetError()); // FIXME (Khaos#3#) Should report to user via msgbox
+		fprintf(stderr, "Could not set %dx%d video mode: %s\n", m_width, m_height, SDL_GetError()); // FIXME (ivucica#3#) Should report to user via msgbox
 		exit(1); // this is perfectly valid, since it's really not believable that any other engine would be supported in case SDL fails to init
 	}
 

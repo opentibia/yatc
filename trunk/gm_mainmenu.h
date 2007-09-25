@@ -24,6 +24,7 @@
 #include <GLICT/container.h>
 #include <GLICT/button.h>
 #include <GLICT/panel.h>
+#include <GLICT/textbox.h>
 #include <GLICT/window.h>
 #include "gamemode.h"
 #include "sprite.h"
@@ -37,6 +38,9 @@ public:
 	void renderScene();
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
+
+
+	void msgBox (const char* mbox, const char* title);
 private:
 	glictContainer desktop;
 	struct {
@@ -44,7 +48,28 @@ private:
 		glictButton btnLogIn, btnOptions, btnAbout, btnExit;
 	} pnlMainMenu;
 
+	struct {
+		glictWindow window;
+		glictPanel pnlUsername, pnlPassword, pnlCreateAc;
+		glictTextbox txtUsername, txtPassword;
+		glictButton btnCreateAc;
+
+		glictPanel pnlSeparator;
+
+		glictButton btnOk, btnCancel;
+
+	} winLogin;
+
 	Sprite* background;
+protected:
+	static void pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 };
 
 #endif

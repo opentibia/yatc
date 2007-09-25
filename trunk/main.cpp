@@ -40,7 +40,7 @@
 const char RSAKey_otserv[] = "109120132967399429278860960508995541528237502902798129123468757937266291492576446330739696001110603907230888610072655818825358503429057592827629436413108566029093628212635953836686562675849720620786279431090218017681061521755056710823876476444260558147179707119674283982419152118103759076030616683978566631413";
 const char RSAKey_cip[]    = "124710459426827943004376449897985582167801707960697037164044904862948569380850421396904597686953877022394604239428185498284169068581802277612081027966724336319448537811441719076484340922854929273517308661370727105382899118999403808045846444647284499123164879035103627004668521005328367415259939915284902061793";
 
-bool running = true;
+bool g_running = true;
 uint32_t keymods = 0;
 
 Connection* g_connection = NULL;
@@ -50,18 +50,18 @@ void onKeyDown(const SDL_Event& event)
 {
 	switch(event.key.keysym.sym){
 	case SDLK_ESCAPE:
-		running = false;
+		g_running = false;
 		break;
 	case SDLK_LSHIFT:
 	case SDLK_RSHIFT:
 		keymods = keymods | KMOD_SHIFT;
 		break;
-	// TODO (Khaos#1#) Add pageup, pagedown, home, end below
+	// TODO (ivucica#1#) Add pageup, pagedown, home, end below
 	case SDLK_LEFT:
 	case SDLK_RIGHT:
 	case SDLK_UP:
 	case SDLK_DOWN:
-		// TODO (Khaos#1#) Pass special keys to a different function
+		// TODO (ivucica#1#) Pass special keys to a different function
 		break;
 	default:
 		// glict expects what glut usually serves: completely prepared keys,
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 	options.Load();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file...\n");
 
-	if(!Objects::getInstance()->loadDat("Tibia.dat")){ //TODO (Smygflik#3#), inform the user with a messagebox
+	if(!Objects::getInstance()->loadDat("tibia.dat")){ //TODO (Smygflik#3#), inform the user with a messagebox
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[FAILED]");
 		exit(1);
 	}
@@ -163,15 +163,15 @@ int main(int argc, char *argv[])
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps these statuses should be moved in a constructor?
 
-//		g_game = new GM_MainMenu();
-		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+		g_game = new GM_MainMenu();
+//		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
 		SDL_WM_SetCaption("YATC v0.1", NULL);
 
 		SDL_Event event;
-		while(running){
+		while(g_running){
 			SDL_Delay(100); //limit to 10fps
 			while(SDL_PollEvent(&event)){
 				switch (event.type){
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 						break;
 
 					case SDL_QUIT:
-						running = false;
+						g_running = false;
 						break;
 
 					case SDL_KEYUP:

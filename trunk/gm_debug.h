@@ -49,6 +49,7 @@ private:
 	glictButton btnExit;
 
 	Sprite* background;
+	Sprite* spr;
 };
 
 #endif
