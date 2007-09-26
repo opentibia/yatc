@@ -24,65 +24,9 @@
 
 #include <string>
 #include <list>
-#include "gamecontent/map.h"
-#include "gamecontent/creature.h"
+#include "gamecontent/enums.h"
 
-enum WindowMessage_t{
-	MESSAGE_ERROR,
-	MESSAGE_INFORMATION,
-	MESSAGE_MOTD
-};
-
-enum MessageType_t{
-	MSG_STATUS_WARNING      = 0x12, /*Red message in game window and in the console*/
-	MSG_EVENT_ADVANCE       = 0x13, /*White message in game window and in the console*/
-	MSG_EVENT_DEFAULT       = 0x14, /*White message at the bottom of the game window and in the console*/
-	MSG_STATUS_DEFAULT      = 0x15, /*White message at the bottom of the game window and in the console*/
-	MSG_INFO_DESCR          = 0x16, /*Green message in game window and in the console*/
-	MSG_STATUS_SMALL        = 0x17, /*White message at the bottom of the game window"*/
-	MSG_STATUS_CONSOLE_BLUE = 0x18, /*Blue message in the console*/
-	MSG_STATUS_CONSOLE_RED  = 0x19, /*Red message in the console*/
-};
-
-enum SpeakClasses_t {
-	SPEAK_SAY           = 0x01,
-	SPEAK_WHISPER       = 0x02,
-	SPEAK_YELL          = 0x03,
-
-	SPEAK_PRIVATE       = 0x04,
-	SPEAK_BROADCAST     = 0x09,
-	SPEAK_PRIVATE_RED   = 0x0B,	//@name@text
-
-	SPEAK_CHANNEL_Y     = 0x05,	//yellow
-	SPEAK_CHANNEL_R1    = 0x0A,	//red - #c text
-	SPEAK_CHANNEL_O     = 0x0C,	//orange
-	SPEAK_CHANNEL_R2    = 0x0E,	//red anonymous - #d text
-
-	SPEAK_CHANNEL_UNK6  = 0x06,
-	SPEAK_CHANNEL_UNK7  = 0x07,
-	SPEAK_CHANNEL_UNK8  = 0x08,
-
-	SPEAK_MONSTER_SAY   = 0x10,
-	SPEAK_MONSTER_YELL  = 0x11,
-};
-
-struct CharacterList_t{
-	std::string name;
-	std::string world;
-	uint32_t ip;
-	uint16_t port;
-};
-
-struct ChannelList_t{
-	int id;
-	std::string name;
-};
-
-struct AvailOutfit_t{
-	int id;
-	std::string name;
-	int addons;
-};
+class Position;
 
 class Notifications{
 	public:

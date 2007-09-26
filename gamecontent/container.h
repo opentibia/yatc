@@ -70,7 +70,7 @@ private:
 class Containers
 {
 public:
-	#define MAX_ALLOWED_CONTAINERS 32
+	#define MAX_ALLOWED_CONTAINERS 15
 	~Containers();
 	static Containers& getInstance(){
 		static Containers instance;
@@ -78,6 +78,8 @@ public:
 	}
 
 	void clear();
+
+	int32_t getFreeContainerSlot();
 
 	Container* getContainer(uint32_t id);
 	Container* createContainer(uint32_t id);

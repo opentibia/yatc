@@ -128,6 +128,16 @@ Containers::~Containers()
 	clear();
 }
 
+int32_t Containers::getFreeContainerSlot()
+{
+	for(uint32_t i = 0; i < MAX_ALLOWED_CONTAINERS; ++i){
+		if(m_containers[i] == NULL){
+			return i;
+		}
+	}
+	return MAX_ALLOWED_CONTAINERS - 1;
+}
+
 Container* Containers::getContainer(uint32_t id)
 {
 	if(id >= MAX_ALLOWED_CONTAINERS){

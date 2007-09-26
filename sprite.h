@@ -50,8 +50,9 @@ class Sprite
 
 		SDL_Surface* getImage() { return m_image; }
 		GLuint getPixelFormat() { return m_pixelformat; }
-		void putPixel(int x, int y, Uint32 pixel);
-		Uint32 getPixel(int x, int y);
+		void putPixel(int x, int y, uint32_t pixel);
+		uint32_t getPixel(int x, int y);
+
 	private:
 		SDL_Surface* m_image;
 		GLuint m_pixelformat;

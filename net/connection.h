@@ -203,7 +203,7 @@ class Connection
 			ERROR_WRONG_MSG_SIZE,
 			ERROR_SEND_FAIL,
 			ERROR_PROTOCOL_ONRECV,
-			ERROR_CONNECTED_SOCKET_ERROR,
+			ERROR_CLOSED_SOCKET,
 			ERROR_TOO_BIG_MESSAGE
 		};
 		static const char* getErrorDesc(int message);

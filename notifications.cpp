@@ -23,22 +23,62 @@
 
 extern Connection* g_connection;
 
+std::list<std::string> g_recFiles;
+std::list<std::string>::iterator g_recIt;
+extern void connectToRECServer(const char* file);
+
+
 #include "gamecontent/container.h"
 #include "gamecontent/creature.h"
 #include "gamecontent/globalvars.h"
 #include "gamecontent/inventory.h"
 #include "gamecontent/map.h"
 
+void newConnect()
+{
+	static Connection* oldConn = NULL;
+	if(g_recIt != g_recFiles.end()){
+		delete oldConn;
+		oldConn = g_connection;
+		oldConn->closeConnection();
+		g_connection = NULL;
+		printf("Parsing: %s ", g_recIt->c_str()); fflush(stdout);
+		connectToRECServer(g_recIt->c_str());
+		++g_recIt;
+	}
+	else{
+		printf("ALL FILES PROCCESSED\n"); fflush(stdout);
+	}
+}
+
 void Notifications::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
 {
-	//
+	std::list<CharacterList_t>::const_iterator it;
+	g_recFiles.clear();
+	for(it = list.begin(); it != list.end(); ++it){
+		printf("%s\n", it->name.c_str());
+		g_recFiles.push_back(it->name);
+	}
+	g_recIt = g_recFiles.begin();
+	newConnect();
 }
 
 void Notifications::onConnectionError(int message)
 {
-	printf("********************************************************\n");
-	printf("CONNECTION ERROR: %d - %s\n", message, Connection::getErrorDesc(message));
-	printf("********************************************************\n");
+	if(message == Connection::ERROR_CLOSED_SOCKET){
+		printf("Done!\n"); fflush(stdout);
+		Containers::getInstance().clear();
+		Creatures::getInstance().clear();
+		GlobalVariables::clear();
+		Inventory::getInstance().clear();
+		Map::getInstance().clear();
+		newConnect();
+	}
+	else{
+		printf("********************************************************\n");
+		printf("CONNECTION ERROR: %d - %s\n", message, Connection::getErrorDesc(message));
+		printf("********************************************************\n");
+	}
 }
 
 void Notifications::onProtocolError(bool fatal)

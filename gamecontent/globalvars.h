@@ -22,37 +22,8 @@
 #define __GLOBALVARS_H__
 
 #include "fassert.h"
-#include "gamecontent/map.h"
-
-enum Stat_t{
-	STAT_HEALTH,
-	STAT_HEALTH_MAX,
-	STAT_CAPACITY,
-	STAT_EXPERIENCE,
-	STAT_MANA,
-	STAT_MANA_MAX,
-	STAT_SOUL,
-	STAT_STAMINA,
-	STAT_LAST
-};
-
-enum SkillList_t{
-	SKILL_LEVEL,
-	SKILL_MAGIC,
-	SKILL_FIST,
-	SKILL_CLUB,
-	SKILL_SWORD,
-	SKILL_AXE,
-	SKILL_DISTANCE,
-	SKILL_SHIELD,
-	SKILL_FISH,
-	SKILL_LAST
-};
-enum SkillAttr_t{
-	SKILL_ATTR_LEVEL,
-	SKILL_ATTR_PERCENT,
-	SKILL_ATTR_LAST,
-};
+#include "map.h"
+#include "enums.h"
 
 class GlobalVariables{
 public:

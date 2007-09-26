@@ -35,6 +35,8 @@ void NetworkMessage::reset()
 
 	m_start = 4;
 	m_writePos = 4;
+
+	m_messageTypeAdded = false;
 }
 
 bool NetworkMessage::canRead(int bytes) const
@@ -224,6 +226,15 @@ void NetworkMessage::addString(const char* value)
 		memcpy(m_buffer + m_writePos, value, stringSize);
 		m_writePos += stringSize;
 		m_size += stringSize;
+	}
+}
+
+void NetworkMessage::addPosition(const Position& pos)
+{
+	if(canWrite(5)){
+		addU16(pos.x);
+		addU16(pos.y);
+		addU8(pos.z);
 	}
 }
 
