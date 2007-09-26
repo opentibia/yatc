@@ -57,6 +57,7 @@
 		<Unit filename="gamecontent/container.h" />
 		<Unit filename="gamecontent/creature.cpp" />
 		<Unit filename="gamecontent/creature.h" />
+		<Unit filename="gamecontent/enums.h" />
 		<Unit filename="gamecontent/globalvars.cpp" />
 		<Unit filename="gamecontent/globalvars.h" />
 		<Unit filename="gamecontent/inventory.cpp" />
