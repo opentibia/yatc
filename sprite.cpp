@@ -24,9 +24,10 @@
 #include <GL/glext.h>
 #endif
 
+#include "engine.h"
 Sprite::Sprite(const std::string& filename, int index)
 {
-	m_pixelformat = GL_NONE;
+	m_pixelformat = GL_RGBA;
 	m_image = NULL;
 
 	size_t extbegins = filename.rfind(".") + 1;
@@ -42,6 +43,7 @@ Sprite::Sprite(const std::string& filename, int index)
 			return;
 		}
 		m_pixelformat = GL_BGR;
+
 	}
 	else if(extension == "spr"){
 		uint32_t signature; // TODO (ivucica#3#) signature should be perhaps read during logon?
@@ -123,6 +125,7 @@ Sprite::Sprite(const std::string& filename, int index)
 		// m_image is already marked as NULL, so we're over
 		return;
 	}
+
 
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magenta is transparent
 }
