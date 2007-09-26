@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="" prefix_auto="1" extension_auto="1" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="" prefix_auto="1" extension_auto="1" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objsrelease/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -40,7 +40,9 @@
 			<Add library="GLICT" />
 			<Add library="gmp" />
 		</Linker>
+		<Unit filename="LICENSE" />
 		<Unit filename="README" />
+		<Unit filename="codeguide.txt" />
 		<Unit filename="debugprint.cpp" />
 		<Unit filename="debugprint.h" />
 		<Unit filename="defines.h" />
@@ -105,8 +107,6 @@
 		<Unit filename="util.h" />
 		<Extensions>
 			<code_completion />
-			<envvars />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
