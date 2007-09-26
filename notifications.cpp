@@ -25,7 +25,7 @@ extern Connection* g_connection;
 
 std::list<std::string> g_recFiles;
 std::list<std::string>::iterator g_recIt;
-extern void connectToRECServer(const char* file);
+//extern void connectToRECServer(const char* file);
 
 
 #include "gamecontent/container.h"
@@ -43,7 +43,7 @@ void newConnect()
 		oldConn->closeConnection();
 		g_connection = NULL;
 		printf("Parsing: %s ", g_recIt->c_str()); fflush(stdout);
-		connectToRECServer(g_recIt->c_str());
+//		connectToRECServer(g_recIt->c_str());
 		++g_recIt;
 	}
 	else{

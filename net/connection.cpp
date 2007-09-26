@@ -64,8 +64,8 @@ const char* Connection::getErrorDesc(int message)
 		return "ERROR_SELECT_FAIL_CONNECTED";
 	case ERROR_SELECT_FAIL_CONNECTING:
 		return "ERROR_SELECT_FAIL_CONNECTING";
-	case ERROR_UNSUCCESSFULL_CONNECTION:
-		return "ERROR_UNSUCCESSFULL_CONNECTION";
+	case ERROR_UNSUCCESSFUL_CONNECTION:
+		return "ERROR_UNSUCCESSFUL_CONNECTION";
 	case ERROR_GETSOCKTOPT_FAIL:
 		return "ERROR_GETSOCKTOPT_FAIL";
 	case ERROR_UNEXPECTED_SELECT_RETURN_VALUE:
@@ -247,7 +247,7 @@ void Connection::executeNetwork()
 			}
 			else if(ret != SOCKET_ERROR && optError != 0){
 				//connection failed
-				closeConnectionError(ERROR_UNSUCCESSFULL_CONNECTION);
+				closeConnectionError(ERROR_UNSUCCESSFUL_CONNECTION);
 			}
 			else{
 				//call to getsockopt failed

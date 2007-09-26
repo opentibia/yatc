@@ -36,7 +36,8 @@ EngineGL::EngineGL()
 
 	if(!m_screen){
 		fprintf(stderr, "Could not set %dx%d video mode: %s\n", m_width, m_height, SDL_GetError());
-		exit(1);
+		return;
+		//exit(1);
 	}
 
 	m_sysfont->SetFontParam(createSprite("font.bmp"));
@@ -84,4 +85,17 @@ void EngineGL::drawRectangle(float x, float y, float width, float height, oRGBA 
 	glRectf(x, y, x+width, y+height);
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+bool EngineGL::isSupported() {
+
+	if (!m_screen) return false; else return true;
+	/*uint32_t vf = SDL_OPENGL | SDL_RESIZABLE;
+
+	SDL_Surface *s = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
+	if (s) {
+		SDL_FreeSurface(s);
+		return true;
+	} else
+		return false;*/
 }
