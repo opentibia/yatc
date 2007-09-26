@@ -21,33 +21,13 @@
 #ifndef __YATC_CREATURE_H__
 #define __YATC_CREATURE_H__
 
-#include "thing.h"
 #include <string>
 #include <map>
 
-enum Direction
-{
-	DIRECTION_NORTH = 0,
-	DIRECTION_EAST = 1,
-	DIRECTION_SOUTH = 2,
-	DIRECTION_WEST = 3,
-	DIRECTION_NE,
-	DIRECTION_NW,
-	DIRECTION_SE,
-	DIRECTION_SW,
-};
+#include "thing.h"
+#include "enums.h"
 
 class Tile;
-
-struct Outfit_t{
-	uint32_t m_looktype;
-	uint32_t m_lookhead;
-	uint32_t m_lookbody;
-	uint32_t m_looklegs;
-	uint32_t m_lookfeet;
-	uint32_t m_lookitem;
-	uint32_t m_addons;
-};
 
 class Creature : public Thing
 {

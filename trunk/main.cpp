@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 	options.Load();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file...\n");
 
-	if(!Objects::getInstance()->loadDat("tibia.dat")){ //TODO (Smygflik#3#), inform the user with a messagebox
+	if(!Objects::getInstance()->loadDat("Tibia.dat")){ //TODO (Smygflik#3#), inform the user with a messagebox
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[FAILED]");
 		exit(1);
 	}
@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps these statuses should be moved in a constructor?
 
-//		g_game = new GM_MainMenu();
+		//g_game = new GM_MainMenu();
 		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
 

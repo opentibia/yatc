@@ -20,7 +20,9 @@
 
 #ifndef __NETMESSAGE_H
 #define __NETMESSAGE_H
+
 #include <string>
+#include "fassert.h"
 
 #define NETWORK_MESSAGE_SIZE 16384
 
@@ -51,8 +53,14 @@ class NetworkMessage
 		void addU32(uint32_t value);
 		void addU16(uint16_t value);
 		void addU8(uint8_t value);
+		void addMessageType(uint8_t value){
+			ASSERT(m_messageTypeAdded == false);
+			ASSERT(m_messageTypeAdded = true);
+			addU8(value);
+		}
 		void addString(const std::string& value) { addString(value.c_str()); }
 		void addString(const char* value);
+		void addPosition(const Position& pos);
 		void addPaddingBytes(uint32_t n);
 		void addHeader();
 
@@ -78,14 +86,18 @@ class NetworkMessage
 		bool canRead(int bytes) const;
 		bool canWrite(int bytes) const;
 
-		bool eof(){ return !canRead(1);}
+		bool eof() const { return !canRead(1);}
 
 		enum{
 			CAN_READ = 1,
 			CAN_WRITE = 2,
 		};
+
 		void setType(int v){ m_accessType = v; }
 		int getType() const { return m_accessType; }
+
+		bool isMessageTypeAdded() const { return m_messageTypeAdded; }
+
 	protected:
 
 		int m_accessType;
@@ -94,6 +106,7 @@ class NetworkMessage
 		int m_readPos;
 		int m_writePos;
 		char m_buffer[NETWORK_MESSAGE_SIZE];
+		bool m_messageTypeAdded;
 };
 
 #endif

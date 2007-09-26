@@ -84,8 +84,8 @@ const char* Connection::getErrorDesc(int message)
 		return "ERROR_SEND_FAIL";
 	case ERROR_PROTOCOL_ONRECV:
 		return "ERROR_PROTOCOL_ONRECV";
-	case ERROR_CONNECTED_SOCKET_ERROR:
-		return "ERROR_CONNECTED_SOCKET_ERROR";
+	case ERROR_CLOSED_SOCKET:
+		return "ERROR_CLOSED_SOCKET";
 	case ERROR_TOO_BIG_MESSAGE:
 		return "ERROR_TOO_BIG_MESSAGE";
 	default:
@@ -364,13 +364,9 @@ void Connection::checkSocketReadState()
 	FD_ZERO(&read_set);
 	FD_SET(m_socket, &read_set);
 
-	//TODO. Change this code
 	int ret = select(m_socket + 1, &read_set, NULL, NULL, &tv);
-	if(ret == 1){
-		//TODO. Connection closed or error?
-		if(getPendingInput() == 0){
-			closeConnectionError(ERROR_CONNECTED_SOCKET_ERROR);
-		}
+	if(ret == 1 && getPendingInput() == 0){
+		closeConnectionError(ERROR_CLOSED_SOCKET);
 	}
 	else if(ret == SOCKET_ERROR){
 		closeConnectionError(ERROR_SELECT_FAIL_CONNECTED);
@@ -416,6 +412,11 @@ void Connection::sendMessage(NetworkMessage& msg)
 {
 	if(m_state != STATE_CONNECTED){
 		printf("Calling send when state == STATE_CONNECTED(state = %d)\n", m_state);
+		return;
+	}
+
+	if(msg.getSize() == 0){
+		printf("Sending size = 0 message\n");
 		return;
 	}
 

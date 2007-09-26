@@ -25,23 +25,30 @@
 #endif
 #include "spritegl.h"
 
-SpriteGL::SpriteGL(const std::string& filename, int index) : Sprite(filename, index)
+SpriteGL::SpriteGL(const std::string& filename, int index) :
+Sprite(filename, index)
 {
+	//Do not continue if the image isnt loaded
+	if(!getImage())
+		return;
+
 	SDL_LockSurface(getImage());
 
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	gluBuild2DMipmaps(GL_TEXTURE_2D,
-			 GL_RGBA,
-			 getImage()->w, getImage()->h,
-			 getPixelFormat(),
-			 GL_UNSIGNED_BYTE,
-			 getImage()->pixels);
+	GLint ret = gluBuild2DMipmaps(GL_TEXTURE_2D,
+						GL_RGBA,
+						getImage()->w, getImage()->h,
+						getPixelFormat(),
+						GL_UNSIGNED_BYTE,
+			 			getImage()->pixels);
+	if(ret != 0){
+		printf("Error [SpriteGL::SpriteGL] Cant build 2DMipmaps\n");
+	}
 
 	SDL_UnlockSurface(getImage());
-
 }
 
 SpriteGL::~SpriteGL()

@@ -33,7 +33,7 @@ m_outputMessage(NetworkMessage::CAN_WRITE)
 
 ProtocolGame::~ProtocolGame()
 {
-	//TODO. clear game state variables
+	//
 }
 
 void ProtocolGame::onConnect()

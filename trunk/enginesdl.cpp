@@ -36,7 +36,7 @@ EngineSDL::EngineSDL()
 		exit(1); // this is perfectly valid, since it's really not believable that any other engine would be supported in case SDL fails to init
 	}
 
-	if (m_screen->format->BitsPerPixel==8) {
+	if(m_screen->format->BitsPerPixel == 8){
 		// 256 colors? go grayscale, go!
 		SDL_Color colors[256];
 		for (int i = 0 ; i < 256; i++) {
