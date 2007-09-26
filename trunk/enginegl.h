@@ -30,7 +30,7 @@ class EngineGL : public Engine
 		EngineGL();
 		~EngineGL();
 
-		bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
+		bool isSupported();
 
 		void Flip(){SDL_GL_SwapBuffers();};
 		void doResize(int h, int w);
