@@ -76,19 +76,9 @@ public:
 	EffectList& getEffects(){return m_effects;}
 	const EffectList& getEffects() const {return m_effects;}
 
-	const Position& getPosition() const { return m_pos;}
-	void setPosition(uint32_t x, uint32_t y, uint32_t z){
-		m_pos.x = x;
-		m_pos.y = y;
-		m_pos.z = z;
-	}
-
 private:
 	Item* m_ground;
 	ThingVector m_objects;
-	Position m_pos;
-
-	bool m_used;
 
 	EffectList m_effects;
 
@@ -120,12 +110,15 @@ public:
 
 private:
 	Map();
-	void internalPrepareTile(uint32_t i, uint32_t x, uint32_t y, uint32_t z);
 
 	typedef std::map<uint64_t, uint16_t> CoordMap;
 	CoordMap m_coordinates;
+
 	#define TILES_CACHE 4096
 	Tile m_tiles[TILES_CACHE];
+
+	typedef std::vector<uint32_t> FreeTiles;
+	FreeTiles m_freeTiles;
 };
 
 #endif

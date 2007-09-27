@@ -28,7 +28,6 @@
 Tile::Tile()
 {
 	m_ground = NULL;
-	m_used = false;
 }
 
 Tile::~Tile()
@@ -112,6 +111,9 @@ bool Tile::insertThing(Thing *thing, int32_t stackpos)
 	}
 
 	if(item->isGroundTile() && pos == 0){
+		if(m_ground){
+			Thing::deleteThing(m_ground);
+		}
 		m_ground = item;
 		return true;
 	}
@@ -208,10 +210,14 @@ void Tile::addEffect(uint32_t effect, double time)
 //*************** Map **************************
 
 #define POS2INDEX(x, y, z) ((uint64_t)(x & 0xFFFF) << 24 | (y & 0xFFFF) << 8 | (z & 0xFF))
+#define INDEX2POS(index, pos)  pos.x = ((uint64_t)(index) >> 24) & 0xFFFF; pos.y = ((index) >> 8) & 0xFFFF; pos.z = ((index) & 0xFF);
 
 Map::Map()
 {
-	//
+	m_freeTiles.reserve(TILES_CACHE);
+	for(uint32_t i = 0; i < TILES_CACHE; ++i){
+		m_freeTiles.push_back(i);
+	}
 }
 
 Map::~Map()
@@ -223,48 +229,58 @@ void Map::clear()
 {
 	for(uint32_t i = 0; i < TILES_CACHE; ++i){
 		m_tiles[i].clear();
-		m_tiles[i].m_used = false;
 	}
 	m_coordinates.clear();
+	m_freeTiles.clear();
+	m_freeTiles.reserve(TILES_CACHE);
+	for(uint32_t i = 0; i < TILES_CACHE; ++i){
+		m_freeTiles.push_back(i);
+	}
 }
 
 Tile* Map::setTile(uint32_t x, uint32_t y, uint32_t z)
 {
 	Tile* tile = getTile(x, y, z);
 	if(!tile){
-		//search unused tile
-		for(uint32_t i = 0; i < TILES_CACHE; ++i){
-			if(m_tiles[i].m_used == false){
-				internalPrepareTile(i, x, y, z);
-				return &m_tiles[i];
-			}
-			else{
-				const Position& tilePos = m_tiles[i].getPosition();
-				if(!playerCanSee(tilePos.x, tilePos.y, tilePos.z)){
-					uint64_t oldPosIndex = POS2INDEX(tilePos.x, tilePos.y, tilePos.z);
-					CoordMap::iterator it = m_coordinates.find(oldPosIndex);
-					if(it != m_coordinates.end()){
-						m_coordinates.erase(it);
+		if(m_freeTiles.size() == 0){
+			CoordMap::iterator it;
+			uint32_t freedTiles = 0;
+			for(it = m_coordinates.begin(); it != m_coordinates.end(); ){
+				Position pos;
+				INDEX2POS(it->first, pos);
+				if(!playerCanSee(pos.x, pos.y, pos.z)){
+
+					m_freeTiles.push_back(it->second);
+					m_coordinates.erase(it++);
+
+					++freedTiles;
+					if(freedTiles > 384){
+						break;
 					}
-					internalPrepareTile(i, x, y, z);
-					return &m_tiles[i];
+				}
+				else{
+					++it;
 				}
 			}
+
+			if(freedTiles == 0){
+				//No free tiles after looking for them
+				return NULL;
+			}
 		}
-		// TODO (mips_act#3#): Handle error, trying to create a tile but there isnt any free slot for it!
+
+		uint32_t i = m_freeTiles.back();
+		m_freeTiles.pop_back();
+
+		uint64_t posIndex = POS2INDEX(x, y, z);
+		m_coordinates[posIndex] = i;
+
+		return &m_tiles[i];
 		return NULL;
 	}
 	else{
 		return tile;
 	}
-}
-
-void Map::internalPrepareTile(uint32_t i, uint32_t x, uint32_t y, uint32_t z)
-{
-	uint64_t posIndex = POS2INDEX(x, y, z);
-	m_coordinates[posIndex] = i;
-	m_tiles[i].setPosition(x, y, z);
-	m_tiles[i].m_used = true;
 }
 
 Tile* Map::getTile(uint32_t x, uint32_t y, uint32_t z)
