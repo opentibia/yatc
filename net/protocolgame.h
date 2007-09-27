@@ -120,22 +120,24 @@ class ProtocolGame : public Protocol
 class SendMessageFunction
 {
 public:
-	SendMessageFunction(ProtocolGame* protocol)
+	inline SendMessageFunction(ProtocolGame* protocol)
 	{
 		m_protocol = protocol;
 		protocol->m_outputMessage.reset();
 	}
 
-	~SendMessageFunction()
+	inline ~SendMessageFunction()
 	{
 		ASSERT(m_protocol->m_outputMessage.isMessageTypeAdded());
+		#ifndef DISABLE_SEND_FUNCTIONS
 		m_protocol->m_connection->sendMessage(m_protocol->m_outputMessage);
+		#endif
 	}
 
 protected:
 	ProtocolGame* m_protocol;
 };
 
-#define PROTOCOLGAME_SEND_FUNCTION SendMessageFunction(this);
+#define PROTOCOLGAME_SEND_FUNCTION SendMessageFunction SEND_FUNCTION_(this);
 
 #endif
