@@ -30,6 +30,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-Werror" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
 			<Add directory="." />
 		</Compiler>

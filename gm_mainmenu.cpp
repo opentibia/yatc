@@ -197,7 +197,7 @@ void GM_MainMenu::msgBox (const char* mbox, const char* title) {
 	mb->SetMessage(mbox);
 
 	mb->SetHeight(glictFontNumberOfLines(mbox)*16 + 35);
-	mb->SetWidth(glictFontSize(mbox, "system"));
+	mb->SetWidth((int)glictFontSize(mbox, "system"));
 
 	mb->GetSize(&s);
 
@@ -225,7 +225,7 @@ void GM_MainMenu::pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictConta
 
 void GM_MainMenu::pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
-	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	//GM_MainMenu* m = (GM_MainMenu*)g_game;
 }
 
 void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictContainer* callerclass)

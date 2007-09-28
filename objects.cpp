@@ -187,7 +187,7 @@ bool Objects::loadDat(const char* filename)
 		ObjectType* oType = new ObjectType(id);
 
 		int optbyte;
-		bool colorTemplate = false;
+		//bool colorTemplate = false;
 		while(((optbyte = fgetc(fp)) >= 0) && (optbyte != 0xFF)){
 			switch(optbyte){
 				case 0x00: //Ground tile
