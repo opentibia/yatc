@@ -16,17 +16,17 @@ Copyright (C) 2007 OpenTibia Team
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
- 1. Requisites
+ 1. Requirements
  2. Building on Linux/Unix
  3. Building on Windows
+ 4. Compiling and installing GLICT
 
-
-1. Requisites
+1. Requirements
 =============
 
 - SDL 1.2		http://www.libsdl.org/
 - GMP 4.2		http://gmplib.org/
-- GLICT
+- GLICT - latest SVN
 - OpenGL and GLU
 - autoconf 2.61
 - automake 1.10
@@ -40,8 +40,53 @@ Copyright (C) 2007 OpenTibia Team
 2. Run "./configure"
 3. Run "make"
 
-
 3. Building on Windows
 ======================
 
+There's a Code::Blocks project file included. You should install Code::Blocks
+and use the aforementioned Code::Blocks project file to compile YATC.
 
+This project file probably won't be usable with Code::Blocks v1.02RC1 (the 
+latest "stable" build) -- so we recommend that you take the latest "unstable"
+release of Code::Blocks.
+
+4. Compiling and installing GLICT
+=================================
+
+We're using one library that you may have trouble finding and installing,
+since it's written by one of our developers. This library is GLICT. 
+
+(This is mainly from the YATC Development Google Group.)
+
+1) Download GLICT SVN with:
+   $ svn co https://glict.svn.sourceforge.net/svnroot/glict/trunk/glict glict
+   (Generally, follow instructions from
+       http://sourceforge.net/svn/?group_id=167920 )
+
+2) Create a new project for GLICT. It should be of "static library" type.
+   It should be called "GLICT".
+3) Add all files in GLICT/ subfolder in it.
+4) Build it!
+5) You will end up with GLICT.lib or libGLICT.a depending on your
+   compiler. (GLICT is developed with GCC, and in the past was regularly
+   tested with MSVC2005.)
+6) Copy the resulting file in your compiler's "lib/" folder. For example,
+   in:
+   * "/usr/lib/" for Debian GNU/Linux GCC
+   * "C:\Dev-Cpp\lib" for Dev-Cpp
+   * "C:\Program Files\Microsoft Visual Studio 8\VC\lib" for MSVC 2005
+      (not express edition!)
+
+   If you have other compiler you'll have to manage it yourself.
+7) Copy the entire subfolder "GLICT/" which contains files such as
+   "button.h", "window.h", "container.h" into your compiler's "include/"
+   folder. For example:
+   * "/usr/include/"
+   * "C:\Dev-Cpp\include"
+   * "C:\Program Files\Microsoft Visual Studio 8\VC\include"
+
+This means you should have files such as this when you're over:
+C:\Dev-Cpp\include\GLICT\button.h
+
+(And don't forget: Dev-Cpp is just an IDE, GCC is the compiler that 
+Dev-Cpp uses. But it's easier for me to put it among real compilers :P)
