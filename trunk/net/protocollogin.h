@@ -27,7 +27,6 @@
 class ProtocolLogin : public Protocol
 {
 	public:
-		ProtocolLogin(int account, const std::string& password);
 		virtual ~ProtocolLogin() {};
 
 		void setCallback(void*);
@@ -36,11 +35,14 @@ class ProtocolLogin : public Protocol
 		virtual bool onRecv(NetworkMessage& msg);
 
 	protected:
+		ProtocolLogin(int account, const std::string& password);
 
 		const char* getProtocolName() { return "Protocol Login"; }
 
 		std::string m_password;
 		int m_account;
+
+		friend class ProtocolConfig;
 };
 
 #endif

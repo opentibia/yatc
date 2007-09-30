@@ -21,6 +21,8 @@
 #include "globalvars.h"
 
 uint32_t GlobalVariables::m_playerId = 0;
+uint32_t GlobalVariables::m_attackId = 0;
+uint32_t GlobalVariables::m_followId = 0;
 Position GlobalVariables::m_playerPos(0,0,0);
 bool GlobalVariables::m_canReportBugs = 0;
 uint32_t GlobalVariables::m_worldLightColor = 0;

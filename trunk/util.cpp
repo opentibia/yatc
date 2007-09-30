@@ -21,13 +21,15 @@
 #include <sstream>
 #include "util.h"
 
-
+#ifdef WIN32
+#include "windows.h"
+#endif
 
 void str_replace(std::string &s, const std::string& what, const std::string& with) {
-    std::string::size_type p, l;
-    for (l = 0; (p = s.find(what, l)) != std::string::npos; l = p + with.size()) {
-        s.replace(p, what.size(), with);
-    }
+	std::string::size_type p, l;
+	for (l = 0; (p = s.find(what, l)) != std::string::npos; l = p + with.size()) {
+		s.replace(p, what.size(), with);
+	}
 }
 
 

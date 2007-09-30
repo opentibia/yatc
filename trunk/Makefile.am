@@ -1,5 +1,5 @@
 
-AM_CXXFLAGS = -Wall -Werror
+AM_CXXFLAGS = -Wall
 
 AM_CPPFLAGS = $(ASSERT_FLAGS) $(DEBUG_FLAGS)
 

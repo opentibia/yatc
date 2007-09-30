@@ -46,7 +46,7 @@ public:
 
 	virtual uint32_t getOrder() const {return getAlwaysOnTopLevel();}
 
-	virtual Item* getItem(){return this;}
+	virtual Item* getItem() {return this;}
 	virtual const Item* getItem() const {return this;}
 
 protected:

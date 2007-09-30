@@ -68,25 +68,63 @@ extern int h_errno;
 #include <list>
 
 class Connection;
+class ProtocolGame;
+
+enum ClientVersion_t{
+	CLIENT_VERSION_800 = 800
+};
+
+enum ClientOS_t{
+	CLIENT_OS_LINUX = 1,
+	CLIENT_OS_WIN = 2
+};
+
+enum ServerType_t{
+	SERVER_CIP = 1,
+	SERVER_OTSERV = 2
+};
 
 class ProtocolConfig
 {
 	public:
 		~ProtocolConfig() {}
 
-		static ProtocolConfig* getInstance()
+		static ProtocolConfig& getInstance()
 		{
 			static ProtocolConfig instance;
-			return &instance;
+			return instance;
 		}
 
-		int os;
-		int clientVersion;
-		int datSignature;
-		int sprSignature;
-		int picSignature;
+		void setVersion(ClientOS_t os, ClientVersion_t version);
+		void setServerType(ServerType_t type);
+		void setServer(const std::string& host, uint16_t port){
+			m_host = host;
+			m_port = port;
+		}
+
+		ClientOS_t getOS() { return m_os; }
+		ClientVersion_t getClientVersion() { return m_clientVersion; }
+		uint32_t getDatSignature() { return m_datSignature; }
+		uint32_t getSprSignature() { return m_sprSignature; }
+		uint32_t getPicSignature() { return m_picSignature; }
+		ServerType_t getServerType() { return m_serverType; }
+		const std::string& getServerHost() {return m_host; }
+		uint16_t getServerPort() { return m_port; }
+
+		static void createLoginConnection(int account, const std::string& password);
+		static ProtocolGame* createGameConnection(int account, const std::string& password, const std::string& name, bool isGM);
 
 	protected:
+
+		ClientOS_t m_os;
+		ClientVersion_t m_clientVersion;
+		uint32_t m_datSignature;
+		uint32_t m_sprSignature;
+		uint32_t m_picSignature;
+		ServerType_t m_serverType;
+		std::string m_host;
+		uint16_t m_port;
+
 		ProtocolConfig();
 };
 
@@ -172,7 +210,6 @@ class Protocol
 class Connection
 {
 	public:
-		Connection(const std::string& host, uint16_t port, Encryption* crypto, Protocol* protocol);
 		~Connection();
 
 		enum STATE
@@ -225,6 +262,10 @@ class Connection
 		}
 
 		Protocol* getProtocol(){ return m_protocol;}
+
+	protected:
+		Connection(const std::string& host, uint16_t port, Encryption* crypto, Protocol* protocol);
+		friend class ProtocolConfig;
 
 	private:
 		//functions

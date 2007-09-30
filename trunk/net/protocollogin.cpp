@@ -32,14 +32,14 @@ ProtocolLogin::ProtocolLogin(int account, const std::string& password)
 
 void ProtocolLogin::onConnect()
 {
-	ProtocolConfig* config = ProtocolConfig::getInstance();
+	ProtocolConfig& config = ProtocolConfig::getInstance();
 	NetworkMessage output(NetworkMessage::CAN_WRITE);
 	output.addU8(0x01); //Login Protocol
-	output.addU16(config->os); // os; 1 = linux, 2 = windows
-	output.addU16(config->clientVersion); //Client version
-	output.addU32(config->datSignature); //tibia.dat signature
-	output.addU32(config->sprSignature); //tibia.spr signature
-	output.addU32(config->picSignature); //tibia.pic signature
+	output.addU16(config.getOS());
+	output.addU16(config.getClientVersion());
+	output.addU32(config.getDatSignature());
+	output.addU32(config.getSprSignature());
+	output.addU32(config.getPicSignature());
 
 	int sizeBefore = output.getSize();
 
@@ -69,6 +69,9 @@ void ProtocolLogin::onConnect()
 	m_connection->sendMessage(output);
 	m_connection->setKey((char*)k, 4*sizeof(uint32_t));
 	m_connection->setCryptoState(true);
+
+	m_account = 0;
+	m_password = "";
 }
 
 bool ProtocolLogin::onRecv(NetworkMessage& msg)

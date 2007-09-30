@@ -31,7 +31,6 @@ class NetworkMessage;
 class ProtocolGame : public Protocol
 {
 	public:
-		ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM);
 		virtual ~ProtocolGame();
 
 		virtual void onConnect();
@@ -104,6 +103,9 @@ class ProtocolGame : public Protocol
 		virtual void sendRequestQuest(uint16_t questid) = 0;
 
 	protected:
+
+		ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM);
+
 		virtual void sendPing() = 0;
 		virtual void sendRequestUpdateTile(const Position& pos) = 0;
 		virtual void sendRequestUpdateContainer(uint8_t containerid) = 0;
