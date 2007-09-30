@@ -69,7 +69,7 @@ AC_CHECK_HEADERS(GL/glu.h, ,[AC_MSG_ERROR("*** GLU header not found.")])
 AC_CHECK_LIB(GLU, gluBuild2DMipmaps, ,[AC_MSG_ERROR("*** GLU library not found.")])
 
 # check for GLICT
-AC_CHECK_HEADERS([GLICT/globals.h],,[AC_MSG_ERROR("GLICT header is missing.")])
+AC_CHECK_HEADERS([GLICT/globals.h],,[AC_MSG_ERROR("*** GLICT header not found.")])
 LIBS="$LIBS -lGLICT"
 
 # output files

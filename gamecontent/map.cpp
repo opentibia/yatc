@@ -24,6 +24,41 @@
 #include "item.h"
 #include "creature.h"
 #include "globalvars.h"
+#include "objects.h"
+
+extern uint32_t g_frameTime;
+
+//*************** DistanceEffect **************************
+
+DistanceEffect::DistanceEffect(const Position& from, const Position& to, uint32_t type)
+{
+	m_type = type;
+	m_from = from;
+	m_to = to;
+	m_startTime = g_frameTime;
+	m_it = Objects::getInstance()->getDistanceType(type);
+}
+
+//*************** Effect **************************
+
+Effect::Effect(uint32_t type)
+{
+	m_type = type;
+	m_startTime = g_frameTime;
+	m_it = Objects::getInstance()->getEffectType(type);
+}
+
+//*************** AnimatedText **************************
+
+AnimatedText::AnimatedText(const Position& pos, uint32_t color, const std::string& text)
+{
+	m_color = color;
+	m_text = text;
+	m_pos = pos;
+	m_startTime = g_frameTime;
+}
+
+//*************** Tile **************************
 
 Tile::Tile()
 {
@@ -185,8 +220,7 @@ bool Tile::addThing(Thing *thing)
 	}
 
 	int thingOrder = thing->getOrder();
-
-	ThingVector::iterator it = m_objects.begin();
+	ThingVector::iterator it;
 
 	for(it = m_objects.begin(); it != m_objects.end(); ++it){
 		int itThingOrder = (*it)->getOrder();
@@ -199,12 +233,9 @@ bool Tile::addThing(Thing *thing)
 	return true;
 }
 
-void Tile::addEffect(uint32_t effect, double time)
+void Tile::addEffect(uint32_t effect)
 {
-	TileEffect tileEffect;
-	tileEffect.effect = effect;
-	tileEffect.time = time;
-	m_effects.push_front(tileEffect);
+	m_effects.push_front(Effect(effect));
 }
 
 //*************** Map **************************
@@ -334,4 +365,14 @@ bool Map::playerCanSee(int32_t x, int32_t y, int32_t z)
 	}
 
 	return false;
+}
+
+void Map::addDistanceEffect(const Position& from, const Position& to, uint32_t type)
+{
+	m_distanceEffects.push_back(DistanceEffect(from, to , type));
+}
+
+void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string& text)
+{
+	m_animatedTexts.push_back(AnimatedText(pos, color, text));
 }

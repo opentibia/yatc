@@ -36,6 +36,12 @@ public:
 	static uint32_t getPlayerID() { return m_playerId; }
 	static void setPlayerID(uint32_t v) { m_playerId = v;}
 
+	static uint32_t getAttackID() { return m_attackId; }
+	static void setAttackID(uint32_t v) { m_attackId = v;}
+
+	static uint32_t getFollowID() { return m_followId; }
+	static void setFollowID(uint32_t v) { m_followId = v;}
+
 	static bool canReprotBugs() { return m_canReportBugs;}
 	static void setCanReportBugs(bool v){ m_canReportBugs = v;}
 
@@ -57,13 +63,15 @@ public:
 	static uint32_t getPlayerSkill(SkillList_t skill, SkillAttr_t attr );
 	static void setPlayerSkill(SkillList_t skill, SkillAttr_t attr, uint32_t v);
 
-
 protected:
 	GlobalVariables(){}
 
 	static uint32_t m_playerId;
 	static Position m_playerPos;
 	static bool m_canReportBugs;
+
+	static uint32_t m_attackId;
+	static uint32_t m_followId;
 
 	static uint32_t m_worldLightColor;
 	static uint32_t m_worldLightLevel;

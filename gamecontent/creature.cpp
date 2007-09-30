@@ -19,6 +19,9 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "creature.h"
+#include "globalvars.h"
+
+extern uint32_t g_frameTime;
 
 //*********** Creature **************
 Creature::Creature()
@@ -38,6 +41,23 @@ Creature::Creature()
 	m_speed = 0;
 	m_skull = 0;
 	m_shield = 0;
+
+	m_squareColor = 0;
+	m_squareStartTime = 0;
+
+	m_moveStartTime = 0;
+}
+
+void Creature::setSquare(uint32_t color)
+{
+	m_squareColor = color;
+	m_squareStartTime = g_frameTime;
+}
+
+void Creature::setMoving(const Position& oldPos)
+{
+	m_moveStartTime = g_frameTime;
+	m_moveOldPos = oldPos;
 }
 
 //*********** Creatures *************
@@ -80,6 +100,12 @@ int16_t Creatures::reserveCreature(uint32_t id)
 	}
 	// TODO (mips_act#3#): Handle error, trying to create a creature but there isnt any free slot for it!
 	return -1;
+}
+
+Creature* Creatures::getPlayer()
+{
+	uint32_t ourId = GlobalVariables::getPlayerID();
+	return getCreature(ourId);
 }
 
 Creature* Creatures::getCreature(uint32_t id)

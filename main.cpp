@@ -32,18 +32,15 @@
 #include "gm_mainmenu.h"
 #include "gm_debug.h"
 
-#include "net/rsa.h"
 #include "net/connection.h"
 #include "net/protocollogin.h"
 #include "net/protocolgame.h"
-
-const char RSAKey_otserv[] = "109120132967399429278860960508995541528237502902798129123468757937266291492576446330739696001110603907230888610072655818825358503429057592827629436413108566029093628212635953836686562675849720620786279431090218017681061521755056710823876476444260558147179707119674283982419152118103759076030616683978566631413";
-const char RSAKey_cip[]    = "124710459426827943004376449897985582167801707960697037164044904862948569380850421396904597686953877022394604239428185498284169068581802277612081027966724336319448537811441719076484340922854929273517308661370727105382899118999403808045846444647284499123164879035103627004668521005328367415259939915284902061793";
 
 bool g_running = true;
 uint32_t keymods = 0;
 
 Connection* g_connection = NULL;
+uint32_t g_frameTime = 0;
 
 
 void onKeyDown(const SDL_Event& event)
@@ -156,11 +153,6 @@ int main(int argc, char *argv[])
 			g_engine = new EngineSDL;
 		}
 
-
-
-		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Setting up RSA key...\n");
-		RSA::getInstance()->setPublicKey(RSAKey_otserv, "65537");
-
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n"); // perhaps these statuses should be moved in a constructor?
 
 		//g_game = new GM_MainMenu();
@@ -173,6 +165,8 @@ int main(int argc, char *argv[])
 		SDL_Event event;
 		while(g_running){
 			SDL_Delay(100); //limit to 10fps
+
+			//first process sdl events
 			while(SDL_PollEvent(&event)){
 				switch (event.type){
 					case SDL_VIDEORESIZE:
@@ -207,9 +201,13 @@ int main(int argc, char *argv[])
 						break;
 				}
 			}
+			//update current frame time
+			g_frameTime = SDL_GetTicks();
+			//check connection
 			if(g_connection){
 				g_connection->executeNetwork();
 			}
+			//and finally render
 			g_game->renderScene();
 			g_engine->Flip();
 		}

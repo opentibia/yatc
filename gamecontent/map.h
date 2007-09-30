@@ -24,10 +24,12 @@
 #include <vector>
 #include <map>
 #include <list>
+#include <string>
 
 class Item;
 class Creature;
 class Thing;
+class ObjectType;
 
 typedef std::vector<Thing*> ThingVector;
 
@@ -51,6 +53,45 @@ public:
 	uint32_t x, y, z;
 };
 
+
+class DistanceEffect{
+public:
+	DistanceEffect(const Position& from, const Position& to, uint32_t type);
+	virtual ~DistanceEffect(){};
+
+private:
+	uint32_t m_startTime;
+	Position m_from;
+	Position m_to;
+	uint32_t m_type;
+	const ObjectType* m_it;
+};
+
+
+class Effect{
+public:
+	Effect(uint32_t type);
+	virtual ~Effect(){};
+
+private:
+	uint32_t m_startTime;
+	uint32_t m_type;
+	const ObjectType* m_it;
+};
+
+class AnimatedText{
+public:
+	AnimatedText(const Position& pos, uint32_t color, const std::string& text);
+	virtual ~AnimatedText(){}
+
+
+private:
+	uint32_t m_startTime;
+	uint32_t m_color;
+	std::string m_text;
+	Position m_pos;
+};
+
 class Tile{
 public:
 	Tile();
@@ -65,20 +106,13 @@ public:
 	const Thing* getThingByStackPos(int32_t pos) const;
 	const Item* getGround() const;
 
-	struct TileEffect{
-		uint32_t effect;
-		double time;
-	};
-
-	typedef std::list<TileEffect> EffectList;
-
-	void addEffect(uint32_t effect, double time);
-	EffectList& getEffects(){return m_effects;}
-	const EffectList& getEffects() const {return m_effects;}
+	void addEffect(uint32_t effect);
 
 private:
 	Item* m_ground;
 	ThingVector m_objects;
+
+	typedef std::list<Effect> EffectList;
 
 	EffectList m_effects;
 
@@ -108,6 +142,9 @@ public:
 
 	bool playerCanSee(int32_t x, int32_t y, int32_t z);
 
+	void addDistanceEffect(const Position& from, const Position& to, uint32_t type);
+	void addAnimatedText(const Position& pos, uint32_t color, const std::string& text);
+
 private:
 	Map();
 
@@ -119,6 +156,12 @@ private:
 
 	typedef std::vector<uint32_t> FreeTiles;
 	FreeTiles m_freeTiles;
+
+	typedef std::list<AnimatedText> AnimatedTextList;
+	AnimatedTextList m_animatedTexts;
+
+	typedef std::list<DistanceEffect> DistanceEffectList;
+	DistanceEffectList m_distanceEffects;
 };
 
 #endif

@@ -38,11 +38,11 @@ ProtocolGame::~ProtocolGame()
 
 void ProtocolGame::onConnect()
 {
-	ProtocolConfig* config = ProtocolConfig::getInstance();
+	ProtocolConfig& config = ProtocolConfig::getInstance();
 	NetworkMessage output(NetworkMessage::CAN_WRITE);
 	output.addU8(0x0A); //Game world Protocol
-	output.addU16(config->os);  // os; 1 = linux, 2 = windows
-	output.addU16(config->clientVersion); //Client version
+	output.addU16(config.getOS());
+	output.addU16(config.getClientVersion());
 
 	int sizeBefore = output.getSize();
 
@@ -74,4 +74,9 @@ void ProtocolGame::onConnect()
 	m_connection->sendMessage(output);
 	m_connection->setKey((char*)k, 4*sizeof(uint32_t));
 	m_connection->setCryptoState(true);
+
+	m_account = 0;
+	m_password = "";
+	m_name = "";
+	m_isGM = 0;
 }
