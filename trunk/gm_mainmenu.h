@@ -28,7 +28,9 @@
 #include <GLICT/window.h>
 #include "gamemode.h"
 #include "sprite.h"
-
+#include "ui/login.h"
+#include "ui/options.h"
+#include "ui/mainmenu.h"
 class GM_MainMenu : public GameMode
 {
 public:
@@ -43,22 +45,9 @@ public:
 	void msgBox (const char* mbox, const char* title);
 private:
 	glictContainer desktop;
-	struct {
-		glictPanel mainmenu;
-		glictButton btnLogIn, btnOptions, btnAbout, btnExit;
-	} pnlMainMenu;
-
-	struct {
-		glictWindow window;
-		glictPanel pnlUsername, pnlPassword, pnlCreateAc;
-		glictTextbox txtUsername, txtPassword;
-		glictButton btnCreateAc;
-
-		glictPanel pnlSeparator;
-
-		glictButton btnOk, btnCancel;
-
-	} winLogin;
+	pnlMainMenu_t pnlMainMenu;
+	winLogin_t winLogin;
+	winOptions_t winOptions;
 
 	Sprite* background;
 protected:
@@ -68,6 +57,8 @@ protected:
 	static void pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 };
