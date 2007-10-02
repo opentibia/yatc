@@ -38,9 +38,9 @@ extern Connection* g_connection;
 
 void GM_Debug::ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
-	EncXTEA* crypto = new EncXTEA;
-	Protocol* protocol = new ProtocolLogin(1000, "test");
-	g_connection = new Connection("localhost", 7172, crypto, protocol);
+	ProtocolConfig::getInstance().setServerType(SERVER_OTSERV);
+	ProtocolConfig::getInstance().setServer("localhost", 7172);
+	ProtocolConfig::createLoginConnection(1000, "test");
 }
 
 void GM_Debug::ExitOnClick(glictPos* relmousepos, glictContainer* callerclass)
