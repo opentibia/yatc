@@ -88,7 +88,7 @@ ProtocolGame* ProtocolConfig::createGameConnection(int account, const std::strin
 	ProtocolGame* protocol;
 	switch(getInstance().m_clientVersion){
 	case CLIENT_VERSION_800:
-		protocol = new ProtocolGame80(account, password, name, isGM);
+		//protocol = new ProtocolGame80(account, password, name, isGM);
 		break;
 	default:
 		return NULL;
