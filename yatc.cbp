@@ -105,10 +105,15 @@
 		<Unit filename="spritegl.h" />
 		<Unit filename="spritesdl.cpp" />
 		<Unit filename="spritesdl.h" />
+		<Unit filename="ui/login.h" />
+		<Unit filename="ui/mainmenu.h" />
+		<Unit filename="ui/options.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Extensions>
 			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
