@@ -26,11 +26,15 @@
 #include <GLICT/panel.h>
 #include <GLICT/textbox.h>
 #include <GLICT/window.h>
+#include "options.h"
 #include "gamemode.h"
 #include "sprite.h"
 #include "ui/login.h"
-#include "ui/options.h"
 #include "ui/mainmenu.h"
+#include "ui/options.h"
+#include "ui/optionsgeneral.h"
+#include "ui/optionsnetwork.h"
+
 class GM_MainMenu : public GameMode
 {
 public:
@@ -48,6 +52,8 @@ private:
 	pnlMainMenu_t pnlMainMenu;
 	winLogin_t winLogin;
 	winOptions_t winOptions;
+	winOptionsGeneral_t winOptionsGeneral;
+	winOptionsNetwork_t winOptionsNetwork;
 
 	Sprite* background;
 protected:
@@ -58,7 +64,14 @@ protected:
 
 	static void winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
+	static void winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 };

@@ -31,6 +31,12 @@ Options::Options()
 	engine = ENGINE_SDL;
 	os_cursor = 0;
 	skin = "default";
+
+	motdtext = "No message of the day retrieved yet.";
+	motdnum = 0;
+
+	server = "change.me.now";
+	port = 7171;
 }
 
 Options::~Options()

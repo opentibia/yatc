@@ -42,7 +42,15 @@ public:
 	bool os_cursor;
 	std::string skin;
 
+	std::string motdtext;
+	int motdnum;
+	std::string server;
+	int port;
+
 	enginelist_t engine;
+
+
+
 };
 
 
