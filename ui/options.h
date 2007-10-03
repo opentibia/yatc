@@ -97,7 +97,7 @@ public:
 		pnlNetwork.SetPos(112, 146);
 		pnlNetwork.SetWidth(142);
 		pnlNetwork.SetHeight(27);
-		pnlNetwork.SetCaption("Set the server\nand protocol");
+		pnlNetwork.SetCaption("Configure network options,\nsuch as server address.");
 		pnlNetwork.SetBGActiveness(false);
 
 		window.AddObject(&pnlSeparator1);

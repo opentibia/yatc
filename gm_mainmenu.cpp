@@ -25,6 +25,12 @@
 #include "engine.h"
 #include "sprite.h"
 #include "options.h"
+
+#include "net/connection.h"
+#include "net/protocollogin.h"
+#include "net/protocolgame80.h"
+
+
 extern bool g_running;
 
 GM_MainMenu::GM_MainMenu()
@@ -41,6 +47,7 @@ GM_MainMenu::GM_MainMenu()
 
 	/* ****************** LOGIN SCREEN *********************** */
 	desktop.AddObject(&winLogin.window);
+	winLogin.btnOk.SetOnClick(GM_MainMenu::winLogin_btnOk_OnClick);
 	winLogin.btnCancel.SetOnClick(GM_MainMenu::winLogin_btnCancel_OnClick);
 
 	/* ******************* OPTIONS ************************* */
@@ -54,9 +61,9 @@ GM_MainMenu::GM_MainMenu()
 	desktop.AddObject(&winOptionsGeneral.window);
 	winOptionsGeneral.btnCancel.SetOnClick(GM_MainMenu::winOptionsGeneral_btnCancel_OnClick);
 
-
 	/* ***************** OPTIONS/NETWORK ******************** */
 	desktop.AddObject(&winOptionsNetwork.window);
+	winOptionsNetwork.btnOk.SetOnClick(GM_MainMenu::winOptionsNetwork_btnOk_OnClick);
 	winOptionsNetwork.btnCancel.SetOnClick(GM_MainMenu::winOptionsNetwork_btnCancel_OnClick);
 
 
@@ -165,8 +172,10 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		"Ivan Vucica\n"
 		"Smygflik\n"
 		"\n"
-		"YATC comes with ABSOLUTELY NO WARRANTY; for details see sections 11 and 12 in LICENSE.\n"
-		"This is free software, and you are welcome to redistribute it under certain conditions;\n"
+		"YATC comes with ABSOLUTELY NO WARRANTY; for \n"
+		"details see sections 11 and 12 in LICENSE.\n"
+		"This is free software, and you are welcome \n"
+		"to redistribute it under certain conditions;\n"
 		"see LICENSE for details.",
 
 		"About YATC"
@@ -178,6 +187,18 @@ void GM_MainMenu::pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContai
 	g_running = 0;
 }
 /* **********LOGIN******* */
+
+void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winLogin.window.SetVisible(false);
+
+	ProtocolConfig::getInstance().setServerType(SERVER_OTSERV); // perhaps this should go to options, too?
+	ProtocolConfig::getInstance().setServer(options.server, options.port);
+	ProtocolConfig::createLoginConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption());
+}
+
+
 void GM_MainMenu::winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
@@ -189,7 +210,6 @@ void GM_MainMenu::winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictCont
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsGeneral.Init();
 	m->winOptionsGeneral.window.SetVisible(true);
-
 	m->winOptionsGeneral.window.Focus(NULL);
 }
 void GM_MainMenu::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
@@ -213,6 +233,11 @@ void GM_MainMenu::winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, gli
 	m->winOptionsGeneral.window.SetVisible(false);
 }
 /* **********NETWORK********* */
+void GM_MainMenu::winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsNetwork.Store();
+	m->winOptionsNetwork.window.SetVisible(false);
+}
 
 void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;

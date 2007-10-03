@@ -84,6 +84,11 @@ public:
 		txtServer.SetCaption(options.server);
 		txtPort.SetCaption(port.str());
 	}
+	void Store() {
+		options.server = txtServer.GetCaption();
+		options.port = atoi(txtPort.GetCaption().c_str());
+		options.Save();
+	}
 
 	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
 		if (caller->GetCaption() == "X")
