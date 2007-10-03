@@ -24,7 +24,7 @@
 #include "defines.h"
 #include "engine.h"
 #include "sprite.h"
-
+#include "options.h"
 extern bool g_running;
 
 GM_MainMenu::GM_MainMenu()
@@ -45,7 +45,20 @@ GM_MainMenu::GM_MainMenu()
 
 	/* ******************* OPTIONS ************************* */
 	desktop.AddObject(&winOptions.window);
+	winOptions.btnGeneral.SetOnClick(GM_MainMenu::winOptions_btnGeneral_OnClick);
+	winOptions.btnNetwork.SetOnClick(GM_MainMenu::winOptions_btnNetwork_OnClick);
+	winOptions.btnMotd.SetOnClick(GM_MainMenu::winOptions_btnMotd_OnClick);
 	winOptions.btnOk.SetOnClick(GM_MainMenu::winOptions_btnOk_OnClick);
+
+	/* ***************** OPTIONS/GENERAL ******************** */
+	desktop.AddObject(&winOptionsGeneral.window);
+	winOptionsGeneral.btnCancel.SetOnClick(GM_MainMenu::winOptionsGeneral_btnCancel_OnClick);
+
+
+	/* ***************** OPTIONS/NETWORK ******************** */
+	desktop.AddObject(&winOptionsNetwork.window);
+	winOptionsNetwork.btnCancel.SetOnClick(GM_MainMenu::winOptionsNetwork_btnCancel_OnClick);
+
 
 	// TODO (ivucica#1#) These should be moved to an "onresize" function which should be called here, but we don't catch a window resize event yet...
 	pnlMainMenu.mainmenu.SetPos(60, glictGlobals.h - 240);
@@ -135,6 +148,7 @@ void GM_MainMenu::pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictCon
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptions.window.SetVisible(true);
+	m->winOptions.window.Focus(NULL);
 }
 
 void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -163,15 +177,44 @@ void GM_MainMenu::pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContai
 {
 	g_running = 0;
 }
-/* ***************** */
+/* **********LOGIN******* */
 void GM_MainMenu::winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winLogin.window.SetVisible(false);
 }
-/* ******************* */
+/* **********OPTIONS********* */
 
+void GM_MainMenu::winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsGeneral.Init();
+	m->winOptionsGeneral.window.SetVisible(true);
+
+	m->winOptionsGeneral.window.Focus(NULL);
+}
+void GM_MainMenu::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsNetwork.Init();
+	m->winOptionsNetwork.window.SetVisible(true);
+	m->winOptionsNetwork.window.Focus(NULL);
+}
+void GM_MainMenu::winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->msgBox(options.motdtext.c_str(), "Message of the Day");
+}
 void GM_MainMenu::winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptions.window.SetVisible(false);
+}
+/* *********GENERAL********** */
+
+void GM_MainMenu::winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsGeneral.window.SetVisible(false);
+}
+/* **********NETWORK********* */
+
+void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsNetwork.window.SetVisible(false);
 }

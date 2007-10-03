@@ -30,7 +30,6 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-Werror" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
 			<Add directory="." />
 		</Compiler>
@@ -108,6 +107,8 @@
 		<Unit filename="ui/login.h" />
 		<Unit filename="ui/mainmenu.h" />
 		<Unit filename="ui/options.h" />
+		<Unit filename="ui/optionsgeneral.h" />
+		<Unit filename="ui/optionsnetwork.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Extensions>

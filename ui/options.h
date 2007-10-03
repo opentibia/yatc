@@ -10,11 +10,13 @@ public:
 	glictButton btnGraphics; // 15, 49
 	glictButton btnConsole; // 15, 82
 	glictButton btnHotkeys; // 15 115
+	glictButton btnNetwork;
 
 	glictPanel pnlGeneral; //112, 14; 142 27
 	glictPanel pnlGraphics; // 112 47
 	glictPanel pnlConsole; // 112 80
 	glictPanel pnlHotkeys; // 112 113
+	glictPanel pnlNetwork;
 
 	glictPanel pnlSeparator1; // 13, 147 -- 250 2
 
@@ -28,7 +30,7 @@ public:
 	winOptions_t () {
 
 		window.SetVisible(false);
-		window.SetHeight(238);
+		window.SetHeight(271);
 		window.SetWidth(278);
 		window.SetCaption("Options");
 
@@ -56,6 +58,13 @@ public:
 		btnHotkeys.SetHeight(18);
 		btnHotkeys.SetCaption("Hotkeys");
 
+
+		window.AddObject(&btnNetwork);
+		btnNetwork.SetPos(15, 148);
+		btnNetwork.SetWidth(84);
+		btnNetwork.SetHeight(18);
+		btnNetwork.SetCaption("Network");
+
 		window.AddObject(&pnlGeneral);
 		pnlGeneral.SetPos(112, 14);
 		pnlGeneral.SetWidth(142);
@@ -74,7 +83,7 @@ public:
 		pnlConsole.SetPos(112, 80);
 		pnlConsole.SetWidth(142);
 		pnlConsole.SetHeight(27);
-		pnlConsole.SetCaption("Customize the console");
+		pnlConsole.SetCaption("Customise the console");
 		pnlConsole.SetBGActiveness(false);
 
 		window.AddObject(&pnlHotkeys);
@@ -84,34 +93,41 @@ public:
 		pnlHotkeys.SetCaption("Edit your hotkey texts");
 		pnlHotkeys.SetBGActiveness(false);
 
+		window.AddObject(&pnlNetwork);
+		pnlNetwork.SetPos(112, 146);
+		pnlNetwork.SetWidth(142);
+		pnlNetwork.SetHeight(27);
+		pnlNetwork.SetCaption("Set the server\nand protocol");
+		pnlNetwork.SetBGActiveness(false);
+
 		window.AddObject(&pnlSeparator1);
-		pnlSeparator1.SetPos(13, 143);
+		pnlSeparator1.SetPos(13, 176);
 		pnlSeparator1.SetWidth(250);
 		pnlSeparator1.SetHeight(2);
 		pnlSeparator1.SetBGColor(.2,.2,.2,1.);
 
 		window.AddObject(&btnMotd);
-		btnMotd.SetPos(15, 165);
+		btnMotd.SetPos(15, 198);
 		btnMotd.SetWidth(84);
 		btnMotd.SetHeight(18);
 		btnMotd.SetCaption("Motd");
 
 		window.AddObject(&pnlMotd);
-		pnlMotd.SetPos(112, 163);
+		pnlMotd.SetPos(112, 196);
 		pnlMotd.SetWidth(142);
 		pnlMotd.SetHeight(27);
 		pnlMotd.SetCaption("Show the most recent\nMessage of the Day");
 		pnlMotd.SetBGActiveness(false);
 
 		window.AddObject(&pnlSeparator2);
-		pnlSeparator2.SetPos(9, 204);
+		pnlSeparator2.SetPos(9, 237);
 		pnlSeparator2.SetWidth(260);
 		pnlSeparator2.SetHeight(2);
 		pnlSeparator2.SetBGColor(.2,.2,.2,1.);
 
 
 		window.AddObject(&btnOk);
-		btnOk.SetPos(227, 215 );
+		btnOk.SetPos(227, 248);
 		btnOk.SetWidth(41);
 		btnOk.SetHeight(17);
 		btnOk.SetCaption("Ok");
