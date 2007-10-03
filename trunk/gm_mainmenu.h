@@ -62,6 +62,7 @@ protected:
 	static void pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
+	static void winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass);
@@ -71,6 +72,7 @@ protected:
 
 	static void winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
+	static void winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void MBOnDismiss(glictPos* pos, glictContainer* caller);

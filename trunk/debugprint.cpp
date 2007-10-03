@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -42,7 +42,7 @@
 char debuglevel=DEBUGLEVEL_BUILDTIME;
 
 std::string DEBUG_FILE; int DEBUG_LINE;
-void DEBUGPRINTx (char msgdebuglevel, char type, char* txt, ...)
+void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 {
 	va_list vl;
 	va_start(vl, txt);
@@ -50,11 +50,11 @@ void DEBUGPRINTx (char msgdebuglevel, char type, char* txt, ...)
 	if(msgdebuglevel <= debuglevel){
 		char tx[6000];
 		vsnprintf(tx, 6000, txt, vl);
-		
+
 		#ifdef WIN32
 		HANDLE con = GetStdHandle(STD_OUTPUT_HANDLE);
 		#endif
-		
+
 		switch (type) {
 			default:
 					printf(tx);

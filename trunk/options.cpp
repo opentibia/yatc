@@ -46,10 +46,10 @@ Options::~Options()
 
 void Options::Save()
 {
-	//
+	printf("Saving options...\n");
 }
 
 void Options::Load()
 {
-	//
+	printf("Loading options...\n");
 }

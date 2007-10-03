@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// 
+//
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -34,7 +34,7 @@
 #define DEBUGPRINT_LEVEL_JUNK 3
 
 extern char debuglevel;
-void DEBUGPRINTx (char msgdebuglevel, char type, char* txt, ...);
+void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...);
 extern std::string DEBUG_FILE; extern int DEBUG_LINE;
 void DEBUGMARKER (unsigned int size, const char *val);
 

@@ -49,6 +49,7 @@ public:
 		txtPassword.SetPos(128,45);
 		txtPassword.SetWidth(216-134);
 		txtPassword.SetHeight(46-33);
+		txtPassword.SetPassProtectCharacter('*');
 
 		pnlCreateAc.SetWidth(131-17);
 		pnlCreateAc.SetHeight(12);
