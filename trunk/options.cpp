@@ -21,13 +21,14 @@
 #include <string>
 #include <sstream>
 #include "options.h"
+#include "confighandler.h"
 
 Options options;
 
 Options::Options()
 {
+	configHandler = new ConfigHandler();
 	fullscreen = 0;
-	//engine = ENGINE_OPENGL;
 	engine = ENGINE_SDL;
 	os_cursor = 0;
 	skin = "default";
@@ -41,15 +42,97 @@ Options::Options()
 
 Options::~Options()
 {
-	//
+	delete configHandler;
 }
 
 void Options::Save()
 {
-	printf("Saving options...\n");
+	//Update all the values for saving
+	std::stringstream ss;
+	Section* section = configHandler->newSection("window");
+	ss << engine;
+	section->addKey("engine", ss.str());
+	ss.str("");
+	ss << fullscreen;
+	section->addKey("fullscreen", ss.str());
+	ss.str("");
+	ss << os_cursor;
+	section->addKey("os_cursor", ss.str());
+	ss.str("");
+	
+	section = configHandler->newSection("client");
+	ss << skin;
+	section->addKey("skin", ss.str());
+	ss.str("");
+	ss << motdnum;
+	section->addKey("motdnum", ss.str());
+	ss.str("");
+	ss << motdtext;
+	section->addKey("motdtext", ss.str());
+	ss.str("");
+	
+	section = configHandler->newSection("network");
+	ss << server;
+	section->addKey("server", ss.str());
+	ss.str("");
+	ss << port;
+	section->addKey("port", ss.str());
+	ss.str("");
+	
+	configHandler->saveConfig("yatc.cfg");
 }
 
 void Options::Load()
 {
-	printf("Loading options...\n");
+	if(!configHandler->loadConfig("yatc.cfg")){
+		return false;	
+	}
+	
+	switch((enginelist_t)atoi(configHandler->getKeyValue("window", "engine").c_str())){
+		case ENGINE_SDL:
+				setEngine(ENGINE_SDL);
+			break;
+		case ENGINE_OPENGL:
+				setEngine(ENGINE_OPENGL);
+			break;
+		case ENGINE_DIRECTX:
+				setEngine(ENGINE_DIRECTX);
+			break;
+		default:
+				setEngine(ENGINE_SDL);
+			break;	
+	}
+	
+	switch(atoi(configHandler->getKeyValue("window", "fullscreen").c_str())){
+		case 0:
+				fullscreen = false;
+			break;
+		case 1:
+				fullscreen = true;
+			break;
+		default:
+				fullscreen = false;
+			break;
+	}
+	
+	switch(atoi(configHandler->getKeyValue("window", "os_cursor").c_str())){
+		case 0:
+				os_cursor = false;
+			break;
+		case 1:
+				os_cursor = true;
+			break;
+		default:
+				os_cursor = false;
+			break;
+	}
+	
+	skin = configHandler->getKeyValue("client", "skin");
+	motdnum = configHandler->getKeyValue("client", "motdnum");
+	motdtext = configHandler->getKeyValue("client", "motdtext");
+	
+	server = configHandler->getKeyValue("network", "server");
+	port = atoi(configHandler->getKeyValue("network", "port").c_str());
+	
+	configHandler->clear();
 }
