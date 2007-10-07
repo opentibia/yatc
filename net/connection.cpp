@@ -22,7 +22,7 @@
 
 #include "connection.h"
 #include "encryption.h"
-#include "../notifications.h"
+#include "notifications.h"
 
 #include "rsa.h"
 #include "protocollogin.h"
