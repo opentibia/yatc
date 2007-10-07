@@ -20,7 +20,7 @@
 
 #include "networkmessage.h"
 #include "stdio.h"
-#include "gamecontent/map.h"
+#include "../gamecontent/map.h"
 
 NetworkMessage::NetworkMessage(int type)
 {
