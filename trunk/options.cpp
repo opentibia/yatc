@@ -85,21 +85,21 @@ void Options::Save()
 void Options::Load()
 {
 	if(!configHandler->loadConfig("yatc.cfg")){
-		return false;	
+		return;	
 	}
 	
 	switch((enginelist_t)atoi(configHandler->getKeyValue("window", "engine").c_str())){
 		case ENGINE_SDL:
-				setEngine(ENGINE_SDL);
+				engine = ENGINE_SDL;
 			break;
 		case ENGINE_OPENGL:
-				setEngine(ENGINE_OPENGL);
+				engine = ENGINE_OPENGL;
 			break;
 		case ENGINE_DIRECTX:
-				setEngine(ENGINE_DIRECTX);
+				engine = ENGINE_DIRECTX;
 			break;
 		default:
-				setEngine(ENGINE_SDL);
+				engine = ENGINE_SDL;
 			break;	
 	}
 	
@@ -128,7 +128,7 @@ void Options::Load()
 	}
 	
 	skin = configHandler->getKeyValue("client", "skin");
-	motdnum = configHandler->getKeyValue("client", "motdnum");
+	motdnum = atoi(configHandler->getKeyValue("client", "motdnum").c_str());
 	motdtext = configHandler->getKeyValue("client", "motdtext");
 	
 	server = configHandler->getKeyValue("network", "server");

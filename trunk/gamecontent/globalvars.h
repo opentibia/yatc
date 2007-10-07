@@ -21,7 +21,7 @@
 #ifndef __GLOBALVARS_H__
 #define __GLOBALVARS_H__
 
-#include "fassert.h"
+#include "../fassert.h"
 #include "map.h"
 #include "enums.h"
 

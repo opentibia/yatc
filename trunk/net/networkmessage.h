@@ -22,7 +22,7 @@
 #define __NETMESSAGE_H
 
 #include <string>
-#include "fassert.h"
+#include "../fassert.h"
 
 #define NETWORK_MESSAGE_SIZE 16384
 
