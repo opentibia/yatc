@@ -22,7 +22,7 @@
 #define __YATC_ITEM_H__
 
 #include "thing.h"
-#include "../objects.h"
+#include "objects.h"
 
 class Item : public Thing
 {
