@@ -18,7 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "../fassert.h"
+#include "fassert.h"
 #include "protocolgame80.h"
 
 ProtocolGame80::ProtocolGame80(int account, const std::string& password, const std::string& name, bool isGM) :

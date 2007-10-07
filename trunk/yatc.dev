@@ -5,7 +5,7 @@ UnitCount=66
 Type=1
 Ver=1
 ObjFiles=
-Includes=
+Includes=gamecontent/;net/;ui/;.
 Libs=
 PrivateResource=
 ResourceIncludes=
@@ -32,7 +32,7 @@ CompilerSettings=0000000000000000000100
 [Unit1]
 FileName=util.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -42,7 +42,7 @@ BuildCmd=
 [Unit2]
 FileName=confighandler.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -52,7 +52,7 @@ BuildCmd=
 [Unit3]
 FileName=confighandler.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -62,7 +62,7 @@ BuildCmd=
 [Unit4]
 FileName=debugprint.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -72,7 +72,7 @@ BuildCmd=
 [Unit5]
 FileName=debugprint.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -82,7 +82,7 @@ BuildCmd=
 [Unit6]
 FileName=defines.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -92,7 +92,7 @@ BuildCmd=
 [Unit7]
 FileName=engine.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -102,7 +102,7 @@ BuildCmd=
 [Unit8]
 FileName=engine.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -112,7 +112,7 @@ BuildCmd=
 [Unit9]
 FileName=enginegl.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -122,7 +122,7 @@ BuildCmd=
 [Unit10]
 FileName=enginegl.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -132,7 +132,7 @@ BuildCmd=
 [Unit11]
 FileName=enginesdl.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -142,7 +142,7 @@ BuildCmd=
 [Unit12]
 FileName=enginesdl.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -152,7 +152,7 @@ BuildCmd=
 [Unit13]
 FileName=fassert.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -162,7 +162,7 @@ BuildCmd=
 [Unit14]
 FileName=gamemode.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -172,7 +172,7 @@ BuildCmd=
 [Unit15]
 FileName=gamemode.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -182,7 +182,7 @@ BuildCmd=
 [Unit16]
 FileName=gm_debug.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -192,7 +192,7 @@ BuildCmd=
 [Unit17]
 FileName=gm_debug.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -202,7 +202,7 @@ BuildCmd=
 [Unit18]
 FileName=gm_mainmenu.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -212,7 +212,7 @@ BuildCmd=
 [Unit19]
 FileName=gm_mainmenu.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -222,7 +222,7 @@ BuildCmd=
 [Unit20]
 FileName=main.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -232,7 +232,7 @@ BuildCmd=
 [Unit21]
 FileName=notifications.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -242,7 +242,7 @@ BuildCmd=
 [Unit22]
 FileName=notifications.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -252,7 +252,7 @@ BuildCmd=
 [Unit23]
 FileName=objects.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -262,7 +262,7 @@ BuildCmd=
 [Unit24]
 FileName=objects.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -272,7 +272,7 @@ BuildCmd=
 [Unit25]
 FileName=options.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -282,7 +282,7 @@ BuildCmd=
 [Unit26]
 FileName=options.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -292,7 +292,7 @@ BuildCmd=
 [Unit27]
 FileName=sprite.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -302,7 +302,7 @@ BuildCmd=
 [Unit28]
 FileName=sprite.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -312,7 +312,7 @@ BuildCmd=
 [Unit29]
 FileName=spritegl.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -322,7 +322,7 @@ BuildCmd=
 [Unit30]
 FileName=spritegl.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -332,7 +332,7 @@ BuildCmd=
 [Unit31]
 FileName=spritesdl.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -342,7 +342,7 @@ BuildCmd=
 [Unit32]
 FileName=spritesdl.h
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000
@@ -352,7 +352,7 @@ BuildCmd=
 [Unit33]
 FileName=util.cpp
 CompileCpp=1
-Folder=yatc
+Folder=
 Compile=1
 Link=1
 Priority=1000

@@ -24,7 +24,7 @@
 
 #include <string>
 #include "connection.h"
-#include "../gamecontent/enums.h"
+#include "gamecontent/enums.h"
 
 class NetworkMessage;
 
