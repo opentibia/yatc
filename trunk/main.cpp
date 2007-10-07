@@ -216,6 +216,8 @@ int main(int argc, char *argv[])
 	printf("Game over\n");
 	printf("Unloading data...\n");
 	Objects::getInstance()->unloadDat();
+	printf("Saving options...\n");
+	Options.Save();
 	printf("Shutting down SDL...\n");
 	SDL_Quit();
 
