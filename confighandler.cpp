@@ -43,8 +43,7 @@ bool ConfigHandler::loadConfig(const char* filename)
 	
 	bool sector = false;
 	int currentSection = 0;
-	int failsafe = 0;
-	
+
 	char* buffer = strtok(content, "\r\n");
 	while(buffer != 0){
 		buffer[strlen(buffer)] = '\0';
@@ -59,9 +58,6 @@ bool ConfigHandler::loadConfig(const char* filename)
 		}
 		
 		buffer = strtok(0, "\r\n");
-		
-		if(failsafe > size)
-			break;
 	}
 		
 	delete[] content;
