@@ -26,6 +26,7 @@
 #include <GLICT/panel.h>
 #include <GLICT/textbox.h>
 #include <GLICT/window.h>
+#include <GLICT/messagebox.h>
 #include "options.h"
 #include "gamemode.h"
 #include "sprite.h"
@@ -45,8 +46,9 @@ public:
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
 
-
 	void msgBox (const char* mbox, const char* title);
+
+	void onConnectionError(int message, const char* text);
 private:
 	glictContainer desktop;
 	pnlMainMenu_t pnlMainMenu;
@@ -54,6 +56,8 @@ private:
 	winOptions_t winOptions;
 	winOptionsGeneral_t winOptionsGeneral;
 	winOptionsNetwork_t winOptionsNetwork;
+
+	glictMessageBox winStatus;
 
 	Sprite* background;
 protected:
@@ -76,6 +80,8 @@ protected:
 	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void MBOnDismiss(glictPos* pos, glictContainer* caller);
+
+	friend class Notifications;
 };
 
 #endif

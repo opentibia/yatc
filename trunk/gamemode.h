@@ -23,6 +23,7 @@
 #define __GAMEMODE_H
 
 #include <SDL/SDL_events.h>
+#include <string>
 class GameMode
 {
 public:
@@ -32,6 +33,8 @@ public:
 	virtual void renderScene() = 0;
 	virtual void mouseEvent (SDL_Event&) {}
 	virtual void keyPress (char key) {}
+
+	virtual void onConnectionError(int message, const char* errortext) {}
 };
 
 extern GameMode* g_game;

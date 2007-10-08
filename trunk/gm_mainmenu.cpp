@@ -67,6 +67,9 @@ GM_MainMenu::GM_MainMenu()
 	winOptionsNetwork.btnCancel.SetOnClick(GM_MainMenu::winOptionsNetwork_btnCancel_OnClick);
 
 
+	desktop.AddObject(&winStatus);
+	winStatus.SetVisible(false);
+
 	// TODO (ivucica#1#) These should be moved to an "onresize" function which should be called here, but we don't catch a window resize event yet...
 	pnlMainMenu.mainmenu.SetPos(60, glictGlobals.h - 240);
 	desktop.SetWidth(glictGlobals.w);
@@ -112,6 +115,7 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 
 void GM_MainMenu::keyPress (char key)
 {
+	printf("Key %c %d\n", key, key);
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 }
 
@@ -196,6 +200,11 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ProtocolConfig::getInstance().setServerType(SERVER_OTSERV); // perhaps this should go to options, too?
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 	ProtocolConfig::createLoginConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption());
+
+	m->winStatus.SetVisible(true);
+	m->winStatus.SetCaption("Logging in");
+	m->winStatus.SetMessage("Connecting to the server...\n");
+	m->winStatus.SetEnabled(false);
 }
 
 
@@ -242,4 +251,19 @@ void GM_MainMenu::winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictCo
 void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsNetwork.window.SetVisible(false);
+}
+
+
+/* ********** Responses to notifications *********** */
+void GM_MainMenu::onConnectionError(int message, const char* errortext) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	std::stringstream s;
+	s << "There was an error while connecting." << std::endl <<
+		 std::endl <<
+	     "The following may help you identify error:" << std::endl <<
+	     errortext;
+
+	m->winStatus.SetCaption("Error");
+	m->winStatus.SetMessage(s.str());
+	m->winStatus.SetEnabled(true);
 }

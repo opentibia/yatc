@@ -20,7 +20,7 @@
 
 #include "notifications.h"
 #include "net/connection.h"
-
+#include "gamemode.h"
 extern Connection* g_connection;
 
 std::list<std::string> g_recFiles;
@@ -53,6 +53,8 @@ void newConnect()
 
 void Notifications::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
 {
+
+	/*
 	std::list<CharacterList_t>::const_iterator it;
 	g_recFiles.clear();
 	for(it = list.begin(); it != list.end(); ++it){
@@ -61,11 +63,14 @@ void Notifications::openCharactersList(const std::list<CharacterList_t>& list, i
 	}
 	g_recIt = g_recFiles.begin();
 	newConnect();
+	*/
 }
 
 void Notifications::onConnectionError(int message)
 {
-	if(message == Connection::ERROR_CLOSED_SOCKET){
+
+	g_game->onConnectionError(message, Connection::getErrorDesc(message));
+	/*if(message == Connection::ERROR_CLOSED_SOCKET){
 		printf("Done!\n"); fflush(stdout);
 		Containers::getInstance().clear();
 		Creatures::getInstance().clear();
@@ -78,7 +83,7 @@ void Notifications::onConnectionError(int message)
 		printf("********************************************************\n");
 		printf("CONNECTION ERROR: %d - %s\n", message, Connection::getErrorDesc(message));
 		printf("********************************************************\n");
-	}
+	}*/
 }
 
 void Notifications::onProtocolError(bool fatal)
