@@ -133,7 +133,7 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 	fread(&fh, sizeof(fh), 1, fi);
 	fwrite(&fh, sizeof(fh), 1, fo);
 
-	sproffset = fh.imgcount * sizeof(ph);
+	sproffset = fh.imgcount * (sizeof(ph) + 2);
 	for (i=0; i<fh.imgcount; i++) {
 		fread(&ph, sizeof(ph), 1, fi); 
 		if (i == index) {
@@ -148,18 +148,17 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 	fseek(fi, sizeof(fh), SEEK_SET);
 	for (i=0; i<fh.imgcount; i++) {
 		fread(&ph, sizeof(ph), 1, fi);
-		printf("Encountered image (%dx%d)\n", ph.width, ph.height);
+
 		if (i!=index) {
-			printf("Cloning picture (%dx%d)\n", ph.width, ph.height);
 			if (!ph.width || !ph.height) {
 				fprintf(stderr, "pictool: width or height are 0\n");
 				exit(10);
 			}
 			fwrite(&ph, sizeof(ph), 1, fo);
-			printf("Written\n");
+
 			for (j=0; j<ph.width * ph.height; j++) {
 				fread(&sprloc, sizeof(sprloc), 1, fi);
-				printf("Sprloc 0x%08x, sproffset 0x%08x\n", sprloc, sproffset);
+
 				if (sproffset > 2000000) {
 					fprintf(stderr, "pictool: infinite loop\n");
 					exit(8);
@@ -177,37 +176,27 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 				fseek(fo, sproffset, SEEK_SET);
 
 				fread(&datasize, sizeof(datasize), 1, fi);
-				printf("Datasize %d\n", datasize);
 				fwrite(&datasize, sizeof(datasize), 1, fo);
-				printf("Written\n");
 				data = malloc(datasize+10);
 				if (!data) {
 					fprintf(stderr, "Allocation problem\n");
 					exit(7);
 				}
-				printf("Allocated\n");
 				fread(data, datasize, 1, fi);
-				printf("Read data\n");
 				fwrite(data, datasize, 1, fo);
-				printf("Written data\n");
 				free(data);
-				printf("Aye, freed\n");
 
 				fseek(fo, continuationposo, SEEK_SET);
 				fseek(fi, continuationposi, SEEK_SET);
-				printf("Resuming\n");
 				sproffset += datasize;
 			}
 			fflush(fo);
 		} else {
-			printf("Skipping %d %d\n", ph.width, ph.height);
 			fseek(fi, ph.width*ph.height*4, SEEK_CUR);
-			printf("Reading picture of size %d %d\n", s->w, s->h);
 			ph.width = s->w / 32; ph.height = s->h / 32;
 			fwrite(&ph, sizeof(ph), 1, fo);
 			for (j=0; j<ph.height; j++) 
 				for (k=0; k<ph.width; k++) {
-					printf("%d %d (%d %d) => ", k, j, k*32, j*32);
 					fwrite(&sproffset, sizeof(sproffset), 1, fo);
 	
 					continuationposo = ftell(fo);
@@ -216,7 +205,7 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 	
 					fseek(fo, continuationposo, SEEK_SET);
 					sproffset += datasize;
-					printf("sproffset: %d, because of datasize: %d\n", sproffset, datasize);
+
 				}
 			fflush(fo);
 		}
@@ -234,6 +223,7 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 	fileheader_t fh;
 	picheader_t ph;
 	uint32_t sprloc;
+	uint32_t magneta;
 
 	f = fopen(filename, "rb");
 	if (!f) 
@@ -253,6 +243,9 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 		if (i == index) {
 			s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000); 
 			
+			magneta = SDL_MapRGB(s->format, 255, 0, 255);
+			SDL_FillRect(s, NULL, magneta);
+
 			/* FIXME (ivucica#4#) Above statement is potentially unportable to architectures with 
 			 * different endianess. Lilitputtans would be happier if we took a look at SDL 
 			 * docs and corrected this. */
@@ -317,21 +310,20 @@ int main (int argc, char **argv) {
 			exit(0);
 		}
 	}
-	if (argc ==3) {
+	if (argc==3) {
 		fprintf(stderr, "pictool: not enough arguments\n");
 		exit(2);
 	}
 	
 
-
 	SDL_Init(SDL_INIT_VIDEO);
 	if (argc==5 && !strcmp(argv[4], "--topic")) {
-		fprintf(stderr, "pictool: writing not supported yet\n");
-		exit(3);
+/*		fprintf(stderr, "pictool: writing not supported yet\n");
+		exit(3);*/
 		s = SDL_LoadBMP(argv[3]);
 		writepic(argv[1], atoi(argv[2]), s);
 		SDL_FreeSurface(s);
-	} else if (argc==3 || !strcmp(argv[4], "--tobmp")) {
+	} else if (argc==4 || !strcmp(argv[4], "--tobmp")) {
 		if (readpic(argv[1], atoi(argv[2]), &s)) {
 			fprintf(stderr, "pictool: bad format\n");
 			SDL_Quit();
