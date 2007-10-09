@@ -59,7 +59,7 @@ void Options::Save()
 	ss << os_cursor;
 	section->addKey("os_cursor", ss.str());
 	ss.str("");
-	
+
 	section = configHandler->newSection("client");
 	ss << skin;
 	section->addKey("skin", ss.str());
@@ -70,7 +70,7 @@ void Options::Save()
 	ss << motdtext;
 	section->addKey("motdtext", ss.str());
 	ss.str("");
-	
+
 	section = configHandler->newSection("network");
 	ss << server;
 	section->addKey("server", ss.str());
@@ -78,16 +78,16 @@ void Options::Save()
 	ss << port;
 	section->addKey("port", ss.str());
 	ss.str("");
-	
+
 	configHandler->saveConfig("yatc.cfg");
 }
 
 void Options::Load()
 {
 	if(!configHandler->loadConfig("yatc.cfg")){
-		return;	
+		return;
 	}
-	
+
 	switch((enginelist_t)atoi(configHandler->getKeyValue("window", "engine").c_str())){
 		case ENGINE_SDL:
 				engine = ENGINE_SDL;
@@ -100,39 +100,18 @@ void Options::Load()
 			break;
 		default:
 				engine = ENGINE_SDL;
-			break;	
-	}
-	
-	switch(atoi(configHandler->getKeyValue("window", "fullscreen").c_str())){
-		case 0:
-				fullscreen = false;
-			break;
-		case 1:
-				fullscreen = true;
-			break;
-		default:
-				fullscreen = false;
 			break;
 	}
-	
-	switch(atoi(configHandler->getKeyValue("window", "os_cursor").c_str())){
-		case 0:
-				os_cursor = false;
-			break;
-		case 1:
-				os_cursor = true;
-			break;
-		default:
-				os_cursor = false;
-			break;
-	}
-	
+
+	fullscreen = (atoi(configHandler->getKeyValue("window", "fullscreen").c_str()) == 1);
+	os_cursor = (atoi(configHandler->getKeyValue("window", "os_cursor").c_str()) == 1);
+
 	skin = configHandler->getKeyValue("client", "skin");
 	motdnum = atoi(configHandler->getKeyValue("client", "motdnum").c_str());
 	motdtext = configHandler->getKeyValue("client", "motdtext");
-	
+
 	server = configHandler->getKeyValue("network", "server");
 	port = atoi(configHandler->getKeyValue("network", "port").c_str());
-	
+
 	configHandler->clear();
 }

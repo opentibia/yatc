@@ -23,7 +23,7 @@
 #ifdef WIN32
 #include <GL/glext.h>
 #endif
-
+#include "sprdata.h"
 Sprite::Sprite(const std::string& filename, int index)
 {
 	m_pixelformat = GL_NONE;
@@ -68,7 +68,7 @@ Sprite::Sprite(const std::string& filename, int index)
 		fread(&where, sizeof(where), 1, f);
 
 		// create surface where we'll store data, and fill it with transparency
-		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000); // FIXME (ivucica#5#) Potentially unportable to architectures with different endianess, take a look at SDL docs and make all Liliputtans happy
 		if(!m_image){
 			printf("Error [Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			return;
@@ -80,40 +80,13 @@ Sprite::Sprite(const std::string& filename, int index)
 
 		// read the data
 		fseek(f, where, SEEK_SET);
-		fgetc(f); fgetc(f); fgetc(f); // what do these do?
-		fread(&size, 2, 1, f);
-
-		SDL_LockSurface(m_image);
-		for(int i = ftell(f); ftell(f) < i + size-1; ){
-			uint16_t pixelchunksize;
-			uint32_t color;
-			unsigned char rgba[3];
-			fread(&pixelchunksize, 2, 1, f);
-			if(pixelchunksize>1024){
-				// captain, the warp core breach has happened! what shall we do?!
-				SDL_UnlockSurface(m_image);
-				SDL_FreeSurface(m_image);
-				m_image = NULL;
-				fclose(f);
-				printf("Error [Sprite::loadSurfaceFromFile] Pixel chunk size is invalid.\n");
-				return;
-				// number one, eject the core
-			}
-
-			if(!transparent){
-				for(int j = 0; j < pixelchunksize; j++){
-					fread(&rgba, 3, 1, f);
-					// dont make static since if we change the rendering engine
-					//  at runtime, this may change too
-					color = SDL_MapRGB(m_image->format, rgba[0], rgba[1], rgba[2]);
-					putPixel((destination+j) % 32, (destination+j) / 32, color);
-				}
-			}
-			destination += pixelchunksize;
-			transparent = !transparent;
+		fgetc(f); fgetc(f); fgetc(f); // TODO (ivucica#4#) maybe we should figure out what do these do?
+		if (readSprData(f, m_image, 0, 0)) {
+			// error happened
+			m_image = NULL;
+			return;
 		}
 
-		SDL_UnlockSurface(m_image);
 		fclose(f);
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
 
