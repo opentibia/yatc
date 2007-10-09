@@ -43,6 +43,8 @@
 		<Unit filename="LICENSE" />
 		<Unit filename="README" />
 		<Unit filename="codeguide.txt" />
+		<Unit filename="confighandler.cpp" />
+		<Unit filename="confighandler.h" />
 		<Unit filename="debugprint.cpp" />
 		<Unit filename="debugprint.h" />
 		<Unit filename="defines.h" />
@@ -104,11 +106,14 @@
 		<Unit filename="spritegl.h" />
 		<Unit filename="spritesdl.cpp" />
 		<Unit filename="spritesdl.h" />
+		<Unit filename="sprdata.c" />
+		<Unit filename="sprdata.h" />
 		<Unit filename="ui/login.h" />
 		<Unit filename="ui/mainmenu.h" />
 		<Unit filename="ui/options.h" />
 		<Unit filename="ui/optionsgeneral.h" />
 		<Unit filename="ui/optionsnetwork.h" />
+		<Unit filename="ui/optionsgraphics.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Extensions>
