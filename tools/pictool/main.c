@@ -38,7 +38,7 @@
 #if (0)
 #define dbgprintf printf
 #else
-static dbgprintf(const char* txt, ...) {}
+static void dbgprintf(const char* txt, ...) {}
 #endif
 
 
@@ -211,7 +211,10 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 		}
 	}
 				 
+	fclose(fo);
+	fclose(fi);
 
+	rename("__tmp__.pic", filename);
 	return 0;
 }
 

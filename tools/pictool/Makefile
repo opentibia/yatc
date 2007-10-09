@@ -1,7 +1,8 @@
 CFLAGS=-ansi -O0 -g3 -Wall
-all: __tmp__.pic pictool
+all:  pictool
 clean: 
-	rm main.o ../../sprdata.o __tmp__.pic
+	rm main.o ../../sprdata.o
+
 rebuild: clean all
 
 pictool: main.o ../../sprdata.o
