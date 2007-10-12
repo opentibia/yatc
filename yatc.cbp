@@ -55,6 +55,8 @@
 		<Unit filename="enginesdl.cpp" />
 		<Unit filename="enginesdl.h" />
 		<Unit filename="fassert.h" />
+		<Unit filename="font.cpp" />
+		<Unit filename="font.h" />
 		<Unit filename="gamecontent/container.cpp" />
 		<Unit filename="gamecontent/container.h" />
 		<Unit filename="gamecontent/creature.cpp" />
@@ -100,20 +102,22 @@
 		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
 		<Unit filename="options.h" />
+		<Unit filename="sprdata.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sprdata.h" />
 		<Unit filename="sprite.cpp" />
 		<Unit filename="sprite.h" />
 		<Unit filename="spritegl.cpp" />
 		<Unit filename="spritegl.h" />
 		<Unit filename="spritesdl.cpp" />
 		<Unit filename="spritesdl.h" />
-		<Unit filename="sprdata.c" />
-		<Unit filename="sprdata.h" />
 		<Unit filename="ui/login.h" />
 		<Unit filename="ui/mainmenu.h" />
 		<Unit filename="ui/options.h" />
 		<Unit filename="ui/optionsgeneral.h" />
-		<Unit filename="ui/optionsnetwork.h" />
 		<Unit filename="ui/optionsgraphics.h" />
+		<Unit filename="ui/optionsnetwork.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Extensions>

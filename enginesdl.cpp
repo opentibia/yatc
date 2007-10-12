@@ -22,7 +22,9 @@
 /// Contains code for SDL rendering engine.
 /// \sa EngineSDL
 
+#include <GLICT/globals.h>
 #include "enginesdl.h"
+#include "font.h"
 
 EngineSDL::EngineSDL()
 {
@@ -46,8 +48,11 @@ EngineSDL::EngineSDL()
 		SDL_SetColors(m_screen, colors, 0, sizeof(colors) / sizeof(SDL_Color));
 	}
 
+	glictGlobals.drawPartialOut = false;
 
-	m_sysfont->SetFontParam(createSprite("font.bmp"));
+	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
+	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
+	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
 }
 
 EngineSDL::~EngineSDL()

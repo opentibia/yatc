@@ -26,30 +26,37 @@ public:
 		window.SetHeight(238);
 		window.SetWidth(225);
 		window.SetCaption("Network Options");
+		window.SetBGColor(.4, .4, .4, 1.);
 
 		window.AddObject(&lblServer);
 		lblServer.SetCaption("Server address:");
 		lblServer.SetPos(16, 16);
 		lblServer.SetWidth(198);
 		lblServer.SetHeight(11);
+		lblServer.SetBGActiveness(false);
+		lblServer.SetFont("aafont");
 
 		window.AddObject(&txtServer);
 		txtServer.SetCaption("");
 		txtServer.SetPos(16, 27);
 		txtServer.SetWidth(198);
 		txtServer.SetHeight(11);
+		txtServer.SetFont("aafont");
 
 		window.AddObject(&lblPort);
 		lblPort.SetCaption("Server port:");
 		lblPort.SetPos(16, 49);
 		lblPort.SetWidth(198);
 		lblPort.SetHeight(11);
+		lblPort.SetBGActiveness(false);
+		lblPort.SetFont("aafont");
 
 		window.AddObject(&txtPort);
 		txtPort.SetCaption("");
 		txtPort.SetPos(16, 60);
 		txtPort.SetWidth(198);
 		txtPort.SetHeight(11);
+		txtPort.SetFont("aafont");
 
 
 
@@ -64,19 +71,23 @@ public:
 		btnHelp.SetWidth(41);
 		btnHelp.SetHeight(17);
 		btnHelp.SetCaption("Help");
+		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(125, 200);
 		btnOk.SetWidth(41);
 		btnOk.SetHeight(17);
 		btnOk.SetCaption("Ok");
+		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(178, 200);
 		btnCancel.SetWidth(41);
 		btnCancel.SetHeight(17);
 		btnCancel.SetCaption("Cancel");
+		btnCancel.SetFont("minifont",8);
 	}
+
 	void Init() {
 		std::stringstream port; // FIXME (ivucica#1#) somebody should enlighten me on a clean integer=>string conversion
 		port << options.port;
@@ -84,6 +95,7 @@ public:
 		txtServer.SetCaption(options.server);
 		txtPort.SetCaption(port.str());
 	}
+
 	void Store() {
 		options.server = txtServer.GetCaption();
 		options.port = atoi(txtPort.GetCaption().c_str());

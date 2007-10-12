@@ -27,7 +27,7 @@
 #include "defines.h"
 #include "sprite.h"
 #include "spritesdl.h"
-
+#include "font.h"
 struct glictColor;
 
 class Engine
@@ -49,21 +49,23 @@ class Engine
 
 	protected:
 		Engine();
+		void initFont(glictFont** fnt, const char* fontname);
 
 		friend void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h);
 
 		static void draw_rectangle(float left, float right, float top, float bottom, glictColor &col);
-		static void font_render(const char* txt, const void* font, float x, float y);
-		static void font_drawchar(char t, Sprite* img, int x1, int y1);
-		static float font_size(const char* txt, const void* font);
+		static void font_render(const char* txt, const void* font, float fontsize, float x, float y);
+		static float font_size(const char* txt, const void* font, float fontsize);
 
 		int m_width;
 		int m_height;
 		int m_video_bpp;
 
-		glictFont* m_sysfont;
+		glictFont *m_sysfont, *m_minifont, *m_aafont;
 		SDL_Surface* m_screen;
 		int m_videoflags;
+
+		friend class winOptionsGraphics_t;
 };
 
 extern int ptrx, ptry;

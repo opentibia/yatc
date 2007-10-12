@@ -25,8 +25,9 @@
 /// \sa EngineGL
 
 #include <GL/gl.h>
+#include <GLICT/globals.h>
 #include "enginegl.h"
-
+#include "font.h"
 EngineGL::EngineGL()
 {
 	printf("Starting OpenGL engine\n");
@@ -40,7 +41,11 @@ EngineGL::EngineGL()
 		//exit(1);
 	}
 
-	m_sysfont->SetFontParam(createSprite("font.bmp"));
+	glictGlobals.drawPartialOut = true;
+
+	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
+	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
+	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
 
 	initEngine();
 	doResize(m_width, m_height);

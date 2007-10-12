@@ -28,16 +28,26 @@ Options options;
 Options::Options()
 {
 	configHandler = new ConfigHandler();
-	fullscreen = 0;
+
 	engine = ENGINE_SDL;
 	os_cursor = 0;
 	skin = "default";
-
-	motdtext = "No message of the day retrieved yet.";
-	motdnum = 0;
-
 	server = "change.me.now";
 	port = 7171;
+
+	classiccontrol = 0;
+	autochase = 1;
+	showhints = 1;
+	shownames = 1;
+	showtexteffects = 1;
+
+	fullscreen = 0;
+	w = 640;
+	h = 480;
+	bpp = 32;
+
+	motdtext = "No current information.";
+	motdnum = 0;
 }
 
 Options::~Options()
@@ -53,9 +63,6 @@ void Options::Save()
 	ss << engine;
 	section->addKey("engine", ss.str());
 	ss.str("");
-	ss << fullscreen;
-	section->addKey("fullscreen", ss.str());
-	ss.str("");
 	ss << os_cursor;
 	section->addKey("os_cursor", ss.str());
 	ss.str("");
@@ -70,6 +77,40 @@ void Options::Save()
 	ss << motdtext;
 	section->addKey("motdtext", ss.str());
 	ss.str("");
+
+
+	section = configHandler->newSection("general");
+	ss << classiccontrol;
+	section->addKey("classiccontrol", ss.str());
+	ss.str("");
+	ss << autochase;
+	section->addKey("autochase", ss.str());
+	ss.str("");
+	ss << showhints;
+	section->addKey("showhints", ss.str());
+	ss.str("");
+	ss << shownames;
+	section->addKey("shownames", ss.str());
+	ss.str("");
+	ss << showtexteffects;
+	section->addKey("showtexteffects", ss.str());
+	ss.str("");
+
+
+	section = configHandler->newSection("graphics");
+	ss << fullscreen;
+	section->addKey("fullscreen", ss.str());
+	ss.str("");
+	ss << w;
+	section->addKey("width", ss.str());
+	ss.str("");
+	ss << h;
+	section->addKey("height", ss.str());
+	ss.str("");
+	ss << bpp;
+	section->addKey("bpp", ss.str());
+	ss.str("");
+
 
 	section = configHandler->newSection("network");
 	ss << server;
@@ -103,12 +144,24 @@ void Options::Load()
 			break;
 	}
 
-	fullscreen = (atoi(configHandler->getKeyValue("window", "fullscreen").c_str()) == 1);
 	os_cursor = (atoi(configHandler->getKeyValue("window", "os_cursor").c_str()) == 1);
 
 	skin = configHandler->getKeyValue("client", "skin");
 	motdnum = atoi(configHandler->getKeyValue("client", "motdnum").c_str());
 	motdtext = configHandler->getKeyValue("client", "motdtext");
+
+	classiccontrol = (atoi(configHandler->getKeyValue("general", "classiccontrol").c_str()) == 1);
+	autochase = (atoi(configHandler->getKeyValue("general", "autochase").c_str()) == 1);
+	showhints = (atoi(configHandler->getKeyValue("general", "showhints").c_str()) == 1);
+	shownames = (atoi(configHandler->getKeyValue("general", "shownames").c_str()) == 1);
+	showtexteffects = (atoi(configHandler->getKeyValue("general", "showtexteffects").c_str()) == 1);
+
+
+	fullscreen = (atoi(configHandler->getKeyValue("graphics", "fullscreen").c_str()) == 1);
+	w = atoi(configHandler->getKeyValue("graphics", "width").c_str());
+	h = atoi(configHandler->getKeyValue("graphics", "height").c_str());
+	bpp = atoi(configHandler->getKeyValue("graphics", "bpp").c_str());
+
 
 	server = configHandler->getKeyValue("network", "server");
 	port = atoi(configHandler->getKeyValue("network", "port").c_str());

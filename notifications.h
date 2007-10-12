@@ -44,7 +44,7 @@ class Notifications{
 
 		//**** Login Messages ****
 		static void changeLoginServer(){}
-		static void openMessageWindow(WindowMessage_t type, const std::string& message){}
+		static void openMessageWindow(WindowMessage_t type, const std::string& message);
 		static void openWaitingList(const std::string& message, int time){}
 		static void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
 
