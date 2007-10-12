@@ -3,8 +3,8 @@
  * Part of OpenTibia project
  *
  * Although written in ANSI C, this makes use of #pragma pack(),
- * make sure your compiler supports packed structures, or else. 
- * 
+ * make sure your compiler supports packed structures, or else.
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -24,9 +24,9 @@
 #pragma pack(1)
 
 /* If your compiler does not support uint32_t and friends, then
- * change #if (0) into #if (1) and we'll try defining them. 
+ * change #if (0) into #if (1) and we'll try defining them.
  * Note that most modern compilers should support them; GCC
- * supports them even in ANSI mode, but then, GCC is not the 
+ * supports them even in ANSI mode, but then, GCC is not the
  * only compiler out there. */
 #if (0)
 #define uint32_t unsigned long
@@ -60,14 +60,14 @@ typedef struct {
 
 
 
-static int filesize (FILE* f) {                                                                                                                              
-        int loc = ftell(f);                                                                                                                                  
-        int size = 0;                                                                                                                                        
-                                                                                                                                                             
-        fseek(f, 0, SEEK_END);                                                                                                                               
-        size = ftell(f);                                                                                                                                     
-        fseek(f, loc, SEEK_SET);                                                                                                                             
-        return size;                                                                                                                                         
+static int filesize (FILE* f) {
+        int loc = ftell(f);
+        int size = 0;
+
+        fseek(f, 0, SEEK_END);
+        size = ftell(f);
+        fseek(f, loc, SEEK_SET);
+        return size;
 }
 
 int writesprite (FILE *f, SDL_Surface *s, int offx, int offy, uint16_t *datasize) {
@@ -76,8 +76,8 @@ int writesprite (FILE *f, SDL_Surface *s, int offx, int offy, uint16_t *datasize
 
 int readsprite (FILE *f, uint32_t sprloc, SDL_Surface *s, int offx, int offy) {
 	int oldloc = ftell(f);
-	int r; 
-	
+	int r;
+
 	fseek(f, sprloc, SEEK_SET);
 
 	r = readSprData(f, s, offx, offy);
@@ -95,9 +95,9 @@ int picdetails (const char* filename) {
 	uint32_t index=0;
 
 	f = fopen(filename, "rb");
-	if (!f) 
+	if (!f)
 		return -1;
-	
+
         fread(&fh,sizeof(fh),1,f);
 	printf("signature %d\n", fh.signature);
 	printf("imagecount %d\n", fh.imgcount);
@@ -128,14 +128,14 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
         fo = fopen("__tmp__.pic","wb+");
 
 
-	if (!fi || !fo) 
+	if (!fi || !fo)
 		return -1;
 	fread(&fh, sizeof(fh), 1, fi);
 	fwrite(&fh, sizeof(fh), 1, fo);
 
 	sproffset = fh.imgcount * (sizeof(ph) + 2);
 	for (i=0; i<fh.imgcount; i++) {
-		fread(&ph, sizeof(ph), 1, fi); 
+		fread(&ph, sizeof(ph), 1, fi);
 		if (i == index) {
 			ph.width = s->w / 32;
 			ph.height = s->h / 32;
@@ -144,7 +144,7 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 		fseek(fi, ph.width*ph.height*4, SEEK_CUR);
 	}
 
-	
+
 	fseek(fi, sizeof(fh), SEEK_SET);
 	for (i=0; i<fh.imgcount; i++) {
 		fread(&ph, sizeof(ph), 1, fi);
@@ -168,10 +168,10 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 					exit(9);
 				}
 				fwrite(&sproffset, sizeof(sproffset), 1, fo);
-				
+
 				continuationposi = ftell(fi);
 				continuationposo = ftell(fo);
-				
+
 				fseek(fi, sprloc, SEEK_SET);
 				fseek(fo, sproffset, SEEK_SET);
 
@@ -195,14 +195,14 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 			fseek(fi, ph.width*ph.height*4, SEEK_CUR);
 			ph.width = s->w / 32; ph.height = s->h / 32;
 			fwrite(&ph, sizeof(ph), 1, fo);
-			for (j=0; j<ph.height; j++) 
+			for (j=0; j<ph.height; j++)
 				for (k=0; k<ph.width; k++) {
 					fwrite(&sproffset, sizeof(sproffset), 1, fo);
-	
+
 					continuationposo = ftell(fo);
 					fseek(fo, sproffset, SEEK_SET);
 					writesprite(fo, s,k * 32, j*32, &datasize);
-	
+
 					fseek(fo, continuationposo, SEEK_SET);
 					sproffset += datasize;
 
@@ -210,7 +210,7 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 			fflush(fo);
 		}
 	}
-				 
+
 	fclose(fo);
 	fclose(fi);
 
@@ -229,28 +229,22 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 	uint32_t magneta;
 
 	f = fopen(filename, "rb");
-	if (!f) 
+	if (!f)
 		return -1;
 
 	fread(&fh,sizeof(fh),1,f);
 
-	dbgprintf(":: File signature: 0x%08x\n", fh.signature);
-	dbgprintf(":: Image count: %u\n", fh.imgcount);
-	dbgprintf("\n");
-
 	for (i=0; i<fh.imgcount && i<=index ; i++) {
-		dbgprintf(":: Image %d\n", i+1);
 		fread(&ph, sizeof(ph), 1, f);
-		dbgprintf(":: Size: %dx%d\n", ph.width, ph.height);
 
 		if (i == index) {
-			s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000); 
-			
+			s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+
 			magneta = SDL_MapRGB(s->format, 255, 0, 255);
 			SDL_FillRect(s, NULL, magneta);
 
-			/* FIXME (ivucica#4#) Above statement is potentially unportable to architectures with 
-			 * different endianess. Lilitputtans would be happier if we took a look at SDL 
+			/* FIXME (ivucica#4#) Above statement is potentially unportable to architectures with
+			 * different endianess. Lilitputtans would be happier if we took a look at SDL
 			 * docs and corrected this. */
 
 			for (j=0; j<ph.height; j++) {
@@ -263,7 +257,6 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 			}
 		} else
 			fseek(f, sizeof(sprloc)*ph.height*ph.width, SEEK_CUR);
-		dbgprintf("\n");
 	}
 
 	fclose(f);
@@ -295,8 +288,8 @@ void show_help() {
 int main (int argc, char **argv) {
 	SDL_Surface *s=NULL;
 	int index=3;
-	
-	
+
+
 	if (argc == 1) {
 		fprintf(stderr, "pictool: no input files\n");
 		exit(1);
@@ -317,7 +310,7 @@ int main (int argc, char **argv) {
 		fprintf(stderr, "pictool: not enough arguments\n");
 		exit(2);
 	}
-	
+
 
 	SDL_Init(SDL_INIT_VIDEO);
 	if (argc==5 && !strcmp(argv[4], "--topic")) {
@@ -344,7 +337,7 @@ int main (int argc, char **argv) {
 		SDL_Quit();
 		exit(5);
 	}
-	
+
 	SDL_Quit();
 	return 0;
 }

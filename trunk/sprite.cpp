@@ -24,6 +24,19 @@
 #include <GL/glext.h>
 #endif
 #include "sprdata.h"
+
+#pragma pack(1)
+typedef struct {
+	uint32_t signature;
+	uint16_t imgcount;
+} picfileheader_t;
+typedef struct {
+	uint8_t width, height;
+	uint8_t unk1, unk2, unk3;
+} picpicheader_t;
+
+
+
 Sprite::Sprite(const std::string& filename, int index)
 {
 	m_pixelformat = GL_NONE;
@@ -75,14 +88,15 @@ Sprite::Sprite(const std::string& filename, int index)
 		}
 		// dont make static since if we change the rendering engine at runtime,
 		//  this may change too
-		Uint32 magenta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
-		SDL_FillRect(m_image, NULL, magenta);
+		Uint32 magneta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
+		SDL_FillRect(m_image, NULL, magneta);
 
 		// read the data
 		fseek(f, where, SEEK_SET);
 		fgetc(f); fgetc(f); fgetc(f); // TODO (ivucica#4#) maybe we should figure out what do these do?
 		if (readSprData(f, m_image, 0, 0)) {
 			// error happened
+			SDL_FreeSurface(m_image);
 			m_image = NULL;
 			return;
 		}
@@ -91,6 +105,56 @@ Sprite::Sprite(const std::string& filename, int index)
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
 
 		m_pixelformat = GL_RGBA;
+	}
+	else if(extension == "pic"){
+		FILE *f;
+		SDL_Surface *s;
+		int i,j,k;
+		picfileheader_t fh;
+		picpicheader_t ph;
+		uint32_t sprloc;
+		uint32_t magneta;
+
+
+		f = fopen(filename.c_str(), "rb");
+		if (!f)
+			return;
+
+		fread(&fh,sizeof(fh),1,f);
+
+		for (i=0; i<fh.imgcount && i<=index ; i++) {
+			fread(&ph, sizeof(ph), 1, f);
+
+			if (i == index) {
+				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+
+				magneta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
+				SDL_FillRect(s, NULL, magneta);
+
+				for (j=0; j<ph.height; j++) {
+					for (k=0; k<ph.width; k++) {
+						fread(&sprloc, sizeof(sprloc), 1, f);
+
+						int oldloc = ftell(f);
+						int r;
+						fseek(f, sprloc, SEEK_SET);
+						r = readSprData(f, s, k*32, j*32);
+						fseek(f, oldloc, SEEK_SET);
+
+						if (r) {
+							SDL_FreeSurface(s);
+							return;
+						}
+					}
+				}
+			} else
+				fseek(f, sizeof(sprloc)*ph.height*ph.width, SEEK_CUR);
+		}
+
+		fclose(f);
+
+		m_image = s;
+
 	}
 	else{
 		// m_image is already marked as NULL, so we're over

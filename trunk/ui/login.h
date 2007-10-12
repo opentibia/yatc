@@ -35,16 +35,19 @@ public:
 		pnlUsername.SetCaption("Account number:");
 		pnlUsername.SetPos(13,17);
 		pnlUsername.SetBGActiveness(false);
+		pnlUsername.SetFont("aafont");
 
 		txtUsername.SetPos(128,15);
 		txtUsername.SetWidth(216-134);
 		txtUsername.SetHeight(46-33);
+		txtUsername.SetPassProtectCharacter('*');
 
 		pnlPassword.SetWidth(131-17);
 		pnlPassword.SetHeight(12);
 		pnlPassword.SetCaption("Password:");
 		pnlPassword.SetPos(13,47);
 		pnlPassword.SetBGActiveness(false);
+		pnlPassword.SetFont("aafont");
 
 		txtPassword.SetPos(128,45);
 		txtPassword.SetWidth(216-134);
@@ -53,15 +56,17 @@ public:
 
 		pnlCreateAc.SetWidth(131-17);
 		pnlCreateAc.SetHeight(12);
-		pnlCreateAc.SetCaption("If you don't have\nan account yet::");
+		pnlCreateAc.SetCaption("If you don't have\nan account yet:");
 		pnlCreateAc.SetPos(13,85);
 		pnlCreateAc.SetBGActiveness(false);
+		pnlCreateAc.SetFont("aafont");
 
 		btnCreateAc.SetPos(128,94);
 		btnCreateAc.SetWidth(216-133);
 		btnCreateAc.SetHeight(112-95);
 		btnCreateAc.SetCaption("Create Account");
 		btnCreateAc.SetBGColor(.2,.2,.2,1.);
+		btnCreateAc.SetFont("minifont",8);
 
 		pnlSeparator.SetPos(9, 121);
 		pnlSeparator.SetBGColor(.1,.1,.1,1.);
@@ -73,12 +78,14 @@ public:
 		btnOk.SetHeight(166-149);
 		btnOk.SetCaption("Ok");
 		btnOk.SetBGColor(.1,.1,.1,1.);
+		btnOk.SetFont("minifont",8);
 
 		btnCancel.SetPos(180-4,148-17);
 		btnCancel.SetWidth(40);
 		btnCancel.SetHeight(166-149);
 		btnCancel.SetCaption("Cancel");
 		btnCancel.SetBGColor(.1,.1,.1,1.);
+		btnCancel.SetFont("minifont",8);
 
 	}
 };

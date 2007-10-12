@@ -45,12 +45,12 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy) {
 		uint32_t color;
 		unsigned char rgba[3];
 		fread(&pixelchunksize, 2, 1, f);
-		if(pixelchunksize>1024){
+		if(pixelchunksize>3076){
 			/* captain, the warp core breach has happened! what shall we do?! */
 			SDL_UnlockSurface(surface);
 			SDL_FreeSurface(surface);
 			fclose(f);
-			printf("Error [readSprData] Pixel chunk size is invalid.\n");
+			printf("Error [readSprData] Pixel chunk size is invalid (%d)\n", pixelchunksize);
 			return -1;
 			/* number one, eject the core */
 		}
@@ -89,7 +89,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 			color = getPixel(surface, offx + i%32, offy + i/32); 
 		else 
 			done = 1;
-		if (transparent && (color != SDL_MapRGB(surface->format, 255, 0, 255) || done)) { /* if we're drawing transparency, and we encountered a nontransparent pixel or we're done */
+		if (transparent && (color != SDL_MapRGB(surface->format, 255, 0, 255) && color != SDL_MapRGB(surface->format, 254, 0, 254) || done)) { /* if we're drawing transparency, and we encountered a nontransparent pixel or we're done */
 			transparent = 0; /* then we're no longer encountering transparency */
 			fwrite(&chunksize, 2, 1, f); /* we should write down the chunk size (since we have not written any other byte in meantime, we can directly write it down) */
 			chunksize = 0;
@@ -98,7 +98,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 			fseek(f, 2, SEEK_CUR); /* so, we skip this placeholder*/
 	
 		} else
-		if (!transparent && (color == SDL_MapRGB(surface->format, 255, 0, 255) || done)) { /* if we're drawing solidity, and we encountered a transparent pixel or we're done*/
+		if (!transparent && (color == SDL_MapRGB(surface->format, 255, 0, 255) || color == SDL_MapRGB(surface->format, 254, 0, 254) || done)) { /* if we're drawing solidity, and we encountered a transparent pixel or we're done*/
 			transparent = 1; /* that means we started drawing real stuff */
 	
 	
@@ -115,7 +115,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 		if (!transparent && !done) { /* if we're getting solid stuff draw em */
 			unsigned char rgb[3];
 			SDL_GetRGB(color, surface->format, rgb, rgb+1, rgb+2);
-			rgb[0] /= 2;
+/*			rgb[0] /= 2;*/
 			fwrite(rgb, 3, 1, f);
 			size += 3;
 	

@@ -53,18 +53,58 @@ GM_MainMenu::GM_MainMenu()
 	/* ******************* OPTIONS ************************* */
 	desktop.AddObject(&winOptions.window);
 	winOptions.btnGeneral.SetOnClick(GM_MainMenu::winOptions_btnGeneral_OnClick);
+	winOptions.btnGraphics.SetOnClick(GM_MainMenu::winOptions_btnGraphics_OnClick);
 	winOptions.btnNetwork.SetOnClick(GM_MainMenu::winOptions_btnNetwork_OnClick);
 	winOptions.btnMotd.SetOnClick(GM_MainMenu::winOptions_btnMotd_OnClick);
 	winOptions.btnOk.SetOnClick(GM_MainMenu::winOptions_btnOk_OnClick);
 
 	/* ***************** OPTIONS/GENERAL ******************** */
 	desktop.AddObject(&winOptionsGeneral.window);
+	winOptionsGeneral.btnOk.SetOnClick(GM_MainMenu::winOptionsGeneral_btnOk_OnClick);
 	winOptionsGeneral.btnCancel.SetOnClick(GM_MainMenu::winOptionsGeneral_btnCancel_OnClick);
+	winOptionsGeneral.btnHelp.SetOnClick(GM_MainMenu::btnHelp_OnClick);
+	winOptionsGeneral.btnHelp.SetCustomData(new std::string(
+		"Classic Control is ...\n"
+		"\n"
+		"Auto-chase Off turns off automatic chase of any\n"
+		"monster you attack.\n"
+		"\n"
+		"Show hints allows occasional popups with some help\n"
+		"during gameplay.\n"
+		"\n"
+		"Show names determines if there will be floating names\n"
+		"above creatures.\n"
+		"\n"
+		"Show text effects allows you to turn on and off the\n"
+		"so-called \"animated text\" effects."
+		));
+
+	/* ***************** OPTIONS/GRAPHICS ******************** */
+	desktop.AddObject(&winOptionsGraphics.window);
+	winOptionsGraphics.btnOk.SetOnClick(GM_MainMenu::winOptionsGraphics_btnOk_OnClick);
+	winOptionsGraphics.btnCancel.SetOnClick(GM_MainMenu::winOptionsGraphics_btnCancel_OnClick);
+	winOptionsGraphics.btnHelp.SetOnClick(GM_MainMenu::btnHelp_OnClick);
+	winOptionsGraphics.btnHelp.SetCustomData(new std::string(
+
+		"Fullscreen decides whether or not the client will\n"
+		"be taking the entire screen.\n"
+		"\n"
+		"Available resolutions shows detected resolutions on\n"
+		"your computer that the client can use while in fullscreen."
+		));
 
 	/* ***************** OPTIONS/NETWORK ******************** */
 	desktop.AddObject(&winOptionsNetwork.window);
 	winOptionsNetwork.btnOk.SetOnClick(GM_MainMenu::winOptionsNetwork_btnOk_OnClick);
 	winOptionsNetwork.btnCancel.SetOnClick(GM_MainMenu::winOptionsNetwork_btnCancel_OnClick);
+	winOptionsNetwork.btnHelp.SetOnClick(GM_MainMenu::btnHelp_OnClick);
+	winOptionsNetwork.btnHelp.SetCustomData(new std::string(
+		"Server name is the IP address or hostname of the\n"
+		"login server.\n"
+		"\n"
+		"Port is the TCP port of the login server."
+		));
+
 
 
 	desktop.AddObject(&winStatus);
@@ -78,7 +118,7 @@ GM_MainMenu::GM_MainMenu()
 
 
 	if (g_engine) {
-		background = g_engine->createSprite("yatc.bmp");
+		background = g_engine->createSprite("Tibia.pic",0);
 	}
 	else {
 		background = NULL;
@@ -115,7 +155,7 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 
 void GM_MainMenu::keyPress (char key)
 {
-	printf("Key %c %d\n", key, key);
+	//printf("Key %c %d\n", key, key);
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 }
 
@@ -190,6 +230,11 @@ void GM_MainMenu::pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContai
 {
 	g_running = 0;
 }
+void GM_MainMenu::btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	std::string *helptext = (std::string*)callerclass->GetCustomData();
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->msgBox(helptext->c_str(), "Help");
+}
 /* **********LOGIN******* */
 
 void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -200,7 +245,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ProtocolConfig::getInstance().setServerType(SERVER_OTSERV); // perhaps this should go to options, too?
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 	ProtocolConfig::createLoginConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption());
-
+	printf("logging in as %d with %s\n", atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption().c_str());
 	m->winStatus.SetVisible(true);
 	m->winStatus.SetCaption("Logging in");
 	m->winStatus.SetMessage("Connecting to the server...\n");
@@ -221,6 +266,12 @@ void GM_MainMenu::winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictCont
 	m->winOptionsGeneral.window.SetVisible(true);
 	m->winOptionsGeneral.window.Focus(NULL);
 }
+void GM_MainMenu::winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsGraphics.Init();
+	m->winOptionsGraphics.window.SetVisible(true);
+	m->winOptionsGraphics.window.Focus(NULL);
+}
 void GM_MainMenu::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsNetwork.Init();
@@ -237,9 +288,25 @@ void GM_MainMenu::winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer
 }
 /* *********GENERAL********** */
 
+void GM_MainMenu::winOptionsGeneral_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsGeneral.Store();
+	m->winOptionsGeneral.window.SetVisible(false);
+}
 void GM_MainMenu::winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsGeneral.window.SetVisible(false);
+}
+/* *********GENERAL********** */
+
+void GM_MainMenu::winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsGraphics.Store();
+	m->winOptionsGraphics.window.SetVisible(false);
+}
+void GM_MainMenu::winOptionsGraphics_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsGraphics.window.SetVisible(false);
 }
 /* **********NETWORK********* */
 void GM_MainMenu::winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
@@ -256,14 +323,50 @@ void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, gli
 
 /* ********** Responses to notifications *********** */
 void GM_MainMenu::onConnectionError(int message, const char* errortext) {
-	GM_MainMenu* m = (GM_MainMenu*)g_game;
+
 	std::stringstream s;
 	s << "There was an error while connecting." << std::endl <<
 		 std::endl <<
 	     "The following may help you identify error:" << std::endl <<
 	     errortext;
 
-	m->winStatus.SetCaption("Error");
-	m->winStatus.SetMessage(s.str());
-	m->winStatus.SetEnabled(true);
+	winStatus.SetCaption("Error");
+	winStatus.SetMessage(s.str());
+	winStatus.SetEnabled(true);
+}
+void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
+
+
+	if (options.motdnum == motdnum) {
+		printf("Motd numbers matching, not displaying motd.\n");
+		winStatus.SetVisible(false);
+		options.motdtext = text;
+		return;
+	}
+
+	//options.motdnum = motdnum;
+	options.motdtext = text;
+	options.Save();
+
+	winStatus.SetCaption("Message of the Day");
+	winStatus.SetMessage(text);
+	winStatus.SetEnabled(true);
+
+
+}
+void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& text) {
+
+
+
+	if (type == MESSAGE_ERROR)
+		winStatus.SetCaption("Error");
+	else
+		winStatus.SetCaption("Information");
+
+	winStatus.SetMessage(text);
+	winStatus.SetEnabled(true);
+}
+
+void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int premDays) {
+
 }

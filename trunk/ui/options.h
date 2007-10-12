@@ -33,37 +33,42 @@ public:
 		window.SetHeight(271);
 		window.SetWidth(278);
 		window.SetCaption("Options");
+		window.SetBGColor(.4, .4, .4, 1.);
 
 		window.AddObject(&btnGeneral);
 		btnGeneral.SetPos(15, 16);
 		btnGeneral.SetWidth(84);
 		btnGeneral.SetHeight(18);
 		btnGeneral.SetCaption("General");
+		btnGeneral.SetFont("minifont",8);
 
 		window.AddObject(&btnGraphics);
 		btnGraphics.SetPos(15, 49);
 		btnGraphics.SetWidth(84);
 		btnGraphics.SetHeight(18);
 		btnGraphics.SetCaption("Graphics");
+		btnGraphics.SetFont("minifont",8);
 
 		window.AddObject(&btnConsole);
 		btnConsole.SetPos(15, 82);
 		btnConsole.SetWidth(84);
 		btnConsole.SetHeight(18);
 		btnConsole.SetCaption("Console");
+		btnConsole.SetFont("minifont",8);
 
 		window.AddObject(&btnHotkeys);
 		btnHotkeys.SetPos(15, 115);
 		btnHotkeys.SetWidth(84);
 		btnHotkeys.SetHeight(18);
 		btnHotkeys.SetCaption("Hotkeys");
-
+		btnHotkeys.SetFont("minifont",8);
 
 		window.AddObject(&btnNetwork);
 		btnNetwork.SetPos(15, 148);
 		btnNetwork.SetWidth(84);
 		btnNetwork.SetHeight(18);
 		btnNetwork.SetCaption("Network");
+		btnNetwork.SetFont("minifont",8);
 
 		window.AddObject(&pnlGeneral);
 		pnlGeneral.SetPos(112, 14);
@@ -71,6 +76,7 @@ public:
 		pnlGeneral.SetHeight(27);
 		pnlGeneral.SetCaption("Change general\ngame options");
 		pnlGeneral.SetBGActiveness(false);
+		pnlGeneral.SetFont("aafont",10);
 
 		window.AddObject(&pnlGraphics);
 		pnlGraphics.SetPos(112, 47);
@@ -78,6 +84,7 @@ public:
 		pnlGraphics.SetHeight(27);
 		pnlGraphics.SetCaption("Change graphics and\nperformance settings");
 		pnlGraphics.SetBGActiveness(false);
+		pnlGraphics.SetFont("aafont");
 
 		window.AddObject(&pnlConsole);
 		pnlConsole.SetPos(112, 80);
@@ -85,6 +92,7 @@ public:
 		pnlConsole.SetHeight(27);
 		pnlConsole.SetCaption("Customise the console");
 		pnlConsole.SetBGActiveness(false);
+		pnlConsole.SetFont("aafont");
 
 		window.AddObject(&pnlHotkeys);
 		pnlHotkeys.SetPos(112, 113);
@@ -92,6 +100,7 @@ public:
 		pnlHotkeys.SetHeight(27);
 		pnlHotkeys.SetCaption("Edit your hotkey texts");
 		pnlHotkeys.SetBGActiveness(false);
+		pnlHotkeys.SetFont("aafont");
 
 		window.AddObject(&pnlNetwork);
 		pnlNetwork.SetPos(112, 146);
@@ -99,6 +108,7 @@ public:
 		pnlNetwork.SetHeight(27);
 		pnlNetwork.SetCaption("Configure network options,\nsuch as server address.");
 		pnlNetwork.SetBGActiveness(false);
+		pnlNetwork.SetFont("aafont");
 
 		window.AddObject(&pnlSeparator1);
 		pnlSeparator1.SetPos(13, 176);
@@ -111,6 +121,7 @@ public:
 		btnMotd.SetWidth(84);
 		btnMotd.SetHeight(18);
 		btnMotd.SetCaption("Motd");
+		btnMotd.SetFont("minifont",8);
 
 		window.AddObject(&pnlMotd);
 		pnlMotd.SetPos(112, 196);
@@ -118,6 +129,7 @@ public:
 		pnlMotd.SetHeight(27);
 		pnlMotd.SetCaption("Show the most recent\nMessage of the Day");
 		pnlMotd.SetBGActiveness(false);
+		pnlMotd.SetFont("aafont");
 
 		window.AddObject(&pnlSeparator2);
 		pnlSeparator2.SetPos(9, 237);
@@ -131,6 +143,7 @@ public:
 		btnOk.SetWidth(41);
 		btnOk.SetHeight(17);
 		btnOk.SetCaption("Ok");
+		btnOk.SetFont("minifont",8);
 	}
 
 };

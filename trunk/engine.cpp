@@ -27,8 +27,11 @@
 /// Functions are designed to be valid GLICT callbacks.
 #include <GLICT/globals.h>
 #include <GLICT/types.h>
+#include <sstream>
+#include "util.h"
 #include "defines.h"
 #include "engine.h"
+#include "font.h"
 Engine* g_engine;
 int ptrx, ptry;
 
@@ -38,24 +41,23 @@ void Engine::draw_rectangle(float left, float right, float top, float bottom, gl
 	g_engine->drawRectangle((int)left, (int)top, (int)(right-left), (int)(bottom-top), oRGBA(col.r * 255, col.g * 255, col.b * 255, col.a * 255));
 }
 
-void Engine::font_render(const char* txt, const void* font, float x, float y)
+void Engine::font_render(const char* txt, const void* font, float fontsize, float x, float y)
 {
-	Sprite *img = (Sprite*)font;
-
-	float cx = x*10, cy = y*10;
+	Font* f = (Font*)font;
+	float cx = x, cy = y ;
 	float sizesofar = 0.f;
 	float linessofar = 0.f;
 	for(const char* t = txt; *t; ++t){
 		switch(*t) {
 			default:
-				Engine::font_drawchar(*t, img, (int)cx, (int)cy);
-				cx += 7;
-				sizesofar += 7;
+				f->Blit(*t,cx,cy);
+				cx += f->getWidth(*t);
+				sizesofar += f->getWidth(*t);
 				break;
 			case '\n':
 			case '\r':
 				cx -= sizesofar;
-				cy += 16;
+				cy += f->getHeight('\n');
 				linessofar += 1.;
 				sizesofar = 0;
 				if (*t == '\n' && *(t + 1) == '\r' ||
@@ -66,24 +68,14 @@ void Engine::font_render(const char* txt, const void* font, float x, float y)
 	}
 }
 
-void Engine::font_drawchar(char t, Sprite* img, int x1, int y1)
+
+float Engine::font_size(const char* txt, const void* font, float fontsize)
 {
-	t -= 32;
-	int x = (int)((t % 32)*16.);
-	int y = (int)((t / 32)*16.);
-
-	float w = 10;
-	float h = 10;
-
-	img->Blit(x1, y1, x, y, w, h);
-}
-
-float Engine::font_size(const char* txt, const void* font)
-{
+	Font* f = (Font*)font;
     int size=0, len=strlen(txt);
     int maxsize=0;
     for (int i=0;i<len;i++) {
-        size++;
+        size+=f->getWidth(txt[i]) ;
         if (txt[i]=='\n' || txt[i]=='\r') {
             if (size>maxsize) maxsize=size;
             if (i < len && (txt[i]=='\n' && txt[i+1]=='\r' || txt[i]=='\r' && txt[i+1]=='\n')) i++;
@@ -93,7 +85,7 @@ float Engine::font_size(const char* txt, const void* font)
     }
     if (size>maxsize) maxsize=size;
 
-	return maxsize*.7;
+	return maxsize;
 }
 
 // set the callbacks up in the constructor
@@ -107,17 +99,26 @@ Engine::Engine()
 	m_video_bpp = 8;
 
 	m_screen = NULL;
-	m_sysfont = glictCreateFont("system");
-	if(!m_sysfont){
-		// TODO (mips_act#3#): Report error
-	}
-	m_sysfont->SetRenderFunc(Engine::font_render);
-	m_sysfont->SetSizeFunc(Engine::font_size);
+
+	initFont(&m_sysfont, "system");
+	initFont(&m_minifont, "minifont");
+	initFont(&m_aafont, "aafont");
 }
 
 Engine::~Engine()
 {
 	glictDeleteFont("system");
+}
+
+void Engine::initFont(glictFont **fnt, const char *fontname) {
+	*fnt = glictCreateFont(fontname);
+	if(!*fnt){
+		std::stringstream s;
+		s << "Cannot load font '" << fontname << "'.";
+		NativeGUIError(s.str().c_str(), "Error loading font");
+	}
+	(*fnt)->SetRenderFunc(Engine::font_render);
+	(*fnt)->SetSizeFunc(Engine::font_size);
 }
 
 void Engine::doResize(int w, int h)

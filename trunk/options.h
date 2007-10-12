@@ -38,9 +38,18 @@ public:
 	void Save();
 	void Load();
 
-	bool fullscreen;
+
 	bool os_cursor;
 	std::string skin;
+
+	bool classiccontrol;
+	bool autochase;
+	bool showhints;
+	bool shownames;
+	bool showtexteffects;
+
+	int w, h, bpp;
+	bool fullscreen;
 
 	std::string motdtext;
 	int motdnum;

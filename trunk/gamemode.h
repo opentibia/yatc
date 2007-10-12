@@ -24,6 +24,8 @@
 
 #include <SDL/SDL_events.h>
 #include <string>
+#include <list>
+#include "gamecontent/enums.h"
 class GameMode
 {
 public:
@@ -35,6 +37,9 @@ public:
 	virtual void keyPress (char key) {}
 
 	virtual void onConnectionError(int message, const char* errortext) {}
+	virtual void openMOTD(int motdnum, const std::string& message) {}
+	virtual void openMessageWindow(WindowMessage_t type, const std::string& message) {}
+	virtual void openCharactersList(const std::list<CharacterList_t>& list, int premDays) {}
 };
 
 extern GameMode* g_game;

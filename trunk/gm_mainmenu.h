@@ -34,6 +34,7 @@
 #include "ui/mainmenu.h"
 #include "ui/options.h"
 #include "ui/optionsgeneral.h"
+#include "ui/optionsgraphics.h"
 #include "ui/optionsnetwork.h"
 
 class GM_MainMenu : public GameMode
@@ -49,18 +50,26 @@ public:
 	void msgBox (const char* mbox, const char* title);
 
 	void onConnectionError(int message, const char* text);
+	void openMessageWindow(WindowMessage_t type, const std::string& message);
+	void openMOTD(int motdnum, const std::string& message);
+	void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
 private:
 	glictContainer desktop;
 	pnlMainMenu_t pnlMainMenu;
 	winLogin_t winLogin;
 	winOptions_t winOptions;
 	winOptionsGeneral_t winOptionsGeneral;
+	winOptionsGraphics_t winOptionsGraphics;
 	winOptionsNetwork_t winOptionsNetwork;
 
 	glictMessageBox winStatus;
 
+	std::list<CharacterList_t> charlist;
+
 	Sprite* background;
 protected:
+	static void btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
 	static void pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictContainer* callerclass);
@@ -70,11 +79,16 @@ protected:
 	static void winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
+	static void winOptionsGeneral_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsGraphics_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);

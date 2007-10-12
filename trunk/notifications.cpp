@@ -53,37 +53,27 @@ void newConnect()
 
 void Notifications::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
 {
-
-	/*
-	std::list<CharacterList_t>::const_iterator it;
-	g_recFiles.clear();
-	for(it = list.begin(); it != list.end(); ++it){
-		printf("%s\n", it->name.c_str());
-		g_recFiles.push_back(it->name);
-	}
-	g_recIt = g_recFiles.begin();
-	newConnect();
-	*/
+	g_game->openCharactersList(list, premDays);
 }
 
 void Notifications::onConnectionError(int message)
 {
 
-	g_game->onConnectionError(message, Connection::getErrorDesc(message));
-	/*if(message == Connection::ERROR_CLOSED_SOCKET){
+
+
+	if(message == Connection::ERROR_CLOSED_SOCKET){
 		printf("Done!\n"); fflush(stdout);
 		Containers::getInstance().clear();
 		Creatures::getInstance().clear();
 		GlobalVariables::clear();
 		Inventory::getInstance().clear();
 		Map::getInstance().clear();
-		newConnect();
+	//	newConnect();
 	}
 	else{
-		printf("********************************************************\n");
-		printf("CONNECTION ERROR: %d - %s\n", message, Connection::getErrorDesc(message));
-		printf("********************************************************\n");
-	}*/
+		g_game->onConnectionError(message, Connection::getErrorDesc(message));
+
+	}
 }
 
 void Notifications::onProtocolError(bool fatal)
@@ -143,4 +133,19 @@ void Notifications::onProtocolError(bool fatal)
 		}
 	}
 	printf("********************************************************\n");
+}
+
+
+
+void Notifications::openMessageWindow(WindowMessage_t type, const std::string& message) {
+
+	if (type == MESSAGE_MOTD) {
+		std::string text;
+		int motdnum;
+		sscanf(message.c_str(), "%d", &motdnum);
+
+		text = message.substr(message.find('\n')+1);
+		g_game->openMOTD(motdnum, text);
+	} else
+		g_game->openMessageWindow(type, message);
 }
