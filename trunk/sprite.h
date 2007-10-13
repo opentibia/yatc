@@ -36,9 +36,12 @@ class Sprite
 		virtual float getWidth() const { return m_image->w; }
 		virtual float getHeight() const { return m_image->h; }
 
+		bool isLoaded() { return m_loaded;}
 
 		void Blit(float destx, float desty){
-			Blit(destx, desty, 0, 0, getWidth(), getHeight());
+			if(m_image){
+				Blit(destx, desty, 0, 0, getWidth(), getHeight());
+			}
 		}
 
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) = 0;
@@ -50,10 +53,12 @@ class Sprite
 
 		SDL_Surface* getImage() { return m_image; }
 		GLuint getPixelFormat() { return m_pixelformat; }
+
+	private:
 		void putPixel(int x, int y, uint32_t pixel);
 		uint32_t getPixel(int x, int y);
 
-	private:
+		bool m_loaded;
 		SDL_Surface* m_image;
 		GLuint m_pixelformat;
 };

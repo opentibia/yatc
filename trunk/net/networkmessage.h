@@ -90,7 +90,7 @@ class NetworkMessage
 
 		enum{
 			CAN_READ = 1,
-			CAN_WRITE = 2,
+			CAN_WRITE = 2
 		};
 
 		void setType(int v){ m_accessType = v; }

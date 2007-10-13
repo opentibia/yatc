@@ -30,7 +30,6 @@
 #include "net/protocollogin.h"
 #include "net/protocolgame80.h"
 
-
 extern bool g_running;
 
 GM_MainMenu::GM_MainMenu()
@@ -116,11 +115,14 @@ GM_MainMenu::GM_MainMenu()
 	desktop.SetHeight(glictGlobals.h);
 	desktop.ResetTransformations();
 
-
-	if (g_engine) {
+	if(g_engine){
 		background = g_engine->createSprite("Tibia.pic",0);
+		if(!background->isLoaded()){
+			delete background;
+			background = NULL;
+		}
 	}
-	else {
+	else{
 		background = NULL;
 	}
 }
@@ -132,7 +134,7 @@ GM_MainMenu::~GM_MainMenu()
 
 void GM_MainMenu::renderScene()
 {
-	if (background)
+	if(background)
 		background->Blit(0,0);
 
 	desktop.Paint();

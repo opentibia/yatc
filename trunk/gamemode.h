@@ -28,8 +28,9 @@
 #include "gamecontent/enums.h"
 class GameMode
 {
-public:
+protected:
 	GameMode() {}
+public:
 	virtual ~GameMode() {}
 
 	virtual void renderScene() = 0;

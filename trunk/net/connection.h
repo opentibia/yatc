@@ -290,7 +290,7 @@ class Connection
 
 		enum READSTATE{
 			READING_SIZE,
-			READING_MESSAGE,
+			READING_MESSAGE
 		};
 
 		STATE m_state;

@@ -26,7 +26,7 @@
 enum enginelist_t {
 	ENGINE_SDL = 0, // software renderer
 	ENGINE_OPENGL = 1,
-	ENGINE_DIRECTX = 2,
+	ENGINE_DIRECTX = 2
 };
 
 class Options
@@ -57,9 +57,6 @@ public:
 	int port;
 
 	enginelist_t engine;
-
-
-
 };
 
 

@@ -41,6 +41,7 @@ Sprite::Sprite(const std::string& filename, int index)
 {
 	m_pixelformat = GL_NONE;
 	m_image = NULL;
+	m_loaded = false;
 
 	size_t extbegins = filename.rfind(".") + 1;
 	std::string extension;
@@ -55,14 +56,15 @@ Sprite::Sprite(const std::string& filename, int index)
 			return;
 		}
 		m_pixelformat = GL_BGR;
+		m_loaded = true;
 	}
 	else if(extension == "spr"){
 		uint32_t signature; // TODO (ivucica#3#) signature should be perhaps read during logon?
 		uint16_t sprcount;
 		uint32_t where;
-		uint16_t size;
-		bool transparent = true;
-		int destination = 0;
+		//uint16_t size;
+		//bool transparent = true;
+		//int destination = 0;
 
 		FILE *f = fopen(filename.c_str(), "r");
 		if(!f){
@@ -105,6 +107,7 @@ Sprite::Sprite(const std::string& filename, int index)
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
 
 		m_pixelformat = GL_RGBA;
+		m_loaded = true;
 	}
 	else if(extension == "pic"){
 		FILE *f;
@@ -115,24 +118,25 @@ Sprite::Sprite(const std::string& filename, int index)
 		uint32_t sprloc;
 		uint32_t magneta;
 
-
 		f = fopen(filename.c_str(), "rb");
-		if (!f)
+		if(!f){
+			printf("Error [Sprite::loadSurfaceFromFile] Sprite file %s not found\n", filename.c_str());
 			return;
+		}
 
-		fread(&fh,sizeof(fh),1,f);
+		fread(&fh, sizeof(fh), 1, f);
 
-		for (i=0; i<fh.imgcount && i<=index ; i++) {
+		for(i = 0; i < fh.imgcount && i <= index ; i++) {
 			fread(&ph, sizeof(ph), 1, f);
 
-			if (i == index) {
+			if(i == index){
 				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
 
 				magneta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
 				SDL_FillRect(s, NULL, magneta);
 
-				for (j=0; j<ph.height; j++) {
-					for (k=0; k<ph.width; k++) {
+				for(j = 0; j < ph.height; j++){
+					for(k = 0; k < ph.width; k++){
 						fread(&sprloc, sizeof(sprloc), 1, f);
 
 						int oldloc = ftell(f);
@@ -141,20 +145,22 @@ Sprite::Sprite(const std::string& filename, int index)
 						r = readSprData(f, s, k*32, j*32);
 						fseek(f, oldloc, SEEK_SET);
 
-						if (r) {
+						if(r){
 							SDL_FreeSurface(s);
+							fclose(f);
 							return;
 						}
 					}
 				}
-			} else
+			}
+			else{
 				fseek(f, sizeof(sprloc)*ph.height*ph.width, SEEK_CUR);
+			}
 		}
 
 		fclose(f);
-
 		m_image = s;
-
+		m_loaded = true;
 	}
 	else{
 		// m_image is already marked as NULL, so we're over
