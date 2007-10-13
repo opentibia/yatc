@@ -31,12 +31,12 @@
 static void putPixel(SDL_Surface *surface, int x, int y, uint32_t pixel);
 static uint32_t getPixel(SDL_Surface *surface, int x, int y);
 
-int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy) {
+int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
+{
 	uint16_t size;
 	uint16_t destination=0;
 	int i,j;
 	int transparent = 1;
-
 
 	fread(&size, 2, 1, f);
 	SDL_LockSurface(surface);
@@ -45,7 +45,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy) {
 		uint32_t color;
 		unsigned char rgba[3];
 		fread(&pixelchunksize, 2, 1, f);
-		if(pixelchunksize>3076){
+		if(pixelchunksize > 3076){
 			/* captain, the warp core breach has happened! what shall we do?! */
 			SDL_UnlockSurface(surface);
 			SDL_FreeSurface(surface);
@@ -72,57 +72,57 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy) {
 	return 0;
 }
 
-int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *datasize) {
-
-	uint16_t i=0;
-	uint32_t color=0;
+int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *datasize)
+{
+	uint16_t i = 0;
+	uint32_t color = 0;
 	int transparent = 1;
 	int sizepos, chunksizepos, continuationpos;
-	uint16_t size=0, chunksize=0;
-	int done=0;
+	uint16_t size = 0, chunksize = 0;
+	int done = 0;
 
 	sizepos = ftell(f);
 	fseek(f, 2, SEEK_CUR);
 	chunksizepos = sizepos + 2;
-	while (!done) {
-		if (i<1024)
-			color = getPixel(surface, offx + i%32, offy + i/32); 
-		else 
+	while(!done){
+		if(i < 1024){
+			color = getPixel(surface, offx + i%32, offy + i/32);
+		}
+		else{
 			done = 1;
-		if (transparent && (color != SDL_MapRGB(surface->format, 255, 0, 255) && color != SDL_MapRGB(surface->format, 254, 0, 254) || done)) { /* if we're drawing transparency, and we encountered a nontransparent pixel or we're done */
+		}
+
+		/* if we're drawing transparency, and we encountered a nontransparent pixel or we're done */
+		if(transparent && ((color != SDL_MapRGB(surface->format, 255, 0, 255) && color != SDL_MapRGB(surface->format, 254, 0, 254)) || done)){
 			transparent = 0; /* then we're no longer encountering transparency */
 			fwrite(&chunksize, 2, 1, f); /* we should write down the chunk size (since we have not written any other byte in meantime, we can directly write it down) */
 			chunksize = 0;
 			size += 2;
 			chunksizepos = ftell(f); /* next time we write down chunksize, we'll put it straight after this chunksize */
 			fseek(f, 2, SEEK_CUR); /* so, we skip this placeholder*/
-	
-		} else
-		if (!transparent && (color == SDL_MapRGB(surface->format, 255, 0, 255) || color == SDL_MapRGB(surface->format, 254, 0, 254) || done)) { /* if we're drawing solidity, and we encountered a transparent pixel or we're done*/
+		}
+		/* if we're drawing solidity, and we encountered a transparent pixel or we're done*/
+		else if(!transparent && (color == SDL_MapRGB(surface->format, 255, 0, 255) || color == SDL_MapRGB(surface->format, 254, 0, 254) || done)){
 			transparent = 1; /* that means we started drawing real stuff */
-	
-	
+
 			continuationpos = ftell(f);
 			fseek(f, chunksizepos, SEEK_SET);
 			fwrite(&chunksize, 2, 1, f);
 			fseek(f, continuationpos, SEEK_SET);
 			size += 2;
 			chunksize = 0;
-	
-	
 		}
-	
+
 		if (!transparent && !done) { /* if we're getting solid stuff draw em */
 			unsigned char rgb[3];
 			SDL_GetRGB(color, surface->format, rgb, rgb+1, rgb+2);
 /*			rgb[0] /= 2;*/
 			fwrite(rgb, 3, 1, f);
 			size += 3;
-	
+
 		}
 		chunksize += 1;
 		i++;
-
 	}
 
 	fseek(f, sizepos, SEEK_SET);

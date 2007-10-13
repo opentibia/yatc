@@ -60,6 +60,8 @@ SpriteGL::~SpriteGL()
 
 void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float width, float height)
 {
+	if(!getImage())
+		return;
 	// TODO (mips_act#3#): Configure glict to dont enable/disable all the time
 	// GL_TEXTURE_2D
 	glEnable(GL_TEXTURE_2D);

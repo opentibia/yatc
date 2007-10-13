@@ -147,7 +147,7 @@ bool Objects::loadDat(const char* filename)
 		return false;
 
 	uint16_t id = 100;
-	uint32_t size;
+	int32_t size;
 	uint16_t read_short, read_short2;
 	uint32_t maxObjects = 0;
 

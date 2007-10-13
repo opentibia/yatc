@@ -34,6 +34,8 @@ SpriteSDL::~SpriteSDL()
 
 void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
 {
+	if(!getImage())
+		return;
 	// code is like this because of dx5.0 ... see docs/html/sdlrect.html in SDL documentation for more info
 	SDL_Rect src = {(int)sx,(int)sy,(int)(w),(int)(h)};
 	SDL_Rect dst = {(int)dx,(int)dy,(int)(w),(int)(h)};

@@ -65,7 +65,7 @@ enum SkillList_t{
 enum SkillAttr_t{
 	SKILL_ATTR_LEVEL,
 	SKILL_ATTR_PERCENT,
-	SKILL_ATTR_LAST,
+	SKILL_ATTR_LAST
 };
 
 enum Direction
@@ -77,7 +77,7 @@ enum Direction
 	DIRECTION_NE,
 	DIRECTION_NW,
 	DIRECTION_SE,
-	DIRECTION_SW,
+	DIRECTION_SW
 };
 
 enum WindowMessage_t{
@@ -94,7 +94,7 @@ enum MessageType_t{
 	MSG_INFO_DESCR          = 0x16, /*Green message in game window and in the console*/
 	MSG_STATUS_SMALL        = 0x17, /*White message at the bottom of the game window"*/
 	MSG_STATUS_CONSOLE_BLUE = 0x18, /*Blue message in the console*/
-	MSG_STATUS_CONSOLE_RED  = 0x19, /*Red message in the console*/
+	MSG_STATUS_CONSOLE_RED  = 0x19  /*Red message in the console*/
 };
 
 enum SpeakClasses_t{
@@ -116,7 +116,7 @@ enum SpeakClasses_t{
 	SPEAK_CHANNEL_UNK8  = 0x08,
 
 	SPEAK_MONSTER_SAY   = 0x10,
-	SPEAK_MONSTER_YELL  = 0x11,
+	SPEAK_MONSTER_YELL  = 0x11
 };
 
 struct CharacterList_t{

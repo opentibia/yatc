@@ -29,6 +29,7 @@ Options::Options()
 {
 	configHandler = new ConfigHandler();
 
+	//engine = ENGINE_OPENGL;
 	engine = ENGINE_SDL;
 	os_cursor = 0;
 	skin = "default";
@@ -127,7 +128,7 @@ void Options::Load()
 {
 	if(!configHandler->loadConfig("yatc.cfg")){
 		return;
-	}
+}
 
 	switch((enginelist_t)atoi(configHandler->getKeyValue("window", "engine").c_str())){
 		case ENGINE_SDL:
