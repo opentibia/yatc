@@ -29,7 +29,6 @@ Options::Options()
 {
 	configHandler = new ConfigHandler();
 
-	//engine = ENGINE_OPENGL;
 	engine = ENGINE_SDL;
 	os_cursor = 0;
 	skin = "default";
@@ -45,7 +44,7 @@ Options::Options()
 	fullscreen = 0;
 	w = 640;
 	h = 480;
-	bpp = 32;
+	bpp = 16;
 
 	motdtext = "No current information.";
 	motdnum = 0;
@@ -128,7 +127,7 @@ void Options::Load()
 {
 	if(!configHandler->loadConfig("yatc.cfg")){
 		return;
-}
+	}
 
 	switch((enginelist_t)atoi(configHandler->getKeyValue("window", "engine").c_str())){
 		case ENGINE_SDL:
@@ -169,3 +168,4 @@ void Options::Load()
 
 	configHandler->clear();
 }
+

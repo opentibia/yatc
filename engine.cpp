@@ -32,6 +32,7 @@
 #include "defines.h"
 #include "engine.h"
 #include "font.h"
+#include "options.h"
 Engine* g_engine;
 int ptrx, ptry;
 
@@ -100,9 +101,9 @@ Engine::Engine()
 	glictGlobals.paintrectCallback = Engine::draw_rectangle;
 	glictGlobals.enableGlTranslate = false;
 
-	doResize(640, 480);
+	doResize(options.w, options.h);
 
-	m_video_bpp = 8;
+	m_video_bpp = options.bpp;
 
 	m_screen = NULL;
 
@@ -134,3 +135,4 @@ void Engine::doResize(int w, int h)
 	glictGlobals.w = w;
 	glictGlobals.h = h;
 }
+

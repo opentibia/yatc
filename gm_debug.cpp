@@ -22,6 +22,7 @@
 #include "defines.h"
 #include "engine.h"
 #include "sprite.h"
+#include "options.h"
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -51,8 +52,8 @@ void GM_Debug::ExitOnClick(glictPos* relmousepos, glictContainer* callerclass)
 GM_Debug::GM_Debug()
 {
 
-	desktop.SetWidth(640);
-	desktop.SetHeight(480);
+	desktop.SetWidth(options.w);
+	desktop.SetHeight(options.h);
 	desktop.ResetTransformations();
 
 	desktop.AddObject(&btnButton);
@@ -72,8 +73,8 @@ GM_Debug::GM_Debug()
 	btnExit.SetOnClick(GM_Debug::ExitOnClick);
 
 	if(g_engine){
-		background = g_engine->createSprite("yatc.bmp");
-		spr = g_engine->createSprite("tibia.spr", 365);
+		background = g_engine->createSprite("Tibia.pic", 0);
+		spr = g_engine->createSprite("Tibia.spr", 365);
 	}
 	else{  // i think that if g_engine does not exist, we might as well crash. what do you think, guys? ivucica
 		background = NULL;

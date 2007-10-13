@@ -8,6 +8,7 @@ AM_INIT_AUTOMAKE([foreign])
 AC_REVISION($Revision: 1.0 $)
 
 # Checks for programs.
+AC_PROG_CC
 AC_PROG_CXX
 AC_LANG(C++)
 

@@ -140,11 +140,10 @@ public:
 			resdata_t *data = (resdata_t *)((*it)->GetCustomData());
 			if (data->w == options.w && data->h == options.h && data->bpp == options.bpp) {
 				(*it)->SetBGActiveness(true);
-				printf("oi.\n");
+				currentres = *((resdata_t*)(*it)->GetCustomData());
 			} else {
 				(*it)->SetBGActiveness(false);
 			}
-			printf("%d %d %d - %d %d %d\n", data->w, data->h, data->bpp, options.w, options.h, options.bpp);
 		}
 	}
 

@@ -48,6 +48,7 @@ public:
 	void keyPress (char key);
 
 	void msgBox (const char* mbox, const char* title);
+	void centerWindow (glictWindow *win);
 
 	void onConnectionError(int message, const char* text);
 	void openMessageWindow(WindowMessage_t type, const std::string& message);
@@ -99,3 +100,4 @@ protected:
 };
 
 #endif
+

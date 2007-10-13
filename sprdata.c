@@ -84,8 +84,8 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 	sizepos = ftell(f);
 	fseek(f, 2, SEEK_CUR);
 	chunksizepos = sizepos + 2;
-	while(!done){
-		if(i < 1024){
+	while (!done) {
+		if (i <= 1024) {
 			color = getPixel(surface, offx + i%32, offy + i/32);
 		}
 		else{
@@ -116,7 +116,6 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 		if (!transparent && !done) { /* if we're getting solid stuff draw em */
 			unsigned char rgb[3];
 			SDL_GetRGB(color, surface->format, rgb, rgb+1, rgb+2);
-/*			rgb[0] /= 2;*/
 			fwrite(rgb, 3, 1, f);
 			size += 3;
 
@@ -191,3 +190,4 @@ static uint32_t getPixel(SDL_Surface *surface, int x, int y)
 		return 0; /* shouldn't happen, but avoids warnings */
 	}
 }
+
