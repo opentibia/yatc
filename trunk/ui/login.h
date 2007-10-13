@@ -41,6 +41,9 @@ public:
 		txtUsername.SetWidth(216-134);
 		txtUsername.SetHeight(46-33);
 		txtUsername.SetPassProtectCharacter('*');
+		#if (GLICT_APIREV >= 2)
+		txtUsername.SetAllowedChars("0123456789");
+		#endif
 
 		pnlPassword.SetWidth(131-17);
 		pnlPassword.SetHeight(12);
@@ -53,6 +56,9 @@ public:
 		txtPassword.SetWidth(216-134);
 		txtPassword.SetHeight(46-33);
 		txtPassword.SetPassProtectCharacter('*');
+		#if (GLICT_APIREV >= 2)
+		txtPassword.SetAllowedChars(" !\"#$%/()=?*'+<>[]{}`~\\|;:_,.-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+		#endif
 
 		pnlCreateAc.SetWidth(131-17);
 		pnlCreateAc.SetHeight(12);

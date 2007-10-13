@@ -57,8 +57,12 @@ public:
 	int port;
 
 	enginelist_t engine;
+
+
+
 };
 
 
 extern Options options;
 #endif
+

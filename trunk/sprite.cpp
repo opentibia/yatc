@@ -62,9 +62,6 @@ Sprite::Sprite(const std::string& filename, int index)
 		uint32_t signature; // TODO (ivucica#3#) signature should be perhaps read during logon?
 		uint16_t sprcount;
 		uint32_t where;
-		//uint16_t size;
-		//bool transparent = true;
-		//int destination = 0;
 
 		FILE *f = fopen(filename.c_str(), "r");
 		if(!f){
@@ -118,6 +115,7 @@ Sprite::Sprite(const std::string& filename, int index)
 		uint32_t sprloc;
 		uint32_t magneta;
 
+
 		f = fopen(filename.c_str(), "rb");
 		if(!f){
 			printf("Error [Sprite::loadSurfaceFromFile] Sprite file %s not found\n", filename.c_str());
@@ -159,7 +157,9 @@ Sprite::Sprite(const std::string& filename, int index)
 		}
 
 		fclose(f);
+
 		m_image = s;
+
 		m_loaded = true;
 	}
 	else{
@@ -236,3 +236,4 @@ uint32_t Sprite::getPixel(int x, int y)
 		return 0; /* shouldn't happen, but avoids warnings */
 	}
 }
+

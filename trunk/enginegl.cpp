@@ -26,12 +26,15 @@
 
 #include <GL/gl.h>
 #include <GLICT/globals.h>
+#include "options.h"
 #include "enginegl.h"
 #include "font.h"
 EngineGL::EngineGL()
 {
 	printf("Starting OpenGL engine\n");
 	m_videoflags = SDL_OPENGL | SDL_RESIZABLE;
+	if (options.fullscreen)
+		m_videoflags |= SDL_FULLSCREEN;
 
 	m_screen = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
 

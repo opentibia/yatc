@@ -30,6 +30,7 @@
 #include "net/protocollogin.h"
 #include "net/protocolgame80.h"
 
+
 extern bool g_running;
 
 GM_MainMenu::GM_MainMenu()
@@ -114,8 +115,15 @@ GM_MainMenu::GM_MainMenu()
 	desktop.SetWidth(glictGlobals.w);
 	desktop.SetHeight(glictGlobals.h);
 	desktop.ResetTransformations();
+	centerWindow(&winLogin.window);
+	centerWindow(&winOptions.window);
+	centerWindow(&winOptionsGeneral.window);
+	centerWindow(&winOptionsGraphics.window);
+	centerWindow(&winOptionsNetwork.window);
+	centerWindow(&winStatus);
+	// end of "onresize"
 
-	if(g_engine){
+	if (g_engine) {
 		background = g_engine->createSprite("Tibia.pic",0);
 		if(!background->isLoaded()){
 			delete background;
@@ -161,6 +169,11 @@ void GM_MainMenu::keyPress (char key)
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 }
 
+void GM_MainMenu::centerWindow (glictWindow *win) {
+	glictSize s;
+	win->GetSize(&s);
+	win->SetPos(glictGlobals.w / 2 - s.w / 2, glictGlobals.h/2 - s.h / 2);
+}
 
 void GM_MainMenu::msgBox (const char* mbox, const char* title) {
 	glictSize s;
@@ -209,7 +222,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->msgBox(
 		"YATC - Yet Another Tibia Client\n"
-		"v1.0\n"
+		"v0.1\n"
 		"\n"
 		"(c) 2007 OpenTibia Team\n"
 		"\n"
@@ -302,8 +315,40 @@ void GM_MainMenu::winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, gli
 /* *********GENERAL********** */
 
 void GM_MainMenu::winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	enginelist_t e = options.engine;
+	int w = options.w; int h = options.h; int bpp = options.bpp;
+	bool fs = options.fullscreen;
+
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
+
 	m->winOptionsGraphics.Store();
+	#if 0
+	if (e != options.engine || w != options.w || h != options.h || bpp != options.bpp || fs != options.fullscreen) {
+		switch(options.engine) {
+			case ENGINE_OPENGL:
+				g_engine = new EngineGL;
+				break;
+			/*
+			case ENGINE_DIRECTX:
+				g_engine = new EngineDX;
+				break;
+			*/
+			default:
+				DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Unknown engine was selected. Falling back to SDL.");
+				options.engine = ENGINE_SDL;
+			case ENGINE_SDL:
+				g_engine = new EngineSDL;
+				break;
+		}
+
+		if(!g_engine->isSupported()){
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "The selected graphics engine is not supported. Falling back to SDL.");
+			delete g_engine;
+			options.engine = ENGINE_SDL;
+			g_engine = new EngineSDL;
+		}
+	}
+	#endif
 	m->winOptionsGraphics.window.SetVisible(false);
 }
 void GM_MainMenu::winOptionsGraphics_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
@@ -338,7 +383,6 @@ void GM_MainMenu::onConnectionError(int message, const char* errortext) {
 }
 void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
 
-
 	if (options.motdnum == motdnum) {
 		printf("Motd numbers matching, not displaying motd.\n");
 		winStatus.SetVisible(false);
@@ -372,3 +416,4 @@ void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& tex
 void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int premDays) {
 
 }
+

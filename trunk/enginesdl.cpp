@@ -25,11 +25,13 @@
 #include <GLICT/globals.h>
 #include "enginesdl.h"
 #include "font.h"
-
+#include "options.h"
 EngineSDL::EngineSDL()
 {
 	printf("Starting SDL engine\n");
 	m_videoflags = SDL_HWSURFACE | SDL_ANYFORMAT | SDL_DOUBLEBUF | SDL_RESIZABLE;
+	if (options.fullscreen)
+		m_videoflags |= SDL_FULLSCREEN;
 
 	m_screen = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
 
