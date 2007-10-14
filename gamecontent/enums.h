@@ -124,6 +124,7 @@ struct CharacterList_t{
 	std::string world;
 	uint32_t ip;
 	uint16_t port;
+	void* extra;
 };
 
 struct ChannelList_t{

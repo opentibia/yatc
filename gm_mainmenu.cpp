@@ -50,6 +50,11 @@ GM_MainMenu::GM_MainMenu()
 	winLogin.btnOk.SetOnClick(GM_MainMenu::winLogin_btnOk_OnClick);
 	winLogin.btnCancel.SetOnClick(GM_MainMenu::winLogin_btnCancel_OnClick);
 
+	/* ****************** CHARLIST SCREEN *********************** */
+	desktop.AddObject(&winCharlist.window);
+	winCharlist.btnOk.SetOnClick(GM_MainMenu::winCharlist_btnOk_OnClick);
+	winCharlist.btnCancel.SetOnClick(GM_MainMenu::winCharlist_btnCancel_OnClick);
+
 	/* ******************* OPTIONS ************************* */
 	desktop.AddObject(&winOptions.window);
 	winOptions.btnGeneral.SetOnClick(GM_MainMenu::winOptions_btnGeneral_OnClick);
@@ -116,6 +121,7 @@ GM_MainMenu::GM_MainMenu()
 	desktop.SetHeight(glictGlobals.h);
 	desktop.ResetTransformations();
 	centerWindow(&winLogin.window);
+	centerWindow(&winCharlist.window);
 	centerWindow(&winOptions.window);
 	centerWindow(&winOptionsGeneral.window);
 	centerWindow(&winOptionsGraphics.window);
@@ -250,8 +256,8 @@ void GM_MainMenu::btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerc
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->msgBox(helptext->c_str(), "Help");
 }
-/* **********LOGIN******* */
 
+/* **********LOGIN******* */
 void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
@@ -267,12 +273,25 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	m->winStatus.SetEnabled(false);
 }
 
-
 void GM_MainMenu::winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winLogin.window.SetVisible(false);
 }
+
+/* **********CHARLIST******* */
+void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winCharlist.window.SetVisible(false);
+}
+
+void GM_MainMenu::winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winCharlist.window.SetVisible(false);
+}
+
 /* **********OPTIONS********* */
 
 void GM_MainMenu::winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
@@ -315,9 +334,9 @@ void GM_MainMenu::winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, gli
 /* *********GENERAL********** */
 
 void GM_MainMenu::winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
-	enginelist_t e = options.engine;
-	int w = options.w; int h = options.h; int bpp = options.bpp;
-	bool fs = options.fullscreen;
+	//enginelist_t e = options.engine;
+	//int w = options.w; int h = options.h; int bpp = options.bpp;  // these will be used in disabled chunk of code, do not remove
+	//bool fs = options.fullscreen;
 
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 
@@ -367,6 +386,11 @@ void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, gli
 	m->winOptionsNetwork.window.SetVisible(false);
 }
 
+/* ************* OTHER **************** */
+void GM_MainMenu::winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winCharlist.window.SetVisible(true);
+}
 
 /* ********** Responses to notifications *********** */
 void GM_MainMenu::onConnectionError(int message, const char* errortext) {
@@ -387,10 +411,11 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
 		printf("Motd numbers matching, not displaying motd.\n");
 		winStatus.SetVisible(false);
 		options.motdtext = text;
+		winMotd_OnDismiss(NULL, NULL);
 		return;
 	}
 
-	//options.motdnum = motdnum;
+	options.motdnum = motdnum;
 	options.motdtext = text;
 	options.Save();
 
@@ -398,12 +423,10 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
 	winStatus.SetMessage(text);
 	winStatus.SetEnabled(true);
 
+	winStatus.SetOnDismiss(winMotd_OnDismiss);
 
 }
 void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& text) {
-
-
-
 	if (type == MESSAGE_ERROR)
 		winStatus.SetCaption("Error");
 	else
@@ -414,6 +437,6 @@ void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& tex
 }
 
 void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int premDays) {
-
+	winCharlist.generateList(list, premDays);
 }
 

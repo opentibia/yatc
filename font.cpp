@@ -42,15 +42,16 @@ Font::Font (std::string fn, int index, Sprite *spr) {
 			charw['I'] = 5;
 
 			charw['c'] = 6;
-			charw['e'] = 6;
+			charw['e'] = 7;
 			charw['f'] = 6;
 			charw['g'] = 8; charh['g'] = 10;
-			charw['i'] = 5;
+			charw['i'] = 4;
 			charw['l'] = 5;
 			charw['o'] = 7;
 			charw['m'] = 9;
 			charw['n'] = 6;
 			charw['p'] = 7; charh['p'] = 10;
+			charw['r'] = 7;
 			charw['t'] = 6;
 			charw['y'] = 8; charh['y'] = 10;
 
