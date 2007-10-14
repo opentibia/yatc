@@ -30,8 +30,9 @@
 #include "options.h"
 #include "gamemode.h"
 #include "sprite.h"
-#include "ui/login.h"
 #include "ui/mainmenu.h"
+#include "ui/login.h"
+#include "ui/charlist.h"
 #include "ui/options.h"
 #include "ui/optionsgeneral.h"
 #include "ui/optionsgraphics.h"
@@ -58,14 +59,14 @@ private:
 	glictContainer desktop;
 	pnlMainMenu_t pnlMainMenu;
 	winLogin_t winLogin;
+	winCharlist_t winCharlist;
 	winOptions_t winOptions;
 	winOptionsGeneral_t winOptionsGeneral;
 	winOptionsGraphics_t winOptionsGraphics;
 	winOptionsNetwork_t winOptionsNetwork;
 
-	glictMessageBox winStatus;
 
-	std::list<CharacterList_t> charlist;
+	glictMessageBox winStatus;
 
 	Sprite* background;
 protected:
@@ -78,6 +79,9 @@ protected:
 
 	static void winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass);
@@ -93,6 +97,10 @@ protected:
 
 	static void winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+
+	static void winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass);
+
 
 	static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 

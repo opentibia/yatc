@@ -19,6 +19,7 @@ public:
 		window.SetHeight(173-17);
 		window.SetCaption("Enter Game");
 		window.SetVisible(false);
+		window.SetBGColor(.4, .4, .4, 1.);
 
 		window.AddObject(&pnlUsername);
 		window.AddObject(&txtUsername);
