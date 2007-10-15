@@ -149,3 +149,7 @@ void Notifications::openMessageWindow(WindowMessage_t type, const std::string& m
 	} else
 		g_game->openMessageWindow(type, message);
 }
+
+void Notifications::onTextMessage(MessageType_t type, const std::string& message) {
+	printf("%s\n", message.c_str());
+}

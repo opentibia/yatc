@@ -1,9 +1,24 @@
+2007-10-15  Ivan Vucica  <ivucica@users.sourceforge.net>
+
+	* net/connection.cpp: Enabled creation of ProtocolGame80
+	* net/protocolgame80.h: Stubbed "pure" functions from ProtocolGame80 (otherwise it would not compile
+	* gm_mainmenu.cpp: added connecting to gameworld
+	* notifications.cpp: Added handling of onTextMessage()
+	* notifications.h: ditto
+
 2007-10-14  Ivan Vucica  <ivucica@users.sourceforge.net>
+
+	* gamecontent/enums.h (CharacterList_t): Added void *extra
+	* ui/charlist.h: added
+	* ui/login.h: explicitly set bg color (a bit darker...)
+	* font.cpp: minor font chr width changes
+	* gm_mainmenu.cpp: added charlist
+
+2007-10-13  Ivan Vucica  <ivucica@users.sourceforge.net>
 
 	* ChangeLog (adding): Added changelog file (as suggested by AutoBook.)
 	* sprite.cpp: some cleanup
-	* sprdata.c (writeSprData): Changed "while i<1024" to "while i<=1024";
-	(corrects bug with dots appearing when using pictool to import a bmp)
+	* sprdata.c (writeSprData): Changed "while i<1024" to "while i<=1024";(corrects bug with dots appearing when using pictool to import a bmp)
 	* gm_mainmenu.cpp: added centerWindow
 	* gm_mainmenu.cpp: began adding dynamic engine switching
 	* font.cpp: some changes of a font's width

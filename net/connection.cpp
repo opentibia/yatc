@@ -48,6 +48,7 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	case CLIENT_VERSION_800:
 		m_clientVersion = CLIENT_VERSION_800;
 		//TODO. set right values
+		// ivucica: imho this should be read from pic, dat and spr files and fed to protocolconfig some other way
 		m_datSignature = 0;
 		m_sprSignature = 0;
 		m_picSignature = 0;
@@ -88,7 +89,7 @@ ProtocolGame* ProtocolConfig::createGameConnection(int account, const std::strin
 	ProtocolGame* protocol;
 	switch(getInstance().m_clientVersion){
 	case CLIENT_VERSION_800:
-		//protocol = new ProtocolGame80(account, password, name, isGM);
+		protocol = new ProtocolGame80(account, password, name, isGM);
 		break;
 	default:
 		return NULL;
