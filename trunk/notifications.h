@@ -58,7 +58,7 @@ class Notifications{
 		//void onWalk(const Position& from, const Position& to) {}
 		static void onChangeIcons() {}
 		static void onChangeCreatureSkull(uint32_t id);
-		static void onTextMessage(MessageType_t type, const std::string& message){}
+		static void onTextMessage(MessageType_t type, const std::string& message);
 		//SAY,WHISPER, YELL, MONSTER_SAY, MONSTER_YELL
 		static void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
 			const Position& pos, const std::string& message){}

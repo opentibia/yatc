@@ -30,7 +30,7 @@
 #include "net/protocollogin.h"
 #include "net/protocolgame80.h"
 
-
+extern Connection* g_connection;
 extern bool g_running;
 
 GM_MainMenu::GM_MainMenu()
@@ -266,7 +266,6 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ProtocolConfig::getInstance().setServerType(SERVER_OTSERV); // perhaps this should go to options, too?
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 	ProtocolConfig::createLoginConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption());
-	printf("logging in as %d with %s\n", atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption().c_str());
 	m->winStatus.SetVisible(true);
 	m->winStatus.SetCaption("Logging in");
 	m->winStatus.SetMessage("Connecting to the server...\n");
@@ -282,8 +281,25 @@ void GM_MainMenu::winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContain
 /* **********CHARLIST******* */
 void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
+	// FIXME (ivucica#1#) mips should check if this switching to gameworld is written properly
+
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	static Connection* loginConnection;
+	uint32_t ipnum = m->winCharlist.currentChar.ip;
+	std::stringstream ips;
+	std::string ip;
+
+	ips << (ipnum & 0xFF) << "." << ((ipnum & 0xFF00) >> 8) << "." << ((ipnum & 0xFF0000) >> 16) << "." << ((ipnum & 0xFF000000) >> 24);
+	ip = ips.str();
+
 	m->winCharlist.window.SetVisible(false);
+	(loginConnection = g_connection)->closeConnection();
+
+	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, CLIENT_VERSION_800); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
+	ProtocolConfig::getInstance().setServer(ip, m->winCharlist.currentChar.port);
+	ProtocolConfig::createGameConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);
+	delete loginConnection;
+
 }
 
 void GM_MainMenu::winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
