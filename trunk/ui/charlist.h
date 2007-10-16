@@ -109,6 +109,8 @@ public:
 		}
 		if (pd == 0)
 			pnlAccStatus.SetCaption ("Free Account");
+		else if (pd > 32767)
+			pnlAccStatus.SetCaption ("Gratis Premium Account");
 		else {
 			std::stringstream s;
 			s << "Premium Account (" << pd << " days left)";
