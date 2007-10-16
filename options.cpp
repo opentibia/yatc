@@ -30,6 +30,7 @@ Options::Options()
 	configHandler = new ConfigHandler();
 
 	engine = ENGINE_SDL;
+	//engine = ENGINE_OPENGL;
 	os_cursor = 0;
 	skin = "default";
 	server = "change.me.now";

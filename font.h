@@ -4,16 +4,16 @@
 
 #include <string>
 #include "sprite.h"
-class Font {
+class Font{
 	public:
-		Font (std::string filename, int index, Sprite* spr);
+		Font(std::string filename, int index, Sprite* spr);
 
 		void Blit (char t, int x1, int y1) {
-			pic->Blit(x1, y1, charx[(int)t], chary[(int)t], charw[(int)t], charh[(int)t]);
+			pic->Blit(x1, y1, charx[(unsigned char)t], chary[(unsigned char)t], charw[(unsigned char)t], charh[(unsigned char)t]);
 		}
 
-		int getWidth (char t) { return charw[(int)t]; }
-		int getHeight (char t) { return charh[(int)t]; }
+		int getWidth(char t) { return charw[(unsigned char)t]; }
+		int getHeight(char t) { return charh[(unsigned char)t]; }
 	private:
 		Sprite* pic;
 		int charx[256], chary[256], charw[256], charh[256];
