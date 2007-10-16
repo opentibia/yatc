@@ -1,3 +1,13 @@
+2007-10-16  Ivan Vucica  <ivucica@users.sourceforge.net>
+
+	* ui/charlist.h: Support for "Gratis Premium Account"
+
+2007-10-16  mips  <mips_act@users.sourceforge.net>
+
+	* Added ProtocolGame80
+	* Fixed warnings in font.cpp
+	* Set eol style to native
+
 2007-10-15  Ivan Vucica  <ivucica@users.sourceforge.net>
 
 	* net/connection.cpp: Enabled creation of ProtocolGame80
