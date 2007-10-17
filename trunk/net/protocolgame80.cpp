@@ -49,6 +49,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 	while(!msg.eof()){
 		MSG_READ_U8(cmd);
 		addServerCmd(cmd);
+		printf("Received packet 0x%02x\n", cmd);
 		switch(cmd){
 		case 0x0A: //Self appear
 		{

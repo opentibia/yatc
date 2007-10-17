@@ -35,12 +35,12 @@ class ProtocolLogin : public Protocol
 		virtual bool onRecv(NetworkMessage& msg);
 
 	protected:
-		ProtocolLogin(int account, const std::string& password);
+		ProtocolLogin(uint32_t account, const std::string& password);
 
 		const char* getProtocolName() { return "Protocol Login"; }
 
 		std::string m_password;
-		int m_account;
+		uint32_t m_account;
 
 		friend class ProtocolConfig;
 };
