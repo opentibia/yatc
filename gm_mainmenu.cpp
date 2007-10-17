@@ -300,6 +300,10 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	ProtocolConfig::createGameConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);
 	delete loginConnection;
 
+	m->winStatus.SetVisible(true);
+	m->winStatus.SetCaption("Entering game");
+	m->winStatus.SetMessage("Connecting to the server...");
+
 }
 
 void GM_MainMenu::winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)

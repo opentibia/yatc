@@ -24,7 +24,7 @@
 #include "rsa.h"
 #include "notifications.h"
 
-ProtocolLogin::ProtocolLogin(int account, const std::string& password)
+ProtocolLogin::ProtocolLogin(uint32_t account, const std::string& password)
 {
 	m_account = account;
 	m_password = password;
