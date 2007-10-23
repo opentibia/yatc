@@ -10,9 +10,9 @@ Libs=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
-Compiler=
-CppCompiler=-D DEBUGLEVEL_BUILDTIME_@@_
-Linker=C:/Dev-Cpp/lib/glict.a_@@_-lopengl32_@@_-lwsock32_@@_-lglu32_@@_-lgmp_@@_-lmingw32_@@_-lSDLmain_@@_-lSDL_@@_
+Compiler=-DDEBUGLEVEL_BUILDTIME=0_@@_-DWIN32_@@_
+CppCompiler=-D DEBUGLEVEL_BUILDTIME=0_@@_-DWIN32_@@_
+Linker=-lGLICT_@@_-lopengl32_@@_-lwsock32_@@_-lglu32_@@_-lgmp_@@_-lmingw32_@@_-lSDLmain_@@_-lSDL_@@_
 IsCpp=1
 Icon=
 ExeOutput=
@@ -709,7 +709,7 @@ AutoIncBuildNr=0
 
 [Unit67]
 FileName=sprdata.c
-CompileCpp=1
+CompileCpp=0
 Folder=yatc
 Compile=1
 Link=1

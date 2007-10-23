@@ -25,6 +25,7 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy);
 int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *datasize);
 
