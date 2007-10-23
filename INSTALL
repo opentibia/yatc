@@ -19,18 +19,16 @@ Copyright (C) 2007 OpenTibia Team
  1. Requirements
  2. Building on Linux/Unix
  3. Building on Windows
- 4. Compiling and installing GLICT
 
 1. Requirements
 =============
 
 - SDL 1.2		http://www.libsdl.org/
 - GMP 4.2		http://gmplib.org/
-- GLICT - latest SVN
+- GLICT 		https://glict.svn.sf.net/svnroot/glict/ (svn)
 - OpenGL and GLU
 - autoconf 2.61
 - automake 1.10
-
 
 
 2. Building on Linux/Unix
@@ -40,53 +38,69 @@ Copyright (C) 2007 OpenTibia Team
 2. Run "./configure"
 3. Run "make"
 
-3. Building on Windows
-======================
+== 2.1. Compiling and installing GLICT ==
 
-There's a Code::Blocks project file included. You should install Code::Blocks
-and use the aforementioned Code::Blocks project file to compile YATC.
+Adapt directories to your distribution. GLICT doesn't use automake yet.
 
-This project file probably won't be usable with Code::Blocks v1.02RC1 (the 
-latest "stable" build) -- so we recommend that you take the latest "unstable"
-release of Code::Blocks.
+1. svn co https://glict.svn.sf.net/svnroot/glict/trunk/glict/
+2. cd glict/GLICT/
+3. make
+4. cp libGLICT.a /usr/lib/
+5. cd ..
+6. cp -R GLICT/ /usr/include/
 
-4. Compiling and installing GLICT
-=================================
+3. Building on Windows with Dev-Cpp
+===================================
 
-We're using one library that you may have trouble finding and installing,
-since it's written by one of our developers. This library is GLICT. 
+You are expected to have DevCpp installed. Instructions are based around Windows XP environment, but you can easily adapt them to other OSes, if you turn on your brain. 
 
-(This is mainly from the YATC Development Google Group.)
+When instructed to fetch code from SVN repository, and you don't have a SVN client, you can use the WebDAV client built into the XP. Instructions are in chapter 3.3.
 
-1) Download GLICT SVN with:
-   $ svn co https://glict.svn.sourceforge.net/svnroot/glict/trunk/glict glict
-   (Generally, follow instructions from
-       http://sourceforge.net/svn/?group_id=167920 )
+If you have any problems please try to fix them yourself, and then contact me via OTfans PM. If you really cannot find a solution, try contacting me anyway. If you report the problem we can fix these instructions together -- if not, someone else will have the same problem!
 
-2) Create a new project for GLICT. It should be of "static library" type.
-   It should be called "GLICT".
-3) Add all files in GLICT/ subfolder in it.
-4) Build it!
-5) You will end up with GLICT.lib or libGLICT.a depending on your
-   compiler. (GLICT is developed with GCC, and in the past was regularly
-   tested with MSVC2005.)
-6) Copy the resulting file in your compiler's "lib/" folder. For example,
-   in:
-   * "/usr/lib/" for Debian GNU/Linux GCC
-   * "C:\Dev-Cpp\lib" for Dev-Cpp
-   * "C:\Program Files\Microsoft Visual Studio 8\VC\lib" for MSVC 2005
-      (not express edition!)
+== 3.1. Compiling GLICT ==
 
-   If you have other compiler you'll have to manage it yourself.
-7) Copy the entire subfolder "GLICT/" which contains files such as
-   "button.h", "window.h", "container.h" into your compiler's "include/"
-   folder. For example:
-   * "/usr/include/"
-   * "C:\Dev-Cpp\include"
-   * "C:\Program Files\Microsoft Visual Studio 8\VC\include"
+1. Fetch the GLICT code from the SVN.
+   (https://glict.svn.sf.net/svnroot/glict/trunk/glict/)
+2. Start Devcpp and create a new project of type "Empty project". 
+   Call it "libGLICT".
+   Choose type "Static library".
+   Save it in the root GLICT folder (next to "history.txt"). 
+   Call the file: "libGLICT.dev"
+3. Click Project->Add to project. 
+   Select all files in the "GLICT/" subfolder 
+    ("button.cpp", "button.h", "container.cpp", "container.h", ...)
+4. Copy the entire "GLICT/" subfolder to C:\Dev-Cpp\include 
+     (you should now have files such as:
+      C:\Dev-Cpp\include\GLICT\button.h
+      C:\Dev-Cpp\include\GLICT\container.h, ...)
+5. Click Execute->Compile
+6. Go to the root GLICT folder. 
+7. Find "libGLICT.a". 
+8. Copy it to "C:\Dev-Cpp\lib\libGLICT.a"
 
-This means you should have files such as this when you're over:
-C:\Dev-Cpp\include\GLICT\button.h
+== 3.2. Compiling YATC ==
 
-(And don't forget: Dev-Cpp is just an IDE, GCC is the compiler that 
-Dev-Cpp uses. But it's easier for me to put it among real compilers :P)
+1) First, you'll need GMP and SDL. Get and install the Devpaks.
+2) Fetch YATC SVN.
+3) Open the yatc.dev project file.
+4) Go to Execute->Compile.
+5) Copy C:\Dev-Cpp\bin\SDL.dll to YATC's folder. 
+
+You should have YATC.exe built in the directory where YATC.dev was, and it should run correctly. Don't forget to copy Tibia.pic, Tibia.dat and Tibia.spr to YATC's folder!
+
+== 3.3. Fetching SVN using XP's WebDAV client ==
+
+Here are instructions on how to do fetch a Subversion repository without a Subversion client under XP, using the WebDAV client.
+
+1. Go to My Network Places. 
+2. Click on Add a network place. 
+3. Select "Choose another network location". 
+4. Under "Internet or network address", enter SVN repository's URL. You'll get a warning about security certificate being invalid; just ignore it. 
+5. If you want, change the name of the shortcut that'll be created in My Network Places. 
+6. Then make sure that "Open this network place when I click finish" is checked.
+7. Click Finish.
+   The repository's contents will open as a more-or-less regular folder. 
+8. Copy the files you need out of it into a new folder. 
+
+Then, proceed with instructions!
