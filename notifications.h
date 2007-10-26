@@ -40,7 +40,7 @@ class Notifications{
 		static void onConnectionError(int message);
 		// onProtocolError is called before closing a connection due a protocol error
 		static void onProtocolError(bool fatal);
-		static void onEnterGame(){}
+		static void onEnterGame();
 
 		//**** Login Messages ****
 		static void changeLoginServer(){}

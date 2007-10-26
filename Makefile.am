@@ -8,7 +8,7 @@ noinst_PROGRAMS = yatc
 yatc_SOURCES = debugprint.cpp enginesdl.cpp gm_mainmenu.cpp objects.cpp spritegl.cpp \
 		engine.cpp gamemode.cpp main.cpp options.cpp spritesdl.cpp \
 		enginegl.cpp gm_debug.cpp notifications.cpp sprite.cpp util.cpp \
-		sprdata.c font.cpp confighandler.cpp \
+		sprdata.c font.cpp confighandler.cpp gm_gameworld.cpp \
 		net/connection.cpp net/networkmessage.cpp net/protocolgame80.cpp \
 		net/rsa.cpp net/encryption.cpp net/protocolgame.cpp net/protocollogin.cpp \
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
@@ -17,7 +17,7 @@ yatc_SOURCES = debugprint.cpp enginesdl.cpp gm_mainmenu.cpp objects.cpp spritegl
 EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		engine.h gamemode.h options.h spritesdl.h \
 		enginegl.h gm_debug.h notifications.h sprite.h util.h \
-		sprdata.h font.h confighandler.h \
+		sprdata.h font.h confighandler.h gm_gameworld.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \

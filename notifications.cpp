@@ -153,3 +153,7 @@ void Notifications::openMessageWindow(WindowMessage_t type, const std::string& m
 void Notifications::onTextMessage(MessageType_t type, const std::string& message) {
 	printf("%s\n", message.c_str());
 }
+
+void Notifications::onEnterGame() {
+	g_game->onEnterGame();
+}

@@ -41,6 +41,7 @@ public:
 	virtual void openMOTD(int motdnum, const std::string& message) {}
 	virtual void openMessageWindow(WindowMessage_t type, const std::string& message) {}
 	virtual void openCharactersList(const std::list<CharacterList_t>& list, int premDays) {}
+	virtual void onEnterGame() {}
 };
 
 extern GameMode* g_game;
