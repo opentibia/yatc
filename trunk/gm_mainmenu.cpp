@@ -21,6 +21,7 @@
 #include <GLICT/globals.h>
 #include <GLICT/messagebox.h>
 #include "gm_mainmenu.h"
+#include "gm_gameworld.h"
 #include "defines.h"
 #include "engine.h"
 #include "sprite.h"
@@ -270,6 +271,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	m->winStatus.SetCaption("Logging in");
 	m->winStatus.SetMessage("Connecting to the server...\n");
 	m->winStatus.SetEnabled(false);
+	printf("SetVisible...\n");
 }
 
 void GM_MainMenu::winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -460,3 +462,7 @@ void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int
 	winCharlist.generateList(list, premDays);
 }
 
+void GM_MainMenu::onEnterGame() {
+	delete g_game;
+	g_game = new GM_Gameworld;
+}

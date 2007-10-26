@@ -55,6 +55,9 @@ public:
 	void openMessageWindow(WindowMessage_t type, const std::string& message);
 	void openMOTD(int motdnum, const std::string& message);
 	void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
+
+	void onEnterGame();
+
 private:
 	glictContainer desktop;
 	pnlMainMenu_t pnlMainMenu;
