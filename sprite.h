@@ -45,6 +45,7 @@ class Sprite
 		}
 
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) = 0;
+		virtual void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth) = 0; // stretch from SRCWxSRCH to DESTWxDESTH
 
 	protected:
 		Sprite(const Sprite& original);

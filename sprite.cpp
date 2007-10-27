@@ -160,6 +160,8 @@ Sprite::Sprite(const std::string& filename, int index)
 
 		m_image = s;
 
+		m_pixelformat = GL_RGBA;
+
 		m_loaded = true;
 	}
 	else{

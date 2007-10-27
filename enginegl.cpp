@@ -45,6 +45,7 @@ EngineGL::EngineGL()
 	}
 
 	glictGlobals.drawPartialOut = true;
+	glictGlobals.clippingMode = GLICT_SCISSORTEST;
 
 	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
 	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));

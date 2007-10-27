@@ -34,6 +34,7 @@ Sprite(filename, index)
 
 	SDL_LockSurface(getImage());
 
+	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -41,13 +42,13 @@ Sprite(filename, index)
 	GLint ret = gluBuild2DMipmaps(GL_TEXTURE_2D,
 						GL_RGBA,
 						getImage()->w, getImage()->h,
-						getPixelFormat(),
+						(getPixelFormat() == GL_NONE ? (printf("Warning [SpriteGL::SpriteGL] Invalid pixelformat\n"), GL_RGBA) : getPixelFormat()),
 						GL_UNSIGNED_BYTE,
 			 			getImage()->pixels);
 	if(ret != 0){
-		printf("Error [SpriteGL::SpriteGL] Cant build 2DMipmaps\n");
+		printf("Error [SpriteGL::SpriteGL] Cant build 2DMipmaps - %d\n", getPixelFormat());
 	}
-
+	glDisable(GL_TEXTURE_2D);
 	SDL_UnlockSurface(getImage());
 }
 
@@ -58,7 +59,12 @@ SpriteGL::~SpriteGL()
 	}
 }
 
-void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float width, float height)
+void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcwidth, float srcheight)
+{
+	Blit(destx, desty, srcx, srcy, srcwidth, srcheight, srcwidth, srcheight);
+}
+
+void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcwidth, float srcheight, float destwidth, float destheight)
 {
 	if(!getImage())
 		return;
@@ -79,14 +85,14 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float widt
 		glTexCoord2f(srcx/spriteWidth, srcy/spriteHeight);
 		glVertex2f(destx, desty);
 
-		glTexCoord2f(srcx/spriteWidth, (srcy + height)/spriteHeight);
-		glVertex2f(destx, desty + height);
+		glTexCoord2f(srcx/spriteWidth, (srcy + srcheight)/spriteHeight);
+		glVertex2f(destx, desty + destheight);
 
-		glTexCoord2f((srcx + width)/spriteWidth, (srcy + height)/spriteHeight);
-		glVertex2f(destx + width, desty + height);
+		glTexCoord2f((srcx + srcwidth)/spriteWidth, (srcy + srcheight)/spriteHeight);
+		glVertex2f(destx + destwidth, desty + destheight);
 
-		glTexCoord2f((srcx + width)/spriteWidth, srcy/spriteHeight);
-		glVertex2f(destx + width, desty);
+		glTexCoord2f((srcx + srcwidth)/spriteWidth, srcy/spriteHeight);
+		glVertex2f(destx + destwidth, desty);
 	glEnd();
 
 	glPopMatrix();
@@ -103,3 +109,5 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float widt
 	glEnd();
 	*/
 }
+
+

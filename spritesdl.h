@@ -32,6 +32,7 @@ public:
 	virtual ~SpriteSDL();
 
 	virtual void Blit(float dx, float dy, float sx, float sy, float w, float h);
+	virtual void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
 };
 
 #endif
