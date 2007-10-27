@@ -46,7 +46,7 @@ public:
 		txtUsername.SetAllowedChars("0123456789");
 		#endif
 		#if (GLICT_APIREV >= 46)
-		txtUsername.SetPrevious(&btnCancel);
+		txtUsername.SetPrevious(&txtPassword);
 		txtUsername.SetNext(&txtPassword);
 		#endif
 
@@ -66,11 +66,11 @@ public:
 		#endif
 		#if (GLICT_APIREV >= 46)
 		txtPassword.SetPrevious(&txtUsername);
-		txtPassword.SetNext(&btnOk);
+		txtPassword.SetNext(&txtUsername);
 		#endif
 
 		pnlCreateAc.SetWidth(131-17);
-		pnlCreateAc.SetHeight(12);
+		pnlCreateAc.SetHeight(24);
 		pnlCreateAc.SetCaption("If you don't have\nan account yet:");
 		pnlCreateAc.SetPos(13,85);
 		pnlCreateAc.SetBGActiveness(false);
@@ -94,10 +94,12 @@ public:
 		btnOk.SetCaption("Ok");
 		btnOk.SetBGColor(.1,.1,.1,1.);
 		btnOk.SetFont("minifont",8);
+		/*
 		#if (GLICT_APIREV >= 46)
 		btnOk.SetPrevious(&txtPassword);
 		btnOk.SetNext(&btnCancel);
 		#endif
+		*/
 
 		btnCancel.SetPos(180-4,148-17);
 		btnCancel.SetWidth(40);
@@ -105,10 +107,12 @@ public:
 		btnCancel.SetCaption("Cancel");
 		btnCancel.SetBGColor(.1,.1,.1,1.);
 		btnCancel.SetFont("minifont",8);
+		/*
 		#if (GLICT_APIREV >= 46)
 		btnCancel.SetPrevious(&btnOk);
 		btnCancel.SetNext(&txtUsername);
 		#endif
+		*/
 
 	}
 };
