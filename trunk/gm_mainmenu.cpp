@@ -150,9 +150,15 @@ GM_MainMenu::~GM_MainMenu()
 void GM_MainMenu::renderScene()
 {
 	if(background)
-		background->Blit(0,0);
+		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
 
-	desktop.Paint();
+	if (options.engine == ENGINE_OPENGL) {
+		glEnable(GL_SCISSOR_TEST);
+		desktop.Paint();
+		glDisable(GL_SCISSOR_TEST);
+	} else {
+		desktop.Paint();
+	}
 }
 
 void GM_MainMenu::mouseEvent(SDL_Event& event)
@@ -265,6 +271,11 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winLogin.window.SetVisible(false);
 
+	if(g_connection){
+		delete g_connection;
+		g_connection = NULL;
+	}
+
 	ProtocolConfig::getInstance().setServerType(SERVER_OTSERV); // perhaps this should go to options, too?
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 	ProtocolConfig::createLoginConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption());
@@ -287,7 +298,6 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	// FIXME (ivucica#1#) mips should check if this switching to gameworld is written properly
 
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
-	static Connection* loginConnection;
 	uint32_t ipnum = m->winCharlist.currentChar.ip;
 	std::stringstream ips;
 	std::string ip;
@@ -296,12 +306,14 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	ip = ips.str();
 
 	m->winCharlist.window.SetVisible(false);
-	(loginConnection = g_connection)->closeConnection();
+	if(g_connection){
+		delete g_connection;
+		g_connection = NULL;
+	}
 
 	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, CLIENT_VERSION_800); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
 	ProtocolConfig::getInstance().setServer(ip, m->winCharlist.currentChar.port);
 	ProtocolConfig::createGameConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);
-	delete loginConnection;
 
 	m->winStatus.SetVisible(true);
 	m->winStatus.SetCaption("Entering game");

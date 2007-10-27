@@ -31,7 +31,7 @@ class SpriteGL : public Sprite
 		virtual ~SpriteGL();
 
 		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
-
+		void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
 	private:
 		GLuint m_texture;
 };

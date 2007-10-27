@@ -46,3 +46,16 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
 		SDL_UnlockSurface(getImage());
 	}
 }
+
+
+
+
+void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, float destw, float desth)
+{
+	// TODO (ivucica#1#) this is COMPLETELY INCORRECT, this implementation TILES the image while it should STRETCH it instead
+	if(!getImage())
+		return;
+	for (float i=0; i<destw; i+=w)
+		for (float j=0;j<desth;j+=h)
+			Blit(dx+i, dy+j, sx, sy, w, h);
+}
