@@ -25,31 +25,12 @@ extern Connection* g_connection;
 
 std::list<std::string> g_recFiles;
 std::list<std::string>::iterator g_recIt;
-//extern void connectToRECServer(const char* file);
-
 
 #include "gamecontent/container.h"
 #include "gamecontent/creature.h"
 #include "gamecontent/globalvars.h"
 #include "gamecontent/inventory.h"
 #include "gamecontent/map.h"
-
-void newConnect()
-{
-	static Connection* oldConn = NULL;
-	if(g_recIt != g_recFiles.end()){
-		delete oldConn;
-		oldConn = g_connection;
-		oldConn->closeConnection();
-		g_connection = NULL;
-		printf("Parsing: %s ", g_recIt->c_str()); fflush(stdout);
-//		connectToRECServer(g_recIt->c_str());
-		++g_recIt;
-	}
-	else{
-		printf("ALL FILES PROCCESSED\n"); fflush(stdout);
-	}
-}
 
 void Notifications::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
 {
@@ -58,17 +39,12 @@ void Notifications::openCharactersList(const std::list<CharacterList_t>& list, i
 
 void Notifications::onConnectionError(int message)
 {
-
-
-
 	if(message == Connection::ERROR_CLOSED_SOCKET){
-		printf("Done!\n"); fflush(stdout);
 		Containers::getInstance().clear();
 		Creatures::getInstance().clear();
 		GlobalVariables::clear();
 		Inventory::getInstance().clear();
 		Map::getInstance().clear();
-	//	newConnect();
 	}
 	else{
 		g_game->onConnectionError(message, Connection::getErrorDesc(message));
@@ -137,23 +113,27 @@ void Notifications::onProtocolError(bool fatal)
 
 
 
-void Notifications::openMessageWindow(WindowMessage_t type, const std::string& message) {
-
-	if (type == MESSAGE_MOTD) {
+void Notifications::openMessageWindow(WindowMessage_t type, const std::string& message)
+{
+	if(type == MESSAGE_MOTD){
 		std::string text;
 		int motdnum;
 		sscanf(message.c_str(), "%d", &motdnum);
 
 		text = message.substr(message.find('\n')+1);
 		g_game->openMOTD(motdnum, text);
-	} else
+	}
+	else{
 		g_game->openMessageWindow(type, message);
+	}
 }
 
-void Notifications::onTextMessage(MessageType_t type, const std::string& message) {
+void Notifications::onTextMessage(MessageType_t type, const std::string& message)
+{
 	printf("%s\n", message.c_str());
 }
 
-void Notifications::onEnterGame() {
+void Notifications::onEnterGame()
+{
 	g_game->onEnterGame();
 }
