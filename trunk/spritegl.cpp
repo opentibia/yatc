@@ -46,7 +46,7 @@ Sprite(filename, index)
 						GL_UNSIGNED_BYTE,
 			 			getImage()->pixels);
 	if(ret != 0){
-		printf("Error [SpriteGL::SpriteGL] Cant build 2DMipmaps - %d\n", getPixelFormat());
+		printf("Error [SpriteGL::SpriteGL] Cant build 2DMipmaps: %s\n", gluErrorString(ret));
 	}
 	glDisable(GL_TEXTURE_2D);
 	SDL_UnlockSurface(getImage());
