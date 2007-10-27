@@ -215,6 +215,7 @@ void GM_MainMenu::pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictConta
 	m->winLogin.window.SetVisible(true);
 	m->winLogin.txtUsername.SetCaption("");
 	m->winLogin.txtPassword.SetCaption("");
+	m->winLogin.txtUsername.Focus(NULL);
 }
 
 void GM_MainMenu::pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictContainer* callerclass)
