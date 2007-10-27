@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DUSEASSERT" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -79,6 +80,8 @@
 		<Unit filename="gm_debug.h">
 			<Option target="Debug" />
 		</Unit>
+		<Unit filename="gm_gameworld.cpp" />
+		<Unit filename="gm_gameworld.h" />
 		<Unit filename="gm_mainmenu.cpp" />
 		<Unit filename="gm_mainmenu.h" />
 		<Unit filename="main.cpp" />
