@@ -75,10 +75,11 @@ void onKeyDown(const SDL_Event& event)
 				key = key - 16;
 			}
 		}
-		if (key > 0xFF)
+		if (key > 0xFF)	
 			key = (key & 0xFF) + '0'; 
+
 		// TODO (mips_act#1#) Use SDLK_ constants instead of numeric values
-		if(key < 32 && key != 8 && key != 27 && key != 13 && key != 10) // most keys won't be passed here
+		if(key < 32 && key != 8 && key != 9 && key != 27 && key != 13 && key != 10) // most keys won't be passed here
 			return;
 
 		g_game->keyPress(key);
