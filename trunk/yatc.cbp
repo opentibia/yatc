@@ -105,6 +105,8 @@
 		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
 		<Unit filename="options.h" />
+		<Unit filename="skin.cpp" />
+		<Unit filename="skin.h" />
 		<Unit filename="sprdata.c">
 			<Option compilerVar="CC" />
 		</Unit>
