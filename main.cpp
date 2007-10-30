@@ -32,6 +32,7 @@
 #include "gm_mainmenu.h"
 #include "gm_debug.h"
 #include "util.h"
+#include "skin.h"
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -75,8 +76,8 @@ void onKeyDown(const SDL_Event& event)
 				key = key - 16;
 			}
 		}
-		if (key > 0xFF)	
-			key = (key & 0xFF) + '0'; 
+		if (key > 0xFF)
+			key = (key & 0xFF) + '0';
 
 		// TODO (mips_act#1#) Use SDLK_ constants instead of numeric values
 		if(key < 32 && key != 8 && key != 9 && key != 27 && key != 13 && key != 10) // most keys won't be passed here
@@ -155,6 +156,10 @@ int main(int argc, char *argv[])
 			options.engine = ENGINE_SDL;
 			g_engine = new EngineSDL;
 		}
+
+
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading skin...\n");
+		skin.loadSkin("default");
 
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option

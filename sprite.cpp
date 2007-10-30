@@ -169,6 +169,9 @@ Sprite::Sprite(const std::string& filename, int index)
 		return;
 	}
 
+	this->filename = filename;
+	this->index = index;
+
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magenta is transparent
 }
 
