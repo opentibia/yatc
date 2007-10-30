@@ -33,8 +33,8 @@ class Sprite
 		Sprite(const std::string& filename, int index);
 		virtual ~Sprite();
 
-		virtual float getWidth() const { return m_image->w; }
-		virtual float getHeight() const { return m_image->h; }
+		virtual float getWidth() const { return m_image ? m_image->w : 0; }
+		virtual float getHeight() const { return m_image ? m_image->h : 0; }
 
 		bool isLoaded() { return m_loaded;}
 
@@ -55,6 +55,7 @@ class Sprite
 		SDL_Surface* getImage() { return m_image; }
 		GLuint getPixelFormat() { return m_pixelformat; }
 
+		std::string filename; int index;
 	private:
 		void putPixel(int x, int y, uint32_t pixel);
 		uint32_t getPixel(int x, int y);
@@ -62,6 +63,7 @@ class Sprite
 		bool m_loaded;
 		SDL_Surface* m_image;
 		GLuint m_pixelformat;
+
 };
 
 #endif
