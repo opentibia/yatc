@@ -30,6 +30,8 @@
 #include "options.h"
 #include "gamemode.h"
 #include "sprite.h"
+
+#include "skin.h"
 #include "ui/mainmenu.h"
 #include "ui/login.h"
 #include "ui/charlist.h"

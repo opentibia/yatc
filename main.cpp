@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
 
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading skin...\n");
-		skin.loadSkin("default");
+		skin.loadSkin();
 
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
