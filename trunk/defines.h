@@ -22,9 +22,9 @@
 #define __DEFINES_H
 
 #define PI 3.14159
-#ifndef min
-    #define min(a,b) (a > b ? b : a)
-    #define max(a,b) (a < b ? b : a)
+#ifndef MIN
+    #define MIN(a,b) (a > b ? b : a)
+    #define MAX(a,b) (a < b ? b : a)
 #endif
 
 #include <stdio.h>

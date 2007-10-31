@@ -1,6 +1,7 @@
 #ifndef __UI_MAINMENU_H
 #define __UI_MAINMENU_H
 
+
 class pnlMainMenu_t {
 public:
 
@@ -12,6 +13,7 @@ public:
 		mainmenu.SetWidth(118);
 		mainmenu.SetHeight(170);
 		mainmenu.SetBGColor(.4,.4,.4,1.);
+		mainmenu.SetSkin(&skin.tmm );
 
 		mainmenu.AddObject(&btnLogIn);
 		mainmenu.AddObject(&btnOptions);
