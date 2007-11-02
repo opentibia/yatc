@@ -8,51 +8,19 @@
 #include "sprite.h"
 #include "engine.h"
 
+
+
 class skinImage : public glictImage {
-
 public:
-	skinImage(const std::string& filename, int index = 0, float x=0, float y=0, float w=-1, float h=-1) {
-		m_spr = g_engine->createSprite(filename, index);
-		m_x = x;
-		m_y = y;
-		if (w == -1)
-			if (m_spr)
-				m_width = m_spr->getWidth();
-			else
-				m_width = 0;
-		else
-			m_width = w;
-
-		if (h == -1)
-			if (m_spr)
-				m_height = m_spr->getHeight();
-			else
-				m_height = 0;
-		else
-			m_height = h;
-
-		m_filename = filename;
-
-	}
-	~skinImage() {
-		delete m_spr;
-	}
-	void Paint(float destx, float desty, float w, float h) {
-		m_spr->Blit(destx + glictGlobals.translation.x, desty + glictGlobals.translation.y, m_x, m_y, w, h);
-
-	}
-	float GetW() {
-		return m_width;
-	}
-	float GetH() {
-		return m_height;
-	}
-
+	skinImage(float x=0, float y=0, float w=-1, float h=-1);
+	~skinImage() {}
+	void Paint(float destx, float desty, float w, float h);
+	float GetW() { return m_width; }
+	float GetH() { return m_height; }
 private:
-	Sprite* m_spr;
 	float m_x, m_y, m_width, m_height;
-	std::string m_filename;
 };
+
 
 class Skin {
 public:
@@ -64,6 +32,8 @@ public:
 
 
 private:
+	Sprite *m_uisprite;
+
 	skinImage *wintl, *wint, *wintr, *winl, *winc, *winr, *winbl, *winb, *winbr;
 	glictSkinner win;
 	skinImage *btntl, *btnt, *btntr, *btnl, *btnc, *btnr, *btnbl, *btnb, *btnbr;
@@ -76,8 +46,9 @@ private:
 	skinImage *tmmtl, *tmmt, *tmmtr, *tmml, *tmmc, *tmmr, *tmmbl, *tmmb, *tmmbr;
 public:
 	glictSkinner chk, tmm;
+
+	friend class skinImage;
 };
-extern Skin skin;
 
 #else
 #warning You need GLICT APIREV 49 or newer to compile YATC with skins. Update your YATC.
@@ -88,7 +59,7 @@ public:
 };
 #endif
 
-
+extern Skin g_skin;
 
 #endif
 

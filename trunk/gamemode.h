@@ -33,9 +33,10 @@ protected:
 public:
 	virtual ~GameMode() {}
 
-	virtual void renderScene() = 0;
+	virtual void updateScene() {}
 	virtual void mouseEvent (SDL_Event&) {}
 	virtual void keyPress (char key) {}
+	virtual void doResize(float w, float h) {}
 
 	virtual void onConnectionError(int message, const char* errortext) {}
 	virtual void openMOTD(int motdnum, const std::string& message) {}

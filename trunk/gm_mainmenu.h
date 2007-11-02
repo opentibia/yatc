@@ -49,6 +49,7 @@ public:
 	void renderScene();
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
+	void doResize(float w, float h);
 
 	void msgBox (const char* mbox, const char* title);
 	void centerWindow (glictWindow *win);

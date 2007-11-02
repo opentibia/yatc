@@ -159,7 +159,7 @@ int main(int argc, char *argv[])
 
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading skin...\n");
-		skin.loadSkin();
+		g_skin.loadSkin();
 
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
@@ -177,6 +177,7 @@ int main(int argc, char *argv[])
 				switch (event.type){
 					case SDL_VIDEORESIZE:
 						g_engine->doResize(event.resize.w, event.resize.h);
+						g_game->doResize(event.resize.w, event.resize.h);
 						break;
 
 					case SDL_QUIT:
@@ -213,8 +214,8 @@ int main(int argc, char *argv[])
 			if(g_connection){
 				g_connection->executeNetwork();
 			}
-			//and finally render
-			g_game->renderScene();
+			//and finally update scene
+			g_game->updateScene();
 			g_engine->Flip();
 		}
 	} catch (std::string errtext) {

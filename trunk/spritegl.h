@@ -28,12 +28,14 @@ class SpriteGL : public Sprite
 {
 	public:
 		SpriteGL(const std::string& filename, int index = 0);
+		SpriteGL(const std::string& filename, int index, int x, int y, int w, int h);
 		virtual ~SpriteGL();
 
 		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
 		void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
 	private:
 		GLuint m_texture;
+		double m_multiplierx, m_multipliery;
 };
 
 #endif

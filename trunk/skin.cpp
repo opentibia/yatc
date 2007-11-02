@@ -3,7 +3,7 @@
 #include <GLICT/globals.h>
 #include "skin.h"
 
-Skin skin;
+Skin g_skin;
 
 #if (GLICT_APIREV >= 49)
 
@@ -13,6 +13,34 @@ Skin skin;
 #include "assert.h"
 #include "defines.h" // for fileexists
 
+
+skinImage::skinImage(float x, float y, float w, float h) {
+	m_x = x;
+	m_y = y;
+	if (w == -1)
+		if (g_skin.m_uisprite)
+			m_width = g_skin.m_uisprite->getWidth();
+		else
+			m_width = 0;
+	else
+		m_width = w;
+
+	if (h == -1)
+		if (g_skin.m_uisprite)
+			m_height = g_skin.m_uisprite->getHeight();
+		else
+			m_height = 0;
+	else
+		m_height = h;
+
+}
+
+void skinImage::Paint(float destx, float desty, float w, float h) {
+	g_skin.m_uisprite->Blit(destx + glictGlobals.translation.x, desty + glictGlobals.translation.y, m_x, m_y, w, h);
+}
+
+
+/////////////////////////
 
 
 Skin::Skin() {
@@ -86,81 +114,83 @@ void Skin::loadSkin() {
 
 	printf("[Skin::loadSkin] Loading skin from Tibia.pic...\n");
 
+	m_uisprite = g_engine->createSprite("Tibia.pic", 3);
+
     printf("[Skin::loadSkin] Loading window\n");
-    win.SetTL		(wintl = new skinImage("Tibia.pic",	3,	106,	183,	4,		17));
-    win.SetTop		(wint  = new skinImage("Tibia.pic",	3,	114,	183,	96,		17));
-    win.SetTR		(wintr = new skinImage("Tibia.pic",	3,	110,	183,	4,		17));
-    win.SetLeft		(winl  = new skinImage("Tibia.pic",	3,	256,	0,		4,		96));
-    win.SetCenter	(winc  = new skinImage("Tibia.pic",	3,	0,		0,		96,		96));
-    win.SetRight	(winr  = new skinImage("Tibia.pic",	3,	260,	0,		4,		96));
-    win.SetBL		(winbl = new skinImage("Tibia.pic",	3,	2,		193,	4,		4)); // FIXME
-    win.SetBottom	(winb  = new skinImage("Tibia.pic",	3,	2,		193,	96,		4));
-    win.SetBR		(winbr = new skinImage("Tibia.pic",	3,	2,		193,	4,		4)); // FIXME
+    win.SetTL		(wintl = new skinImage(106,	183,	4,		17));
+    win.SetTop		(wint  = new skinImage(114,	183,	96,		17));
+    win.SetTR		(wintr = new skinImage(110,	183,	4,		17));
+    win.SetLeft		(winl  = new skinImage(256,	0,		4,		96));
+    win.SetCenter	(winc  = new skinImage(0,	0,		96,		96));
+    win.SetRight	(winr  = new skinImage(260,	0,		4,		96));
+    win.SetBL		(winbl = new skinImage(2,	193,	4,		4)); // FIXME
+    win.SetBottom	(winb  = new skinImage(2,	193,	96,		4));
+    win.SetBR		(winbr = new skinImage(2,	193,	4,		4)); // FIXME
 
 	glictGlobals.windowBodySkin = &win;
 
     printf("[Skin::loadSkin] Loading button\n");
-    btn.SetTL		(btntl = new skinImage("Tibia.pic", 3,	174,	138,	1,		1));
-    btn.SetTop		(btnt  = new skinImage("Tibia.pic", 3,	175,	138,	32,		1));
-    btn.SetTR		(btntr = new skinImage("Tibia.pic", 3,	207,	138,	1,		1));
-    btn.SetLeft		(btnl  = new skinImage("Tibia.pic", 3,	174,	139,	1,		18));
-    btn.SetCenter	(btnc  = new skinImage("Tibia.pic", 3,	175,	139,	32,		18));
-    btn.SetRight	(btnr  = new skinImage("Tibia.pic", 3,	207,	139,	1,		18));
-    btn.SetBL		(btnbl = new skinImage("Tibia.pic", 3,	174,	157,	1,		1));
-    btn.SetBottom	(btnb  = new skinImage("Tibia.pic", 3,	175,	157,	32,		1));
-    btn.SetBR		(btnbr = new skinImage("Tibia.pic", 3,	207,	157,	1,		1));
+    btn.SetTL		(btntl = new skinImage(174,	138,	1,		1));
+    btn.SetTop		(btnt  = new skinImage(175,	138,	32,		1));
+    btn.SetTR		(btntr = new skinImage(207,	138,	1,		1));
+    btn.SetLeft		(btnl  = new skinImage(174,	139,	1,		18));
+    btn.SetCenter	(btnc  = new skinImage(175,	139,	32,		18));
+    btn.SetRight	(btnr  = new skinImage(207,	139,	1,		18));
+    btn.SetBL		(btnbl = new skinImage(174,	157,	1,		1));
+    btn.SetBottom	(btnb  = new skinImage(175,	157,	32,		1));
+    btn.SetBR		(btnbr = new skinImage(207,	157,	1,		1));
 
 	glictGlobals.buttonSkin = &btn;
 
     printf("[Skin::loadSkin] Loading button highlight\n");
-    bth.SetTL		(bthtl = new skinImage("Tibia.pic", 3,	174,	158,	1,		1));
-    bth.SetTop		(btht  = new skinImage("Tibia.pic", 3,	175,	158,	32,		1));
-    bth.SetTR		(bthtr = new skinImage("Tibia.pic", 3,	207,	158,	1,		1));
-    bth.SetLeft		(bthl  = new skinImage("Tibia.pic", 3,	174,	159,	1,		18));
-    bth.SetCenter	(bthc  = new skinImage("Tibia.pic", 3,	175,	159,	32,		18));
-    bth.SetRight	(bthr  = new skinImage("Tibia.pic", 3,	207,	159,	1,		18));
-    bth.SetBL		(bthbl = new skinImage("Tibia.pic", 3,	174,	177,	1,		1));
-    bth.SetBottom	(bthb  = new skinImage("Tibia.pic", 3,	175,	177,	32,		1));
-    bth.SetBR		(bthbr = new skinImage("Tibia.pic", 3,	207,	177,	1,		1));
+    bth.SetTL		(bthtl = new skinImage(174,	158,	1,		1));
+    bth.SetTop		(btht  = new skinImage(175,	158,	32,		1));
+    bth.SetTR		(bthtr = new skinImage(207,	158,	1,		1));
+    bth.SetLeft		(bthl  = new skinImage(174,	159,	1,		18));
+    bth.SetCenter	(bthc  = new skinImage(175,	159,	32,		18));
+    bth.SetRight	(bthr  = new skinImage(207,	159,	1,		18));
+    bth.SetBL		(bthbl = new skinImage(174,	177,	1,		1));
+    bth.SetBottom	(bthb  = new skinImage(175,	177,	32,		1));
+    bth.SetBR		(bthbr = new skinImage(207,	177,	1,		1));
 
 	glictGlobals.buttonHighlightSkin = &bth;
 
     printf("[Skin::loadSkin] Loading textbox\n");
-    txt.SetTL		(txttl = new skinImage("Tibia.pic", 3,	308,	96,		1,		1));
-    txt.SetTop		(txtt  = new skinImage("Tibia.pic", 3,	309,	96,		10,		1));
-    txt.SetTR		(txttr = new skinImage("Tibia.pic", 3,	319,	96,		1,		1));
-    txt.SetLeft		(txtl  = new skinImage("Tibia.pic", 3,	308,	97,		1,		10));
-    txt.SetCenter	(txtc  = new skinImage("Tibia.pic", 3,	309,	97,		10,		10));
-    txt.SetRight	(txtr  = new skinImage("Tibia.pic", 3,	319,	97,		1,		10));
-    txt.SetBL		(txtbl = new skinImage("Tibia.pic", 3,	308,	107,	1,		1));
-    txt.SetBottom	(txtb  = new skinImage("Tibia.pic", 3,	309,	107,	10,		1));
-    txt.SetBR		(txtbr = new skinImage("Tibia.pic", 3,	319,	107,	1,		1));
+    txt.SetTL		(txttl = new skinImage(308,	96,		1,		1));
+    txt.SetTop		(txtt  = new skinImage(309,	96,		10,		1));
+    txt.SetTR		(txttr = new skinImage(319,	96,		1,		1));
+    txt.SetLeft		(txtl  = new skinImage(308,	97,		1,		10));
+    txt.SetCenter	(txtc  = new skinImage(309,	97,		10,		10));
+    txt.SetRight	(txtr  = new skinImage(319,	97,		1,		10));
+    txt.SetBL		(txtbl = new skinImage(308,	107,	1,		1));
+    txt.SetBottom	(txtb  = new skinImage(309,	107,	10,		1));
+    txt.SetBR		(txtbr = new skinImage(319,	107,	1,		1));
 
 	glictGlobals.textboxSkin = &txt;
 
 
     printf("[Skin::loadSkin] Loading checkbox\n");
-    chk.SetTL		(chktl = new skinImage("Tibia.pic", 3,	308,	108,	1,		1));
-    chk.SetTop		(chkt  = new skinImage("Tibia.pic", 3,	309,	108,	10,		1));
-    chk.SetTR		(chktr = new skinImage("Tibia.pic", 3,	319,	108,	1,		1));
-    chk.SetLeft		(chkl  = new skinImage("Tibia.pic", 3,	308,	109,	1,		10));
-    chk.SetCenter	(chkc  = new skinImage("Tibia.pic", 3,	309,	109,	10,		10));
-    chk.SetRight	(chkr  = new skinImage("Tibia.pic", 3,	319,	109,	1,		10));
-    chk.SetBL		(chkbl = new skinImage("Tibia.pic", 3,	308,	119,	1,		1));
-    chk.SetBottom	(chkb  = new skinImage("Tibia.pic", 3,	309,	119,	10,		1));
-    chk.SetBR		(chkbr = new skinImage("Tibia.pic", 3,	319,	119,	1,		1));
+    chk.SetTL		(chktl = new skinImage(308,	108,	1,		1));
+    chk.SetTop		(chkt  = new skinImage(309,	108,	10,		1));
+    chk.SetTR		(chktr = new skinImage(319,	108,	1,		1));
+    chk.SetLeft		(chkl  = new skinImage(308,	109,	1,		10));
+    chk.SetCenter	(chkc  = new skinImage(309,	109,	10,		10));
+    chk.SetRight	(chkr  = new skinImage(319,	109,	1,		10));
+    chk.SetBL		(chkbl = new skinImage(308,	119,	1,		1));
+    chk.SetBottom	(chkb  = new skinImage(309,	119,	10,		1));
+    chk.SetBR		(chkbr = new skinImage(319,	119,	1,		1));
 
 
 	printf("[Skin::loadSkin] Loading panelmainmenu\n");
-    tmm.SetTL		(tmmtl = new skinImage("Tibia.pic", 3,	308,	96,		1,		1));
-    tmm.SetTop		(tmmt  = new skinImage("Tibia.pic", 3,	309,	96,		10,		1));
-    tmm.SetTR		(tmmtr = new skinImage("Tibia.pic", 3,	319,	96,		1,		1));
-    tmm.SetLeft		(tmml  = new skinImage("Tibia.pic", 3,	308,	97,		1,		10));
-    tmm.SetCenter	(tmmc  = new skinImage("Tibia.pic", 3,	309,	97,		10,		10));
-    tmm.SetRight	(tmmr  = new skinImage("Tibia.pic", 3,	319,	97,		1,		10));
-    tmm.SetBL		(tmmbl = new skinImage("Tibia.pic", 3,	308,	107,	1,		1));
-    tmm.SetBottom	(tmmb  = new skinImage("Tibia.pic", 3,	309,	107,	10,		1));
-    tmm.SetBR		(tmmbr = new skinImage("Tibia.pic", 3,	319,	107,	1,		1));
+    tmm.SetTL		(tmmtl = new skinImage(44,		226,	5,		5));
+    tmm.SetTop		(tmmt  = new skinImage(43,		214,	32,		5));
+    tmm.SetTR		(tmmtr = new skinImage(49,		226,	5,		5));
+    tmm.SetLeft		(tmml  = new skinImage(0,		214,	5,		32));
+    tmm.SetCenter	(tmmc  = new skinImage(11,		214,	32,		32));
+    tmm.SetRight	(tmmr  = new skinImage(6,		214,	5,		32));
+    tmm.SetBL		(tmmbl = new skinImage(44,		231,	5,		5));
+    tmm.SetBottom	(tmmb  = new skinImage(43,		219,	32,		5));
+    tmm.SetBR		(tmmbr = new skinImage(49,		231,	5,		5));
 
 }
 
@@ -283,7 +313,7 @@ void Skin::unloadSkin() {
     chk.SetBottom(NULL);
     chk.SetBR(NULL);
 
-    printf("[Skin::unloadSkin] Unloading tibiamainmenu skin...\n");
+    printf("[Skin::unloadSkin] Unloading panelmainmenu skin...\n");
 
     if (tmmtl) delete tmmtl; tmmtl = NULL;
     if (tmmt)  delete tmmt;  tmmt  = NULL;

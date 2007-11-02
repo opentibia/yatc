@@ -32,17 +32,9 @@
 EngineGL::EngineGL()
 {
 	printf("Starting OpenGL engine\n");
-	m_videoflags = SDL_OPENGL | SDL_RESIZABLE;
-	if (options.fullscreen)
-		m_videoflags |= SDL_FULLSCREEN;
+	m_screen = NULL;
 
-	m_screen = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
-
-	if(!m_screen){
-		fprintf(stderr, "Could not set %dx%d video mode: %s\n", m_width, m_height, SDL_GetError());
-		return;
-		//exit(1);
-	}
+	doResize(m_width, m_height);
 
 	glictGlobals.drawPartialOut = true;
 	glictGlobals.clippingMode = GLICT_SCISSORTEST;
@@ -52,7 +44,7 @@ EngineGL::EngineGL()
 	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
 
 	initEngine();
-	doResize(m_width, m_height);
+
 }
 
 EngineGL::~EngineGL()
@@ -76,6 +68,18 @@ void EngineGL::initEngine()
 void EngineGL::doResize(int w, int h)
 {
 	Engine::doResize(w, h);
+
+	if (m_screen) SDL_FreeSurface(m_screen);
+	m_videoflags = SDL_OPENGL | SDL_RESIZABLE;
+	if (options.fullscreen)
+		m_videoflags |= SDL_FULLSCREEN;
+
+	m_screen = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
+
+	if(!m_screen){
+		fprintf(stderr, "Could not set %dx%d video mode: %s\n", m_width, m_height, SDL_GetError());
+		return;
+	}
 
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);

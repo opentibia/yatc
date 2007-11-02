@@ -51,14 +51,14 @@ public:
 
 		window.AddObject(&pnlFullscreen);
 		pnlFullscreen.SetPos(15,16);
-		pnlFullscreen.SetWidth(198);
-		pnlFullscreen.SetHeight(20);
+		pnlFullscreen.SetWidth(200);
+		pnlFullscreen.SetHeight(22);
 		pnlFullscreen.AddObject(&btnFullscreen);
 		pnlFullscreen.AddObject(&lblFullscreen);
 		pnlFullscreen.SetBGActiveness(false);
-		btnFullscreen.SetWidth(8);
-		btnFullscreen.SetHeight(8);
-		btnFullscreen.SetPos(7, 6);
+		btnFullscreen.SetWidth(12);
+		btnFullscreen.SetHeight(12);
+		btnFullscreen.SetPos(5, 4);
 		btnFullscreen.SetOnClick(winOptionsGraphics_t::OnCheckbox);
 		lblFullscreen.SetWidth(170);
 		lblFullscreen.SetHeight(11);
@@ -109,22 +109,22 @@ public:
 
 		window.AddObject(&btnHelp);
 		btnHelp.SetPos(72, 232);
-		btnHelp.SetWidth(41);
-		btnHelp.SetHeight(17);
+		btnHelp.SetWidth(43);
+		btnHelp.SetHeight(19);
 		btnHelp.SetCaption("Help");
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(125, 232);
-		btnOk.SetWidth(41);
-		btnOk.SetHeight(17);
+		btnOk.SetWidth(43);
+		btnOk.SetHeight(19);
 		btnOk.SetCaption("Ok");
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(178, 232);
-		btnCancel.SetWidth(41);
-		btnCancel.SetHeight(17);
+		btnCancel.SetWidth(43);
+		btnCancel.SetHeight(19);
 		btnCancel.SetCaption("Cancel");
 		btnCancel.SetFont("minifont",8);
 
