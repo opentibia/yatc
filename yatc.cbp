@@ -32,6 +32,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
+			<Add option="-DUSE_SDLGFX" />
 			<Add directory="." />
 		</Compiler>
 		<Linker>
@@ -40,6 +41,7 @@
 			<Add library="GLU" />
 			<Add library="GLICT" />
 			<Add library="gmp" />
+			<Add library="SDL_gfx" />
 		</Linker>
 		<Unit filename="LICENSE" />
 		<Unit filename="README" />
@@ -126,6 +128,7 @@
 		<Unit filename="ui/optionsnetwork.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
+		<Unit filename="yatc.cfg" />
 		<Extensions>
 			<code_completion />
 			<envvars />

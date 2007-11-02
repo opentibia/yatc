@@ -31,10 +31,11 @@ class Sprite
 {
 	public:
 		Sprite(const std::string& filename, int index);
+		Sprite(const std::string& filename, int index, int x, int y, int w, int h);
 		virtual ~Sprite();
 
-		virtual float getWidth() const { return m_image ? m_image->w : 0; }
-		virtual float getHeight() const { return m_image ? m_image->h : 0; }
+		virtual float getWidth() const { return m_stretchimage ? m_stretchimage->w : m_image->w; }
+		virtual float getHeight() const { return m_stretchimage ? m_stretchimage->h : m_image->h; }
 
 		bool isLoaded() { return m_loaded;}
 
@@ -47,21 +48,24 @@ class Sprite
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) = 0;
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth) = 0; // stretch from SRCWxSRCH to DESTWxDESTH
 
+		void Stretch(float neww, float newh, bool smooth = false);
+		void unStretch() { if (m_stretchimage) SDL_FreeSurface(m_stretchimage); m_stretchimage = NULL; }
+
 	protected:
 		Sprite(const Sprite& original);
 
-		bool loadSurfaceFromFile(const std::string& filename, int index);
+		void loadSurfaceFromFile(const std::string& filename, int index);
 
-		SDL_Surface* getImage() { return m_image; }
+		SDL_Surface* getImage() { return m_stretchimage ? m_stretchimage : m_image; }
 		GLuint getPixelFormat() { return m_pixelformat; }
 
-		std::string filename; int index;
+		std::string m_filename; int m_index;
 	private:
 		void putPixel(int x, int y, uint32_t pixel);
 		uint32_t getPixel(int x, int y);
 
 		bool m_loaded;
-		SDL_Surface* m_image;
+		SDL_Surface *m_image, *m_stretchimage;
 		GLuint m_pixelformat;
 
 };

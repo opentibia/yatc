@@ -29,6 +29,36 @@
 EngineSDL::EngineSDL()
 {
 	printf("Starting SDL engine\n");
+
+	m_screen = NULL;
+	doResize(m_width, m_height);
+
+	glictGlobals.drawPartialOut = false;
+
+	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
+	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
+	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
+
+
+}
+
+EngineSDL::~EngineSDL()
+{
+	SDL_FreeSurface(m_screen);
+	delete (SpriteSDL*)m_sysfont->GetFontParam();
+	printf("Closing SDL engine\n");
+}
+
+void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)
+{
+	static const SDL_VideoInfo* vi = SDL_GetVideoInfo();
+	SDL_Rect r={(int)x,(int)y,(int)width,(int)height};
+	SDL_FillRect(m_screen, &r, SDL_MapRGBA(vi->vfmt, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)color.a));
+}
+void EngineSDL::doResize(int w, int h)
+{
+	Engine::doResize(w, h);
+
 	m_videoflags = SDL_HWSURFACE | SDL_ANYFORMAT | SDL_DOUBLEBUF | SDL_RESIZABLE;
 	if (options.fullscreen)
 		m_videoflags |= SDL_FULLSCREEN;
@@ -50,23 +80,4 @@ EngineSDL::EngineSDL()
 		SDL_SetColors(m_screen, colors, 0, sizeof(colors) / sizeof(SDL_Color));
 	}
 
-	glictGlobals.drawPartialOut = false;
-
-	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
-	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
-	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
-}
-
-EngineSDL::~EngineSDL()
-{
-	SDL_FreeSurface(m_screen);
-	delete (SpriteSDL*)m_sysfont->GetFontParam();
-	printf("Closing SDL engine\n");
-}
-
-void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)
-{
-	static const SDL_VideoInfo* vi = SDL_GetVideoInfo();
-	SDL_Rect r={(int)x,(int)y,(int)width,(int)height};
-	SDL_FillRect(m_screen, &r, SDL_MapRGBA(vi->vfmt, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)color.a));
 }

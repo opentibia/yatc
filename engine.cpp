@@ -134,5 +134,7 @@ void Engine::doResize(int w, int h)
 	m_height = h;
 	glictGlobals.w = w;
 	glictGlobals.h = h;
+	options.w = w;
+	options.h = h;
 }
 

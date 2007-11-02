@@ -21,9 +21,10 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #ifdef WIN32
-#include <GL/glext.h>
+	#include <GL/glext.h> // TODO (ivucica#1#) ivucica asks: do we really need this include?
 #endif
 #include "spritegl.h"
+#include "util.h"
 
 SpriteGL::SpriteGL(const std::string& filename, int index) :
 Sprite(filename, index)
@@ -32,13 +33,19 @@ Sprite(filename, index)
 	if(!getImage())
 		return;
 
+
+	m_multiplierx = nextpow(this->getWidth()) / this->getWidth();
+	m_multipliery = nextpow(this->getHeight()) / this->getHeight();
+
+	Stretch(nextpow(this->getWidth()), nextpow(this->getHeight()));
+
 	SDL_LockSurface(getImage());
 
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	GLint ret = gluBuild2DMipmaps(GL_TEXTURE_2D,
 						GL_RGBA,
 						getImage()->w, getImage()->h,
@@ -79,36 +86,29 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
-	float spriteWidth = getImage()->w;
-	float spriteHeight = getImage()->h;
+	float spriteWidth = getWidth()  / m_multiplierx ;
+	float spriteHeight = getHeight()  / m_multipliery;
 
+	glAlphaFunc(GL_GEQUAL, .80);
+	glEnable(GL_ALPHA_TEST);
+	//if (m_index==0)
+		//printf("File: %s Index: %d Multipliers: %g %g WxH: %gx%g\n", m_filename.c_str(), m_index, m_multiplierx, m_multipliery, spriteWidth, spriteHeight);
 	glBegin(GL_QUADS);
-		glTexCoord2f(srcx/spriteWidth, srcy/spriteHeight);
-		glVertex2f(destx, desty);
+		glTexCoord2f((srcx)/spriteWidth, (srcy )/spriteHeight);
+		glVertex2f(destx , desty );
 
-		glTexCoord2f(srcx/spriteWidth, (srcy + srcheight)/spriteHeight);
-		glVertex2f(destx, desty + destheight);
+		glTexCoord2f((srcx)/spriteWidth, (srcy + srcheight / m_multipliery)/spriteHeight);
+		glVertex2f(destx , desty + destheight);
 
-		glTexCoord2f((srcx + srcwidth)/spriteWidth, (srcy + srcheight)/spriteHeight);
+		glTexCoord2f((srcx + srcwidth / m_multiplierx)/spriteWidth, (srcy + srcheight / m_multipliery)/spriteHeight);
 		glVertex2f(destx + destwidth, desty + destheight);
 
-		glTexCoord2f((srcx + srcwidth)/spriteWidth, srcy/spriteHeight);
+		glTexCoord2f((srcx + srcwidth / m_multiplierx)/spriteWidth, (srcy) /spriteHeight);
 		glVertex2f(destx + destwidth, desty);
 	glEnd();
 
 	glPopMatrix();
-	/*
-	glBegin(GL_QUADS);
-		glTexCoord2f(0, 0);
-		glVertex2f(destx, desty);
-		glTexCoord2f(0, height/m_image->h);
-		glVertex2f(destx, desty + height);
-		glTexCoord2f(width/m_image->w, height/m_image->h);
-		glVertex2f(destx + width, desty + height);
-		glTexCoord2f(width/m_image->w, 0);
-		glVertex2f(destx + width, desty);
-	glEnd();
-	*/
+
 }
 
 

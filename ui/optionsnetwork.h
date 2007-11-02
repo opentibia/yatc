@@ -39,23 +39,23 @@ public:
 		window.AddObject(&txtServer);
 		txtServer.SetCaption("");
 		txtServer.SetPos(16, 27);
-		txtServer.SetWidth(198);
-		txtServer.SetHeight(11);
+		txtServer.SetWidth(200);
+		txtServer.SetHeight(13);
 		txtServer.SetFont("aafont");
 
 		window.AddObject(&lblPort);
 		lblPort.SetCaption("Server port:");
 		lblPort.SetPos(16, 49);
-		lblPort.SetWidth(198);
-		lblPort.SetHeight(11);
+		lblPort.SetWidth(200);
+		lblPort.SetHeight(13);
 		lblPort.SetBGActiveness(false);
 		lblPort.SetFont("aafont");
 
 		window.AddObject(&txtPort);
 		txtPort.SetCaption("");
 		txtPort.SetPos(16, 60);
-		txtPort.SetWidth(198);
-		txtPort.SetHeight(11);
+		txtPort.SetWidth(200);
+		txtPort.SetHeight(13);
 		txtPort.SetFont("aafont");
 
 
@@ -68,22 +68,22 @@ public:
 
 		window.AddObject(&btnHelp);
 		btnHelp.SetPos(72, 200);
-		btnHelp.SetWidth(41);
-		btnHelp.SetHeight(17);
+		btnHelp.SetWidth(43);
+		btnHelp.SetHeight(19);
 		btnHelp.SetCaption("Help");
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(125, 200);
-		btnOk.SetWidth(41);
-		btnOk.SetHeight(17);
+		btnOk.SetWidth(43);
+		btnOk.SetHeight(19);
 		btnOk.SetCaption("Ok");
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(178, 200);
-		btnCancel.SetWidth(41);
-		btnCancel.SetHeight(17);
+		btnCancel.SetWidth(43);
+		btnCancel.SetHeight(19);
 		btnCancel.SetCaption("Cancel");
 		btnCancel.SetFont("minifont",8);
 	}

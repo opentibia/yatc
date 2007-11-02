@@ -55,7 +55,11 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, f
 	// TODO (ivucica#1#) this is COMPLETELY INCORRECT, this implementation TILES the image while it should STRETCH it instead
 	if(!getImage())
 		return;
-	for (float i=0; i<destw; i+=w)
+
+/*	for (float i=0; i<destw; i+=w)
 		for (float j=0;j<desth;j+=h)
-			Blit(dx+i, dy+j, sx, sy, w, h);
+			Blit(dx+i, dy+j, sx, sy, w, h);*/
+
+	Stretch(destw, desth, true);
+	Blit(dx,dy,sx,sy,w,h);
 }

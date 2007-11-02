@@ -18,10 +18,11 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include <GL/gl.h>
+
 #include "sprite.h"
-#ifdef WIN32
-#include <GL/glext.h>
+
+#ifdef USE_SDLGFX // FIXME (ivucica#1#) use a symbol that 'configure' will use in detection of SDLGFX existance
+	#include <SDL/SDL_rotozoom.h>
 #endif
 #include "sprdata.h"
 
@@ -41,8 +42,50 @@ Sprite::Sprite(const std::string& filename, int index)
 {
 	m_pixelformat = GL_NONE;
 	m_image = NULL;
+	m_stretchimage = NULL;
 	m_loaded = false;
 
+	loadSurfaceFromFile(filename, index);
+}
+
+
+Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int h)
+{
+	m_pixelformat = GL_NONE;
+	m_image = NULL;
+	m_stretchimage = NULL;
+	m_loaded = false;
+
+	loadSurfaceFromFile(filename, index);
+
+	if(!m_image){
+		return;
+	}
+
+	SDL_Surface *ns = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+	SDL_Rect src = {x,y,w,h};
+	SDL_Rect dst = {0,0,w,h};
+	SDL_BlitSurface(m_image, &src, ns, &dst);
+
+	SDL_FreeSurface(m_image);
+	m_image = ns;
+}
+
+
+
+Sprite::~Sprite()
+{
+	if(m_image){
+		SDL_FreeSurface(m_image);
+	}
+	if(m_stretchimage){
+		SDL_FreeSurface(m_stretchimage);
+	}
+}
+
+
+
+void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	size_t extbegins = filename.rfind(".") + 1;
 	std::string extension;
 	if(extbegins != std::string::npos){
@@ -109,7 +152,6 @@ Sprite::Sprite(const std::string& filename, int index)
 	else if(extension == "pic"){
 		FILE *f;
 		SDL_Surface *s;
-		int i,j,k;
 		picfileheader_t fh;
 		picpicheader_t ph;
 		uint32_t sprloc;
@@ -124,7 +166,7 @@ Sprite::Sprite(const std::string& filename, int index)
 
 		fread(&fh, sizeof(fh), 1, f);
 
-		for(i = 0; i < fh.imgcount && i <= index ; i++) {
+		for(int i = 0; i < fh.imgcount && i <= index ; i++) {
 			fread(&ph, sizeof(ph), 1, f);
 
 			if(i == index){
@@ -133,8 +175,8 @@ Sprite::Sprite(const std::string& filename, int index)
 				magneta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
 				SDL_FillRect(s, NULL, magneta);
 
-				for(j = 0; j < ph.height; j++){
-					for(k = 0; k < ph.width; k++){
+				for(int j = 0; j < ph.height; j++){
+					for(int k = 0; k < ph.width; k++){
 						fread(&sprloc, sizeof(sprloc), 1, f);
 
 						int oldloc = ftell(f);
@@ -169,19 +211,12 @@ Sprite::Sprite(const std::string& filename, int index)
 		return;
 	}
 
-	this->filename = filename;
-	this->index = index;
+	m_filename = filename;
+	m_index = index;
 
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magenta is transparent
-}
 
-Sprite::~Sprite()
-{
-	if(m_image){
-		SDL_FreeSurface(m_image);
-	}
 }
-
 void Sprite::putPixel(int x, int y, uint32_t pixel)
 {
 	int bpp = m_image->format->BytesPerPixel;
@@ -242,3 +277,15 @@ uint32_t Sprite::getPixel(int x, int y)
 	}
 }
 
+void Sprite::Stretch (float w, float h, bool smooth)
+{
+	if (m_stretchimage)
+		if (abs(m_stretchimage->w - w) < 2 && abs(m_stretchimage->h - h)<2)
+			return;
+	#ifdef USE_SDLGFX
+	printf("Stretching to %g %g\n", w, h);
+	unStretch();
+	m_stretchimage = zoomSurface(m_image, w/m_image->w, h/m_image->h, smooth ? 1 : 0);
+	printf("New size: %d %d\n", m_stretchimage->w, m_stretchimage->h);
+	#endif
+}

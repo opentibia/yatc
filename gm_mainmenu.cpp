@@ -116,7 +116,28 @@ GM_MainMenu::GM_MainMenu()
 	desktop.AddObject(&winStatus);
 	winStatus.SetVisible(false);
 
-	// TODO (ivucica#1#) These should be moved to an "onresize" function which should be called here, but we don't catch a window resize event yet...
+	if (g_engine) {
+		background = g_engine->createSprite("Tibia.pic",0);
+		if(!background->isLoaded()){
+			delete background;
+			background = NULL;
+		}
+	}
+	else{
+		background = NULL;
+	}
+
+	doResize(glictGlobals.w, glictGlobals.h);
+
+	renderScene();
+}
+
+GM_MainMenu::~GM_MainMenu()
+{
+
+}
+
+void GM_MainMenu::doResize(float w, float h) {
 	pnlMainMenu.mainmenu.SetPos(60, glictGlobals.h - 240);
 	desktop.SetWidth(glictGlobals.w);
 	desktop.SetHeight(glictGlobals.h);
@@ -128,27 +149,13 @@ GM_MainMenu::GM_MainMenu()
 	centerWindow(&winOptionsGraphics.window);
 	centerWindow(&winOptionsNetwork.window);
 	centerWindow(&winStatus);
-	// end of "onresize"
 
-	if (g_engine) {
-		background = g_engine->createSprite("Tibia.pic",0);
-		if(!background->isLoaded()){
-			delete background;
-			background = NULL;
-		}
-	}
-	else{
-		background = NULL;
-	}
+	renderScene();
 }
 
-GM_MainMenu::~GM_MainMenu()
-{
 
-}
 
-void GM_MainMenu::renderScene()
-{
+void GM_MainMenu::renderScene() {
 	if(background)
 		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
 
@@ -173,6 +180,8 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
 	if (event.button.state != SDL_PRESSED)
 		desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+
+	renderScene();
 
 }
 

@@ -13,7 +13,7 @@ public:
 		mainmenu.SetWidth(118);
 		mainmenu.SetHeight(170);
 		mainmenu.SetBGColor(.4,.4,.4,1.);
-		mainmenu.SetSkin(&skin.tmm );
+		mainmenu.SetSkin(&g_skin.tmm );
 
 		mainmenu.AddObject(&btnLogIn);
 		mainmenu.AddObject(&btnOptions);
