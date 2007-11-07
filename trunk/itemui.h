@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// Gameworld gamemode
+// Item instance class
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -19,27 +19,21 @@
 //////////////////////////////////////////////////////////////////////
 
 
-#include "gm_gameworld.h"
-#include "engine.h"
-#include "options.h"
+#ifndef __ITEMUI_H
+#define __ITEMUI_H
+
+#include "thingui.h"
 #include "objects.h"
-GM_Gameworld::GM_Gameworld()
-{
-	ui = g_engine->createSprite("Tibia.pic", 3);
-}
+class ItemUI : public ThingUI {
+public:
+	ItemUI(int id);
+	virtual ~ItemUI();
 
-GM_Gameworld::~GM_Gameworld ()
-{
+	void Blit(int x, int y);
 
-}
+private:
+	ObjectType *m_obj;
+	int m_id;
+};
 
-void GM_Gameworld::updateScene()
-{
-	for(int i = 0; i < options.w; i += 96){
-		for(int j = 0; j < options.h; j += 96){
-			ui->Blit(i, j, 0, 0, 96, 96);
-		}
-	}
-
-	printf("%d\n", Objects::getInstance()->getItemType(155)->imageData[0]);
-}
+#endif

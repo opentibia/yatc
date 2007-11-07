@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// Gameworld gamemode
+// Base item/creature/... class
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,28 +18,20 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#ifndef __THINGUI_H
+#define __THINGUI_H
 
-#include "gm_gameworld.h"
-#include "engine.h"
-#include "options.h"
-#include "objects.h"
-GM_Gameworld::GM_Gameworld()
-{
-	ui = g_engine->createSprite("Tibia.pic", 3);
-}
+#include <vector>
+#include "sprite.h"
+class ThingUI {
+public:
+	ThingUI() {}
+	virtual ~ThingUI() {}
 
-GM_Gameworld::~GM_Gameworld ()
-{
+	virtual void Blit(int x, int y) = 0;
+protected:
+	std::vector<Sprite*> m_gfx;
+};
 
-}
+#endif
 
-void GM_Gameworld::updateScene()
-{
-	for(int i = 0; i < options.w; i += 96){
-		for(int j = 0; j < options.h; j += 96){
-			ui->Blit(i, j, 0, 0, 96, 96);
-		}
-	}
-
-	printf("%d\n", Objects::getInstance()->getItemType(155)->imageData[0]);
-}

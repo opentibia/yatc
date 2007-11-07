@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-//
+// Utility functions
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@
 #include "util.h"
 
 #ifdef WIN32
-#include "windows.h"
+#include <windows.h>
 #endif
 
 void str_replace(std::string &s, const std::string& what, const std::string& with) {
