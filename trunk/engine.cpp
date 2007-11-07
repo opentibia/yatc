@@ -110,12 +110,27 @@ Engine::Engine()
 	initFont(&m_sysfont, "system");
 	initFont(&m_minifont, "minifont");
 	initFont(&m_aafont, "aafont");
+
+	m_fps = 0.;
+
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Setting up FPS timer\n");
+	m_fpstimer = SDL_AddTimer(1000, Engine::fpsTimer, NULL);
+	if (!m_fpstimer) // FIXME (ivucica#3#) this should be an assertion
+		printf("[!] Failed to set up FPS timer!\n");
 }
 
 Engine::~Engine()
 {
 	glictDeleteFont("system");
+	glictDeleteFont("minifont");
+	glictDeleteFont("aafont");
 }
+
+Uint32 Engine::fpsTimer(Uint32 interval, void*param) {
+
+	return interval;
+}
+
 
 void Engine::initFont(glictFont **fnt, const char *fontname) {
 	*fnt = glictCreateFont(fontname);

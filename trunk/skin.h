@@ -41,11 +41,11 @@ private:
 	skinImage *bthtl, *btht, *bthtr, *bthl, *bthc, *bthr, *bthbl, *bthb, *bthbr;
 	glictSkinner bth;
 	skinImage *txttl, *txtt, *txttr, *txtl, *txtc, *txtr, *txtbl, *txtb, *txtbr;
-	glictSkinner txt;
 	skinImage *chktl, *chkt, *chktr, *chkl, *chkc, *chkr, *chkbl, *chkb, *chkbr;
 	skinImage *tmmtl, *tmmt, *tmmtr, *tmml, *tmmc, *tmmr, *tmmbl, *tmmb, *tmmbr;
 public:
 	glictSkinner chk, tmm;
+	glictSkinner txt;
 
 	friend class skinImage;
 };

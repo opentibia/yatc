@@ -18,12 +18,11 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-
-#include "sprite.h"
-
 #ifdef USE_SDLGFX // FIXME (ivucica#1#) use a symbol that 'configure' will use in detection of SDLGFX existance
 	#include <SDL/SDL_rotozoom.h>
 #endif
+#include <GL/gl.h>
+#include "sprite.h"
 #include "sprdata.h"
 
 #pragma pack(1)

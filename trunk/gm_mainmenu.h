@@ -47,6 +47,7 @@ public:
 	~GM_MainMenu();
 
 	void renderScene();
+	void renderUI();
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
 	void doResize(float w, float h);

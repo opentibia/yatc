@@ -123,10 +123,10 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-
+	//setenv("SDL_VIDEODRIVER", "aalib", 0);
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing windowing...\n");
 
-	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
 		fprintf(stderr,"Couldn't initialize SDL: %s\n", SDL_GetError());
 		exit(1);
 	}
@@ -163,6 +163,7 @@ int main(int argc, char *argv[])
 
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
