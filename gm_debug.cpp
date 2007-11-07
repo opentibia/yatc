@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-//
+// Debugging gamemode
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,11 +18,15 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <GLICT/globals.h>
+
 #include "gm_debug.h"
 #include "defines.h"
 #include "engine.h"
 #include "sprite.h"
 #include "options.h"
+#include "itemui.h"
+#include "util.h"
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -75,25 +79,33 @@ GM_Debug::GM_Debug()
 	if(g_engine){
 		background = g_engine->createSprite("Tibia.pic", 0);
 		spr = g_engine->createSprite("Tibia.spr", 365);
+//		thing = new ItemUI(101);
 	}
 	else{  // i think that if g_engine does not exist, we might as well crash. what do you think, guys? ivucica
-		background = NULL;
-		spr = NULL;
+		NativeGUIError("Somehow, engine managed to not initialize.", "Oddity");
+		exit(1);
 	}
 }
 
 GM_Debug::~GM_Debug()
 {
-
+	delete background;
+	delete spr;
+//	delete thing;
 }
-
+void GM_Debug::updateScene()
+{
+	renderScene();
+}
 void GM_Debug::renderScene()
 {
 	if(background)
-		background->Blit(0,0);
+		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
 	if(spr)
 		spr->Blit(0,0);
-
+	/*if(item)
+		item->Blit(0,0);
+*/
 	desktop.RememberTransformations();
 	desktop.Paint();
 

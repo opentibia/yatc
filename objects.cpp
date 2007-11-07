@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-//
+// Object data
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,8 +18,9 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "objects.h"
 #include <iostream>
+#include "objects.h"
+
 
 uint16_t ObjectType::minItemId = 0;
 uint16_t ObjectType::maxItemId = 0;
@@ -324,7 +325,7 @@ bool Objects::loadDat(const char* filename)
 		oType->blendframes = fgetc(fp);
 		oType->xdiv        = fgetc(fp);
 		oType->ydiv        = fgetc(fp);
-		oType->unk1 	   = fgetc(fp);
+		oType->unk1        = fgetc(fp);
 		oType->animcount   = fgetc(fp);
 
 		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->unk1;

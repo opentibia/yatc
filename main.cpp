@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-//
+// Main
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -161,8 +161,8 @@ int main(int argc, char *argv[])
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading skin...\n");
 		g_skin.loadSkin();
 
-		g_game = new GM_MainMenu();
-		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+		//g_game = new GM_MainMenu();
+		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
 
 

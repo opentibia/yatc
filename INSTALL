@@ -19,13 +19,15 @@ Copyright (C) 2007 OpenTibia Team
  1. Requirements
  2. Building on Linux/Unix
  3. Building on Windows
+ 4. Devpaks and Debian packages
 
 1. Requirements
-=============
+===============
 
 - SDL 1.2		http://www.libsdl.org/
 - GMP 4.2		http://gmplib.org/
 - GLICT 		https://glict.svn.sf.net/svnroot/glict/ (svn)
+- SDL_gfx for SDL1.2
 - OpenGL and GLU
 - autoconf 2.61
 - automake 1.10
@@ -104,3 +106,27 @@ Here are instructions on how to do fetch a Subversion repository without a Subve
 8. Copy the files you need out of it into a new folder. 
 
 Then, proceed with instructions!
+
+4. Devpaks and Debian packages
+==============================
+
+Here we include links to required Devpaks and Debian packages.
+GLICT is not officially available as Devpak nor as Debian package, but
+compile instructions are included above.
+
+== 4.1. Devpaks
+
+SDL: 		http://devpaks.org/details.php?devpak=200
+SDL_gfx:	http://old.devpaks.org/show.php?devpak=160
+GMP:		http://pekayz.googlepages.com/GMP.DevPak
+GLICT:		(compile instructions provided, no devpak available)
+
+== 4.2. Debian/Ubuntu packages
+
+Just copypaste this to root commandline (type su and type root password, then 
+punch these lines in):
+
+apt-get install libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake \
+		libgl1-mesa-dev libglu1-mesa-dev
+
+

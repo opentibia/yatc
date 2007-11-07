@@ -86,6 +86,8 @@
 		<Unit filename="gm_gameworld.h" />
 		<Unit filename="gm_mainmenu.cpp" />
 		<Unit filename="gm_mainmenu.h" />
+		<Unit filename="itemui.cpp" />
+		<Unit filename="itemui.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="net/connection.cpp" />
 		<Unit filename="net/connection.h" />
@@ -119,6 +121,8 @@
 		<Unit filename="spritegl.h" />
 		<Unit filename="spritesdl.cpp" />
 		<Unit filename="spritesdl.h" />
+		<Unit filename="thingui.cpp" />
+		<Unit filename="thingui.h" />
 		<Unit filename="ui/charlist.h" />
 		<Unit filename="ui/login.h" />
 		<Unit filename="ui/mainmenu.h" />

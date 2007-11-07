@@ -27,6 +27,7 @@
 #include <GLICT/window.h>
 #include "gamemode.h"
 #include "sprite.h"
+//#include "thingui.h"
 
 class GM_Debug : public GameMode
 {
@@ -34,7 +35,7 @@ public:
 	GM_Debug();
 	~GM_Debug();
 
-
+	void updateScene();
 	void renderScene();
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
@@ -50,6 +51,7 @@ private:
 
 	Sprite* background;
 	Sprite* spr;
+	//ThingUI* thing;
 };
 
 #endif

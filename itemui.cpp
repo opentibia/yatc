@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// Gameworld gamemode
+// Item instance class
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,28 +18,22 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-
-#include "gm_gameworld.h"
+#include "itemui.h"
 #include "engine.h"
-#include "options.h"
-#include "objects.h"
-GM_Gameworld::GM_Gameworld()
-{
-	ui = g_engine->createSprite("Tibia.pic", 3);
+
+ItemUI::ItemUI(int id) : ThingUI() {
+	m_id = id;
+	m_obj = Objects::getInstance()->getItemType(id);
+	for (int i = 0; i < m_obj->numsprites; i++)
+		m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", m_obj->imageData[i]));
 }
-
-GM_Gameworld::~GM_Gameworld ()
-{
-
-}
-
-void GM_Gameworld::updateScene()
-{
-	for(int i = 0; i < options.w; i += 96){
-		for(int j = 0; j < options.h; j += 96){
-			ui->Blit(i, j, 0, 0, 96, 96);
-		}
+ItemUI::~ItemUI() {
+	for (std::vector<Sprite*>::iterator it = m_gfx.begin(); it != m_gfx.end();) {
+		delete *it;
+		m_gfx.erase(it);
 	}
+}
 
-	printf("%d\n", Objects::getInstance()->getItemType(155)->imageData[0]);
+void ItemUI::Blit(int x, int y) {
+	m_gfx[0]->Blit(x, y);
 }
