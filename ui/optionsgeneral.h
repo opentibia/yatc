@@ -1,40 +1,37 @@
 #ifndef __UI_OPTIONSGENERAL_H
 #define __UI_OPTIONSGENERAL_H
 
+#include "skin.h"
+
 class winOptionsGeneral_t {
 public:
-
-
-
-
-
 
 
 	glictWindow window;
 
 	// 16 16, 198 20
 	glictPanel pnlClassicControl;
-	glictButton btnClassicControl;
+	glictPanel btnClassicControl;
 	glictPanel lblClassicControl;
 
 	// 16 49, 198 20
 	glictPanel pnlAutoChase;
-	glictButton btnAutoChase;
+	glictPanel btnAutoChase;
 	glictPanel lblAutoChase;
 
 	// 16 82
 	glictPanel pnlShowHints;
-	glictButton btnShowHints;
+	glictPanel btnShowHints;
 	glictPanel lblShowHints;
 
 	// 16 115
 	glictPanel pnlShowNames;
-	glictButton btnShowNames;
+	glictPanel btnShowNames;
 	glictPanel lblShowNames;
 
 	// 16 148
 	glictPanel pnlShowTextEffects;
-	glictButton btnShowTextEffects;
+	glictPanel btnShowTextEffects;
 	glictPanel lblShowTextEffects;
 
 	// 10 189, 210 2
@@ -172,26 +169,34 @@ public:
 
 
 	void Init() {
-		btnAutoChase.SetCaption(options.autochase ? "X" : "");
-		btnShowHints.SetCaption(options.showhints ? "X" : "");
-		btnShowTextEffects.SetCaption(options.showtexteffects ? "X" : "");
-		btnClassicControl.SetCaption(options.classiccontrol ? "X" : "");
-		btnShowNames.SetCaption(options.shownames ? "X" : "");
+		btnAutoChase.SetCustomData(options.autochase ? (void*)1 : NULL);
+		btnAutoChase.SetSkin(options.autochase ? &g_skin.chk : &g_skin.txt);
+		btnShowHints.SetCustomData(options.showhints ? (void*)1 : NULL);
+		btnShowHints.SetSkin(options.showhints ? &g_skin.chk : &g_skin.txt);
+		btnShowTextEffects.SetCustomData(options.showtexteffects ? (void*)1 : NULL);
+		btnShowTextEffects.SetSkin(options.showtexteffects ? &g_skin.chk : &g_skin.txt);
+		btnClassicControl.SetCustomData(options.classiccontrol ? (void*)1 : NULL);
+		btnClassicControl.SetSkin(options.classiccontrol ? &g_skin.chk : &g_skin.txt);
+		btnShowNames.SetCustomData(options.shownames ? (void*)1 : NULL);
+		btnShowNames.SetSkin(options.shownames ? &g_skin.chk : &g_skin.txt);
 	}
 
 	void Store() {
-		options.autochase = (btnAutoChase.GetCaption() == "X");
-		options.showhints = (btnShowHints.GetCaption() == "X");
-		options.showtexteffects = (btnShowTextEffects.GetCaption() == "X");
-		options.classiccontrol = (btnClassicControl.GetCaption() == "X");
-		options.shownames = (btnShowNames.GetCaption() == "X");
+		options.autochase = (btnAutoChase.GetCustomData() != NULL);
+		options.showhints = (btnShowHints.GetCustomData() != NULL);
+		options.showtexteffects = (btnShowTextEffects.GetCustomData() != NULL);
+		options.classiccontrol = (btnClassicControl.GetCustomData() != NULL);
+		options.shownames = (btnShowNames.GetCustomData() != NULL);
 	}
 
 	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
-		if (caller->GetCaption() == "X")
-			caller->SetCaption("");
-		else
-			caller->SetCaption("X");
+		if ((int)caller->GetCustomData() == 1) {
+			caller->SetCustomData(NULL);
+			((glictPanel*)caller)->SetSkin(&g_skin.txt);
+		} else {
+			caller->SetCustomData((void*)1);
+			((glictPanel*)caller)->SetSkin(&g_skin.chk);
+		}
 	}
 
 };

@@ -35,6 +35,7 @@ EngineSDL::EngineSDL()
 
 	glictGlobals.drawPartialOut = false;
 
+	// FIXME (ivucica#2#) we should save the Font* somewhere so we can delete; it... perhaps glictFont() should have a GetFontParam
 	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
 	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
 	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));

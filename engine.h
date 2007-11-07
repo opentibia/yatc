@@ -47,6 +47,8 @@ class Engine
 
 		virtual void Flip() = 0;
 
+		static Uint32 fpsTimer(Uint32 interval, void*param);
+
 	protected:
 		Engine();
 		void initFont(glictFont** fnt, const char* fontname);
@@ -60,6 +62,9 @@ class Engine
 		int m_width;
 		int m_height;
 		int m_video_bpp;
+
+		float m_fps;
+		SDL_TimerID m_fpstimer ;
 
 		glictFont *m_sysfont, *m_minifont, *m_aafont;
 		SDL_Surface* m_screen;

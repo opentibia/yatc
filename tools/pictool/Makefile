@@ -1,4 +1,4 @@
-CFLAGS=-ansi -O0 -g3 -Wall
+CFLAGS= -O0 -g3 -Wall
 all:  pictool
 clean: 
 	rm main.o ../../sprdata.o
@@ -6,7 +6,7 @@ clean:
 rebuild: clean all
 
 pictool: main.o ../../sprdata.o
-	gcc main.o ../../sprdata.o -o pictool  -lSDL -O0 -g3
+	$(CC) main.o ../../sprdata.o -o pictool  -lSDL -O0 -g3
 
 YATC.pic: pictool ../../yatc.bmp ../../inv.bmp
 	cp Tibia.pic YATC.pic

@@ -155,8 +155,8 @@ void Skin::loadSkin() {
 
 	glictGlobals.buttonHighlightSkin = &bth;
 
-    printf("[Skin::loadSkin] Loading textbox\n");
-    txt.SetTL		(txttl = new skinImage(308,	96,		1,		1));
+    printf("[Skin::loadSkin] Loading textbox\n"); // FIXME (ivucica#4#) looks like the "unchecked checkbox" is not the same as "textbox" -- see: "XPlike Tibia.pic" for more info
+    txt.SetTL		(txttl = new skinImage(308,	96,		1,		1)); // in fact it looks like we have to HARDCODE this piece of skin.
     txt.SetTop		(txtt  = new skinImage(309,	96,		10,		1));
     txt.SetTR		(txttr = new skinImage(319,	96,		1,		1));
     txt.SetLeft		(txtl  = new skinImage(308,	97,		1,		10));

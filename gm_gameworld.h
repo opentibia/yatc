@@ -28,7 +28,7 @@ public:
 	GM_Gameworld();
 	~GM_Gameworld();
 
-	void renderScene();
+	void updateScene();
 private:
 	Sprite* ui;
 };

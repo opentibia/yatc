@@ -159,6 +159,10 @@ void GM_MainMenu::renderScene() {
 	if(background)
 		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
 
+	renderUI();
+}
+
+void GM_MainMenu::renderUI() {
 	if (options.engine == ENGINE_OPENGL) {
 		glEnable(GL_SCISSOR_TEST);
 		desktop.Paint();
@@ -167,7 +171,6 @@ void GM_MainMenu::renderScene() {
 		desktop.Paint();
 	}
 }
-
 void GM_MainMenu::mouseEvent(SDL_Event& event)
 {
 	glictPos pos;
@@ -189,6 +192,7 @@ void GM_MainMenu::keyPress (char key)
 {
 	//printf("Key %c %d\n", key, key);
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+	renderUI();
 }
 
 void GM_MainMenu::centerWindow (glictWindow *win) {
@@ -448,6 +452,7 @@ void GM_MainMenu::onConnectionError(int message, const char* errortext) {
 	winStatus.SetCaption("Error");
 	winStatus.SetMessage(s.str());
 	winStatus.SetEnabled(true);
+	renderScene();
 }
 void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
 
@@ -468,6 +473,7 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
 	winStatus.SetEnabled(true);
 
 	winStatus.SetOnDismiss(winMotd_OnDismiss);
+	renderScene();
 
 }
 void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& text) {
@@ -478,10 +484,12 @@ void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& tex
 
 	winStatus.SetMessage(text);
 	winStatus.SetEnabled(true);
+	renderScene();
 }
 
 void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int premDays) {
 	winCharlist.generateList(list, premDays);
+	renderUI();
 }
 
 void GM_MainMenu::onEnterGame() {

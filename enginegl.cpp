@@ -36,9 +36,14 @@ EngineGL::EngineGL()
 
 	doResize(m_width, m_height);
 
+	if (!m_screen)
+		// looks like GL is not supported -- dont attempt anything else
+		return;
+
 	glictGlobals.drawPartialOut = true;
 	glictGlobals.clippingMode = GLICT_SCISSORTEST;
 
+	// FIXME (ivucica#2#) we should save the Font* somewhere so we can delete; it... perhaps glictFont() should have a GetFontParam
 	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
 	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
 	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
@@ -101,8 +106,10 @@ void EngineGL::drawRectangle(float x, float y, float width, float height, oRGBA 
 }
 
 bool EngineGL::isSupported() {
-
-	if (!m_screen) return false; else return true;
+	if (!m_screen)
+		return false;
+	else
+		return true;
 	/*uint32_t vf = SDL_OPENGL | SDL_RESIZABLE;
 
 	SDL_Surface *s = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
