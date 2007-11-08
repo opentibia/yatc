@@ -1,13 +1,17 @@
 
 AM_CXXFLAGS = -Wall
 
-AM_CPPFLAGS = $(ASSERT_FLAGS) $(DEBUG_FLAGS)
+AM_CPPFLAGS = $(ASSERT_FLAGS) $(DEBUG_FLAGS) $(SDLGFX_FLAGS) $(OPENGL_FLAGS)
 
 noinst_PROGRAMS = yatc
 
-yatc_SOURCES = debugprint.cpp enginesdl.cpp gm_mainmenu.cpp objects.cpp spritegl.cpp \
+if USE_OPENGL
+MAYBE_OPENGL = spritegl.cpp enginegl.cpp
+endif
+
+yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp objects.cpp  \
 		engine.cpp gamemode.cpp main.cpp options.cpp spritesdl.cpp \
-		enginegl.cpp gm_debug.cpp notifications.cpp sprite.cpp util.cpp \
+		 gm_debug.cpp notifications.cpp sprite.cpp util.cpp \
 		sprdata.c font.cpp confighandler.cpp gm_gameworld.cpp \
 		skin.cpp thingui.cpp itemui.cpp \
 		net/connection.cpp net/networkmessage.cpp net/protocolgame80.cpp \

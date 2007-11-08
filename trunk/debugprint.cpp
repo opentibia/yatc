@@ -28,11 +28,12 @@
 #include <stdarg.h>
 #include "debugprint.h"
 
-
-#include <GL/gl.h>
-#if defined(WIN32) && defined(GREMDEY)
-	#include <GL/GRemdeyExtensions.h>
-	extern PFNGLSTRINGMARKERGREMEDYPROC glStringMarkerGREMEDY;
+#if USE_OPENGL
+	#include <GL/gl.h>
+	#if defined(WIN32) && defined(GREMDEY)
+		#include <GL/GRemdeyExtensions.h>
+		extern PFNGLSTRINGMARKERGREMEDYPROC glStringMarkerGREMEDY;
+	#endif
 #endif
 
 #ifndef DEBUGLEVEL_BUILDTIME

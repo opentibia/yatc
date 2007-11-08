@@ -21,8 +21,6 @@
  */
 
 
-#pragma pack(1)
-
 /* If your compiler does not support uint32_t and friends, then
  * change #if (0) into #if (1) and we'll try defining them.
  * Note that most modern compilers should support them; GCC
@@ -49,6 +47,7 @@ static void dbgprintf(const char* txt, ...) {}
 
 #include "../../sprdata.h"
 
+#pragma pack(1)
 typedef struct {
 	uint32_t signature;
 	uint16_t imgcount;
@@ -57,7 +56,7 @@ typedef struct {
 	uint8_t width, height;
 	uint8_t unk1, unk2, unk3;
 } picheader_t;
-
+#pragma pack()
 
 
 static int filesize (FILE* f) {
@@ -92,20 +91,19 @@ int picdetails (const char* filename) {
         fileheader_t fh;
         picheader_t ph;
 	uint32_t sprloc;
-	uint32_t index=0;
 
 	f = fopen(filename, "rb");
 	if (!f)
 		return -1;
 
-        fread(&fh,sizeof(fh),1,f);
+        fread(&fh, sizeof(fh), 1, f);
 	printf("signature %d\n", fh.signature);
 	printf("imagecount %d\n", fh.imgcount);
-	for (i=0; i<fh.imgcount  ; i++) {
+	for(i = 0; i < fh.imgcount ; i++){
 		fread(&ph, sizeof(ph), 1, f);
 		printf("img%d width %d height %d\n", i, ph.width, ph.height);
-		for (j=0; j<ph.height; j++) {
-			for (k=0; k<ph.width; k++) {
+		for(j = 0; j<ph.height; j++){
+			for(k = 0; k < ph.width; k++){
 				fread(&sprloc, sizeof(sprloc), 1, f);
 				printf("sprite img %d x %d y %d location %d\n", i,k,j,sprloc);
 			}
@@ -114,7 +112,7 @@ int picdetails (const char* filename) {
 	return 0;
 }
 
-int writepic (const char* filename, int index, SDL_Surface *s) {
+int writepic(const char* filename, int index, SDL_Surface *s){
 
 	FILE *fi, *fo;
 	fileheader_t fh;
@@ -134,9 +132,9 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 	fwrite(&fh, sizeof(fh), 1, fo);
 
 	sproffset = fh.imgcount * (sizeof(ph) + 2);
-	for (i=0; i<fh.imgcount; i++) {
+	for(i = 0; i < fh.imgcount; i++){
 		fread(&ph, sizeof(ph), 1, fi);
-		if (i == index) {
+		if(i == index){
 			ph.width = s->w / 32;
 			ph.height = s->h / 32;
 		}
@@ -146,24 +144,24 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 
 
 	fseek(fi, sizeof(fh), SEEK_SET);
-	for (i=0; i<fh.imgcount; i++) {
+	for(i = 0; i < fh.imgcount; i++){
 		fread(&ph, sizeof(ph), 1, fi);
 
-		if (i!=index) {
-			if (!ph.width || !ph.height) {
+		if(i != index){
+			if(!ph.width || !ph.height){
 				fprintf(stderr, "pictool: width or height are 0\n");
 				exit(10);
 			}
 			fwrite(&ph, sizeof(ph), 1, fo);
 
-			for (j=0; j<ph.width * ph.height; j++) {
+			for(j=0; j < ph.width * ph.height; j++){
 				fread(&sprloc, sizeof(sprloc), 1, fi);
 
-				if (sproffset > 2000000) {
+				if(sproffset > 2000000){
 					fprintf(stderr, "pictool: infinite loop\n");
 					exit(8);
 				}
-				if (sprloc > filesize(fi))  {
+				if(sprloc > filesize(fi)){
 					fprintf(stderr, "pictool: bad spr pointer\n");
 					exit(9);
 				}
@@ -178,7 +176,7 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 				fread(&datasize, sizeof(datasize), 1, fi);
 				fwrite(&datasize, sizeof(datasize), 1, fo);
 				data = malloc(datasize+10);
-				if (!data) {
+				if(!data){
 					fprintf(stderr, "Allocation problem\n");
 					exit(7);
 				}
@@ -191,12 +189,13 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 				sproffset += datasize;
 			}
 			fflush(fo);
-		} else {
+		}
+		else{
 			fseek(fi, ph.width*ph.height*4, SEEK_CUR);
 			ph.width = s->w / 32; ph.height = s->h / 32;
 			fwrite(&ph, sizeof(ph), 1, fo);
-			for (j=0; j<ph.height; j++)
-				for (k=0; k<ph.width; k++) {
+			for(j = 0; j < ph.height; j++){
+				for(k = 0; k < ph.width; k++){
 					fwrite(&sproffset, sizeof(sproffset), 1, fo);
 
 					continuationposo = ftell(fo);
@@ -207,6 +206,7 @@ int writepic (const char* filename, int index, SDL_Surface *s) {
 					sproffset += datasize;
 
 				}
+			}
 			fflush(fo);
 		}
 	}
@@ -226,7 +226,7 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 	fileheader_t fh;
 	picheader_t ph;
 	uint32_t sprloc;
-	uint32_t magneta;
+	uint32_t magenta;
 
 	f = fopen(filename, "rb");
 	if (!f)
@@ -234,29 +234,35 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 
 	fread(&fh,sizeof(fh),1,f);
 
-	for (i=0; i<fh.imgcount && i<=index ; i++) {
+	for(i = 0; i < fh.imgcount && i <= index; i++){
 		fread(&ph, sizeof(ph), 1, f);
 
-		if (i == index) {
+		if(i == index){
 			s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
-
-			magneta = SDL_MapRGB(s->format, 255, 0, 255);
-			SDL_FillRect(s, NULL, magneta);
+			if(!s){
+				printf("CreateRGBSurface failed: %s\n", SDL_GetError());
+				return -1;
+			}
+			
+			magenta = SDL_MapRGB(s->format, 255, 0, 255);
+			SDL_FillRect(s, NULL, magenta);
 
 			/* FIXME (ivucica#4#) Above statement is potentially unportable to architectures with
 			 * different endianess. Lilitputtans would be happier if we took a look at SDL
 			 * docs and corrected this. */
 
-			for (j=0; j<ph.height; j++) {
-				for (k=0; k<ph.width; k++) {
+			for(j = 0; j < ph.height; j++){
+				for(k = 0; k < ph.width; k++){
 					fread(&sprloc, sizeof(sprloc), 1, f);
-					if (readsprite(f, sprloc, s, k*32, j*32)) { /* TODO (ivucica#1#) cleanup sdl surface upon error */
+					if(readsprite(f, sprloc, s, k*32, j*32)){ /* TODO (ivucica#1#) cleanup sdl surface upon error */
 						return -1;
 					}
 				}
 			}
-		} else
+		}
+		else{
 			fseek(f, sizeof(sprloc)*ph.height*ph.width, SEEK_CUR);
+		}
 	}
 
 	fclose(f);
@@ -286,58 +292,59 @@ void show_help() {
 }
 
 int main (int argc, char **argv) {
-	SDL_Surface *s=NULL;
-	int index=3;
+	SDL_Surface *s = NULL;
 
-
-	if (argc == 1) {
+	if (argc == 1){
 		fprintf(stderr, "pictool: no input files\n");
 		exit(1);
 	}
-	if (argc == 2) {
-		if (!strcmp(argv[1], "--help")) {
+	if(argc == 2){
+		if(!strcmp(argv[1], "--help")){
 			show_help();
 			exit(0);
-		} else {
-			if (picdetails(argv[1])) {
+		}
+		else{
+			if(picdetails(argv[1])){
 				fprintf(stderr, "pictool: bad format\n");
 				exit(4);
 			}
 			exit(0);
 		}
 	}
-	if (argc==3) {
+	if(argc == 3){
 		fprintf(stderr, "pictool: not enough arguments\n");
 		exit(2);
 	}
 
 
 	SDL_Init(SDL_INIT_VIDEO);
-	if (argc==5 && !strcmp(argv[4], "--topic")) {
+
+	if(argc == 5 && !strcmp(argv[4], "--topic")){
 /*		fprintf(stderr, "pictool: writing not supported yet\n");
 		exit(3);*/
 		s = SDL_LoadBMP(argv[3]);
 		writepic(argv[1], atoi(argv[2]), s);
 		SDL_FreeSurface(s);
-	} else if (argc==4 || !strcmp(argv[4], "--tobmp")) {
-		if (readpic(argv[1], atoi(argv[2]), &s)) {
+	}
+	else if(argc == 4 || !strcmp(argv[4], "--tobmp")){
+		if(readpic(argv[1], atoi(argv[2]), &s)){
 			fprintf(stderr, "pictool: bad format\n");
 			SDL_Quit();
 			exit(4);
 		}
 		dbgprintf(":: Saving to %s\n", argv[3]);
-		if (SDL_SaveBMP(s, argv[3])) {
+		if(SDL_SaveBMP(s, argv[3])){
 			fprintf(stderr, "pictool: saving to bmp failed\n");
 			SDL_Quit();
 			exit(6);
 		}
 		SDL_FreeSurface(s);
-	} else  {
+	}
+	else{
 		fprintf(stderr, "pictool: unrecognized argument\n");
 		SDL_Quit();
 		exit(5);
 	}
-
 	SDL_Quit();
 	return 0;
 }

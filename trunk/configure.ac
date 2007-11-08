@@ -20,11 +20,23 @@ AC_ARG_ENABLE(debug, [  --enable-debug          enable debug], [
 	AC_SUBST(DEBUG_FLAGS)
 ])
 
-
 AC_ARG_ENABLE(assert, [  --enable-assert          enable assertions], [
 	AC_HEADER_ASSERT
 	ASSERT_FLAGS=-DUSEASSERT
 	AC_SUBST(ASSERT_FLAGS)
+])
+
+AC_ARG_ENABLE(opengl, [  --enable-opengl          use opengl], [
+	OPENGL_FLAGS=-DUSE_OPENGL
+	AC_SUBST(OPENGL_FLAGS)
+	AM_CONDITIONAL(USE_OPENGL, true)
+],[
+	AM_CONDITIONAL(USE_OPENGL, false)
+])
+
+AC_ARG_WITH(SDL_gfx, [ --with-SDL_gfx          use SDL_gfx library], [
+	SDLGFX_FLAGS=-DUSE_SDLGFX
+	AC_SUBST(SDLGFX_FLAGS)
 ])
 
 # Checks for header files.
@@ -57,17 +69,28 @@ CFLAGS="$CFLAGS $SDL_CFLAGS"
 LIBS="$LIBS $SDL_LIBS"
 AC_SUBST(SDL_LIBS)
 
+#check SDL-gfx
+if test -n "$SDLGFX_FLAGS"; then 
+	AC_CHECK_HEADERS([SDL/SDL_rotozoom.h], ,[AC_MSG_ERROR("*** SDL_gfx headers not found.")])
+	AC_CHECK_LIB(SDL_gfx, rotozoomSurfaceXY, ,[AC_MSG_ERROR("*** SDL_gfx library not found.")])
+fi
+
+AC_CHECK_HEADERS([gmp.h], ,[AC_MSG_ERROR("*** GMP header not found.")])
+AC_CHECK_LIB(gmp, __gmpz_init2, ,[AC_MSG_ERROR("*** GMP library not found.")])
+
 #check GMP
 AC_CHECK_HEADERS([gmp.h], ,[AC_MSG_ERROR("*** GMP header not found.")])
 AC_CHECK_LIB(gmp, __gmpz_init2, ,[AC_MSG_ERROR("*** GMP library not found or < 4.0.")])
 
-#check GL
-AC_CHECK_HEADERS(GL/gl.h, ,[AC_MSG_ERROR("*** OpenGL header not found.")])
-AC_CHECK_LIB(GL, glLoadIdentity, ,[AC_MSG_ERROR("*** OpenGL library not found.")])
+if test -n "$OPENGL_FLAGS"; then 
+	#check GL
+	AC_CHECK_HEADERS(GL/gl.h, ,[AC_MSG_ERROR("*** OpenGL header not found.")])
+	AC_CHECK_LIB(GL, glLoadIdentity, ,[AC_MSG_ERROR("*** OpenGL library not found.")])
 
-#check GLU
-AC_CHECK_HEADERS(GL/glu.h, ,[AC_MSG_ERROR("*** GLU header not found.")])
-AC_CHECK_LIB(GLU, gluBuild2DMipmaps, ,[AC_MSG_ERROR("*** GLU library not found.")])
+	#check GLU
+	AC_CHECK_HEADERS(GL/glu.h, ,[AC_MSG_ERROR("*** GLU header not found.")])
+	AC_CHECK_LIB(GLU, gluBuild2DMipmaps, ,[AC_MSG_ERROR("*** GLU library not found.")])
+fi
 
 # check for GLICT
 AC_CHECK_HEADERS([GLICT/globals.h],,[AC_MSG_ERROR("*** GLICT header not found.")])

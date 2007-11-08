@@ -21,7 +21,10 @@
 #ifndef __SPRITE_H
 #define __SPRITE_H
 
-#include <GL/glu.h>
+#ifdef USE_OPENGL
+	#include <GL/glu.h>
+#endif
+
 #include <string>
 #include <SDL/SDL.h>
 
@@ -57,8 +60,10 @@ class Sprite
 		void loadSurfaceFromFile(const std::string& filename, int index);
 
 		SDL_Surface* getImage() { return m_stretchimage ? m_stretchimage : m_image; }
+		#ifdef USE_OPENGL
 		GLuint getPixelFormat() { return m_pixelformat; }
-
+		#endif
+		
 		std::string m_filename; int m_index;
 	private:
 		void putPixel(int x, int y, uint32_t pixel);
@@ -66,7 +71,9 @@ class Sprite
 
 		bool m_loaded;
 		SDL_Surface *m_image, *m_stretchimage;
+		#ifdef USE_OPENGL
 		GLuint m_pixelformat;
+		#endif
 
 };
 
