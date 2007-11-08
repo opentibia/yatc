@@ -75,7 +75,9 @@ class Engine
 
 extern int ptrx, ptry;
 #include "enginesdl.h"
+#ifdef USE_OPENGL
 #include "enginegl.h"
+#endif
 extern Engine* g_engine;
 
 #endif

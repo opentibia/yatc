@@ -134,9 +134,11 @@ int main(int argc, char *argv[])
 	try {
 
 		switch(options.engine) {
+			#ifdef USE_OPENGL
 			case ENGINE_OPENGL:
 				g_engine = new EngineGL;
 				break;
+			#endif
 			/*
 			case ENGINE_DIRECTX:
 				g_engine = new EngineDX;
@@ -161,8 +163,8 @@ int main(int argc, char *argv[])
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading skin...\n");
 		g_skin.loadSkin();
 
-		//g_game = new GM_MainMenu();
-		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+		g_game = new GM_MainMenu();
+		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
 
 

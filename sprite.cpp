@@ -21,9 +21,14 @@
 #ifdef USE_SDLGFX // FIXME (ivucica#1#) use a symbol that 'configure' will use in detection of SDLGFX existance
 	#include <SDL/SDL_rotozoom.h>
 #endif
-#include <GL/gl.h>
+
+#ifdef USE_OPENGL
+	#include <GL/gl.h>
+#endif
+
 #include "sprite.h"
 #include "sprdata.h"
+#include <math.h>
 
 #pragma pack(1)
 typedef struct {
@@ -34,12 +39,14 @@ typedef struct {
 	uint8_t width, height;
 	uint8_t unk1, unk2, unk3;
 } picpicheader_t;
-
+#pragma pack()
 
 
 Sprite::Sprite(const std::string& filename, int index)
 {
+	#ifdef USE_OPENGL
 	m_pixelformat = GL_NONE;
+	#endif
 	m_image = NULL;
 	m_stretchimage = NULL;
 	m_loaded = false;
@@ -50,7 +57,9 @@ Sprite::Sprite(const std::string& filename, int index)
 
 Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int h)
 {
+	#ifdef USE_OPENGL
 	m_pixelformat = GL_NONE;
+	#endif
 	m_image = NULL;
 	m_stretchimage = NULL;
 	m_loaded = false;
@@ -97,7 +106,9 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			printf("Error [Sprite::loadSurfaceFromFile] SDL_LoadBMP file: %s\n", filename.c_str());
 			return;
 		}
+		#ifdef USE_OPENGL
 		m_pixelformat = GL_BGR;
+		#endif
 		m_loaded = true;
 	}
 	else if(extension == "spr"){
@@ -129,8 +140,8 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		}
 		// dont make static since if we change the rendering engine at runtime,
 		//  this may change too
-		Uint32 magneta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
-		SDL_FillRect(m_image, NULL, magneta);
+		Uint32 magenta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
+		SDL_FillRect(m_image, NULL, magenta);
 
 		// read the data
 		fseek(f, where, SEEK_SET);
@@ -144,17 +155,19 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 		fclose(f);
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
-
+		
+		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
+		#endif
 		m_loaded = true;
 	}
 	else if(extension == "pic"){
 		FILE *f;
-		SDL_Surface *s;
+		SDL_Surface *s = NULL;
 		picfileheader_t fh;
 		picpicheader_t ph;
 		uint32_t sprloc;
-		uint32_t magneta;
+		uint32_t magenta;
 
 
 		f = fopen(filename.c_str(), "rb");
@@ -169,10 +182,11 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			fread(&ph, sizeof(ph), 1, f);
 
 			if(i == index){
+				printf("%d\n", i);
 				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
 
-				magneta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
-				SDL_FillRect(s, NULL, magneta);
+				magenta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
+				SDL_FillRect(s, NULL, magenta);
 
 				for(int j = 0; j < ph.height; j++){
 					for(int k = 0; k < ph.width; k++){
@@ -200,9 +214,9 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		fclose(f);
 
 		m_image = s;
-
+		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
-
+		#endif
 		m_loaded = true;
 	}
 	else{
@@ -279,7 +293,7 @@ uint32_t Sprite::getPixel(int x, int y)
 void Sprite::Stretch (float w, float h, bool smooth)
 {
 	if (m_stretchimage)
-		if (abs(m_stretchimage->w - w) < 2 && abs(m_stretchimage->h - h)<2)
+		if (fabs(m_stretchimage->w - w) < 2 && fabs(m_stretchimage->h - h)<2)
 			return;
 	#ifdef USE_SDLGFX
 	printf("Stretching to %g %g\n", w, h);
