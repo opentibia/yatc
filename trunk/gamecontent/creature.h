@@ -24,13 +24,14 @@
 #include <string>
 #include <map>
 
+#include "creatureui.h"
 #include "thing.h"
 #include "enums.h"
 #include "map.h"
 
 class Tile;
 
-class Creature : public Thing
+class Creature :  public CreatureUI, public Thing
 {
 public:
 	virtual ~Creature() {}

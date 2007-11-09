@@ -58,8 +58,16 @@ void GM_Gameworld::updateScene()
 			}
 			// FIXME (ivucica#1#) error: passing 'const Item' as 'this' argument of 'virtual const void ItemUI::Blit(int, int)' discards qualifiers
 			// I cast it into Item* temporarily
-			((Item*)t->getGround())->Blit(i*32,j*32);
 
+			t->getGround()->Blit(i*32,j*32);
+
+			for (int k=0; k<t->getThingCount(); k++) {
+				Thing *th = t->getThingByStackPos(k);
+				if (th)
+					th->Blit(i*32,j*32);
+				else
+					printf("Thing invalid\n");
+			}
 			printf("Painting %d %d\n", i, j);
 		}
 	}
