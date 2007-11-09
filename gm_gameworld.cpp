@@ -44,14 +44,14 @@ void GM_Gameworld::updateScene()
 		}
 	}
 
-	//printf("%d\n", Objects::getInstance()->getItemType(155)->imageData[0]);
-
-
-	printf("Painting...\n");
 	// TODO (ivucica#2#) test on edge of map
-	for ( int i =  0; i < 8; i++) {
-		for ( int j = 0  ; j < 8; j++) {
-			Tile *t = Map::getInstance().getTile(GlobalVariables::getPlayerPosition().x+i - 4,GlobalVariables::getPlayerPosition().x+j - 4,7);
+	printf("Painting...\n");
+	Position pos = GlobalVariables::getPlayerPosition();
+
+	for ( int i = 0; i < 18; i++) {
+		for ( int j = 0; j < 14; j++) {
+
+			Tile *t = Map::getInstance().getTile(pos.x+i - 9, pos.y+j - 7, 7);
 			if (!t) {
 				printf("No tile?\n");
 				continue;
