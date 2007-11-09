@@ -18,9 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifdef USE_SDLGFX // FIXME (ivucica#1#) use a symbol that 'configure' will use in detection of SDLGFX existance
-	#include <SDL/SDL_rotozoom.h>
-#endif
+#include <SDL/SDL_rotozoom.h> // library you need is called SDL_gfx
 
 #ifdef USE_OPENGL
 	#include <GL/gl.h>
@@ -161,7 +159,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 		fclose(f);
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
-		
+
 		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
 		#endif
@@ -301,10 +299,10 @@ void Sprite::Stretch (float w, float h, bool smooth)
 	if (m_stretchimage)
 		if (fabs(m_stretchimage->w - w) < 2 && fabs(m_stretchimage->h - h)<2)
 			return;
-	#ifdef USE_SDLGFX
+
 	printf("Stretching to %g %g\n", w, h);
 	unStretch();
 	m_stretchimage = zoomSurface(m_image, w/m_image->w, h/m_image->h, smooth ? 1 : 0);
 	printf("New size: %d %d\n", m_stretchimage->w, m_stretchimage->h);
-	#endif
+
 }
