@@ -23,6 +23,9 @@
 #include "engine.h"
 #include "options.h"
 #include "objects.h"
+#include "gamecontent/globalvars.h"
+#include "gamecontent/map.h"
+#include "gamecontent/item.h"
 GM_Gameworld::GM_Gameworld()
 {
 	ui = g_engine->createSprite("Tibia.pic", 3);
@@ -41,5 +44,24 @@ void GM_Gameworld::updateScene()
 		}
 	}
 
-	printf("%d\n", Objects::getInstance()->getItemType(155)->imageData[0]);
+	//printf("%d\n", Objects::getInstance()->getItemType(155)->imageData[0]);
+
+
+	printf("Painting...\n");
+	// TODO (ivucica#2#) test on edge of map
+	for ( int i =  0; i < 8; i++) {
+		for ( int j = 0  ; j < 8; j++) {
+			Tile *t = Map::getInstance().getTile(GlobalVariables::getPlayerPosition().x+i - 4,GlobalVariables::getPlayerPosition().x+j - 4,7);
+			if (!t) {
+				printf("No tile?\n");
+				continue;
+			}
+			// FIXME (ivucica#1#) error: passing 'const Item' as 'this' argument of 'virtual const void ItemUI::Blit(int, int)' discards qualifiers
+			// I cast it into Item* temporarily
+			((Item*)t->getGround())->Blit(i*32,j*32);
+
+			printf("Painting %d %d\n", i, j);
+		}
+	}
+
 }

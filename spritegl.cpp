@@ -18,6 +18,8 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#ifdef USE_OPENGL
+
 #include <GL/gl.h>
 #include <GL/glu.h>
 #ifdef WIN32
@@ -112,3 +114,5 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 }
 
 
+
+#endif

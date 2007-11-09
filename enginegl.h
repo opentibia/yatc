@@ -21,8 +21,11 @@
 #ifndef __ENGINEGL_H
 #define __ENGINEGL_H
 
-#include <GLICT/fonts.h>
 #include "engine.h"
+
+#ifdef USE_OPENGL
+
+#include <GLICT/fonts.h>
 #include "spritegl.h"
 class EngineGL : public Engine
 {
@@ -49,5 +52,13 @@ class EngineGL : public Engine
 
 		void initEngine();
 };
+
+#else // use_opengl
+
+class EngineGL : public Engine
+{
+}
+
+#endif // use_opengl
 
 #endif

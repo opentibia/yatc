@@ -121,6 +121,12 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			printf("Error [Sprite::loadSurfaceFromFile] Sprite file %s not found\n", filename.c_str());
 			return;
 		}
+
+		if (index < 1) {
+			printf("Error [Sprite::loadSurfaceFromFile] Invalid index %d\n", index);
+			return;
+		}
+
 		fread(&signature, sizeof(signature), 1, f);
 		fread(&sprcount, sizeof(sprcount), 1, f);
 		if(index >= sprcount){// i can't do this, captain, there's not enough power
@@ -129,7 +135,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		}
 
 		// read the pointer to the real SPR data
-		fseek(f, index*4, SEEK_CUR);
+		fseek(f, (index-1)*4, SEEK_CUR);
 		fread(&where, sizeof(where), 1, f);
 
 		// create surface where we'll store data, and fill it with transparency
@@ -172,7 +178,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 		f = fopen(filename.c_str(), "rb");
 		if(!f){
-			printf("Error [Sprite::loadSurfaceFromFile] Sprite file %s not found\n", filename.c_str());
+			printf("Error [Sprite::loadSurfaceFromFile] Picture file %s not found\n", filename.c_str());
 			return;
 		}
 
