@@ -28,7 +28,7 @@ public:
 	ThingUI() {}
 	virtual ~ThingUI() {}
 
-	virtual const void Blit(int x, int y) = 0;
+	virtual void Blit(int x, int y) const = 0;
 protected:
 	std::vector<Sprite*> m_gfx;
 };

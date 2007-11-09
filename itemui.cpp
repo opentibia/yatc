@@ -47,7 +47,7 @@ ItemUI::~ItemUI() {
 	}
 }
 
-const void ItemUI::Blit(int x, int y) {
+void ItemUI::Blit(int x, int y) const {
 	int g_frame = 0;
 	struct { int x, y; } m_pos = {0, 0};
 
@@ -56,7 +56,9 @@ const void ItemUI::Blit(int x, int y) {
 	//m_gfx[0]->Blit(x, y);
 
 	if (m_obj->stackable) {
-		if (m_count <= 4)
+		if (m_count < 1)
+			m_gfx[0]->Blit(x,y);
+		else if (m_count <= 4)
 			m_gfx[m_count-1]->Blit(x,y);
 		else if (m_count <= 9)
 			m_gfx[4]->Blit(x,y);

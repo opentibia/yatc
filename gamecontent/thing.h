@@ -24,11 +24,12 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include "thingui.h"
 
 class Item;
 class Creature;
 
-class Thing{
+class Thing : virtual public ThingUI {
 public:
 	Thing(){};
 	virtual ~Thing(){};

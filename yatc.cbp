@@ -32,7 +32,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
-			<Add option="-DUSE_SDLGFX" />
 			<Add option="-DUSE_OPENGL" />
 			<Add directory="." />
 		</Compiler>
@@ -49,6 +48,7 @@
 		<Unit filename="codeguide.txt" />
 		<Unit filename="confighandler.cpp" />
 		<Unit filename="confighandler.h" />
+		<Unit filename="creatureui.h" />
 		<Unit filename="debugprint.cpp" />
 		<Unit filename="debugprint.h" />
 		<Unit filename="defines.h" />

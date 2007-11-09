@@ -24,12 +24,12 @@
 
 #include "thingui.h"
 #include "objects.h"
-class ItemUI : public ThingUI {
+class ItemUI : virtual public ThingUI {
 public:
 	ItemUI(uint16_t id, uint8_t count);
 	virtual ~ItemUI();
 
-	const void Blit(int x, int y);
+	void Blit(int x, int y) const;
 
 private:
 	ObjectType *m_obj;
