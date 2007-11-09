@@ -21,10 +21,11 @@
 #ifndef __YATC_ITEM_H__
 #define __YATC_ITEM_H__
 
+#include "itemui.h"
 #include "thing.h"
 #include "objects.h"
 
-class Item : public Thing
+class Item : public Thing, public ItemUI
 {
 public:
 	static Item* CreateItem(const uint16_t type, const uint8_t _count = 0);

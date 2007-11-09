@@ -26,14 +26,15 @@
 #include "objects.h"
 class ItemUI : public ThingUI {
 public:
-	ItemUI(int id);
+	ItemUI(uint16_t id, uint8_t count);
 	virtual ~ItemUI();
 
-	void Blit(int x, int y);
+	const void Blit(int x, int y);
 
 private:
 	ObjectType *m_obj;
 	int m_id;
+	int m_count;
 };
 
 #endif

@@ -40,7 +40,7 @@ extern Connection* g_connection;
 #include "gamecontent/inventory.h"
 #include "gamecontent/map.h"
 
-
+extern bool g_running;
 void GM_Debug::ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	ProtocolConfig::getInstance().setServerType(SERVER_OTSERV);
@@ -50,8 +50,16 @@ void GM_Debug::ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass)
 
 void GM_Debug::ExitOnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
-	exit(0); // this should be done a bit smarter like terminating loop in "main"...
+	g_running = false;
 }
+
+void GM_Debug::UpdateOnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	GM_Debug *gd = (GM_Debug*)g_game;
+	gd->spr = g_engine->createSprite("Tibia.spr", atoi(gd->txtSprite.GetCaption().c_str()));
+	gd->thing = new ItemUI(atoi(gd->txtItem.GetCaption().c_str()), 1);
+}
+
 
 GM_Debug::GM_Debug()
 {
@@ -76,13 +84,34 @@ GM_Debug::GM_Debug()
 	btnExit.SetBGColor(1,0,0,1);
 	btnExit.SetOnClick(GM_Debug::ExitOnClick);
 
+	desktop.AddObject(&txtSprite);
+	txtSprite.SetPos(100,132);
+	txtSprite.SetWidth(128);
+	txtSprite.SetHeight(16);
+	txtSprite.SetCaption("200");
+
+	desktop.AddObject(&txtItem);
+	txtItem.SetPos(100,148);
+	txtItem.SetWidth(128);
+	txtItem.SetHeight(16);
+	txtItem.SetCaption("100");
+
+	desktop.AddObject(&btnUpdate);
+	btnUpdate.SetPos(100,164);
+	btnUpdate.SetWidth(128);
+	btnUpdate.SetHeight(16);
+	btnUpdate.SetCaption("Update gfx");
+	btnUpdate.SetBGColor(1,0,0,1);
+	btnUpdate.SetOnClick(GM_Debug::UpdateOnClick);
+
+
 	if(g_engine){
 		background = g_engine->createSprite("Tibia.pic", 0);
-		spr = g_engine->createSprite("Tibia.spr", 365);
-//		thing = new ItemUI(101);
+		spr = g_engine->createSprite("Tibia.spr", 200);
+		thing = new ItemUI(6401, 1);
 	}
 	else{  // i think that if g_engine does not exist, we might as well crash. what do you think, guys? ivucica
-		NativeGUIError("Somehow, engine managed to not initialize.", "Oddity");
+		NativeGUIError("Somehow, engine managed to not initialize.", "YATC Fatal Error");
 		exit(1);
 	}
 }
@@ -91,7 +120,7 @@ GM_Debug::~GM_Debug()
 {
 	delete background;
 	delete spr;
-//	delete thing;
+	delete thing;
 }
 void GM_Debug::updateScene()
 {
@@ -102,10 +131,10 @@ void GM_Debug::renderScene()
 	if(background)
 		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
 	if(spr)
-		spr->Blit(0,0);
-	/*if(item)
-		item->Blit(0,0);
-*/
+		spr->Blit(50,50);
+	if(thing)
+		thing->Blit(400,50);
+
 	desktop.RememberTransformations();
 	desktop.Paint();
 
@@ -131,5 +160,5 @@ void GM_Debug::mouseEvent(SDL_Event& event)
 
 void GM_Debug::keyPress (char key)
 {
-	desktop.CastEvent(GLICT_KEYPRESS, 0, key);
+	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 }

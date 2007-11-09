@@ -25,9 +25,10 @@
 #include <GLICT/container.h>
 #include <GLICT/button.h>
 #include <GLICT/window.h>
+#include <GLICT/textbox.h>
 #include "gamemode.h"
 #include "sprite.h"
-//#include "thingui.h"
+#include "thingui.h"
 
 class GM_Debug : public GameMode
 {
@@ -44,14 +45,18 @@ private:
 
 	static void ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void ExitOnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void UpdateOnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	glictContainer desktop;
 	glictButton btnButton;
 	glictButton btnExit;
+	glictTextbox txtSprite;
+	glictTextbox txtItem;
+	glictButton btnUpdate;
 
 	Sprite* background;
 	Sprite* spr;
-	//ThingUI* thing;
+	ThingUI* thing;
 };
 
 #endif

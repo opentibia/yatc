@@ -215,7 +215,7 @@ void Skin::loadSkin() {
 
 void Skin::unloadSkin() {
 
-    printf("[Skin::unloadSkin] Unloading window skin...\n");
+//    printf("[Skin::unloadSkin] Unloading window skin...\n");
     if (wintl) delete wintl; wintl = NULL;
     if (wint)  delete wint;  wint  = NULL;
     if (wintr) delete wintr; wintr = NULL;
@@ -239,7 +239,7 @@ void Skin::unloadSkin() {
     win.SetBR(NULL);
 
 
-    printf("[Skin::unloadSkin] Unloading button skin...\n");
+//    printf("[Skin::unloadSkin] Unloading button skin...\n");
 
     if (btntl) delete btntl; btntl = NULL;
     if (btnt)  delete btnt;  btnt  = NULL;
@@ -264,7 +264,7 @@ void Skin::unloadSkin() {
     glictGlobals.buttonSkin = NULL;
 
 
-    printf("[Skin::unloadSkin] Unloading highlighted button skin...\n");
+//    printf("[Skin::unloadSkin] Unloading highlighted button skin...\n");
 
     if (bthtl) delete bthtl; bthtl = NULL;
     if (btht)  delete btht;  btht  = NULL;
@@ -288,7 +288,7 @@ void Skin::unloadSkin() {
 
     glictGlobals.buttonHighlightSkin = NULL;
 
-    printf("[Skin::unloadSkin] Unloading textbox skin...\n");
+//    printf("[Skin::unloadSkin] Unloading textbox skin...\n");
 
     if (txttl) delete txttl; txttl = NULL;
     if (txtt)  delete txtt;  txtt  = NULL;
@@ -310,7 +310,7 @@ void Skin::unloadSkin() {
     txt.SetBottom(NULL);
     txt.SetBR(NULL);
 
-    printf("[Skin::unloadSkin] Unloading checkbox skin...\n");
+//    printf("[Skin::unloadSkin] Unloading checkbox skin...\n");
 
     if (chktl) delete chktl; chktl = NULL;
     if (chkt)  delete chkt;  chkt  = NULL;
@@ -332,7 +332,7 @@ void Skin::unloadSkin() {
     chk.SetBottom(NULL);
     chk.SetBR(NULL);
 
-    printf("[Skin::unloadSkin] Unloading panelmainmenu skin...\n");
+//    printf("[Skin::unloadSkin] Unloading panelmainmenu skin...\n");
 
     if (tmmtl) delete tmmtl; tmmtl = NULL;
     if (tmmt)  delete tmmt;  tmmt  = NULL;

@@ -24,6 +24,8 @@
 ///
 /// \sa EngineGL
 
+#ifdef USE_OPENGL
+
 #include <GL/gl.h>
 #include <GLICT/globals.h>
 #include "options.h"
@@ -119,3 +121,4 @@ bool EngineGL::isSupported() {
 	} else
 		return false;*/
 }
+#endif

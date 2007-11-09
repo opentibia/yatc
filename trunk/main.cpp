@@ -116,10 +116,16 @@ int main(int argc, char *argv[])
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.1\n");
 	options.Load();
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file...\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data files...\n");
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){ //TODO (Smygflik#3#), inform the user with a messagebox
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file failed!");
 		NativeGUIError("Loading the data file 'Tibia.dat' has failed.\nPlease place 'Tibia.dat' in the same folder as YATC.", "YATC Fatal Error");
+		exit(1);
+	}
+
+	if (!fileexists("Tibia.spr")) {
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Locating sprite file failed!");
+		NativeGUIError("Locating the data file 'Tibia.spr' has failed.\nPlease place 'Tibia.spr' in the same folder as YATC.", "YATC Fatal Error");
 		exit(1);
 	}
 
@@ -127,7 +133,11 @@ int main(int argc, char *argv[])
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing windowing...\n");
 
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
-		fprintf(stderr,"Couldn't initialize SDL: %s\n", SDL_GetError());
+		std::stringstream out;
+		out << "Couldn't initialize SDL: " << SDL_GetError() << std::endl;
+		fprintf(stderr,out.str().c_str());
+
+		NativeGUIError(out.str().c_str(), "YATC Fatal Error");
 		exit(1);
 	}
 

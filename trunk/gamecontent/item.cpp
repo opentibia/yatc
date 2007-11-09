@@ -20,7 +20,7 @@
 
 #include "item.h"
 
-Item::Item(uint16_t id, uint8_t count)
+Item::Item(uint16_t id, uint8_t count) : ItemUI(id, count)
 {
 	m_id = id;
 	m_count = count;
