@@ -45,30 +45,36 @@ void GM_Gameworld::updateScene()
 	}
 
 	// TODO (ivucica#2#) test on edge of map
-	printf("Painting...\n");
+	//printf("Painting...\n");
 	Position pos = GlobalVariables::getPlayerPosition();
 
-	for ( int i = 0; i < 18; i++) {
-		for ( int j = 0; j < 14; j++) {
+	for(uint32_t i = 0; i < 18; ++i){
+		for(uint32_t j = 0; j < 14; ++j){
 
-			Tile *t = Map::getInstance().getTile(pos.x+i - 9, pos.y+j - 7, 7);
-			if (!t) {
-				printf("No tile?\n");
+			const Tile* tile = Map::getInstance().getTile(pos.x + i - 9, pos.y + j - 7, 7);
+			if(!tile){
+				//printf("No tile?\n");
 				continue;
 			}
 			// FIXME (ivucica#1#) error: passing 'const Item' as 'this' argument of 'virtual const void ItemUI::Blit(int, int)' discards qualifiers
 			// I cast it into Item* temporarily
 
-			t->getGround()->Blit(i*32,j*32);
-
-			for (int k=0; k<t->getThingCount(); k++) {
-				Thing *th = t->getThingByStackPos(k);
-				if (th)
-					th->Blit(i*32,j*32);
-				else
-					printf("Thing invalid\n");
+			const Item* ground = tile->getGround();
+			if(ground){
+				ground->Blit(i*32,j*32);
 			}
-			printf("Painting %d %d\n", i, j);
+
+			// FIXME (mips#1#) error: find the right draw order
+			for(int32_t k = tile->getThingCount() - 1; k >= 1 ; --k){
+				const Thing* thing = tile->getThingByStackPos(k);
+				if(thing){
+					thing->Blit(i*32, j*32);
+				}
+				else{
+					printf("Thing invalid %d\n", k);
+				}
+			}
+			//printf("Painting %d %d\n", i, j);
 		}
 	}
 

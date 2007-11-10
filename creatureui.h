@@ -24,7 +24,7 @@
 #include "thingui.h"
 class CreatureUI : virtual public ThingUI {
 public:
-	void Blit(int x,int y) const {}
+	virtual void Blit(int x,int y) const {}
 };
 
 #endif

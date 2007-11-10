@@ -50,6 +50,8 @@ public:
 	virtual Item* getItem() {return this;}
 	virtual const Item* getItem() const {return this;}
 
+	virtual void Blit(int x, int y) const;
+
 protected:
 
 	Item(uint16_t id, uint8_t count);

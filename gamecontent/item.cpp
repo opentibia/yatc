@@ -20,11 +20,16 @@
 
 #include "item.h"
 
-Item::Item(uint16_t id, uint8_t count) : ItemUI(id, count)
+Item::Item(uint16_t id, uint8_t count) : ItemUI(id)
 {
 	m_id = id;
 	m_count = count;
 	m_it = Objects::getInstance()->getItemType(m_id);
+}
+
+void Item::Blit(int x, int y) const
+{
+	BlitItem(x, y, m_count, m_it);
 }
 
 Item* Item::CreateItem(const uint16_t type, const uint8_t count /*= 0*/)

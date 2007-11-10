@@ -20,73 +20,86 @@
 
 #include "itemui.h"
 #include "engine.h"
+#include "fassert.h"
 
-ItemUI::ItemUI(uint16_t id, uint8_t count) : ThingUI() {
-	m_id = id;
-
-	if (id < 100) {
+ItemUI::ItemUI(uint16_t id) : ThingUI()
+{
+	if(id < 100){
 		printf("Error [ItemUI::ItemUI] Invalid item %d\n", id);
-		m_obj = NULL;
 		return;
 	}
 
-	m_obj = Objects::getInstance()->getItemType(id);
+	const ObjectType* obj = Objects::getInstance()->getItemType(id);
 	printf("== Item %d ==\n" , id);
-	for (int i = 0; i < m_obj->numsprites; i++) {
-		printf("Loading sprite %d...\n", m_obj->imageData[i]);
-		m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", m_obj->imageData[i]));
+	for(uint32_t i = 0; i < obj->numsprites; i++){
+		printf("Loading sprite %d...\n", obj->imageData[i]);
+		m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", obj->imageData[i]));
 	}
+
 	printf("== End of item %d == \n", id);
 }
-ItemUI::~ItemUI() {
-	if (!m_obj)
-		return;
-	for (std::vector<Sprite*>::iterator it = m_gfx.begin(); it != m_gfx.end();) {
+
+ItemUI::~ItemUI()
+{
+	std::vector<Sprite*>::iterator it;
+	for(it = m_gfx.begin(); it != m_gfx.end(); ++it){
 		delete *it;
-		m_gfx.erase(it);
 	}
+	m_gfx.clear();
 }
 
-void ItemUI::Blit(int x, int y) const {
-	int g_frame = 0;
+void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj) const
+{
+	uint32_t g_frame = 0;
 	struct { int x, y; } m_pos = {0, 0};
 
-	if (!m_obj)
+	if(!obj)
 		return;
-	//m_gfx[0]->Blit(x, y);
 
-	if (m_obj->stackable) {
-		if (m_count < 1)
-			m_gfx[0]->Blit(x,y);
-		else if (m_count <= 4)
-			m_gfx[m_count-1]->Blit(x,y);
-		else if (m_count <= 9)
-			m_gfx[4]->Blit(x,y);
-		else if (m_count <= 24)
-			m_gfx[5]->Blit(x,y);
-		else if (m_count <= 49)
-			m_gfx[6]->Blit(x,y);
-		else if (m_count <= 100)
-			m_gfx[7]->Blit(x,y);
-		else
-			m_gfx[0]->Blit(x,y);
-	} else {
-		unsigned int activeframe;
-		for (int i = 0; i < m_obj->height; i++) {
-			for (int j = 0; j < m_obj->width; j++) {
-				for (int k = 0; k < m_obj->blendframes; k++) { // note: if it's anything except item, there won't be blendframes...
+	if(obj->stackable){
 
-					activeframe =   (((((( // same amount of ('s as of *'s
-									g_frame)
-									* m_obj->ydiv + m_pos.y % m_obj->ydiv)
-									* m_obj->xdiv + m_pos.x % m_obj->xdiv)
-									* m_obj->blendframes + k)  // k == subblendframes  (stacked sprite)
-									* m_obj->height + i)           // i == subheight       (y coordinate)
-									* m_obj->width + j)        // j == subwidth        (x coordinate)
+		if(obj->numsprites < 8){
+			m_gfx[0]->Blit(x, y);
+			printf("Item stackable - m_obj->numsprites < 8");
+			return;
+		}
 
-									;
-					m_gfx[activeframe]->Blit(x-j*32,y-i*32);
-					printf("Blitting to %d %d\n", x-j*32,y-i*32);
+		if(count < 1){
+			m_gfx[0]->Blit(x, y);
+		}
+		else if(count < 5){
+			m_gfx[count - 1]->Blit(x,y);
+		}
+		else if(count < 10){
+			m_gfx[4]->Blit(x, y);
+		}
+		else if(count < 25){
+			m_gfx[5]->Blit(x, y);
+		}
+		else if(count < 50){
+			m_gfx[6]->Blit(x, y);
+		}
+		else if(count <= 100){
+			m_gfx[7]->Blit(x, y);
+		}
+		else{
+			m_gfx[0]->Blit(x, y);
+		}
+	}
+	else{
+		uint32_t activeframe = g_frame *
+							(obj->ydiv + m_pos.y % obj->ydiv) *
+							(obj->xdiv + m_pos.x % obj->xdiv);
+
+		for(uint32_t k = 0; k < obj->blendframes; ++k){ // note: if it's anything except item, there won't be blendframes...
+			for(uint32_t i = 0; i < obj->height; ++i){
+				for(uint32_t j = 0; j < obj->width; ++j){
+
+					ASSERT(activeframe < obj->numsprites);
+
+					m_gfx[activeframe]->Blit(x - j*32, y - i*32);
+					activeframe++;
+//					printf("Blitting to %d %d\n", x-j*32,y-i*32);
 				}
 			}
 		}

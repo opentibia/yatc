@@ -24,17 +24,18 @@
 
 #include "thingui.h"
 #include "objects.h"
-class ItemUI : virtual public ThingUI {
+
+class ItemUI : virtual public ThingUI
+{
 public:
-	ItemUI(uint16_t id, uint8_t count);
+	ItemUI(uint16_t id);
 	virtual ~ItemUI();
 
-	void Blit(int x, int y) const;
+	virtual void Blit(int x, int y) const = 0;
 
-private:
-	ObjectType *m_obj;
-	int m_id;
-	int m_count;
+protected:
+
+	void BlitItem(int x, int y, uint8_t count, const ObjectType* obj) const;
 };
 
 #endif

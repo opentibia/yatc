@@ -190,7 +190,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 				RAISE_PROTOCOL_ERROR("Tile Add - !tile");
 			}
 
-			if(!tile->addThing(thing)){
+			if(!tile->addThing(thing, true)){
 				RAISE_PROTOCOL_ERROR("Tile Add - addThing");
 			}
 
