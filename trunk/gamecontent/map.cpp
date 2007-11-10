@@ -194,7 +194,7 @@ bool Tile::removeThing(Thing *thing)
 	return false;
 }
 
-bool Tile::addThing(Thing *thing)
+bool Tile::addThing(Thing *thing, bool pushThing/* = false*/)
 {
 	if(thing == NULL){
 		return false;
@@ -224,8 +224,15 @@ bool Tile::addThing(Thing *thing)
 
 	for(it = m_objects.begin(); it != m_objects.end(); ++it){
 		int itThingOrder = (*it)->getOrder();
-		if(itThingOrder > thingOrder){
-			break;
+		if(pushThing){
+			if(itThingOrder >= thingOrder){
+				break;
+			}
+		}
+		else{
+			if(itThingOrder > thingOrder){
+				break;
+			}
 		}
 	}
 

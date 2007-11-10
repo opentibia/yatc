@@ -101,7 +101,7 @@ public:
 	int32_t getThingCount() const;
 	bool insertThing(Thing* thing, int32_t stackpos);
 	bool removeThing(Thing* thing);
-	bool addThing(Thing* thing);
+	bool addThing(Thing* thing, bool pushThing = false);
 	Thing* getThingByStackPos(int32_t pos);
 	const Thing* getThingByStackPos(int32_t pos) const;
 	const Item* getGround() const;

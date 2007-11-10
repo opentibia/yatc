@@ -57,9 +57,8 @@ void GM_Debug::UpdateOnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Debug *gd = (GM_Debug*)g_game;
 	gd->spr = g_engine->createSprite("Tibia.spr", atoi(gd->txtSprite.GetCaption().c_str()));
-	gd->thing = new ItemUI(atoi(gd->txtItem.GetCaption().c_str()), 1);
+	//gd->thing = new ItemUI(atoi(gd->txtItem.GetCaption().c_str()), 1);
 }
-
 
 GM_Debug::GM_Debug()
 {
@@ -108,7 +107,7 @@ GM_Debug::GM_Debug()
 	if(g_engine){
 		background = g_engine->createSprite("Tibia.pic", 0);
 		spr = g_engine->createSprite("Tibia.spr", 200);
-		thing = new ItemUI(6401, 1);
+		//thing = new ItemUI(6401, 1);
 	}
 	else{  // i think that if g_engine does not exist, we might as well crash. what do you think, guys? ivucica
 		NativeGUIError("Somehow, engine managed to not initialize.", "YATC Fatal Error");
