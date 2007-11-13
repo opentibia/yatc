@@ -26,9 +26,15 @@
 #include "gamecontent/globalvars.h"
 #include "gamecontent/map.h"
 #include "gamecontent/item.h"
+#include "net/connection.h"
+#include "net/protocolgame.h"
+
+extern Connection* g_connection;
+
 GM_Gameworld::GM_Gameworld()
 {
 	ui = g_engine->createSprite("Tibia.pic", 3);
+	m_protocol = (ProtocolGame*)g_connection->getProtocol();
 }
 
 GM_Gameworld::~GM_Gameworld ()
@@ -44,8 +50,8 @@ void GM_Gameworld::updateScene()
 		}
 	}
 
+	float scale=1.;
 	// TODO (ivucica#2#) test on edge of map
-	//printf("Painting...\n");
 	Position pos = GlobalVariables::getPlayerPosition();
 
 	for(uint32_t i = 0; i < 18; ++i){
@@ -56,16 +62,17 @@ void GM_Gameworld::updateScene()
 				//printf("No tile?\n");
 				continue;
 			}
-			// FIXME (ivucica#1#) error: passing 'const Item' as 'this' argument of 'virtual const void ItemUI::Blit(int, int)' discards qualifiers
-			// I cast it into Item* temporarily
 
 			const Item* ground = tile->getGround();
 			if(ground){
-				ground->Blit(i*32,j*32);
+				ground->Blit(i*32*scale,j*32*scale, scale);
 			}
 
+
 			// FIXME (mips#1#) error: find the right draw order
-			for(int32_t k = tile->getThingCount() - 1; k >= 1 ; --k){
+			// ivucica says: i think that it's slightly better if we go 0 => n than n => 0
+			//for(int32_t k = tile->getThingCount() - 1; k >= 1 ; --k){
+			for(int32_t k = 0; k < tile->getThingCount(); ++k){
 				const Thing* thing = tile->getThingByStackPos(k);
 				if(thing){
 					thing->Blit(i*32, j*32);
@@ -74,8 +81,33 @@ void GM_Gameworld::updateScene()
 					printf("Thing invalid %d\n", k);
 				}
 			}
-			//printf("Painting %d %d\n", i, j);
 		}
 	}
 
+}
+
+
+void GM_Gameworld::keyPress (char key)
+{
+	printf("K%d\n", key);
+//	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+}
+
+void GM_Gameworld::specKeyPress (int key)
+{
+	printf("S%d\n", key);
+	switch (key) {
+	case SDLK_LEFT:
+		m_protocol->sendMove(DIRECTION_WEST);
+		break;
+	case SDLK_RIGHT:
+		m_protocol->sendMove(DIRECTION_EAST);
+		break;
+	case SDLK_UP:
+		m_protocol->sendMove(DIRECTION_NORTH);
+		break;
+	case SDLK_DOWN:
+		m_protocol->sendMove(DIRECTION_SOUTH);
+		break;
+	}
 }

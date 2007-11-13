@@ -27,9 +27,10 @@ Item::Item(uint16_t id, uint8_t count) : ItemUI(id)
 	m_it = Objects::getInstance()->getItemType(m_id);
 }
 
-void Item::Blit(int x, int y) const
+// FIXME (ivucica#1#) mips, I'm so mad right now at you. We said we don't mix graphics code with gamecontent code.  I want this moved back where it belongs -- into ItemUI. I don't want to mess with your code, so I want to separate mine as much as possible
+void Item::Blit(int x, int y, float scale) const
 {
-	BlitItem(x, y, m_count, m_it);
+	BlitItem(x, y, m_count, m_it, scale);
 }
 
 Item* Item::CreateItem(const uint16_t type, const uint8_t count /*= 0*/)

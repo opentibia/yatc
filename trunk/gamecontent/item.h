@@ -50,7 +50,7 @@ public:
 	virtual Item* getItem() {return this;}
 	virtual const Item* getItem() const {return this;}
 
-	virtual void Blit(int x, int y) const;
+	virtual void Blit(int x, int y, float scale) const;
 
 protected:
 

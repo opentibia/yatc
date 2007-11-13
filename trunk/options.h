@@ -38,25 +38,34 @@ public:
 	void Save();
 	void Load();
 
-
+	// [window]
 	bool os_cursor;
 	std::string skin;
 
+	// [login]
+	std::string account, password;
+
+	// [client]
+	enginelist_t engine;
+	std::string motdtext;
+	int motdnum;
+
+	// [general]
 	bool classiccontrol;
 	bool autochase;
 	bool showhints;
 	bool shownames;
 	bool showtexteffects;
 
+	// [graphics]
 	int w, h, bpp;
 	bool fullscreen;
 
-	std::string motdtext;
-	int motdnum;
+	// [network]
 	std::string server;
 	int port;
 
-	enginelist_t engine;
+
 
 
 

@@ -29,8 +29,11 @@ public:
 	~GM_Gameworld();
 
 	void updateScene();
+	void keyPress (char key);
+	void specKeyPress (int key);
 private:
 	Sprite* ui;
+	class ProtocolGame* m_protocol;
 };
 
 #endif

@@ -122,6 +122,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 		if (index < 1) {
 			printf("Error [Sprite::loadSurfaceFromFile] Invalid index %d\n", index);
+			fclose(f);
 			return;
 		}
 
@@ -152,8 +153,10 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		fgetc(f); fgetc(f); fgetc(f); // TODO (ivucica#4#) maybe we should figure out what do these do?
 		if (readSprData(f, m_image, 0, 0)) {
 			// error happened
+			printf("Error [Sprite::loadSurfaceFromFile] Problem in readSprData()\n");
 			SDL_FreeSurface(m_image);
 			m_image = NULL;
+			fclose(f);
 			return;
 		}
 

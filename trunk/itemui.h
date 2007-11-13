@@ -31,11 +31,11 @@ public:
 	ItemUI(uint16_t id);
 	virtual ~ItemUI();
 
-	virtual void Blit(int x, int y) const = 0;
+	virtual void Blit(int x, int y, float scale = 1.) const = 0;
 
 protected:
 
-	void BlitItem(int x, int y, uint8_t count, const ObjectType* obj) const;
+	void BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale = 1.) const;
 };
 
 #endif
