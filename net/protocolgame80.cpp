@@ -1093,6 +1093,7 @@ Thing* ProtocolGame80::internalGetThing(NetworkMessage& msg)
 		if(!internalSetOutfit(msg, creature->getOutfit())){
 			return NULL;
 		}
+		creature->loadOutfit();
 
 		//check if we can read 6 bytes
 		if(!msg.canRead(6)){

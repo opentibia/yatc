@@ -29,26 +29,36 @@ Options::Options()
 {
 	configHandler = new ConfigHandler();
 
+	// [window]
 	engine = ENGINE_SDL;
 	//engine = ENGINE_OPENGL;
 	os_cursor = 0;
-	skin = "default";
-	server = "change.me.now";
-	port = 7171;
 
+	// [login]
+	account = "";
+	password = "";
+
+	// [client]
+	skin = "default";
+	motdtext = "No current information.";
+	motdnum = 0;
+
+	// [general]
 	classiccontrol = 0;
 	autochase = 1;
 	showhints = 1;
 	shownames = 1;
 	showtexteffects = 1;
 
+	// [graphics]
 	fullscreen = 0;
 	w = 640;
 	h = 480;
 	bpp = 16;
 
-	motdtext = "No current information.";
-	motdnum = 0;
+	// [network]
+	server = "change.me.now";
+	port = 7171;
 }
 
 Options::~Options()
@@ -60,12 +70,24 @@ void Options::Save()
 {
 	//Update all the values for saving
 	std::stringstream ss;
-	Section* section = configHandler->newSection("window");
+
+	Section *section;
+
+	section = configHandler->newSection("window");
 	ss << engine;
 	section->addKey("engine", ss.str());
 	ss.str("");
 	ss << os_cursor;
 	section->addKey("os_cursor", ss.str());
+	ss.str("");
+
+
+	section = configHandler->newSection("login");
+	ss << account;
+	section->addKey("account", ss.str());
+	ss.str("");
+	ss << password;
+	section->addKey("password", ss.str());
 	ss.str("");
 
 	section = configHandler->newSection("client");
@@ -130,6 +152,7 @@ void Options::Load()
 		return;
 	}
 
+	// [window]
 	switch((enginelist_t)atoi(configHandler->getKeyValue("window", "engine").c_str())){
 		case ENGINE_SDL:
 				engine = ENGINE_SDL;
@@ -144,26 +167,31 @@ void Options::Load()
 				engine = ENGINE_SDL;
 			break;
 	}
-
 	os_cursor = (atoi(configHandler->getKeyValue("window", "os_cursor").c_str()) == 1);
 
+	// [login]
+	account = configHandler->getKeyValue("login", "account");
+	password = configHandler->getKeyValue("login", "password");
+
+	// [client]
 	skin = configHandler->getKeyValue("client", "skin");
 	motdnum = atoi(configHandler->getKeyValue("client", "motdnum").c_str());
 	motdtext = configHandler->getKeyValue("client", "motdtext");
 
+	// [general]
 	classiccontrol = (atoi(configHandler->getKeyValue("general", "classiccontrol").c_str()) == 1);
 	autochase = (atoi(configHandler->getKeyValue("general", "autochase").c_str()) == 1);
 	showhints = (atoi(configHandler->getKeyValue("general", "showhints").c_str()) == 1);
 	shownames = (atoi(configHandler->getKeyValue("general", "shownames").c_str()) == 1);
 	showtexteffects = (atoi(configHandler->getKeyValue("general", "showtexteffects").c_str()) == 1);
 
-
+	// [graphics]
 	fullscreen = (atoi(configHandler->getKeyValue("graphics", "fullscreen").c_str()) == 1);
 	w = atoi(configHandler->getKeyValue("graphics", "width").c_str());
 	h = atoi(configHandler->getKeyValue("graphics", "height").c_str());
 	bpp = atoi(configHandler->getKeyValue("graphics", "bpp").c_str());
 
-
+	// [network]
 	server = configHandler->getKeyValue("network", "server");
 	port = atoi(configHandler->getKeyValue("network", "port").c_str());
 

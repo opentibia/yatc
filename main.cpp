@@ -60,7 +60,7 @@ void onKeyDown(const SDL_Event& event)
 	case SDLK_RIGHT:
 	case SDLK_UP:
 	case SDLK_DOWN:
-		// TODO (ivucica#1#) Pass special keys to a different function
+		g_game->specKeyPress(event.key.keysym.sym);
 		break;
 	default:
 		// glict expects what glut usually serves: completely prepared keys,
@@ -80,7 +80,7 @@ void onKeyDown(const SDL_Event& event)
 			key = (key & 0xFF) + '0';
 
 		// TODO (mips_act#1#) Use SDLK_ constants instead of numeric values
-		if(key < 32 && key != 8 && key != 9 && key != 27 && key != 13 && key != 10) // most keys won't be passed here
+		if(key < 32 && key != 8 && key != 9 && key != 27 && key != 13 && key != 10) // most special keys won't be passed here, but enter, backspace and friends will
 			return;
 
 		g_game->keyPress(key);

@@ -22,9 +22,15 @@
 #define __CREATUREUI_H
 
 #include "thingui.h"
+#include "objects.h"
 class CreatureUI : virtual public ThingUI {
 public:
-	virtual void Blit(int x,int y) const {}
+
+	CreatureUI();
+	virtual void Blit(int x,int y, float scale = 1.) const;
+	void loadOutfit();
+private:
+	ObjectType *m_obj;
 };
 
 #endif

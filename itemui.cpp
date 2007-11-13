@@ -48,7 +48,7 @@ ItemUI::~ItemUI()
 	m_gfx.clear();
 }
 
-void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj) const
+void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale) const
 {
 	uint32_t g_frame = 0;
 	struct { int x, y; } m_pos = {0, 0};
@@ -99,7 +99,6 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj) const
 
 					m_gfx[activeframe]->Blit(x - j*32, y - i*32);
 					activeframe++;
-//					printf("Blitting to %d %d\n", x-j*32,y-i*32);
 				}
 			}
 		}
