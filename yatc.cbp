@@ -48,6 +48,7 @@
 		<Unit filename="codeguide.txt" />
 		<Unit filename="confighandler.cpp" />
 		<Unit filename="confighandler.h" />
+		<Unit filename="creatureui.cpp" />
 		<Unit filename="creatureui.h" />
 		<Unit filename="debugprint.cpp" />
 		<Unit filename="debugprint.h" />

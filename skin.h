@@ -2,7 +2,10 @@
 #define __SKIN_H
 
 #include <GLICT/globals.h>
-#if (GLICT_APIREV >= 49)
+
+#if (GLICT_APIREV < 49)
+#error You must update GLICT to at least revision 49 for skins to compile correctly.
+#endif
 
 #include <GLICT/image.h>
 #include "sprite.h"
@@ -49,15 +52,6 @@ public:
 
 	friend class skinImage;
 };
-
-#else
-#warning You need GLICT APIREV 49 or newer to compile YATC with skins. Update your YATC.
-class Skin {
-public:
-	void loadSkin() {}
-	void unloadSkin() {}
-};
-#endif
 
 extern Skin g_skin;
 

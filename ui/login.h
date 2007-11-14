@@ -42,13 +42,9 @@ public:
 		txtUsername.SetWidth(216-134);
 		txtUsername.SetHeight(46-33);
 		txtUsername.SetPassProtectCharacter('*');
-		#if (GLICT_APIREV >= 2)
 		txtUsername.SetAllowedChars("0123456789");
-		#endif
-		#if (GLICT_APIREV >= 46)
-		txtUsername.SetPrevious(&txtPassword);
+		txtUsername.SetPrevious(!options.ui_compat ? (glictContainer*)&txtPassword : (glictContainer*)&btnCancel);
 		txtUsername.SetNext(&txtPassword);
-		#endif
 
 		pnlPassword.SetWidth(131-17);
 		pnlPassword.SetHeight(12);
@@ -61,13 +57,9 @@ public:
 		txtPassword.SetWidth(216-134);
 		txtPassword.SetHeight(46-33);
 		txtPassword.SetPassProtectCharacter('*');
-		#if (GLICT_APIREV >= 2)
 		txtPassword.SetAllowedChars(" !\"#$%/()=?*'+<>[]{}`~\\|;:_,.-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-		#endif
-		#if (GLICT_APIREV >= 46)
 		txtPassword.SetPrevious(&txtUsername);
-		txtPassword.SetNext(&txtUsername);
-		#endif
+		txtPassword.SetNext(!options.ui_compat ? (glictContainer*)&txtUsername : (glictContainer*)&btnCreateAc);
 
 		pnlCreateAc.SetWidth(131-17);
 		pnlCreateAc.SetHeight(24);
@@ -80,8 +72,10 @@ public:
 		btnCreateAc.SetWidth(216-133);
 		btnCreateAc.SetHeight(112-95);
 		btnCreateAc.SetCaption("Create Account");
-		btnCreateAc.SetBGColor(.2,.2,.2,1.);
+		btnCreateAc.SetBGColor(.8,.8,.8,1.);
 		btnCreateAc.SetFont("minifont",8);
+		btnCreateAc.SetPrevious(!options.ui_compat ? NULL : &txtPassword);
+		btnCreateAc.SetNext(!options.ui_compat ? NULL : &btnOk);
 
 		pnlSeparator.SetPos(9, 121);
 		pnlSeparator.SetBGColor(.1,.1,.1,1.);
@@ -92,27 +86,20 @@ public:
 		btnOk.SetWidth(40);
 		btnOk.SetHeight(166-149);
 		btnOk.SetCaption("Ok");
-		btnOk.SetBGColor(.1,.1,.1,1.);
+		btnOk.SetBGColor(.8,.8,.8,1.);
 		btnOk.SetFont("minifont",8);
-		/*
-		#if (GLICT_APIREV >= 46)
-		btnOk.SetPrevious(&txtPassword);
-		btnOk.SetNext(&btnCancel);
-		#endif
-		*/
+		btnOk.SetPrevious(!options.ui_compat ? NULL : &btnCreateAc);
+		btnOk.SetNext(!options.ui_compat ? NULL : &btnCancel);
+
 
 		btnCancel.SetPos(180-4,148-17);
 		btnCancel.SetWidth(40);
 		btnCancel.SetHeight(166-149);
 		btnCancel.SetCaption("Cancel");
-		btnCancel.SetBGColor(.1,.1,.1,1.);
+		btnCancel.SetBGColor(.8,.8,.8,1.);
 		btnCancel.SetFont("minifont",8);
-		/*
-		#if (GLICT_APIREV >= 46)
-		btnCancel.SetPrevious(&btnOk);
-		btnCancel.SetNext(&txtUsername);
-		#endif
-		*/
+		btnCancel.SetPrevious(!options.ui_compat ? NULL : &btnOk);
+		btnCancel.SetNext(!options.ui_compat ? NULL : &txtUsername);
 
 	}
 };

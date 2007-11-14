@@ -116,6 +116,20 @@ GM_MainMenu::GM_MainMenu()
 	desktop.AddObject(&winStatus);
 	winStatus.SetVisible(false);
 
+	pnlMainMenu.btnLogIn.Focus(NULL);
+
+	if (options.ui_compat) {
+		#if (GLICT_APIREV >= 50)
+		glictGlobals.drawFocus = true;
+		#else
+		#warning Drawing focus requires at least GLICT revision 50. Please upgrade GLICT. (Compiling will proceed, but this feature will not be available.)
+		#endif
+	} else {
+		#if (GLICT_APIREV >= 50)
+		glictGlobals.drawFocus = false;
+		#endif
+	}
+
 	if (g_engine) {
 		background = g_engine->createSprite("Tibia.pic",0);
 		if(!background->isLoaded()){
@@ -191,6 +205,22 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 void GM_MainMenu::keyPress (char key)
 {
 	//printf("Key %c %d\n", key, key);
+	if (!options.ui_compat) {
+		if (glictGlobals.topFocused == &winLogin.txtUsername && key == 13)
+			winLogin.btnOk.Focus(NULL);
+		else if (glictGlobals.topFocused == &winLogin.txtPassword && key == 13)
+			winLogin.btnOk.Focus(NULL);
+	} else {
+		if (glictGlobals.topFocused == &winLogin.txtUsername && key == 13) {
+			winLogin.txtPassword.Focus(NULL);
+			renderUI();
+			return;
+		}
+		else if (glictGlobals.topFocused == &winLogin.txtPassword && key == 13)
+			winLogin.btnOk.Focus(NULL);
+
+	}
+
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 	renderUI();
 }
@@ -201,7 +231,7 @@ void GM_MainMenu::centerWindow (glictWindow *win) {
 	win->SetPos(glictGlobals.w / 2 - s.w / 2, glictGlobals.h/2 - s.h / 2);
 }
 
-void GM_MainMenu::msgBox (const char* mbox, const char* title) {
+void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* focusondismiss) {
 	glictSize s;
 	glictMessageBox *mb;
 	desktop.AddObject(mb = new glictMessageBox);
@@ -211,6 +241,7 @@ void GM_MainMenu::msgBox (const char* mbox, const char* title) {
 
 	mb->SetHeight(glictFontNumberOfLines(mbox)*16 + 35);
 	mb->SetWidth((int)glictFontSize(mbox, "system"));
+	mb->Focus(NULL);
 
 	mb->GetSize(&s);
 
@@ -218,11 +249,17 @@ void GM_MainMenu::msgBox (const char* mbox, const char* title) {
 
 	mb->SetOnDismiss(GM_MainMenu::MBOnDismiss);
 
+	mb->SetCustomData(focusondismiss);
+
 }
 
 void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	if (caller->GetCustomData())
+		((glictContainer*)caller->GetCustomData())->Focus(NULL);
 	m->desktop.RemoveObject(caller);
+	printf("Repaint.\n");
+	m->renderScene();
 	delete caller;
 }
 
@@ -264,7 +301,9 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		"to redistribute it under certain conditions;\n"
 		"see LICENSE for details.",
 
-		"About YATC"
+		"About YATC",
+
+		&m->pnlMainMenu.btnAbout
 	);
 }
 
@@ -275,7 +314,7 @@ void GM_MainMenu::pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContai
 void GM_MainMenu::btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	std::string *helptext = (std::string*)callerclass->GetCustomData();
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
-	m->msgBox(helptext->c_str(), "Help");
+	m->msgBox(helptext->c_str(), "Help", callerclass);
 }
 
 /* **********LOGIN******* */
@@ -362,7 +401,7 @@ void GM_MainMenu::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictCont
 }
 void GM_MainMenu::winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
-	m->msgBox(options.motdtext.c_str(), "Message of the Day");
+	m->msgBox(options.motdtext.c_str(), "Message of the Day", &m->winCharlist.lstChars );
 }
 void GM_MainMenu::winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
@@ -438,6 +477,14 @@ void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, gli
 void GM_MainMenu::winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass) {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winCharlist.window.SetVisible(true);
+	m->renderScene();
+}
+void GM_MainMenu::winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winStatus.SetVisible(false);
+	m->pnlMainMenu.btnLogIn.Focus(NULL);
+	m->renderScene();
+
 }
 
 /* ********** Responses to notifications *********** */
@@ -461,6 +508,7 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
 		winStatus.SetVisible(false);
 		options.motdtext = text;
 		winMotd_OnDismiss(NULL, NULL);
+		renderScene();
 		return;
 	}
 
@@ -471,6 +519,7 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
 	winStatus.SetCaption("Message of the Day");
 	winStatus.SetMessage(text);
 	winStatus.SetEnabled(true);
+	winStatus.Focus(NULL);
 
 	winStatus.SetOnDismiss(winMotd_OnDismiss);
 	renderScene();
@@ -484,6 +533,8 @@ void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& tex
 
 	winStatus.SetMessage(text);
 	winStatus.SetEnabled(true);
+	winStatus.Focus(NULL);
+	winStatus.SetOnDismiss(winStatus_ErrorOnDismiss);
 	renderScene();
 }
 

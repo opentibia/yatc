@@ -49,6 +49,7 @@ public:
 	enginelist_t engine;
 	std::string motdtext;
 	int motdnum;
+	bool ui_compat;
 
 	// [general]
 	bool classiccontrol;

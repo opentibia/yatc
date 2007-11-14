@@ -52,6 +52,7 @@ public:
 		lstChars.SetWidth(200);
 		lstChars.SetHeight(146);
 		lstChars.SetBGColor(.2,.2,.2,1.);
+		if (options.ui_compat) lstChars.SetNext(&btnOk);
 
 		lblAccStatus.SetWidth(200);
 		lblAccStatus.SetHeight(12);
@@ -78,6 +79,7 @@ public:
 		btnOk.SetCaption("Ok");
 		btnOk.SetBGColor(.1,.1,.1,1.);
 		btnOk.SetFont("minifont",8);
+		if (options.ui_compat) btnOk.SetNext(&btnCancel);
 
 		btnCancel.SetPos(176, 247);
 		btnCancel.SetWidth(43);
@@ -85,7 +87,7 @@ public:
 		btnCancel.SetCaption("Cancel");
 		btnCancel.SetBGColor(.1,.1,.1,1.);
 		btnCancel.SetFont("minifont",8);
-
+		if (options.ui_compat) btnCancel.SetNext(&lstChars);
 	}
 
 	~winCharlist_t() {
@@ -116,7 +118,7 @@ public:
 			s << "Premium Account (" << pd << " days left)";
 			pnlAccStatus.SetCaption(s.str());
 		}
-
+		lstChars.Focus(NULL);
 	}
 
 	void addChar (const CharacterList_t& chr) {
@@ -135,6 +137,7 @@ public:
 		res->SetCustomData(data);
 		res->SetCaption(s.str());
 		res->SetFont("aafont");
+		res->SetFocusable(false);
 
 		lsiChars.insert(lsiChars.end(), res);
 		lstChars.AddObject(res);
