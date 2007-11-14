@@ -57,7 +57,7 @@ void GM_Gameworld::updateScene()
 	for(uint32_t i = 0; i < 18; ++i){
 		for(uint32_t j = 0; j < 14; ++j){
 
-			const Tile* tile = Map::getInstance().getTile(pos.x + i - 9, pos.y + j - 7, 7);
+			const Tile* tile = Map::getInstance().getTile(pos.x + i - 9, pos.y + j - 7, pos.z);
 			if(!tile){
 				//printf("No tile?\n");
 				continue;
@@ -70,7 +70,8 @@ void GM_Gameworld::updateScene()
 
 
 			// FIXME (mips#1#) error: find the right draw order
-			// ivucica says: i think that it's slightly better if we go 0 => n than n => 0
+			// ivucica says: i think that it's slightly better if we go 0 => n than n => 0; i agree though that we need to find the correct order
+			// perhaps fike can help?
 			//for(int32_t k = tile->getThingCount() - 1; k >= 1 ; --k){
 			for(int32_t k = 0; k < tile->getThingCount(); ++k){
 				const Thing* thing = tile->getThingByStackPos(k);

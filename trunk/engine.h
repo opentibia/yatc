@@ -39,6 +39,7 @@ class Engine
 
 		virtual void doResize(int w, int h);
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
+		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color) {}
 
 		int getWindowWidth() const {return m_width;};
 		int getWindowHeight() const {return m_height;};
@@ -56,6 +57,7 @@ class Engine
 		friend void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h);
 
 		static void draw_rectangle(float left, float right, float top, float bottom, glictColor &col);
+		static void draw_rectangle_lines(float left, float right, float top, float bottom, glictColor &col);
 		static void font_render(const char* txt, const void* font, float fontsize, float x, float y);
 		static float font_size(const char* txt, const void* font, float fontsize);
 

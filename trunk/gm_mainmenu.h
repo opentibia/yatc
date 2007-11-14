@@ -52,7 +52,7 @@ public:
 	void keyPress (char key);
 	void doResize(float w, float h);
 
-	void msgBox (const char* mbox, const char* title);
+	void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);
 	void centerWindow (glictWindow *win);
 
 	void onConnectionError(int message, const char* text);
@@ -107,7 +107,7 @@ protected:
 
 
 	static void winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass);
-
+	static void winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 

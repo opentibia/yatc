@@ -53,6 +53,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charh[(unsigned char)'\n'] = 14;
 
 			charw[(unsigned char)' '] = 4;
+			charw[(unsigned char)'.'] = 3;
 			charw[(unsigned char)'!'] = 3;
 			charw[(unsigned char)':'] = 3;
 			charw[(unsigned char)'\''] = 3; charh[(unsigned char)'\''] = 3;

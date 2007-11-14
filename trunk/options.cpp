@@ -42,6 +42,7 @@ Options::Options()
 	skin = "default";
 	motdtext = "No current information.";
 	motdnum = 0;
+	ui_compat = false;
 
 	// [general]
 	classiccontrol = 0;
@@ -99,6 +100,9 @@ void Options::Save()
 	ss.str("");
 	ss << motdtext;
 	section->addKey("motdtext", ss.str());
+	ss.str("");
+	ss << ui_compat;
+	section->addKey("ui_compat", ss.str());
 	ss.str("");
 
 
@@ -177,6 +181,7 @@ void Options::Load()
 	skin = configHandler->getKeyValue("client", "skin");
 	motdnum = atoi(configHandler->getKeyValue("client", "motdnum").c_str());
 	motdtext = configHandler->getKeyValue("client", "motdtext");
+	ui_compat = (atoi(configHandler->getKeyValue("client", "ui_compat").c_str()) == 1);
 
 	// [general]
 	classiccontrol = (atoi(configHandler->getKeyValue("general", "classiccontrol").c_str()) == 1);

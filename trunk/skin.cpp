@@ -24,9 +24,6 @@
 
 Skin g_skin;
 
-#if (GLICT_APIREV >= 49)
-
-
 #include <GLICT/skinner.h>
 
 #include "assert.h"
@@ -356,5 +353,3 @@ void Skin::unloadSkin() {
 
 }
 
-
-#endif // glict_apirev
