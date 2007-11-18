@@ -44,7 +44,7 @@ void CreatureUI::Blit(int x,int y, float scale) const {
 
 	//for(uint32_t k = 0; k < m_obj->blendframes; ++k){ // note: if it's anything except item, there won't be blendframes...
 	{
-		int k = 0;
+		//int k = 0;
 		for(uint32_t i = 0; i < m_obj->height; ++i){
 			for(uint32_t j = 0; j < m_obj->width; ++j){
 

@@ -39,8 +39,6 @@ EngineSDL::EngineSDL()
 	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
 	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
 	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
-
-
 }
 
 EngineSDL::~EngineSDL()
@@ -56,27 +54,32 @@ void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA
 	SDL_Rect r={(int)x,(int)y,(int)width,(int)height};
 	SDL_FillRect(m_screen, &r, SDL_MapRGBA(vi->vfmt, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)color.a));
 }
+
 void EngineSDL::drawRectangleLines(float x, float y, float width, float height, oRGBA color)
 {
 	const SDL_VideoInfo* vi = SDL_GetVideoInfo();
 	int col = SDL_MapRGBA(vi->vfmt, (int)(color.r), (int)(color.g), (int)(color.b), (int)(color.a));
 	{
-		SDL_Rect rect = {x, y, 1, height};
+		SDL_Rect rect = {(int)x, (int)y, 1, (int)height};
 		SDL_FillRect(m_screen, &rect, col);
 	}
+
 	{
-		SDL_Rect rect = {x+width-1, y, 1, height};
+		SDL_Rect rect = {(int)(x+width-1.f), (int)y, 1, (int)height};
 		SDL_FillRect(m_screen, &rect, col);
 	}
+
 	{
-		SDL_Rect rect = {x, y, width, 1};
+		SDL_Rect rect = {(int)x, (int)y, (int)width, 1};
 		SDL_FillRect(m_screen, &rect, col);
 	}
+
 	{
-		SDL_Rect rect = {x, y+height-1,width, 1};
+		SDL_Rect rect = {(int)x, (int)(y+height-1.f), (int)width, 1};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 }
+
 void EngineSDL::doResize(int w, int h)
 {
 	Engine::doResize(w, h);
