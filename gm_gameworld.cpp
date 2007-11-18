@@ -50,7 +50,8 @@ void GM_Gameworld::updateScene()
 		}
 	}
 
-	float scale=1.;
+	float scale = 1.f;
+	float scaledSize = 32*scale;
 	// TODO (ivucica#2#) test on edge of map
 	Position pos = GlobalVariables::getPlayerPosition();
 
@@ -63,25 +64,89 @@ void GM_Gameworld::updateScene()
 				continue;
 			}
 
+			int screenx = (int)(i*scaledSize);
+			int screeny = (int)(j*scaledSize);
+
 			const Item* ground = tile->getGround();
 			if(ground){
-				ground->Blit(i*32*scale,j*32*scale, scale);
+				ground->Blit(screenx, screeny, scale);
 			}
 
+			enum drawingStates_t{
+				DRAW_ITEMTOP1 = 1,
+				DRAW_ITEMTOP2,
+				DRAW_ITEMDOWN,
+				DRAW_CREATURE,
+				DRAW_ITEMTOP3
+			};
+			drawingStates_t drawState = DRAW_ITEMTOP1;
 
-			// FIXME (mips#1#) error: find the right draw order
-			// ivucica says: i think that it's slightly better if we go 0 => n than n => 0; i agree though that we need to find the correct order
-			// perhaps fike can help?
-			//for(int32_t k = tile->getThingCount() - 1; k >= 1 ; --k){
-			for(int32_t k = 0; k < tile->getThingCount(); ++k){
-				const Thing* thing = tile->getThingByStackPos(k);
+			int32_t thingsCount = tile->getThingCount() - 1;
+			int32_t drawIndex = 1, lastTopIndex;
+			while(drawIndex <= thingsCount && drawIndex >= 1){
+
+				const Thing* thing = tile->getThingByStackPos(drawIndex);
 				if(thing){
-					thing->Blit(i*32, j*32);
+
+					int32_t thingOrder = thing->getOrder();
+
+					switch(drawState){
+					case DRAW_ITEMTOP1: //topItems 1,2
+					case DRAW_ITEMTOP2:
+						if(thingOrder > 2){
+							drawState = DRAW_ITEMDOWN;
+							lastTopIndex = drawIndex;
+							drawIndex = thingsCount;
+							continue;
+						}
+						break;
+
+					case DRAW_ITEMDOWN: //downItems
+						if(thingOrder != 5){
+							drawState = DRAW_CREATURE;
+							continue;
+						}
+						break;
+
+					case DRAW_CREATURE: //creatures
+						if(thingOrder != 4){
+							drawState = DRAW_ITEMTOP3;
+							drawIndex = lastTopIndex;
+							continue;
+						}
+						break;
+
+					case DRAW_ITEMTOP3: //topItems 3
+						if(thingOrder != 3){
+							drawIndex = 0; //force exit loop
+							continue;
+						}
+						break;
+					}
+
+					thing->Blit(screenx, screeny, scale);
+
+					switch(drawState){
+					case DRAW_ITEMTOP1: //topItems 1,2
+					case DRAW_ITEMTOP2:
+						drawIndex++;
+						break;
+					case DRAW_ITEMDOWN: //downItems
+					case DRAW_CREATURE: //creatures
+						drawIndex--;
+						break;
+					case DRAW_ITEMTOP3: //topItems 3
+						drawIndex++;
+						break;
+					}
+
 				}
 				else{
-					printf("Thing invalid %d\n", k);
+					printf("Thing invalid %d\n", drawIndex);
+					break;
 				}
 			}
+
 		}
 	}
 
