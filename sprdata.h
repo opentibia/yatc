@@ -25,7 +25,12 @@
 extern "C" {
 #endif
 
+/*  
+    Integer types are defined in SDL_config_win32.h, so including stdint.h causes redefinition errors.
+*/
+#if !defined(WIN32)
 #include <stdint.h>
+#endif
 int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy);
 int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *datasize);
 
