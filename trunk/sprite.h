@@ -50,8 +50,9 @@ class Sprite
 
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) = 0;
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth) = 0; // stretch from SRCWxSRCH to DESTWxDESTH
+        virtual void addColor(float r, float g, float b);
 
-		void Stretch(float neww, float newh, bool smooth = false);
+		void Stretch(float neww, float newh, int smooth = -1, bool force = false);
 		void unStretch() { if (m_stretchimage) SDL_FreeSurface(m_stretchimage); m_stretchimage = NULL; }
 
 	protected:
@@ -63,14 +64,16 @@ class Sprite
 		#ifdef USE_OPENGL
 		GLuint getPixelFormat() { return m_pixelformat; }
 		#endif
-		
+
 		std::string m_filename; int m_index;
 	private:
-		void putPixel(int x, int y, uint32_t pixel);
-		uint32_t getPixel(int x, int y);
+		void putPixel(int x, int y, uint32_t pixel, SDL_Surface *img = NULL);
+		uint32_t getPixel(int x, int y, SDL_Surface *img = NULL);
 
 		bool m_loaded;
-		SDL_Surface *m_image, *m_stretchimage;
+		SDL_Surface *m_image, *m_stretchimage, *m_coloredimage;
+		float m_r, m_g, m_b;
+		bool m_smoothstretch;
 		#ifdef USE_OPENGL
 		GLuint m_pixelformat;
 		#endif

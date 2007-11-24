@@ -24,6 +24,10 @@
 	#include <GL/gl.h>
 #endif
 
+#ifndef GL_BGR
+#warning Odd OpenGL header. Defining GL_BGR to a 0.
+#define GL_BGR 0
+#endif
 #include "sprite.h"
 #include "sprdata.h"
 #include <math.h>
@@ -48,6 +52,10 @@ Sprite::Sprite(const std::string& filename, int index)
 	m_image = NULL;
 	m_stretchimage = NULL;
 	m_loaded = false;
+	m_smoothstretch = 0;
+    m_r = 1.f;
+    m_g = 1.f;
+    m_b = 1.f;
 
 	loadSurfaceFromFile(filename, index);
 }
@@ -61,6 +69,10 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 	m_image = NULL;
 	m_stretchimage = NULL;
 	m_loaded = false;
+	m_smoothstretch = 1;
+	m_r = 1.f;
+    m_g = 1.f;
+    m_b = 1.f;
 
 	loadSurfaceFromFile(filename, index);
 
@@ -74,7 +86,9 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 	SDL_BlitSurface(m_image, &src, ns, &dst);
 
 	SDL_FreeSurface(m_image);
+	SDL_FreeSurface(m_coloredimage);
 	m_image = ns;
+	m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
 }
 
 
@@ -86,6 +100,9 @@ Sprite::~Sprite()
 	}
 	if(m_stretchimage){
 		SDL_FreeSurface(m_stretchimage);
+	}
+	if(m_coloredimage){
+        SDL_FreeSurface(m_coloredimage);
 	}
 }
 
@@ -114,7 +131,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		uint16_t sprcount;
 		uint32_t where;
 
-		FILE *f = fopen(filename.c_str(), "r");
+		FILE *f = fopen(filename.c_str(), "rb");
 		if(!f){
 			printf("Error [Sprite::loadSurfaceFromFile] Sprite file %s not found\n", filename.c_str());
 			return;
@@ -143,6 +160,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			printf("Error [Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			return;
 		}
+		printf("Created rgb surface\n");
 		// dont make static since if we change the rendering engine at runtime,
 		//  this may change too
 		Uint32 magenta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
@@ -234,14 +252,19 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	m_filename = filename;
 	m_index = index;
 
+    m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magenta is transparent
-
 }
-void Sprite::putPixel(int x, int y, uint32_t pixel)
-{
-	int bpp = m_image->format->BytesPerPixel;
 
-	uint8_t *p = (uint8_t *)m_image->pixels + y * m_image->pitch + x * bpp;
+
+void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
+{
+	if (!img)
+        img = m_image;
+	int bpp = img->format->BytesPerPixel;
+
+	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
 	switch(bpp){
 	case 1:
 		*p = pixel;
@@ -269,11 +292,14 @@ void Sprite::putPixel(int x, int y, uint32_t pixel)
 	}
 }
 
-uint32_t Sprite::getPixel(int x, int y)
+uint32_t Sprite::getPixel(int x, int y, SDL_Surface *img)
 {
-	int bpp = m_image->format->BytesPerPixel;
+	if (!img)
+        img = m_image;
+	int bpp = img->format->BytesPerPixel;
+
 	/* Here p is the address to the pixel we want to retrieve */
-	uint8_t *p = (uint8_t *)m_image->pixels + y * m_image->pitch + x * bpp;
+	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
 
 	switch(bpp){
 	case 1:
@@ -297,15 +323,46 @@ uint32_t Sprite::getPixel(int x, int y)
 	}
 }
 
-void Sprite::Stretch (float w, float h, bool smooth)
+void Sprite::Stretch (float w, float h, int smooth, bool force)
 {
-	if (m_stretchimage)
+	SDL_Surface *img;
+	if (m_stretchimage && !force)
 		if (fabs(m_stretchimage->w - w) < 2 && fabs(m_stretchimage->h - h)<2)
 			return;
 
-	printf("Stretching to %g %g\n", w, h);
+    if (m_r == 1.f && m_g == 1.f && m_b == 1.f)
+        img = m_image;
+    else
+        img = m_coloredimage;
+
+    if (smooth == -1)
+        smooth = m_smoothstretch;
+    else
+        m_smoothstretch = smooth;
+
+
 	unStretch();
-	m_stretchimage = zoomSurface(m_image, w/m_image->w, h/m_image->h, smooth ? 1 : 0);
+
+	if (w == m_image->w && h == m_image->h)
+        return;
+
+    printf("Stretching to %g %g\n", w, h);
+	m_stretchimage = zoomSurface(img, w/img->w, h/img->h, smooth);
+
 	printf("New size: %d %d\n", m_stretchimage->w, m_stretchimage->h);
 
+}
+
+void Sprite::addColor(float r, float g, float b)
+{
+    uint8_t ro, go, bo;  // old rgb
+    if (r == m_r && g == m_g && b == m_b)
+        return;
+    for (int i=0; i < m_image->w; i++)
+        for (int j=0; j < m_image->h; j++) {
+            SDL_GetRGB(getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo);
+            putPixel(i, j, SDL_MapRGB(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b)), m_coloredimage);
+        }
+
+    Stretch(getImage()->w, getImage()->h, -1, true);
 }

@@ -6,19 +6,27 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
+			<Target title="Debug Unix">
+				<Option platforms="Unix;" />
 				<Option output="yatc" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/" />
+				<Option object_output=".objs\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g3" />
 					<Add option="-DUSEASSERT" />
 				</Compiler>
+				<Linker>
+					<Add library="GL" />
+					<Add library="GLU" />
+					<Add library="SDL" />
+					<Add library="SDL_gfx" />
+				</Linker>
 			</Target>
-			<Target title="Release">
+			<Target title="Release Unix">
+				<Option platforms="Unix;" />
 				<Option output="yatc" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objsrelease/" />
+				<Option object_output=".objsrelease\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -26,6 +34,57 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="GL" />
+					<Add library="GLU" />
+					<Add library="SDL" />
+					<Add library="SDL_gfx" />
+				</Linker>
+			</Target>
+			<Target title="Debug Windows">
+				<Option platforms="Windows;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-DUSEASSERT" />
+				</Compiler>
+				<Linker>
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-lgmp" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
+				</Linker>
+			</Target>
+			<Target title="Release Windows">
+				<Option platforms="Windows;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsrelease\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-lgmp" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
 				</Linker>
 			</Target>
 		</Build>
@@ -36,12 +95,8 @@
 			<Add directory="." />
 		</Compiler>
 		<Linker>
-			<Add library="SDL" />
-			<Add library="GL" />
-			<Add library="GLU" />
 			<Add library="GLICT" />
 			<Add library="gmp" />
-			<Add library="SDL_gfx" />
 		</Linker>
 		<Unit filename="LICENSE" />
 		<Unit filename="README" />
@@ -62,27 +117,29 @@
 		<Unit filename="fassert.h" />
 		<Unit filename="font.cpp" />
 		<Unit filename="font.h" />
-		<Unit filename="gamecontent/container.cpp" />
-		<Unit filename="gamecontent/container.h" />
-		<Unit filename="gamecontent/creature.cpp" />
-		<Unit filename="gamecontent/creature.h" />
-		<Unit filename="gamecontent/enums.h" />
-		<Unit filename="gamecontent/globalvars.cpp" />
-		<Unit filename="gamecontent/globalvars.h" />
-		<Unit filename="gamecontent/inventory.cpp" />
-		<Unit filename="gamecontent/inventory.h" />
-		<Unit filename="gamecontent/item.cpp" />
-		<Unit filename="gamecontent/item.h" />
-		<Unit filename="gamecontent/map.cpp" />
-		<Unit filename="gamecontent/map.h" />
-		<Unit filename="gamecontent/thing.h" />
+		<Unit filename="gamecontent\container.cpp" />
+		<Unit filename="gamecontent\container.h" />
+		<Unit filename="gamecontent\creature.cpp" />
+		<Unit filename="gamecontent\creature.h" />
+		<Unit filename="gamecontent\enums.h" />
+		<Unit filename="gamecontent\globalvars.cpp" />
+		<Unit filename="gamecontent\globalvars.h" />
+		<Unit filename="gamecontent\inventory.cpp" />
+		<Unit filename="gamecontent\inventory.h" />
+		<Unit filename="gamecontent\item.cpp" />
+		<Unit filename="gamecontent\item.h" />
+		<Unit filename="gamecontent\map.cpp" />
+		<Unit filename="gamecontent\map.h" />
+		<Unit filename="gamecontent\thing.h" />
 		<Unit filename="gamemode.cpp" />
 		<Unit filename="gamemode.h" />
 		<Unit filename="gm_debug.cpp">
-			<Option target="Debug" />
+			<Option target="Debug Unix" />
+			<Option target="Debug Windows" />
 		</Unit>
 		<Unit filename="gm_debug.h">
-			<Option target="Debug" />
+			<Option target="Debug Unix" />
+			<Option target="Debug Windows" />
 		</Unit>
 		<Unit filename="gm_gameworld.cpp" />
 		<Unit filename="gm_gameworld.h" />
@@ -91,20 +148,20 @@
 		<Unit filename="itemui.cpp" />
 		<Unit filename="itemui.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="net/connection.cpp" />
-		<Unit filename="net/connection.h" />
-		<Unit filename="net/encryption.cpp" />
-		<Unit filename="net/encryption.h" />
-		<Unit filename="net/networkmessage.cpp" />
-		<Unit filename="net/networkmessage.h" />
-		<Unit filename="net/protocolgame.cpp" />
-		<Unit filename="net/protocolgame.h" />
-		<Unit filename="net/protocolgame80.cpp" />
-		<Unit filename="net/protocolgame80.h" />
-		<Unit filename="net/protocollogin.cpp" />
-		<Unit filename="net/protocollogin.h" />
-		<Unit filename="net/rsa.cpp" />
-		<Unit filename="net/rsa.h" />
+		<Unit filename="net\connection.cpp" />
+		<Unit filename="net\connection.h" />
+		<Unit filename="net\encryption.cpp" />
+		<Unit filename="net\encryption.h" />
+		<Unit filename="net\networkmessage.cpp" />
+		<Unit filename="net\networkmessage.h" />
+		<Unit filename="net\protocolgame.cpp" />
+		<Unit filename="net\protocolgame.h" />
+		<Unit filename="net\protocolgame80.cpp" />
+		<Unit filename="net\protocolgame80.h" />
+		<Unit filename="net\protocollogin.cpp" />
+		<Unit filename="net\protocollogin.h" />
+		<Unit filename="net\rsa.cpp" />
+		<Unit filename="net\rsa.h" />
 		<Unit filename="notifications.cpp" />
 		<Unit filename="notifications.h" />
 		<Unit filename="objects.cpp" />
@@ -125,13 +182,13 @@
 		<Unit filename="spritesdl.h" />
 		<Unit filename="thingui.cpp" />
 		<Unit filename="thingui.h" />
-		<Unit filename="ui/charlist.h" />
-		<Unit filename="ui/login.h" />
-		<Unit filename="ui/mainmenu.h" />
-		<Unit filename="ui/options.h" />
-		<Unit filename="ui/optionsgeneral.h" />
-		<Unit filename="ui/optionsgraphics.h" />
-		<Unit filename="ui/optionsnetwork.h" />
+		<Unit filename="ui\charlist.h" />
+		<Unit filename="ui\login.h" />
+		<Unit filename="ui\mainmenu.h" />
+		<Unit filename="ui\options.h" />
+		<Unit filename="ui\optionsgeneral.h" />
+		<Unit filename="ui\optionsgraphics.h" />
+		<Unit filename="ui\optionsnetwork.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Unit filename="yatc.cfg" />

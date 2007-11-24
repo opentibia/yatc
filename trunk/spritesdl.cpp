@@ -56,6 +56,6 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, f
 	if(!getImage())
 		return;
 
-	Stretch(destw, desth, false);
+	Stretch(destw, desth, 0);
 	Blit(dx,dy,sx,sy,destw,desth);
 }
