@@ -88,6 +88,9 @@
 				</Linker>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="Debug Unix;Release Unix;Debug Windows;Release Windows;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
