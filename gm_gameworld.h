@@ -21,8 +21,44 @@
 #ifndef __GM_GAMEWORLD_H
 #define __GM_GAMEWORLD_H
 
+#include <GLICT/container.h>
+#include <GLICT/panel.h>
+#include <GLICT/button.h>
 #include "gamemode.h"
 #include "sprite.h"
+
+class pnlInventory_t {
+public:
+	pnlInventory_t() {
+		static int posInvSlots[] = {
+            45, 3,  // helmet
+            8, 17,  // necklace
+            83, 17, // backpack
+            45, 40, // armor
+            83, 54, // right weapon
+            8, 54,  // left weapon
+            45, 77, // legs
+            45, 115,// feet
+            8, 91,  // ring
+            83, 91};// hand
+
+
+
+		for (int i = 0; i < 10; i++) {
+			panel.AddObject(pnlItem+i);
+			pnlItem[i].SetPos(posInvSlots[i*2], posInvSlots[i*2+1]);
+			pnlItem[i].SetHeight(32);
+			pnlItem[i].SetWidth(32);
+			pnlItem[i].SetBGColor(1,0,0,1);
+//			pnlItem[i].SetBGActiveness(true);
+		}
+	}
+
+	glictContainer panel; // it's a container, so it's transparent
+	glictButton pnlItem[10];
+
+};
+
 class GM_Gameworld : public GameMode {
 public:
 	GM_Gameworld();
@@ -31,8 +67,12 @@ public:
 	void updateScene();
 	void keyPress (char key);
 	void specKeyPress (int key);
+	void doResize(float w, float h);
 private:
 	Sprite* ui;
+	glictContainer desktop;
+	pnlInventory_t pnlInventory;
+
 	class ProtocolGame* m_protocol;
 };
 

@@ -97,7 +97,7 @@ public:
 
 	void destroyList() {
 		printf("Destroying character list...\n");
-		for (std::vector<glictPanel*>::iterator it = lsiChars.begin(); it != lsiChars.end(); it++) {
+		for (std::vector<glictPanel*>::iterator it = lsiChars.begin(); it != lsiChars.end(); ) {
 			delete (CharacterList_t*)((*it)->GetCustomData());
 			delete (*it);
 			lsiChars.erase(it);
