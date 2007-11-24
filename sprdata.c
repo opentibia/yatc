@@ -39,6 +39,13 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 	int transparent = 1;
 
 	fread(&size, 2, 1, f);
+	if (size > 3500) {
+        SDL_UnlockSurface(surface);
+        SDL_FreeSurface(surface);
+        fclose(f);
+        printf("Error [readSprData] Sprite size is invalid (%d)\n", size);
+        return -1;
+    }
 	SDL_LockSurface(surface);
 	for(i = ftell(f); ftell(f) < i + size-1; ){
 		uint16_t pixelchunksize;
