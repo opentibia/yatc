@@ -30,13 +30,13 @@ ItemUI::ItemUI(uint16_t id) : ThingUI()
 	}
 
 	const ObjectType* obj = Objects::getInstance()->getItemType(id);
-	printf("== Item %d ==\n" , id);
+//	printf("== Item %d ==\n" , id);
 	for(uint32_t i = 0; i < obj->numsprites; i++){
-		printf("Loading sprite %d...\n", obj->imageData[i]);
+//		printf("Loading sprite %d...\n", obj->imageData[i]);
 		m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", obj->imageData[i]));
 	}
 
-	printf("== End of item %d == \n", id);
+//	printf("== End of item %d == \n", id);
 }
 
 ItemUI::~ItemUI()

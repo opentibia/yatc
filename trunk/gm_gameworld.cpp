@@ -18,7 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-
+#include <GLICT/globals.h>
 #include "gm_gameworld.h"
 #include "engine.h"
 #include "options.h"
@@ -33,8 +33,15 @@ extern Connection* g_connection;
 
 GM_Gameworld::GM_Gameworld()
 {
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting gameworld...\n");
+
 	ui = g_engine->createSprite("Tibia.pic", 3);
 	m_protocol = (ProtocolGame*)g_connection->getProtocol();
+
+	desktop.AddObject(&pnlInventory.panel);
+	pnlInventory.panel.SetPos(10, 10);
+
+	doResize(glictGlobals.w, glictGlobals.h);
 }
 
 GM_Gameworld::~GM_Gameworld ()
@@ -42,8 +49,21 @@ GM_Gameworld::~GM_Gameworld ()
 
 }
 
+
+void GM_Gameworld::doResize(float w, float h)
+{
+	desktop.SetWidth(glictGlobals.w);
+	desktop.SetHeight(glictGlobals.h);
+	desktop.ResetTransformations();
+
+	updateScene();
+}
+
+
 void GM_Gameworld::updateScene()
 {
+
+
 	for(int i = 0; i < options.w; i += 96){
 		for(int j = 0; j < options.h; j += 96){
 			ui->Blit(i, j, 0, 0, 96, 96);
@@ -150,13 +170,14 @@ void GM_Gameworld::updateScene()
 		}
 	}
 
+	desktop.Paint();
 }
 
 
 void GM_Gameworld::keyPress (char key)
 {
 	printf("K%d\n", key);
-//	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 }
 
 void GM_Gameworld::specKeyPress (int key)

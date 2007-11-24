@@ -151,7 +151,8 @@ GM_MainMenu::~GM_MainMenu()
 
 }
 
-void GM_MainMenu::doResize(float w, float h) {
+void GM_MainMenu::doResize(float w, float h)
+{
 	pnlMainMenu.mainmenu.SetPos(60, glictGlobals.h - 240);
 	desktop.SetWidth(glictGlobals.w);
 	desktop.SetHeight(glictGlobals.h);
@@ -169,14 +170,16 @@ void GM_MainMenu::doResize(float w, float h) {
 
 
 
-void GM_MainMenu::renderScene() {
+void GM_MainMenu::renderScene()
+{
 	if(background)
 		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
 
 	renderUI();
 }
 
-void GM_MainMenu::renderUI() {
+void GM_MainMenu::renderUI()
+{
 	if (options.engine == ENGINE_OPENGL) {
 		glEnable(GL_SCISSOR_TEST);
 		desktop.Paint();
@@ -225,13 +228,15 @@ void GM_MainMenu::keyPress (char key)
 	renderUI();
 }
 
-void GM_MainMenu::centerWindow (glictWindow *win) {
+void GM_MainMenu::centerWindow (glictWindow *win)
+{
 	glictSize s;
 	win->GetSize(&s);
 	win->SetPos(glictGlobals.w / 2 - s.w / 2, glictGlobals.h/2 - s.h / 2);
 }
 
-void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* focusondismiss) {
+void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* focusondismiss)
+{
 	glictSize s;
 	glictMessageBox *mb;
 	desktop.AddObject(mb = new glictMessageBox);
@@ -253,7 +258,8 @@ void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* f
 
 }
 
-void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller) {
+void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	if (caller->GetCustomData())
 		((glictContainer*)caller->GetCustomData())->Focus(NULL);
@@ -381,19 +387,22 @@ void GM_MainMenu::winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictCont
 
 /* **********OPTIONS********* */
 
-void GM_MainMenu::winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsGeneral.Init();
 	m->winOptionsGeneral.window.SetVisible(true);
 	m->winOptionsGeneral.window.Focus(NULL);
 }
-void GM_MainMenu::winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsGraphics.Init();
 	m->winOptionsGraphics.window.SetVisible(true);
 	m->winOptionsGraphics.window.Focus(NULL);
 }
-void GM_MainMenu::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsNetwork.Init();
 	m->winOptionsNetwork.window.SetVisible(true);
@@ -420,7 +429,8 @@ void GM_MainMenu::winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, gli
 }
 /* *********GENERAL********** */
 
-void GM_MainMenu::winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
 	//enginelist_t e = options.engine;
 	//int w = options.w; int h = options.h; int bpp = options.bpp;  // these will be used in disabled chunk of code, do not remove
 	//bool fs = options.fullscreen;
@@ -457,29 +467,34 @@ void GM_MainMenu::winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictC
 	#endif
 	m->winOptionsGraphics.window.SetVisible(false);
 }
-void GM_MainMenu::winOptionsGraphics_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winOptionsGraphics_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsGraphics.window.SetVisible(false);
 }
 /* **********NETWORK********* */
-void GM_MainMenu::winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsNetwork.Store();
 	m->winOptionsNetwork.window.SetVisible(false);
 }
 
-void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsNetwork.window.SetVisible(false);
 }
 
 /* ************* OTHER **************** */
-void GM_MainMenu::winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winCharlist.window.SetVisible(true);
 	m->renderScene();
 }
-void GM_MainMenu::winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer* callerclass) {
+void GM_MainMenu::winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer* callerclass)
+{
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winStatus.SetVisible(false);
 	m->pnlMainMenu.btnLogIn.Focus(NULL);
@@ -488,8 +503,8 @@ void GM_MainMenu::winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer
 }
 
 /* ********** Responses to notifications *********** */
-void GM_MainMenu::onConnectionError(int message, const char* errortext) {
-
+void GM_MainMenu::onConnectionError(int message, const char* errortext)
+{
 	std::stringstream s;
 	s << "There was an error while connecting." << std::endl <<
 		 std::endl <<
@@ -501,7 +516,8 @@ void GM_MainMenu::onConnectionError(int message, const char* errortext) {
 	winStatus.SetEnabled(true);
 	renderScene();
 }
-void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
+void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
+{
 
 	if (options.motdnum == motdnum) {
 		printf("Motd numbers matching, not displaying motd.\n");
@@ -525,7 +541,8 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text) {
 	renderScene();
 
 }
-void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& text) {
+void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& text)
+{
 	if (type == MESSAGE_ERROR)
 		winStatus.SetCaption("Error");
 	else
@@ -538,12 +555,14 @@ void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& tex
 	renderScene();
 }
 
-void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int premDays) {
+void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
+{
 	winCharlist.generateList(list, premDays);
 	renderUI();
 }
 
-void GM_MainMenu::onEnterGame() {
+void GM_MainMenu::onEnterGame()
+{
 	delete g_game;
 	g_game = new GM_Gameworld;
 }
