@@ -60,6 +60,7 @@ Options::Options()
 	// [network]
 	server = "change.me.now";
 	port = 7171;
+	otkey = true;
 }
 
 Options::~Options()
@@ -146,6 +147,9 @@ void Options::Save()
 	ss << port;
 	section->addKey("port", ss.str());
 	ss.str("");
+	ss << otkey;
+	section->addKey("otkey", ss.str());
+	ss.str("");
 
 	configHandler->saveConfig("yatc.cfg");
 }
@@ -199,6 +203,7 @@ void Options::Load()
 	// [network]
 	server = configHandler->getKeyValue("network", "server");
 	port = atoi(configHandler->getKeyValue("network", "port").c_str());
+    otkey = (atoi(configHandler->getKeyValue("network", "otkey").c_str()) == 1);
 
 	configHandler->clear();
 }

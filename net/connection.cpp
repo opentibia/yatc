@@ -49,9 +49,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 		m_clientVersion = CLIENT_VERSION_800;
 		//TODO. set right values
 		// ivucica: imho this should be read from pic, dat and spr files and fed to protocolconfig some other way
-		m_datSignature = 0;
-		m_sprSignature = 0;
-		m_picSignature = 0;
+		m_datSignature = 0x467FD7E6;
+		m_sprSignature = 0x467F9E74;
+		m_picSignature = 0x45670923;
 		break;
 	default:
 		ASSERT(0);

@@ -58,11 +58,11 @@ public:
 		pnlFullscreen.SetBGActiveness(false);
 		btnFullscreen.SetWidth(12);
 		btnFullscreen.SetHeight(12);
-		btnFullscreen.SetPos(5, 4);
+		btnFullscreen.SetPos(5, 5);
 		btnFullscreen.SetOnClick(winOptionsGraphics_t::OnCheckbox);
 		lblFullscreen.SetWidth(170);
 		lblFullscreen.SetHeight(11);
-		lblFullscreen.SetPos(22,4);
+		lblFullscreen.SetPos(22,7);
 		lblFullscreen.SetCaption("Fullscreen");
 		lblFullscreen.SetFont("aafont");
 		lblFullscreen.SetBGActiveness(false);

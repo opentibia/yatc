@@ -65,7 +65,7 @@ public:
 	// [network]
 	std::string server;
 	int port;
-
+    bool otkey;
 
 
 
