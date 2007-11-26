@@ -18,8 +18,8 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifndef __Objects_H
-#define __Objects_H
+#ifndef __OBJECTS_H
+#define __OBJECTS_H
 
 #include <stdlib.h>
 #include <stdint.h>

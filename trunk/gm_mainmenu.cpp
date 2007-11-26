@@ -108,7 +108,11 @@ GM_MainMenu::GM_MainMenu()
 		"Server name is the IP address or hostname of the\n"
 		"login server.\n"
 		"\n"
-		"Port is the TCP port of the login server."
+		"Port is the TCP port of the login server.\n"
+		"\n"
+		"You can also choose if you'd like to access OpenTibia\n"
+		"servers, or a proprietary server. To access OpenTibia\n"
+		"servers, turn on the OT Encryption Key option."
 		));
 
 
@@ -334,7 +338,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 		g_connection = NULL;
 	}
 
-	ProtocolConfig::getInstance().setServerType(SERVER_OTSERV); // perhaps this should go to options, too?
+	ProtocolConfig::getInstance().setServerType(options.otkey ? SERVER_OTSERV : SERVER_CIP ); // perhaps this should go to options, too?
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 	ProtocolConfig::createLoginConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption());
 	m->winStatus.SetVisible(true);

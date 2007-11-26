@@ -56,13 +56,13 @@ public:
 		pnlClassicControl.AddObject(&btnClassicControl);
 		pnlClassicControl.AddObject(&lblClassicControl);
 		pnlClassicControl.SetBGActiveness(false);
-		btnClassicControl.SetWidth(8);
-		btnClassicControl.SetHeight(8);
-		btnClassicControl.SetPos(7, 6);
+		btnClassicControl.SetWidth(12);
+		btnClassicControl.SetHeight(12);
+		btnClassicControl.SetPos(5, 5);
 		btnClassicControl.SetOnClick(winOptionsGeneral_t::OnCheckbox);
 		lblClassicControl.SetWidth(170);
 		lblClassicControl.SetHeight(11);
-		lblClassicControl.SetPos(22,4);
+		lblClassicControl.SetPos(22,7);
 		lblClassicControl.SetCaption("Classic Control");
 		lblClassicControl.SetFont("aafont");
 		lblClassicControl.SetBGActiveness(false);
@@ -74,13 +74,13 @@ public:
 		pnlAutoChase.AddObject(&btnAutoChase);
 		pnlAutoChase.AddObject(&lblAutoChase);
 		pnlAutoChase.SetBGActiveness(false);
-		btnAutoChase.SetWidth(8);
-		btnAutoChase.SetHeight(8);
-		btnAutoChase.SetPos(7, 6);
+		btnAutoChase.SetWidth(12);
+		btnAutoChase.SetHeight(12);
+		btnAutoChase.SetPos(5, 5);
 		btnAutoChase.SetOnClick(winOptionsGeneral_t::OnCheckbox);
 		lblAutoChase.SetWidth(170);
 		lblAutoChase.SetHeight(11);
-		lblAutoChase.SetPos(22,4);
+		lblAutoChase.SetPos(22,7);
 		lblAutoChase.SetCaption("Auto Chase Off");
 		lblAutoChase.SetFont("aafont");
 		lblAutoChase.SetBGActiveness(false);
@@ -92,13 +92,13 @@ public:
 		pnlShowHints.AddObject(&btnShowHints);
 		pnlShowHints.AddObject(&lblShowHints);
 		pnlShowHints.SetBGActiveness(false);
-		btnShowHints.SetWidth(8);
-		btnShowHints.SetHeight(8);
-		btnShowHints.SetPos(7, 6);
+		btnShowHints.SetWidth(12);
+		btnShowHints.SetHeight(12);
+		btnShowHints.SetPos(5, 5);
 		btnShowHints.SetOnClick(winOptionsGeneral_t::OnCheckbox);
 		lblShowHints.SetWidth(170);
 		lblShowHints.SetHeight(11);
-		lblShowHints.SetPos(22,4);
+		lblShowHints.SetPos(22,7);
 		lblShowHints.SetCaption("Show Hints");
 		lblShowHints.SetFont("aafont");
 		lblShowHints.SetBGActiveness(false);
@@ -110,13 +110,13 @@ public:
 		pnlShowNames.AddObject(&btnShowNames);
 		pnlShowNames.AddObject(&lblShowNames);
 		pnlShowNames.SetBGActiveness(false);
-		btnShowNames.SetWidth(8);
-		btnShowNames.SetHeight(8);
-		btnShowNames.SetPos(7, 6);
+		btnShowNames.SetWidth(12);
+		btnShowNames.SetHeight(12);
+		btnShowNames.SetPos(5, 5);
 		btnShowNames.SetOnClick(winOptionsGeneral_t::OnCheckbox);
 		lblShowNames.SetWidth(170);
 		lblShowNames.SetHeight(11);
-		lblShowNames.SetPos(22,4);
+		lblShowNames.SetPos(22,7);
 		lblShowNames.SetCaption("Show Names of Creatures");
 		lblShowNames.SetFont("aafont");
 		lblShowNames.SetBGActiveness(false);
@@ -128,13 +128,13 @@ public:
 		pnlShowTextEffects.AddObject(&btnShowTextEffects);
 		pnlShowTextEffects.AddObject(&lblShowTextEffects);
 		pnlShowTextEffects.SetBGActiveness(false);
-		btnShowTextEffects.SetWidth(8);
-		btnShowTextEffects.SetHeight(8);
-		btnShowTextEffects.SetPos(7, 6);
+		btnShowTextEffects.SetWidth(12);
+		btnShowTextEffects.SetHeight(12);
+		btnShowTextEffects.SetPos(5, 5);
 		btnShowTextEffects.SetOnClick(winOptionsGeneral_t::OnCheckbox);
 		lblShowTextEffects.SetWidth(170);
 		lblShowTextEffects.SetHeight(11);
-		lblShowTextEffects.SetPos(22,4);
+		lblShowTextEffects.SetPos(22,7);
 		lblShowTextEffects.SetCaption("Show Textual Effects");
 		lblShowTextEffects.SetFont("aafont");
 		lblShowTextEffects.SetBGActiveness(false);
@@ -187,6 +187,7 @@ public:
 		options.showtexteffects = (btnShowTextEffects.GetCustomData() != NULL);
 		options.classiccontrol = (btnClassicControl.GetCustomData() != NULL);
 		options.shownames = (btnShowNames.GetCustomData() != NULL);
+		options.Save();
 	}
 
 	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
