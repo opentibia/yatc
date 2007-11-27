@@ -33,7 +33,7 @@
 #endif
 
 /* Below, 1 means "debugging output on", and 0 means "debugging output off". */
-#if (0)
+#if (1)
 #define dbgprintf printf
 #else
 static void dbgprintf(const char* txt, ...) {}
@@ -325,7 +325,9 @@ int main (int argc, char **argv) {
 	if(argc == 5 && !strcmp(argv[4], "--topic")){
 /*		fprintf(stderr, "pictool: writing not supported yet\n");
 		exit(3);*/
+		dbgprintf(":: Loading from bitmap %s\n", argv[3]);
 		s = SDL_LoadBMP(argv[3]);
+		dbgprintf(":: Success\n");
 		writepic(argv[1], atoi(argv[2]), s);
 		SDL_FreeSurface(s);
 	}
@@ -341,6 +343,7 @@ int main (int argc, char **argv) {
 			SDL_Quit();
 			exit(6);
 		}
+		dbgprintf(":: Success\n");
 		SDL_FreeSurface(s);
 	}
 	else{
@@ -348,6 +351,8 @@ int main (int argc, char **argv) {
 		SDL_Quit();
 		exit(5);
 	}
-	SDL_Quit();
+
+    dbgprintf(":: SDLQuit\n");
+    SDL_Quit();
 	return 0;
 }

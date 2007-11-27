@@ -48,6 +48,7 @@
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
+					<Add option="-Wall" />
 					<Add option="-g3" />
 					<Add option="-O0" />
 					<Add option="-DUSEASSERT" />
@@ -62,6 +63,7 @@
 					<Add option="-lSDLmain" />
 					<Add option="-lSDL" />
 					<Add option="-lSDL_gfx" />
+					<Add option="-g3 -O0" />
 				</Linker>
 			</Target>
 			<Target title="Release Windows">

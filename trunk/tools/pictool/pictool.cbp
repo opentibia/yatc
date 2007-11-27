@@ -36,9 +36,13 @@
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="tibia.pic 3 tibia3.bmp --topic" />
 				<Compiler>
-					<Add option="-g" />
+					<Add option="-g3 -O0" />
 				</Compiler>
+				<Linker>
+					<Add option="-g3 -O0" />
+				</Linker>
 			</Target>
 			<Target title="Release Windows">
 				<Option platforms="Windows;" />

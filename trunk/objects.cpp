@@ -20,7 +20,7 @@
 
 #include <iostream>
 #include "objects.h"
-
+#include "engine.h" // used to create engine specific sprites
 
 uint16_t ObjectType::minItemId = 0;
 uint16_t ObjectType::maxItemId = 0;
@@ -78,7 +78,26 @@ ObjectType::ObjectType(uint16_t _id)
 
 ObjectType::~ObjectType()
 {
+    std::vector<Sprite*>::iterator it;
+	for(it = m_gfx.begin(); it != m_gfx.end(); ++it){
+		delete *it;
+	}
+	m_gfx.clear();
+}
 
+
+void ObjectType::loadGfx() {
+    if (m_gfx.size() != numsprites) { // graphics not loaded yet?
+        for(uint32_t i = 0; i < numsprites; i++){
+            m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", imageData[i]));
+        }
+        printf("Loaded\n");
+    }
+
+}
+
+const std::vector<Sprite*>& ObjectType::getGfx() const {
+    return m_gfx;
 }
 
 Objects::Objects() : m_item(8192), m_outfit(256),

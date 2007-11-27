@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <vector>
 
 template<typename A>
 class Array{
@@ -61,11 +62,16 @@ private:
 	uint32_t m_size;
 };
 
+class Sprite;
+
 class ObjectType
 {
 public:
 	ObjectType(uint16_t _id);
 	~ObjectType();
+
+    void loadGfx();
+	const std::vector<Sprite*>& getGfx() const;
 
 	uint16_t id;
 
@@ -117,6 +123,9 @@ public:
 
 	static uint16_t minDistanceId;
 	static uint16_t maxDistanceId;
+
+private:
+    std::vector<Sprite*> m_gfx;
 };
 
 class Objects
