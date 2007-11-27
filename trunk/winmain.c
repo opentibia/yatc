@@ -74,7 +74,7 @@ int APIENTRY WinMain(
 
 	if (exename) free(exename);
 	free(argv);
-	free(cmd);
+//	free(cmd);
 
 	return r;
 }

@@ -33,7 +33,7 @@
 #endif
 
 /* Below, 1 means "debugging output on", and 0 means "debugging output off". */
-#if (1)
+#if (0)
 #define dbgprintf printf
 #else
 static void dbgprintf(const char* txt, ...) {}
@@ -86,17 +86,18 @@ int readsprite (FILE *f, uint32_t sprloc, SDL_Surface *s, int offx, int offy) {
 }
 
 int picdetails (const char* filename) {
-        FILE *f;
-        int i,j,k;
-        fileheader_t fh;
-        picheader_t ph;
+    FILE *f;
+    int i,j,k;
+    fileheader_t fh;
+    picheader_t ph;
 	uint32_t sprloc;
 
 	f = fopen(filename, "rb");
+	printf("information for %s\n", filename);
 	if (!f)
 		return -1;
 
-        fread(&fh, sizeof(fh), 1, f);
+    fread(&fh, sizeof(fh), 1, f);
 	printf("signature %d\n", fh.signature);
 	printf("imagecount %d\n", fh.imgcount);
 	for(i = 0; i < fh.imgcount ; i++){
@@ -131,7 +132,7 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 	fread(&fh, sizeof(fh), 1, fi);
 	fwrite(&fh, sizeof(fh), 1, fo);
 
-	sproffset = fh.imgcount * (sizeof(ph) + 2);
+	sproffset = fh.imgcount * (sizeof(ph)+1)-2;
 	for(i = 0; i < fh.imgcount; i++){
 		fread(&ph, sizeof(ph), 1, fi);
 		if(i == index){
@@ -180,13 +181,13 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 					fprintf(stderr, "Allocation problem\n");
 					exit(7);
 				}
-				fread(data, datasize, 1, fi);
-				fwrite(data, datasize, 1, fo);
+				fread(data, datasize+2, 1, fi);
+				fwrite(data, datasize+2, 1, fo);
 				free(data);
 
 				fseek(fo, continuationposo, SEEK_SET);
 				fseek(fi, continuationposi, SEEK_SET);
-				sproffset += datasize;
+				sproffset += datasize+2; // 2 == space for datasize
 			}
 			fflush(fo);
 		}
@@ -200,12 +201,12 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 
 					continuationposo = ftell(fo);
 					fseek(fo, sproffset, SEEK_SET);
-					writesprite(fo, s,k * 32, j*32, &datasize);
+					writesprite(fo, s, k * 32, j*32, &datasize);
 
 					fseek(fo, continuationposo, SEEK_SET);
 					sproffset += datasize;
-
 				}
+
 			}
 			fflush(fo);
 		}
@@ -215,6 +216,7 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 	fclose(fi);
 
 	rename("__tmp__.pic", filename);
+
 	return 0;
 }
 
@@ -254,6 +256,7 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 			for(j = 0; j < ph.height; j++){
 				for(k = 0; k < ph.width; k++){
 					fread(&sprloc, sizeof(sprloc), 1, f);
+					dbgprintf(":: reading sprite at pos %d %d\n", j, k);
 					if(readsprite(f, sprloc, s, k*32, j*32)){ /* TODO (ivucica#1#) cleanup sdl surface upon error */
 						return -1;
 					}
@@ -297,6 +300,8 @@ void show_help() {
 int main (int argc, char **argv) {
 	SDL_Surface *s = NULL;
 
+
+
 	if (argc == 1){
 		fprintf(stderr, "pictool: no input files\n");
 		exit(1);
@@ -333,7 +338,7 @@ int main (int argc, char **argv) {
 	}
 	else if(argc == 4 || !strcmp(argv[4], "--tobmp")){
 		if(readpic(argv[1], atoi(argv[2]), &s)){
-			fprintf(stderr, "pictool: bad format\n");
+			fprintf(stderr, "pictool: conversion to bmp failed: bad format\n");
 			SDL_Quit();
 			exit(4);
 		}
@@ -354,5 +359,6 @@ int main (int argc, char **argv) {
 
     dbgprintf(":: SDLQuit\n");
     SDL_Quit();
+    dbgprintf(":: Return\n");
 	return 0;
 }

@@ -39,7 +39,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 	int transparent = 1;
 
 	fread(&size, 2, 1, f);
-	if (size > 3500) {
+	if (size > 3444) {
         SDL_UnlockSurface(surface);
         SDL_FreeSurface(surface);
         fclose(f);
@@ -49,10 +49,10 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 	SDL_LockSurface(surface);
 	for(i = ftell(f); ftell(f) < i + size-1; ){
 		uint16_t pixelchunksize;
-		uint32_t color;
+		uint32_t color=0;
 		unsigned char rgba[3];
 		fread(&pixelchunksize, 2, 1, f);
-		if(pixelchunksize > 3500){//3076){
+		if(pixelchunksize > 3076){
 			/* captain, the warp core breach has happened! what shall we do?! */
 			SDL_UnlockSurface(surface);
 			SDL_FreeSurface(surface);
@@ -65,7 +65,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 		if(!transparent){
 			for(j = 0; j < pixelchunksize; j++){
 				fread(&rgba, 3, 1, f);
-
+               // if (rgba[0] > 128 && rgba[1] < 128 && rgba[2] < 128) printf("weird");
 				color = SDL_MapRGB(surface->format, rgba[0], rgba[1], rgba[2]);
 				putPixel(surface, offx+(destination+j) % 32, offy+(destination+j) / 32, color);
 			}
@@ -78,7 +78,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 	SDL_UnlockSurface(surface);
 	return 0;
 }
-
+int prob;
 int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *datasize)
 {
 	uint16_t i = 0;
@@ -92,10 +92,12 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 	fseek(f, 2, SEEK_CUR);
 	chunksizepos = sizepos + 2;
 	while (!done) {
-		if (i <= 1024) {
+		if (i < 1024) {
+		    prob = 0;
 			color = getPixel(surface, offx + i%32, offy + i/32);
+			if (prob) printf("%d\n", i);
 		}
-		else{
+		else {
 			done = 1;
 		}
 
@@ -125,12 +127,12 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 			SDL_GetRGB(color, surface->format, rgb, rgb+1, rgb+2);
 			fwrite(rgb, 3, 1, f);
 			size += 3;
-
 		}
 		chunksize += 1;
 		i++;
 	}
 
+    size += 2;
 	fseek(f, sizepos, SEEK_SET);
 	fwrite(&size, 2, 1, f);
 	*datasize = size;
@@ -143,6 +145,11 @@ static void putPixel(SDL_Surface *surface, int x, int y, uint32_t pixel)
 	int bpp = surface->format->BytesPerPixel;
 
 	uint8_t *p = (uint8_t *)surface->pixels + y * surface->pitch + x * bpp;
+
+
+    if (x >= surface->w || y >= surface->h)
+        prob = 1, printf("Warning: Trying to write a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, surface->w, surface->h);
+
 	switch(bpp){
 	case 1:
 		*p = pixel;
@@ -175,6 +182,9 @@ static uint32_t getPixel(SDL_Surface *surface, int x, int y)
 	int bpp = surface->format->BytesPerPixel;
 	/* Here p is the address to the pixel we want to retrieve */
 	uint8_t *p = (uint8_t *)surface->pixels + y * surface->pitch + x * bpp;
+
+    if (x >= surface->w || y >= surface->h)
+        prob = 1, printf("Warning: Trying to access a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, surface->w, surface->h);
 
 	switch(bpp){
 	case 1:

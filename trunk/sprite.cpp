@@ -257,7 +257,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	m_filename = filename;
 	m_index = index;
 
-    m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+    //m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
 
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magenta is transparent
 }
@@ -270,6 +270,10 @@ void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
 	int bpp = img->format->BytesPerPixel;
 
 	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
+
+    if (x >= surface->w || y >= surface->h)
+        prob = 1, printf("Warning: Trying to write a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, surface->w, surface->h);
+
 	switch(bpp){
 	case 1:
 		*p = pixel;
@@ -305,6 +309,10 @@ uint32_t Sprite::getPixel(int x, int y, SDL_Surface *img)
 
 	/* Here p is the address to the pixel we want to retrieve */
 	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
+
+    if (x >= surface->w || y >= surface->h)
+        prob = 1, printf("Warning: Trying to read a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, surface->w, surface->h);
+
 
 	switch(bpp){
 	case 1:

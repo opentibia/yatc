@@ -48,6 +48,7 @@
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
+					<Add option="-pedantic" />
 					<Add option="-Wall" />
 					<Add option="-g3" />
 					<Add option="-O0" />
@@ -196,6 +197,10 @@
 		<Unit filename="ui\optionsnetwork.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
+		<Unit filename="winmain.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug Windows" />
+		</Unit>
 		<Unit filename="yatc.cfg" />
 		<Extensions>
 			<code_completion />
