@@ -52,7 +52,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 		uint32_t color;
 		unsigned char rgba[3];
 		fread(&pixelchunksize, 2, 1, f);
-		if(pixelchunksize > 3076){
+		if(pixelchunksize > 3500){//3076){
 			/* captain, the warp core breach has happened! what shall we do?! */
 			SDL_UnlockSurface(surface);
 			SDL_FreeSurface(surface);

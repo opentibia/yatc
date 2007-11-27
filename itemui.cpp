@@ -28,24 +28,13 @@ ItemUI::ItemUI(uint16_t id) : ThingUI()
 		printf("Error [ItemUI::ItemUI] Invalid item %d\n", id);
 		return;
 	}
-
-	const ObjectType* obj = Objects::getInstance()->getItemType(id);
-//	printf("== Item %d ==\n" , id);
-	for(uint32_t i = 0; i < obj->numsprites; i++){
-//		printf("Loading sprite %d...\n", obj->imageData[i]);
-		m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", obj->imageData[i]));
-	}
-
-//	printf("== End of item %d == \n", id);
+    ObjectType* obj = Objects::getInstance()->getItemType(id);
+    obj->loadGfx();
 }
 
 ItemUI::~ItemUI()
 {
-	std::vector<Sprite*>::iterator it;
-	for(it = m_gfx.begin(); it != m_gfx.end(); ++it){
-		delete *it;
-	}
-	m_gfx.clear();
+
 }
 
 void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale) const
@@ -59,31 +48,31 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 	if(obj->stackable){
 
 		if(obj->numsprites < 8){
-			m_gfx[0]->Blit(x, y);
+			obj->getGfx()[0]->Blit(x, y);
 			printf("Item stackable - m_obj->numsprites < 8");
 			return;
 		}
 
 		if(count < 1){
-			m_gfx[0]->Blit(x, y);
+			obj->getGfx()[0]->Blit(x, y);
 		}
 		else if(count < 5){
-			m_gfx[count - 1]->Blit(x,y);
+			obj->getGfx()[count - 1]->Blit(x,y);
 		}
 		else if(count < 10){
-			m_gfx[4]->Blit(x, y);
+			obj->getGfx()[4]->Blit(x, y);
 		}
 		else if(count < 25){
-			m_gfx[5]->Blit(x, y);
+			obj->getGfx()[5]->Blit(x, y);
 		}
 		else if(count < 50){
-			m_gfx[6]->Blit(x, y);
+			obj->getGfx()[6]->Blit(x, y);
 		}
 		else if(count <= 100){
-			m_gfx[7]->Blit(x, y);
+			obj->getGfx()[7]->Blit(x, y);
 		}
 		else{
-			m_gfx[0]->Blit(x, y);
+			obj->getGfx()[0]->Blit(x, y);
 		}
 	}
 	else{
@@ -97,7 +86,7 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 
 					ASSERT(activeframe < obj->numsprites);
 
-					m_gfx[activeframe]->Blit(x - j*32, y - i*32);
+					obj->getGfx()[activeframe]->Blit(x - j*32, y - i*32);
 					activeframe++;
 				}
 			}

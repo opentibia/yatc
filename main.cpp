@@ -115,6 +115,10 @@ int main(int argc, char *argv[])
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "YATC -- YET ANOTHER TIBIA CLIENT\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.1\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " This is free software: you are free to change and redistribute it.\n"
+		" There is NO WARRANTY, to the extent permitted by law. \n"
+		" Review LICENSE in YATC distribution for details.\n");
+
 	options.Load();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data files...\n");
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){ //TODO (Smygflik#3#), inform the user with a messagebox
@@ -172,6 +176,7 @@ int main(int argc, char *argv[])
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading skin...\n");
 		g_skin.loadSkin();
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Skin has been loaded\n");
 
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
