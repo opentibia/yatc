@@ -1,7 +1,7 @@
 [Project]
 FileName=yatc.dev
 Name=yatc
-UnitCount=75
+UnitCount=76
 Type=1
 Ver=1
 ObjFiles=
@@ -715,7 +715,7 @@ Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c sprdata.c -o sprdata.o $(CFLAGS)
 
 [Unit68]
 FileName=sprdata.h
@@ -796,4 +796,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+
+[Unit76]
+FileName=winmain.c
+CompileCpp=0
+Folder=yatc
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c winmain.c -o winmain.o $(CFLAGS)
 
