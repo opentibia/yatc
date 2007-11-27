@@ -29,7 +29,7 @@
 class GameMode
 {
 protected:
-	GameMode() {}
+    GameMode() {}
 public:
 	virtual ~GameMode() {}
 

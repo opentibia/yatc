@@ -36,12 +36,13 @@
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="tibia.pic 3 tibia3.bmp --topic" />
+				<Option parameters="tibia.pic 3 tibia3.bmp " />
 				<Compiler>
 					<Add option="-g3 -O0" />
 				</Compiler>
 				<Linker>
 					<Add option="-g3 -O0" />
+					<Add option="-lSDL.dll" />
 				</Linker>
 			</Target>
 			<Target title="Release Windows">
@@ -71,6 +72,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\sprdata.h" />
+		<Unit filename="exchndl2.cxx">
+			<Option target="Debug Windows" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -109,7 +109,7 @@ GM_Debug::GM_Debug()
 
 
 	if(g_engine){
-		background = g_engine->createSprite("Tibia.pic", 0);
+		background = g_engine->createSprite("Tibia.pic", 3);
 		spr = g_engine->createSprite("Tibia.spr", 200);
 		//thing = new ItemUI(6401, 1);
 		thing = NULL;
