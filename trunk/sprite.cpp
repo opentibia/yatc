@@ -207,9 +207,14 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			fread(&ph, sizeof(ph), 1, f);
 
 			if(i == index){
-				printf("%d\n", i);
+				printf(":: Loading pic index %d\n", i);
 				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
-
+				if (!s) {
+				    printf(":: Failed to create surface of size %dx%d\n", ph.width*32, ph.height*32);
+                    fclose(f);
+                    return;
+				}
+                printf(":: Created surface\n");
 				magenta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
 				SDL_FillRect(s, NULL, magenta);
 
@@ -237,7 +242,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		}
 
 		fclose(f);
-
+        printf(":: Loading pic complete\n");
 		m_image = s;
 		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
