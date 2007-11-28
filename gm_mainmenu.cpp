@@ -184,6 +184,7 @@ void GM_MainMenu::renderScene()
 
 void GM_MainMenu::renderUI()
 {
+#ifdef HAVE_OPENGL
 	if (options.engine == ENGINE_OPENGL) {
 		glEnable(GL_SCISSOR_TEST);
 		desktop.Paint();
@@ -191,6 +192,9 @@ void GM_MainMenu::renderUI()
 	} else {
 		desktop.Paint();
 	}
+#else
+	desktop.Paint();
+#endif
 }
 void GM_MainMenu::mouseEvent(SDL_Event& event)
 {

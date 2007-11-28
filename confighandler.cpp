@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "confighandler.h"
-
+#include "wince.h"
 ConfigHandler* configHandler = NULL;
 
 ConfigHandler::ConfigHandler()

@@ -62,6 +62,12 @@ AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_TYPE_SIZE_T
 
+
+#check GMP
+AC_CHECK_HEADERS([gmp.h], ,[AC_MSG_ERROR("*** GMP header not found.")])
+AC_CHECK_LIB(gmp, __gmpz_init2, ,[AC_MSG_ERROR("*** GMP library not found or < 4.0.")])
+
+
 #check SDL
 SDL_VERSION=1.2.0
 AM_PATH_SDL($SDL_VERSION, :, AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!]))
@@ -75,9 +81,7 @@ if test -n "$SDLGFX_FLAGS"; then
 	AC_CHECK_LIB(SDL_gfx, rotozoomSurfaceXY, ,[AC_MSG_ERROR("*** SDL_gfx library not found.")])
 fi
 
-#check GMP
-AC_CHECK_HEADERS([gmp.h], ,[AC_MSG_ERROR("*** GMP header not found.")])
-AC_CHECK_LIB(gmp, __gmpz_init2, ,[AC_MSG_ERROR("*** GMP library not found or < 4.0.")])
+
 if test -n "$OPENGL_FLAGS"; then 
 	#check GL
 	AC_CHECK_HEADERS(GL/gl.h, ,[AC_MSG_ERROR("*** OpenGL header not found.")])

@@ -19,9 +19,13 @@
 //////////////////////////////////////////////////////////////////////
 
 #ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#include <wincon.h>
+	#ifndef WINCE
+		#define WIN32_LEAN_AND_MEAN
+		#include <windows.h>
+		#include <wincon.h>
+	#else
+		#include <windows.h>
+	#endif
 #endif
 
 #include <stdio.h>
@@ -52,7 +56,7 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 		char tx[6000];
 		vsnprintf(tx, 6000, txt, vl);
 
-		#ifdef WIN32
+		#if defined(WIN32) && !defined(WINCE)
 		HANDLE con = GetStdHandle(STD_OUTPUT_HANDLE);
 		#endif
 
@@ -61,20 +65,20 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 					printf(tx);
 				break;
 			case DEBUGPRINT_ERROR:
-					#ifdef WIN32
+					#if defined(WIN32) && !defined(WINCE)
 					SetConsoleTextAttribute(con, FOREGROUND_RED | FOREGROUND_INTENSITY);
 					#endif
 					printf("[E] %s\n", tx);
-					#ifdef WIN32
+					#if defined(WIN32) && !defined(WINCE)
 					SetConsoleTextAttribute(con, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 					#endif
 				break;
 			case DEBUGPRINT_WARNING:
-					#ifdef WIN32
+					#if defined(WIN32) && !defined(WINCE)
 					SetConsoleTextAttribute(con, FOREGROUND_RED | FOREGROUND_GREEN);
 					#endif
 					printf("[W] %s\n", tx);
-					#ifdef WIN32
+					#if defined(WIN32) && !defined(WINCE)
 					SetConsoleTextAttribute(con, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 					#endif
 				break;
