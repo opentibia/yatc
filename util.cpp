@@ -24,6 +24,8 @@
 #ifdef WIN32
 #include <windows.h>
 #endif
+#include "wince.h"
+
 
 void str_replace(std::string &s, const std::string& what, const std::string& with) {
 	std::string::size_type p, l;
@@ -44,7 +46,7 @@ void NativeGUIError(const char* text, const char *title) {
 			BSTR unicodetitle = SysAllocStringLen(NULL, b=strlen(title));
 			MultiByteToWideChar(CP_ACP, 0, text, a, unicodetext, a);
 			MultiByteToWideChar(CP_ACP, 0, title, b, unicodetitle, b);
-		
+
 
 
 			MessageBox(HWND_DESKTOP, unicodetext, unicodetitle, MB_ICONSTOP);
@@ -64,3 +66,11 @@ void NativeGUIError(const char* text, const char *title) {
 	#endif
 }
 
+bool fileexists(const char* filename){
+    FILE *f;
+    if ((f = fopen(filename, "r"))) {
+        fclose(f);
+        return true;
+    } else
+        return false;
+}

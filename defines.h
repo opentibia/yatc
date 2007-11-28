@@ -43,13 +43,5 @@ struct oRGBA
 	float r, g, b, a;
 };
 
-inline bool fileexists(const char* filename){
-    FILE *f;
-    if ((f = fopen(filename, "r"))) {
-        fclose(f);
-        return true;
-    } else
-        return false;
-}
 
 #endif

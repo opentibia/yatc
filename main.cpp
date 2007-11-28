@@ -120,7 +120,9 @@ int main(int argc, char *argv[])
 		" There is NO WARRANTY, to the extent permitted by law. \n"
 		" Review LICENSE in YATC distribution for details.\n");
 
+
 	options.Load();
+
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data files...\n");
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){ //TODO (Smygflik#3#), inform the user with a messagebox
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file failed!");
@@ -145,6 +147,7 @@ int main(int argc, char *argv[])
 		NativeGUIError(out.str().c_str(), "YATC Fatal Error");
 		exit(1);
 	}
+
 
 	try {
 
@@ -179,10 +182,10 @@ int main(int argc, char *argv[])
 		g_skin.loadSkin();
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Skin has been loaded\n");
 
+
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Constructing gamemode...\n");
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
-
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
