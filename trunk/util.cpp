@@ -35,7 +35,22 @@ void str_replace(std::string &s, const std::string& what, const std::string& wit
 
 void NativeGUIError(const char* text, const char *title) {
 	#ifdef WIN32
-		MessageBox(HWND_DESKTOP, text, title, MB_ICONSTOP);
+		#ifdef WINCE
+			MessageBox(HWND_DESKTOP, text, title, MB_ICONSTOP);
+		#else
+			int a, b;
+
+			BSTR unicodetext = SysAllocStringLen(NULL, a=strlen(text));
+			BSTR unicodetitle = SysAllocStringLen(NULL, b=strlen(title));
+			MultiByteToWideChar(CP_ACP, 0, text, a, unicodetext, a);
+			MultiByteToWideChar(CP_ACP, 0, title, b, unicodetitle, b);
+		
+
+
+			MessageBox(HWND_DESKTOP, unicodetext, unicodetitle, MB_ICONSTOP);
+			SysFreeString(unicodetext);
+			SysFreeString(unicodetitle);
+		#endif
 	#else
 		std::string texts=text, titles=title;
 		str_replace(texts, "\\", "\\\\");
