@@ -26,6 +26,7 @@
 #include "enginesdl.h"
 #include "font.h"
 #include "options.h"
+#include "util.h"
 EngineSDL::EngineSDL()
 {
 	printf("Starting SDL engine\n");
@@ -33,7 +34,7 @@ EngineSDL::EngineSDL()
 	m_screen = NULL;
 	doResize(m_width, m_height);
 
-	glictGlobals.drawPartialOut = false;
+	//glictGlobals.drawPartialOut = false;
 
 	// FIXME (ivucica#2#) we should save the Font* somewhere so we can delete; it... perhaps glictFont() should have a GetFontParam
 	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
@@ -91,7 +92,9 @@ void EngineSDL::doResize(int w, int h)
 	m_screen = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
 
 	if(!m_screen){
-		fprintf(stderr, "Could not set %dx%d video mode: %s\n", m_width, m_height, SDL_GetError()); // FIXME (ivucica#3#) Should report to user via msgbox
+		char tmperr[255];
+		sprintf(tmperr, "Could not set %dx%d video mode: %s\n", m_width, m_height, SDL_GetError()); // DONE (ivucica#3#) Should report to user via msgbox
+		NativeGUIError(tmperr, "YATC SDL Engine Failed");
 		exit(1); // this is perfectly valid, since it's really not believable that any other engine would be supported in case SDL fails to init
 	}
 

@@ -24,7 +24,7 @@
 
 void str_replace(std::string &s, const std::string& what, const std::string& with);
 void NativeGUIError(const char* text, const char *title);
-
+bool fileexists(const char* filename);
 #define nextpow(n) (n <= 2 ? 2 : (n <= 4 ? 4 : (n <= 8 ? 8 : (n <= 16 ? 16 : (n <= 32 ? 32 : (n <= 64 ? 64 : (n <= 128 ? 128 : (n <= 256 ? 256 : (n <= 512 ? 512 : 1024)))))))))
 
 #endif

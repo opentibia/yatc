@@ -43,7 +43,7 @@ void ConfigHandler::clear()
 		delete (*it);
 	}
 
-		sections.clear();
+	sections.clear();
 }
 
 bool ConfigHandler::loadConfig(const char* filename)

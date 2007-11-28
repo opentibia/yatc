@@ -22,7 +22,7 @@
 #include <sstream>
 #include "options.h"
 #include "confighandler.h"
-
+#include "util.h"
 Options options;
 
 Options::Options()
