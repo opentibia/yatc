@@ -23,7 +23,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		engine.h gamemode.h options.h spritesdl.h \
 		enginegl.h gm_debug.h notifications.h sprite.h util.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
-		skin.h thingui.h itemui.h creatureui.h \
+		skin.h thingui.h itemui.h creatureui.h wince.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \

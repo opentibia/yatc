@@ -21,6 +21,7 @@
 #include <iostream>
 #include "objects.h"
 #include "engine.h" // used to create engine specific sprites
+#include "wince.h"
 
 uint16_t ObjectType::minItemId = 0;
 uint16_t ObjectType::maxItemId = 0;

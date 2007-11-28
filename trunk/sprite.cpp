@@ -31,6 +31,7 @@
 #include "sprite.h"
 #include "sprdata.h"
 #include <math.h>
+#include "wince.h"
 
 #pragma pack(1)
 typedef struct {

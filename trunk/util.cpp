@@ -35,7 +35,7 @@ void str_replace(std::string &s, const std::string& what, const std::string& wit
 
 void NativeGUIError(const char* text, const char *title) {
 	#ifdef WIN32
-		#ifdef WINCE
+		#ifndef WINCE
 			MessageBox(HWND_DESKTOP, text, title, MB_ICONSTOP);
 		#else
 			int a, b;
@@ -50,6 +50,7 @@ void NativeGUIError(const char* text, const char *title) {
 			MessageBox(HWND_DESKTOP, unicodetext, unicodetitle, MB_ICONSTOP);
 			SysFreeString(unicodetext);
 			SysFreeString(unicodetitle);
+
 		#endif
 	#else
 		std::string texts=text, titles=title;
