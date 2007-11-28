@@ -271,8 +271,8 @@ void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
 
 	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
 
-    if (x >= surface->w || y >= surface->h)
-        prob = 1, printf("Warning: Trying to write a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, surface->w, surface->h);
+    if (x >= img->w || y >= img->h)
+        printf("Warning: Trying to write a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, img->w, img->h);
 
 	switch(bpp){
 	case 1:
@@ -310,8 +310,8 @@ uint32_t Sprite::getPixel(int x, int y, SDL_Surface *img)
 	/* Here p is the address to the pixel we want to retrieve */
 	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
 
-    if (x >= surface->w || y >= surface->h)
-        prob = 1, printf("Warning: Trying to read a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, surface->w, surface->h);
+    if (x >= img->w || y >= img->h)
+        printf("Warning: Trying to read a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, img->w, img->h);
 
 
 	switch(bpp){
