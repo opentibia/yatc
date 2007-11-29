@@ -29,7 +29,7 @@
 #include "util.h"
 EngineSDL::EngineSDL()
 {
-	printf("Starting SDL engine\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting SDL engine\n");
 
 	m_screen = NULL;
 	doResize(m_width, m_height);
@@ -46,7 +46,7 @@ EngineSDL::~EngineSDL()
 {
 	SDL_FreeSurface(m_screen);
 	delete (SpriteSDL*)m_sysfont->GetFontParam();
-	printf("Closing SDL engine\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Closing SDL engine\n");
 }
 
 void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)

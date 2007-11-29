@@ -31,7 +31,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "debugprint.h"
-
+#include "wince.h"
 #if USE_OPENGL
 	#include <GL/gl.h>
 	#if defined(WIN32) && defined(GREMDEY)
@@ -59,16 +59,27 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 		#if defined(WIN32) && !defined(WINCE)
 		HANDLE con = GetStdHandle(STD_OUTPUT_HANDLE);
 		#endif
-
+		
+		#ifdef WINCE
+		FILE *lf = fopen("log.txt", "a");
+		#endif
+		
 		switch (type) {
 			default:
-					printf(tx);
+				printf(tx);
+				#ifdef WINCE
+				fprintf(lf, "%s", tx);
+				#endif
+
 				break;
 			case DEBUGPRINT_ERROR:
 					#if defined(WIN32) && !defined(WINCE)
 					SetConsoleTextAttribute(con, FOREGROUND_RED | FOREGROUND_INTENSITY);
 					#endif
-					printf("[E] %s\n", tx);
+					printf("[E] %s", tx);
+					#ifdef WINCE
+					fprintf(lf, "[E] %s", tx);
+					#endif
 					#if defined(WIN32) && !defined(WINCE)
 					SetConsoleTextAttribute(con, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 					#endif
@@ -77,12 +88,18 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 					#if defined(WIN32) && !defined(WINCE)
 					SetConsoleTextAttribute(con, FOREGROUND_RED | FOREGROUND_GREEN);
 					#endif
-					printf("[W] %s\n", tx);
+					printf("[W] %s", tx);
+					#ifdef WINCE
+					fprintf(lf, "[W] %s", tx);
+					#endif
 					#if defined(WIN32) && !defined(WINCE)
 					SetConsoleTextAttribute(con, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 					#endif
 				break;
 		}
+		#ifdef WINCE
+		fclose(lf);
+		#endif
 		va_end(vl);
 	}
 }

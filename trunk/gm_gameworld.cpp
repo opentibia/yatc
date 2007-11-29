@@ -162,7 +162,7 @@ void GM_Gameworld::updateScene()
 
 				}
 				else{
-					printf("Thing invalid %d\n", drawIndex);
+					DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "Thing invalid %d\n", drawIndex);
 					break;
 				}
 			}
@@ -176,13 +176,13 @@ void GM_Gameworld::updateScene()
 
 void GM_Gameworld::keyPress (char key)
 {
-	printf("K%d\n", key);
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "K%d\n", key);
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 }
 
 void GM_Gameworld::specKeyPress (int key)
 {
-	printf("S%d\n", key);
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "S%d\n", key);
 	switch (key) {
 	case SDLK_LEFT:
 		m_protocol->sendMove(DIRECTION_WEST);

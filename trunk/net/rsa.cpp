@@ -20,7 +20,7 @@
 
 #include "rsa.h"
 #include "fassert.h"
-
+#include "debugprint.h"
 RSA::RSA()
 {
 	mpz_init2(m_mod, 1024);
@@ -43,6 +43,7 @@ void RSA::setPublicKey(const char* m, const char* e)
 
 bool RSA::encrypt(char* msg, int32_t size)
 {
+
 	ASSERT(m_keyset == true);
 
 	mpz_t plain,c;
@@ -59,5 +60,6 @@ bool RSA::encrypt(char* msg, int32_t size)
 
 	mpz_clear(c);
 	mpz_clear(plain);
+
 	return true;
 }

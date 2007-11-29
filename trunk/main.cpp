@@ -33,6 +33,7 @@
 #include "gm_debug.h"
 #include "util.h"
 #include "skin.h"
+#include "config.h"
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -101,21 +102,28 @@ int main(int argc, char *argv[])
 	wVersionRequested = MAKEWORD( 2, 2 );
 
 	if(WSAStartup(wVersionRequested, &wsaData) != 0){
-		printf("Winsock startup failed!!");
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Winsock startup failed!!");
 		return -1;
 	}
 
 	if((LOBYTE(wsaData.wVersion) != 2) || (HIBYTE(wsaData.wVersion) != 2)){
 		WSACleanup( );
-		printf("No Winsock 2.2 found!");
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "No Winsock 2.2 found!");
 		return -1;
 	}
 #endif
 
+#ifdef WINCE
+	FILE *f = fopen("log.txt","w"); // wipe the log clean
+	fclose(f);
+#endif
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "YATC -- YET ANOTHER TIBIA CLIENT\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.1\n");
+#ifdef BUILDVERSION
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "build %s\n", BUILDVERSION);
+#endif
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " This is free software: you are free to change and redistribute it.\n"
 		" There is NO WARRANTY, to the extent permitted by law. \n"
 		" Review LICENSE in YATC distribution for details.\n");
@@ -142,7 +150,7 @@ int main(int argc, char *argv[])
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
 		std::stringstream out;
 		out << "Couldn't initialize SDL: " << SDL_GetError() << std::endl;
-		fprintf(stderr,out.str().c_str());
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, out.str().c_str());
 
 		NativeGUIError(out.str().c_str(), "YATC Fatal Error");
 		exit(1);
@@ -184,8 +192,8 @@ int main(int argc, char *argv[])
 
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Constructing gamemode...\n");
-		g_game = new GM_MainMenu();
-		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+		//g_game = new GM_MainMenu();
+		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
@@ -220,6 +228,10 @@ int main(int argc, char *argv[])
 
 					case SDL_MOUSEBUTTONUP:
 					case SDL_MOUSEBUTTONDOWN:
+						#ifdef WINCE
+						if (ptrx < 5 && ptry < 5) 
+							SDL_WM_IconifyWindow();
+						#endif
 						g_game->mouseEvent(event);
 						break;
 
@@ -242,23 +254,23 @@ int main(int argc, char *argv[])
 			g_engine->Flip();
 		}
 	} catch (std::string errtext) {
-		printf("ERROR: %s\n", errtext.c_str());
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "%s", errtext.c_str());
 	}
 
-	printf("Game over\n");
-	printf("Unloading data...\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Game over\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Unloading data...\n");
 	Objects::getInstance()->unloadDat();
-	printf("Saving options...\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Saving options...\n");
 	options.Save();
-	printf("Shutting down SDL...\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Shutting down SDL...\n");
 	SDL_Quit();
 
 #ifdef WIN32
 	WSACleanup();
 #endif
 
-    delete g_game;
-	printf("Thanks for playing!\n");
+	delete g_game;
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Thanks for playing!\n");
 
 	return 0;
 }

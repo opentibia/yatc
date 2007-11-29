@@ -18,6 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include "debugprint.h"
 #include "encryption.h"
 #include "networkmessage.h"
 
@@ -63,17 +64,26 @@ bool EncXTEA::encrypt(NetworkMessage& msg)
 bool EncXTEA::decrypt(NetworkMessage& msg)
 {
 	if(msg.getReadSize() % 8 != 0){
-		fprintf(stderr, "[EncXTEA::decrypt]. Not valid encrypted message size\n");
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[EncXTEA::decrypt]. Not valid encrypted message size\n");
 		return false;
 	}
-
 	//
 	uint32_t k[4];
 	k[0] = m_key[0]; k[1] = m_key[1]; k[2] = m_key[2]; k[3] = m_key[3];
 
 	uint32_t* buffer = (uint32_t*)msg.getReadBuffer();
 	int read_pos = 0;
+
 	int32_t messageLength = msg.getReadSize();
+
+
+	#ifdef WINCE
+	// due to compiler bug, we'll do a memcpy instead of directly accessing
+	// casting into something else, and then using it with [] crashes
+	buffer = (uint32_t*)malloc(messageLength);
+	memcpy(buffer, msg.getReadBuffer(), messageLength);
+	#endif
+
 	while(read_pos < messageLength/4){
 		uint32_t v0 = buffer[read_pos], v1 = buffer[read_pos + 1];
 		uint32_t delta = 0x61C88647;
@@ -86,15 +96,23 @@ bool EncXTEA::decrypt(NetworkMessage& msg)
 		}
 		buffer[read_pos] = v0; buffer[read_pos + 1] = v1;
 		read_pos = read_pos + 2;
+		
 	}
+	
+	#ifdef WINCE
+	// now restoring into original buffer (look above for reasoning)
+	memcpy(msg.getReadBuffer(), buffer, messageLength);
+	free(buffer);
+	#endif
+	
 	//
 	uint16_t newSize;
 	if(!msg.getU16(newSize)){
-		fprintf(stderr, "[EncXTEA::decrypt]. Cant read unencrypted message size\n");
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[EncXTEA::decrypt]. Cant read unencrypted message size\n");
 		return false;
 	}
 	if(newSize > msg.getReadSize()){
-		fprintf(stderr, "[EncXTEA::decrypt]. Not valid unencrypted message size\n");
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[EncXTEA::decrypt]. Not valid unencrypted message size\n");
 		return false;
 	}
 

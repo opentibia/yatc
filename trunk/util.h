@@ -22,6 +22,7 @@
 #ifndef __UTIL_H
 #define __UTIL_H
 
+#include <string>
 void str_replace(std::string &s, const std::string& what, const std::string& with);
 void NativeGUIError(const char* text, const char *title);
 bool fileexists(const char* filename);

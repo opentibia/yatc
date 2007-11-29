@@ -154,7 +154,7 @@ void GM_Debug::mouseEvent(SDL_Event& event)
 
 	desktop.TransformScreenCoords(&pos);
 
-	printf("Casting click on %g %g (%d %d)\n", pos.x, pos.y, ptrx, ptry);
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Casting click on %g %g (%d %d)\n", pos.x, pos.y, ptrx, ptry);
 
 	if (event.button.state == SDL_PRESSED)
 		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);

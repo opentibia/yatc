@@ -23,7 +23,7 @@
 #include "networkmessage.h"
 #include "rsa.h"
 #include "notifications.h"
-
+#include "debugprint.h"
 ProtocolLogin::ProtocolLogin(uint32_t account, const std::string& password)
 {
 	m_account = account;
@@ -81,6 +81,7 @@ bool ProtocolLogin::onRecv(NetworkMessage& msg)
 	while(msg.getReadSize() > 0){
 		MSG_READ_U8(cmd);
 		addServerCmd(cmd);
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Received packet 0x%02x\n", cmd);
 		switch(cmd){
 		case 0x0A: //Error message
 		{

@@ -33,7 +33,7 @@
 #include "font.h"
 EngineGL::EngineGL()
 {
-	printf("Starting OpenGL engine\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting OpenGL engine\n");
 	m_screen = NULL;
 
 	doResize(m_width, m_height);
@@ -58,7 +58,7 @@ EngineGL::~EngineGL()
 {
 	SDL_FreeSurface(m_screen);
 	delete (SpriteGL*)m_sysfont->GetFontParam();
-	printf("Closing OpenGL engine\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Closing OpenGL engine\n");
 }
 
 void EngineGL::initEngine()

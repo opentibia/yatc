@@ -25,7 +25,7 @@
 ItemUI::ItemUI(uint16_t id) : ThingUI()
 {
 	if(id < 100){
-		printf("Error [ItemUI::ItemUI] Invalid item %d\n", id);
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[ItemUI::ItemUI] Invalid item %d\n", id);
 		return;
 	}
     ObjectType* obj = Objects::getInstance()->getItemType(id);
@@ -49,7 +49,7 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 
 		if(obj->numsprites < 8){
 			obj->getGfx()[0]->Blit(x, y);
-			printf("Item stackable - m_obj->numsprites < 8");
+			DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Item stackable - m_obj->numsprites < 8");
 			return;
 		}
 
