@@ -139,7 +139,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			break;
 
 		default:
-			printf("Error [Font::Font] index = %d.\n", index);
+			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Font::Font] index = %d.\n", index);
 			break;
 	}
 }

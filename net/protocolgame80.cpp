@@ -22,6 +22,7 @@
 #include "protocolgame80.h"
 
 #include "objects.h"
+#include "../debugprint.h"
 
 #include "gamecontent/globalvars.h"
 #include "gamecontent/map.h"
@@ -49,7 +50,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 	while(!msg.eof()){
 		MSG_READ_U8(cmd);
 		addServerCmd(cmd);
-		printf("Received packet 0x%02x\n", cmd);
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Received packet 0x%02x\n", cmd);
 		switch(cmd){
 		case 0x0A: //Self appear
 		{

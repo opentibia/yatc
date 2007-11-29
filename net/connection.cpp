@@ -20,6 +20,11 @@
 
 #include <SDL/SDL.h>
 
+#ifdef WINCE
+#include <windows.h>
+#include "../util.h"
+#endif
+
 #include "connection.h"
 #include "encryption.h"
 #include "notifications.h"
@@ -27,6 +32,7 @@
 #include "rsa.h"
 #include "protocollogin.h"
 #include "protocolgame80.h"
+#include "../debugprint.h"
 
 const char RSAKey_otserv[] = "109120132967399429278860960508995541528237502902798129123468757937266291492576446330739696001110603907230888610072655818825358503429057592827629436413108566029093628212635953836686562675849720620786279431090218017681061521755056710823876476444260558147179707119674283982419152118103759076030616683978566631413";
 const char RSAKey_cip[]    = "124710459426827943004376449897985582167801707960697037164044904862948569380850421396904597686953877022394604239428185498284169068581802277612081027966724336319448537811441719076484340922854929273517308661370727105382899118999403808045846444647284499123164879035103627004668521005328367415259939915284902061793";
@@ -304,9 +310,10 @@ void Connection::executeNetwork()
 			}
 		}
 		else if(ret == 1 && FD_ISSET(m_socket, &write_set)){
+#ifndef WINCE
 			//Check if it was a successful connection
 			int optError;
-			optlen_t optErrorLen = sizeof(int);
+			optlen_t optErrorLen = sizeof(optError); 	
 			int ret = getsockopt(m_socket, SOL_SOCKET, SO_ERROR, (opt_t*)&optError, &optErrorLen);
 			if(ret != SOCKET_ERROR && optError == 0){
 				//connection succeeded
@@ -323,6 +330,13 @@ void Connection::executeNetwork()
 				//call to getsockopt failed
 				closeConnectionError(ERROR_GETSOCKTOPT_FAIL);
 			}
+#else
+			// Since Windows Mobile 2003 (WINCE4.20) seems to set 120 in WSAGetLastError() which stands for something
+			// like CALLNOTIMPLEMENTED we'll just stub this to successful connection and pray it works ;)
+			DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "WINCE Connection\n");
+			m_state = STATE_CONNECTED;
+			m_protocol->onConnect();
+#endif
 		}
 		else if(ret == SOCKET_ERROR){
 			//select failed
@@ -481,12 +495,12 @@ int Connection::internalRead(unsigned int n, bool all)
 void Connection::sendMessage(NetworkMessage& msg)
 {
 	if(m_state != STATE_CONNECTED){
-		printf("Calling send when state == STATE_CONNECTED(state = %d)\n", m_state);
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Calling send when state != STATE_CONNECTED(state = %d)\n", m_state);
 		return;
 	}
 
 	if(msg.getSize() == 0){
-		printf("Sending size = 0 message\n");
+		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "Sending size = 0 message\n");
 		return;
 	}
 

@@ -27,6 +27,7 @@
 #endif
 #include "spritegl.h"
 #include "util.h"
+#include "debugprint.h"
 
 SpriteGL::SpriteGL(const std::string& filename, int index) :
 Sprite(filename, index)
@@ -51,11 +52,11 @@ Sprite(filename, index)
 	GLint ret = gluBuild2DMipmaps(GL_TEXTURE_2D,
 						GL_RGBA,
 						getImage()->w, getImage()->h,
-						(getPixelFormat() == GL_NONE ? (printf("Warning [SpriteGL::SpriteGL] Invalid pixelformat\n"), GL_RGBA) : getPixelFormat()),
+						(getPixelFormat() == GL_NONE ? (DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "[SpriteGL::SpriteGL] Invalid pixelformat\n"), GL_RGBA) : getPixelFormat()),
 						GL_UNSIGNED_BYTE,
 			 			getImage()->pixels);
 	if(ret != 0){
-		printf("Error [SpriteGL::SpriteGL] Cant build 2DMipmaps: %s\n", gluErrorString(ret));
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Error [SpriteGL::SpriteGL] Cant build 2DMipmaps: %s\n", gluErrorString(ret));
 	}
 	glDisable(GL_TEXTURE_2D);
 	SDL_UnlockSurface(getImage());

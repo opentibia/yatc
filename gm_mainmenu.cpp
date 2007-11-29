@@ -199,6 +199,8 @@ void GM_MainMenu::renderUI()
 void GM_MainMenu::mouseEvent(SDL_Event& event)
 {
 	glictPos pos;
+	// FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
+	// who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave! 
 	pos.x = ptrx;
 	pos.y = ptry;
 
@@ -272,7 +274,7 @@ void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller)
 	if (caller->GetCustomData())
 		((glictContainer*)caller->GetCustomData())->Focus(NULL);
 	m->desktop.RemoveObject(caller);
-	printf("Repaint.\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Repaint.\n");
 	m->renderScene();
 	delete caller;
 }
@@ -349,7 +351,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	m->winStatus.SetCaption("Logging in");
 	m->winStatus.SetMessage("Connecting to the server...\n");
 	m->winStatus.SetEnabled(false);
-	printf("SetVisible...\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "SetVisible...\n");
 }
 
 void GM_MainMenu::winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -528,7 +530,7 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 {
 
 	if (options.motdnum == motdnum) {
-		printf("Motd numbers matching, not displaying motd.\n");
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Motd numbers matching, not displaying motd.\n");
 		winStatus.SetVisible(false);
 		options.motdtext = text;
 		winMotd_OnDismiss(NULL, NULL);

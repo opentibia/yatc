@@ -31,6 +31,7 @@ std::list<std::string>::iterator g_recIt;
 #include "gamecontent/globalvars.h"
 #include "gamecontent/inventory.h"
 #include "gamecontent/map.h"
+#include "debugprint.h"
 
 void Notifications::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
 {
@@ -56,59 +57,59 @@ void Notifications::onProtocolError(bool fatal)
 {
 	Protocol* protocol = g_connection->getProtocol();
 	std::string error = protocol->getErrorDesc();
-	printf("\n********************************************************\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "\n********************************************************\n");
 	if(fatal){
-		printf("PROTOCOL ERROR: %s\n", error.c_str());
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "PROTOCOL ERROR: %s\n", error.c_str());
 	}
 	else{
-		printf("PROTOCOL WARNING: %s\n", error.c_str());
+		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "PROTOCOL WARNING: %s\n", error.c_str());
 	}
 	const std::list<uint8_t>& serverCmd = protocol->getLastServerCmd();
 	std::list<uint8_t>::const_iterator it;
-	printf("Last received cmd: ");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Last received cmd: ");
 	for(it = serverCmd.begin(); it != serverCmd.end(); ++it){
-		printf("%02x ", *it);
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%02x ", *it);
 	}
-	printf("\n");
-	printf("Total Received: %d\n", protocol->getCurrentMsgN());
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Total Received: %d\n", protocol->getCurrentMsgN());
 	const NetworkMessage* msg = protocol->getCurrentMsg();
 	if(msg){
 		const unsigned char* buffer = (const unsigned char*)msg->getBuffer();
 		if(buffer){
 			int32_t msgRealSize = msg->getSize() - msg->getStart();
-			printf("Last received msg: (%x/%x)\n", (int)((long)msg->getReadBuffer() - (long)msg->getBuffer()), msgRealSize);
+			DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Last received msg: (%x/%x)\n", (int)((long)msg->getReadBuffer() - (long)msg->getBuffer()), msgRealSize);
 			#define LINE_SIZE 16
 			for(int32_t i = 0; i < msgRealSize; i += LINE_SIZE){
 				int32_t pos = i;
-				printf("%04x : ", i);
+				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%04x : ", i);
 				for(int32_t j = 0; j < LINE_SIZE; ++j, ++pos){
 					if(pos < msgRealSize){
-						printf("%02x ", buffer[pos]);
+						DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%02x ", buffer[pos]);
 					}
 					else{
-						printf("   ");
+						DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "   ");
 					}
 				}
-				printf("; ");
+				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "; ");
 				pos = i;
 				for(uint32_t j = 0; j < LINE_SIZE; ++j, ++pos){
 					if(pos < msgRealSize){
 						if(buffer[pos] >= 32 && buffer[pos] < 127){
-							printf("%c", buffer[pos]);
+							DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%c", buffer[pos]);
 						}
 						else{
-							printf(".");
+							DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, ".");
 						}
 					}
 					else{
-						printf(" ");
+						DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " ");
 					}
 				}
-				printf("\n");
+				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "\n");
 			}
 		}
 	}
-	printf("********************************************************\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "********************************************************\n");
 }
 
 
@@ -130,7 +131,7 @@ void Notifications::openMessageWindow(WindowMessage_t type, const std::string& m
 
 void Notifications::onTextMessage(MessageType_t type, const std::string& message)
 {
-	printf("%s\n", message.c_str());
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%s\n", message.c_str());
 }
 
 void Notifications::onEnterGame()

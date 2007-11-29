@@ -92,7 +92,7 @@ void ObjectType::loadGfx() {
         for(uint32_t i = 0; i < numsprites; i++){
             m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", imageData[i]));
         }
-        printf("Loaded\n");
+        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loaded\n");
     }
 
 }

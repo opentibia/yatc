@@ -120,7 +120,7 @@ Engine::Engine()
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Setting up FPS timer\n");
 	m_fpstimer = SDL_AddTimer(1000, Engine::fpsTimer, NULL);
 	if (!m_fpstimer) // FIXME (ivucica#3#) this should be an assertion
-		printf("[!] Failed to set up FPS timer!\n");
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[!] Failed to set up FPS timer!\n");
 }
 
 Engine::~Engine()
