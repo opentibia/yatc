@@ -44,6 +44,17 @@ bool EncXTEA::encrypt(NetworkMessage& msg)
 
 	int read_pos = 0;
 	uint32_t* buffer = (uint32_t*)msg.getBuffer();
+
+
+	#ifdef WINCE
+	// due to compiler bug, we'll do a memcpy instead of directly accessing
+	// casting into something else, and then using it with [] crashes
+	//
+	buffer = (uint32_t*)malloc(messageLength);
+	memcpy(buffer, msg.getBuffer(), messageLength);
+	#endif
+
+
 	while(read_pos < messageLength/4){
 		uint32_t v0 = buffer[read_pos], v1 = buffer[read_pos + 1];
 		uint32_t delta = 0x61C88647;
@@ -57,6 +68,15 @@ bool EncXTEA::encrypt(NetworkMessage& msg)
 		buffer[read_pos] = v0; buffer[read_pos + 1] = v1;
 		read_pos = read_pos + 2;
 	}
+
+	#ifdef WINCE
+	// now restoring into original buffer (look above for reasoning)
+	memcpy(msg.getBuffer(), buffer, messageLength);
+	free(buffer);
+	#endif
+
+
+
 	msg.addHeader();
 	return true;
 }
@@ -96,15 +116,15 @@ bool EncXTEA::decrypt(NetworkMessage& msg)
 		}
 		buffer[read_pos] = v0; buffer[read_pos + 1] = v1;
 		read_pos = read_pos + 2;
-		
+
 	}
-	
+
 	#ifdef WINCE
 	// now restoring into original buffer (look above for reasoning)
 	memcpy(msg.getReadBuffer(), buffer, messageLength);
 	free(buffer);
 	#endif
-	
+
 	//
 	uint16_t newSize;
 	if(!msg.getU16(newSize)){

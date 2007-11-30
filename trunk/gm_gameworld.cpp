@@ -38,8 +38,10 @@ GM_Gameworld::GM_Gameworld()
 	ui = g_engine->createSprite("Tibia.pic", 3);
 	m_protocol = (ProtocolGame*)g_connection->getProtocol();
 
+	#ifndef WINCE
 	desktop.AddObject(&pnlInventory.panel);
 	pnlInventory.panel.SetPos(10, 10);
+	#endif
 
 	doResize(glictGlobals.w, glictGlobals.h);
 }
@@ -52,17 +54,39 @@ GM_Gameworld::~GM_Gameworld ()
 
 void GM_Gameworld::doResize(float w, float h)
 {
+	#ifndef WINCE
 	desktop.SetWidth(glictGlobals.w);
 	desktop.SetHeight(glictGlobals.h);
 	desktop.ResetTransformations();
 
-	updateScene();
+	updateScene(); // FIXME (ivucica#2#) potentially dangerous during call inside constructor (map possibly not loaded yet) -- gotta check with mips if we may draw map while it still isn't received from server via initial 0x64 packet
+	#endif
 }
 
 
 void GM_Gameworld::updateScene()
 {
+	#ifdef WINCE
+	{
+	//DEBUGPRINT(0,0,"Beginning draw\n");
+        Position pos = GlobalVariables::getPlayerPosition();
 
+	for(uint32_t i = 0; i < 7; ++i){
+		for(uint32_t j = 0; j < 7; ++j){
+	//		DEBUGPRINT(0,0,"%d %d\n", i, j);
+			const Tile* tile = Map::getInstance().getTile(pos.x + i - 3, pos.y + j - 3, pos.z);
+			int screenx = (int)(i*32);
+			int screeny = (int)(j*32);
+			const Item* ground = tile->getGround();
+			if(ground){
+				ground->Blit(screenx, screeny, 1.);
+			}	
+		}
+	}
+	return;
+	}
+
+	#endif
 
 	for(int i = 0; i < options.w; i += 96){
 		for(int j = 0; j < options.h; j += 96){
@@ -198,3 +222,23 @@ void GM_Gameworld::specKeyPress (int key)
 		break;
 	}
 }
+
+void GM_Gameworld::mouseEvent(SDL_Event& event)
+{
+        glictPos pos;
+        // FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
+        // who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave! 
+        pos.x = ptrx;
+        pos.y = ptry;
+
+        desktop.TransformScreenCoords(&pos);
+
+        if (event.button.state == SDL_PRESSED)
+                desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
+        if (event.button.state != SDL_PRESSED)
+                desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+
+       // Scene();
+
+}
+

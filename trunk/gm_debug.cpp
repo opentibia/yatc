@@ -58,10 +58,17 @@ void GM_Debug::ExitOnClick(glictPos* relmousepos, glictContainer* callerclass)
 void GM_Debug::UpdateOnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Debug *gd = (GM_Debug*)g_game;
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Deleting spr\n");
 	delete gd->spr;
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Deleting thing\n");
 	delete gd->thing;
+        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Creating spr\n");
+
 	gd->spr = g_engine->createSprite("Tibia.spr", atoi(gd->txtSprite.GetCaption().c_str()));
+        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Creating thing\n");
 	gd->thing = Item::CreateItem(atoi(gd->txtItem.GetCaption().c_str()), 1);
+        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "GREATNESS!\n");
+
 }
 
 GM_Debug::GM_Debug()
@@ -109,12 +116,12 @@ GM_Debug::GM_Debug()
 
 
 	if(g_engine){
-		background = g_engine->createSprite("Tibia.pic", 3);
+		background = g_engine->createSprite("Tibia.pic", 0);
 		spr = g_engine->createSprite("Tibia.spr", 200);
 		//thing = new ItemUI(6401, 1);
 		thing = NULL;
 
-		//background->addColor(.5, 1., 1.);
+		background->addColor(.5, 1., 1.);
 	}
 	else{  // i think that if g_engine does not exist, we might as well crash. what do you think, guys? ivucica
 		NativeGUIError("Somehow, engine managed to not initialize.", "YATC Fatal Error");
@@ -139,7 +146,7 @@ void GM_Debug::renderScene()
 	if(spr)
 		spr->Blit(50,50);
 	if(thing)
-		thing->Blit(400,50);
+		thing->Blit(100,50);
 
 	desktop.RememberTransformations();
 	desktop.Paint();

@@ -53,6 +53,7 @@ Sprite::Sprite(const std::string& filename, int index)
 	#endif
 	m_image = NULL;
 	m_stretchimage = NULL;
+	m_coloredimage = NULL;
 	m_loaded = false;
 	m_smoothstretch = 0;
     m_r = 1.f;
@@ -70,6 +71,7 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 	#endif
 	m_image = NULL;
 	m_stretchimage = NULL;
+	m_coloredimage = NULL;
 	m_loaded = false;
 	m_smoothstretch = 1;
 	m_r = 1.f;
@@ -98,13 +100,16 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 Sprite::~Sprite()
 {
 	if(m_image){
+		DEBUGPRINT(0,0,"Freeing m_image\n");
 		SDL_FreeSurface(m_image);
 	}
 	if(m_stretchimage){
+		DEBUGPRINT(0,0,"Freeing m_stretchimage\n");
 		SDL_FreeSurface(m_stretchimage);
 	}
 	if(m_coloredimage){
-        SDL_FreeSurface(m_coloredimage);
+		DEBUGPRINT(0,0,"Freeing m_coloredimage\n");
+		SDL_FreeSurface(m_coloredimage);
 	}
 }
 
@@ -259,7 +264,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	m_filename = filename;
 	m_index = index;
 
-    //m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+	m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
 
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magenta is transparent
 }
@@ -378,6 +383,6 @@ void Sprite::addColor(float r, float g, float b)
             SDL_GetRGB(getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo);
             putPixel(i, j, SDL_MapRGB(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b)), m_coloredimage);
         }
-
+    m_r = r; m_g = g; m_b = b;
     Stretch(getImage()->w, getImage()->h, -1, true);
 }

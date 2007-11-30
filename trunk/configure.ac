@@ -96,6 +96,7 @@ AC_CHECK_HEADERS([SDL/SDL_rotozoom.h], ,[AC_MSG_ERROR("*** SDL_gfx headers not f
 ## More precisely, over there SDL wants SDL_main and not main, which the standard AC test does
 ## not provide.
 #AC_CHECK_LIB(SDL_gfx, rotozoomSurfaceXY, ,[AC_MSG_ERROR("*** SDL_gfx library not found.")])
+LIBS="$LIBS -lSDL_gfx"
 #fi
 
 

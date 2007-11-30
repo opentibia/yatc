@@ -3,6 +3,7 @@ AM_CXXFLAGS = -Wall
 
 AM_CPPFLAGS = $(ASSERT_FLAGS) $(DEBUG_FLAGS) $(SDLGFX_FLAGS) $(OPENGL_FLAGS)
 
+AM_LDFLAGS = $(SDLGFX_FLAGS)
 noinst_PROGRAMS = yatc
 
 if USE_OPENGL
@@ -32,7 +33,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		defines.h gamecontent/enums.h fassert.h \
 		gamecontent/thing.h \
 		ui/login.h ui/mainmenu.h ui/options.h ui/optionsgeneral.h \
-		ui/optionsgraphics.h ui/optionsnetwork.h \
+		ui/optionsgraphics.h ui/optionsnetwork.h ui/charlist.h \
 		\
 		yatc.cbp yatc.dev \
 		yatc.bmp \

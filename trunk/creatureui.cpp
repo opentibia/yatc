@@ -87,6 +87,11 @@ void CreatureUI::Blit(int x,int y, float scale) const {
 
 void CreatureUI::loadOutfit() {
     Creature* n = (Creature*)this;
+    DEBUGPRINT(0,0,"Loading creature %d (itemlook %d)\n", n->getOutfit().m_looktype, n->getOutfit().m_lookitem);
+
+	if (!n->getOutfit().m_looktype && !n->getOutfit().m_lookitem)
+		m_obj = Objects::getInstance()->getItemType(100); // FIXME (ivucica#1#) Completely wrong, but it will have to do for now since otherwise it crashes. it should be invisible
+	else
     if (n->getOutfit().m_lookitem != 0) {
         m_obj = Objects::getInstance()->getItemType(n->getOutfit().m_lookitem);
     } else {
