@@ -29,6 +29,7 @@ ItemUI::ItemUI(uint16_t id) : ThingUI()
 		return;
 	}
     ObjectType* obj = Objects::getInstance()->getItemType(id);
+
     obj->loadGfx();
 }
 

@@ -43,19 +43,21 @@ public:
             83, 91};// hand
 
 
-
+		panel.SetHeight(150);
+		panel.SetWidth(150);
 		for (int i = 0; i < 10; i++) {
 			panel.AddObject(pnlItem+i);
 			pnlItem[i].SetPos(posInvSlots[i*2], posInvSlots[i*2+1]);
 			pnlItem[i].SetHeight(32);
 			pnlItem[i].SetWidth(32);
-			pnlItem[i].SetBGColor(1,0,0,1);
+			pnlItem[i].SetBGColor(.1,.1,.1,1);
+			pnlItem[i].SetCaption("");
 //			pnlItem[i].SetBGActiveness(true);
 		}
 	}
 
 	glictContainer panel; // it's a container, so it's transparent
-	glictButton pnlItem[10];
+	glictPanel pnlItem[10];
 
 };
 
@@ -68,6 +70,7 @@ public:
 	void keyPress (char key);
 	void specKeyPress (int key);
 	void doResize(float w, float h);
+	void mouseEvent(SDL_Event& event);
 private:
 	Sprite* ui;
 	glictContainer desktop;

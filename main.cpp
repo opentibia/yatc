@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 /// \file main.cpp
-/// This file contains the main(int,char*) function.
+/// This file contains the main(int,char**) function.
 
 #include <SDL/SDL.h>
 #include <GLICT/globals.h>
@@ -113,10 +113,6 @@ int main(int argc, char *argv[])
 	}
 #endif
 
-#ifdef WINCE
-	FILE *f = fopen("log.txt","w"); // wipe the log clean
-	fclose(f);
-#endif
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "YATC -- YET ANOTHER TIBIA CLIENT\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
@@ -192,8 +188,8 @@ int main(int argc, char *argv[])
 
 
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Constructing gamemode...\n");
-		//g_game = new GM_MainMenu();
-		g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+		g_game = new GM_MainMenu();
+		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
@@ -230,7 +226,7 @@ int main(int argc, char *argv[])
 					case SDL_MOUSEBUTTONDOWN:
 						#ifdef WINCE
 						if (ptrx < 5 && ptry < 5) 
-							SDL_WM_IconifyWindow();
+							SDL_WM_IconifyWindow(); // appears to crash the application?! ah nevermind
 						#endif
 						g_game->mouseEvent(event);
 						break;
