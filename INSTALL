@@ -20,6 +20,7 @@ Copyright (C) 2007 OpenTibia Team
  2. Building on Linux/Unix
  3. Building on Windows
  4. Devpaks and Debian packages
+ 5. Building without OpenGL support
 
 1. Requirements
 ===============
@@ -128,5 +129,27 @@ punch these lines in):
 
 apt-get install libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake \
 		libgl1-mesa-dev libglu1-mesa-dev
+
+5. Building without OpenGL support
+==================================
+If you are building for a platform that does not support OpenGL such as 
+Windows CE, you may want to use option --disable-opengl when running configure:
+
+ $ ./configure --disable-opengl
+
+Configure script should detect GL's nonexistance automatically, but if it
+does not, that's the way to do it.
+
+Do not forget, your GLICT must also be compiled without OpenGL support; to do
+that, define NO_GL macro. In the Makefile, find the line that begins with 
+CPPFLAGS= and in it, on the end, add -DNO_GL:
+
+ CPPFLAGS=[... stuff...] -DNO_GL
+
+You probably had to do this anyway if you were working with WinCE or similar
+platform, but it's sure worth mentioning in case you're, for a sick and twisted
+reason to complicate yourself the building process, trying to compile it for
+a platform that does have GL, you must not forget this since otherwise it'll
+break badly and you'll be extremely unhappy.
 
 

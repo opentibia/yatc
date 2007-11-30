@@ -26,18 +26,18 @@ AC_ARG_ENABLE(assert, [  --enable-assert          enable assertions], [
 	AC_SUBST(ASSERT_FLAGS)
 ])
 
-AC_ARG_ENABLE(opengl, [  --enable-opengl          use opengl], [
+AC_ARG_ENABLE(opengl, [  --disable-opengl          don't use opengl], [
+	AM_CONDITIONAL(USE_OPENGL, false)
+],[
 	OPENGL_FLAGS=-DUSE_OPENGL
 	AC_SUBST(OPENGL_FLAGS)
 	AM_CONDITIONAL(USE_OPENGL, true)
-],[
-	AM_CONDITIONAL(USE_OPENGL, false)
 ])
 
-AC_ARG_WITH(SDL_gfx, [ --with-SDL_gfx          use SDL_gfx library], [
-	SDLGFX_FLAGS=-DUSE_SDLGFX
-	AC_SUBST(SDLGFX_FLAGS)
-])
+#AC_ARG_WITH(SDL_gfx, [ --with-SDL_gfx          use SDL_gfx library], [ ## This lib is obligatory now
+#	SDLGFX_FLAGS=-DUSE_SDLGFX
+#	AC_SUBST(SDLGFX_FLAGS)
+#])
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -67,25 +67,10 @@ AC_TYPE_SIZE_T
 AC_CHECK_HEADERS([gmp.h], ,[AC_MSG_ERROR("*** GMP header not found.")])
 AC_CHECK_LIB(gmp, __gmpz_init2, ,[AC_MSG_ERROR("*** GMP library not found or < 4.0.")])
 
-
-#check SDL
-SDL_VERSION=1.2.0
-AM_PATH_SDL($SDL_VERSION, :, AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!]))
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-LIBS="$LIBS $SDL_LIBS"
-AC_SUBST(SDL_LIBS)
-
-#check SDL-gfx
-if test -n "$SDLGFX_FLAGS"; then 
-	AC_CHECK_HEADERS([SDL/SDL_rotozoom.h], ,[AC_MSG_ERROR("*** SDL_gfx headers not found.")])
-	AC_CHECK_LIB(SDL_gfx, rotozoomSurfaceXY, ,[AC_MSG_ERROR("*** SDL_gfx library not found.")])
-fi
-
-
 if test -n "$OPENGL_FLAGS"; then 
 	#check GL
-	AC_CHECK_HEADERS(GL/gl.h, ,[AC_MSG_ERROR("*** OpenGL header not found.")])
-	AC_CHECK_LIB(GL, glLoadIdentity, ,[AC_MSG_ERROR("*** OpenGL library not found.")])
+	AC_CHECK_HEADERS(GL/gl.h, ,[AC_MSG_ERROR("*** OpenGL header not found. (You may want to use --disable-opengl, more info in INSTALL)")])
+	AC_CHECK_LIB(GL, glLoadIdentity, ,[AC_MSG_ERROR("*** OpenGL library not found. (You may want to use --disable-opengl, more info in INSTALL)")])
 
 	#check GLU
 	AC_CHECK_HEADERS(GL/glu.h, ,[AC_MSG_ERROR("*** GLU header not found.")])
@@ -95,6 +80,24 @@ fi
 # check for GLICT
 AC_CHECK_HEADERS([GLICT/globals.h],,[AC_MSG_ERROR("*** GLICT header not found.")])
 LIBS="$LIBS -lGLICT"
+
+#check SDL
+SDL_VERSION=1.2.0
+AM_PATH_SDL($SDL_VERSION, :, AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!]))
+CFLAGS="$CFLAGS $SDL_CFLAGS"
+LIBS="$LIBS $SDL_LIBS"
+AC_SUBST(SDL_LIBS)
+
+
+#check SDL-gfx
+#if test -n "$SDLGFX_FLAGS"; then ### It's obligatory now
+AC_CHECK_HEADERS([SDL/SDL_rotozoom.h], ,[AC_MSG_ERROR("*** SDL_gfx headers not found.")])
+## Following test does not work with any Windows-targetting compiler (mingw and mingw32ce included)
+## More precisely, over there SDL wants SDL_main and not main, which the standard AC test does
+## not provide.
+#AC_CHECK_LIB(SDL_gfx, rotozoomSurfaceXY, ,[AC_MSG_ERROR("*** SDL_gfx library not found.")])
+#fi
+
 
 # output files
 AC_CONFIG_HEADERS([config.h])
