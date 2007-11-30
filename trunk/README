@@ -29,9 +29,10 @@ YATC is a client for any game that uses Tibia-compatible protocol. It is being
 developed as a part of the OpenTibia project. We have chosen the name YATC
 since name OpenTibia Client was already taken by a project by another author.  
 
-It is currently in planning phase, and we are doing some basic coding. We plan
-support for SDL, OpenGL and DirectX based drawing engines. GLICT is planned to
-be used as the user interface. 
+The code has taken shape, but it is still in early development. We develop
+support for SDL and OpenGL based drawing engines. GLICT is the current
+user interface library. For now we can connect to the login server, display
+character list, connect to game world, display basic map, and we can move
+around.
 
-Currently there are no more plans to announce. Stay tuned!
 
