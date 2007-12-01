@@ -36,6 +36,7 @@ public:
 protected:
 
 	void BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale = 1.) const;
+	uint16_t  m_id;
 };
 
 #endif

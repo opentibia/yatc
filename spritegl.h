@@ -33,9 +33,12 @@ class SpriteGL : public Sprite
 
 		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
 		void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
+		void buildGLTexture();
+		void addColor(float r, float g, float b);
 	private:
 		GLuint m_texture;
 		double m_multiplierx, m_multipliery;
+		uint32_t m_engineCreationTimestamp;
 };
 
 #endif

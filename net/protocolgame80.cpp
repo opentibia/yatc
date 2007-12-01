@@ -92,7 +92,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			Notifications::openMessageWindow(MESSAGE_INFORMATION, infoMessage);
 			break;
 		}
-		case 0x16: //Waiting list
+            case 0x16: //Waiting list
 		{
 			MSG_READ_STRING(waitMessage);
 			MSG_READ_U8(waitTime);
@@ -127,6 +127,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			if(!setMapDescription(msg, myPos.x - 8, myPos.y - 6, myPos.z, 18, 1)){
 				RAISE_PROTOCOL_ERROR("Map description 0x65");
 			}
+			Notifications::onWalk();
 			break;
 		}
 		case 0x66: //move east
@@ -136,6 +137,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			if(!setMapDescription(msg, myPos.x + 9, myPos.y - 6, myPos.z, 1, 14)){
 				RAISE_PROTOCOL_ERROR("Map description 0x66");
 			}
+			Notifications::onWalk();
 			break;
 		}
 		case 0x67: //move south
@@ -145,6 +147,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			if(!setMapDescription(msg, myPos.x - 8, myPos.y + 7, myPos.z, 18, 1)){
 				RAISE_PROTOCOL_ERROR("Map description 0x67");
 			}
+			Notifications::onWalk();
 			break;
 		}
 		case 0x68: //move west
@@ -154,6 +157,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			if(!setMapDescription(msg, myPos.x - 8, myPos.y - 6, myPos.z, 1, 14)){
 				RAISE_PROTOCOL_ERROR("Map description 0x68");
 			}
+			Notifications::onWalk();
 			break;
 		}
 		case 0x69: //update tile

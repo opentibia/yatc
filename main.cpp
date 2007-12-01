@@ -39,12 +39,13 @@
 #include "net/protocollogin.h"
 #include "net/protocolgame.h"
 
-bool g_running = true;
+bool g_running = false;
 uint32_t keymods = 0;
 
 Connection* g_connection = NULL;
 uint32_t g_frameTime = 0;
 
+int g_frames;
 
 void onKeyDown(const SDL_Event& event)
 {
@@ -195,10 +196,12 @@ int main(int argc, char *argv[])
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
 		SDL_WM_SetCaption("YATC v0.1", NULL);
 
+        g_running = true;
+
 		SDL_Event event;
 		while(g_running){
-			SDL_Delay(100); //limit to 10fps
 
+            int beginticks = SDL_GetTicks();
 			//first process sdl events
 			while(SDL_PollEvent(&event)){
 				switch (event.type){
@@ -225,7 +228,7 @@ int main(int argc, char *argv[])
 					case SDL_MOUSEBUTTONUP:
 					case SDL_MOUSEBUTTONDOWN:
 						#ifdef WINCE
-						if (ptrx < 5 && ptry < 5) 
+						if (ptrx < 5 && ptry < 5)
 							SDL_WM_IconifyWindow(); // appears to crash the application?! ah nevermind
 						#endif
 						g_game->mouseEvent(event);
@@ -241,6 +244,12 @@ int main(int argc, char *argv[])
 			}
 			//update current frame time
 			g_frameTime = SDL_GetTicks();
+
+
+            if (g_frameTime-beginticks < 100)
+                SDL_Delay(100 - (g_frameTime - beginticks)); //limit to 10fps
+
+
 			//check connection
 			if(g_connection){
 				g_connection->executeNetwork();
@@ -248,6 +257,7 @@ int main(int argc, char *argv[])
 			//and finally update scene
 			g_game->updateScene();
 			g_engine->Flip();
+			g_frames ++;
 		}
 	} catch (std::string errtext) {
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "%s", errtext.c_str());

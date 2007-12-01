@@ -40,11 +40,11 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
 	// code is like this because of dx5.0 ... see docs/html/sdlrect.html in SDL documentation for more info
 	SDL_Rect src = {(int)sx,(int)sy,(int)(w),(int)(h)};
 	SDL_Rect dst = {(int)dx,(int)dy,(int)(w),(int)(h)};
-	while(SDL_BlitSurface(getImage(), &src, g_engine->m_screen, &dst) == -2){
-		while(SDL_LockSurface(getImage()) < 0 ){
+	while(SDL_BlitSurface(getColoredImage(), &src, g_engine->m_screen, &dst) == -2){
+		while(SDL_LockSurface(getColoredImage()) < 0 ){
 				SDL_Delay(10);
 		}
-		SDL_UnlockSurface(getImage());
+		SDL_UnlockSurface(getColoredImage());
 	}
 }
 

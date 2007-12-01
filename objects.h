@@ -70,8 +70,11 @@ public:
 	ObjectType(uint16_t _id);
 	~ObjectType();
 
+    // item only functions (perhaps later they will apply for effects too)
     void loadGfx();
+    void unloadGfx();
 	const std::vector<Sprite*>& getGfx() const;
+	int instancesOnMap; // how many times itemUI for this one was spawned
 
 	uint16_t id;
 

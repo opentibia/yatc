@@ -34,6 +34,7 @@
 #include "font.h"
 #include "options.h"
 Engine* g_engine;
+extern int g_frames;
 int ptrx, ptry;
 
 // first we'll define all the C-style callbacks we'll use elsewhere
@@ -117,6 +118,7 @@ Engine::Engine()
 
 	m_fps = 0.;
 
+    g_frames = 0;
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Setting up FPS timer\n");
 	m_fpstimer = SDL_AddTimer(1000, Engine::fpsTimer, NULL);
 	if (!m_fpstimer) // FIXME (ivucica#3#) this should be an assertion
@@ -131,7 +133,13 @@ Engine::~Engine()
 }
 
 Uint32 Engine::fpsTimer(Uint32 interval, void*param) {
+    char caption[255];
 
+    g_engine->m_fps = (g_frames / (float)interval) * 1000;
+    g_frames = 0;
+
+    sprintf(caption, "YATC v0.1 - fps: %g", g_engine->m_fps);
+    SDL_WM_SetCaption(caption, NULL);
 	return interval;
 }
 

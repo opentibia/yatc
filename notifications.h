@@ -45,7 +45,7 @@ class Notifications{
 		//**** Login Messages ****
 		static void changeLoginServer(){}
 		static void openMessageWindow(WindowMessage_t type, const std::string& message);
-		static void openWaitingList(const std::string& message, int time){}
+		static void openWaitingList(const std::string& message, int time);
 		static void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
 
 		//**** inGame events ****
@@ -55,7 +55,7 @@ class Notifications{
 		static void onCancelWalk(Direction direction) {}
 		static void onCancelAttack() {}
 		//static void onDistanceEffect(const Position& from, const Position& to) {}
-		//void onWalk(const Position& from, const Position& to) {}
+		static void onWalk(); //(const Position& from, const Position& to) {} // for now we don't need to know this information
 		static void onChangeIcons() {}
 		static void onChangeCreatureSkull(uint32_t id);
 		static void onTextMessage(MessageType_t type, const std::string& message);

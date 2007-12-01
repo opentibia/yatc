@@ -78,6 +78,9 @@ void EngineGL::doResize(int w, int h)
 
 	if (m_screen) SDL_FreeSurface(m_screen);
 	m_videoflags = SDL_OPENGL | SDL_RESIZABLE;
+
+	m_creationTimestamp = time(NULL);
+
 	if (options.fullscreen)
 		m_videoflags |= SDL_FULLSCREEN;
 

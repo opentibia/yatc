@@ -75,19 +75,18 @@ ObjectType::ObjectType(uint16_t _id)
 	unk1 = 0;
 	animcount = 1;
 	numsprites = 0;
+
+	instancesOnMap = 0;
 }
 
 ObjectType::~ObjectType()
 {
-    std::vector<Sprite*>::iterator it;
-	for(it = m_gfx.begin(); it != m_gfx.end(); ++it){
-		delete *it;
-	}
-	m_gfx.clear();
+    unloadGfx();
 }
 
 
-void ObjectType::loadGfx() {
+void ObjectType::loadGfx()
+{
     if (m_gfx.size() != numsprites) { // graphics not loaded yet?
         for(uint32_t i = 0; i < numsprites; i++){
             m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", imageData[i]));
@@ -95,6 +94,15 @@ void ObjectType::loadGfx() {
         DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loaded\n");
     }
 
+}
+
+void ObjectType::unloadGfx()
+{
+    std::vector<Sprite*>::iterator it;
+	for(it = m_gfx.begin(); it != m_gfx.end(); ++it){
+		delete *it;
+	}
+	m_gfx.clear();
 }
 
 const std::vector<Sprite*>& ObjectType::getGfx() const {

@@ -46,6 +46,7 @@ public:
 	GM_MainMenu();
 	~GM_MainMenu();
 
+    void updateScene();
 	void renderScene();
 	void renderUI();
 	void mouseEvent (SDL_Event&);

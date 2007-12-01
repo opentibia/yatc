@@ -28,15 +28,38 @@
 #include "spritegl.h"
 #include "util.h"
 #include "debugprint.h"
+#include "engine.h"
+
+extern bool g_running;
 
 SpriteGL::SpriteGL(const std::string& filename, int index) :
 Sprite(filename, index)
 {
-	//Do not continue if the image isnt loaded
+	buildGLTexture();
+}
+
+SpriteGL::~SpriteGL()
+{
+	if(m_texture != GL_INVALID_VALUE){
+		glDeleteTextures(1, &m_texture);
+	}
+}
+
+void SpriteGL::addColor(float r, float g, float b)
+{
+    m_r = r;
+    m_g = g;
+    m_b = b;
+}
+
+void SpriteGL::buildGLTexture() {
+    //Do not continue if the image isnt loaded
 	if(!getImage())
 		return;
 
-
+    m_engineCreationTimestamp = 0;
+    if (!g_running)
+        return;
 	m_multiplierx = nextpow(this->getWidth()) / this->getWidth();
 	m_multipliery = nextpow(this->getHeight()) / this->getHeight();
 
@@ -60,13 +83,9 @@ Sprite(filename, index)
 	}
 	glDisable(GL_TEXTURE_2D);
 	SDL_UnlockSurface(getImage());
-}
 
-SpriteGL::~SpriteGL()
-{
-	if(m_texture != GL_INVALID_VALUE){
-		glDeleteTextures(1, &m_texture);
-	}
+    m_engineCreationTimestamp = g_engine->m_creationTimestamp;
+
 }
 
 void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcwidth, float srcheight)
@@ -78,6 +97,11 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 {
 	if(!getImage())
 		return;
+
+
+    if (m_engineCreationTimestamp != g_engine->m_creationTimestamp) { // we need to recreate the texture since the context was invalidated in the meantime
+        buildGLTexture();
+    }
 
 	// TODO (mips_act#3#): Configure glict to dont enable/disable all the time
 	// GL_TEXTURE_2D
@@ -96,6 +120,10 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 	glEnable(GL_ALPHA_TEST);
 	//if (m_index==0)
 		//printf("File: %s Index: %d Multipliers: %g %g WxH: %gx%g\n", m_filename.c_str(), m_index, m_multiplierx, m_multipliery, spriteWidth, spriteHeight);
+    if (m_r != 1. || m_g != 1. || m_b != 1.)
+        glColor4f(m_r, m_g, m_b, 1.);
+
+
 	glBegin(GL_QUADS);
 		glTexCoord2f((srcx)/spriteWidth, (srcy )/spriteHeight);
 		glVertex2f(destx , desty );
@@ -109,7 +137,8 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 		glTexCoord2f((srcx + srcwidth / m_multiplierx)/spriteWidth, (srcy) /spriteHeight);
 		glVertex2f(destx + destwidth, desty);
 	glEnd();
-
+    if (m_r != 1. || m_g != 1. || m_b != 1.)
+        glColor4f(1.,1.,1., 1.);
 	glPopMatrix();
 
 }

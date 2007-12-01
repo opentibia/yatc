@@ -43,12 +43,15 @@ GM_Gameworld::GM_Gameworld()
 	pnlInventory.panel.SetPos(10, 10);
 	#endif
 
+	m_preWalk = false;
+	m_walkState = 0;
+
 	doResize(glictGlobals.w, glictGlobals.h);
 }
 
 GM_Gameworld::~GM_Gameworld ()
 {
-
+    delete ui;
 }
 
 
@@ -80,7 +83,7 @@ void GM_Gameworld::updateScene()
 			const Item* ground = tile->getGround();
 			if(ground){
 				ground->Blit(screenx, screeny, 1.);
-			}	
+			}
 		}
 	}
 	return;
@@ -227,7 +230,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 {
         glictPos pos;
         // FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
-        // who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave! 
+        // who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave!
         pos.x = ptrx;
         pos.y = ptry;
 

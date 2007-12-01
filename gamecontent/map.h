@@ -150,8 +150,11 @@ private:
 
 	typedef std::map<uint64_t, uint16_t> CoordMap;
 	CoordMap m_coordinates;
-
-	#define TILES_CACHE 4096
+    #ifndef WINCE
+        #define TILES_CACHE 4096
+    #else
+        #define TILES_CACHE 512
+    #endif
 	Tile m_tiles[TILES_CACHE];
 
 	typedef std::vector<uint32_t> FreeTiles;

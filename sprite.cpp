@@ -45,6 +45,8 @@ typedef struct {
 } picpicheader_t;
 #pragma pack()
 
+#include "engine.h"
+
 
 Sprite::Sprite(const std::string& filename, int index)
 {
@@ -61,6 +63,7 @@ Sprite::Sprite(const std::string& filename, int index)
     m_b = 1.f;
 
 	loadSurfaceFromFile(filename, index);
+
 }
 
 
@@ -174,17 +177,19 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		SDL_FillRect(m_image, NULL, magenta);
 
 		// read the data
-		fseek(f, where, SEEK_SET);
-		fgetc(f); fgetc(f); fgetc(f); // TODO (ivucica#4#) maybe we should figure out what do these do?
-		if (readSprData(f, m_image, 0, 0)) {
-			// error happened
-			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] Problem in readSprData()\n");
-			SDL_FreeSurface(m_image);
-			m_image = NULL;
-			fclose(f);
-			return;
-		}
+        if (where) {
+            fseek(f, where, SEEK_SET);
 
+            fgetc(f); fgetc(f); fgetc(f); // TODO (ivucica#4#) maybe we should figure out what do these do?
+            if (readSprData(f, m_image, 0, 0)) {
+                // error happened
+                DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] Problem in readSprData()\n");
+                SDL_FreeSurface(m_image);
+                m_image = NULL;
+                fclose(f);
+                return;
+            }
+        }
 		fclose(f);
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
 
