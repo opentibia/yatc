@@ -5,13 +5,13 @@ rem pictool tibia.pic 0 tibia0.bmp
 rem pictool tibia.pic 0 tibia0.bmp --topic
 rem move __tmp__.pic tibia.pic
 
-pictool tibia.pic 1 tibia1.bmp 
-pictool tibia.pic 1 tibia1.bmp --topic
-move __tmp__.pic tibia.pic
-
-rem pictool tibia.pic 2 tibia2.bmp 
-rem pictool tibia.pic 2 tibia2.bmp --topic
+rem pictool tibia.pic 1 tibia1.bmp 
+rem pictool tibia.pic 1 tibia1.bmp --topic
 rem move __tmp__.pic tibia.pic
+
+pictool tibia.pic 2 tibia2.bmp 
+pictool tibia.pic 2 tibia2.bmp --topic
+move __tmp__.pic tibia.pic
 
 pause
 
