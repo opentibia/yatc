@@ -34,6 +34,7 @@
 extern Connection* g_connection;
 extern bool g_running;
 
+
 GM_MainMenu::GM_MainMenu()
 {
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n");
@@ -155,6 +156,12 @@ GM_MainMenu::~GM_MainMenu()
 
 }
 
+void GM_MainMenu::updateScene()
+{
+    if (options.engine == ENGINE_OPENGL) {
+        renderScene();
+    }
+}
 void GM_MainMenu::doResize(float w, float h)
 {
 	pnlMainMenu.mainmenu.SetPos(60, glictGlobals.h - 240);
@@ -200,7 +207,7 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 {
 	glictPos pos;
 	// FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
-	// who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave! 
+	// who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave!
 	pos.x = ptrx;
 	pos.y = ptry;
 
@@ -350,6 +357,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	m->winStatus.SetVisible(true);
 	m->winStatus.SetCaption("Logging in");
 	m->winStatus.SetMessage("Connecting to the server...\n");
+	m->winStatus.SetWidth(320);
 	m->winStatus.SetEnabled(false);
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "SetVisible...\n");
 }

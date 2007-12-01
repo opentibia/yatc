@@ -42,7 +42,6 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 	if (size > 3444) {
         SDL_UnlockSurface(surface);
         SDL_FreeSurface(surface);
-        fclose(f);
         printf("Error [readSprData] Sprite size is invalid (%d)\n", size);
         return -1;
     }
@@ -56,7 +55,6 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 			/* captain, the warp core breach has happened! what shall we do?! */
 			SDL_UnlockSurface(surface);
 			SDL_FreeSurface(surface);
-			fclose(f);
 			printf("Error [readSprData] Pixel chunk size is invalid (%d)\n", pixelchunksize);
 			return -1;
 			/* number one, eject the core */
@@ -65,7 +63,6 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 		if(!transparent){
 			for(j = 0; j < pixelchunksize; j++){
 				fread(&rgba, 3, 1, f);
-               // if (rgba[0] > 128 && rgba[1] < 128 && rgba[2] < 128) printf("weird");
 				color = SDL_MapRGB(surface->format, rgba[0], rgba[1], rgba[2]);
 				putPixel(surface, offx+(destination+j) % 32, offy+(destination+j) / 32, color);
 			}

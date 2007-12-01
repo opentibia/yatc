@@ -76,6 +76,9 @@ private:
 	glictContainer desktop;
 	pnlInventory_t pnlInventory;
 
+	bool m_preWalk;
+	int m_walkState;
+
 	class ProtocolGame* m_protocol;
 };
 

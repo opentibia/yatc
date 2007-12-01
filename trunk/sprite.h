@@ -59,23 +59,27 @@ class Sprite
 
 		void loadSurfaceFromFile(const std::string& filename, int index);
 
-		SDL_Surface* getImage() { return m_stretchimage ? m_stretchimage : ((m_r != 1. || m_g != 1. || m_b != 1.) ? m_coloredimage : m_image); }
+		SDL_Surface* getColoredImage() { return m_stretchimage ? m_stretchimage : ((m_r != 1. || m_g != 1. || m_b != 1.) ? m_coloredimage : m_image); }
+		SDL_Surface* getImage() { return m_stretchimage ? m_stretchimage : m_image; }
 		#ifdef USE_OPENGL
 		GLuint getPixelFormat() { return m_pixelformat; }
 		#endif
 
 		std::string m_filename; int m_index;
+        float m_r, m_g, m_b;
+
 	private:
 		void putPixel(int x, int y, uint32_t pixel, SDL_Surface *img = NULL);
 		uint32_t getPixel(int x, int y, SDL_Surface *img = NULL);
 
 		bool m_loaded;
 		SDL_Surface *m_image, *m_stretchimage, *m_coloredimage;
-		float m_r, m_g, m_b;
+
 		bool m_smoothstretch;
 		#ifdef USE_OPENGL
 		GLuint m_pixelformat;
 		#endif
+
 
 };
 

@@ -50,6 +50,8 @@ class Engine
 
 		static Uint32 fpsTimer(Uint32 interval, void*param);
 
+		uint32_t m_creationTimestamp; // some engines, like GL, need this in order to know when to re-create their sprite memories
+
 	protected:
 		Engine();
 		void initFont(glictFont** fnt, const char* fontname);

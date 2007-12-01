@@ -18,6 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <sstream>
 #include "notifications.h"
 #include "net/connection.h"
 #include "gamemode.h"
@@ -127,6 +128,17 @@ void Notifications::openMessageWindow(WindowMessage_t type, const std::string& m
 	else{
 		g_game->openMessageWindow(type, message);
 	}
+
+}
+
+
+void Notifications::openWaitingList(const std::string& message, int time) {
+    // TODO (ivucica#3#) ugly stub, but i'm too lazy for a proper waiting list
+    std::stringstream message2;
+    message2 << message << std::endl << std::endl << "Retry in " << time << "seconds";
+    printf("WAITING LIST!!!\n%s\n", message2.str().c_str());
+    g_game->openMessageWindow(MESSAGE_ERROR, message2.str());
+
 }
 
 void Notifications::onTextMessage(MessageType_t type, const std::string& message)
@@ -137,4 +149,9 @@ void Notifications::onTextMessage(MessageType_t type, const std::string& message
 void Notifications::onEnterGame()
 {
 	g_game->onEnterGame();
+}
+
+void Notifications::onWalk()
+{
+
 }

@@ -1,13 +1,68 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
+#include "..\..\sprdata.h"
+void problem(const char* txt) {
+    fprintf(stderr, "sprtool: %s\n", txt);
+    exit(1);
+}
 
 void sprinfo() {
     fprintf(stderr, "sprtool: spr info not supported yet\n");
     exit(1);
 }
 int extract_all(const char* fn) {
-    fprintf(stderr, "sprtool: extracting all not supported yet\n");
-    exit(1);
+    uint32_t signature;
+    uint16_t sprcount;
+    uint32_t where;
+    uint32_t magenta;
+    int i;
+
+    FILE *f;
+    SDL_Surface *image;
+
+
+    f = fopen(fn,"rb");
+    if (!f) { fprintf(stderr, "sprtool: failed to open input file %s\n", fn); return 1; }
+
+    image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+
+    if (!image) {fprintf(stderr, "failed to create image"); return 1;}
+
+    magenta = SDL_MapRGB(image->format, 255, 0, 255);
+
+    fread(&signature, sizeof(signature), 1, f);
+    fread(&sprcount, sizeof(sprcount), 1, f);
+
+    for (i=0;i<sprcount;i++) {
+
+		int oldpos;
+		char outfn[255];
+
+        sprintf(outfn, "%s.data/%d.bmp", fn, i+1);
+		SDL_FillRect(image, NULL, magenta);
+
+
+        fread(&where, sizeof(where), 1, f);
+
+
+        if (where) {
+            int a,b,c;
+            oldpos = ftell(f);
+            fseek(f, where, SEEK_SET);
+            a=fgetc(f); b=fgetc(f); c=fgetc(f); /* TODO (ivucica#4#) maybe we should figure out what do these do?*/
+            /*printf("%d @ %d... %02x %02x %02x\n", i+1, where, a, b, c);*/
+
+            if (readSprData(f, image, 0, 0)) { fprintf(stderr, "readSprData() failed for sprite %d", i+1); }//return 1; }
+
+            fseek(f, oldpos, SEEK_SET);
+
+            SDL_SaveBMP(image, outfn);
+        }
+
+
+    }
+    fclose(f);
+    return 0;
 }
 int import_all(const char* fn) {
     fprintf(stderr, "sprtool: importing all not supported yet\n");
@@ -43,6 +98,8 @@ void show_help() {
         " example, YATC.SPR.data). If not all files are present in that folder,\n"
         " not all will be imported.\n");
     printf("\n");
+    printf(" ATTENTION! The folder must already exist!\n");
+    printf("\n");
 	printf(" This program cannot create new .SPR from scratch; a .SPR must already\n"
         " exist.\n");
 	printf("\n");
@@ -57,7 +114,6 @@ int main (int argc, char **argv) {
 		fprintf(stderr, "sprtool: no input files\n");
 		exit(1);
 	}
-
 
 	SDL_Init(SDL_INIT_VIDEO);
 
