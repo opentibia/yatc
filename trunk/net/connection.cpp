@@ -45,6 +45,14 @@ ProtocolConfig::ProtocolConfig()
 	m_port = 7171;
 	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_800);
 	setServerType(SERVER_OTSERV);
+	setVersionOverride(0); // no override
+}
+
+uint32_t ProtocolConfig::readSignature(const char* fn) {
+    FILE*f=fopen(fn,"rb");
+    uint32_t sig;
+    fread(&sig, 4, 1, f);
+    return sig;
 }
 
 void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
@@ -53,16 +61,25 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	switch(version){
 	case CLIENT_VERSION_800:
 		m_clientVersion = CLIENT_VERSION_800;
-		//TODO. set right values
-		// ivucica: imho this should be read from pic, dat and spr files and fed to protocolconfig some other way
-		m_datSignature = 0x467FD7E6;
-		m_sprSignature = 0x467F9E74;
-		m_picSignature = 0x45670923;
+
+		// ivucica: imho this is now read from pic, dat and spr files and fed to protocolconfig another way
+		//m_datSignature = 0x467FD7E6;
+		//m_sprSignature = 0x467F9E74;
+		//m_picSignature = 0x45670923;
+
 		break;
 	default:
 		ASSERT(0);
 		break;
 	}
+	m_datSignature = this->readSignature("Tibia.dat");
+	m_sprSignature = this->readSignature("Tibia.spr");
+	m_picSignature = this->readSignature("Tibia.pic");
+}
+void ProtocolConfig::setVersionOverride(uint16_t version) {
+    // this means that we'll just send a different version to the server
+    // dat, spr and pic are read from file anyways
+    m_overrideVersion = version;
 }
 
 void ProtocolConfig::setServerType(ServerType_t type)
@@ -313,7 +330,7 @@ void Connection::executeNetwork()
 #ifndef WINCE
 			//Check if it was a successful connection
 			int optError;
-			optlen_t optErrorLen = sizeof(optError); 	
+			optlen_t optErrorLen = sizeof(optError);
 			int ret = getsockopt(m_socket, SOL_SOCKET, SO_ERROR, (opt_t*)&optError, &optErrorLen);
 			if(ret != SOCKET_ERROR && optError == 0){
 				//connection succeeded

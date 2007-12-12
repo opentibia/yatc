@@ -67,6 +67,8 @@ public:
 	int port;
     bool otkey;
 
+    int overrideversion;
+
 
 
 
