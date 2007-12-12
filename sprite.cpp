@@ -386,7 +386,8 @@ void Sprite::addColor(float r, float g, float b)
     for (int i=0; i < m_image->w; i++)
         for (int j=0; j < m_image->h; j++) {
             SDL_GetRGB(getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo);
-            putPixel(i, j, SDL_MapRGB(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b)), m_coloredimage);
+            if (ro!=255 || go!=0 || bo!=255)
+                putPixel(i, j, SDL_MapRGB(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b)), m_coloredimage);
         }
     m_r = r; m_g = g; m_b = b;
     Stretch(getImage()->w, getImage()->h, -1, true);

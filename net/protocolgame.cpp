@@ -42,7 +42,7 @@ void ProtocolGame::onConnect()
 	NetworkMessage output(NetworkMessage::CAN_WRITE);
 	output.addU8(0x0A); //Game world Protocol
 	output.addU16(config.getOS());
-	output.addU16(config.getClientVersion());
+	output.addU16(config.getVersionOverride() ? config.getVersionOverride() : config.getClientVersion());
 
 	int sizeBefore = output.getSize();
 

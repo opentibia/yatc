@@ -21,6 +21,9 @@
 /// \file main.cpp
 /// This file contains the main(int,char**) function.
 
+#define MAXFPS 35
+
+
 #include <SDL/SDL.h>
 #include <GLICT/globals.h>
 #include <sstream>
@@ -89,6 +92,82 @@ void onKeyDown(const SDL_Event& event)
 	}
 }
 
+
+#ifdef WIN32
+
+
+/*  Declare Windows procedure  */
+LRESULT CALLBACK win32splashWindowProcedure (HWND, UINT, WPARAM, LPARAM);
+HWND win32splashhwnd;               /* This is the handle for our window */
+
+int showSplashScreen() {
+    HWND hwnd;               /* This is the handle for our window */
+//    MSG messages;            /* Here messages to the application are saved */
+    WNDCLASSEX wincl;        /* Data structure for the windowclass */
+
+    /* The Window structure */
+    wincl.hInstance = NULL;//hThisInstance;
+    wincl.lpszClassName = "YATCSplash";
+    wincl.lpfnWndProc = win32splashWindowProcedure;      /* This function is called by windows */
+    wincl.style = CS_DBLCLKS;                 /* Catch double-clicks */
+    wincl.cbSize = sizeof (WNDCLASSEX);
+
+    /* Use default icon and mouse-pointer */
+    wincl.hIcon = LoadIcon (NULL, IDI_APPLICATION);
+    wincl.hIconSm = LoadIcon (NULL, IDI_APPLICATION);
+    wincl.hCursor = LoadCursor (NULL, IDC_ARROW);
+    wincl.lpszMenuName = NULL;                 /* No menu */
+    wincl.cbClsExtra = 0;                      /* No extra bytes after the window class */
+    wincl.cbWndExtra = 0;                      /* structure or the window instance */
+    /* Use Windows's default colour as the background of the window */
+    wincl.hbrBackground = (HBRUSH) COLOR_BACKGROUND;
+
+    /* Register the window class, and if it fails quit the program */
+    if (!RegisterClassEx (&wincl))
+        return 0;
+
+    /* The class is registered, let's create the program*/
+    hwnd = CreateWindowEx (
+           0,                   /* Extended possibilites for variation */
+           "YATCSplash",         /* Classname */
+           "Loading YATC",       /* Title Text */
+           WS_OVERLAPPEDWINDOW, /* default window */
+           CW_USEDEFAULT,       /* Windows decides the position */
+           CW_USEDEFAULT,       /* where the window ends up on the screen */
+           544,                 /* The programs width */
+           375,                 /* and height in pixels */
+           HWND_DESKTOP,        /* The window is a child-window to desktop */
+           NULL,                /* No menu */
+           NULL,//hThisInstance,       /* Program Instance handler */
+           NULL                 /* No Window Creation data */
+           );
+
+    /* Make the window visible on the screen */
+    ShowWindow (hwnd, 1);//nCmdShow);
+
+
+}
+
+
+LRESULT CALLBACK win32splashWindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)                  /* handle the messages */
+    {
+        case WM_DESTROY:
+            PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
+            break;
+        default:                      /* for messages that we don't deal with */
+            return DefWindowProc (hwnd, message, wParam, lParam);
+    }
+
+    return 0;
+}
+
+void hideSplashScreen() {
+    DestroyWindow(win32splashhwnd);
+}
+#endif
+
 /// \brief Main program function
 ///
 /// This function does very little on its own. It manages some output to
@@ -112,6 +191,8 @@ int main(int argc, char *argv[])
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "No Winsock 2.2 found!");
 		return -1;
 	}
+
+	//showSplashScreen(); // useful on WINCE and generally on slow computers...
 #endif
 
 
@@ -154,6 +235,7 @@ int main(int argc, char *argv[])
 	}
 
 
+    SDL_WM_SetCaption("YATC v0.1", NULL);
 	try {
 
 		switch(options.engine) {
@@ -162,11 +244,7 @@ int main(int argc, char *argv[])
 				g_engine = new EngineGL;
 				break;
 			#endif
-			/*
-			case ENGINE_DIRECTX:
-				g_engine = new EngineDX;
-				break;
-			*/
+
 			default:
 				DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Unknown engine was selected. Falling back to SDL.");
 				options.engine = ENGINE_SDL;
@@ -194,8 +272,9 @@ int main(int argc, char *argv[])
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
-		SDL_WM_SetCaption("YATC v0.1", NULL);
-
+        #ifdef WIN32
+        hideSplashScreen();
+        #endif
         g_running = true;
 
 		SDL_Event event;
@@ -246,9 +325,10 @@ int main(int argc, char *argv[])
 			g_frameTime = SDL_GetTicks();
 
 
-            if (g_frameTime-beginticks < 100)
-                SDL_Delay(100 - (g_frameTime - beginticks)); //limit to 10fps
+            if (g_frameTime-beginticks < 1000/MAXFPS-10)
+                SDL_Delay(1000/MAXFPS - (g_frameTime - beginticks)-10); //limit to 10fps
 
+            while (abs((int)SDL_GetTicks() - beginticks) < 1000/MAXFPS);
 
 			//check connection
 			if(g_connection){

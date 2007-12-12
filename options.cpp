@@ -61,6 +61,7 @@ Options::Options()
 	server = "change.me.now";
 	port = 7171;
 	otkey = true;
+	overrideversion = 0;
 }
 
 Options::~Options()
@@ -150,6 +151,9 @@ void Options::Save()
 	ss << otkey;
 	section->addKey("otkey", ss.str());
 	ss.str("");
+	ss << overrideversion;
+	section->addKey("overrideversion", ss.str());
+	ss.str("");
 
 	configHandler->saveConfig("yatc.cfg");
 }
@@ -204,6 +208,7 @@ void Options::Load()
 	server = configHandler->getKeyValue("network", "server");
 	port = atoi(configHandler->getKeyValue("network", "port").c_str());
     otkey = (atoi(configHandler->getKeyValue("network", "otkey").c_str()) == 1);
+    overrideversion = atoi(configHandler->getKeyValue("network", "overrideversrion").c_str());
 
 	configHandler->clear();
 }

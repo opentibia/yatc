@@ -95,7 +95,9 @@ class ProtocolConfig
 			return instance;
 		}
 
+        uint32_t readSignature(const char* fn);
 		void setVersion(ClientOS_t os, ClientVersion_t version);
+		void setVersionOverride(uint16_t version);
 		void setServerType(ServerType_t type);
 		void setServer(const std::string& host, uint16_t port){
 			m_host = host;
@@ -104,6 +106,7 @@ class ProtocolConfig
 
 		ClientOS_t getOS() { return m_os; }
 		ClientVersion_t getClientVersion() { return m_clientVersion; }
+		uint16_t getVersionOverride() { return m_overrideVersion; }
 		uint32_t getDatSignature() { return m_datSignature; }
 		uint32_t getSprSignature() { return m_sprSignature; }
 		uint32_t getPicSignature() { return m_picSignature; }
@@ -118,6 +121,7 @@ class ProtocolConfig
 
 		ClientOS_t m_os;
 		ClientVersion_t m_clientVersion;
+		uint8_t m_overrideVersion;
 		uint32_t m_datSignature;
 		uint32_t m_sprSignature;
 		uint32_t m_picSignature;
