@@ -46,8 +46,34 @@ bool EncXTEA::encrypt(NetworkMessage& msg)
 	uint32_t* buffer = (uint32_t*)msg.getBuffer();
 
 
+
+	// FIXME (ivucica#2#) implement a recommendation from Pedro Alves from CeGCC development mailing list to fix ARM problems; his text below:
+	// --------- BEGIN QUOTE ---------------
+	// Why don't you just do something like:
+
+    //   uint8_t* buffer = (uint8_t*)msg.getBuffer();
+
+    //   int read_post = 0;
+    //   while (read_pos < messageLength) {
+    //           uint32_t v0 = read32(buffer);
+    //           uint32_t v1 = read32(buffer + 4);
+    //
+    //           (...)
+    //
+    //           write32(buffer, v0);
+    //           write32(buffer + 4, v1);
+    //           read_pos += 8;
+    //   }
+
+	// ... and write read32/write32 as macros or inline functions that
+	// just copy and just a few bytes:
+
+	// uin32_t read32(uint8_t*);
+	// void write32(uint8_t*, uin32_t);
+	// ----------- END QUOTE --------------------
+
 	#ifdef WINCE
-	// due to compiler bug, we'll do a memcpy instead of directly accessing
+	// due to ARM architectural difference, we'll do a memcpy instead of directly accessing
 	// casting into something else, and then using it with [] crashes
 	//
 	buffer = (uint32_t*)malloc(messageLength);
@@ -96,9 +122,10 @@ bool EncXTEA::decrypt(NetworkMessage& msg)
 
 	int32_t messageLength = msg.getReadSize();
 
+	// FIXME (ivucica#2#) implement a recommendation from Pedro Alves from CeGCC development mailing list to fix ARM problems; his text in another comment  in this file
 
 	#ifdef WINCE
-	// due to compiler bug, we'll do a memcpy instead of directly accessing
+	// due to ARM architectural difference, we'll do a memcpy instead of directly accessing
 	// casting into something else, and then using it with [] crashes
 	buffer = (uint32_t*)malloc(messageLength);
 	memcpy(buffer, msg.getReadBuffer(), messageLength);
