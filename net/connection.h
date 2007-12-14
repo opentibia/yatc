@@ -121,7 +121,7 @@ class ProtocolConfig
 
 		ClientOS_t m_os;
 		ClientVersion_t m_clientVersion;
-		uint8_t m_overrideVersion;
+		uint16_t m_overrideVersion;
 		uint32_t m_datSignature;
 		uint32_t m_sprSignature;
 		uint32_t m_picSignature;
