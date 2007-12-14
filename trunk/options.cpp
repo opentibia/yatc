@@ -208,7 +208,7 @@ void Options::Load()
 	server = configHandler->getKeyValue("network", "server");
 	port = atoi(configHandler->getKeyValue("network", "port").c_str());
     otkey = (atoi(configHandler->getKeyValue("network", "otkey").c_str()) == 1);
-    overrideversion = atoi(configHandler->getKeyValue("network", "overrideversrion").c_str());
+    overrideversion = atoi(configHandler->getKeyValue("network", "overrideversion").c_str());
 
 	configHandler->clear();
 }

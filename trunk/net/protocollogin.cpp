@@ -36,10 +36,14 @@ void ProtocolLogin::onConnect()
 	NetworkMessage output(NetworkMessage::CAN_WRITE);
 	output.addU8(0x01); //Login Protocol
 	output.addU16(config.getOS());
-	output.addU16(config.getClientVersion());
+	output.addU16(config.getVersionOverride() ? config.getVersionOverride() : config.getClientVersion());
 	output.addU32(config.getDatSignature());
 	output.addU32(config.getSprSignature());
 	output.addU32(config.getPicSignature());
+
+
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Logging on with version: %d dat: %08x spr: %08x pic: %08x\n", config.getVersionOverride() ? config.getVersionOverride() : config.getClientVersion(), config.getDatSignature(), config.getSprSignature(), config.getPicSignature());
+
 
 	int sizeBefore = output.getSize();
 
