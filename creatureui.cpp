@@ -25,7 +25,6 @@
 #include "fassert.h"
 #include "gamecontent/creature.h"
 CreatureUI::CreatureUI() : ThingUI() {
-
 	//m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", Objects::getInstance()->getOutfitType(1)->imageData[0]));
 	m_obj = NULL;
 }
@@ -89,16 +88,28 @@ void CreatureUI::loadOutfit() {
     Creature* n = (Creature*)this;
     DEBUGPRINT(0,0,"Loading creature %d (itemlook %d)\n", n->getOutfit().m_looktype, n->getOutfit().m_lookitem);
 
-	if (!n->getOutfit().m_looktype && !n->getOutfit().m_lookitem)
+	Outfit_t outfit = n->getOutfit();
+
+	if (!outfit.m_looktype && !outfit.m_lookitem) {
 		m_obj = Objects::getInstance()->getItemType(100); // FIXME (ivucica#1#) Completely wrong, but it will have to do for now since otherwise it crashes. it should be invisible
-	else
-    if (n->getOutfit().m_lookitem != 0) {
-        m_obj = Objects::getInstance()->getItemType(n->getOutfit().m_lookitem);
+	} else if (outfit.m_lookitem != 0) {
+        m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
     } else {
-       m_obj = Objects::getInstance()->getOutfitType(n->getOutfit().m_looktype);
+       m_obj = Objects::getInstance()->getOutfitType(outfit.m_looktype);
     }
 
-	for(uint32_t i = 0; i < m_obj->numsprites; i++){
-		m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", m_obj->imageData[i]));
+	for(uint32_t i = 0; i < m_obj->numsprites ; i++){
+		Sprite *spr;
+
+		if (m_obj->blendframes > 1) {
+            if ((i / (m_obj->height * m_obj->width)) % 2 ) { // if it's a template, then let's just put a NULL in there
+                m_gfx.insert(m_gfx.end(), NULL);
+                continue;
+            }
+        }
+
+		spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
+		spr->templatedColorize(&spr[i + m_obj->height * m_obj->width], outfit.m_lookhead, outfit.m_lookbody, outfit.m_looklegs, outfit.m_lookfeet);
+		m_gfx.insert(m_gfx.end(), spr);
 	}
 }
