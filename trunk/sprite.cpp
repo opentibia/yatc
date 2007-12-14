@@ -33,6 +33,7 @@
 #include "sprdata.h"
 #include <math.h>
 #include "wince.h"
+#include "gamecontent/creature.h"
 
 #pragma pack(1)
 typedef struct {
@@ -273,7 +274,26 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magenta is transparent
 }
+void Sprite::templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b)
+{
+	uint8_t ro = (Creatures::OutfitLookupTable[color] & 0xFF0000) >> 16;
+	uint8_t go = (Creatures::OutfitLookupTable[color] & 0xFF00) >> 8;
+	uint8_t bo = (Creatures::OutfitLookupTable[color] & 0xFF);
+	r = (unsigned char)(r * (ro / 255.f));
+    g = (unsigned char)(g * (go / 255.f));
+    b = (unsigned char)(b * (bo / 255.f));
 
+
+}
+void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet)
+{
+/*	for (int i=0; i < m_height; i++) {
+		for (int j=0; i < m_width; j++) {
+			uint16_t pixel = getPixel(j,i,m_image);
+
+		}
+	}*/
+}
 
 void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
 {
