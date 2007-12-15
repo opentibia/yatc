@@ -32,6 +32,7 @@
 #include "rsa.h"
 #include "protocollogin.h"
 #include "protocolgame80.h"
+#include "protocolgame81.h"
 #include "../debugprint.h"
 
 const char RSAKey_otserv[] = "109120132967399429278860960508995541528237502902798129123468757937266291492576446330739696001110603907230888610072655818825358503429057592827629436413108566029093628212635953836686562675849720620786279431090218017681061521755056710823876476444260558147179707119674283982419152118103759076030616683978566631413";
@@ -43,7 +44,7 @@ ProtocolConfig::ProtocolConfig()
 {
 	m_host = "localhost";
 	m_port = 7171;
-	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_800);
+	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_810);
 	setServerType(SERVER_OTSERV);
 	setVersionOverride(0); // no override
 }
@@ -61,12 +62,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	switch(version){
 	case CLIENT_VERSION_800:
 		m_clientVersion = CLIENT_VERSION_800;
-
-		// ivucica: imho this is now read from pic, dat and spr files and fed to protocolconfig another way
-		//m_datSignature = 0x467FD7E6;
-		//m_sprSignature = 0x467F9E74;
-		//m_picSignature = 0x45670923;
-
+		break;
+	case CLIENT_VERSION_810:
+		m_clientVersion = CLIENT_VERSION_810;
 		break;
 	default:
 		ASSERT(0);
@@ -113,6 +111,9 @@ ProtocolGame* ProtocolConfig::createGameConnection(int account, const std::strin
 	switch(getInstance().m_clientVersion){
 	case CLIENT_VERSION_800:
 		protocol = new ProtocolGame80(account, password, name, isGM);
+		break;
+	case CLIENT_VERSION_810:
+		protocol = new ProtocolGame81(account, password, name, isGM);
 		break;
 	default:
 		return NULL;

@@ -71,7 +71,8 @@ class Connection;
 class ProtocolGame;
 
 enum ClientVersion_t{
-	CLIENT_VERSION_800 = 800
+	CLIENT_VERSION_800 = 800,
+	CLIENT_VERSION_810 = 810
 };
 
 enum ClientOS_t{
