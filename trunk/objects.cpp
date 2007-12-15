@@ -210,6 +210,14 @@ bool Objects::loadDat(const char* filename)
 	ObjectType::maxDistanceId = read_short;
 	maxObjects += ObjectType::maxDistanceId;
 
+	/*
+	 * A T T E N T I O N ! ! !
+	 *
+	 * Do not update the reader to 8.1 without first making it possible
+	 * to choose between 8.1 and 8.0 reader. We want to be able to load
+	 * older formats as well.
+	 */
+
 
 	while(ftell(fp) < size && id <= maxObjects){
 		ObjectType* oType = new ObjectType(id);
