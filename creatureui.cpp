@@ -24,14 +24,16 @@
 #include "engine.h"
 #include "fassert.h"
 #include "gamecontent/creature.h"
-CreatureUI::CreatureUI() : ThingUI() {
+CreatureUI::CreatureUI() : ThingUI()
+{
 	//m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", Objects::getInstance()->getOutfitType(1)->imageData[0]));
 	m_obj = NULL;
 }
 
 
 
-void CreatureUI::Blit(int x,int y, float scale) const {
+void CreatureUI::Blit(int x,int y, float scale) const
+{
 	int m_frame=0;
 	struct { int x, y; } m_pos = {0, 0};
 
@@ -84,7 +86,14 @@ void CreatureUI::Blit(int x,int y, float scale) const {
 
 }
 
-void CreatureUI::loadOutfit() {
+void CreatureUI::drawName(int x, int y, float scale) const
+{
+	Creature* n = (Creature*)this;
+	g_engine->drawText(n->getName().c_str() , "gamefont", x, y-10, 150);
+}
+
+void CreatureUI::loadOutfit()
+{
     Creature* n = (Creature*)this;
     DEBUGPRINT(0,0,"Loading creature %d (itemlook %d)\n", n->getOutfit().m_looktype, n->getOutfit().m_lookitem);
 
@@ -99,7 +108,7 @@ void CreatureUI::loadOutfit() {
     }
 
 	for(uint32_t i = 0; i < m_obj->numsprites ; i++){
-		Sprite *spr;
+		Sprite *spr, *tspr;
 
 		if (m_obj->blendframes > 1) {
             if ((i / (m_obj->height * m_obj->width)) % 2 ) { // if it's a template, then let's just put a NULL in there
@@ -109,7 +118,10 @@ void CreatureUI::loadOutfit() {
         }
 
 		spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
-		spr->templatedColorize(&spr[i + m_obj->height * m_obj->width], outfit.m_lookhead, outfit.m_lookbody, outfit.m_looklegs, outfit.m_lookfeet);
+		tspr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i + m_obj->height * m_obj->width]);
+		if (i + m_obj->height * m_obj->width < m_obj->numsprites)
+			spr->templatedColorize(tspr, outfit.m_lookhead, outfit.m_lookbody, outfit.m_looklegs, outfit.m_lookfeet);
+		delete tspr;
 		m_gfx.insert(m_gfx.end(), spr);
 	}
 }

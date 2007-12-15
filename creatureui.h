@@ -29,8 +29,10 @@ public:
 	CreatureUI();
 	virtual void Blit(int x,int y, float scale = 1.) const;
 	void loadOutfit();
+	void drawName(int x, int y, float scale) const;
 private:
 	ObjectType *m_obj;
+
 };
 
 #endif

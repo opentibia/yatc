@@ -40,6 +40,7 @@ class Engine
 		virtual void doResize(int w, int h);
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
 		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color) {}
+		virtual void drawText(const char* text, const char* font, int x, int y, uint8_t color);
 
 		int getWindowWidth() const {return m_width;};
 		int getWindowHeight() const {return m_height;};
@@ -70,7 +71,7 @@ class Engine
 		float m_fps;
 		SDL_TimerID m_fpstimer ;
 
-		glictFont *m_sysfont, *m_minifont, *m_aafont;
+		glictFont *m_sysfont, *m_minifont, *m_aafont, *m_gamefont;
 		SDL_Surface* m_screen;
 		int m_videoflags;
 
