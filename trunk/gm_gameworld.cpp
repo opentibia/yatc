@@ -26,6 +26,7 @@
 #include "gamecontent/globalvars.h"
 #include "gamecontent/map.h"
 #include "gamecontent/item.h"
+#include "gamecontent/creature.h"
 #include "net/connection.h"
 #include "net/protocolgame.h"
 
@@ -196,6 +197,37 @@ void GM_Gameworld::updateScene()
 
 		}
 	}
+
+
+	// draw always-on-top things
+	// (currently only creature names)
+
+	for(uint32_t i = 0; i < 18; ++i){
+		for(uint32_t j = 0; j < 14; ++j){
+			const Tile* tile = Map::getInstance().getTile(pos.x + i - 9, pos.y + j - 7, pos.z);
+			if(!tile){
+				//printf("No tile?\n");
+				continue;
+			}
+
+			int screenx = (int)(i*scaledSize);
+			int screeny = (int)(j*scaledSize);
+
+			int32_t thingsCount = tile->getThingCount() - 1;
+			int32_t drawIndex = 1, lastTopIndex;
+			while(drawIndex <= thingsCount){
+
+				const Thing* thing = tile->getThingByStackPos(drawIndex);
+				if(thing){
+					if (thing->getCreature())
+						thing->getCreature()->drawName(screenx, screeny, scale);
+				}
+				drawIndex++;
+			}
+
+		}
+	}
+
 
 	desktop.Paint();
 }

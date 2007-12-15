@@ -115,6 +115,7 @@ Engine::Engine()
 	initFont(&m_sysfont, "system");
 	initFont(&m_minifont, "minifont");
 	initFont(&m_aafont, "aafont");
+	initFont(&m_gamefont, "gamefont");
 
 	m_fps = 0.;
 
@@ -130,9 +131,11 @@ Engine::~Engine()
 	glictDeleteFont("system");
 	glictDeleteFont("minifont");
 	glictDeleteFont("aafont");
+	glictDeleteFont("gamefont");
 }
 
-Uint32 Engine::fpsTimer(Uint32 interval, void*param) {
+Uint32 Engine::fpsTimer(Uint32 interval, void*param)
+{
     char caption[255];
 
     g_engine->m_fps = (g_frames / (float)interval) * 1000;
@@ -144,7 +147,8 @@ Uint32 Engine::fpsTimer(Uint32 interval, void*param) {
 }
 
 
-void Engine::initFont(glictFont **fnt, const char *fontname) {
+void Engine::initFont(glictFont **fnt, const char *fontname)
+{
 	*fnt = glictCreateFont(fontname);
 	if(!*fnt){
 		std::stringstream s;
@@ -153,6 +157,12 @@ void Engine::initFont(glictFont **fnt, const char *fontname) {
 	}
 	(*fnt)->SetRenderFunc(Engine::font_render);
 	(*fnt)->SetSizeFunc(Engine::font_size);
+}
+
+void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t color)
+{
+	// TODO (ivucica#2#) stub -- we'll just render in white for now. later we must recolor, and paint it ourselves instead of delegating to glic
+	glictFontRender(text, font, x, y);
 }
 
 void Engine::doResize(int w, int h)

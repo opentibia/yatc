@@ -63,6 +63,7 @@ class Sprite
 
 		SDL_Surface* getColoredImage() { return m_stretchimage ? m_stretchimage : ((m_r != 1. || m_g != 1. || m_b != 1.) ? m_coloredimage : m_image); }
 		SDL_Surface* getImage() { return m_stretchimage ? m_stretchimage : m_image; }
+		SDL_Surface* getBasicImage() { return m_image; }
 		#ifdef USE_OPENGL
 		GLuint getPixelFormat() { return m_pixelformat; }
 		#endif

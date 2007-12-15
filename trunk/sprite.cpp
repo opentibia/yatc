@@ -276,23 +276,93 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 }
 void Sprite::templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b)
 {
-	uint8_t ro = (Creatures::OutfitLookupTable[color] & 0xFF0000) >> 16;
+	uint8_t ro = (Creatures::OutfitLookupTable[color] & 0xFF0000) >> 16; // rgb outfit
 	uint8_t go = (Creatures::OutfitLookupTable[color] & 0xFF00) >> 8;
 	uint8_t bo = (Creatures::OutfitLookupTable[color] & 0xFF);
-	r = (unsigned char)(r * (ro / 255.f));
-    g = (unsigned char)(g * (go / 255.f));
-    b = (unsigned char)(b * (bo / 255.f));
-
-
+	r = (uint8_t)(r * (ro / 255.f));
+    g = (uint8_t)(g * (go / 255.f));
+    b = (uint8_t)(b * (bo / 255.f));
 }
 void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet)
 {
-/*	for (int i=0; i < m_height; i++) {
-		for (int j=0; i < m_width; j++) {
-			uint16_t pixel = getPixel(j,i,m_image);
+	if (!templatespr)  {
+		printf("!templatespr\n");
+		return;
+	}
+	if (!templatespr->getBasicImage()) {
+		printf("!templatespr->getBasicImage()\n");
+		return;
+	}
+	if (!m_image) {
+		printf("!m_image\n");
+		return;
+	}
+	for (int i=0; i < m_image->h; i++) {
+		for (int j=0; j < m_image->w; j++) {
+			uint32_t pixel = getPixel(j,i,m_image);
+			uint32_t templatepixel = getPixel(j,i,templatespr->getBasicImage());
+			uint8_t rt, gt, bt; // rgb template
+			uint8_t ro, go, bo; // rgb original
 
+			SDL_GetRGB(templatepixel, templatespr->getBasicImage()->format, &rt, &gt, &bt);
+			SDL_GetRGB(pixel, m_image->format, &ro, &go, &bo);
+
+			if (rt && gt && !bt) // yellow == head
+				templatedColorizePixel(head, ro, go, bo);
+			else
+			if (rt && !gt && !bt) // red == body
+				templatedColorizePixel(body, ro, go, bo);
+			else
+			if (!rt && gt && !bt) // green == legs
+				templatedColorizePixel(legs, ro, go, bo);
+			else
+			if (!rt && !gt && bt) // blue == feet
+				templatedColorizePixel(feet, ro, go, bo);
+			else
+				continue; // to if nothing changed, skip the change of pixel
+
+			putPixel(j, i, SDL_MapRGB(getBasicImage()->format, ro, go, bo), m_image);
 		}
-	}*/
+	}
+
+
+/*
+	for (int i=0; i < 32; i++) {
+        for (int j = 0; j < 32; j++) if (templatepixels[i * 32 + j].a) {
+            if  (templatepixels[i * 32 + j].r && // Yellow == head
+                 templatepixels[i * 32 + j].g &&
+                !templatepixels[i * 32 + j].b) {
+                    FIXCOLORS(head)
+                }
+
+            if  (templatepixels[i * 32 + j].r && // Red == body
+                !templatepixels[i * 32 + j].g &&
+                !templatepixels[i * 32 + j].b) {
+                    FIXCOLORS(body)
+                }
+
+
+            if (!templatepixels[i * 32 + j].r && // Green == legs
+                 templatepixels[i * 32 + j].g &&
+                !templatepixels[i * 32 + j].b) {
+                    FIXCOLORS(legs)
+                }
+
+            if (!templatepixels[i * 32 + j].r && // Blue == feet
+                !templatepixels[i * 32 + j].g &&
+                 templatepixels[i * 32 + j].b) {
+                    FIXCOLORS(feet)
+                }
+
+
+
+            //printf("*");
+        } //else printf(" ");
+        //printf("\n");
+    }
+    return pixels;
+*/
+
 }
 
 void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)

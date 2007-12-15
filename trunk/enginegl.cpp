@@ -49,6 +49,7 @@ EngineGL::EngineGL()
 	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
 	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
 	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
+	m_gamefont->SetFontParam(new Font("Tibia.pic", 4, createSprite("Tibia.pic", 4)));
 
 	initEngine();
 
