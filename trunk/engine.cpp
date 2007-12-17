@@ -56,8 +56,8 @@ void Engine::font_render(const char* txt, const void* font, float fontsize, floa
 		switch(*t) {
 			default:
 				f->Blit(*t,(int)cx,(int)cy);
-				cx += f->getWidth(*t);
-				sizesofar += f->getWidth(*t);
+				cx += f->getWidth(*t)+1;
+				sizesofar += f->getWidth(*t)+1;
 				break;
 			case '\n':
 			case '\r':

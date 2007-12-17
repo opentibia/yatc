@@ -152,7 +152,7 @@ public:
 		if (currentres.w) {
 			options.w = currentres.w; options.h = currentres.h; options.bpp = currentres.bpp;
 		}
-		g_engine.doResize(currentres.w, currentres.h);
+		g_engine->doResize(currentres.w, currentres.h);
 	}
 
 	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
