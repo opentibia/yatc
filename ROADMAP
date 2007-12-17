@@ -1,0 +1,43 @@
+YATC Roadmap
+============
+Here's a small proposed roadmap for YATC. Changes are ok before work starts
+on a certain release, changing after not recommended. (0.1 being exception.)
+
+Work on areas not outlined for a release should be discouraged. Order in the
+list also kind of denotes priority.
+
+Note: at the moment this was assembled only by ivucica, other developers
+should comment.
+
+0.1
+---
+* full multilevel map rendering
+* moving +
+* console
+* talking
+* rendering inventory
+
+0.2
+---
+* outfit change window
+* add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
+* smooth creature scrolling
+* smooth screen scrolling
+* turning
+* completely fixing GL engine
+* attacking
+* using
+* private messaging with tabs
+* skill box
+* fix the status window not appearing after one login failure (perhaps customize instead of using glict msgbox?)
+
+0.3
+---
+* trading
+
+...
+
+0.4
+---
+
+...

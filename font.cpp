@@ -55,6 +55,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 			charw[(unsigned char)' '] = 4;
 			charw[(unsigned char)'.'] = 3;
+			charw[(unsigned char)','] = 3; charh[(unsigned char)','] = 10;
 			charw[(unsigned char)'!'] = 3;
 			charw[(unsigned char)':'] = 3;
 			charw[(unsigned char)'\''] = 3; charh[(unsigned char)'\''] = 3;

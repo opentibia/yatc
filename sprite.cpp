@@ -118,14 +118,13 @@ Sprite::~Sprite()
 }
 
 
-
+#include "util.h" // REMOVE ME
 void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	size_t extbegins = filename.rfind(".") + 1;
 	std::string extension;
 	if(extbegins != std::string::npos){
 		extension = filename.substr(extbegins, filename.length() - extbegins);
 	}
-
 	if(extension == "bmp"){
 		m_image = SDL_LoadBMP(filename.c_str());
 		if(!m_image){
@@ -174,7 +173,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 		// dont make static since if we change the rendering engine at runtime,
 		//  this may change too
-		Uint32 magenta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
+		Uint32 magenta = SDL_MapRGB(m_image->format, 255, 0, 255);
 		SDL_FillRect(m_image, NULL, magenta);
 
 		// read the data
@@ -228,7 +227,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 					return;
 				}
 				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, ":: Created surface\n");
-				magenta = SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 255, 0, 255);
+				magenta = SDL_MapRGB(s->format, 255, 0, 255);
 				SDL_FillRect(s, NULL, magenta);
 
 				for(int j = 0; j < ph.height; j++){
@@ -272,7 +271,17 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 	m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
 
-	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(SDL_GetVideoInfo()->vfmt, 0xFF, 0, 0xFF)); // magenta is transparent
+	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(m_image->format, 0xFF, 0, 0xFF)); // magenta is transparent
+
+
+	{
+		SDL_Surface *ns=SDL_DisplayFormatAlpha(m_image);
+		if (ns) {
+			SDL_FreeSurface(m_image);
+			m_image=ns;
+		}
+	}
+
 }
 void Sprite::templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b)
 {
@@ -324,44 +333,6 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 			putPixel(j, i, SDL_MapRGB(getBasicImage()->format, ro, go, bo), m_image);
 		}
 	}
-
-
-/*
-	for (int i=0; i < 32; i++) {
-        for (int j = 0; j < 32; j++) if (templatepixels[i * 32 + j].a) {
-            if  (templatepixels[i * 32 + j].r && // Yellow == head
-                 templatepixels[i * 32 + j].g &&
-                !templatepixels[i * 32 + j].b) {
-                    FIXCOLORS(head)
-                }
-
-            if  (templatepixels[i * 32 + j].r && // Red == body
-                !templatepixels[i * 32 + j].g &&
-                !templatepixels[i * 32 + j].b) {
-                    FIXCOLORS(body)
-                }
-
-
-            if (!templatepixels[i * 32 + j].r && // Green == legs
-                 templatepixels[i * 32 + j].g &&
-                !templatepixels[i * 32 + j].b) {
-                    FIXCOLORS(legs)
-                }
-
-            if (!templatepixels[i * 32 + j].r && // Blue == feet
-                !templatepixels[i * 32 + j].g &&
-                 templatepixels[i * 32 + j].b) {
-                    FIXCOLORS(feet)
-                }
-
-
-
-            //printf("*");
-        } //else printf(" ");
-        //printf("\n");
-    }
-    return pixels;
-*/
 
 }
 
@@ -470,15 +441,21 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
 
 void Sprite::addColor(float r, float g, float b)
 {
-    uint8_t ro, go, bo;  // old rgb
+    uint8_t ro, go, bo, ao;  // old rgba
+    uint32_t pv; // pixel value
     if (r == m_r && g == m_g && b == m_b)
         return;
     for (int i=0; i < m_image->w; i++)
         for (int j=0; j < m_image->h; j++) {
-            SDL_GetRGB(getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo);
-            if (ro!=255 || go!=0 || bo!=255)
-                putPixel(i, j, SDL_MapRGB(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b)), m_coloredimage);
+            SDL_GetRGBA(pv=getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo, &ao);
+			if (ao)
+                putPixel(i, j, SDL_MapRGBA(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
         }
     m_r = r; m_g = g; m_b = b;
     Stretch(getImage()->w, getImage()->h, -1, true);
+}
+#include "util.h" // REMOVE ME
+void Sprite::setAsIcon() {
+	if (!m_image) NativeGUIError("Issue","Yes");
+	SDL_WM_SetIcon(m_image,NULL);
 }

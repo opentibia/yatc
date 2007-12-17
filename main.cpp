@@ -37,6 +37,8 @@
 #include "util.h"
 #include "skin.h"
 #include "config.h"
+#include "spritesdl.h" // to load icon
+
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -207,10 +209,24 @@ int main(int argc, char *argv[])
 		" Review LICENSE in YATC distribution for details.\n");
 
 
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Checking graphics files existence...");
+	{
+		FILE*f = fopen("Tibia.pic","r");
+		if (!f) {
+			NativeGUIError("Loading the data file 'Tibia.pic' has failed.\nPlease place 'Tibia.pic' in the same folder as YATC.", "YATC Fatal Error");
+			exit(1);
+		} else fclose(f);
+		f = fopen("Tibia.spr","r");
+		if (!f) {
+			NativeGUIError("Loading the data file 'Tibia.spr' has failed\nPlease place 'Tibia.spr' in the same folder as YATC.", "YATC Fatal Error");
+		}
+	}
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " passed\n");
+
 	options.Load();
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data files...\n");
-	if(!Objects::getInstance()->loadDat("Tibia.dat")){ //TODO (Smygflik#3#), inform the user with a messagebox
+	if(!Objects::getInstance()->loadDat("Tibia.dat")){ //DONE (Smygflik#3#), inform the user with a messagebox
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file failed!");
 		NativeGUIError("Loading the data file 'Tibia.dat' has failed.\nPlease place 'Tibia.dat' in the same folder as YATC.", "YATC Fatal Error");
 		exit(1);
@@ -234,8 +250,17 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+	{
+		g_engine = NULL;
+		SDL_WM_SetCaption("YATC v0.1", "YATC v0.1");
+		SpriteSDL *s = new SpriteSDL("Tibia.spr", 13855);
+		SpriteSDL *st = new SpriteSDL("Tibia.spr", 13575);
+		s->templatedColorize(st, 79, 94, 88, 82);
+		s->setAsIcon();
+		delete s;
+		delete st;
+	}
 
-    SDL_WM_SetCaption("YATC v0.1", NULL);
 	try {
 
 		switch(options.engine) {

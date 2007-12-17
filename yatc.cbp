@@ -96,7 +96,7 @@
 			</Target>
 			<Target title="Debug WinCE">
 				<Option platforms="Unix;" />
-				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option output="yatc.exe" prefix_auto="0" extension_auto="0" />
 				<Option object_output=".objswince/" />
 				<Option type="1" />
 				<Option compiler="mingw32ce_gnu_gcc_compiler" />
@@ -116,6 +116,34 @@
 					<Add option="-lSDL_gfx" />
 				</Linker>
 			</Target>
+			<Target title="Debug MinGW32">
+				<Option platforms="Unix;" />
+				<Option output="yatc.exe" prefix_auto="0" extension_auto="0" />
+				<Option object_output=".objsmingw/" />
+				<Option type="0" />
+				<Option compiler="mingw_gnu_gcc_compiler" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-pedantic" />
+					<Add option="-Wall" />
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-DUSEASSERT" />
+					<Add option="-DUSE_OPENGL" />
+				</Compiler>
+				<Linker>
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-lgmp" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
+					<Add option="-g3 -O0" />
+				</Linker>
+			</Target>
 		</Build>
 		<VirtualTargets>
 			<Add alias="All" targets="Debug Unix;Release Unix;Debug Windows;Release Windows;" />
@@ -131,6 +159,7 @@
 		</Linker>
 		<Unit filename="LICENSE" />
 		<Unit filename="README" />
+		<Unit filename="ROADMAP" />
 		<Unit filename="codeguide.txt" />
 		<Unit filename="confighandler.cpp" />
 		<Unit filename="confighandler.h" />
@@ -168,11 +197,13 @@
 			<Option target="Debug Unix" />
 			<Option target="Debug Windows" />
 			<Option target="Debug WinCE" />
+			<Option target="Debug MinGW32" />
 		</Unit>
 		<Unit filename="gm_debug.h">
 			<Option target="Debug Unix" />
 			<Option target="Debug Windows" />
 			<Option target="Debug WinCE" />
+			<Option target="Debug MinGW32" />
 		</Unit>
 		<Unit filename="gm_gameworld.cpp" />
 		<Unit filename="gm_gameworld.h" />
@@ -203,6 +234,11 @@
 		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
 		<Unit filename="options.h" />
+		<Unit filename="resources.rc">
+			<Option target="Debug Windows" />
+			<Option target="Release Windows" />
+			<Option target="Debug MinGW32" />
+		</Unit>
 		<Unit filename="skin.cpp" />
 		<Unit filename="skin.h" />
 		<Unit filename="sprdata.c">

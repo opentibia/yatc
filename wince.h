@@ -6,7 +6,7 @@
 #define WINCE_INSTALLDIR "/Storage Card/YATC/"
 
 
-#include "util.h" // FIXME (ivucica#1#) REMOVEME we dont need a debug nativeguierror anymore
+
 /* FIXME (ivucica#5#) move to a separate file */
 static FILE* fopen_wince(const char* fn, const char* mode) {
 	/* ugly as hell, but WINCE's fopen does not use current working dir

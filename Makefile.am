@@ -16,6 +16,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp obje
 		sprdata.c font.cpp confighandler.cpp gm_gameworld.cpp \
 		skin.cpp thingui.cpp itemui.cpp creatureui.cpp \
 		net/connection.cpp net/networkmessage.cpp net/protocolgame80.cpp \
+		net/protocolgame81.cpp \
 		net/rsa.cpp net/encryption.cpp net/protocolgame.cpp net/protocollogin.cpp \
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
 		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
@@ -26,6 +27,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
 		skin.h thingui.h itemui.h creatureui.h wince.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
+		net/protocolgame81.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \
 		gamecontent/inventory.h gamecontent/item.h gamecontent/map.h \
@@ -36,7 +38,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/optionsgraphics.h ui/optionsnetwork.h ui/charlist.h \
 		\
 		yatc.cbp yatc.dev \
-		yatc.bmp \
-		COPYING AUTHORS
+		yatc.bmp ui.bmp yatc.ico resources.rc \
+		COPYING AUTHORS ROADMAP
 
 

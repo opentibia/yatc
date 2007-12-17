@@ -56,6 +56,9 @@ class Sprite
 
 		void Stretch(float neww, float newh, int smooth = -1, bool force = false);
 		void unStretch() { if (m_stretchimage) SDL_FreeSurface(m_stretchimage); m_stretchimage = NULL; }
+
+		void setAsIcon();// used only once, in main
+
 	protected:
 		Sprite(const Sprite& original);
 
@@ -68,8 +71,9 @@ class Sprite
 		GLuint getPixelFormat() { return m_pixelformat; }
 		#endif
 
+
 		std::string m_filename; int m_index;
-        float m_r, m_g, m_b;
+		float m_r, m_g, m_b;
 
 	private:
 		void putPixel(int x, int y, uint32_t pixel, SDL_Surface *img = NULL);
