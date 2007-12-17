@@ -53,32 +53,31 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 			charh[(unsigned char)'\n'] = 14;
 
-			charw[(unsigned char)' '] = 4;
-			charw[(unsigned char)'.'] = 3;
-			charw[(unsigned char)','] = 3; charh[(unsigned char)','] = 10;
-			charw[(unsigned char)'!'] = 3;
-			charw[(unsigned char)':'] = 3;
-			charw[(unsigned char)'\''] = 3; charh[(unsigned char)'\''] = 3;
-			charw[(unsigned char)'_'] = 8; charh[(unsigned char)'_'] = 10;
+			charw[(unsigned char)' '] = 3;
+			charw[(unsigned char)'.'] = 2;
+			charw[(unsigned char)','] = 2; charh[(unsigned char)','] = 10;
+			charw[(unsigned char)'!'] = 2;
+			charw[(unsigned char)':'] = 2;
+			charw[(unsigned char)'\''] = 2; charh[(unsigned char)'\''] = 3;
+			charw[(unsigned char)'_'] = 7; charh[(unsigned char)'_'] = 10;
 
-			charw[(unsigned char)'A'] = 8;
-			charw[(unsigned char)'I'] = 5;
+			charw[(unsigned char)'A'] = 7;
+			charw[(unsigned char)'I'] = 4;
 
-			charw[(unsigned char)'c'] = 6;
-			charw[(unsigned char)'e'] = 7;
-			charw[(unsigned char)'f'] = 6;
-			charw[(unsigned char)'g'] = 8; charh[(unsigned char)'g'] = 10;
-			charw[(unsigned char)'i'] = 4;
-			charw[(unsigned char)'l'] = 5;
-			charw[(unsigned char)'o'] = 7;
-			charw[(unsigned char)'m'] = 9;
+			charw[(unsigned char)'c'] = 5;
+			charw[(unsigned char)'e'] = 6;
+			charw[(unsigned char)'f'] = 5;
+			charw[(unsigned char)'g'] = 7; charh[(unsigned char)'g'] = 10;
+			charw[(unsigned char)'i'] = 3;
+			charw[(unsigned char)'l'] = 4;
+			charw[(unsigned char)'o'] = 6;
+			charw[(unsigned char)'m'] = 8;
 			charw[(unsigned char)'n'] = 6;
-			charw[(unsigned char)'p'] = 7; charh[(unsigned char)'p'] = 10;
-			charw[(unsigned char)'r'] = 7;
-			charw[(unsigned char)'t'] = 6;
-			charw[(unsigned char)'y'] = 8; charh[(unsigned char)'y'] = 10;
-
-
+			charw[(unsigned char)'p'] = 6; charh[(unsigned char)'p'] = 10;
+			charw[(unsigned char)'r'] = 6;
+			charw[(unsigned char)'t'] = 5;
+			charw[(unsigned char)'u'] = 5;
+			charw[(unsigned char)'y'] = 7; charh[(unsigned char)'y'] = 10;
 			if (index == 4) { // outlined font
 				for(int i = 0;i < 255; i++){
 					if(i >= 32 && i < 128){
