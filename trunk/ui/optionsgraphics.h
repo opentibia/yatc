@@ -135,7 +135,7 @@ public:
 
 		btnFullscreen.SetCaption(options.fullscreen ? "X" : "");
 
-
+		currentres.w = 0; currentres.h = 0; currentres.bpp = 0;
 		for (std::vector<glictPanel*>::iterator it = lsiResolutions.begin(); it != lsiResolutions.end(); it++) {
 			resdata_t *data = (resdata_t *)((*it)->GetCustomData());
 			if (data->w == options.w && data->h == options.h && data->bpp == options.bpp) {
@@ -149,9 +149,10 @@ public:
 
 	void Store() {
 		options.fullscreen = (btnFullscreen.GetCaption() == "X");
-		options.w = currentres.w; options.h = currentres.h; options.bpp = currentres.bpp;
-
-			printf("current res: %d %d\n", currentres.w, currentres.h);
+		if (currentres.w) {
+			options.w = currentres.w; options.h = currentres.h; options.bpp = currentres.bpp;
+		}
+		g_engine.doResize(currentres.w, currentres.h);
 	}
 
 	static void OnCheckbox(glictPos* pos, glictContainer *caller) {

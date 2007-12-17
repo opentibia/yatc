@@ -121,7 +121,7 @@ GM_Debug::GM_Debug()
 		//thing = new ItemUI(6401, 1);
 		thing = NULL;
 
-		background->addColor(.5, 1., 1.);
+		//background->addColor(.5, 1., 1.);
 	}
 	else{  // i think that if g_engine does not exist, we might as well crash. what do you think, guys? ivucica
 		NativeGUIError("Somehow, engine managed to not initialize.", "YATC Fatal Error");

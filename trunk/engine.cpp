@@ -142,7 +142,7 @@ Uint32 Engine::fpsTimer(Uint32 interval, void*param)
     g_frames = 0;
 
     sprintf(caption, "YATC v0.1 - fps: %g", g_engine->m_fps);
-    SDL_WM_SetCaption(caption, NULL);
+    SDL_WM_SetCaption(caption, "YATC v0.1");
 	return interval;
 }
 
