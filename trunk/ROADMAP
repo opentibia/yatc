@@ -28,16 +28,19 @@ should comment.
 * attacking
 * using
 * private messaging with tabs
-* skill box
+* skill window
 * fix the status window not appearing after one login failure (perhaps customize instead of using glict msgbox?)
 
 0.3
 ---
 * trading
+* party shields
+* skulls
+* party options
 
 ...
 
 0.4
 ---
-
-...
+* vip
+* battle window
