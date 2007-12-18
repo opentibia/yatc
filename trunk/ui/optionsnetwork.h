@@ -144,6 +144,7 @@ public:
 		txtServer.SetCaption(options.server);
 		txtPort.SetCaption(port.str());
 
+		btnOTKey.SetCustomData(options.otkey ? (void*)1 : NULL);
 		btnOTKey.SetSkin(options.otkey ? &g_skin.chk : &g_skin.txt);
 
 		currentversion = options.protocol;

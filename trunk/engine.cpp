@@ -59,6 +59,10 @@ void Engine::font_render(const char* txt, const void* font, float fontsize, floa
 				cx += f->getWidth(*t)+1;
 				sizesofar += f->getWidth(*t)+1;
 				break;
+			case '\t':
+				cx += (int)sizesofar % 15;// FIXME (ivucica#5#) use fmod
+				sizesofar += (int)sizesofar % 15;
+				break;
 			case '\n':
 			case '\r':
 				cx -= sizesofar;
