@@ -61,13 +61,13 @@ class Notifications{
 		static void onTextMessage(MessageType_t type, const std::string& message);
 		//SAY,WHISPER, YELL, MONSTER_SAY, MONSTER_YELL
 		static void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
-			const Position& pos, const std::string& message){}
+			const Position& pos, const std::string& message);
 		//SPEAK_CHANNEL_Y, SPEAK_CHANNEL_R1, SPEAK_CHANNEL_R2, SPEAK_CHANNEL_O
 		static void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
-			int channel, const std::string& message){}
+			int channel, const std::string& message);
 		//SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
 		static void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
-			const std::string& message){}
+			const std::string& message);
 
 		//**** Open/Close inGame windows ****
 		//open item text window

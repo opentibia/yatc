@@ -23,9 +23,12 @@
 
 #include <GLICT/container.h>
 #include <GLICT/panel.h>
+#include <GLICT/textbox.h>
 #include <GLICT/button.h>
 #include "gamemode.h"
 #include "sprite.h"
+
+class Console;
 
 class pnlInventory_t {
 public:
@@ -71,10 +74,20 @@ public:
 	void specKeyPress (int key);
 	void doResize(float w, float h);
 	void mouseEvent(SDL_Event& event);
+
+	void onWalk();
+	void onTextMessage(MessageType_t type, const std::string& message);
+	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message);
+	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message);
+	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message);
 private:
 	Sprite* ui;
 	glictContainer desktop;
 	pnlInventory_t pnlInventory;
+	glictPanel pnlTraffic;
+	glictTextbox txtConsoleEntry;
+
+	std::vector<Console> m_consoles;
 
 	bool m_preWalk;
 	int m_walkState;

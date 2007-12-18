@@ -2,8 +2,11 @@
 #define __UI_OPTIONSNETWORK_H
 
 #include <sstream> // FIXME (ivucica#1#): remove me after cleaning up the int=>str conversion
+#include <map>
+#include "net/connection.h"
 class winOptionsNetwork_t {
 public:
+
 
 	glictWindow window;
 
@@ -17,6 +20,8 @@ public:
 	glictPanel btnOTKey;
 	glictPanel lblOTKey;
 
+	std::map<ClientVersion_t, glictButton> btnProtocol;
+
 	// 10 189, 210 2
 	glictPanel pnlSeparator;
 
@@ -24,6 +29,11 @@ public:
 	glictButton btnHelp;// 72 200, 40 17
 	glictButton btnOk; // 125 200
 	glictButton btnCancel; // 178 200
+
+
+	ClientVersion_t currentversion;
+
+
 	winOptionsNetwork_t () {
 
 		window.SetVisible(false);
@@ -82,7 +92,22 @@ public:
 		lblOTKey.SetFont("aafont");
 		lblOTKey.SetBGActiveness(false);
 
+		window.AddObject(&btnProtocol[CLIENT_VERSION_800]);
+		btnProtocol[CLIENT_VERSION_800].SetCaption("Protocol 8.0");
+		window.AddObject(&btnProtocol[CLIENT_VERSION_810]);
+		btnProtocol[CLIENT_VERSION_810].SetCaption("Protocol 8.1");
+		window.AddObject(&btnProtocol[CLIENT_VERSION_AUTO]);
+		btnProtocol[CLIENT_VERSION_AUTO].SetCaption("Autodetect");
 
+		int pc=0;
+		for (std::map<ClientVersion_t, glictButton>::iterator it = btnProtocol.begin(); it != btnProtocol.end(); it++) {
+			it->second.SetHeight(20);
+			it->second.SetWidth(100);
+			it->second.SetPos(16+(pc%2)*100, 100+(pc/2)*24);
+			it->second.SetCustomData(this);
+			it->second.SetOnClick(winOptionsNetwork_t::OnProtocol);
+			pc++;
+		}
 
 		window.AddObject(&pnlSeparator);
 		pnlSeparator.SetPos(10, 189);
@@ -120,12 +145,25 @@ public:
 		txtPort.SetCaption(port.str());
 
 		btnOTKey.SetSkin(options.otkey ? &g_skin.chk : &g_skin.txt);
+
+		currentversion = options.protocol;
+		#if (GLICT_APIREV < 52)
+		#warning Update your GLICT to rev52 or newer; OptionsNetwork will not work correctly until you do.
+		#else
+		for (std::map<ClientVersion_t, glictButton>::iterator it = btnProtocol.begin(); it != btnProtocol.end(); it++) {
+			if (it->first == currentversion)
+				it->second.SetHold(true);
+			else
+				it->second.SetHold(false);
+		}
+		#endif
 	}
 
 	void Store() {
 		options.server = txtServer.GetCaption();
 		options.port = atoi(txtPort.GetCaption().c_str());
 		options.otkey = (btnOTKey.GetCustomData() != NULL);
+		options.protocol = currentversion;
 		options.Save();
 	}
 
@@ -137,6 +175,27 @@ public:
 			caller->SetCustomData((void*)1);
 			((glictPanel*)caller)->SetSkin(&g_skin.chk);
 		}
+	}
+	static void OnProtocol(glictPos* pos, glictContainer *caller) {
+		glictButton* b = (glictButton*)caller;
+		winOptionsNetwork_t* won = (winOptionsNetwork_t*)b->GetCustomData();
+
+		for (std::map<ClientVersion_t, glictButton>::iterator it = won->btnProtocol.begin(); it != won->btnProtocol.end(); it++) {
+			if (&it->second == b) {
+				won->currentversion = it->first;
+			} else {
+				#if (GLICT_APIREV < 52)
+				#warning Update your GLICT to rev52 or newer; OptionsNetwork will not work correctly until you do.
+				#else
+				it->second.SetHold(false);
+				#endif
+			}
+		}
+		#if (GLICT_APIREV < 52)
+		#warning Update your GLICT to rev52 or newer; OptionsNetwork will not work correctly until you do.
+		#else
+		b->SetHold(true);
+		#endif
 	}
 
 };

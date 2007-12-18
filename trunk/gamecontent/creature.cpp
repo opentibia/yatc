@@ -88,8 +88,6 @@ uint32_t Creatures::OutfitLookupTable[] = {
 	0x7F0000,
 };
 
-// FIXME (ivucica#1#) having this statically initialized is bad, since it prevents from Creature getting some graphics via CreatureUI
-// besides, why is it not a std::map or std::vector? this makes no sense
 Creature Creatures::m_creaturesArray[CREATURES_ARRAY];
 
 int16_t Creatures::reserveCreature(uint32_t id)

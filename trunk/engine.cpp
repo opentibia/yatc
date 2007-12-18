@@ -80,7 +80,7 @@ float Engine::font_size(const char* txt, const void* font, float fontsize)
 	int size = 0, len = strlen(txt);
 	int maxsize = 0;
 	for(int i = 0; i < len; i++) {
-		size += f->getWidth(txt[i]);
+		size += f->getWidth(txt[i])+1;
 		if(txt[i] == '\n' || txt[i] == '\r'){
 			if(size > maxsize){
 				maxsize = size;
@@ -128,6 +128,7 @@ Engine::Engine()
 
 Engine::~Engine()
 {
+	SDL_RemoveTimer(m_fpstimer);
 	glictDeleteFont("system");
 	glictDeleteFont("minifont");
 	glictDeleteFont("aafont");
@@ -141,7 +142,7 @@ Uint32 Engine::fpsTimer(Uint32 interval, void*param)
     g_engine->m_fps = (g_frames / (float)interval) * 1000;
     g_frames = 0;
 
-    sprintf(caption, "YATC v0.1 - fps: %g", g_engine->m_fps);
+    sprintf(caption, "YATC v0.1 - fps: %g", g_engine->m_fps );
     SDL_WM_SetCaption(caption, "YATC v0.1");
 	return interval;
 }

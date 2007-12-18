@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-// Sprite for SDL engine
+// Console
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,45 +18,54 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "enginesdl.h"
-#include "spritesdl.h"
+#ifndef __CONSOLE_H
+#define __CONSOLE_H
 
-SpriteSDL::SpriteSDL(const std::string& filename, int index) : Sprite(filename, index)
-{
+#include <time.h>
+#include <vector>
+#include <string>
+#include <SDL/SDL.h>
+enum ConsoleColor {
+	CONRED = 0,
+	CONBLUE = 1,
+	CONYELLOW = 2,
+	CONORANGE = 3,
+	CONLTBLUE = 4,
+	CONGREEN = 5,
+	CONWHITE = 6
+};
 
-}
-
-SpriteSDL::~SpriteSDL()
-{
-
-}
-
-
-void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
-{
-	if(!getImage())
-		return;
-
-	// code is like this because of dx5.0 ... see docs/html/sdlrect.html in SDL documentation for more info
-	SDL_Rect src = {(int)sx,(int)sy,(int)(w),(int)(h)};
-	SDL_Rect dst = {(int)dx,(int)dy,(int)(w),(int)(h)};
-	while(SDL_BlitSurface(getColoredImage(), &src, g_engine->m_screen, &dst) == -2){
-		while(SDL_LockSurface(getColoredImage()) < 0 ){
-				SDL_Delay(10);
+class ConsoleEntry {
+	public:
+		ConsoleEntry(std::string text, ConsoleColor c=CONWHITE)
+		{
+			m_text = text;
+			m_speaker = "";
+			m_color = c;
+			m_timestamp = time(NULL);
 		}
-		// FIXME (ivucica#1#) i forgot that we need to re-write image pixels here!
-		SDL_UnlockSurface(getColoredImage());
-	}
-}
+		ConsoleEntry(std::string text, std::string speaker, ConsoleColor c=CONYELLOW)
+		{
+			m_text = text;
+			m_speaker = speaker;
+			m_color = c;
+			m_timestamp = time(NULL);
+		}
+		int Paint(float x, float y);
+	private:
+		std::string m_text, m_speaker;
+		ConsoleColor m_color;
+		uint32_t m_timestamp;
+};
+class Console {
+	public:
+		Console();
+		virtual ~Console();
 
-
-
-
-void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, float destw, float desth)
-{
-	if(!getImage())
-		return;
-
-	Stretch(destw, desth, 0);
-	Blit(dx,dy,sx,sy,destw,desth);
-}
+		void Paint(float left, float top, float right, float bottom);
+		void Insert(ConsoleEntry ce);
+	private:
+		std::vector <ConsoleEntry> m_content;
+		SDL_Surface *m_surface;
+};
+#endif

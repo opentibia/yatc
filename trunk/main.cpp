@@ -369,10 +369,15 @@ int main(int argc, char *argv[])
 	}
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Game over\n");
+
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Unloading data...\n");
 	Objects::getInstance()->unloadDat();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Saving options...\n");
 	options.Save();
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Finishing engine...\n");
+	delete g_engine;
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Ending game...\n");
+	delete g_game;
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Shutting down SDL...\n");
 	SDL_Quit();
 
@@ -380,7 +385,6 @@ int main(int argc, char *argv[])
 	WSACleanup();
 #endif
 
-	delete g_game;
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Thanks for playing!\n");
 
 	return 0;

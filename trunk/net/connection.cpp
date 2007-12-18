@@ -74,6 +74,25 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	m_sprSignature = this->readSignature("Tibia.spr");
 	m_picSignature = this->readSignature("Tibia.pic");
 }
+ClientVersion_t ProtocolConfig::detectVersion()
+{
+	uint32_t datSignature = ProtocolConfig::readSignature("Tibia.dat");
+	uint32_t sprSignature = ProtocolConfig::readSignature("Tibia.spr");
+	uint32_t picSignature = ProtocolConfig::readSignature("Tibia.pic");
+
+	printf("%08x %08x %08x\n", datSignature, sprSignature, picSignature);
+	if (datSignature == 0x467FD7E6 &&
+		sprSignature == 0x467F9E74 &&
+		picSignature == 0x45670923)
+			return CLIENT_VERSION_800;
+
+	if (datSignature == 0x475D3747 &&
+		sprSignature == 0x475D0B01 &&
+		picSignature == 0x4742FCD7)
+	        return CLIENT_VERSION_810;
+
+	return CLIENT_VERSION_AUTO; // failure
+}
 void ProtocolConfig::setVersionOverride(uint16_t version) {
     // this means that we'll just send a different version to the server
     // dat, spr and pic are read from file anyways
@@ -205,6 +224,10 @@ m_inputMessage(NetworkMessage::CAN_READ)
 
 	m_socket = INVALID_SOCKET;
 	m_ticks = 0;
+
+	m_sentBytes = 0;
+	m_recvBytes = 0;
+
 }
 
 Connection::~Connection()
@@ -287,6 +310,10 @@ void Connection::executeNetwork()
 			return;
 		}
 		#endif
+
+		//Reset traffic counter
+		m_sentBytes = 0;
+		m_recvBytes = 0;
 
 		//And connect
 		sockaddr_in addr;
@@ -495,6 +522,7 @@ int Connection::internalRead(unsigned int n, bool all)
 	if(ret != SOCKET_ERROR && ret == (int)bytesToRead){
 		//we have read n bytes, so we resize inputMessage
 		m_inputMessage.setReadSize(m_inputMessage.getReadSize() + bytesToRead);
+		m_recvBytes+=bytesToRead;
 		return bytesToRead;
 	}
 	else if(ret == 0){
@@ -539,4 +567,5 @@ void Connection::sendMessage(NetworkMessage& msg)
 		}
 		sendBytes += b;
 	} while(sendBytes < msg.getSize());
+	m_sentBytes += sendBytes;
 }

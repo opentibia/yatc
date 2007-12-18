@@ -71,6 +71,7 @@ class Connection;
 class ProtocolGame;
 
 enum ClientVersion_t{
+	CLIENT_VERSION_AUTO = 0, // used only in ui, feeding it elsewhere is invalid
 	CLIENT_VERSION_800 = 800,
 	CLIENT_VERSION_810 = 810
 };
@@ -96,7 +97,8 @@ class ProtocolConfig
 			return instance;
 		}
 
-        uint32_t readSignature(const char* fn);
+        static uint32_t readSignature(const char* fn);
+        static ClientVersion_t detectVersion();
 		void setVersion(ClientOS_t os, ClientVersion_t version);
 		void setVersionOverride(uint16_t version);
 		void setServerType(ServerType_t type);
@@ -266,6 +268,11 @@ class Connection
 			}
 		}
 
+		uint32_t getSent() {return m_sentBytes;}
+		uint32_t getRecv() {return m_recvBytes;}
+		uint32_t getTraffic() {return m_sentBytes+m_recvBytes;}
+
+
 		Protocol* getProtocol(){ return m_protocol;}
 
 	protected:
@@ -289,6 +296,10 @@ class Connection
 		std::string m_host;
 		uint32_t m_ip;
 		uint16_t m_port;
+
+		//Traffic measurement
+		uint32_t m_sentBytes;
+		uint32_t m_recvBytes;
 
 		//internal connection state
 		bool m_cryptoEnable;

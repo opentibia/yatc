@@ -40,7 +40,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 		case 4: // outlined font
 		case 7: // antialiased outlineless font
 			for(int i = 0; i < 255; i++){
-				if(i >= 32 && i < 128){
+				if(i >= 32 && i < 170){
 					charx[i] = ((i-32) % 32) * 8;
 					chary[i] = ((i-32) / 32) * 16;
 					charw[i] = 8;
@@ -53,34 +53,60 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 			charh[(unsigned char)'\n'] = 14;
 
-			charw[(unsigned char)' '] = 3;
+			charw[(unsigned char)' '] = 2;
 			charw[(unsigned char)'.'] = 2;
 			charw[(unsigned char)','] = 2; charh[(unsigned char)','] = 10;
 			charw[(unsigned char)'!'] = 2;
 			charw[(unsigned char)':'] = 2;
+			charw[(unsigned char)';'] = 2; charh[(unsigned char)';'] = 10;
 			charw[(unsigned char)'\''] = 2; charh[(unsigned char)'\''] = 3;
 			charw[(unsigned char)'_'] = 7; charh[(unsigned char)'_'] = 10;
+			charw[(unsigned char)'('] = 4; charh[(unsigned char)'('] = 10;
+			charw[(unsigned char)')'] = 4; charh[(unsigned char)')'] = 10;
+
+			charw[(unsigned char)'0'] = 6;
+			charw[(unsigned char)'1'] = 4;
+			charw[(unsigned char)'2'] = 6;
+
 
 			charw[(unsigned char)'A'] = 7;
+			charw[(unsigned char)'B'] = 6;
+			charw[(unsigned char)'C'] = 6;
+			charw[(unsigned char)'E'] = 6;
+			charw[(unsigned char)'F'] = 6;
 			charw[(unsigned char)'I'] = 4;
+			charw[(unsigned char)'L'] = 6;
+			charw[(unsigned char)'P'] = 6;
+			charw[(unsigned char)'S'] = 6;
+			charw[(unsigned char)'Y'] = 6;
 
+			charw[(unsigned char)'a'] = 6;
+			charw[(unsigned char)'b'] = 7;
 			charw[(unsigned char)'c'] = 5;
+			charw[(unsigned char)'d'] = 7;
 			charw[(unsigned char)'e'] = 6;
 			charw[(unsigned char)'f'] = 5;
-			charw[(unsigned char)'g'] = 7; charh[(unsigned char)'g'] = 10;
-			charw[(unsigned char)'i'] = 3;
-			charw[(unsigned char)'l'] = 4;
+			charw[(unsigned char)'g'] = 6; charh[(unsigned char)'g'] = 10;
+			charw[(unsigned char)'h'] = 6;
+			charw[(unsigned char)'i'] = 2;
+			charw[(unsigned char)'k'] = 6;
+			charw[(unsigned char)'l'] = 3;
 			charw[(unsigned char)'o'] = 6;
 			charw[(unsigned char)'m'] = 8;
 			charw[(unsigned char)'n'] = 6;
 			charw[(unsigned char)'p'] = 6; charh[(unsigned char)'p'] = 10;
-			charw[(unsigned char)'r'] = 6;
+			charw[(unsigned char)'r'] = 5;
+			charw[(unsigned char)'s'] = 5;
 			charw[(unsigned char)'t'] = 5;
-			charw[(unsigned char)'u'] = 5;
+			charw[(unsigned char)'u'] = 6;
 			charw[(unsigned char)'y'] = 7; charh[(unsigned char)'y'] = 10;
+
+
+			charw[(unsigned char)169] = 8; charh[(unsigned char)169] = 10;  // copyright symbol
+
 			if (index == 4) { // outlined font
 				for(int i = 0;i < 255; i++){
-					if(i >= 32 && i < 128){
+					if(i >= 32 && i < 170){
 						charx[i] = ((i-32) % 32) * 16;
 						chary[i] = ((i-32) / 32) * 16;
 						//charw[i] += 1;
@@ -97,7 +123,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 		case 5: // minifont
 			charh[(unsigned char)'\n'] = 8;
 			for(int i = 0;i < 255;i++){
-				if(i >= 32 && i < 128){
+				if(i >= 32 && i < 170){
 					charx[i] = ((i-32) % 32) * 8;
 					chary[i] = ((i-32) / 32) * 8;
 					charw[i] = 7;
@@ -108,35 +134,36 @@ Font::Font(std::string fn, int index, Sprite *spr)
 				}
 			}
 
-			charw[(unsigned char)' '] = 2; charh[(unsigned char)' '] = 1;
-			charw[(unsigned char)'!'] = 3; charh[(unsigned char)'!'] = 6;
-			charw[(unsigned char)'"'] = 4; charh[(unsigned char)'"'] = 3;
-			charw[(unsigned char)'#'] = 7; charh[(unsigned char)'#'] = 6;
+			charw[(unsigned char)' '] = 1; charh[(unsigned char)' '] = 1;
+			charw[(unsigned char)'!'] = 2; charh[(unsigned char)'!'] = 6;
+			charw[(unsigned char)'"'] = 3; charh[(unsigned char)'"'] = 3;
+			charw[(unsigned char)'#'] = 6; charh[(unsigned char)'#'] = 6;
 
-			charw[(unsigned char)'A'] = 6; charh[(unsigned char)'A'] = 6;
-			charw[(unsigned char)'C'] = 6; charh[(unsigned char)'C'] = 6;
-			charw[(unsigned char)'E'] = 5; charh[(unsigned char)'E'] = 6;
-			charw[(unsigned char)'H'] = 6; charh[(unsigned char)'H'] = 6;
-			charw[(unsigned char)'I'] = 4; charh[(unsigned char)'I'] = 6;
-			charw[(unsigned char)'O'] = 7; charh[(unsigned char)'O'] = 6;
+			charw[(unsigned char)'A'] = 5; charh[(unsigned char)'A'] = 6;
+			charw[(unsigned char)'C'] = 5; charh[(unsigned char)'C'] = 6;
+			charw[(unsigned char)'E'] = 4; charh[(unsigned char)'E'] = 6;
+			charw[(unsigned char)'G'] = 6; charh[(unsigned char)'G'] = 6;
+			charw[(unsigned char)'H'] = 5; charh[(unsigned char)'H'] = 6;
+			charw[(unsigned char)'I'] = 3; charh[(unsigned char)'I'] = 6;
+			charw[(unsigned char)'O'] = 6; charh[(unsigned char)'O'] = 6;
 
-			charw[(unsigned char)'a'] = 5; charh[(unsigned char)'a'] = 6;
-			charw[(unsigned char)'c'] = 5; charh[(unsigned char)'c'] = 6;
-			charw[(unsigned char)'e'] = 5; charh[(unsigned char)'e'] = 7;
-			charw[(unsigned char)'f'] = 4; charh[(unsigned char)'f'] = 6;
-			charw[(unsigned char)'g'] = 5; charh[(unsigned char)'g'] = 8;
-			charw[(unsigned char)'i'] = 3; charh[(unsigned char)'i'] = 6;
-			charw[(unsigned char)'k'] = 5; charh[(unsigned char)'k'] = 6;
-			charw[(unsigned char)'l'] = 3; charh[(unsigned char)'l'] = 6;
-			charw[(unsigned char)'m'] = 8; charh[(unsigned char)'m'] = 6;
+			charw[(unsigned char)'a'] = 4; charh[(unsigned char)'a'] = 6;
+			charw[(unsigned char)'c'] = 4; charh[(unsigned char)'c'] = 6;
+			charw[(unsigned char)'e'] = 4; charh[(unsigned char)'e'] = 7;
+			charw[(unsigned char)'f'] = 3; charh[(unsigned char)'f'] = 6;
+			charw[(unsigned char)'g'] = 4; charh[(unsigned char)'g'] = 8;
+			charw[(unsigned char)'i'] = 2; charh[(unsigned char)'i'] = 6;
+			charw[(unsigned char)'k'] = 4; charh[(unsigned char)'k'] = 6;
+			charw[(unsigned char)'l'] = 2; charh[(unsigned char)'l'] = 6;
+			charw[(unsigned char)'m'] = 7; charh[(unsigned char)'m'] = 6;
 			charw[(unsigned char)'n'] = 5; charh[(unsigned char)'n'] = 6;
 			charw[(unsigned char)'o'] = 5; charh[(unsigned char)'o'] = 6;
-			charw[(unsigned char)'p'] = 6; charh[(unsigned char)'p'] = 8;
-			charw[(unsigned char)'r'] = 4; charh[(unsigned char)'r'] = 6;
-			charw[(unsigned char)'s'] = 5; charh[(unsigned char)'s'] = 6;
-			charw[(unsigned char)'t'] = 4; charh[(unsigned char)'t'] = 6;
-			charw[(unsigned char)'u'] = 5; charh[(unsigned char)'u'] = 6;
-			charw[(unsigned char)'x'] = 5; charh[(unsigned char)'x'] = 6;
+			charw[(unsigned char)'p'] = 5; charh[(unsigned char)'p'] = 8;
+			charw[(unsigned char)'r'] = 3; charh[(unsigned char)'r'] = 6;
+			charw[(unsigned char)'s'] = 4; charh[(unsigned char)'s'] = 6;
+			charw[(unsigned char)'t'] = 3; charh[(unsigned char)'t'] = 6;
+			charw[(unsigned char)'u'] = 4; charh[(unsigned char)'u'] = 6;
+			charw[(unsigned char)'x'] = 4; charh[(unsigned char)'x'] = 6;
 
 			break;
 

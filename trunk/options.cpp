@@ -61,6 +61,7 @@ Options::Options()
 	server = "change.me.now";
 	port = 7171;
 	otkey = true;
+	protocol = CLIENT_VERSION_AUTO;
 	overrideversion = 0;
 }
 
@@ -151,6 +152,9 @@ void Options::Save()
 	ss << otkey;
 	section->addKey("otkey", ss.str());
 	ss.str("");
+	ss << protocol;
+	section->addKey("protocol", ss.str());
+	ss.str("");
 	ss << overrideversion;
 	section->addKey("overrideversion", ss.str());
 	ss.str("");
@@ -160,6 +164,9 @@ void Options::Save()
 
 void Options::Load()
 {
+	// vars in case of need of additional parsin
+	int protocol_int;
+
 	if(!configHandler->loadConfig("yatc.cfg")){
 		return;
 	}
@@ -208,7 +215,24 @@ void Options::Load()
 	server = configHandler->getKeyValue("network", "server");
 	port = atoi(configHandler->getKeyValue("network", "port").c_str());
     otkey = (atoi(configHandler->getKeyValue("network", "otkey").c_str()) == 1);
+    protocol_int = atoi(configHandler->getKeyValue("network", "protocol").c_str());
     overrideversion = atoi(configHandler->getKeyValue("network", "overrideversion").c_str());
+
+
+    // further parsing of some options
+    // [network]
+    switch (protocol_int) {
+    	case 800:
+			protocol = CLIENT_VERSION_800;
+			break;
+		default:
+		case 0:
+			protocol = CLIENT_VERSION_AUTO;
+			break;
+		case 810:
+			protocol = CLIENT_VERSION_810;
+			break;
+    }
 
 	configHandler->clear();
 }
