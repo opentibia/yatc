@@ -15,6 +15,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp obje
 		 gm_debug.cpp notifications.cpp sprite.cpp util.cpp \
 		sprdata.c font.cpp confighandler.cpp gm_gameworld.cpp \
 		skin.cpp thingui.cpp itemui.cpp creatureui.cpp \
+		console.cpp \
 		net/connection.cpp net/networkmessage.cpp net/protocolgame80.cpp \
 		net/protocolgame81.cpp \
 		net/rsa.cpp net/encryption.cpp net/protocolgame.cpp net/protocollogin.cpp \
@@ -25,7 +26,9 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		engine.h gamemode.h options.h spritesdl.h \
 		enginegl.h gm_debug.h notifications.h sprite.h util.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
-		skin.h thingui.h itemui.h creatureui.h wince.h \
+		skin.h thingui.h itemui.h creatureui.h console.h \
+		wince.h \
+		\
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \

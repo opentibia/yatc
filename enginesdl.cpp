@@ -51,9 +51,9 @@ EngineSDL::EngineSDL()
 
 EngineSDL::~EngineSDL()
 {
-	SDL_FreeSurface(m_screen);
-	delete (SpriteSDL*)m_sysfont->GetFontParam();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Closing SDL engine\n");
+	delete (Font*)m_sysfont->GetFontParam();
+	SDL_FreeSurface(m_screen);
 }
 
 void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)
@@ -92,7 +92,7 @@ void EngineSDL::doResize(int w, int h)
 {
 	Engine::doResize(w, h);
 
-	m_videoflags = SDL_HWSURFACE | SDL_ANYFORMAT | SDL_DOUBLEBUF | SDL_RESIZABLE;
+	m_videoflags = SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE;
 	if (options.fullscreen)
 		m_videoflags |= SDL_FULLSCREEN;
 

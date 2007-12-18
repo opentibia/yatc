@@ -128,11 +128,9 @@ Skin::~Skin() {
 }
 void Skin::loadSkin() {
 
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[Skin::loadSkin] Loading skin from Tibia.pic...\n");
 
 	m_uisprite = g_engine->createSprite("Tibia.pic", 3);
 
-    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[Skin::loadSkin] Loading window\n");
     win.SetTL		(wintl = new skinImage(106,	183,	4,		17));
     win.SetTop		(wint  = new skinImage(114,	183,	96,		17));
     win.SetTR		(wintr = new skinImage(110,	183,	4,		17));
@@ -145,7 +143,6 @@ void Skin::loadSkin() {
 
 	glictGlobals.windowBodySkin = &win;
 
-    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[Skin::loadSkin] Loading button\n");
     btn.SetTL		(btntl = new skinImage(174,	138,	1,		1));
     btn.SetTop		(btnt  = new skinImage(175,	138,	32,		1));
     btn.SetTR		(btntr = new skinImage(207,	138,	1,		1));
@@ -158,7 +155,6 @@ void Skin::loadSkin() {
 
 	glictGlobals.buttonSkin = &btn;
 
-    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[Skin::loadSkin] Loading button highlight\n");
     bth.SetTL		(bthtl = new skinImage(174,	158,	1,		1));
     bth.SetTop		(btht  = new skinImage(175,	158,	32,		1));
     bth.SetTR		(bthtr = new skinImage(207,	158,	1,		1));
@@ -171,7 +167,7 @@ void Skin::loadSkin() {
 
 	glictGlobals.buttonHighlightSkin = &bth;
 
-    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[Skin::loadSkin] Loading textbox\n"); // FIXME (ivucica#4#) looks like the "unchecked checkbox" is not the same as "textbox" -- see: "XPlike Tibia.pic" for more info
+    // FIXME (ivucica#4#) looks like the "unchecked checkbox" is not the same as "textbox" -- see: "XPlike Tibia.pic" for more info
     txt.SetTL		(txttl = new skinImage(308,	96,		1,		1)); // in fact it looks like we have to HARDCODE this piece of skin.
     txt.SetTop		(txtt  = new skinImage(309,	96,		10,		1));
     txt.SetTR		(txttr = new skinImage(319,	96,		1,		1));
@@ -184,8 +180,6 @@ void Skin::loadSkin() {
 
 	glictGlobals.textboxSkin = &txt;
 
-
-    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY,"[Skin::loadSkin] Loading checkbox\n");
     chk.SetTL		(chktl = new skinImage(308,	108,	1,		1));
     chk.SetTop		(chkt  = new skinImage(309,	108,	10,		1));
     chk.SetTR		(chktr = new skinImage(319,	108,	1,		1));
@@ -197,7 +191,6 @@ void Skin::loadSkin() {
     chk.SetBR		(chkbr = new skinImage(319,	119,	1,		1));
 
 
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY,"[Skin::loadSkin] Loading panelmainmenu\n");
     tmm.SetTL		(tmmtl = new skinImage(44,		226,	5,		5));
     tmm.SetTop		(tmmt  = new skinImage(43,		214,	32,		5));
     tmm.SetTR		(tmmtr = new skinImage(49,		226,	5,		5));

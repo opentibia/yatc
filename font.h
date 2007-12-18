@@ -7,7 +7,7 @@
 class Font{
 	public:
 		Font(std::string filename, int index, Sprite* spr);
-
+		virtual ~Font() { delete pic; }
 		void Blit (char t, int x1, int y1) {
 			pic->Blit(x1, y1, charx[(unsigned char)t], chary[(unsigned char)t], charw[(unsigned char)t], charh[(unsigned char)t]);
 		}

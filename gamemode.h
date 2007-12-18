@@ -26,6 +26,8 @@
 #include <string>
 #include <list>
 #include "gamecontent/enums.h"
+
+class Position;
 class GameMode
 {
 protected:
@@ -44,6 +46,18 @@ public:
 	virtual void openMessageWindow(WindowMessage_t type, const std::string& message) {}
 	virtual void openCharactersList(const std::list<CharacterList_t>& list, int premDays) {}
 	virtual void onEnterGame() {}
+	virtual void onWalk() {}
+	virtual void onTextMessage(MessageType_t type, const std::string& message) {printf("Textmessage[%d]: %s\n", type, message.c_str());}
+
+	//SAY,WHISPER, YELL, MONSTER_SAY, MONSTER_YELL
+	virtual void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
+		const Position& pos, const std::string& message) {}
+	//SPEAK_CHANNEL_Y, SPEAK_CHANNEL_R1, SPEAK_CHANNEL_R2, SPEAK_CHANNEL_O
+	virtual void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
+		int channel, const std::string& message) {}
+	//SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
+	virtual void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
+		const std::string& message) {}
 };
 
 extern GameMode* g_game;

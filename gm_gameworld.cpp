@@ -19,6 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <GLICT/globals.h>
+#include <sstream>
 #include "gm_gameworld.h"
 #include "engine.h"
 #include "options.h"
@@ -29,6 +30,7 @@
 #include "gamecontent/creature.h"
 #include "net/connection.h"
 #include "net/protocolgame.h"
+#include "console.h"
 
 extern Connection* g_connection;
 
@@ -43,9 +45,21 @@ GM_Gameworld::GM_Gameworld()
 	desktop.AddObject(&pnlInventory.panel);
 	pnlInventory.panel.SetPos(10, 10);
 	#endif
+	desktop.AddObject(&pnlTraffic);
+	pnlTraffic.SetPos(10,10);
+	pnlTraffic.SetWidth(150);
+	pnlTraffic.SetHeight(40);
+	pnlTraffic.SetBGActiveness(false);
+	pnlTraffic.SetFont("gamefont", 10);
+	pnlTraffic.SetCaption("...");
+	desktop.AddObject(&txtConsoleEntry);
+	txtConsoleEntry.SetHeight(12);
+	txtConsoleEntry.SetCaption("");
 
 	m_preWalk = false;
 	m_walkState = 0;
+
+	m_consoles.insert(m_consoles.end(), Console());
 
 	doResize(glictGlobals.w, glictGlobals.h);
 }
@@ -58,13 +72,14 @@ GM_Gameworld::~GM_Gameworld ()
 
 void GM_Gameworld::doResize(float w, float h)
 {
-	#ifndef WINCE
 	desktop.SetWidth(glictGlobals.w);
 	desktop.SetHeight(glictGlobals.h);
 	desktop.ResetTransformations();
 
+	txtConsoleEntry.SetWidth(w);
+	txtConsoleEntry.SetPos(0,h-12);
 	updateScene(); // FIXME (ivucica#2#) potentially dangerous during call inside constructor (map possibly not loaded yet) -- gotta check with mips if we may draw map while it still isn't received from server via initial 0x64 packet
-	#endif
+
 }
 
 
@@ -214,7 +229,7 @@ void GM_Gameworld::updateScene()
 			int screeny = (int)(j*scaledSize);
 
 			int32_t thingsCount = tile->getThingCount() - 1;
-			int32_t drawIndex = 1, lastTopIndex;
+			int32_t drawIndex = 1;
 			while(drawIndex <= thingsCount){
 
 				const Thing* thing = tile->getThingByStackPos(drawIndex);
@@ -228,31 +243,50 @@ void GM_Gameworld::updateScene()
 		}
 	}
 
+	m_consoles[0].Paint(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
 
+	{
+		std::stringstream s;
+		s << "TX: " << g_connection->getSent() << " bytes\n" <<
+			 "RX: " << g_connection->getRecv()<< " bytes\n" <<
+			 "++: " << g_connection->getTraffic() << " bytes\n";
+		pnlTraffic.SetCaption(s.str());
+	}
 	desktop.Paint();
 }
 
 
 void GM_Gameworld::keyPress (char key)
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "K%d\n", key);
-	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+
+	txtConsoleEntry.Focus(NULL);
+	if (key==13) {
+		if (txtConsoleEntry.GetCaption().size())
+			m_protocol->sendSay(SPEAK_SAY, txtConsoleEntry.GetCaption());
+		txtConsoleEntry.SetCaption("");
+	} else {
+		desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+	}
 }
 
 void GM_Gameworld::specKeyPress (int key)
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "S%d\n", key);
+
 	switch (key) {
 	case SDLK_LEFT:
+		m_preWalk = true;
 		m_protocol->sendMove(DIRECTION_WEST);
 		break;
 	case SDLK_RIGHT:
+		m_preWalk = true;
 		m_protocol->sendMove(DIRECTION_EAST);
 		break;
 	case SDLK_UP:
+		m_preWalk = true;
 		m_protocol->sendMove(DIRECTION_NORTH);
 		break;
 	case SDLK_DOWN:
+		m_preWalk = true;
 		m_protocol->sendMove(DIRECTION_SOUTH);
 		break;
 	}
@@ -260,20 +294,47 @@ void GM_Gameworld::specKeyPress (int key)
 
 void GM_Gameworld::mouseEvent(SDL_Event& event)
 {
-        glictPos pos;
-        // FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
-        // who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave!
-        pos.x = ptrx;
-        pos.y = ptry;
+	glictPos pos;
+	// FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
+	// who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave!
+	pos.x = ptrx;
+	pos.y = ptry;
 
-        desktop.TransformScreenCoords(&pos);
+	desktop.TransformScreenCoords(&pos);
 
-        if (event.button.state == SDL_PRESSED)
-                desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
-        if (event.button.state != SDL_PRESSED)
-                desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+	if (event.button.state == SDL_PRESSED)
+			desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
+	if (event.button.state != SDL_PRESSED)
+			desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
 
-       // Scene();
+	// Scene();
 
 }
 
+
+void GM_Gameworld::onWalk()
+{
+	m_preWalk = false;
+}
+
+void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
+{
+	m_consoles[0].Insert(ConsoleEntry(message));
+}
+
+
+//SAY,WHISPER, YELL, MONSTER_SAY, MONSTER_YELL
+void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message)
+{
+	m_consoles[0].Insert(ConsoleEntry(message, name));
+}
+//SPEAK_CHANNEL_Y, SPEAK_CHANNEL_R1, SPEAK_CHANNEL_R2, SPEAK_CHANNEL_O
+void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message)
+{
+	m_consoles[0].Insert(ConsoleEntry(message, name));
+}
+//SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
+void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message)
+{
+	m_consoles[0].Insert(ConsoleEntry(message, name));
+}

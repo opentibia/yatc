@@ -156,6 +156,7 @@ GM_MainMenu::~GM_MainMenu()
 
 }
 
+
 void GM_MainMenu::updateScene()
 {
     if (options.engine == ENGINE_OPENGL) {
@@ -261,7 +262,7 @@ void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* f
 	mb->SetCaption(title);
 	mb->SetMessage(mbox);
 
-	mb->SetHeight(glictFontNumberOfLines(mbox)*16 + 35);
+	mb->SetHeight(glictFontNumberOfLines(mbox)*14 + 35);
 	mb->SetWidth((int)glictFontSize(mbox, "system"));
 	mb->Focus(NULL);
 
@@ -306,28 +307,26 @@ void GM_MainMenu::pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictCon
 
 void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
+	std::stringstream txt;
+	char c = 169;
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
-	m->msgBox(
-		"YATC - Yet Another Tibia Client\n"
-		"v0.1\n"
-		"\n"
-		"(c) 2007 OpenTibia Team\n"
-		"\n"
-		"Programmed by (in no particular order):\n"
-		"mips\n"
-		"Ivan Vucica\n"
-		"Smygflik\n"
-		"\n"
-		"YATC comes with ABSOLUTELY NO WARRANTY; for \n"
-		"details see sections 11 and 12 in LICENSE.\n"
-		"This is free software, and you are welcome \n"
-		"to redistribute it under certain conditions;\n"
-		"see LICENSE for details.",
+	txt << "YATC - Yet Another Tibia Client\n"
+		<< "v0.1\n"
+		<< "\n"
+		<< c <<" 2007 OpenTibia Team\n"
+		<< "\n"
+		<< "Programmed by (in no particular order):\n"
+		<< "mips\n"
+		<< "Ivan Vucica\n"
+		<< "Smygflik\n"
+		<< "\n"
+		<< "YATC comes with ABSOLUTELY NO WARRANTY; \n"
+		<< "for details see sections 11 and 12 in LICENSE.\n"
+		<< "This is free software, and you are welcome \n"
+		<< "to redistribute it under certain conditions;\n"
+		<< "see LICENSE for details.";
 
-		"About YATC",
-
-		&m->pnlMainMenu.btnAbout
-	);
+	m->msgBox(txt.str().c_str(), "About YATC", &m->pnlMainMenu.btnAbout);
 }
 
 void GM_MainMenu::pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -351,8 +350,29 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 		g_connection = NULL;
 	}
 
+	ClientVersion_t proto = options.protocol;
+	if (!proto)
+		proto = ProtocolConfig::detectVersion();
+	if (!proto) {
+		std::stringstream t;
+		char c = 149; // bullet
+		t << "Data files in the directory either:\n" <<
+			 c << "do not belong to same protocol version, or\n" <<
+			 c << "are modified and with unknown signatures.\n" <<
+			 "\n" <<
+			 "Either get correct files from a single known\n" <<
+			 "client version, or make sure that you have\n" <<
+			 "correct signatures in the files, or go to\n" <<
+			 "Options->Network and choose the correct\n" <<
+			 "protocol.";
+
+
+		m->msgBox(t.str().c_str(),"Protocol detection failed");
+		return;
+	}
+
 	ProtocolConfig::getInstance().setServerType(options.otkey ? SERVER_OTSERV : SERVER_CIP ); // perhaps this should go to options, too?
-	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, CLIENT_VERSION_810); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
+	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, proto); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 
@@ -390,7 +410,11 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 		g_connection = NULL;
 	}
 
-	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, CLIENT_VERSION_810); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
+	ClientVersion_t proto = options.protocol;
+	if (!proto) proto = ProtocolConfig::detectVersion();
+	ASSERT(proto);
+
+	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, proto); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
 	ProtocolConfig::getInstance().setServer(ip, m->winCharlist.currentChar.port);
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
 	ProtocolConfig::createGameConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);

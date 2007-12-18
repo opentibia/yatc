@@ -22,6 +22,7 @@
 #define __OPTIONS_H
 
 #include <string>
+#include "net/connection.h"
 
 enum enginelist_t {
 	ENGINE_SDL = 0, // software renderer
@@ -66,6 +67,7 @@ public:
 	std::string server;
 	int port;
     bool otkey;
+	ClientVersion_t protocol;
 
     int overrideversion;
 

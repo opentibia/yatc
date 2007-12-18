@@ -57,9 +57,9 @@ EngineGL::EngineGL()
 
 EngineGL::~EngineGL()
 {
-	SDL_FreeSurface(m_screen);
-	delete (SpriteGL*)m_sysfont->GetFontParam();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Closing OpenGL engine\n");
+	delete (Font*)m_sysfont->GetFontParam();
+	SDL_FreeSurface(m_screen);
 }
 
 void EngineGL::initEngine()

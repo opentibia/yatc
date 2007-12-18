@@ -143,7 +143,8 @@ void Notifications::openWaitingList(const std::string& message, int time) {
 
 void Notifications::onTextMessage(MessageType_t type, const std::string& message)
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%s\n", message.c_str());
+	//DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%s\n", message.c_str());
+	g_game->onTextMessage(type, message);
 }
 
 void Notifications::onEnterGame()
@@ -153,5 +154,20 @@ void Notifications::onEnterGame()
 
 void Notifications::onWalk()
 {
+	g_game->onWalk();
+}
 
+void Notifications::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message)
+{
+	g_game->onCreatureSpeak(type, n, name, level, pos, message);
+}
+
+void Notifications::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message)
+{
+	g_game->onCreatureSpeak(type, n, name, level, channel, message);
+}
+
+void Notifications::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message)
+{
+	g_game->onCreatureSpeak(type, n, name, level, message);
 }

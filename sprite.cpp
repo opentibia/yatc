@@ -104,17 +104,15 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 Sprite::~Sprite()
 {
 	if(m_image){
-		DEBUGPRINT(0,0,"Freeing m_image\n");
 		SDL_FreeSurface(m_image);
 	}
 	if(m_stretchimage){
-		DEBUGPRINT(0,0,"Freeing m_stretchimage\n");
 		SDL_FreeSurface(m_stretchimage);
 	}
 	if(m_coloredimage){
-		DEBUGPRINT(0,0,"Freeing m_coloredimage\n");
 		SDL_FreeSurface(m_coloredimage);
 	}
+
 }
 
 
@@ -219,14 +217,12 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			fread(&ph, sizeof(ph), 1, f);
 
 			if(i == index){
-				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, ":: Loading pic index %d\n", i);
 				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
 				if (!s) {
 					DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Failed to create surface of size %dx%d\n", ph.width*32, ph.height*32);
 					fclose(f);
 					return;
 				}
-				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, ":: Created surface\n");
 				magenta = SDL_MapRGB(s->format, 255, 0, 255);
 				SDL_FillRect(s, NULL, magenta);
 
@@ -254,7 +250,6 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		}
 
 		fclose(f);
-    		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, ":: Loading pic complete\n");
 		m_image = s;
 		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
