@@ -109,7 +109,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 					if(i >= 32 && i < 170){
 						charx[i] = ((i-32) % 32) * 16;
 						chary[i] = ((i-32) / 32) * 16;
-						//charw[i] += 1;
+						charw[i] += 1;
 						charh[i] += 2;
 					}
 					else{
@@ -139,6 +139,8 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'"'] = 3; charh[(unsigned char)'"'] = 3;
 			charw[(unsigned char)'#'] = 6; charh[(unsigned char)'#'] = 6;
 
+			charw[(unsigned char)'1'] = 3; charh[(unsigned char)'1'] = 6;
+
 			charw[(unsigned char)'A'] = 5; charh[(unsigned char)'A'] = 6;
 			charw[(unsigned char)'C'] = 5; charh[(unsigned char)'C'] = 6;
 			charw[(unsigned char)'E'] = 4; charh[(unsigned char)'E'] = 6;
@@ -146,6 +148,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'H'] = 5; charh[(unsigned char)'H'] = 6;
 			charw[(unsigned char)'I'] = 3; charh[(unsigned char)'I'] = 6;
 			charw[(unsigned char)'O'] = 6; charh[(unsigned char)'O'] = 6;
+			charw[(unsigned char)'S'] = 5; charh[(unsigned char)'S'] = 6;
 
 			charw[(unsigned char)'a'] = 4; charh[(unsigned char)'a'] = 6;
 			charw[(unsigned char)'c'] = 4; charh[(unsigned char)'c'] = 6;

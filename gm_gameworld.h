@@ -55,9 +55,13 @@ public:
 			pnlItem[i].SetWidth(32);
 			pnlItem[i].SetBGColor(.1,.1,.1,1);
 			pnlItem[i].SetCaption("");
+			pnlItem[i].SetCustomData(pnlItem);
+			pnlItem[i].SetOnPaint(pnlInventory_t::inventoryItemOnPaint);
 //			pnlItem[i].SetBGActiveness(true);
 		}
 	}
+
+	static void inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
 
 	glictContainer panel; // it's a container, so it's transparent
 	glictPanel pnlItem[10];
@@ -75,11 +79,17 @@ public:
 	void doResize(float w, float h);
 	void mouseEvent(SDL_Event& event);
 
+
+
 	void onWalk();
 	void onTextMessage(MessageType_t type, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message);
+
+protected:
+	int getMinZ();
+
 private:
 	Sprite* ui;
 	glictContainer desktop;
@@ -91,6 +101,8 @@ private:
 
 	bool m_preWalk;
 	int m_walkState;
+
+	uint32_t m_startTime;
 
 	class ProtocolGame* m_protocol;
 };
