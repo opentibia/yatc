@@ -41,7 +41,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/optionsgraphics.h ui/optionsnetwork.h ui/charlist.h \
 		\
 		yatc.cbp yatc.dev \
-		yatc.bmp ui.bmp yatc.ico resources.rc \
-		COPYING AUTHORS ROADMAP
+		yatc.bmp yatc.ico resources.rc \
+		COPYING AUTHORS ROADMAP INSTALL
 
 
