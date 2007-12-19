@@ -308,7 +308,7 @@ void GM_MainMenu::pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictCon
 void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	std::stringstream txt;
-	char c = 169;
+	unsigned char c = 169;
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	txt << "YATC - Yet Another Tibia Client\n"
 		<< "v0.1\n"
@@ -321,10 +321,10 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< "Smygflik\n"
 		<< "\n"
 		<< "YATC comes with ABSOLUTELY NO WARRANTY; \n"
-		<< "for details see sections 11 and 12 in LICENSE.\n"
+		<< "for details see sections 11 and 12 in COPYING.\n"
 		<< "This is free software, and you are welcome \n"
 		<< "to redistribute it under certain conditions;\n"
-		<< "see LICENSE for details.";
+		<< "see COPYING for details.";
 
 	m->msgBox(txt.str().c_str(), "About YATC", &m->pnlMainMenu.btnAbout);
 }
@@ -355,7 +355,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 		proto = ProtocolConfig::detectVersion();
 	if (!proto) {
 		std::stringstream t;
-		char c = 149; // bullet
+		unsigned char c = 149; // bullet
 		t << "Data files in the directory either:\n" <<
 			 c << "do not belong to same protocol version, or\n" <<
 			 c << "are modified and with unknown signatures.\n" <<

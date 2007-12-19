@@ -55,11 +55,15 @@ Adapt directories to your distribution. GLICT doesn't use automake yet.
 3. Building on Windows with Dev-Cpp
 ===================================
 
+WARNING! For the 0.1 release, the .dev project file was not updated. It will not work without modifications. We may release a fix at a later date.
+
 You are expected to have DevCpp installed. Instructions are based around Windows XP environment, but you can easily adapt them to other OSes, if you turn on your brain. 
+
+Dev-Cpp project file is rarely updated. If you get link errors, make sure that all .cpp files are a part of the project. Developers who care ;) do not have access to a Win32 machine with Dev-Cpp installed.
 
 When instructed to fetch code from SVN repository, and you don't have a SVN client, you can use the WebDAV client built into the XP. Instructions are in chapter 3.3.
 
-If you have any problems please try to fix them yourself, and then contact me via OTfans PM. If you really cannot find a solution, try contacting me anyway. If you report the problem we can fix these instructions together -- if not, someone else will have the same problem!
+If you have any problems please try to fix them yourself, and then contact Khaos via OTfans PM. If you really cannot find a solution, try contacting Khaos anyway. If you report the problem we can fix these instructions together -- if not, someone else will have the same problem!
 
 == 3.1. Compiling GLICT ==
 
