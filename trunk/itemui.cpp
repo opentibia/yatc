@@ -61,31 +61,31 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 	if(obj->stackable){
 
 		if(obj->numsprites < 8){
-			obj->getGfx()[0]->Blit(x, y);
+			obj->getGfx()[0]->Blit(x, y, 0, 0, 32, 32, 32*scale, 32*scale);
 			DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Item stackable - m_obj->numsprites < 8");
 			return;
 		}
 
 		if(count < 1){
-			obj->getGfx()[0]->Blit(x, y);
+			obj->getGfx()[0]->Blit(x, y, 0, 0, 32, 32, 32*scale, 32*scale);
 		}
 		else if(count < 5){
-			obj->getGfx()[count - 1]->Blit(x,y);
+			obj->getGfx()[count - 1]->Blit(x,y, 0, 0, 32, 32, 32*scale, 32*scale);
 		}
 		else if(count < 10){
-			obj->getGfx()[4]->Blit(x, y);
+			obj->getGfx()[4]->Blit(x, y, 0, 0, 32, 32, 32*scale, 32*scale);
 		}
 		else if(count < 25){
-			obj->getGfx()[5]->Blit(x, y);
+			obj->getGfx()[5]->Blit(x, y, 0, 0, 32, 32, 32*scale, 32*scale);
 		}
 		else if(count < 50){
-			obj->getGfx()[6]->Blit(x, y);
+			obj->getGfx()[6]->Blit(x, y, 0, 0, 32, 32, 32*scale, 32*scale);
 		}
 		else if(count <= 100){
-			obj->getGfx()[7]->Blit(x, y);
+			obj->getGfx()[7]->Blit(x, y, 0, 0, 32, 32, 32*scale, 32*scale);
 		}
 		else{
-			obj->getGfx()[0]->Blit(x, y);
+			obj->getGfx()[0]->Blit(x, y, 0, 0, 32, 32, 32*scale, 32*scale);
 		}
 	}
 	else{
@@ -99,7 +99,7 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 
 					ASSERT(activeframe < obj->numsprites);
 
-					obj->getGfx()[activeframe]->Blit(x - j*32, y - i*32);
+					obj->getGfx()[activeframe]->Blit(x - j*32*scale, y - i*32*scale, 0, 0, 32, 32, 32*scale, 32*scale);
 					activeframe++;
 				}
 			}

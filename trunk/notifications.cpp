@@ -171,3 +171,9 @@ void Notifications::onCreatureSpeak(SpeakClasses_t type, int n, const std::strin
 {
 	g_game->onCreatureSpeak(type, n, name, level, message);
 }
+
+void Notifications::onCreatureMove(uint32_t id)
+{
+	printf("Movement of %d\n", id);
+	g_game->onCreatureMove(id);
+}

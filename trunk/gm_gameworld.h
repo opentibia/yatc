@@ -86,7 +86,7 @@ public:
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message);
-
+	void onCreatureMove(uint32_t id);
 protected:
 	int getMinZ();
 
@@ -98,9 +98,6 @@ private:
 	glictTextbox txtConsoleEntry;
 
 	std::vector<Console> m_consoles;
-
-	bool m_preWalk;
-	int m_walkState;
 
 	uint32_t m_startTime;
 

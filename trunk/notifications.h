@@ -68,6 +68,7 @@ class Notifications{
 		//SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
 		static void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
 			const std::string& message);
+		static void onCreatureMove(uint32_t id);
 
 		//**** Open/Close inGame windows ****
 		//open item text window

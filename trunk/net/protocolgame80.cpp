@@ -308,6 +308,8 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 				RAISE_PROTOCOL_ERROR("Creature move - addThing");
 			}
 
+			Notifications::onCreatureMove(creature->getId());
+
 			creature->setMoving(oldPos);
 
 			//update creature direction

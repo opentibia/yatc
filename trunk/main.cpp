@@ -261,6 +261,8 @@ int main(int argc, char *argv[])
 		delete st;
 	}
 
+	SDL_EnableKeyRepeat(200, 50);
+
 	try {
 
 		switch(options.engine) {
