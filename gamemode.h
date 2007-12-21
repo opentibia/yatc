@@ -58,6 +58,8 @@ public:
 	//SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
 	virtual void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
 		const std::string& message) {}
+
+	virtual void onCreatureMove(uint32_t id) {}
 };
 
 extern GameMode* g_game;

@@ -86,8 +86,6 @@ GM_Gameworld::GM_Gameworld()
 	txtConsoleEntry.SetHeight(12);
 	txtConsoleEntry.SetCaption("");
 
-	m_preWalk = false;
-	m_walkState = 0;
 
 	m_consoles.insert(m_consoles.end(), Console());
 
@@ -144,22 +142,20 @@ void GM_Gameworld::updateScene()
 
 	#ifdef WINCE
 	{
-	//DEBUGPRINT(0,0,"Beginning draw\n");
-        Position pos = GlobalVariables::getPlayerPosition();
+		Position pos = GlobalVariables::getPlayerPosition();
 
-	for(uint32_t i = 0; i < 7; ++i){
-		for(uint32_t j = 0; j < 7; ++j){
-	//		DEBUGPRINT(0,0,"%d %d\n", i, j);
-			const Tile* tile = Map::getInstance().getTile(pos.x + i - 3, pos.y + j - 3, pos.z);
-			int screenx = (int)(i*32);
-			int screeny = (int)(j*32);
-			const Item* ground = tile->getGround();
-			if(ground){
-				ground->Blit(screenx, screeny, 1.);
+		for(uint32_t i = 0; i < 7; ++i){
+			for(uint32_t j = 0; j < 7; ++j){
+				const Tile* tile = Map::getInstance().getTile(pos.x + i - 3, pos.y + j - 3, pos.z);
+				int screenx = (int)(i*32);
+				int screeny = (int)(j*32);
+				const Item* ground = tile->getGround();
+				if(ground){
+					ground->Blit(screenx, screeny, 1.);
+				}
 			}
 		}
-	}
-	return;
+		return;
 	}
 
 	#endif
@@ -170,17 +166,30 @@ void GM_Gameworld::updateScene()
 		}
 	}
 
+	// set up scale
 	float scale = 1.f;
 	float scaledSize = 32*scale;
 
+	// get player position
 	Position pos = GlobalVariables::getPlayerPosition();
 
+	// find out how far above the player shall be visible
 	int m=getMinZ();
 	int sz;
 	if (pos.z > 7) // underground
 		sz = pos.z + 3;
 	else
 		sz = 7;
+
+	// find out scrolling offset
+	float walkoffx=0.f, walkoffy=0.f;
+	Creature* player = Creatures::getInstance().getPlayer();
+	if (player)
+		player->getWalkOffset(walkoffx, walkoffy, scale);
+	walkoffx *= -1; walkoffy *= -1;
+
+
+
 	for (int z = sz; z >= m; z--) {
 
 		ASSERT(z >= 0);
@@ -195,8 +204,8 @@ void GM_Gameworld::updateScene()
 					continue;
 				}
 
-				int screenx = (int)(i*scaledSize);
-				int screeny = (int)(j*scaledSize);
+				int screenx = (int)(i*scaledSize) + walkoffx;
+				int screeny = (int)(j*scaledSize) + walkoffy;
 
 				const Item* ground = tile->getGround();
 				if(ground){
@@ -284,7 +293,7 @@ void GM_Gameworld::updateScene()
 
 	// draw always-on-top things
 	// (currently only creature names)
-
+	int playerspeed;
 	for(uint32_t i = 0; i < 18; ++i){
 		for(uint32_t j = 0; j < 14; ++j){
 			const Tile* tile = Map::getInstance().getTile(pos.x + i - 9, pos.y + j - 7, pos.z);
@@ -293,23 +302,31 @@ void GM_Gameworld::updateScene()
 				continue;
 			}
 
-			int screenx = (int)(i*scaledSize);
-			int screeny = (int)(j*scaledSize);
+			int screenx = (int)(i*scaledSize) + walkoffx;
+			int screeny = (int)(j*scaledSize) + walkoffy;
+			int groundspeed = tile->getGround() ? Objects::getInstance()->getItemType( tile->getGround()->getID() )->speed : 500;
 
 			int32_t thingsCount = tile->getThingCount() - 1;
 			int32_t drawIndex = 1;
 			while(drawIndex <= thingsCount){
 
-				const Thing* thing = tile->getThingByStackPos(drawIndex);
+				Thing* thing = (Thing*)tile->getThingByStackPos(drawIndex); // FIXME (ivucica#3#) getThingByStackPos() should allow changing (should not be returning const)
 				if(thing){
-					if (thing->getCreature())
+					if (thing->getCreature()) {
 						thing->getCreature()->drawName(screenx, screeny, scale);
+						if (!player || thing->getCreature()->getId() != player->getId())
+							thing->getCreature()->advanceWalk(groundspeed);
+						else
+							playerspeed = groundspeed;
+					}
 				}
 				drawIndex++;
 			}
 
 		}
 	}
+	if (player)
+		player->advanceWalk(playerspeed);
 
 	m_consoles[0].Paint(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
 
@@ -357,25 +374,32 @@ void GM_Gameworld::keyPress (char key)
 
 void GM_Gameworld::specKeyPress (int key)
 {
-
+	Direction dir; int action;
 	switch (key) {
 	case SDLK_LEFT:
-		m_preWalk = true;
-		m_protocol->sendMove(DIRECTION_WEST);
+		action = 0; dir = DIRECTION_WEST;
 		break;
 	case SDLK_RIGHT:
-		m_preWalk = true;
-		m_protocol->sendMove(DIRECTION_EAST);
+		action = 0; dir = DIRECTION_EAST;
 		break;
 	case SDLK_UP:
-		m_preWalk = true;
-		m_protocol->sendMove(DIRECTION_NORTH);
+		action = 0; dir = DIRECTION_NORTH;
 		break;
 	case SDLK_DOWN:
-		m_preWalk = true;
-		m_protocol->sendMove(DIRECTION_SOUTH);
+		action = 0; dir = DIRECTION_SOUTH;
 		break;
 	}
+
+	switch (action) {
+	case 0: // do move
+		if (Creatures::getInstance().getPlayer()->getWalkState() == 1.) {
+			Creatures::getInstance().getPlayer()->setLookDir(dir);
+			Creatures::getInstance().getPlayer()->startWalk();
+			m_protocol->sendMove(dir);
+		}
+		break;
+	}
+
 }
 
 void GM_Gameworld::mouseEvent(SDL_Event& event)
@@ -401,7 +425,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
 void GM_Gameworld::onWalk()
 {
-	m_preWalk = false;
+	Creatures::getInstance().getPlayer()->confirmWalk();
 }
 
 void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
@@ -426,3 +450,11 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
 	m_consoles[0].Insert(ConsoleEntry(message, name));
 }
 
+void GM_Gameworld::onCreatureMove(uint32_t id)
+{
+	if (id != GlobalVariables::getPlayerID() || !Creatures::getInstance().getPlayer()->isPreWalking() )
+		Creatures::getInstance().getCreature(id)->startWalk();
+	Creatures::getInstance().getCreature(id)->confirmWalk();
+	printf("Moving %d\n", id);
+
+}

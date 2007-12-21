@@ -27,11 +27,24 @@ class CreatureUI : virtual public ThingUI {
 public:
 
 	CreatureUI();
+	~CreatureUI();
 	virtual void Blit(int x,int y, float scale = 1.) const;
 	void loadOutfit();
 	void drawName(int x, int y, float scale) const;
+	void startWalk() { m_preWalk = true; m_walkState = 0.f; }
+	void confirmWalk() { m_preWalk = false; }
+	void advanceWalk(int groundspeed);
+	void getWalkOffset(float &walkoffx, float &walkoffy, float scale=1.f) const;
+	bool isPreWalking() {return m_preWalk;}
+	float getWalkState() {return m_walkState;}
+protected:
+	void unloadGfx();
+
 private:
 	ObjectType *m_obj;
+
+	bool m_preWalk;
+	float m_walkState;
 
 };
 

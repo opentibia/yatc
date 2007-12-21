@@ -22,8 +22,8 @@ should comment.
 * add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
 * party shields
 * skulls
-* smooth creature scrolling
-* smooth screen scrolling
+* smooth creature scrolling +/-
+* smooth screen scrolling +
 * turning
 * completely fixing GL engine
 * attacking
