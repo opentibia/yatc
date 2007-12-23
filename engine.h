@@ -50,7 +50,7 @@ class Engine
 		virtual void Flip() = 0;
 
 		static Uint32 fpsTimer(Uint32 interval, void*param);
-		uint32_t getFps() { return m_fps; }
+		uint32_t getFps() { return (uint32_t)m_fps; }
 
 		uint32_t m_creationTimestamp; // some engines, like GL, need this in order to know when to re-create their sprite memories
 

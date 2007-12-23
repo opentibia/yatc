@@ -21,14 +21,20 @@
 #include <SDL/SDL_rotozoom.h> // library you need is called SDL_gfx
 
 #ifdef USE_OPENGL
-	#include <GL/gl.h>
+#include <GL/gl.h>
+
+#if defined WIN32 || defined WINDOWS
+#include <GL/glext.h>
 #endif
-#include "debugprint.h"
 
 #ifndef GL_BGR
 #warning Odd OpenGL header. Defining GL_BGR to a 0.
 #define GL_BGR 0
 #endif
+
+#endif
+#include "debugprint.h"
+
 #include "sprite.h"
 #include "sprdata.h"
 #include <math.h>
@@ -88,7 +94,7 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 		return;
 	}
 
-	SDL_Surface *ns = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+	SDL_Surface* ns = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
 	SDL_Rect src = {x,y,w,h};
 	SDL_Rect dst = {0,0,w,h};
 	SDL_BlitSurface(m_image, &src, ns, &dst);
@@ -289,20 +295,20 @@ void Sprite::templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8
 }
 void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet)
 {
-	if (!templatespr)  {
+	if(!templatespr){
 		printf("!templatespr\n");
 		return;
 	}
-	if (!templatespr->getBasicImage()) {
+	if(!templatespr->getBasicImage()){
 		printf("!templatespr->getBasicImage()\n");
 		return;
 	}
-	if (!m_image) {
+	if(!m_image){
 		printf("!m_image\n");
 		return;
 	}
-	for (int i=0; i < m_image->h; i++) {
-		for (int j=0; j < m_image->w; j++) {
+	for(int i=0; i < m_image->h; i++){
+		for(int j=0; j < m_image->w; j++){
 			uint32_t pixel = getPixel(j,i,m_image);
 			uint32_t templatepixel = getPixel(j,i,templatespr->getBasicImage());
 			uint8_t rt, gt, bt; // rgb template
@@ -311,19 +317,21 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 			SDL_GetRGB(templatepixel, templatespr->getBasicImage()->format, &rt, &gt, &bt);
 			SDL_GetRGB(pixel, m_image->format, &ro, &go, &bo);
 
-			if (rt && gt && !bt) // yellow == head
+			if(rt && gt && !bt){ // yellow == head
 				templatedColorizePixel(head, ro, go, bo);
-			else
-			if (rt && !gt && !bt) // red == body
+			}
+			else if (rt && !gt && !bt){ // red == body
 				templatedColorizePixel(body, ro, go, bo);
-			else
-			if (!rt && gt && !bt) // green == legs
+			}
+			else if (!rt && gt && !bt){ // green == legs
 				templatedColorizePixel(legs, ro, go, bo);
-			else
-			if (!rt && !gt && bt) // blue == feet
+			}
+			else if (!rt && !gt && bt){ // blue == feet
 				templatedColorizePixel(feet, ro, go, bo);
-			else
+			}
+			else{
 				continue; // to if nothing changed, skip the change of pixel
+			}
 
 			putPixel(j, i, SDL_MapRGB(getBasicImage()->format, ro, go, bo), m_image);
 		}
@@ -407,19 +415,25 @@ uint32_t Sprite::getPixel(int x, int y, SDL_Surface *img)
 void Sprite::Stretch (float w, float h, int smooth, bool force)
 {
 	SDL_Surface *img;
-	if (m_stretchimage && !force)
-		if (fabs(m_stretchimage->w - w) < 2 && fabs(m_stretchimage->h - h)<2)
+	if(m_stretchimage && !force){
+		if(fabs(m_stretchimage->w - w) < 2.f && fabs(m_stretchimage->h - h) < 2.f){
 			return;
+		}
+	}
 
-    if (m_r == 1.f && m_g == 1.f && m_b == 1.f)
+    if(m_r == 1.f && m_g == 1.f && m_b == 1.f){
         img = m_image;
-    else
+    }
+    else{
         img = m_coloredimage;
+    }
 
-    if (smooth == -1)
+    if(smooth == -1){
         smooth = m_smoothstretch;
-    else
+    }
+    else{
         m_smoothstretch = smooth;
+    }
 
 
 	unStretch();
@@ -438,19 +452,27 @@ void Sprite::addColor(float r, float g, float b)
 {
     uint8_t ro, go, bo, ao;  // old rgba
     uint32_t pv; // pixel value
-    if (r == m_r && g == m_g && b == m_b)
-        return;
-    for (int i=0; i < m_image->w; i++)
-        for (int j=0; j < m_image->h; j++) {
+    if(r == m_r && g == m_g && b == m_b){
+		return;
+    }
+    for(int i=0; i < m_image->w; i++){
+        for (int j=0; j < m_image->h; j++){
             SDL_GetRGBA(pv=getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo, &ao);
-			if (ao)
+			if(ao){
                 putPixel(i, j, SDL_MapRGBA(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
+			}
         }
+    }
     m_r = r; m_g = g; m_b = b;
     Stretch(getImage()->w, getImage()->h, -1, true);
 }
+
 #include "util.h" // REMOVE ME
-void Sprite::setAsIcon() {
-	if (!m_image) NativeGUIError("Issue","Yes");
+
+void Sprite::setAsIcon()
+{
+	if(!m_image)
+		NativeGUIError("Issue","Yes");
+
 	SDL_WM_SetIcon(m_image,NULL);
 }

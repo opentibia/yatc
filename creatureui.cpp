@@ -48,24 +48,21 @@ void CreatureUI::unloadGfx()
 
 void CreatureUI::Blit(int x,int y, float scale) const
 {
-	int m_frame=0;
-	struct { int x, y; } m_pos = {0, 0};
+	//int m_frame=0;
+	//struct { int x, y; } m_pos = {0, 0};
 
 	if (!m_obj)
 		return;
-
-
 
 	/*uint32_t activeframe = m_frame *
 							(m_obj->ydiv + m_pos.y % m_obj->ydiv) *
 							(m_obj->xdiv + m_pos.x % m_obj->xdiv);*/
 
-
     Creature* n = (Creature*)this;
 
     uint32_t activeframe = 0;
 
-    if (n->getOutfit().m_looktype != 0) {
+    if(n->getOutfit().m_looktype != 0){
         activeframe = n->getLookDir() * m_obj->height * m_obj->width * m_obj->blendframes;
     }
 
@@ -123,7 +120,7 @@ void CreatureUI::drawName(int x, int y, float scale) const
 
 	std::stringstream ss;
 	ss << n->getName() << " " << aframes << " " << std::setprecision(2) << m_walkState ;
-	g_engine->drawText(ss.str().c_str() , "gamefont", x + walkoffx, y-10 + walkoffy, 150);
+	g_engine->drawText(ss.str().c_str() , "gamefont", (int)(x + walkoffx), (int)(y - 10 + walkoffy), 150);
 
 }
 

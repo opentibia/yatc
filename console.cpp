@@ -3,7 +3,7 @@
 int ConsoleEntry::Paint(float x, float y)
 {
 	// TODO (ivucica#3#) add word wrapping
-	g_engine->drawText( (m_speaker + (m_speaker.size() ? ": " : "") + m_text).c_str(), "aafont", x, y-glictFontNumberOfLines(m_text.c_str())*12, 0);
+	g_engine->drawText( (m_speaker + (m_speaker.size() ? ": " : "") + m_text).c_str(), "aafont", (int)x, (int)(y - glictFontNumberOfLines(m_text.c_str())*12), 0);
 	return glictFontNumberOfLines(m_text.c_str())*12;
 }
 

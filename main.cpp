@@ -21,7 +21,7 @@
 /// \file main.cpp
 /// This file contains the main(int,char**) function.
 
-#define MAXFPS 35
+#define MAXFPS 10
 
 
 #include <SDL/SDL.h>
@@ -45,7 +45,7 @@
 #include "net/protocolgame.h"
 
 bool g_running = false;
-uint32_t keymods = 0;
+//uint32_t keymods = 0;
 
 Connection* g_connection = NULL;
 uint32_t g_frameTime = 0;
@@ -54,40 +54,82 @@ int g_frames;
 
 void onKeyDown(const SDL_Event& event)
 {
-	switch(event.key.keysym.sym){
+	int key = event.key.keysym.sym;
+	switch(key){
 	case SDLK_ESCAPE:
 		g_running = false;
 		break;
+	/*
 	case SDLK_LSHIFT:
 	case SDLK_RSHIFT:
 		keymods = keymods | KMOD_SHIFT;
 		break;
+	*/
 	// TODO (ivucica#1#) Add pageup, pagedown, home, end below
 	case SDLK_LEFT:
 	case SDLK_RIGHT:
 	case SDLK_UP:
 	case SDLK_DOWN:
-		g_game->specKeyPress(event.key.keysym.sym);
+		g_game->specKeyPress(key);
 		break;
 	default:
 		// glict expects what glut usually serves: completely prepared keys,
 		// with shift already parsed and all that
 		// we'll try to do the parsing here or elsewhere
-		int key = event.key.keysym.sym;
+
+		if(key < 32){
+			switch(key){
+			case SDLK_BACKSPACE:
+			case SDLK_TAB:
+			case SDLK_RETURN:
+			case SDLK_ESCAPE:
+				break;
+			default:
+				return;
+			}
+		}
 
 		if(event.key.keysym.mod & KMOD_SHIFT){
-			if(key >= 'a' && key <='z'){
-				key = key - 32;
-			}
-			else if(key >= '0' && key <='9'){
+			if(key >= '0' && key <='9'){
 				key = key - 16;
 			}
 		}
-		if (key > 0xFF)
-			key = (key & 0xFF) + '0';
 
-		// TODO (mips_act#1#) Use SDLK_ constants instead of numeric values
-		if(key < 32 && key != 8 && key != 9 && key != 27 && key != 13 && key != 10) // most special keys won't be passed here, but enter, backspace and friends will
+		if(key >= 'a' && key <='z'){
+			if((event.key.keysym.mod & KMOD_CAPS) && !(event.key.keysym.mod & KMOD_SHIFT) ||
+				!(event.key.keysym.mod & KMOD_CAPS) && (event.key.keysym.mod & KMOD_SHIFT)){
+				key = key - 32;
+			}
+		}
+
+		//Numeric keypad
+		if((event.key.keysym.mod & KMOD_NUM) && key >= 256 && key <= 271){
+			switch(key){
+			case SDLK_KP_PERIOD:
+				key = SDLK_PERIOD;
+				break;
+			case SDLK_KP_DIVIDE:
+				key = SDLK_SLASH;
+				break;
+	 		case SDLK_KP_MULTIPLY:
+	 			key = SDLK_ASTERISK;
+		 		break;
+			case SDLK_KP_MINUS:
+				key = SDLK_MINUS;
+				break;
+			case SDLK_KP_PLUS:
+				key = SDLK_PLUS;
+				break;
+			case SDLK_KP_ENTER:
+				key = SDLK_RETURN;
+				break;
+			default:
+				key = key - 256 + '0';
+				break;
+			}
+		}
+
+		if(key > 255)
 			return;
 
 		g_game->keyPress(key);
@@ -147,7 +189,7 @@ int showSplashScreen() {
     /* Make the window visible on the screen */
     ShowWindow (hwnd, 1);//nCmdShow);
 
-
+	return 0;
 }
 
 
@@ -211,14 +253,21 @@ int main(int argc, char *argv[])
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Checking graphics files existence...");
 	{
-		FILE*f = fopen("Tibia.pic","r");
-		if (!f) {
+		FILE*f = fopen("Tibia.pic", "r");
+		if(!f){
 			NativeGUIError("Loading the data file 'Tibia.pic' has failed.\nPlease place 'Tibia.pic' in the same folder as YATC.", "YATC Fatal Error");
 			exit(1);
-		} else fclose(f);
-		f = fopen("Tibia.spr","r");
-		if (!f) {
+		}
+		else{
+			fclose(f);
+		}
+
+		f = fopen("Tibia.spr", "r");
+		if(!f){
 			NativeGUIError("Loading the data file 'Tibia.spr' has failed\nPlease place 'Tibia.spr' in the same folder as YATC.", "YATC Fatal Error");
+		}
+		else{
+			fclose(f);
 		}
 	}
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " passed\n");
@@ -232,7 +281,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	if (!fileexists("Tibia.spr")) {
+	if(!fileexists("Tibia.spr")){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Locating sprite file failed!");
 		NativeGUIError("Locating the data file 'Tibia.spr' has failed.\nPlease place 'Tibia.spr' in the same folder as YATC.", "YATC Fatal Error");
 		exit(1);
@@ -241,7 +290,7 @@ int main(int argc, char *argv[])
 	//setenv("SDL_VIDEODRIVER", "aalib", 0);
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing windowing...\n");
 
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0) {
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0){
 		std::stringstream out;
 		out << "Couldn't initialize SDL: " << SDL_GetError() << std::endl;
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, out.str().c_str());
@@ -263,9 +312,9 @@ int main(int argc, char *argv[])
 
 	SDL_EnableKeyRepeat(200, 50);
 
-	try {
+	try{
 
-		switch(options.engine) {
+		switch(options.engine){
 			#ifdef USE_OPENGL
 			case ENGINE_OPENGL:
 				g_engine = new EngineGL;
@@ -297,7 +346,6 @@ int main(int argc, char *argv[])
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
-
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
         #ifdef WIN32
         hideSplashScreen();
@@ -321,10 +369,10 @@ int main(int argc, char *argv[])
 						break;
 
 					case SDL_KEYUP:
-						if(event.key.keysym.sym == SDLK_LSHIFT ||
+						/*if(event.key.keysym.sym == SDLK_LSHIFT ||
 							event.key.keysym.sym == SDLK_RSHIFT){
 							keymods = keymods & ~(uint32_t)KMOD_SHIFT;
-						}
+						}*/
 						break;
 
 					case SDL_KEYDOWN:
@@ -352,8 +400,9 @@ int main(int argc, char *argv[])
 			g_frameTime = SDL_GetTicks();
 
 
-            if (g_frameTime-beginticks < 1000/MAXFPS-10)
-                SDL_Delay(1000/MAXFPS - (g_frameTime - beginticks)-10); //limit to 10fps
+            if(g_frameTime - beginticks < 1000/MAXFPS - 10){
+                SDL_Delay(1000/MAXFPS - (g_frameTime - beginticks) - 10);
+            }
 
             while (abs((int)SDL_GetTicks() - beginticks) < 1000/MAXFPS);
 
@@ -361,12 +410,14 @@ int main(int argc, char *argv[])
 			if(g_connection){
 				g_connection->executeNetwork();
 			}
+
 			//and finally update scene
 			g_game->updateScene();
 			g_engine->Flip();
 			g_frames ++;
 		}
-	} catch (std::string errtext) {
+	}
+	catch(std::string errtext){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "%s", errtext.c_str());
 	}
 
