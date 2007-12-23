@@ -43,10 +43,10 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 	uint8_t slot = (glictPanel*)caller - (glictPanel*)caller->GetCustomData() + 1; // customdata stores the address of pnlItem[0], and caller is pnlItem[slot]...
 
 
-
 	Item* item=Inventory::getInstance().getItem(slot);
-	if (item)
-		item->Blit(real->left, real->top, 1.); // TODO (ivucica#5#) if item is not 32x32, scale appropriately
+	if (item){
+		item->Blit((int)real->left, (int)real->top, 1.); // TODO (ivucica#5#) if item is not 32x32, scale appropriately
+	}
 
 	{
 		std::stringstream s, count;
@@ -58,7 +58,7 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 		s << "Slot " << (int)slot << "\n" << count.str();
 
 
-		g_engine->drawText(s.str().c_str(), "minifont", real->left + 2, real->top + 2, 0);
+		g_engine->drawText(s.str().c_str(), "minifont", (int)real->left + 2, (int)real->top + 2, 0);
 	}
 
 }
@@ -174,23 +174,26 @@ void GM_Gameworld::updateScene()
 	Position pos = GlobalVariables::getPlayerPosition();
 
 	// find out how far above the player shall be visible
-	int m=getMinZ();
+	int m = getMinZ();
 	int sz;
-	if (pos.z > 7) // underground
+	if(pos.z > 7){ // underground
 		sz = pos.z + 3;
-	else
+	}
+	else{
 		sz = 7;
+	}
 
 	// find out scrolling offset
-	float walkoffx=0.f, walkoffy=0.f;
+	float walkoffx = 0.f, walkoffy = 0.f;
 	Creature* player = Creatures::getInstance().getPlayer();
-	if (player)
+	if(player){
 		player->getWalkOffset(walkoffx, walkoffy, scale);
+	}
 	walkoffx *= -1; walkoffy *= -1;
 
 
 
-	for (int z = sz; z >= m; z--) {
+	for(int z = sz; z >= m; z--){
 
 		ASSERT(z >= 0);
 		int offset = z - pos.z;
@@ -204,8 +207,8 @@ void GM_Gameworld::updateScene()
 					continue;
 				}
 
-				int screenx = (int)(i*scaledSize) + walkoffx;
-				int screeny = (int)(j*scaledSize) + walkoffy;
+				int screenx = (int)(i*scaledSize + walkoffx);
+				int screeny = (int)(j*scaledSize + walkoffy);
 
 				const Item* ground = tile->getGround();
 				if(ground){
@@ -222,7 +225,7 @@ void GM_Gameworld::updateScene()
 				drawingStates_t drawState = DRAW_ITEMTOP1;
 
 				int32_t thingsCount = tile->getThingCount() - 1;
-				int32_t drawIndex = 1, lastTopIndex;
+				int32_t drawIndex = 1, lastTopIndex = 0;
 				while(drawIndex <= thingsCount && drawIndex >= 1){
 
 					const Thing* thing = tile->getThingByStackPos(drawIndex);
@@ -286,7 +289,6 @@ void GM_Gameworld::updateScene()
 						break;
 					}
 				}
-
 			}
 		}
 	}
@@ -302,8 +304,8 @@ void GM_Gameworld::updateScene()
 				continue;
 			}
 
-			int screenx = (int)(i*scaledSize) + walkoffx;
-			int screeny = (int)(j*scaledSize) + walkoffy;
+			int screenx = (int)(i*scaledSize + walkoffx);
+			int screeny = (int)(j*scaledSize + walkoffy);
 			int groundspeed = tile->getGround() ? Objects::getInstance()->getItemType( tile->getGround()->getID() )->speed : 500;
 
 			int32_t thingsCount = tile->getThingCount() - 1;
@@ -368,8 +370,8 @@ void GM_Gameworld::keyPress (char key)
 			m_protocol->sendSay(SPEAK_SAY, txtConsoleEntry.GetCaption());
 		txtConsoleEntry.SetCaption("");
 	} else {
-		desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
-	}
+	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+}
 }
 
 void GM_Gameworld::specKeyPress (int key)
@@ -396,7 +398,7 @@ void GM_Gameworld::specKeyPress (int key)
 			Creatures::getInstance().getPlayer()->setLookDir(dir);
 			Creatures::getInstance().getPlayer()->startWalk();
 			m_protocol->sendMove(dir);
-		}
+}
 		break;
 	}
 
