@@ -263,7 +263,9 @@ void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* f
 	mb->SetMessage(mbox);
 
 	mb->SetHeight(glictFontNumberOfLines(mbox)*14 + 35);
-	mb->SetWidth((int)glictFontSize(mbox, "system"));
+	int size1 = (int)glictFontSize(title, "system");
+	int size2 = (int)glictFontSize(mbox, "system");
+	mb->SetWidth(MAX(size1, size2));
 	mb->Focus(NULL);
 
 	mb->GetSize(&s);
