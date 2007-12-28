@@ -381,7 +381,7 @@ bool Objects::loadDat(const char* filename)
 			m_effect.addElement(oType, id - ObjectType::maxItemId - ObjectType::maxOutfitId);
 		}
 		else if(id <= (ObjectType::maxItemId + ObjectType::maxOutfitId + ObjectType::maxEffectId + ObjectType::maxDistanceId)){
-			m_distance.addElement(oType, id - ObjectType::maxItemId - ObjectType::maxOutfitId + ObjectType::maxDistanceId);
+			m_distance.addElement(oType, id - ObjectType::maxItemId - ObjectType::maxOutfitId - ObjectType::maxEffectId);
 		}
 
 		id++;
