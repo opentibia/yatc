@@ -28,7 +28,7 @@ public:
 
 	CreatureUI();
 	~CreatureUI();
-	virtual void Blit(int x,int y, float scale = 1.) const;
+	virtual void Blit(int x, int y, float scale = 1., int map_x = 0, int map_y = 0) const;
 	void loadOutfit();
 	void drawName(int x, int y, float scale) const;
 	void startWalk() { m_preWalk = true; m_walkState = 0.f; }

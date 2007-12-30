@@ -46,7 +46,7 @@ void CreatureUI::unloadGfx()
 	m_gfx.clear();
 }
 
-void CreatureUI::Blit(int x,int y, float scale) const
+void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 {
 	//int m_frame=0;
 	//struct { int x, y; } m_pos = {0, 0};

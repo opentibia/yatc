@@ -313,7 +313,6 @@ int main(int argc, char *argv[])
 	SDL_EnableKeyRepeat(200, 50);
 
 	try{
-
 		switch(options.engine){
 			#ifdef USE_OPENGL
 			case ENGINE_OPENGL:

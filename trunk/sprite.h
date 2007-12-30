@@ -86,8 +86,6 @@ class Sprite
 		#ifdef USE_OPENGL
 		GLuint m_pixelformat;
 		#endif
-
-
 };
 
 #endif

@@ -50,8 +50,6 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
 }
 
 
-
-
 void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, float destw, float desth)
 {
 	if(!getImage())

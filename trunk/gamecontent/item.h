@@ -50,7 +50,9 @@ public:
 	virtual Item* getItem() {return this;}
 	virtual const Item* getItem() const {return this;}
 
-	virtual void Blit(int x, int y, float scale) const;
+	virtual void Blit(int x, int y, float scale = 1.f, int map_x = 0, int map_y = 0) const;
+
+	bool hasHeight() const { return m_it->hasHeight;}
 
 protected:
 

@@ -163,6 +163,7 @@ void GM_MainMenu::updateScene()
         renderScene();
     }
 }
+
 void GM_MainMenu::doResize(float w, float h)
 {
 	pnlMainMenu.mainmenu.SetPos(60, glictGlobals.h - 240);
@@ -180,8 +181,6 @@ void GM_MainMenu::doResize(float w, float h)
 	renderScene();
 }
 
-
-
 void GM_MainMenu::renderScene()
 {
 	if(background)
@@ -192,7 +191,7 @@ void GM_MainMenu::renderScene()
 
 void GM_MainMenu::renderUI()
 {
-#ifdef HAVE_OPENGL
+#ifdef USE_OPENGL
 	if (options.engine == ENGINE_OPENGL) {
 		glEnable(GL_SCISSOR_TEST);
 		desktop.Paint();

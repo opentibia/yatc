@@ -38,7 +38,7 @@ EngineGL::EngineGL()
 
 	doResize(m_width, m_height);
 
-	if (!m_screen)
+	if(!m_screen)
 		// looks like GL is not supported -- dont attempt anything else
 		return;
 
@@ -110,7 +110,13 @@ void EngineGL::drawRectangle(float x, float y, float width, float height, oRGBA 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-bool EngineGL::isSupported() {
+void EngineGL::drawRectangleLines(float x, float y, float width, float height, oRGBA color)
+{
+	//TODO
+}
+
+bool EngineGL::isSupported()
+{
 	if (!m_screen)
 		return false;
 	else
