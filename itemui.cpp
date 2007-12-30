@@ -22,6 +22,9 @@
 #include "engine.h"
 #include "fassert.h"
 
+
+extern uint32_t g_frameTime;
+
 ItemUI::ItemUI(uint16_t id) : ThingUI()
 {
 	if(id < 100){
@@ -50,11 +53,8 @@ ItemUI::~ItemUI()
     if (!obj->instancesOnMap) obj->unloadGfx();
 }
 
-void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale) const
+void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale, int map_x, int map_y) const
 {
-	uint32_t g_frame = 0;
-	struct { int x, y; } m_pos = {0, 0};
-
 	if(!obj)
 		return;
 
@@ -89,9 +89,22 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 		}
 	}
 	else{
-		uint32_t activeframe = g_frame *
-							(obj->ydiv + m_pos.y % obj->ydiv) *
-							(obj->xdiv + m_pos.x % obj->xdiv);
+		uint32_t activeframe;
+		uint32_t spriteSize = obj->width * obj->height * obj->blendframes;
+		uint32_t animationTime = g_frameTime/500;
+
+		if(obj->splash || obj->fluidContainer){
+			activeframe = count;
+		}
+		else if(obj->isHangable){
+			//TODO
+			activeframe = 0;
+		}
+		else{
+			activeframe = (map_x % obj->xdiv + (map_y % obj->ydiv)*obj->xdiv +
+							(animationTime % obj->animcount)*obj->xdiv*obj->ydiv)*
+							spriteSize;
+		}
 
 		for(uint32_t k = 0; k < obj->blendframes; ++k){ // note: if it's anything except item, there won't be blendframes...
 			for(uint32_t i = 0; i < obj->height; ++i){

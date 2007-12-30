@@ -58,12 +58,18 @@ void SpriteGL::buildGLTexture() {
 		return;
 
     m_engineCreationTimestamp = 0;
-    if (!g_running)
-        return;
-	m_multiplierx = nextpow(this->getWidth()) / this->getWidth();
-	m_multipliery = nextpow(this->getHeight()) / this->getHeight();
 
-	Stretch(nextpow(this->getWidth()), nextpow(this->getHeight()));
+    if(!g_running)
+        return;
+
+	//m_multiplierx = nextpow(this->getWidth()) / this->getWidth();
+	//m_multipliery = nextpow(this->getHeight()) / this->getHeight();
+
+	//Stretch(nextpow(this->getWidth()), nextpow(this->getHeight()), true);
+	//printf("Stretch %p\n", this);
+
+	m_multiplierx = 1.;
+	m_multipliery = 1.;
 
 	SDL_LockSurface(getImage());
 
@@ -75,17 +81,18 @@ void SpriteGL::buildGLTexture() {
 	GLint ret = gluBuild2DMipmaps(GL_TEXTURE_2D,
 						GL_RGBA,
 						getImage()->w, getImage()->h,
-						(getPixelFormat() == GL_NONE ? (DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "[SpriteGL::SpriteGL] Invalid pixelformat\n"), GL_RGBA) : getPixelFormat()),
+						(getPixelFormat() == GL_NONE ? (DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "[SpriteGL::SpriteGL] Invalid pixelformat\n"), GL_BGRA) : getPixelFormat()),
 						GL_UNSIGNED_BYTE,
 			 			getImage()->pixels);
+
 	if(ret != 0){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Error [SpriteGL::SpriteGL] Cant build 2DMipmaps: %s\n", gluErrorString(ret));
 	}
+
 	glDisable(GL_TEXTURE_2D);
 	SDL_UnlockSurface(getImage());
 
     m_engineCreationTimestamp = g_engine->m_creationTimestamp;
-
 }
 
 void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcwidth, float srcheight)
@@ -98,13 +105,10 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 	if(!getImage())
 		return;
 
-
     if (m_engineCreationTimestamp != g_engine->m_creationTimestamp) { // we need to recreate the texture since the context was invalidated in the meantime
         buildGLTexture();
     }
 
-	// TODO (mips_act#3#): Configure glict to dont enable/disable all the time
-	// GL_TEXTURE_2D
 	glEnable(GL_TEXTURE_2D);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -120,9 +124,8 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 	glEnable(GL_ALPHA_TEST);
 	//if (m_index==0)
 		//printf("File: %s Index: %d Multipliers: %g %g WxH: %gx%g\n", m_filename.c_str(), m_index, m_multiplierx, m_multipliery, spriteWidth, spriteHeight);
-    if (m_r != 1. || m_g != 1. || m_b != 1.)
+    if(m_r != 1. || m_g != 1. || m_b != 1.)
         glColor4f(m_r, m_g, m_b, 1.);
-
 
 	glBegin(GL_QUADS);
 		glTexCoord2f((srcx)/spriteWidth, (srcy )/spriteHeight);
@@ -137,12 +140,12 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 		glTexCoord2f((srcx + srcwidth / m_multiplierx)/spriteWidth, (srcy) /spriteHeight);
 		glVertex2f(destx + destwidth, desty);
 	glEnd();
-    if (m_r != 1. || m_g != 1. || m_b != 1.)
+
+    if(m_r != 1. || m_g != 1. || m_b != 1.)
         glColor4f(1.,1.,1., 1.);
+
 	glPopMatrix();
-
 }
-
 
 
 #endif

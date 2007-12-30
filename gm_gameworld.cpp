@@ -45,7 +45,7 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 
 	Item* item=Inventory::getInstance().getItem(slot);
 	if (item){
-		item->Blit((int)real->left, (int)real->top, 1.); // TODO (ivucica#5#) if item is not 32x32, scale appropriately
+		item->Blit((int)real->left, (int)real->top, 1.f); // TODO (ivucica#5#) if item is not 32x32, scale appropriately
 	}
 
 	{
@@ -191,8 +191,6 @@ void GM_Gameworld::updateScene()
 	}
 	walkoffx *= -1; walkoffy *= -1;
 
-
-
 	for(int z = sz; z >= m; z--){
 
 		ASSERT(z >= 0);
@@ -201,7 +199,12 @@ void GM_Gameworld::updateScene()
 		for(uint32_t i = 0; i < 18; ++i){
 			for(uint32_t j = 0; j < 14; ++j){
 
-				const Tile* tile = Map::getInstance().getTile(pos.x + i - 9 - offset, pos.y + j - 7 - offset, z);
+				uint32_t tile_height = 0;
+
+				uint32_t tile_x = pos.x + i - 9 - offset;
+				uint32_t tile_y = pos.y + j - 7 - offset;
+
+				const Tile* tile = Map::getInstance().getTile(tile_x, tile_y, z);
 				if(!tile){
 					//printf("No tile?\n");
 					continue;
@@ -212,7 +215,7 @@ void GM_Gameworld::updateScene()
 
 				const Item* ground = tile->getGround();
 				if(ground){
-					ground->Blit(screenx, screeny, scale);
+					ground->Blit(screenx, screeny, scale, tile_x, tile_y);
 				}
 
 				enum drawingStates_t{
@@ -225,12 +228,12 @@ void GM_Gameworld::updateScene()
 				drawingStates_t drawState = DRAW_ITEMTOP1;
 
 				int32_t thingsCount = tile->getThingCount() - 1;
-				int32_t drawIndex = 1, lastTopIndex = 0;
-				while(drawIndex <= thingsCount && drawIndex >= 1){
+				int32_t drawIndex = ground ? 1 : 0, lastTopIndex = 0;
+
+				while(drawIndex <= thingsCount && drawIndex >= 0){
 
 					const Thing* thing = tile->getThingByStackPos(drawIndex);
 					if(thing){
-
 						int32_t thingOrder = thing->getOrder();
 
 						switch(drawState){
@@ -261,13 +264,20 @@ void GM_Gameworld::updateScene()
 
 						case DRAW_ITEMTOP3: //topItems 3
 							if(thingOrder != 3){
-								drawIndex = 0; //force exit loop
+								drawIndex = -1; //force exit loop
 								continue;
 							}
 							break;
 						}
 
-						thing->Blit(screenx, screeny, scale);
+						thing->Blit(screenx - (int)(tile_height*8.*scale),
+									screeny - (int)(tile_height*8.*scale),
+									scale, tile_x, tile_y);
+
+						if(const Item* item = thing->getItem()){
+							if(item->hasHeight())
+								tile_height++;
+						}
 
 						switch(drawState){
 						case DRAW_ITEMTOP1: //topItems 1,2

@@ -169,7 +169,7 @@ public:
 	}
 
 	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
-		if ((int)caller->GetCustomData() == 1) {
+		if ((long)caller->GetCustomData() == 1) {
 			caller->SetCustomData(NULL);
 			((glictPanel*)caller)->SetSkin(&g_skin.txt);
 		} else {

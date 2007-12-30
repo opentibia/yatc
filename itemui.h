@@ -31,12 +31,12 @@ public:
 	ItemUI(uint16_t id);
 	virtual ~ItemUI();
 
-	virtual void Blit(int x, int y, float scale = 1.) const = 0;
+	virtual void Blit(int x, int y, float scale = 1., int map_x = 0, int map_y = 0) const = 0;
 
 protected:
 
-	void BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale = 1.) const;
-	uint16_t  m_id;
+	void BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale = 1., int map_x = 0, int map_y = 0) const;
+	uint16_t m_id;
 };
 
 #endif

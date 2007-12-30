@@ -198,7 +198,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
 
 		#ifdef USE_OPENGL
-		m_pixelformat = GL_RGBA;
+		m_pixelformat = GL_BGRA;
 		#endif
 		m_loaded = true;
 	}
@@ -258,7 +258,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		fclose(f);
 		m_image = s;
 		#ifdef USE_OPENGL
-		m_pixelformat = GL_RGBA;
+		m_pixelformat = GL_BGRA;
 		#endif
 		m_loaded = true;
 	}
@@ -414,7 +414,7 @@ uint32_t Sprite::getPixel(int x, int y, SDL_Surface *img)
 
 void Sprite::Stretch (float w, float h, int smooth, bool force)
 {
-	SDL_Surface *img;
+	SDL_Surface* img;
 	if(m_stretchimage && !force){
 		if(fabs(m_stretchimage->w - w) < 2.f && fabs(m_stretchimage->h - h) < 2.f){
 			return;
