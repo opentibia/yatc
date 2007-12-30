@@ -25,6 +25,38 @@
 
 extern uint32_t g_frameTime;
 
+
+enum FluidColors_t {
+	FLUID_EMPTY   = 0x00,
+	FLUID_BLUE    = 0x01,
+	FLUID_RED     = 0x02,
+	FLUID_BROWN   = 0x03,
+	FLUID_GREEN   = 0x04,
+	FLUID_YELLOW  = 0x05,
+	FLUID_WHITE   = 0x06,
+	FLUID_PURPLE  = 0x07
+};
+
+int fluidColorMap[] = {
+	FLUID_EMPTY,
+	FLUID_BLUE,
+	FLUID_PURPLE,
+	FLUID_BROWN,
+	FLUID_BROWN,
+	FLUID_RED,
+	FLUID_GREEN,
+	FLUID_BROWN,
+	FLUID_YELLOW,
+	FLUID_WHITE,
+	FLUID_PURPLE,
+	FLUID_RED,
+	FLUID_YELLOW,
+	FLUID_BROWN,
+	FLUID_YELLOW,
+	FLUID_WHITE,
+	FLUID_BLUE,
+};
+
 ItemUI::ItemUI(uint16_t id) : ThingUI()
 {
 	if(id < 100){
@@ -94,7 +126,12 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 		uint32_t animationTime = g_frameTime/500;
 
 		if(obj->splash || obj->fluidContainer){
-			activeframe = count;
+			if(count < sizeof(fluidColorMap)/sizeof(int)){
+				activeframe = fluidColorMap[count];
+			}
+			else{
+				activeframe = animationTime % obj->numsprites;
+			}
 		}
 		else if(obj->isHangable){
 			//TODO
