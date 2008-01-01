@@ -60,10 +60,10 @@ void Notifications::onProtocolError(bool fatal)
 	std::string error = protocol->getErrorDesc();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "\n********************************************************\n");
 	if(fatal){
-		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "PROTOCOL ERROR: %s\n", error.c_str());
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "PROTOCOL ERROR: %s\n", error.c_str());
 	}
 	else{
-		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "PROTOCOL WARNING: %s\n", error.c_str());
+		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "PROTOCOL WARNING: %s\n", error.c_str());
 	}
 	const std::list<uint8_t>& serverCmd = protocol->getLastServerCmd();
 	std::list<uint8_t>::const_iterator it;

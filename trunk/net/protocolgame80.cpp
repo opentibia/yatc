@@ -304,7 +304,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			if(!tile){
 				RAISE_PROTOCOL_ERROR("Creature move - !tile new");
 			}
-			if(!tile->addThing(creature)){
+			if(!tile->addThing(creature, true)){
 				RAISE_PROTOCOL_ERROR("Creature move - addThing");
 			}
 
