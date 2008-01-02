@@ -24,6 +24,9 @@
 #include "engine.h"
 #include "fassert.h"
 #include "gamecontent/creature.h"
+
+static std::map<uint32_t, Sprite*> s_spritecache;
+
 CreatureUI::CreatureUI() : ThingUI()
 {
 	//m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", Objects::getInstance()->getOutfitType(1)->imageData[0]));
@@ -115,12 +118,8 @@ void CreatureUI::drawName(int x, int y, float scale) const
 	if (!m_obj) {
 		return;
 	}
-	//g_engine->drawText(n->getName().c_str() , "gamefont", x + walkoffx, y-10 + walkoffy, 150);
-	uint32_t aframes = m_obj->height * m_obj->width * m_obj->blendframes * m_obj->xdiv * m_obj->ydiv * (m_walkState == 1. ? 0 : (((int)(m_walkState*100) / 25) % 2 + 1));
 
-	std::stringstream ss;
-	ss << n->getName() << " " << aframes << " " << std::setprecision(2) << m_walkState ;
-	g_engine->drawText(ss.str().c_str() , "gamefont", (int)(x + walkoffx), (int)(y - 10 + walkoffy), 150);
+	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx), (int)(y - 10 + walkoffy), 150);
 
 }
 
@@ -203,6 +202,8 @@ void CreatureUI::loadOutfit()
 
 		spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
 		tspr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i + m_obj->height * m_obj->width]);
+
+
 		if (i + m_obj->height * m_obj->width < m_obj->numsprites)
 			spr->templatedColorize(tspr, outfit.m_lookhead, outfit.m_lookbody, outfit.m_looklegs, outfit.m_lookfeet);
 		delete tspr;

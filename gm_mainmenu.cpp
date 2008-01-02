@@ -314,7 +314,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 	txt << "YATC - Yet Another Tibia Client\n"
 		<< "v0.1\n"
 		<< "\n"
-		<< c <<" 2007 OpenTibia Team\n"
+		<< c <<" 2007-2008 OpenTibia Team\n"
 		<< "\n"
 		<< "Programmed by (in no particular order):\n"
 		<< "mips\n"
