@@ -38,7 +38,7 @@
 #include "skin.h"
 #include "config.h"
 #include "spritesdl.h" // to load icon
-
+#include "wince.h" // fopen fix, etc
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -136,9 +136,8 @@ void onKeyDown(const SDL_Event& event)
 	}
 }
 
-
+#if 0
 #ifdef WIN32
-
 
 /*  Declare Windows procedure  */
 LRESULT CALLBACK win32splashWindowProcedure (HWND, UINT, WPARAM, LPARAM);
@@ -210,7 +209,8 @@ LRESULT CALLBACK win32splashWindowProcedure (HWND hwnd, UINT message, WPARAM wPa
 void hideSplashScreen() {
     DestroyWindow(win32splashhwnd);
 }
-#endif
+#endif // ifdef win32
+#endif // if 0
 
 /// \brief Main program function
 ///
@@ -347,7 +347,7 @@ int main(int argc, char *argv[])
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
         #ifdef WIN32
-        hideSplashScreen();
+        //hideSplashScreen();
         #endif
         g_running = true;
 

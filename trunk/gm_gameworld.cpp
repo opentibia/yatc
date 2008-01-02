@@ -92,11 +92,13 @@ GM_Gameworld::GM_Gameworld()
 	m_startTime = time(NULL);
 
 	doResize(glictGlobals.w, glictGlobals.h);
+
+
 }
 
 GM_Gameworld::~GM_Gameworld ()
 {
-    delete ui;
+	delete ui;
 }
 
 
@@ -111,7 +113,9 @@ void GM_Gameworld::doResize(float w, float h)
 
 	pnlTraffic.SetPos(w-200, 0);
 
+	DEBUGPRINT(0,0,"Updating scene\n");
 	updateScene(); // FIXME (ivucica#2#) potentially dangerous during call inside constructor (map possibly not loaded yet) -- gotta check with mips if we may draw map while it still isn't received from server via initial 0x64 packet
+	DEBUGPRINT(0,0,"Scene updated\n");
 
 }
 
@@ -120,18 +124,18 @@ int GM_Gameworld::getMinZ() { // find out how far can we render... if anything i
 	Position pos = GlobalVariables::getPlayerPosition();
 	const Tile* tile = Map::getInstance().getTile(pos.x, pos.y, pos.z);
 
-    int minz = 0;
-    for (int z = pos.z-1; z>=0; z--) {
+	int minz = 0;
+	for (int z = pos.z-1; z>=0; z--) {
 
-        tile = Map::getInstance().getTile(pos.x-(z-pos.z), pos.y-(z-pos.z), z);
-        if (tile && tile->getThingCount() ) {
-        	printf("Player Z: %d, minz: %d, tc: %d\n", pos.z, minz, tile->getThingCount());
-            minz = z+1;
+		tile = Map::getInstance().getTile(pos.x-(z-pos.z), pos.y-(z-pos.z), z);
+		if (tile && tile->getThingCount() ) {
+			printf("Player Z: %d, minz: %d, tc: %d\n", pos.z, minz, tile->getThingCount());
+			minz = z+1;
 
-            return minz;
-        }
-    }
-    printf("Player Z: %d, nothing above player\n", pos.z);
+			return minz;
+		}
+	}
+	printf("Player Z: %d, nothing above player\n", pos.z);
 	return 0;
 }
 
@@ -139,7 +143,7 @@ int GM_Gameworld::getMinZ() { // find out how far can we render... if anything i
 void GM_Gameworld::updateScene()
 {
 	// TODO (ivucica#2#) test on edge of map
-
+	#if 0
 	#ifdef WINCE
 	{
 		Position pos = GlobalVariables::getPlayerPosition();
@@ -159,12 +163,22 @@ void GM_Gameworld::updateScene()
 	}
 
 	#endif
+	#endif
 
+	#ifndef WINCE
 	for(int i = 0; i < options.w; i += 96){
 		for(int j = 0; j < options.h; j += 96){
 			ui->Blit(i, j, 0, 0, 96, 96);
 		}
 	}
+	#endif
+
+	// tilecount: width and height to render  -- "viewport" width and height
+	#ifndef WINCE
+	int vpw=18, vph=14;
+	#else
+	int vpw=8, vph=6;
+	#endif
 
 	// set up scale
 	float scale = 1.f;
@@ -196,15 +210,16 @@ void GM_Gameworld::updateScene()
 		ASSERT(z >= 0);
 		int offset = z - pos.z;
 
-		for(uint32_t i = 0; i < 18; ++i){
-			for(uint32_t j = 0; j < 14; ++j){
+		for(uint32_t i = 0; i < vpw; ++i){
+			for(uint32_t j = 0; j < vph; ++j){
 
 				uint32_t tile_height = 0;
 
-				uint32_t tile_x = pos.x + i - 9 - offset;
-				uint32_t tile_y = pos.y + j - 7 - offset;
+				uint32_t tile_x = pos.x + i - vpw/2 - offset;
+				uint32_t tile_y = pos.y + j - vph/2 - offset;
 
 				const Tile* tile = Map::getInstance().getTile(tile_x, tile_y, z);
+
 				if(!tile){
 					//printf("No tile?\n");
 					continue;
@@ -305,10 +320,10 @@ void GM_Gameworld::updateScene()
 
 	// draw always-on-top things
 	// (currently only creature names)
-	int playerspeed;
-	for(uint32_t i = 0; i < 18; ++i){
-		for(uint32_t j = 0; j < 14; ++j){
-			const Tile* tile = Map::getInstance().getTile(pos.x + i - 9, pos.y + j - 7, pos.z);
+	int playerspeed = 0;
+	for(uint32_t i = 0; i < vpw; ++i){
+		for(uint32_t j = 0; j < vph; ++j){
+			const Tile* tile = Map::getInstance().getTile(pos.x + i - vpw/2, pos.y + j - vph/2, pos.z);
 			if(!tile){
 				//printf("No tile?\n");
 				continue;
@@ -367,6 +382,7 @@ void GM_Gameworld::updateScene()
 			 "";
 		pnlTraffic.SetCaption(s.str());
 	}
+
 	desktop.Paint();
 }
 
@@ -386,7 +402,8 @@ void GM_Gameworld::keyPress (char key)
 
 void GM_Gameworld::specKeyPress (int key)
 {
-	Direction dir; int action;
+	Direction dir = DIRECTION_NORTH;
+	int action = 0;
 	switch (key) {
 	case SDLK_LEFT:
 		action = 0; dir = DIRECTION_WEST;

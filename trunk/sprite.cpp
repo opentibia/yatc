@@ -33,6 +33,7 @@
 #endif
 
 #endif
+#include <sstream>
 #include "debugprint.h"
 
 #include "sprite.h"
@@ -65,12 +66,13 @@ Sprite::Sprite(const std::string& filename, int index)
 	m_coloredimage = NULL;
 	m_loaded = false;
 	m_smoothstretch = 0;
+    m_filename = filename;
+    m_index = index;
     m_r = 1.f;
     m_g = 1.f;
     m_b = 1.f;
 
 	loadSurfaceFromFile(filename, index);
-
 }
 
 
@@ -79,6 +81,7 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 	#ifdef USE_OPENGL
 	m_pixelformat = GL_NONE;
 	#endif
+
 	m_image = NULL;
 	m_stretchimage = NULL;
 	m_coloredimage = NULL;
@@ -123,12 +126,27 @@ Sprite::~Sprite()
 
 
 #include "util.h" // REMOVE ME
+
 void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	size_t extbegins = filename.rfind(".") + 1;
 	std::string extension;
 	if(extbegins != std::string::npos){
 		extension = filename.substr(extbegins, filename.length() - extbegins);
 	}
+
+
+	// print loading status (useful for slow machines such as wince; on the other hand, flipping too often causes slowness, too)
+	#ifdef WINCE
+		std::stringstream loadingtext;
+		loadingtext << "Loading " << filename << "[" << index << "]...";
+		if (g_engine && index) {
+			g_engine->drawRectangle(0,0,240,10,oRGBA(0,0,0,1));
+			g_engine->drawText(loadingtext.str().c_str(), "minifont", 0, 0, 0xFF);
+			g_engine->Flip();
+		}
+	#endif
+
+
 	if(extension == "bmp"){
 		m_image = SDL_LoadBMP(filename.c_str());
 		if(!m_image){
@@ -154,14 +172,14 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		if (index < 1) {
 			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY,"[Sprite::loadSurfaceFromFile] Invalid index %d\n", index);
 			fclose(f);
-			return;
+			goto loadFail;
 		}
 
 		fread(&signature, sizeof(signature), 1, f);
 		fread(&sprcount, sizeof(sprcount), 1, f);
 		if(index >= sprcount){// i can't do this, captain, there's not enough power
 			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] Loading spr index %d while we have %d sprites in file.\n", index, sprcount);
-			return; // she won't hold it much longer
+			goto loadFail; // she won't hold it much longer
 		}
 
 		// read the pointer to the real SPR data
@@ -172,7 +190,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000); // FIXME (ivucica#5#) Potentially unportable to architectures with different endianess, take a look at SDL docs and make all Liliputtans happy
 		if(!m_image){
 			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY,"[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
-			return;
+			goto loadFail;
 		}
 
 		// dont make static since if we change the rendering engine at runtime,
@@ -191,7 +209,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
                 SDL_FreeSurface(m_image);
                 m_image = NULL;
                 fclose(f);
-                return;
+                goto loadFail;
             }
         }
 		fclose(f);
@@ -214,7 +232,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		f = fopen(filename.c_str(), "rb");
 		if(!f){
 			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] Picture file %s not found\n", filename.c_str());
-			return;
+			goto loadFail;
 		}
 
 		fread(&fh, sizeof(fh), 1, f);
@@ -227,7 +245,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 				if (!s) {
 					DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Failed to create surface of size %dx%d\n", ph.width*32, ph.height*32);
 					fclose(f);
-					return;
+					goto loadFail;
 				}
 				magenta = SDL_MapRGB(s->format, 255, 0, 255);
 				SDL_FillRect(s, NULL, magenta);
@@ -245,7 +263,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 						if(r){
 							SDL_FreeSurface(s);
 							fclose(f);
-							return;
+							goto loadFail;
 						}
 					}
 				}
@@ -283,6 +301,13 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		}
 	}
 
+
+
+	return;
+
+
+loadFail:
+	return;
 }
 void Sprite::templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b)
 {
@@ -386,7 +411,7 @@ uint32_t Sprite::getPixel(int x, int y, SDL_Surface *img)
 	/* Here p is the address to the pixel we want to retrieve */
 	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
 
-        if (x >= img->w || y >= img->h)
+	if (x >= img->w || y >= img->h)
 		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "Trying to read a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, img->w, img->h);
 
 
@@ -471,6 +496,9 @@ void Sprite::addColor(float r, float g, float b)
 
 void Sprite::setAsIcon()
 {
+	#ifndef WINCE
+	return; // sdl for wince doesnt uspport runtime icons anyway
+	#endif
 	if(!m_image)
 		NativeGUIError("Issue","Yes");
 

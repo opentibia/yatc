@@ -123,11 +123,13 @@ Engine::Engine()
 
 	m_fps = 0.;
 
-    g_frames = 0;
+	g_frames = 0;
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Setting up FPS timer\n");
 	m_fpstimer = SDL_AddTimer(1000, Engine::fpsTimer, NULL);
-	if (!m_fpstimer) // FIXME (ivucica#3#) this should be an assertion
+	if (!m_fpstimer) {// FIXME (ivucica#3#) this should be an assertion; wince appears to always fail
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[!] Failed to set up FPS timer!\n");
+		m_fps = 5.;
+	}
 }
 
 Engine::~Engine()

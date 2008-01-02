@@ -59,11 +59,11 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 		#if defined(WIN32) && !defined(WINCE)
 		HANDLE con = GetStdHandle(STD_OUTPUT_HANDLE);
 		#endif
-		
+
 		#ifdef WINCE
 		FILE *lf = fopen("log.txt", "a");
 		#endif
-		
+
 		switch (type) {
 			default:
 				printf(tx);
