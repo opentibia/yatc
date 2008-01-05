@@ -309,15 +309,17 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 loadFail:
 	return;
 }
+
 void Sprite::templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b)
 {
 	uint8_t ro = (Creatures::OutfitLookupTable[color] & 0xFF0000) >> 16; // rgb outfit
 	uint8_t go = (Creatures::OutfitLookupTable[color] & 0xFF00) >> 8;
 	uint8_t bo = (Creatures::OutfitLookupTable[color] & 0xFF);
 	r = (uint8_t)(r * (ro / 255.f));
-    g = (uint8_t)(g * (go / 255.f));
-    b = (uint8_t)(b * (bo / 255.f));
+	g = (uint8_t)(g * (go / 255.f));
+	b = (uint8_t)(b * (bo / 255.f));
 }
+
 void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet)
 {
 	if(!templatespr){
@@ -367,7 +369,8 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
 {
 	if (!img)
-        img = m_image;
+		img = m_image;
+
 	int bpp = img->format->BytesPerPixel;
 
 	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
@@ -475,24 +478,22 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
 
 void Sprite::addColor(float r, float g, float b)
 {
-    uint8_t ro, go, bo, ao;  // old rgba
-    uint32_t pv; // pixel value
-    if(r == m_r && g == m_g && b == m_b){
+	uint8_t ro, go, bo, ao;  // old rgba
+	uint32_t pv; // pixel value
+	if(r == m_r && g == m_g && b == m_b){
 		return;
-    }
-    for(int i=0; i < m_image->w; i++){
-        for (int j=0; j < m_image->h; j++){
-            SDL_GetRGBA(pv=getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo, &ao);
+	}
+	for(int i = 0; i < m_image->w; i++){
+		for(int j =0; j < m_image->h; j++){
+			SDL_GetRGBA(pv=getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo, &ao);
 			if(ao){
-                putPixel(i, j, SDL_MapRGBA(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
+				putPixel(i, j, SDL_MapRGBA(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
 			}
-        }
-    }
-    m_r = r; m_g = g; m_b = b;
-    Stretch(getImage()->w, getImage()->h, -1, true);
+		}
+	}
+	m_r = r; m_g = g; m_b = b;
+	Stretch(getImage()->w, getImage()->h, -1, true);
 }
-
-#include "util.h" // REMOVE ME
 
 void Sprite::setAsIcon()
 {
@@ -500,7 +501,7 @@ void Sprite::setAsIcon()
 	return; // sdl for wince doesnt uspport runtime icons anyway
 	#endif
 	if(!m_image)
-		NativeGUIError("Issue","Yes");
+		NativeGUIError("Issue", "Yes");
 
-	SDL_WM_SetIcon(m_image,NULL);
+	SDL_WM_SetIcon(m_image, NULL);
 }

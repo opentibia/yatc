@@ -26,6 +26,11 @@
 #include <list>
 #include <string>
 
+#include "position.h"
+
+#include "../effectui.h"
+#include "../distanceui.h"
+
 class Item;
 class Creature;
 class Thing;
@@ -35,48 +40,18 @@ typedef std::vector<Thing*> ThingVector;
 
 #define MAP_LAYER 16
 
-class Position
+class DistanceEffect : public DistanceUI
 {
-public:
-	Position()
-	{
-		x = y = z = 0;
-	}
-	Position(uint32_t _x, uint32_t _y, uint32_t _z)
-	{
-		x = _x;
-		y = _y;
-		z = _z;
-	}
-	~Position(){};
-
-	uint32_t x, y, z;
-};
-
-
-class DistanceEffect{
 public:
 	DistanceEffect(const Position& from, const Position& to, uint32_t type);
 	virtual ~DistanceEffect(){};
-
-private:
-	uint32_t m_startTime;
-	Position m_from;
-	Position m_to;
-	uint32_t m_type;
-	const ObjectType* m_it;
 };
 
-
-class Effect{
+class Effect : public EffectUI
+{
 public:
 	Effect(uint32_t type);
 	virtual ~Effect(){};
-
-private:
-	uint32_t m_startTime;
-	uint32_t m_type;
-	const ObjectType* m_it;
 };
 
 class AnimatedText{
@@ -84,6 +59,12 @@ public:
 	AnimatedText(const Position& pos, uint32_t color, const std::string& text);
 	virtual ~AnimatedText(){}
 
+	uint32_t getStartTime(){ return m_startTime;}
+	uint32_t getColor() { return m_color;}
+	const std::string& getText() { return m_text;}
+	const Position& getPosition() { return m_pos;}
+
+	bool canBeDeleted();
 
 private:
 	uint32_t m_startTime;
@@ -106,14 +87,13 @@ public:
 	const Thing* getThingByStackPos(int32_t pos) const;
 	const Item* getGround() const;
 
+	typedef std::list<Effect*> EffectList;
 	void addEffect(uint32_t effect);
+	EffectList& getEffects() { return m_effects;}
 
 private:
 	Item* m_ground;
 	ThingVector m_objects;
-
-	typedef std::list<Effect> EffectList;
-
 	EffectList m_effects;
 
 	friend class Map;
@@ -142,8 +122,13 @@ public:
 
 	bool playerCanSee(int32_t x, int32_t y, int32_t z);
 
+	typedef std::list<DistanceEffect*> DistanceEffectList;
 	void addDistanceEffect(const Position& from, const Position& to, uint32_t type);
+	DistanceEffectList& getDistanceEffect(uint8_t floor) { return m_distanceEffects[floor];}
+
+	typedef std::list<AnimatedText> AnimatedTextList;
 	void addAnimatedText(const Position& pos, uint32_t color, const std::string& text);
+	AnimatedTextList& getAnimatedTexts(uint8_t floor) { return m_animatedTexts[floor];}
 
 private:
 	Map();
@@ -160,11 +145,8 @@ private:
 	typedef std::vector<uint32_t> FreeTiles;
 	FreeTiles m_freeTiles;
 
-	typedef std::list<AnimatedText> AnimatedTextList;
-	AnimatedTextList m_animatedTexts;
-
-	typedef std::list<DistanceEffect> DistanceEffectList;
-	DistanceEffectList m_distanceEffects;
+	AnimatedTextList m_animatedTexts[16];
+	DistanceEffectList m_distanceEffects[16];
 };
 
 #endif

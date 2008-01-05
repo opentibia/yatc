@@ -47,6 +47,9 @@ public:
 	bool isNpc() { return (m_id & 0x10000000 != 0) && (m_id & 0x20000000 != 0); }
 
 	void setSquare(uint32_t color);
+	uint32_t getSquareColor(){ return m_squareColor;}
+	uint32_t getSquareStart() { return m_squareStartTime;}
+
 	void setMoving(const Position& oldPos);
 
 	void setId(uint32_t id){ m_id = id;}
