@@ -30,22 +30,18 @@ extern uint32_t g_frameTime;
 
 //*************** DistanceEffect **************************
 
-DistanceEffect::DistanceEffect(const Position& from, const Position& to, uint32_t type)
+DistanceEffect::DistanceEffect(const Position& from, const Position& to, uint32_t type) :
+DistanceUI(from, to, type)
 {
-	m_type = type;
-	m_from = from;
-	m_to = to;
-	m_startTime = g_frameTime;
-	m_it = Objects::getInstance()->getDistanceType(type);
+	//
 }
 
 //*************** Effect **************************
 
-Effect::Effect(uint32_t type)
+Effect::Effect(uint32_t type) :
+EffectUI(type)
 {
-	m_type = type;
-	m_startTime = g_frameTime;
-	m_it = Objects::getInstance()->getEffectType(type);
+	//
 }
 
 //*************** AnimatedText **************************
@@ -56,6 +52,16 @@ AnimatedText::AnimatedText(const Position& pos, uint32_t color, const std::strin
 	m_text = text;
 	m_pos = pos;
 	m_startTime = g_frameTime;
+}
+
+bool AnimatedText::canBeDeleted()
+{
+	if(g_frameTime - m_startTime > 1000){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
 
 //*************** Tile **************************
@@ -242,7 +248,7 @@ bool Tile::addThing(Thing *thing, bool pushThing/* = false*/)
 
 void Tile::addEffect(uint32_t effect)
 {
-	m_effects.push_front(Effect(effect));
+	m_effects.push_back(new Effect(effect));
 }
 
 //*************** Map **************************
@@ -376,10 +382,13 @@ bool Map::playerCanSee(int32_t x, int32_t y, int32_t z)
 
 void Map::addDistanceEffect(const Position& from, const Position& to, uint32_t type)
 {
-	m_distanceEffects.push_back(DistanceEffect(from, to , type));
+	ASSERT(from.z == to.z);
+	ASSERT(from.z < MAP_LAYER);
+	m_distanceEffects[from.z].push_back(new DistanceEffect(from, to , type));
 }
 
 void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string& text)
 {
-	m_animatedTexts.push_back(AnimatedText(pos, color, text));
+	ASSERT(pos.z < MAP_LAYER);
+	m_animatedTexts[pos.z].push_back(AnimatedText(pos, color, text));
 }

@@ -43,6 +43,8 @@ protected:
 private:
 	ObjectType *m_obj;
 
+	std::vector<Sprite*> m_gfx;
+
 	bool m_preWalk;
 	float m_walkState;
 

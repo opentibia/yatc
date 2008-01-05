@@ -68,6 +68,8 @@ public:
 
 };
 
+class Tile;
+
 class GM_Gameworld : public GameMode {
 public:
 	GM_Gameworld();
@@ -91,6 +93,8 @@ protected:
 	int getMinZ();
 
 private:
+	void drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height);
+
 	Sprite* ui;
 	glictContainer desktop;
 	pnlInventory_t pnlInventory;

@@ -493,9 +493,14 @@ bool ProtocolGame81::onRecv(NetworkMessage& msg)
 		{
 			MSG_READ_POSITION(effectPos);
 			MSG_READ_U8(effect);
-			if(effect == 0 || effect > 35){
+			if(effect == 0 || effect > 55){
 				RAISE_PROTOCOL_ERROR("Magic effect - out of range");
 			}
+			Tile* tile = Map::getInstance().getTile(effectPos);
+			if(!tile){
+				RAISE_PROTOCOL_ERROR("Magic effect - !tile");
+			}
+			tile->addEffect(effect);
 			break;
 		}
 		case 0x84: //animated text
@@ -511,7 +516,7 @@ bool ProtocolGame81::onRecv(NetworkMessage& msg)
 			MSG_READ_POSITION(fromPos);
 			MSG_READ_POSITION(toPos);
 			MSG_READ_U8(effect);
-			if(effect == 0 || effect > 28){
+			if(effect == 0 || effect > 42){
 				RAISE_PROTOCOL_ERROR("Distance shoot - out of range");
 			}
 			Map::getInstance().addDistanceEffect(fromPos, toPos, effect);

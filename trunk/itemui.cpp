@@ -59,15 +59,16 @@ int fluidColorMap[] = {
 
 ItemUI::ItemUI(uint16_t id) : ThingUI()
 {
-	if(id < 100){
+	m_id = id;
+	ObjectType* obj = Objects::getInstance()->getItemType(id);
+
+	if(id < 100 || !obj){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[ItemUI::ItemUI] Invalid item %d\n", id);
 		return;
 	}
-    ObjectType* obj = Objects::getInstance()->getItemType(id);
 
     obj->loadGfx();
     obj->instancesOnMap++;
-    m_id = id;
 }
 
 ItemUI::~ItemUI()
@@ -80,15 +81,19 @@ ItemUI::~ItemUI()
     // of RAM, and realistically should NEVER take more than 8mb of ram ;)
 
     ObjectType* obj = Objects::getInstance()->getItemType(m_id);
-
-    obj->instancesOnMap--;
-    if (!obj->instancesOnMap) obj->unloadGfx();
+    if(obj){
+    	obj->instancesOnMap--;
+    	if (!obj->instancesOnMap) obj->unloadGfx();
+    }
 }
 
 void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale, int map_x, int map_y) const
 {
 	if(!obj)
 		return;
+
+	x = x - obj->xOffset;
+	y = y - obj->xOffset;
 
 	if(obj->stackable){
 

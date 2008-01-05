@@ -26,6 +26,7 @@
 #include "gamecontent/creature.h"
 
 static std::map<uint32_t, Sprite*> s_spritecache;
+extern uint32_t g_frameTime;
 
 CreatureUI::CreatureUI() : ThingUI()
 {
@@ -51,76 +52,78 @@ void CreatureUI::unloadGfx()
 
 void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 {
-	//int m_frame=0;
-	//struct { int x, y; } m_pos = {0, 0};
-
 	if (!m_obj)
 		return;
 
-	/*uint32_t activeframe = m_frame *
-							(m_obj->ydiv + m_pos.y % m_obj->ydiv) *
-							(m_obj->xdiv + m_pos.x % m_obj->xdiv);*/
+	x = x - m_obj->xOffset;
+	y = y - m_obj->xOffset;
 
     Creature* n = (Creature*)this;
 
     uint32_t activeframe = 0;
 
+    uint32_t spriteSize, partSize, aniSize;
+	spriteSize = m_obj->width * m_obj->height * m_obj->blendframes;
+	partSize = spriteSize * m_obj->xdiv;
+	aniSize = partSize * m_obj->ydiv;
+
     if(n->getOutfit().m_looktype != 0){
-        activeframe = n->getLookDir() * m_obj->height * m_obj->width * m_obj->blendframes;
+        activeframe = n->getLookDir() * spriteSize;
     }
 
-	float walkoffx=0.f, walkoffy=0.f;
+	float walkoffx = 0.f, walkoffy = 0.f;
 	getWalkOffset(walkoffx, walkoffy, scale);
-
 
 	//for(uint32_t k = 0; k < m_obj->blendframes; ++k){ // note: if it's anything except item, there won't be blendframes...
 	{
-	    uint32_t tframes = m_obj->height * m_obj->width * m_obj->blendframes * m_obj->xdiv;
 	    uint32_t aframes;
-	    if (m_obj->animcount==3) // TODO (ivucica#2#) add support for permanently moving creatures (e.g. rotworms) and for item-based outfits with animcount != 3
-			aframes = m_obj->height * m_obj->width * m_obj->blendframes * m_obj->xdiv * m_obj->ydiv * (m_walkState == 1. ? 0 : (((int)(m_walkState*100) / 25) % 2 + 1));
+	    if(m_obj->animcount == 3) // TODO (ivucica#2#) add support for permanently moving creatures (e.g. rotworms) and for item-based outfits with animcount != 3
+			aframes = aniSize * (m_walkState == 1. ? 0 : (((int)(m_walkState*100) / 25) % 2 + 1));
 		else
 			aframes = 0;
-		//int k = 0;
+
+		//Square around the creature
+		if(g_frameTime - n->getSquareStart() < 1000){
+			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 32, 32, oRGBA(0,0,0,0));
+		}
+
 		for(uint32_t i = 0; i < m_obj->height; ++i){
 			for(uint32_t j = 0; j < m_obj->width; ++j){
 
 				ASSERT(activeframe + aframes < m_obj->numsprites);
 
-				//m_gfx[activeframe]->Blit(x - j*32, y - i*32);
-                m_gfx[activeframe+aframes]->Blit(x - 8 - j*32*scale + walkoffx, y -8 - i*32*scale + walkoffy, 0, 0, 32, 32, 32*scale, 32*scale);
-                switch(n->getOutfit().m_addons){ // ivucica says: i'm not sure this is correct?
-                case 1:
-                    m_gfx[activeframe+(tframes)+aframes]->Blit(x -8 - j*32*scale+ walkoffx, y -8 -i*32*scale+ walkoffy, 0, 0, 32, 32, 32*scale, 32*scale);
-                case 2:
-                    m_gfx[activeframe+(tframes*2)+aframes]->Blit(x -8 - j*32*scale+ walkoffx, y -8 -i*32*scale+ walkoffy, 0, 0, 32, 32, 32*scale, 32*scale);
-                case 3:
-                    m_gfx[activeframe+(tframes)+aframes]->Blit(x -8 - j*32*scale+ walkoffx, y -8 -i*32*scale+ walkoffy, 0, 0, 32, 32, 32*scale, 32*scale);
-                    m_gfx[activeframe+(tframes*2)+aframes]->Blit(x -8 - j*32*scale+ walkoffx, y -8 -i*32*scale+ walkoffy, 0, 0, 32, 32, 32*scale, 32*scale);
+				int draw_x = (int)(x - j*32*scale + walkoffx);
+				int draw_y = (int)(y - i*32*scale + walkoffy);
+
+                m_gfx[activeframe + aframes]->Blit(draw_x, draw_y, 0, 0, 32, 32, 32*scale, 32*scale);
+
+                if(m_obj->ydiv != 1){
+                	if(n->getOutfit().m_addons & 1){
+                    	m_gfx[activeframe + partSize + aframes]->Blit(draw_x, draw_y, 0, 0, 32, 32, 32*scale, 32*scale);
+                	}
+                	if(n->getOutfit().m_addons & 2){
+                    	m_gfx[activeframe + partSize*2 + aframes]->Blit(draw_x, draw_y, 0, 0, 32, 32, 32*scale, 32*scale);
+                	}
                 }
 
 				activeframe++;
 			}
 		}
 	}
-
-
 }
-#include <sstream> // REMOVEME
-#include <iomanip>
+
 void CreatureUI::drawName(int x, int y, float scale) const
 {
-	float walkoffx=0.f, walkoffy=0.f;
+	float walkoffx = 0.f, walkoffy = 0.f;
 	getWalkOffset(walkoffx, walkoffy, scale);
 
 	Creature* n = (Creature*)this;
 	Outfit_t outfit = n->getOutfit();
-	if (!m_obj) {
+	if(!m_obj){
 		return;
 	}
 
 	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx), (int)(y - 10 + walkoffy), 150);
-
 }
 
 void CreatureUI::getWalkOffset(float &walkoffx, float &walkoffy, float scale) const
@@ -180,33 +183,44 @@ void CreatureUI::loadOutfit()
 
 	Outfit_t outfit = n->getOutfit();
 
-	if (!outfit.m_looktype && !outfit.m_lookitem) {
+	if(!outfit.m_looktype && !outfit.m_lookitem){
 		m_obj = NULL;
 		unloadGfx();
 		return;
-	} else if (outfit.m_lookitem != 0) {
-        m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
-    } else {
+	}
+	else if(outfit.m_lookitem != 0){
+		//TODO
+		m_obj = NULL;
+        //m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
+        return;
+    }
+    else{
 		m_obj = Objects::getInstance()->getOutfitType(outfit.m_looktype);
     }
 
 	for(uint32_t i = 0; i < m_obj->numsprites ; i++){
-		Sprite *spr, *tspr;
+		Sprite* spr;
 
-		if (m_obj->blendframes > 1) {
-            if ((i / (m_obj->height * m_obj->width)) % 2 ) { // if it's a template, then let's just put a NULL in there
+		if(m_obj->blendframes > 1){
+			 // if it's a template, then let's just put a NULL in there
+            if((i / (m_obj->height * m_obj->width)) % 2 ) {
                 m_gfx.insert(m_gfx.end(), NULL);
                 continue;
             }
+            else{
+            	ASSERT(i + m_obj->height * m_obj->width < m_obj->numsprites);
+
+            	spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
+            	Sprite* templatespr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i + m_obj->height * m_obj->width]);
+				spr->templatedColorize(templatespr, outfit.m_lookhead, outfit.m_lookbody, outfit.m_looklegs, outfit.m_lookfeet);
+
+				delete templatespr;
+            }
+        }
+        else{
+        	spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
         }
 
-		spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
-		tspr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i + m_obj->height * m_obj->width]);
-
-
-		if (i + m_obj->height * m_obj->width < m_obj->numsprites)
-			spr->templatedColorize(tspr, outfit.m_lookhead, outfit.m_lookbody, outfit.m_looklegs, outfit.m_lookfeet);
-		delete tspr;
 		m_gfx.insert(m_gfx.end(), spr);
 	}
 }

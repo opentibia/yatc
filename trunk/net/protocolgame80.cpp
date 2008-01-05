@@ -494,6 +494,11 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			if(effect == 0 || effect > 35){
 				RAISE_PROTOCOL_ERROR("Magic effect - out of range");
 			}
+			Tile* tile = Map::getInstance().getTile(effectPos);
+			if(!tile){
+				RAISE_PROTOCOL_ERROR("Magic effect - !tile");
+			}
+			tile->addEffect(effect);
 			break;
 		}
 		case 0x84: //animated text

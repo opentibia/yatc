@@ -36,7 +36,7 @@
 #include "gamecontent/inventory.h"
 
 extern Connection* g_connection;
-
+extern uint32_t g_frameTime;
 
 void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
@@ -129,13 +129,13 @@ int GM_Gameworld::getMinZ() { // find out how far can we render... if anything i
 
 		tile = Map::getInstance().getTile(pos.x-(z-pos.z), pos.y-(z-pos.z), z);
 		if (tile && tile->getThingCount() ) {
-			printf("Player Z: %d, minz: %d, tc: %d\n", pos.z, minz, tile->getThingCount());
+			//printf("Player Z: %d, minz: %d, tc: %d\n", pos.z, minz, tile->getThingCount());
 			minz = z+1;
 
 			return minz;
 		}
 	}
-	printf("Player Z: %d, nothing above player\n", pos.z);
+	//printf("Player Z: %d, nothing above player\n", pos.z);
 	return 0;
 }
 
@@ -175,9 +175,9 @@ void GM_Gameworld::updateScene()
 
 	// tilecount: width and height to render  -- "viewport" width and height
 	#ifndef WINCE
-	int vpw=18, vph=14;
+	const uint32_t vpw=18, vph=14;
 	#else
-	int vpw=8, vph=6;
+	const uint32_t vpw=8, vph=6;
 	#endif
 
 	// set up scale
@@ -244,6 +244,7 @@ void GM_Gameworld::updateScene()
 
 				int32_t thingsCount = tile->getThingCount() - 1;
 				int32_t drawIndex = ground ? 1 : 0, lastTopIndex = 0;
+				bool drawnEffects = false;
 
 				while(drawIndex <= thingsCount && drawIndex >= 0){
 
@@ -271,6 +272,10 @@ void GM_Gameworld::updateScene()
 
 						case DRAW_CREATURE: //creatures
 							if(thingOrder != 4){
+								//Draw effects
+								drawTileEffects(const_cast<Tile*>(tile), screenx, screeny, scale, tile_height);
+								drawnEffects = true;
+								//
 								drawState = DRAW_ITEMTOP3;
 								drawIndex = lastTopIndex;
 								continue;
@@ -314,7 +319,61 @@ void GM_Gameworld::updateScene()
 						break;
 					}
 				}
+				if(!drawnEffects){
+					drawTileEffects(const_cast<Tile*>(tile), screenx, screeny, scale, tile_height);
+				}
 			}
+		}
+
+		//draw animated texts
+		{
+		Map::AnimatedTextList& aniTexts = Map::getInstance().getAnimatedTexts(z);
+		Map::AnimatedTextList::iterator it = aniTexts.begin();
+		while(it != aniTexts.end()){
+			if((*it).canBeDeleted()){
+				aniTexts.erase(it++);
+			}
+			else{
+				const Position& txtpos = (*it).getPosition();
+
+				float textYOffset = (g_frameTime - (*it).getStartTime())/1000.f*0.75f;
+
+				int screenx = (int)((txtpos.x - pos.x + vpw/2 + offset + 0.4)*scaledSize + walkoffx);
+				int screeny = (int)((txtpos.y - pos.y + vph/2 + offset - textYOffset)*scaledSize + walkoffy);
+
+				g_engine->drawText((*it).getText().c_str() , "gamefont", screenx, screeny, (*it).getColor());
+				++it;
+			}
+		}
+		}
+		//draw distance effects
+		{
+		Map::DistanceEffectList& distanceEffects = Map::getInstance().getDistanceEffect(z);
+		Map::DistanceEffectList::iterator it = distanceEffects.begin();
+		while(it != distanceEffects.end()){
+			float flightProgress = (*it)->getFlightProgress();
+
+			if(flightProgress > 1.f){
+				delete *it;
+				distanceEffects.erase(it++);
+			}
+			else{
+				const Position& fromPos = (*it)->getFromPos();
+				const Position& toPos = (*it)->getToPos();
+
+				float screenxFrom = ((fromPos.x - pos.x + vpw/2 + offset)*scaledSize + walkoffx);
+				float screenyFrom = ((fromPos.y - pos.y + vph/2 + offset)*scaledSize + walkoffy);
+
+				float screenxTo = ((toPos.x - pos.x + vpw/2 + offset)*scaledSize + walkoffx);
+				float screenyTo = ((toPos.y - pos.y + vph/2 + offset)*scaledSize + walkoffy);
+
+				int screenx = (int)(screenxFrom + (screenxTo - screenxFrom)*flightProgress);
+				int screeny = (int)(screenyFrom + (screenyTo - screenyFrom)*flightProgress);
+
+				(*it)->Blit(screenx, screeny, scale);
+				++it;
+			}
+		}
 		}
 	}
 
@@ -339,9 +398,9 @@ void GM_Gameworld::updateScene()
 
 				Thing* thing = (Thing*)tile->getThingByStackPos(drawIndex); // FIXME (ivucica#3#) getThingByStackPos() should allow changing (should not be returning const)
 				if(thing){
-					if (thing->getCreature()) {
+					if(thing->getCreature()){
 						thing->getCreature()->drawName(screenx, screeny, scale);
-						if (!player || thing->getCreature()->getId() != player->getId())
+						if(!player || thing->getCreature()->getId() != player->getId())
 							thing->getCreature()->advanceWalk(groundspeed);
 						else
 							playerspeed = groundspeed;
@@ -352,7 +411,8 @@ void GM_Gameworld::updateScene()
 
 		}
 	}
-	if (player)
+
+	if(player)
 		player->advanceWalk(playerspeed);
 
 	m_consoles[0].Paint(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
@@ -384,6 +444,24 @@ void GM_Gameworld::updateScene()
 	}
 
 	desktop.Paint();
+}
+
+void GM_Gameworld::drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height)
+{
+	Tile::EffectList& effects = const_cast<Tile*>(tile)->getEffects();
+	Tile::EffectList::iterator it = effects.begin();
+	while(it != effects.end()){
+		if((*it)->canBeDeleted()){
+			delete *it;
+			effects.erase(it++);
+		}
+		else{
+			(*it)->Blit(screenx - (int)(tile_height*8.*scale),
+					screeny - (int)(tile_height*8.*scale),
+					scale, 0, 0);
+			++it;
+		}
+	}
 }
 
 
