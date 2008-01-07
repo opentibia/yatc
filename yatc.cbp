@@ -214,7 +214,9 @@
 		<Unit filename="gm_gameworld.cpp" />
 		<Unit filename="gm_gameworld.h" />
 		<Unit filename="gm_mainmenu.cpp" />
-		<Unit filename="gm_mainmenu.h" />
+		<Unit filename="gm_mainmenu.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="itemui.cpp" />
 		<Unit filename="itemui.h" />
 		<Unit filename="main.cpp" />

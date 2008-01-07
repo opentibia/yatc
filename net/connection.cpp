@@ -51,9 +51,10 @@ ProtocolConfig::ProtocolConfig()
 }
 
 uint32_t ProtocolConfig::readSignature(const char* fn) {
-	FILE*f=fopen(fn,"rb");
 	uint32_t sig;
+	FILE*f=fopen(fn,"rb");
 	fread(&sig, 4, 1, f);
+	fclose(f);
 	return sig;
 }
 

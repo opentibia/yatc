@@ -344,5 +344,7 @@ void Skin::unloadSkin() {
     tmm.SetBottom(NULL);
     tmm.SetBR(NULL);
 
+
+	delete m_uisprite;
 }
 
