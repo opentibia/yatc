@@ -312,7 +312,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 	unsigned char c = 169;
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	txt << "YATC - Yet Another Tibia Client\n"
-		<< "v0.1\n"
+		<< "v0.2 SVN\n"
 		<< "\n"
 		<< c <<" 2007-2008 OpenTibia Team\n"
 		<< "\n"

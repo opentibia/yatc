@@ -136,82 +136,6 @@ void onKeyDown(const SDL_Event& event)
 	}
 }
 
-#if 0
-#ifdef WIN32
-
-/*  Declare Windows procedure  */
-LRESULT CALLBACK win32splashWindowProcedure (HWND, UINT, WPARAM, LPARAM);
-HWND win32splashhwnd;               /* This is the handle for our window */
-
-int showSplashScreen() {
-    HWND hwnd;               /* This is the handle for our window */
-//    MSG messages;            /* Here messages to the application are saved */
-    WNDCLASSEX wincl;        /* Data structure for the windowclass */
-
-    /* The Window structure */
-    wincl.hInstance = NULL;//hThisInstance;
-    wincl.lpszClassName = "YATCSplash";
-    wincl.lpfnWndProc = win32splashWindowProcedure;      /* This function is called by windows */
-    wincl.style = CS_DBLCLKS;                 /* Catch double-clicks */
-    wincl.cbSize = sizeof (WNDCLASSEX);
-
-    /* Use default icon and mouse-pointer */
-    wincl.hIcon = LoadIcon (NULL, IDI_APPLICATION);
-    wincl.hIconSm = LoadIcon (NULL, IDI_APPLICATION);
-    wincl.hCursor = LoadCursor (NULL, IDC_ARROW);
-    wincl.lpszMenuName = NULL;                 /* No menu */
-    wincl.cbClsExtra = 0;                      /* No extra bytes after the window class */
-    wincl.cbWndExtra = 0;                      /* structure or the window instance */
-    /* Use Windows's default colour as the background of the window */
-    wincl.hbrBackground = (HBRUSH) COLOR_BACKGROUND;
-
-    /* Register the window class, and if it fails quit the program */
-    if (!RegisterClassEx (&wincl))
-        return 0;
-
-    /* The class is registered, let's create the program*/
-    hwnd = CreateWindowEx (
-           0,                   /* Extended possibilites for variation */
-           "YATCSplash",         /* Classname */
-           "Loading YATC",       /* Title Text */
-           WS_OVERLAPPEDWINDOW, /* default window */
-           CW_USEDEFAULT,       /* Windows decides the position */
-           CW_USEDEFAULT,       /* where the window ends up on the screen */
-           544,                 /* The programs width */
-           375,                 /* and height in pixels */
-           HWND_DESKTOP,        /* The window is a child-window to desktop */
-           NULL,                /* No menu */
-           NULL,//hThisInstance,       /* Program Instance handler */
-           NULL                 /* No Window Creation data */
-           );
-
-    /* Make the window visible on the screen */
-    ShowWindow (hwnd, 1);//nCmdShow);
-
-	return 0;
-}
-
-
-LRESULT CALLBACK win32splashWindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message)                  /* handle the messages */
-    {
-        case WM_DESTROY:
-            PostQuitMessage (0);       /* send a WM_QUIT to the message queue */
-            break;
-        default:                      /* for messages that we don't deal with */
-            return DefWindowProc (hwnd, message, wParam, lParam);
-    }
-
-    return 0;
-}
-
-void hideSplashScreen() {
-    DestroyWindow(win32splashhwnd);
-}
-#endif // ifdef win32
-#endif // if 0
-
 /// \brief Main program function
 ///
 /// This function does very little on its own. It manages some output to
@@ -242,7 +166,7 @@ int main(int argc, char *argv[])
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "YATC -- YET ANOTHER TIBIA CLIENT\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.1\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.2 SVN\n");
 #ifdef BUILDVERSION
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "build %s\n", BUILDVERSION);
 #endif
@@ -301,7 +225,7 @@ int main(int argc, char *argv[])
 
 	{
 		g_engine = NULL;
-		SDL_WM_SetCaption("YATC v0.1", "YATC v0.1");
+		SDL_WM_SetCaption("YATC v0.2 SVN", "YATC v0.2 SVN");
 		SpriteSDL *s = new SpriteSDL("Tibia.spr", 13855);
 		SpriteSDL *st = new SpriteSDL("Tibia.spr", 13575);
 		s->templatedColorize(st, 79, 94, 88, 82);
@@ -353,7 +277,7 @@ int main(int argc, char *argv[])
 
 		SDL_Event event;
 		while(g_running){
-
+		g_engine->fpsMutexLock();
             int beginticks = SDL_GetTicks();
 			//first process sdl events
 			while(SDL_PollEvent(&event)){
@@ -414,6 +338,7 @@ int main(int argc, char *argv[])
 			g_game->updateScene();
 			g_engine->Flip();
 			g_frames ++;
+			g_engine->fpsMutexUnlock();
 		}
 	}
 	catch(std::string errtext){

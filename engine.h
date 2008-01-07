@@ -51,6 +51,9 @@ class Engine
 
 		static Uint32 fpsTimer(Uint32 interval, void*param);
 		uint32_t getFps() { return (uint32_t)m_fps; }
+		void fpsMutexLock() { SDL_LockMutex(m_fpsmutex); }
+		void fpsMutexUnlock() { SDL_UnlockMutex(m_fpsmutex); }
+		
 
 		uint32_t m_creationTimestamp; // some engines, like GL, need this in order to know when to re-create their sprite memories
 
@@ -70,7 +73,8 @@ class Engine
 		int m_video_bpp;
 
 		float m_fps;
-		SDL_TimerID m_fpstimer ;
+		SDL_TimerID m_fpstimer;
+		SDL_mutex *m_fpsmutex;
 
 		glictFont *m_sysfont, *m_minifont, *m_aafont, *m_gamefont;
 		SDL_Surface* m_screen;
