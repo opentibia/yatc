@@ -59,6 +59,9 @@ EngineGL::~EngineGL()
 {
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Closing OpenGL engine\n");
 	delete (Font*)m_sysfont->GetFontParam();
+	delete (Font*)m_minifont->GetFontParam();
+	delete (Font*)m_aafont->GetFontParam();
+	delete (Font*)m_gamefont->GetFontParam();
 }
 
 void EngineGL::initEngine()

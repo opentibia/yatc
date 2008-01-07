@@ -43,7 +43,7 @@
 #include "net/connection.h"
 #include "net/protocollogin.h"
 #include "net/protocolgame.h"
-
+#include "gamecontent/map.h"
 bool g_running = false;
 //uint32_t keymods = 0;
 
@@ -136,6 +136,40 @@ void onKeyDown(const SDL_Event& event)
 	}
 }
 
+void checkFile(const char *filename)
+{
+	FILE*f = fopen(filename, "r");
+	if(!f){
+		std::stringstream s;
+		s << "Loading the data file '" << filename << "' has failed.\nPlease place '" << filename << "' in the same folder as YATC.";
+		NativeGUIError(s.str().c_str(), "YATC Fatal Error");
+		exit(1);
+	}
+	else{
+		fclose(f);
+	}
+
+}
+
+void checkFiles()
+{
+	checkFile("Tibia.pic");
+	checkFile("Tibia.spr");
+	checkFile("Tibia.dat");
+}
+
+void setIcon()
+{
+	g_engine = NULL;
+	SDL_WM_SetCaption("YATC v0.2 SVN", "YATC v0.2 SVN");
+	SpriteSDL *s = new SpriteSDL("Tibia.spr", 13855);
+	SpriteSDL *st = new SpriteSDL("Tibia.spr", 13575);
+	s->templatedColorize(st, 79, 94, 88, 82);
+	s->setAsIcon();
+	delete s;
+	delete st;
+}
+
 /// \brief Main program function
 ///
 /// This function does very little on its own. It manages some output to
@@ -160,10 +194,10 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	//showSplashScreen(); // useful on WINCE and generally on slow computers...
 #endif
 
 
+	//setenv("SDL_VIDEODRIVER", "aalib", 0);
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "YATC -- YET ANOTHER TIBIA CLIENT\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.2 SVN\n");
@@ -175,43 +209,14 @@ int main(int argc, char *argv[])
 		" Review LICENSE in YATC distribution for details.\n");
 
 
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Checking graphics files existence...");
-	{
-		FILE*f = fopen("Tibia.pic", "r");
-		if(!f){
-			NativeGUIError("Loading the data file 'Tibia.pic' has failed.\nPlease place 'Tibia.pic' in the same folder as YATC.", "YATC Fatal Error");
-			exit(1);
-		}
-		else{
-			fclose(f);
-		}
 
-		f = fopen("Tibia.spr", "r");
-		if(!f){
-			NativeGUIError("Loading the data file 'Tibia.spr' has failed\nPlease place 'Tibia.spr' in the same folder as YATC.", "YATC Fatal Error");
-		}
-		else{
-			fclose(f);
-		}
-	}
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Checking graphics files existence...");
+	checkFiles();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " passed\n");
 
 	options.Load();
 
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data files...\n");
-	if(!Objects::getInstance()->loadDat("Tibia.dat")){ //DONE (Smygflik#3#), inform the user with a messagebox
-		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file failed!");
-		NativeGUIError("Loading the data file 'Tibia.dat' has failed.\nPlease place 'Tibia.dat' in the same folder as YATC.", "YATC Fatal Error");
-		exit(1);
-	}
 
-	if(!fileexists("Tibia.spr")){
-		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Locating sprite file failed!");
-		NativeGUIError("Locating the data file 'Tibia.spr' has failed.\nPlease place 'Tibia.spr' in the same folder as YATC.", "YATC Fatal Error");
-		exit(1);
-	}
-
-	//setenv("SDL_VIDEODRIVER", "aalib", 0);
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing windowing...\n");
 
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0){
@@ -223,16 +228,15 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	{
-		g_engine = NULL;
-		SDL_WM_SetCaption("YATC v0.2 SVN", "YATC v0.2 SVN");
-		SpriteSDL *s = new SpriteSDL("Tibia.spr", 13855);
-		SpriteSDL *st = new SpriteSDL("Tibia.spr", 13575);
-		s->templatedColorize(st, 79, 94, 88, 82);
-		s->setAsIcon();
-		delete s;
-		delete st;
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data...\n");
+	if(!Objects::getInstance()->loadDat("Tibia.dat")){
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file failed!");
+		NativeGUIError("Loading the data file 'Tibia.dat' has failed.\nPlease place 'Tibia.dat' in the same folder as YATC.", "YATC Fatal Error");
+		exit(1);
 	}
+
+
+	setIcon(); // must be called prior to first call to SDL_SetVideoMode() (currently done in engine)
 
 	SDL_EnableKeyRepeat(200, 50);
 
@@ -270,9 +274,6 @@ int main(int argc, char *argv[])
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
-        #ifdef WIN32
-        //hideSplashScreen();
-        #endif
         g_running = true;
 
 		SDL_Event event;
@@ -349,6 +350,11 @@ int main(int argc, char *argv[])
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Unloading data...\n");
 	Objects::getInstance()->unloadDat();
+	delete Objects::getInstance();
+	g_skin.unloadSkin();
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection and unloading related data...\n");
+	delete g_connection;
+	Map::getInstance().clear();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Saving options...\n");
 	options.Save();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Finishing engine...\n");

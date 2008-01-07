@@ -137,6 +137,7 @@ bool Objects::unloadDat()
 				delete[] oType->imageData;
 				oType->imageData = NULL;
 			}
+			delete oType;
 			++i;
 		}
 		i = 0;
@@ -145,6 +146,7 @@ bool Objects::unloadDat()
 				delete[] oType->imageData;
 				oType->imageData = NULL;
 			}
+			delete oType;
 			++i;
 		}
 		i = 0;
@@ -153,6 +155,7 @@ bool Objects::unloadDat()
 				delete[] oType->imageData;
 				oType->imageData = NULL;
 			}
+			delete oType;
 			++i;
 		}
 		i = 0;
@@ -161,6 +164,7 @@ bool Objects::unloadDat()
 				delete[] oType->imageData;
 				oType->imageData = NULL;
 			}
+			delete oType;
 			++i;
 		}
 

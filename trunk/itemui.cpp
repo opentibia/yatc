@@ -73,13 +73,6 @@ ItemUI::ItemUI(uint16_t id) : ThingUI()
 
 ItemUI::~ItemUI()
 {
-    // FIXME (ivucica#2#) mips, you've already removed m_id once, but atm i have no idea how to do this cleanly ;)
-    // thing is, gfx should be unloaded as soon as it's not needed anymore (when all instances of item are removed from map)
-
-    // and because i'd like to see this optimized for PocketPC, please see what you can do about emptying tiles
-    // a bit more often (the way it currently is, it's untolerable for a machine whose process __CAN'T__ take more than 32mb
-    // of RAM, and realistically should NEVER take more than 8mb of ram ;)
-
     ObjectType* obj = Objects::getInstance()->getItemType(m_id);
     if(obj){
     	obj->instancesOnMap--;

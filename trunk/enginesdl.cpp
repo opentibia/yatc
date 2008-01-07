@@ -53,6 +53,9 @@ EngineSDL::~EngineSDL()
 {
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Closing SDL engine\n");
 	delete (Font*)m_sysfont->GetFontParam();
+	delete (Font*)m_minifont->GetFontParam();
+	delete (Font*)m_aafont->GetFontParam();
+	delete (Font*)m_gamefont->GetFontParam();
 }
 
 void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)

@@ -153,7 +153,7 @@ GM_MainMenu::GM_MainMenu()
 
 GM_MainMenu::~GM_MainMenu()
 {
-
+	delete background;
 }
 
 

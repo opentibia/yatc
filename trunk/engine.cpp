@@ -148,6 +148,8 @@ Uint32 Engine::fpsTimer(Uint32 interval, void*param)
 {
 	char caption[255];
 
+	if (!g_engine)
+		return 0;
 	SDL_LockMutex(g_engine->m_fpsmutex);
 	g_engine->m_fps = (g_frames / (float)interval) * 1000;
 	g_frames = 0;
@@ -155,7 +157,7 @@ Uint32 Engine::fpsTimer(Uint32 interval, void*param)
 	sprintf(caption, "YATC v0.2 SVN - fps: %g", g_engine->m_fps );
 	SDL_WM_SetCaption(caption, "YATC v0.2 SVN");
 	SDL_UnlockMutex(g_engine->m_fpsmutex);
-    
+
 	return interval;
 }
 
