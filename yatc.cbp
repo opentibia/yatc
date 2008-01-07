@@ -170,6 +170,10 @@
 		<Unit filename="debugprint.cpp" />
 		<Unit filename="debugprint.h" />
 		<Unit filename="defines.h" />
+		<Unit filename="distanceui.cpp" />
+		<Unit filename="distanceui.h" />
+		<Unit filename="effectui.cpp" />
+		<Unit filename="effectui.h" />
 		<Unit filename="engine.cpp" />
 		<Unit filename="engine.h" />
 		<Unit filename="enginegl.cpp" />
