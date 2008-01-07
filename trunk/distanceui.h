@@ -23,7 +23,7 @@
 
 #include "thingui.h"
 #include "objects.h"
-#include "gamecontent\position.h"
+#include "gamecontent/position.h"
 
 
 class DistanceUI : virtual public ThingUI
