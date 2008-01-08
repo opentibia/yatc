@@ -60,12 +60,12 @@ void onKeyDown(const SDL_Event& event)
 	case SDLK_ESCAPE:
 		g_running = false;
 		break;
-	/*
+
 	case SDLK_LSHIFT:
 	case SDLK_RSHIFT:
-		keymods = keymods | KMOD_SHIFT;
+		// ignore shiftpresses
 		break;
-	*/
+
 	// TODO (ivucica#1#) Add pageup, pagedown, home, end below
 	case SDLK_LEFT:
 	case SDLK_RIGHT:
@@ -77,6 +77,7 @@ void onKeyDown(const SDL_Event& event)
 		// glict expects what glut usually serves: completely prepared keys,
 		// with shift already parsed and all that
 		// we'll try to do the parsing here or elsewhere
+
 
 		if(key < 32){
 			switch(key){
@@ -90,21 +91,7 @@ void onKeyDown(const SDL_Event& event)
 			}
 		}
 
-		if(event.key.keysym.mod & KMOD_SHIFT){
-			if(key >= '0' && key <='9'){
-				key = key - 16;
-			}
-		}
-
-		if(key >= 'a' && key <='z'){
-			if((event.key.keysym.mod & KMOD_CAPS) && !(event.key.keysym.mod & KMOD_SHIFT) ||
-				!(event.key.keysym.mod & KMOD_CAPS) && (event.key.keysym.mod & KMOD_SHIFT)){
-				key = key - 32;
-			}
-		}
-
-		//Numeric keypad
-		if((event.key.keysym.mod & KMOD_NUM) && key >= 256 && key <= 271){
+		if((event.key.keysym.mod & KMOD_NUM) && key >= 256 && key <= 271){ //Numeric keypad
 			switch(key){
 			case SDLK_KP_PERIOD:
 				key = SDLK_PERIOD;
@@ -125,9 +112,11 @@ void onKeyDown(const SDL_Event& event)
 				key = SDLK_RETURN;
 				break;
 			default:
-				key = key - 256 + '0';
+				key = event.key.keysym.unicode;
 				break;
 			}
+		} else {
+		    key = event.key.keysym.unicode;
 		}
 
 		if(key > 255)
@@ -240,6 +229,7 @@ int main(int argc, char *argv[])
 	setIcon(); // must be called prior to first call to SDL_SetVideoMode() (currently done in engine)
 
 	SDL_EnableKeyRepeat(200, 50);
+	SDL_EnableUNICODE(1);
 
 	try{
 		switch(options.engine){

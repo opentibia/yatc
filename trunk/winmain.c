@@ -18,7 +18,7 @@ int SDL_main(int argn, char **argv);
 
 static int _parse_args(char *arg_buf, char ***arg_list, char *exename) {
 	int i=0;
-	
+
 	*arg_list = (char**)malloc(sizeof(char*)*2);
 
 	if (exename) (*arg_list)[i++] = exename;
@@ -50,7 +50,7 @@ static char *_get_exe_name() {
 		free(exename);
 		return NULL;
 	}
-	
+
 	return exename;
 }
 
@@ -74,7 +74,7 @@ int APIENTRY WinMain(
 
 	if (exename) free(exename);
 	free(argv);
-//	free(cmd);
+/*	free(cmd);*/
 
 	return r;
 }
