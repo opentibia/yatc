@@ -89,6 +89,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'g'] = 6; charh[(unsigned char)'g'] = 10;
 			charw[(unsigned char)'h'] = 6;
 			charw[(unsigned char)'i'] = 2;
+			charw[(unsigned char)'j'] = 6; charh[(unsigned char)'j'] = 10;
 			charw[(unsigned char)'k'] = 6;
 			charw[(unsigned char)'l'] = 3;
 			charw[(unsigned char)'o'] = 6;
@@ -156,6 +157,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'f'] = 3; charh[(unsigned char)'f'] = 6;
 			charw[(unsigned char)'g'] = 4; charh[(unsigned char)'g'] = 8;
 			charw[(unsigned char)'i'] = 2; charh[(unsigned char)'i'] = 6;
+			charw[(unsigned char)'j'] = 4; charh[(unsigned char)'j'] = 8;
 			charw[(unsigned char)'k'] = 4; charh[(unsigned char)'k'] = 6;
 			charw[(unsigned char)'l'] = 2; charh[(unsigned char)'l'] = 6;
 			charw[(unsigned char)'m'] = 7; charh[(unsigned char)'m'] = 6;
