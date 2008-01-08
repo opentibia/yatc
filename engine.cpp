@@ -126,7 +126,9 @@ Engine::Engine()
 
 	g_frames = 0;
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Setting up FPS timer\n");
+	#ifndef WIN32 // FIXME (ivucica#2#) figure out in which platforms the fps timer is done in a second thread
 	m_fpsmutex = SDL_CreateMutex();
+	#endif
 	m_fpstimer = SDL_AddTimer(1000, Engine::fpsTimer, NULL);
 	if (!m_fpstimer) {// FIXME (ivucica#3#) this should be an assertion; wince appears to always fail
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[!] Failed to set up FPS timer!\n");
@@ -136,8 +138,10 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-	SDL_RemoveTimer(m_fpstimer);
+    #ifndef WIN32
 	SDL_DestroyMutex(m_fpsmutex);
+	#endif
+	SDL_RemoveTimer(m_fpstimer);
 	glictDeleteFont("system");
 	glictDeleteFont("minifont");
 	glictDeleteFont("aafont");
@@ -150,13 +154,17 @@ Uint32 Engine::fpsTimer(Uint32 interval, void*param)
 
 	if (!g_engine)
 		return 0;
+    #ifndef WIN32
 	SDL_LockMutex(g_engine->m_fpsmutex);
+	#endif
 	g_engine->m_fps = (g_frames / (float)interval) * 1000;
 	g_frames = 0;
 
 	sprintf(caption, "YATC v0.2 SVN - fps: %g", g_engine->m_fps );
 	SDL_WM_SetCaption(caption, "YATC v0.2 SVN");
+	#ifndef WIN32
 	SDL_UnlockMutex(g_engine->m_fpsmutex);
+	#endif
 
 	return interval;
 }
