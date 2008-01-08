@@ -27,6 +27,7 @@
 #include <SDL/SDL.h>
 #include <GLICT/globals.h>
 #include <sstream>
+#include <stdlib.h>
 #include "debugprint.h"
 #include "options.h"
 #include "engine.h"
@@ -278,7 +279,9 @@ int main(int argc, char *argv[])
 
 		SDL_Event event;
 		while(g_running){
-		g_engine->fpsMutexLock();
+
+            g_engine->fpsMutexLock();
+
             int beginticks = SDL_GetTicks();
 			//first process sdl events
 			while(SDL_PollEvent(&event)){
@@ -335,11 +338,20 @@ int main(int argc, char *argv[])
 				g_connection->executeNetwork();
 			}
 
-			//and finally update scene
-			g_game->updateScene();
-			g_engine->Flip();
+            if (!(SDL_GetAppState() & SDL_APPACTIVE)) {// if the application is minimized
+                #ifdef WIN32
+                Sleep(100); // sleep a while, and don't paint
+                #else
+                usleep(100 * 1000);
+                #endif
+            } else { //otherwise update scene
+                g_game->updateScene();
+                g_engine->Flip();
+            }
 			g_frames ++;
+
 			g_engine->fpsMutexUnlock();
+
 		}
 	}
 	catch(std::string errtext){

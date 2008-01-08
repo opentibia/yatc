@@ -19,6 +19,8 @@
 //////////////////////////////////////////////////////////////////////
 
 
+
+
 #include <GLICT/globals.h>
 #include "skin.h"
 
@@ -345,6 +347,6 @@ void Skin::unloadSkin() {
     tmm.SetBR(NULL);
 
 
-	delete m_uisprite;
+//	delete m_uisprite; // FIXME (ivucica#1#) implement skin with simpleton, might remedy a problem on windows with this throwing an error
 }
 
