@@ -10,8 +10,9 @@ int main (int argc, char**argv) {
         i++;
         fread(a, 1, 1, fi);
         fprintf(fo, "%c=%02x ", (*a >= 32) ? *a : '.', (unsigned char)(*a));
-        if (i % 20 == 0) fprintf(fo, "\n");
-        if (i > 50000) break;
+        //if (i % 20 == 0) 
+	    fprintf(fo, "\n");
+        if (i > 5000) break;
     }
     fclose(fi);
     fclose(fo);

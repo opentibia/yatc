@@ -102,7 +102,7 @@ int picdetails (const char* filename) {
 	printf("imagecount %d\n", fh.imgcount);
 	for(i = 0; i < fh.imgcount ; i++){
 		fread(&ph, sizeof(ph), 1, f);
-		printf("img%d width %d height %d\n", i, ph.width, ph.height);
+		printf("img%d width %d height %d bg rgb #%02x%02x%02x\n", i, ph.width, ph.height, ph.unk1, ph.unk2, ph.unk3);
 		for(j = 0; j<ph.height; j++){
 			for(k = 0; k < ph.width; k++){
 				fread(&sprloc, sizeof(sprloc), 1, f);
@@ -176,7 +176,7 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 
 				fread(&datasize, sizeof(datasize), 1, fi);
 				fwrite(&datasize, sizeof(datasize), 1, fo);
-				data = malloc(datasize+10);
+				data = malloc(datasize+2);
 				if(!data){
 					fprintf(stderr, "Allocation problem\n");
 					exit(7);
@@ -204,7 +204,7 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 					writesprite(fo, s, k * 32, j*32, &datasize);
 
 					fseek(fo, continuationposo, SEEK_SET);
-					sproffset += datasize;
+					sproffset += datasize+2;
 				}
 
 			}
@@ -236,6 +236,7 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 
 	fread(&fh,sizeof(fh),1,f);
 
+	
 	for(i = 0; i < fh.imgcount && i <= index; i++){
 		fread(&ph, sizeof(ph), 1, f);
 
@@ -245,7 +246,7 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 				printf("CreateRGBSurface failed: %s\n", SDL_GetError());
 				return -1;
 			}
-
+			
 			magenta = SDL_MapRGB(s->format, 255, 0, 255);
 			SDL_FillRect(s, NULL, magenta);
 
@@ -300,8 +301,6 @@ void show_help() {
 int main (int argc, char **argv) {
 	SDL_Surface *s = NULL;
 
-
-
 	if (argc == 1){
 		fprintf(stderr, "pictool: no input files\n");
 		exit(1);
@@ -324,12 +323,9 @@ int main (int argc, char **argv) {
 		exit(2);
 	}
 
-
 	SDL_Init(SDL_INIT_VIDEO);
-
+	
 	if(argc == 5 && !strcmp(argv[4], "--topic")){
-/*		fprintf(stderr, "pictool: writing not supported yet\n");
-		exit(3);*/
 		dbgprintf(":: Loading from bitmap %s\n", argv[3]);
 		s = SDL_LoadBMP(argv[3]);
 		dbgprintf(":: Success\n");
