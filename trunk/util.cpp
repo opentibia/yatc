@@ -19,13 +19,17 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <sstream>
+#include <string>
+#include <vector>
+#include "config.h"
 #include "util.h"
 
 #ifdef WIN32
 #include <windows.h>
 #endif
-#include "wince.h"
 
+
+#define WINCE_INSTALLDIR "/Storage Card/YATC/"
 
 void str_replace(std::string &s, const std::string& what, const std::string& with) {
 	std::string::size_type p, l;
@@ -66,7 +70,17 @@ void NativeGUIError(const char* text, const char *title) {
 	#endif
 }
 
+
 bool fileexists(const char* filename){
+    FILE *f;
+    if ((f = yatc_fopen(filename, "r"))) {
+        fclose(f);
+        return true;
+    } else
+        return false;
+}
+
+static bool __internal_fileexists(const char* filename){
     FILE *f;
     if ((f = fopen(filename, "r"))) {
         fclose(f);
@@ -74,3 +88,77 @@ bool fileexists(const char* filename){
     } else
         return false;
 }
+
+
+static std::vector<std::string > searchpaths;
+
+FILE *yatc_fopen(const char* filename, const char* mode) {
+#ifdef WINCE
+	/* ugly as hell, but WINCE's fopen does not use current working dir
+	 * in its path ... it's also probably faster than using the
+	 * searchpath.
+	 * something also tells me SDL_LoadBMP() won't like this, but
+	 * we'll be avoiding it anyway */
+
+	char fopen_fn[255];
+	sprintf(fopen_fn, "%s%s", WINCE_INSTALLDIR, filename);
+
+
+	return fopen(fopen_fn, mode);
+#else
+	for (std::vector<std::string>::iterator it = searchpaths.begin(); it != searchpaths.end(); it++) {
+		if (__internal_fileexists((*it + filename).c_str())) {
+			FILE *f=fopen((*it + filename).c_str(), mode);
+			if (f)
+				return f;
+			// if the above is false, we probably don't have enough permissions for requested mode
+		}
+	}
+
+	// if not found anywhere in the path, let's see what we can do with it
+	#ifndef WIN32 // if these aren't windows, it's probably a unioxid; if not, we'll port later
+	if (mode[0] == 'w' || mode[0] == 'a') // if we're trying to access for writing
+		return fopen((std::string("~/.yatc/") + filename).c_str(), mode);
+	#endif
+
+	// if we resume here, either we're under windows, or we're not attempting to open for writing
+
+
+	return fopen(filename, mode);
+#endif
+}
+
+#ifndef DESTDIRS
+#define DESTDIRS ""
+#endif
+
+void yatc_fopen_init() {
+#if (HAVE_GETENV==1)
+	const char *searchpath = getenv("YATC_PATH");
+	const char *lp;
+	if (!searchpath)
+		searchpath = "~/.yatc/:" DESTDIRS;
+
+	lp = searchpath;
+	for (const char* p=searchpath; ; p++) {
+		if (*p==':' || *p==0) {
+			char *a = new char[p-lp + 1];
+			memcpy(a, lp, p-lp);
+			a[p-lp] = 0;
+			if (strlen(a)) {
+				printf("Adding %s to search path\n", a);
+				searchpaths.insert(searchpaths.end(),std::string(a));
+			}
+			delete []a;
+			lp = p+1;
+			if (!*p)
+				break;
+		}
+	}
+#else
+	printf("Getenv() not supported; leaving searchpath empty.\n");
+#endif
+}
+
+
+

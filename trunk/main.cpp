@@ -39,7 +39,7 @@
 #include "skin.h"
 #include "config.h"
 #include "spritesdl.h" // to load icon
-#include "wince.h" // fopen fix, etc
+
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -128,15 +128,11 @@ void onKeyDown(const SDL_Event& event)
 
 void checkFile(const char *filename)
 {
-	FILE*f = fopen(filename, "r");
-	if(!f){
+	if (!fileexists(filename)) {
 		std::stringstream s;
 		s << "Loading the data file '" << filename << "' has failed.\nPlease place '" << filename << "' in the same folder as YATC.";
 		NativeGUIError(s.str().c_str(), "YATC Fatal Error");
 		exit(1);
-	}
-	else{
-		fclose(f);
 	}
 
 }
@@ -198,6 +194,8 @@ int main(int argc, char *argv[])
 		" There is NO WARRANTY, to the extent permitted by law. \n"
 		" Review LICENSE in YATC distribution for details.\n");
 
+
+	yatc_fopen_init();
 
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Checking graphics files existence...");

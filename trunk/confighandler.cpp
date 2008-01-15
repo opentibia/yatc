@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "confighandler.h"
-#include "wince.h"
+#include "util.h"
 ConfigHandler* configHandler = NULL;
 
 ConfigHandler::ConfigHandler()
@@ -48,7 +48,7 @@ void ConfigHandler::clear()
 
 bool ConfigHandler::loadConfig(const char* filename)
 {
-	FILE* f = fopen(filename, "rb");
+	FILE* f = yatc_fopen(filename, "rb");
 
 	if(!f){
 		return false;
@@ -92,7 +92,7 @@ bool ConfigHandler::loadConfig(const char* filename)
 
 bool ConfigHandler::saveConfig(const char* filename)
 {
-	FILE* f = fopen(filename, "wb");
+	FILE* f = yatc_fopen(filename, "wb");
 
 	if(!f){
 		return false;

@@ -16,6 +16,7 @@
 					<Add option="-g3" />
 					<Add option="-DUSEASSERT" />
 					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_GETENV" />
 				</Compiler>
 				<Linker>
 					<Add library="GL" />
@@ -216,6 +217,7 @@
 		<Unit filename="gm_mainmenu.cpp" />
 		<Unit filename="gm_mainmenu.h">
 			<Option compile="1" />
+			<Option weight="45" />
 		</Unit>
 		<Unit filename="itemui.cpp" />
 		<Unit filename="itemui.h" />
@@ -271,9 +273,6 @@
 		<Unit filename="ui/optionsnetwork.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
-		<Unit filename="wince.h">
-			<Option target="Debug WinCE" />
-		</Unit>
 		<Unit filename="yatc.cfg" />
 		<Extensions>
 			<code_completion />

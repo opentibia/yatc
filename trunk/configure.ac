@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([yatc],[0.1])
+AC_INIT([yatc],[0.2])
 AC_CONFIG_SRCDIR([spritesdl.h])
 AM_INIT_AUTOMAKE([foreign])
 
@@ -34,11 +34,6 @@ AC_ARG_ENABLE(opengl, [  --disable-opengl          don't use opengl], [
 	AM_CONDITIONAL(USE_OPENGL, true)
 ])
 
-#AC_ARG_WITH(SDL_gfx, [ --with-SDL_gfx          use SDL_gfx library], [ ## This lib is obligatory now
-#	SDLGFX_FLAGS=-DUSE_SDLGFX
-#	AC_SUBST(SDLGFX_FLAGS)
-#])
-
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h netdb.h netinet/in.h stdint.h stdlib.h string.h sys/ioctl.h sys/socket.h sys/time.h unistd.h])
@@ -47,6 +42,7 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 #
 AC_CHECK_FUNCS([memset])
+AC_CHECK_FUNCS([getenv])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -90,15 +86,12 @@ AC_SUBST(SDL_LIBS)
 
 
 #check SDL-gfx
-#if test -n "$SDLGFX_FLAGS"; then ### It's obligatory now
 AC_CHECK_HEADERS([SDL/SDL_rotozoom.h], ,[AC_MSG_ERROR("*** SDL_gfx headers not found.")])
 ## Following test does not work with any Windows-targetting compiler (mingw and mingw32ce included)
 ## More precisely, over there SDL wants SDL_main and not main, which the standard AC test does
 ## not provide.
 #AC_CHECK_LIB(SDL_gfx, rotozoomSurfaceXY, ,[AC_MSG_ERROR("*** SDL_gfx library not found.")])
 LIBS="$LIBS -lSDL_gfx"
-#fi
-
 
 # output files
 AC_CONFIG_HEADERS([config.h])

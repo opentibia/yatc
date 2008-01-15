@@ -21,7 +21,7 @@
 #include <iostream>
 #include "objects.h"
 #include "engine.h" // used to create engine specific sprites
-#include "wince.h"
+#include "util.h"
 
 uint16_t ObjectType::minItemId = 0;
 uint16_t ObjectType::maxItemId = 0;
@@ -183,7 +183,7 @@ bool Objects::loadDat(const char* filename)
 	uint16_t read_short, read_short2;
 	uint32_t maxObjects = 0;
 
-	FILE *fp = fopen(filename, "rb");
+	FILE *fp = yatc_fopen(filename, "rb");
 	if(!fp){
 		return false;
 	}
