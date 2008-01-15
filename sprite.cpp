@@ -39,7 +39,6 @@
 #include "sprite.h"
 #include "sprdata.h"
 #include <math.h>
-#include "wince.h"
 #include "gamecontent/creature.h"
 
 #pragma pack(1)
@@ -229,7 +228,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		uint32_t magenta;
 
 
-		f = fopen(filename.c_str(), "rb");
+		f = yatc_fopen(filename.c_str(), "rb");
 		if(!f){
 			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] Picture file %s not found\n", filename.c_str());
 			goto loadFail;

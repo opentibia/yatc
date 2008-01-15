@@ -74,16 +74,25 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'C'] = 6;
 			charw[(unsigned char)'E'] = 6;
 			charw[(unsigned char)'F'] = 6;
+			charw[(unsigned char)'H'] = 7;
 			charw[(unsigned char)'I'] = 4;
+			charw[(unsigned char)'J'] = 5;
+			charw[(unsigned char)'K'] = 6;
 			charw[(unsigned char)'L'] = 6;
+			charw[(unsigned char)'N'] = 7;
 			charw[(unsigned char)'P'] = 6;
+			charw[(unsigned char)'R'] = 6;
+			charw[(unsigned char)'Q'] = 7; charh[(unsigned char)'Q'] = 10;
 			charw[(unsigned char)'S'] = 6;
+			charw[(unsigned char)'V'] = 6;
+			charw[(unsigned char)'X'] = 6;
 			charw[(unsigned char)'Y'] = 6;
+            charw[(unsigned char)'Z'] = 6;
 
 			charw[(unsigned char)'a'] = 6;
 			charw[(unsigned char)'b'] = 6;
 			charw[(unsigned char)'c'] = 5;
-			charw[(unsigned char)'d'] = 7;
+			charw[(unsigned char)'d'] = 6;
 			charw[(unsigned char)'e'] = 6;
 			charw[(unsigned char)'f'] = 5;
 			charw[(unsigned char)'g'] = 6; charh[(unsigned char)'g'] = 10;
@@ -101,9 +110,10 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'t'] = 5;
 			charw[(unsigned char)'u'] = 6;
 			charw[(unsigned char)'v'] = 7;
-			charw[(unsigned char)'y'] = 7; charh[(unsigned char)'y'] = 10;
+			charw[(unsigned char)'x'] = 6;
+			charw[(unsigned char)'y'] = 6; charh[(unsigned char)'y'] = 10;
 			charw[(unsigned char)'q'] = 6; charh[(unsigned char)'q'] = 10;
-			charw[(unsigned char)'z'] = 6;
+			charw[(unsigned char)'z'] = 5;
 
 
 			charw[(unsigned char)169] = 8; charh[(unsigned char)169] = 10;  // copyright symbol

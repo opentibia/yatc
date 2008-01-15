@@ -1,10 +1,11 @@
 
 AM_CXXFLAGS = -Wall
 
-AM_CPPFLAGS = $(ASSERT_FLAGS) $(DEBUG_FLAGS) $(SDLGFX_FLAGS) $(OPENGL_FLAGS)
+AM_CPPFLAGS = $(ASSERT_FLAGS) $(DEBUG_FLAGS) $(SDLGFX_FLAGS) $(OPENGL_FLAGS) -DDESTDIRS=\"$(prefix):$(datadir)/:$(datarootdir)/:$(datadir)/yatc/:$(datarootdir)/yatc/\"
 
 AM_LDFLAGS = $(SDLGFX_FLAGS)
-noinst_PROGRAMS = yatc
+#noinst_PROGRAMS = yatc
+bin_PROGRAMS = yatc
 
 if USE_OPENGL
 MAYBE_OPENGL = spritegl.cpp enginegl.cpp
@@ -27,8 +28,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		enginegl.h gm_debug.h notifications.h sprite.h util.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
 		skin.h thingui.h itemui.h creatureui.h console.h \
-		wince.h \
-		\
+			\
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \

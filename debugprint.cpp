@@ -31,7 +31,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "debugprint.h"
-#include "wince.h"
 #if USE_OPENGL
 	#include <GL/gl.h>
 	#if defined(WIN32) && defined(GREMDEY)
@@ -61,7 +60,7 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 		#endif
 
 		#ifdef WINCE
-		FILE *lf = fopen("log.txt", "a");
+		FILE *lf = yatc_fopen("log.txt", "a");
 		#endif
 
 		switch (type) {
