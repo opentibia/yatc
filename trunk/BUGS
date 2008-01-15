@@ -1,0 +1,14 @@
+This is a list of known bugs. It's a reference for us to know what to fix, and for you to know what to NOT report repeatedly.
+
+Bugs begin:
+
+* this list is not categorized ;)
+
+* server can send magic effects, animated text, text messages etc on a tile that does not exist yet -- we should ignore them, not report them as bugs (error message "Magic effect - !tile")
+* there appears to be a message type 0x11
+* pressing enter or cursor keys in character list doesn't work
+* login status box does not appear during second logon
+* dragging window does not display its contents while it is being dragged
+* dragging the box in scrollbar does not work
+* scrollbar is not skinned
+
