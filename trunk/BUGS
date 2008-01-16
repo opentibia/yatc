@@ -11,4 +11,5 @@ Bugs begin:
 * dragging window does not display its contents while it is being dragged
 * dragging the box in scrollbar does not work
 * scrollbar is not skinned
+* names of creatures are not centered
 
