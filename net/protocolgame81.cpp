@@ -831,7 +831,7 @@ bool ProtocolGame81::onRecv(NetworkMessage& msg)
 		{
 			MSG_READ_U8(messageType);
 			MSG_READ_STRING(text);
-			if(messageType < 0x12 || messageType > 0x19){
+			if(messageType < 0x11 || messageType > 0x19){
 				RAISE_PROTOCOL_ERROR("text message - type");
 			}
 			Notifications::onTextMessage((MessageType_t)messageType, text);
