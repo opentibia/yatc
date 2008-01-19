@@ -1,3 +1,9 @@
+yatc (0.2.20080119-2) unstable; urgency=low
+
+  * Tried fixing some building issues reported by lintian
+
+ -- Ivan Vucica <ivucica@gmail.com>  Sat, 19 Jan 2008 23:02:17 +0100
+
 yatc (0.2.20080119-1) unstable; urgency=low
 
   * Initial release
