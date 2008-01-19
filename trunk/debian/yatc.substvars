@@ -1,0 +1,1 @@
+shlibs:Depends=libsdl-gfx1.2-4 (>= 2.0.13), libglu1-mesa | libglu1, libsdl1.2debian (>= 1.2.10-1), libc6 (>= 2.7-1), libgcc1 (>= 1:4.2.1), libstdc++6 (>= 4.2.1), libgmp3c2, libgl1-mesa-glx | libgl1

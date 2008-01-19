@@ -14,4 +14,4 @@ Bugs begin:
 * names of creatures are not centered
 * names of creatures seem to be printed with wrong font width
 * there are differences in size of text typed out in textbox and one that appears in console
-
+* automake doesnt install into $prefix/games, but into $prefix/bin which is wrong

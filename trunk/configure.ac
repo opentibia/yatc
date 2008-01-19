@@ -93,6 +93,8 @@ AC_CHECK_HEADERS([SDL/SDL_rotozoom.h], ,[AC_MSG_ERROR("*** SDL_gfx headers not f
 #AC_CHECK_LIB(SDL_gfx, rotozoomSurfaceXY, ,[AC_MSG_ERROR("*** SDL_gfx library not found.")])
 LIBS="$LIBS -lSDL_gfx"
 
+
+
 # output files
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([

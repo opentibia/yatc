@@ -73,6 +73,7 @@ void NativeGUIError(const char* text, const char *title) {
 
 bool fileexists(const char* filename){
     FILE *f;
+    printf("Checking for %s\n", filename);
     if ((f = yatc_fopen(filename, "r"))) {
         fclose(f);
         return true;
@@ -106,19 +107,34 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 
 	return fopen(fopen_fn, mode);
 #else
+
+	if (__internal_fileexists(filename)) {
+		FILE *f = fopen(filename, mode);
+		if (f) 
+			return f;
+	}
+
 	for (std::vector<std::string>::iterator it = searchpaths.begin(); it != searchpaths.end(); it++) {
-		if (__internal_fileexists((*it + filename).c_str())) {
-			FILE *f=fopen((*it + filename).c_str(), mode);
-			if (f)
+		std::string fn = (*it + "/" + filename).c_str();
+		if (fn[0] == '~') 
+			fn = std::string(getenv("HOME")) + "/" + fn.substr(1);
+
+		if (__internal_fileexists(fn.c_str())) {
+			FILE *f=fopen(fn.c_str(), mode);
+
+			if (f) {
 				return f;
+			}
 			// if the above is false, we probably don't have enough permissions for requested mode
 		}
 	}
 
 	// if not found anywhere in the path, let's see what we can do with it
 	#ifndef WIN32 // if these aren't windows, it's probably a unioxid; if not, we'll port later
-	if (mode[0] == 'w' || mode[0] == 'a') // if we're trying to access for writing
-		return fopen((std::string("~/.yatc/") + filename).c_str(), mode);
+	if (mode[0] == 'w' || mode[0] == 'a') {// if we're trying to access for writing
+		FILE *f = fopen((std::string(getenv("HOME")) + "/.yatc/" + filename).c_str(), mode);
+		if (f) return f;
+	}
 	#endif
 
 	// if we resume here, either we're under windows, or we're not attempting to open for writing

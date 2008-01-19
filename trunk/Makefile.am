@@ -27,13 +27,14 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		engine.h gamemode.h options.h spritesdl.h \
 		enginegl.h gm_debug.h notifications.h sprite.h util.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
-		skin.h thingui.h itemui.h creatureui.h console.h \
+		skin.h thingui.h itemui.h creatureui.h console.h effectui.h distanceui.h \
 			\
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \
 		gamecontent/inventory.h gamecontent/item.h gamecontent/map.h \
+		gamecontent/position.h \
 		\
 		defines.h gamecontent/enums.h fassert.h \
 		gamecontent/thing.h \
@@ -42,6 +43,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		\
 		yatc.cbp yatc.dev \
 		yatc.bmp yatc.ico resources.rc \
-		COPYING AUTHORS ROADMAP INSTALL
+		autogen.sh configure.ac Makefile.in Makefile.am
+		COPYING AUTHORS ROADMAP INSTALL BUGS
 
 
