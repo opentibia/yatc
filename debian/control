@@ -1,0 +1,13 @@
+Source: yatc
+Section: contrib/games
+Priority: extra
+Maintainer: Ivan Vucica <ivucica@gmail.com>
+Build-Depends: debhelper (>= 5), autotools-dev
+Standards-Version: 3.7.2
+
+Package: yatc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Yet Another Tibia Client, a client for a 2d MMORPG
+ YATC, Yet Another Tibia Client, is a client for a 2d MMORPG. It currently uses
+ proprietary graphics from the original game which must be placed in ~/.yatc
