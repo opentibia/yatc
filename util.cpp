@@ -137,7 +137,7 @@ void yatc_fopen_init() {
 	const char *searchpath = getenv("YATC_PATH");
 	const char *lp;
 	if (!searchpath)
-		searchpath = "~/.yatc/:" DESTDIRS;
+		searchpath = "~/.yatc/:/usr/share/games/yatc-data/:" DESTDIRS;
 
 	lp = searchpath;
 	for (const char* p=searchpath; ; p++) {

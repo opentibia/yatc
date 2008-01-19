@@ -265,11 +265,11 @@ bool Objects::loadDat(const char* filename)
 					break;
 				case 0x09: //Writtable/Readable Objectss
 						oType->readable = true;
-						fread(&read_short2, sizeof(read_short2), 1, fp); //unknown, values like 80, 200, 512, 1024, 2000
-					break;
+						fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+						break;
 				case 0x0A: //Writtable Objectss that can't be edited
 						oType->readable = true;
-						fread(&read_short2, sizeof(read_short2), 1, fp); //unknown, all have the value 1024
+						fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
 					break;
 				case 0x0B: //Fluid containers
 						oType->fluidContainer = true;
