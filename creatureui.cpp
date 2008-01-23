@@ -123,8 +123,9 @@ void CreatureUI::drawName(int x, int y, float scale) const
 		return;
 	}
 
-	volatile float centralizationoffset = -(g_engine->sizeText( n->getName().c_str(), "gamefont" ) / 2) - 16;
-	printf("%g\n", centralizationoffset); // FIXME (ivucica#1#) if this is removed, centralizationoffset doesn't have proper value. remove this and investigate!
+	//volatile float centralizationoffset = -(g_engine->sizeText( n->getName().c_str(), "gamefont" ) / 2) - 16;
+	float centralizationoffset = 0;
+	//printf("%g\n", centralizationoffset); // FIXME (ivucica#1#) if this is removed, centralizationoffset doesn't have proper value. remove this and investigate!
 	getWalkOffset(walkoffx, walkoffy, scale);
 
 	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 10 + walkoffy), 150);
@@ -146,10 +147,14 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale, Sprite* ui) const
 	x+=walkoffx;
 	y+=walkoffy-10;
 	uint32_t skull =  n->getSkull();
-	skull = 1;
 	if (skull) {
 		skull--;
-		ui->Blit(x, y-10, 54 + skull, 225, 11, 11);
+		ui->Blit(x, y-10, 54 + skull*11, 225, 11, 11);
+	}
+	uint32_t shield =  n->getShield();
+	if (shield) {
+		shield--;
+		ui->Blit(x+11, y-10, 54 + shield*11, 225, 11, 11);
 	}
 
 }
