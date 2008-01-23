@@ -31,6 +31,7 @@ public:
 	virtual void Blit(int x, int y, float scale = 1., int map_x = 0, int map_y = 0) const;
 	void loadOutfit();
 	void drawName(int x, int y, float scale) const;
+	void drawSkullsShields(int x, int y, float scale, Sprite* ui) const;
 	void startWalk() { m_preWalk = true; m_walkState = 0.f; }
 	void confirmWalk() { m_preWalk = false; }
 	void advanceWalk(int groundspeed);

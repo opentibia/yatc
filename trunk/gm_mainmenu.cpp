@@ -354,6 +354,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ClientVersion_t proto = options.protocol;
 	if (!proto)
 		proto = ProtocolConfig::detectVersion();
+
 	if (!proto) {
 		std::stringstream t;
 		unsigned char c = 149; // bullet
@@ -370,7 +371,11 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 
 		m->msgBox(t.str().c_str(),"Protocol detection failed");
 		return;
-	}
+	} /*else {
+		std::stringstream t;
+		t << "Autodetected " << std::dec << proto << " dat: 0x" << std::hex << ProtocolConfig::getInstance().getDatSignature() << " pic: 0x" << std::hex << ProtocolConfig::getInstance().getPicSignature() << " spr: 0x" << std::hex << ProtocolConfig::getInstance().getSprSignature();
+		m->msgBox(t.str().c_str(),"Protocol detection");
+	}*/
 
 	ProtocolConfig::getInstance().setServerType(options.otkey ? SERVER_OTSERV : SERVER_CIP ); // perhaps this should go to options, too?
 	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, proto); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
