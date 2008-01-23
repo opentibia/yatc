@@ -400,6 +400,7 @@ void GM_Gameworld::updateScene()
 				if(thing){
 					if(thing->getCreature()){
 						thing->getCreature()->drawName(screenx, screeny, scale);
+						thing->getCreature()->drawSkullsShields(screenx, screeny, scale, ui);
 						if(!player || thing->getCreature()->getId() != player->getId())
 							thing->getCreature()->advanceWalk(groundspeed);
 						else

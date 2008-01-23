@@ -45,7 +45,7 @@ yatc (${YATCVERSION}.${YATCDATE}-1) unstable; urgency=low
 EOF
 mv debian/changelog.new debian/changelog
 ./autogen.sh
-./configure
+./configure --prefix=/usr --bindir=/usr/games --mandir=/usr/share/man
 dpkg-buildpackage -rfakeroot
 --cut here-
 

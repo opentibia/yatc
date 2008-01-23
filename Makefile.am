@@ -43,7 +43,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		\
 		yatc.cbp yatc.dev \
 		yatc.bmp yatc.ico resources.rc \
-		autogen.sh configure.ac Makefile.in Makefile.am
+		autogen.sh configure.ac Makefile.in Makefile.am \
 		COPYING AUTHORS ROADMAP INSTALL BUGS
 
 

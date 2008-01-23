@@ -115,7 +115,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 void CreatureUI::drawName(int x, int y, float scale) const
 {
 	float walkoffx = 0.f, walkoffy = 0.f;
-	getWalkOffset(walkoffx, walkoffy, scale);
+
 
 	Creature* n = (Creature*)this;
 	Outfit_t outfit = n->getOutfit();
@@ -123,7 +123,35 @@ void CreatureUI::drawName(int x, int y, float scale) const
 		return;
 	}
 
-	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx), (int)(y - 10 + walkoffy), 150);
+	volatile float centralizationoffset = -(g_engine->sizeText( n->getName().c_str(), "gamefont" ) / 2) - 16;
+	printf("%g\n", centralizationoffset); // FIXME (ivucica#1#) if this is removed, centralizationoffset doesn't have proper value. remove this and investigate!
+	getWalkOffset(walkoffx, walkoffy, scale);
+
+	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 10 + walkoffy), 150);
+}
+
+void CreatureUI::drawSkullsShields(int x, int y, float scale, Sprite* ui) const
+{
+	// we'll pass ui graphics so we don't have to query the game class
+	// and that we don't have to keep a copy somewhere else
+
+	// skulls: (54, 225), each skull 11x11, green yellow white red
+	// shields: (54, 236), each shield 11x11, yellow blue whiteyellow whiteblue
+
+	Creature* n = (Creature*)this;
+	float walkoffx = 0.f, walkoffy = 0.f;
+
+	getWalkOffset(walkoffx, walkoffy, scale);
+
+	x+=walkoffx;
+	y+=walkoffy-10;
+	uint32_t skull =  n->getSkull();
+	skull = 1;
+	if (skull) {
+		skull--;
+		ui->Blit(x, y-10, 54 + skull, 225, 11, 11);
+	}
+
 }
 
 void CreatureUI::getWalkOffset(float &walkoffx, float &walkoffy, float scale) const

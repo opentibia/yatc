@@ -41,6 +41,7 @@ class Engine
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
 		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color) {}
 		virtual void drawText(const char* text, const char* font, int x, int y, uint8_t color);
+		virtual float sizeText(const char* text, const char* font) { return font_size(text, font, 10); }
 
 		int getWindowWidth() const {return m_width;};
 		int getWindowHeight() const {return m_height;};
@@ -53,7 +54,7 @@ class Engine
 		uint32_t getFps() { return (uint32_t)m_fps; }
 		void fpsMutexLock() { SDL_LockMutex(m_fpsmutex); }
 		void fpsMutexUnlock() { SDL_UnlockMutex(m_fpsmutex); }
-		
+
 
 		uint32_t m_creationTimestamp; // some engines, like GL, need this in order to know when to re-create their sprite memories
 
