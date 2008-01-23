@@ -30,4 +30,14 @@ FILE *yatc_fopen(const char* filename, const char* mode);
 void yatc_fopen_init();
 #define nextpow(n) (n <= 2 ? 2 : (n <= 4 ? 4 : (n <= 8 ? 8 : (n <= 16 ? 16 : (n <= 32 ? 32 : (n <= 64 ? 64 : (n <= 128 ? 128 : (n <= 256 ? 256 : (n <= 512 ? 512 : 1024)))))))))
 
+//	NOTE: If you get an error compiling on MSVC
+//	add the preprocessor definition _CRT_SECURE_NO_DEPRECATE
+
+inline char* yatc_itoa(int val)
+{
+	char* buffer = new char[64];
+	sprintf(buffer, "%d", val);
+	return buffer;
+}
+
 #endif

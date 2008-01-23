@@ -1,7 +1,8 @@
 #ifndef __UI_OPTIONSNETWORK_H
 #define __UI_OPTIONSNETWORK_H
 
-#include <sstream> // FIXME (ivucica#1#): remove me after cleaning up the int=>str conversion
+//#include <sstream> // FIXME (ivucica#1#): remove me after cleaning up the int=>str conversion
+#include "util.h"
 #include <map>
 #include "net/connection.h"
 class winOptionsNetwork_t {
@@ -138,11 +139,12 @@ public:
 	}
 
 	void Init() {
-		std::stringstream port; // FIXME (ivucica#1#) somebody should enlighten me on a clean integer=>string conversion
-		port << options.port;
+		//std::stringstream port; // FIXME (ivucica#1#) somebody should enlighten me on a clean integer=>string conversion
+		//port << options.port;
+		std::string port = yatc_itoa(options.port);
 
 		txtServer.SetCaption(options.server);
-		txtPort.SetCaption(port.str());
+		txtPort.SetCaption(port/*.str()*/);
 
 		btnOTKey.SetCustomData(options.otkey ? (void*)1 : NULL);
 		btnOTKey.SetSkin(options.otkey ? &g_skin.chk : &g_skin.txt);
