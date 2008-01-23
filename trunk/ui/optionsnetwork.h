@@ -141,7 +141,8 @@ public:
 	void Init() {
 		//std::stringstream port; // FIXME (ivucica#1#) somebody should enlighten me on a clean integer=>string conversion
 		//port << options.port;
-		std::string port = yatc_itoa(options.port);
+		char buffer[8];
+		std::string port = yatc_itoa(options.port, buffer);
 
 		txtServer.SetCaption(options.server);
 		txtPort.SetCaption(port/*.str()*/);

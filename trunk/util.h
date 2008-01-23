@@ -32,10 +32,8 @@ void yatc_fopen_init();
 
 //	NOTE: If you get an error compiling on MSVC
 //	add the preprocessor definition _CRT_SECURE_NO_DEPRECATE
-
-inline char* yatc_itoa(int val)
+inline char* yatc_itoa(int val, char* buffer)
 {
-	char* buffer = new char[64];
 	sprintf(buffer, "%d", val);
 	return buffer;
 }
