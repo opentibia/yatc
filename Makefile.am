@@ -13,12 +13,14 @@ endif
 
 SUBDIRS = net gamecontent ui
 
-yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp objects.cpp  \
+yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
+		objects.cpp  \
 		engine.cpp gamemode.cpp main.cpp options.cpp spritesdl.cpp \
 		 gm_debug.cpp notifications.cpp sprite.cpp util.cpp \
 		sprdata.c font.cpp confighandler.cpp gm_gameworld.cpp \
-		skin.cpp thingui.cpp itemui.cpp creatureui.cpp effectui.cpp distanceui.cpp \
-		console.cpp \
+		skin.cpp thingui.cpp itemui.cpp creatureui.cpp effectui.cpp \
+		distanceui.cpp console.cpp \
+		bigint.cpp \
 		net/connection.cpp net/networkmessage.cpp net/protocolgame80.cpp \
 		net/protocolgame81.cpp \
 		net/rsa.cpp net/encryption.cpp net/protocolgame.cpp net/protocollogin.cpp \
@@ -29,8 +31,9 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		engine.h gamemode.h options.h spritesdl.h \
 		enginegl.h gm_debug.h notifications.h sprite.h util.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
-		skin.h thingui.h itemui.h creatureui.h console.h effectui.h distanceui.h \
-			\
+		skin.h thingui.h itemui.h creatureui.h console.h effectui.h \
+		distanceui.h \
+		bigint.h fassert.h stdinttypes.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
@@ -42,6 +45,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		gamecontent/thing.h \
 		ui/login.h ui/mainmenu.h ui/options.h ui/optionsgeneral.h \
 		ui/optionsgraphics.h ui/optionsnetwork.h ui/charlist.h \
+		ui/skills.h \
 		\
 		yatc.cbp yatc.dev \
 		yatc.bmp yatc.ico resources.rc \
