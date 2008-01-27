@@ -30,9 +30,7 @@ extern "C" {
     ivucica: My experience shows that it's safe to always include stdint. Besides, shouldn't a standard file
             be #ifdef-protected?
 */
-/*#if !defined(GNUC) && !defined(__GNUC__) && !defined(__DMC__)*/
-#include <stdint.h>
-/*#endif*/
+#include "stdinttypes.h"
 
 int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy);
 int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *datasize);

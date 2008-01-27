@@ -29,8 +29,10 @@
 #endif
 
 #include <stdio.h>
+
 #include <stdarg.h>
 #include "debugprint.h"
+#include "util.h"
 #if USE_OPENGL
 	#include <GL/gl.h>
 	#if defined(WIN32) && defined(GREMDEY)
@@ -53,7 +55,11 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 
 	if(msgdebuglevel <= debuglevel){
 		char tx[6000];
+		#ifndef _MSC_VER
 		vsnprintf(tx, 6000, txt, vl);
+		#else
+		vsprintf(tx, txt, vl);
+		#endif
 
 		#if defined(WIN32) && !defined(WINCE)
 		HANDLE con = GetStdHandle(STD_OUTPUT_HANDLE);

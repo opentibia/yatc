@@ -21,9 +21,9 @@
 #ifndef __YATC_ITEM_H__
 #define __YATC_ITEM_H__
 
-#include "itemui.h"
+#include "../itemui.h"
 #include "thing.h"
-#include "objects.h"
+#include "../objects.h"
 
 class Item : public Thing, public ItemUI
 {

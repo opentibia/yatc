@@ -21,7 +21,7 @@
 #ifndef __ENCRYPTION_H
 #define __ENCRYPTION_H
 
-#include "stdint.h"
+#include "../stdinttypes.h"
 #include "memory.h"
 
 class NetworkMessage;

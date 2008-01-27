@@ -25,6 +25,7 @@
 #include <vector>
 #include <string>
 #include <SDL/SDL.h>
+#include "stdinttypes.h"
 enum ConsoleColor {
 	CONRED = 0,
 	CONBLUE = 1,

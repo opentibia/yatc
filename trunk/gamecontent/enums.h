@@ -22,6 +22,7 @@
 #define __YATC_ENUMS_H__
 
 #include <string>
+#include "../stdinttypes.h"
 
 enum slots_t {
 	SLOT_FIRST = 1,

@@ -23,8 +23,8 @@
 #define __YATC_THING_H__
 
 #include <stdlib.h>
-#include <stdint.h>
-#include "thingui.h"
+#include "../stdinttypes.h"
+#include "../thingui.h"
 
 class Item;
 class Creature;

@@ -22,7 +22,7 @@
 #ifndef __YATC_INVENTORY_H__
 #define __YATC_INVENTORY_H__
 
-#include "stdint.h"
+#include "../stdinttypes.h"
 #include "enums.h"
 
 class Item;

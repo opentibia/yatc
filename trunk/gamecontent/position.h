@@ -21,6 +21,7 @@
 #ifndef __YATC_POSITION_H__
 #define __YATC_POSITION_H__
 
+#include "../stdinttypes.h"
 class Position
 {
 public:
