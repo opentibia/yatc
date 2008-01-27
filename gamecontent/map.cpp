@@ -24,7 +24,7 @@
 #include "item.h"
 #include "creature.h"
 #include "globalvars.h"
-#include "objects.h"
+#include "../objects.h"
 
 extern uint32_t g_frameTime;
 

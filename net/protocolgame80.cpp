@@ -18,10 +18,10 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "fassert.h"
+#include "../fassert.h"
 #include "protocolgame80.h"
 
-#include "objects.h"
+#include "../objects.h"
 #include "../debugprint.h"
 
 #include "gamecontent/globalvars.h"

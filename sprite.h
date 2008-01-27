@@ -27,6 +27,7 @@
 
 #include <string>
 #include <SDL/SDL.h>
+#include "stdinttypes.h"
 
 class SDL_Surface;
 

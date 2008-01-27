@@ -24,10 +24,10 @@
 #include "networkmessage.h"
 #include "encryption.h"
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_MSC_VER)
 
-#include "winsock2.h"
-#include "windows.h"
+#include <winsock2.h>
+#include <windows.h>
 
 #define socketret_t int
 #define opt_t char

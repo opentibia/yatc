@@ -24,7 +24,7 @@
 #include <string>
 #include <map>
 
-#include "creatureui.h"
+#include "../creatureui.h"
 #include "thing.h"
 #include "enums.h"
 #include "map.h"

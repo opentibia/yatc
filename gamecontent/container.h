@@ -21,7 +21,7 @@
 #ifndef __YATC_CONTAINER_H__
 #define __YATC_CONTAINER_H__
 
-#include "objects.h"
+#include "../objects.h"
 #include <string>
 #include <list>
 

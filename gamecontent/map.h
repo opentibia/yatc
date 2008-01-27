@@ -31,6 +31,8 @@
 #include "../effectui.h"
 #include "../distanceui.h"
 
+#include "../stdinttypes.h"
+
 class Item;
 class Creature;
 class Thing;

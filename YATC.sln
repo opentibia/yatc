@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YATC", "YATCce.vcproj", "{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Pocket PC 2003 (ARMV4) = Debug|Pocket PC 2003 (ARMV4)
+		Release|Pocket PC 2003 (ARMV4) = Release|Pocket PC 2003 (ARMV4)
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Debug|Pocket PC 2003 (ARMV4).ActiveCfg = Debug|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Debug|Pocket PC 2003 (ARMV4).Build.0 = Debug|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Debug|Pocket PC 2003 (ARMV4).Deploy.0 = Debug|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Release|Pocket PC 2003 (ARMV4).ActiveCfg = Release|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Release|Pocket PC 2003 (ARMV4).Build.0 = Release|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Release|Pocket PC 2003 (ARMV4).Deploy.0 = Release|Pocket PC 2003 (ARMV4)
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

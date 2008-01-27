@@ -22,7 +22,7 @@
 #define __OBJECTS_H
 
 #include <stdlib.h>
-#include <stdint.h>
+#include "stdinttypes.h"
 #include <string.h>
 #include <vector>
 
