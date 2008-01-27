@@ -97,6 +97,9 @@ void EngineSDL::doResize(int w, int h)
 	m_videoflags = SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_RESIZABLE;
 	if (options.fullscreen)
 		m_videoflags |= SDL_FULLSCREEN;
+#ifdef WINCE
+	m_videoflags |= SDL_FULLSCREEN;
+#endif
 
 	m_screen = SDL_SetVideoMode(m_width, m_height, m_video_bpp, m_videoflags);
 
