@@ -19,6 +19,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "rsa.h"
+#include "../util.h" // REMOVE ME after fixing bignum=>binary
+#include <stdlib.h> // REMOVE ME as well
 #include "../fassert.h"
 #include "../debugprint.h"
 RSA::RSA()
@@ -75,6 +77,15 @@ bool RSA::encrypt(char* msg, int32_t size)
 
     c = t_power(plain, m_e);
     c = t_modulo(c, m_mod);
+
+    /* FIXME (ivucica#2#) we need to add bignum=>binary (meaning, convert from internal base into base 256) */
+    NativeGUIError("Please recompile with -lgmp and with #define HAVE_GMP. Internal bignums are not done yet. Thank you!", "Bignums not done");
+    exit(EXIT_FAILURE);
+
+
+    /*size_t count = (length(c, 2) + 7)/8;
+	memset(msg, 0, 128 - count);
+    memcpy(&msg[128 - count], c.toString().c_str(), 128 - count);*/
     #endif
 	return true;
 }
