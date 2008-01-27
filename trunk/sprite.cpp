@@ -469,7 +469,11 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
         return;
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Stretching to %g %g\n", w, h);
+#ifndef _MSC_VER
 	m_stretchimage = zoomSurface(img, w/img->w, h/img->h, smooth);
+#else
+	return;
+#endif
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "New size: %d %d\n", m_stretchimage->w, m_stretchimage->h);
 

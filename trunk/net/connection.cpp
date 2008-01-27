@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <SDL/SDL.h>
-
+#include <algorithm> // std::min
 #ifdef WINCE
 #include <windows.h>
 #include "../util.h"

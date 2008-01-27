@@ -52,8 +52,16 @@ class Engine
 
 		static Uint32 fpsTimer(Uint32 interval, void*param);
 		uint32_t getFps() { return (uint32_t)m_fps; }
-		void fpsMutexLock() { SDL_LockMutex(m_fpsmutex); }
-		void fpsMutexUnlock() { SDL_UnlockMutex(m_fpsmutex); }
+		void fpsMutexLock() {
+		    #ifndef WIN32
+            SDL_LockMutex(m_fpsmutex);
+            #endif
+        }
+		void fpsMutexUnlock() {
+		    #ifndef WIN32
+		    SDL_UnlockMutex(m_fpsmutex);
+		    #endif
+        }
 
 
 		uint32_t m_creationTimestamp; // some engines, like GL, need this in order to know when to re-create their sprite memories

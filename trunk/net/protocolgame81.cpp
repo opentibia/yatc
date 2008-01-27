@@ -20,18 +20,18 @@
 
 // FIXME (ivucica#1#) any protocol changes 8.0 => 8.1 need to be applied here, this is a copypaste of 8.0
 
-#include "fassert.h"
+#include "../fassert.h"
 #include "protocolgame81.h"
 
-#include "objects.h"
+#include "../objects.h"
 #include "../debugprint.h"
 
-#include "gamecontent/globalvars.h"
-#include "gamecontent/map.h"
-#include "gamecontent/item.h"
-#include "gamecontent/creature.h"
-#include "gamecontent/container.h"
-#include "gamecontent/inventory.h"
+#include "../gamecontent/globalvars.h"
+#include "../gamecontent/map.h"
+#include "../gamecontent/item.h"
+#include "../gamecontent/creature.h"
+#include "../gamecontent/container.h"
+#include "../gamecontent/inventory.h"
 
 ProtocolGame81::ProtocolGame81(int account, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame(account, password, name, isGM)

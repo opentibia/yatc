@@ -18,12 +18,12 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "fassert.h"
+#include "../fassert.h"
 #include "protocollogin.h"
 #include "networkmessage.h"
 #include "rsa.h"
-#include "notifications.h"
-#include "debugprint.h"
+#include "../notifications.h"
+#include "../debugprint.h"
 ProtocolLogin::ProtocolLogin(uint32_t account, const std::string& password)
 {
 	m_account = account;

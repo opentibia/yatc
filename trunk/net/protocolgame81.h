@@ -23,7 +23,7 @@
 #define __PROTOCOLGAME81_H
 
 #include "protocolgame.h"
-#include "notifications.h"
+#include "../notifications.h"
 
 class Thing;
 class Item;
