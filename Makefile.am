@@ -11,6 +11,8 @@ if USE_OPENGL
 MAYBE_OPENGL = spritegl.cpp enginegl.cpp
 endif
 
+SUBDIRS = net gamecontent ui
+
 yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp objects.cpp  \
 		engine.cpp gamemode.cpp main.cpp options.cpp spritesdl.cpp \
 		 gm_debug.cpp notifications.cpp sprite.cpp util.cpp \

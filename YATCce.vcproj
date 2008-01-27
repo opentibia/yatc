@@ -19,7 +19,7 @@
 			Name="Debug|Pocket PC 2003 (ARMV4)"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -65,9 +65,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions=" /subsystem:windowsce,4.20 /machine:ARM /ARMPADCODE"
-				AdditionalDependencies="SDL.lib SDL_gfx.lib GLICT.lib"
+				AdditionalDependencies="SDL.lib SDL_gfx.lib GLICT.lib ccrtrtti.lib ws2.lib"
 				OutputFile="$(OutDir)/YATC.exe"
 				LinkIncremental="2"
+				IgnoreDefaultLibraryNames="LIBCMT"
 				DelayLoadDLLs="$(NOINHERIT)"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/YATC.pdb"
@@ -187,6 +188,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\bigint.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\confighandler.cpp"
 				>
 			</File>
@@ -212,6 +217,14 @@
 			</File>
 			<File
 				RelativePath=".\debugprint.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\distanceui.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\effectui.cpp"
 				>
 			</File>
 			<File
@@ -349,6 +362,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\bigint.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ui\charlist.h"
 				>
 			</File>
@@ -386,6 +403,14 @@
 			</File>
 			<File
 				RelativePath=".\defines.h"
+				>
+			</File>
+			<File
+				RelativePath=".\distanceui.h"
+				>
+			</File>
+			<File
+				RelativePath=".\effectui.h"
 				>
 			</File>
 			<File
@@ -473,11 +498,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ui\options.h"
+				RelativePath=".\options.h"
 				>
 			</File>
 			<File
-				RelativePath=".\options.h"
+				RelativePath=".\ui\options.h"
 				>
 			</File>
 			<File
@@ -567,6 +592,18 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\Tibia.dat"
+			>
+		</File>
+		<File
+			RelativePath=".\Tibia.pic"
+			>
+		</File>
+		<File
+			RelativePath=".\Tibia.spr"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

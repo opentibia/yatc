@@ -19,26 +19,35 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "rsa.h"
-#include "fassert.h"
-#include "debugprint.h"
+#include "../fassert.h"
+#include "../debugprint.h"
 RSA::RSA()
 {
+    #ifdef HAVE_GMP
 	mpz_init2(m_mod, 1024);
 	mpz_init2(m_e, 1024);
+	#endif
 	m_keyset = false;
 }
 
 RSA::~RSA()
 {
+    #ifdef HAVE_GMP
 	mpz_clear(m_e);
 	mpz_clear(m_mod);
+	#endif
 }
 
 void RSA::setPublicKey(const char* m, const char* e)
 {
 	m_keyset = true;
+	#ifdef HAVE_GMP
 	mpz_set_str(m_mod, m, 10);
 	mpz_set_str(m_e, e, 10);
+	#else
+	m_mod = m;
+	m_e = e;
+	#endif
 }
 
 bool RSA::encrypt(char* msg, int32_t size)
@@ -46,6 +55,7 @@ bool RSA::encrypt(char* msg, int32_t size)
 
 	ASSERT(m_keyset == true);
 
+	#ifdef HAVE_GMP
 	mpz_t plain,c;
 	mpz_init2(plain, 1024);
 	mpz_init2(c, 1024);
@@ -60,6 +70,11 @@ bool RSA::encrypt(char* msg, int32_t size)
 
 	mpz_clear(c);
 	mpz_clear(plain);
+    #else
+    BigInt plain(msg),c;
 
+    c = t_power(plain, m_e);
+    c = t_modulo(c, m_mod);
+    #endif
 	return true;
 }

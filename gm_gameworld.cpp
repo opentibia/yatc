@@ -35,6 +35,10 @@
 #include "console.h"
 #include "gamecontent/inventory.h"
 
+#ifdef _MSC_VER
+#define time _time64
+#endif
+
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
 

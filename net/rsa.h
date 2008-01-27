@@ -20,7 +20,13 @@
 #ifndef __RSA_H__
 #define __RSA_H__
 
-#include "gmp.h"
+#if HAVE_GMP
+#include <gmp.h>
+#else
+#include "../bigint.h"
+#endif
+
+#include "../stdinttypes.h"
 
 class RSA{
 public:
@@ -38,7 +44,11 @@ protected:
 
 	bool m_keyset;
 
+    #ifdef HAVE_GMP
 	mpz_t m_mod, m_e;
+	#else
+	BigInt m_mod, m_e;
+	#endif
 };
 
 #endif

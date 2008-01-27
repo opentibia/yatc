@@ -24,12 +24,12 @@
 #include "../objects.h"
 #include "../debugprint.h"
 
-#include "gamecontent/globalvars.h"
-#include "gamecontent/map.h"
-#include "gamecontent/item.h"
-#include "gamecontent/creature.h"
-#include "gamecontent/container.h"
-#include "gamecontent/inventory.h"
+#include "../gamecontent/globalvars.h"
+#include "../gamecontent/map.h"
+#include "../gamecontent/item.h"
+#include "../gamecontent/creature.h"
+#include "../gamecontent/container.h"
+#include "../gamecontent/inventory.h"
 
 ProtocolGame80::ProtocolGame80(int account, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame(account, password, name, isGM)
