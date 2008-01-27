@@ -20,8 +20,8 @@ should comment.
 0.2
 ---
 * add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
-* party shields 
-* skulls +/-
+* party shields +
+* skulls +
 * smooth creature scrolling +/-
 * smooth screen scrolling +
 * turning

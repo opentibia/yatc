@@ -20,7 +20,8 @@
 #ifndef __RSA_H__
 #define __RSA_H__
 
-#if HAVE_GMP
+#include "../config.h"
+#if HAVE_GMP_H
 #include <gmp.h>
 #else
 #include "../bigint.h"
@@ -44,7 +45,7 @@ protected:
 
 	bool m_keyset;
 
-    #ifdef HAVE_GMP
+    #ifdef HAVE_GMP_H
 	mpz_t m_mod, m_e;
 	#else
 	BigInt m_mod, m_e;

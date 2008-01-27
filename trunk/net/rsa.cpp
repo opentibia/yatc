@@ -25,7 +25,7 @@
 #include "../debugprint.h"
 RSA::RSA()
 {
-    #ifdef HAVE_GMP
+    #ifdef HAVE_GMP_H
 	mpz_init2(m_mod, 1024);
 	mpz_init2(m_e, 1024);
 	#endif
@@ -34,7 +34,7 @@ RSA::RSA()
 
 RSA::~RSA()
 {
-    #ifdef HAVE_GMP
+    #ifdef HAVE_GMP_H
 	mpz_clear(m_e);
 	mpz_clear(m_mod);
 	#endif
@@ -43,7 +43,7 @@ RSA::~RSA()
 void RSA::setPublicKey(const char* m, const char* e)
 {
 	m_keyset = true;
-	#ifdef HAVE_GMP
+	#ifdef HAVE_GMP_H
 	mpz_set_str(m_mod, m, 10);
 	mpz_set_str(m_e, e, 10);
 	#else
@@ -57,7 +57,7 @@ bool RSA::encrypt(char* msg, int32_t size)
 
 	ASSERT(m_keyset == true);
 
-	#ifdef HAVE_GMP
+	#ifdef HAVE_GMP_H
 	mpz_t plain,c;
 	mpz_init2(plain, 1024);
 	mpz_init2(c, 1024);
