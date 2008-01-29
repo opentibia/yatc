@@ -60,6 +60,9 @@ public:
 		const std::string& message) {}
 
 	virtual void onCreatureMove(uint32_t id) {}
+
+	virtual void onChangeSkills() {}
+	virtual void onChangeStats() {}
 };
 
 extern GameMode* g_game;

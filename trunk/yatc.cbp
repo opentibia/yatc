@@ -152,6 +152,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
+			<Add option="-DHAVE_GMP_H=1" />
 			<Add directory="." />
 		</Compiler>
 		<Linker>
@@ -163,6 +164,8 @@
 		<Unit filename="COPYING" />
 		<Unit filename="README" />
 		<Unit filename="ROADMAP" />
+		<Unit filename="bigint.cpp" />
+		<Unit filename="bigint.h" />
 		<Unit filename="codeguide.txt" />
 		<Unit filename="confighandler.cpp" />
 		<Unit filename="confighandler.h" />
@@ -267,12 +270,14 @@
 		<Unit filename="thingui.cpp" />
 		<Unit filename="thingui.h" />
 		<Unit filename="ui/charlist.h" />
+		<Unit filename="ui/inventory.h" />
 		<Unit filename="ui/login.h" />
 		<Unit filename="ui/mainmenu.h" />
 		<Unit filename="ui/options.h" />
 		<Unit filename="ui/optionsgeneral.h" />
 		<Unit filename="ui/optionsgraphics.h" />
 		<Unit filename="ui/optionsnetwork.h" />
+		<Unit filename="ui/skills.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Unit filename="yatc.cfg" />

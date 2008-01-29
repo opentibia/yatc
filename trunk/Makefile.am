@@ -45,7 +45,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		gamecontent/thing.h \
 		ui/login.h ui/mainmenu.h ui/options.h ui/optionsgeneral.h \
 		ui/optionsgraphics.h ui/optionsnetwork.h ui/charlist.h \
-		ui/skills.h \
+		ui/inventory.h ui/skills.h \
 		\
 		yatc.cbp yatc.dev \
 		yatc.bmp yatc.ico resources.rc \
