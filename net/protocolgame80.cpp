@@ -653,6 +653,8 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			GlobalVariables::setPlayerSkill(SKILL_MAGIC, SKILL_ATTR_PERCENT, magicLevelPercent);
 			GlobalVariables::setPlayerStat(STAT_SOUL, soul);
 			GlobalVariables::setPlayerStat(STAT_STAMINA, stamina);
+
+			Notifications::onChangeStats();
 			break;
 		}
 		case 0xA1: //player - skills
@@ -690,6 +692,8 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			GlobalVariables::setPlayerSkill(SKILL_DISTANCE, SKILL_ATTR_PERCENT, distancePercent);
 			GlobalVariables::setPlayerSkill(SKILL_FISH, SKILL_ATTR_LEVEL, fish);
 			GlobalVariables::setPlayerSkill(SKILL_FISH, SKILL_ATTR_PERCENT, fishPercent);
+
+			Notifications::onChangeSkills();
 			break;
 		}
 		case 0xA2: //player - icons

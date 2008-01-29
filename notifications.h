@@ -57,6 +57,8 @@ class Notifications{
 		//static void onDistanceEffect(const Position& from, const Position& to) {}
 		static void onWalk(); //(const Position& from, const Position& to) {} // for now we don't need to know this information
 		static void onChangeIcons() {}
+		static void onChangeStats();
+		static void onChangeSkills();
 		static void onChangeCreatureSkull(uint32_t id);
 		static void onTextMessage(MessageType_t type, const std::string& message);
 		//SAY,WHISPER, YELL, MONSTER_SAY, MONSTER_YELL

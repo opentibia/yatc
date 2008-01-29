@@ -42,14 +42,58 @@
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
 
+/* TODO (ivucica#5#) move this to ui/inventory.cpp (don't do it until compiling of stuff in ui/ has been assured with autoconf)*/
 void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
-	uint8_t slot = (glictPanel*)caller - (glictPanel*)caller->GetCustomData() + 1; // customdata stores the address of pnlItem[0], and caller is pnlItem[slot]...
+	static Sprite* ui = NULL; // FIXME (ivucica#4#) move this local ui, GM_Gameworld::ui and GM_MainMenu::ui to Engine::m_ui, since over there it can be global and not reloaded every now and then
+	if (ui == NULL) {
+		ui = g_engine->createSprite("Tibia.pic", 3);
+	}
+
+	slots_t slot = (slots_t)((glictPanel*)caller - (glictPanel*)caller->GetCustomData() + 1); // customdata stores the address of pnlItem[0], and caller is pnlItem[slot]...
 
 
 	Item* item=Inventory::getInstance().getItem(slot);
 	if (item){
 		item->Blit((int)real->left, (int)real->top, 1.f); // TODO (ivucica#5#) if item is not 32x32, scale appropriately
+	} else {
+		int int_slot;
+		switch (slot) {
+		default:
+		case SLOT_NECKLACE:
+			int_slot = 0;
+			break;
+		case SLOT_HEAD:
+			int_slot = 1;
+			break;
+		case SLOT_BACKPACK:
+			int_slot = 2;
+			break;
+		case SLOT_LEFT:
+			int_slot = 3;
+			break;
+		case SLOT_RIGHT:
+			int_slot = 4;
+			break;
+		case SLOT_ARMOR:
+			int_slot = 5;
+			break;
+		case SLOT_LEGS:
+			int_slot = 6;
+			break;
+		case SLOT_RING:
+			int_slot = 7;
+			break;
+		case SLOT_AMMO:
+			int_slot = 8;
+			break;
+		case SLOT_FEET:
+			int_slot = 9;
+			break;
+		}
+
+		ui->Blit((int)real->left, (int)real->top, 96 + 32 * (int_slot % 5), 32 * (int_slot / 5), 32, 32);
+
 	}
 
 	{
@@ -78,6 +122,8 @@ GM_Gameworld::GM_Gameworld()
 	#ifndef WINCE
 	desktop.AddObject(&pnlInventory.panel);
 	pnlInventory.panel.SetPos(10, 10);
+	desktop.AddObject(&winSkills.window);
+	winSkills.window.SetPos(300,5);
 	#endif
 	desktop.AddObject(&pnlTraffic);
 	pnlTraffic.SetPos(10,10);
@@ -569,4 +615,13 @@ void GM_Gameworld::onCreatureMove(uint32_t id)
 	Creatures::getInstance().getCreature(id)->confirmWalk();
 	printf("Moving %d\n", id);
 
+}
+
+void GM_Gameworld::onChangeSkills()
+{
+	winSkills.updateSelf();
+}
+void GM_Gameworld::onChangeStats()
+{
+	winSkills.updateSelf();
 }

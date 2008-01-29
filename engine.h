@@ -28,6 +28,7 @@
 #include "sprite.h"
 #include "spritesdl.h"
 #include "font.h"
+#include "fassert.h"
 struct glictColor;
 
 class Engine
@@ -41,7 +42,7 @@ class Engine
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
 		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color) {}
 		virtual void drawText(const char* text, const char* font, int x, int y, uint8_t color);
-		virtual float sizeText(const char* text, const char* font) { return font_size(text, font, 10); }
+		virtual float sizeText(const char* text, const char* font) { float a = glictFontSize(text, font, 10); ASSERTFRIENDLY(a<20000, "Looks like text width is enormous."); return a; }
 
 		int getWindowWidth() const {return m_width;};
 		int getWindowHeight() const {return m_height;};

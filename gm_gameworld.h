@@ -21,52 +21,12 @@
 #ifndef __GM_GAMEWORLD_H
 #define __GM_GAMEWORLD_H
 
-#include <GLICT/container.h>
-#include <GLICT/panel.h>
-#include <GLICT/textbox.h>
-#include <GLICT/button.h>
 #include "gamemode.h"
 #include "sprite.h"
-
+#include "ui/inventory.h"
+#include "ui/skills.h"
 class Console;
 
-class pnlInventory_t {
-public:
-	pnlInventory_t() {
-		static int posInvSlots[] = {
-            45, 3,  // helmet
-            8, 17,  // necklace
-            83, 17, // backpack
-            45, 40, // armor
-            83, 54, // right weapon
-            8, 54,  // left weapon
-            45, 77, // legs
-            45, 115,// feet
-            8, 91,  // ring
-            83, 91};// hand
-
-
-		panel.SetHeight(150);
-		panel.SetWidth(150);
-		for (int i = 0; i < 10; i++) {
-			panel.AddObject(pnlItem+i);
-			pnlItem[i].SetPos(posInvSlots[i*2], posInvSlots[i*2+1]);
-			pnlItem[i].SetHeight(32);
-			pnlItem[i].SetWidth(32);
-			pnlItem[i].SetBGColor(.1,.1,.1,1);
-			pnlItem[i].SetCaption("");
-			pnlItem[i].SetCustomData(pnlItem);
-			pnlItem[i].SetOnPaint(pnlInventory_t::inventoryItemOnPaint);
-//			pnlItem[i].SetBGActiveness(true);
-		}
-	}
-
-	static void inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
-
-	glictContainer panel; // it's a container, so it's transparent
-	glictPanel pnlItem[10];
-
-};
 
 class Tile;
 
@@ -89,6 +49,8 @@ public:
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message);
 	void onCreatureMove(uint32_t id);
+	void onChangeSkills();
+	void onChangeStats();
 protected:
 	int getMinZ();
 
@@ -98,6 +60,7 @@ private:
 	Sprite* ui;
 	glictContainer desktop;
 	pnlInventory_t pnlInventory;
+	winSkills_t winSkills;
 	glictPanel pnlTraffic;
 	glictTextbox txtConsoleEntry;
 

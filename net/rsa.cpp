@@ -47,7 +47,7 @@ void RSA::setPublicKey(const char* m, const char* e)
 	mpz_set_str(m_mod, m, 10);
 	mpz_set_str(m_e, e, 10);
 	#else
-	m_mod = m;
+ 	m_mod = m;
 	m_e = e;
 	#endif
 }
