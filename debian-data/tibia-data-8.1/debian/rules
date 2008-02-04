@@ -15,17 +15,10 @@
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
-
+configure:
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-ifneq "$(wildcard /usr/share/misc/config.sub)" ""
-	cp -f /usr/share/misc/config.sub config.sub
-endif
-ifneq "$(wildcard /usr/share/misc/config.guess)" ""
-	cp -f /usr/share/misc/config.guess config.guess
-endif
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --bindir=\$${prefix}/games --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --datarootdir=\$${prefix}/games/share --datadir=\$${prefix}/games/share CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs"
 
 
 build: build-stamp
@@ -34,7 +27,6 @@ build-stamp:  config.status
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE)
 	#docbook-to-man debian/yatc.sgml > yatc.1
 
 	touch $@
@@ -45,8 +37,6 @@ clean:
 	rm -f build-stamp 
 
 	# Add here commands to clean up after the build process.
-	$(MAKE) distclean
-	rm -f config.sub config.guess
 
 	dh_clean 
 
@@ -56,8 +46,10 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 
-	# Add here commands to install the package into debian/yatc.
-	$(MAKE) DESTDIR=$(CURDIR)/debian/yatc install
+	# Add here commands to install the package into debian/tibia-data.
+	cp -H Tibia.spr $(CURDIR)/debian/tibia-data/usr/games/share
+	cp -H Tibia.pic $(CURDIR)/debian/tibia-data/usr/games/share
+	cp -H Tibia.dat $(CURDIR)/debian/tibia-data/usr/games/share
 
 
 # Build architecture-independent files here.
@@ -72,7 +64,7 @@ binary-arch: build install
 	dh_installdocs
 #	dh_installexamples
 	dh_install
-	dh_installmenu
+#	dh_installmenu
 #	dh_installdebconf	
 #	dh_installlogrotate
 #	dh_installemacsen
@@ -82,7 +74,7 @@ binary-arch: build install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman debian/yatc.6
+#	dh_installman debian/yatc.6
 	dh_link
 	dh_strip
 	dh_compress
@@ -90,7 +82,7 @@ binary-arch: build install
 #	dh_perl
 #	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps
+#	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

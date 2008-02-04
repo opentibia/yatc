@@ -45,14 +45,34 @@ yatc (${YATCVERSION}.${YATCDATE}-1) unstable; urgency=low
 EOF
 mv debian/changelog.new debian/changelog
 ./autogen.sh
-./configure --prefix=/usr --bindir=/usr/games --mandir=/usr/share/man
+./configure --prefix=/usr --bindir=/usr/games --mandir=/usr/share/man --datadir=/usr/games/share --datarootdir=/usr/games/share
 dpkg-buildpackage -rfakeroot
 --cut here-
 
 4. You'll get the Debian version of package, named:
     yatc-${YATCVERSION}.${YATCDATE}-1.deb
    Use it, share it, do whatever you want.
-   
+
+5. Need tibia-data? Check out the debian-data/ folder. Go into tibia-data-8.1/
+   and place Tibia data files into it. Symlinking will produce a valid binary
+   package but not a valid source package, so avoid it! 
+   Punch in these keys: 
+
+-- cut here --
+cat - debian/changelog << EOF > debian/changelog.new
+yatc (${YATCVERSION}.${YATCDATE}-1) unstable; urgency=low
+
+  * Custom build
+
+ -- ${YATCDEBIANISER}  ${YATCDATE2}
+
+EOF
+mv debian/changelog.new debian/changelog
+dpkg-buildpackage -rfakeroot
+-- cut here --
+
+
+
 Please do this only for the SVN and mostly for your personal use. Please
 don't submit this to any distribution, this is not ready for that yet.
 We'll handle the official .DEB releases and submissions to distributions

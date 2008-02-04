@@ -14,6 +14,8 @@ distdir:
 	cp $(HEAD) $(distdir)
 	cp Makefile $(distdir)
 distcheck:
+distclean:
+install:
 clean:
 	rm $(OBJS) __all.a
 

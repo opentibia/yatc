@@ -1,0 +1,6 @@
+This is a packaging of Cipsoft's Tibia data files repackaged for use in
+Debian-based systems by Ivan Vucica.  Licensing has not been discussed with 
+Cipsoft and until then the packager takes no responsibility for how you use
+them, and he will not try to submit this packaging to any distribution. 
+
+These files have not been modified in any way except they were repackaged.
