@@ -1,3 +1,10 @@
+yatc (0.2.20080202-1) unstable; urgency=low
+
+  * Latest upstream
+  * Added dependancy upon tibia-data
+
+ -- Ivan Vucica <ivucica@gmail.com>  Sat, 02 Feb 2008 12:04:15 +0100
+
 yatc (0.2.20080119-2) unstable; urgency=low
 
   * Tried fixing some building issues reported by lintian

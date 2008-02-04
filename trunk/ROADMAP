@@ -28,7 +28,7 @@ should comment.
 * completely fixing GL engine
 * attacking
 * using
-* skill window
+* skill window +/-
 * fix the status window not appearing after one login failure (perhaps customize instead of using glict msgbox?)
 
 0.3

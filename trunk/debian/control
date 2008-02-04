@@ -7,7 +7,7 @@ Standards-Version: 3.7.2
 
 Package: yatc
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, tibia-data
 Description: Yet Another Tibia Client, a client for a 2d MMORPG
  YATC, Yet Another Tibia Client, is a client for a 2d MMORPG. It currently uses
- proprietary graphics from the original game which must be placed in ~/.yatc
+ proprietary graphics from the original game - it requires package tibia-data.

@@ -5,4 +5,6 @@ distdir:
 	cp *.h $(distdir)
 	cp Makefile $(distdir)
 distcheck:
+distclean:
+install:
 clean:

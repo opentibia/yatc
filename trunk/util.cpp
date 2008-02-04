@@ -153,7 +153,7 @@ void yatc_fopen_init() {
 	const char *searchpath = getenv("YATC_PATH");
 	const char *lp;
 	if (!searchpath)
-		searchpath = "~/.yatc/:/usr/share/games/yatc-data/:" DESTDIRS;
+		searchpath = "~/.yatc/:/usr/games/share/yatc-data/:/usr/games/share/tibia-data/" DESTDIRS;
 
 	lp = searchpath;
 	for (const char* p=searchpath; ; p++) {
