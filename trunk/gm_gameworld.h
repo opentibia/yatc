@@ -37,7 +37,7 @@ public:
 
 	void updateScene();
 	void keyPress (char key);
-	void specKeyPress (int key);
+	void specKeyPress (const SDL_keysym& key);
 	void doResize(float w, float h);
 	void mouseEvent(SDL_Event& event);
 

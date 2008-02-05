@@ -163,45 +163,45 @@ const char* Connection::getErrorDesc(int message)
 {
 	switch(message){
 	case ERROR_CANNOT_RESOLVE_HOST:
-		return "ERROR_CANNOT_RESOLVE_HOST";
+		return "Cannot resolve host.";
 	case ERROR_WRONG_HOST_ADDR_TYPE:
-		return "ERROR_WRONG_HOST_ADDR_TYPE";
+		return "Host uses an unsupported address type.";
 	case ERROR_CANNOT_CREATE_SOCKET:
-		return "ERROR_CANNOT_CREATE_SOCKET";
+		return "Could not create socket.";
 	case ERROR_CANNOT_SET_NOBLOCKING_SOCKET:
-		return "ERROR_CANNOT_SET_NOBLOCKING_SOCKET";
+		return "Could not create a non-blocking socket.";
 	case ERROR_CANNOT_CONNECT:
-		return "ERROR_CANNOT_CONNECT";
+		return "Cannot connect.";
 	case ERROR_CONNECT_TIMEOUT:
-		return "ERROR_CONNECT_TIMEOUT";
+		return "Connection timed out.";
 	case ERROR_SELECT_FAIL_CONNECTED:
-		return "ERROR_SELECT_FAIL_CONNECTED";
+		return "Failed call to select() while connected.";
 	case ERROR_SELECT_FAIL_CONNECTING:
-		return "ERROR_SELECT_FAIL_CONNECTING";
+		return "Failed call to select() while connecting.";
 	case ERROR_UNSUCCESSFUL_CONNECTION:
-		return "ERROR_UNSUCCESSFUL_CONNECTION";
+		return "Could not connect to server. Is the server running?";
 	case ERROR_GETSOCKTOPT_FAIL:
-		return "ERROR_GETSOCKTOPT_FAIL";
+		return "Failed call to getsockopt().";
 	case ERROR_UNEXPECTED_SELECT_RETURN_VALUE:
-		return "ERROR_UNEXPECTED_SELECT_RETURN_VALUE";
+		return "Unexpected return value from select()";
 	case ERROR_CANNOT_GET_PENDING_SIZE:
-		return "ERROR_CANNOT_GET_PENDING_SIZE";
+		return "Could not get pending size.";
 	case ERROR_RECV_FAIL:
-		return "ERROR_RECV_FAIL";
+		return "Failed call to recv()";
 	case ERROR_UNEXPECTED_RECV_ERROR:
-		return "ERROR_UNEXPECTED_RECV_ERROR";
+		return "Unexpected recv() error.";
 	case ERROR_DECRYPT_FAIL:
-		return "ERROR_DECRYPT_FAIL";
+		return "Decrypting of message failed.";
 	case ERROR_WRONG_MSG_SIZE:
-		return "ERROR_WRONG_MSG_SIZE";
+		return "Message size is wrong.";
 	case ERROR_SEND_FAIL:
-		return "ERROR_SEND_FAIL";
+		return "Failed call to send()";
 	case ERROR_PROTOCOL_ONRECV:
-		return "ERROR_PROTOCOL_ONRECV";
+		return "Failed to parse received message.";
 	case ERROR_CLOSED_SOCKET:
-		return "ERROR_CLOSED_SOCKET";
+		return "Socket has been closed.";
 	case ERROR_TOO_BIG_MESSAGE:
-		return "ERROR_TOO_BIG_MESSAGE";
+		return "Message is too big.";
 	default:
 		return "Error without description.";
 	}

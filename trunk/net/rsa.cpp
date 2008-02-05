@@ -18,9 +18,9 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#include "rsa.h"
-#include "../util.h" // REMOVE ME after fixing bignum=>binary
 #include <stdlib.h> // REMOVE ME as well
+#include "../util.h" // REMOVE ME after fixing bignum=>binary
+#include "rsa.h"
 #include "../fassert.h"
 #include "../debugprint.h"
 RSA::RSA()

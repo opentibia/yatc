@@ -19,17 +19,19 @@ should comment.
 
 0.2
 ---
-* add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
 * party shields +
 * skulls +
-* smooth creature scrolling +/-
+* smooth creature scrolling +
 * smooth screen scrolling +
-* turning
-* completely fixing GL engine
+* turning +
+* skill window +
+* fix the status window not appearing after one login failure + 
+
+* add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
 * attacking
 * using
-* skill window +/-
-* fix the status window not appearing after one login failure (perhaps customize instead of using glict msgbox?)
+* completely fixing GL engine
+
 
 0.3
 ---

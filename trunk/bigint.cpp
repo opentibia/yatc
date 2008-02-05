@@ -1245,7 +1245,7 @@ inline long double ln( BigInt x, long double epsilon = 0.000000000000001 )
     cout << "Bitwise operations:" << endl;
     cout << "1 << 10 = " << ( 1 << 10 ) << " = " << ( BigInt( 1 ) << 10 ) << endl;
     cout << "-7 << 2 = " << ( -7 << 2 ) << " = " << ( BigInt( -7 ) << 2 ) << endl;
-    cout << "3 << 8 = " << ( 3 << 8 ) << " = " << ( BigInt( 3 ) << 8 ) << endl;
+	cout << "3 << 8 = " << ( 3 << 8 ) << " = " << ( BigInt( 3 ) << 8 ) << endl;
     cout << "3 << 9 = " << ( 3 << 9 ) << " = " << ( BigInt( 3 ) << 9 ) << endl;
     cout << "1024 >> 9 = " << ( 1024 >> 9 ) << " = " << ( BigInt( 1024 ) >> 9 ) << endl;
     cout << "-1 >> 4 = " << (-1 >> 4) << " = " << ( BigInt( -1 ) >> 4 ) << endl;

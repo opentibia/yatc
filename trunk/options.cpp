@@ -56,6 +56,7 @@ Options::Options()
 	w = 640;
 	h = 480;
 	bpp = 16;
+	maxfps = 30;
 
 	// [network]
 	server = "change.me.now";
@@ -140,6 +141,9 @@ void Options::Save()
 	ss << bpp;
 	section->addKey("bpp", ss.str());
 	ss.str("");
+	ss << maxfps;
+	section->addKey("maxfps", ss.str());
+	ss.str("");
 
 
 	section = configHandler->newSection("network");
@@ -210,6 +214,7 @@ void Options::Load()
 	w = atoi(configHandler->getKeyValue("graphics", "width").c_str());
 	h = atoi(configHandler->getKeyValue("graphics", "height").c_str());
 	bpp = atoi(configHandler->getKeyValue("graphics", "bpp").c_str());
+	maxfps = atoi(configHandler->getKeyValue("graphics", "maxfps").c_str());
 
 	// [network]
 	server = configHandler->getKeyValue("network", "server");

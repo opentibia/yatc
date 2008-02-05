@@ -7,6 +7,7 @@
 #include <iomanip>
 #include "../engine.h"
 #include "../gamecontent/globalvars.h"
+#include "../util.h"
 class winSkills_t {
 public:
 	// FIXME (ivucica#4#) This window is not a 1:1 match, and among other things, we need to modify GLICT's window to make it such (no icon support, no left alignment support, no minimize and close support ...)
@@ -23,14 +24,22 @@ public:
 	glictPanel lblCapLeft, lblCapRight;
 	glictPanel lblStaLeft, lblStaRight;
 	glictProgressBar pbStamina;
+	glictPanel lblMagicLevelLeft, lblMagicLevelRight;
+	glictProgressBar pbMagicLevel;
+
+	glictPanel pnlSeparator;
+
+	glictPanel lblSkillLeft[7], lblSkillRight[7];
+	glictProgressBar pbSkill[7];
+
 	winSkills_t() {
 		window.SetWidth(150);
-		window.SetHeight(150);
+		window.SetHeight(270);
 		window.SetCaption("Skills");
 		window.AddObject(&container);
 		container.SetWidth(150);
-		container.SetHeight(150);
-		container.SetVirtualSize(150, 1000);
+		container.SetHeight(270);
+		container.SetVirtualSize(150, 270);
 		container.SetBGActiveness(false);
 
 
@@ -153,7 +162,6 @@ public:
 		lblStaRight.SetCaption("0");
 
 
-
 		#if (GLICT_APIREV < 63)
 		#warning You should upgrade to GLICT apirev 63 or greater to have progressbar in skills window work correctly.
 		#endif
@@ -163,6 +171,84 @@ public:
 		pbStamina.SetWidth(130);
 		pbStamina.SetHeight(5);
 		pbStamina.SetValue(40);
+
+
+		container.AddObject(&lblMagicLevelLeft);
+		container.AddObject(&lblMagicLevelRight);
+		lblMagicLevelLeft.SetPos(5, 95);
+		lblMagicLevelLeft.SetWidth(150);
+		lblMagicLevelLeft.SetHeight(12);
+		lblMagicLevelLeft.SetBGActiveness(false);
+		lblMagicLevelLeft.SetCaption("Magic Level");
+
+		lblMagicLevelRight.SetPos(150 - 20, 95);
+		lblMagicLevelRight.SetWidth(10);
+		lblMagicLevelRight.SetHeight(12);
+		lblMagicLevelRight.SetBGActiveness(false);
+		lblMagicLevelRight.SetCaption("0");
+
+
+		#if (GLICT_APIREV < 63)
+		#warning You should upgrade to GLICT apirev 63 or greater to have progressbar in skills window work correctly.
+		#endif
+		container.AddObject(&pbMagicLevel);
+
+		pbMagicLevel.SetPos(5, 105);
+		pbMagicLevel.SetWidth(130);
+		pbMagicLevel.SetHeight(5);
+		pbMagicLevel.SetValue(40);
+
+
+
+		container.AddObject(&pnlSeparator);
+		pnlSeparator.SetPos(5,115);
+		pnlSeparator.SetWidth(130);
+		pnlSeparator.SetHeight(2);
+		pnlSeparator.SetBGColor(.7, .7, .7, 1.);
+
+
+
+
+
+
+
+
+
+
+
+		for (int i = 0; i < 7; i++) {
+			container.AddObject(&lblSkillLeft[i]);
+			container.AddObject(&lblSkillRight[i]);
+			lblSkillLeft[i].SetPos(5, 125 + i * 20);
+			lblSkillLeft[i].SetWidth(150);
+			lblSkillLeft[i].SetHeight(12);
+			lblSkillLeft[i].SetBGActiveness(false);
+			lblSkillLeft[i].SetCaption(std::string("Skill ") + yatc_itoa(i) );
+
+			lblSkillRight[i].SetPos(150 - 20, 125 + i*20);
+			lblSkillRight[i].SetWidth(10);
+			lblSkillRight[i].SetHeight(12);
+			lblSkillRight[i].SetBGActiveness(false);
+			lblSkillRight[i].SetCaption("0");
+
+
+			#if (GLICT_APIREV < 63)
+			#warning You should upgrade to GLICT apirev 63 or greater to have progressbar in skills window work correctly.
+			#endif
+			container.AddObject(&pbSkill[i]);
+
+			pbSkill[i].SetPos(5, 135 + i*20);
+			pbSkill[i].SetWidth(130);
+			pbSkill[i].SetHeight(5);
+			pbSkill[i].SetValue(40);
+		}
+		lblSkillLeft[0].SetCaption("Fist Fighting");
+		lblSkillLeft[1].SetCaption("Club Fighting");
+		lblSkillLeft[2].SetCaption("Sword Fighting");
+		lblSkillLeft[3].SetCaption("Axe Fighting");
+		lblSkillLeft[4].SetCaption("Distance Fighting");
+		lblSkillLeft[5].SetCaption("Shielding");
+		lblSkillLeft[6].SetCaption("Fishing");
 
 		updateSelf();
 	}
@@ -181,8 +267,6 @@ public:
 		lblLevelRight.SetCaption(s.str());
 
 		pbExperience.SetValue(GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_PERCENT));
-		printf("Experience level: %d\n", GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_PERCENT));
-
 		///////////////////
 
 
@@ -211,7 +295,27 @@ public:
 		lblStaRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 75);
 		lblStaRight.SetCaption(s.str());
 
-		pbExperience.SetValue(GlobalVariables::getPlayerStat(STAT_STAMINA) / 56*60); /* 56 hours 60 minutes is max stamina so far */
+		pbStamina.SetValue((GlobalVariables::getPlayerStat(STAT_STAMINA) / (56*60.)) * 100.); /* 56 hours 60 minutes is max stamina so far */
+
+		s.str("");
+		s << GlobalVariables::getPlayerSkill(SKILL_MAGIC, SKILL_ATTR_LEVEL);
+		lblMagicLevelRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 95);
+		lblMagicLevelRight.SetCaption(s.str());
+
+		pbMagicLevel.SetValue(GlobalVariables::getPlayerSkill(SKILL_MAGIC, SKILL_ATTR_PERCENT));
+
+
+		for (int i = 0; i < 7; i++) {
+			s.str("");
+			s << GlobalVariables::getPlayerSkill((SkillList_t)(SKILL_FIST + i), SKILL_ATTR_LEVEL);
+			lblSkillRight[i].SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 125 + i*20);
+			lblSkillRight[i].SetCaption(s.str());
+
+			pbSkill[i].SetValue(GlobalVariables::getPlayerSkill((SkillList_t)(SKILL_FIST + i), SKILL_ATTR_PERCENT));
+		}
+
+
+
 
 	}
 

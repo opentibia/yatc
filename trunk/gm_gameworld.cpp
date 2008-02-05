@@ -34,6 +34,7 @@
 #include "net/protocolgame.h"
 #include "console.h"
 #include "gamecontent/inventory.h"
+#include "util.h"
 
 #ifdef _MSC_VER
 #define time _time64
@@ -41,6 +42,11 @@
 
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
+
+
+static int REMOVEME_lastcreatureid=0;// FIXME (ivucica#1#) ugly 'attack someone' hack, just for testing
+
+
 
 /* TODO (ivucica#5#) move this to ui/inventory.cpp (don't do it until compiling of stuff in ui/ has been assured with autoconf)*/
 void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
@@ -123,7 +129,7 @@ GM_Gameworld::GM_Gameworld()
 	desktop.AddObject(&pnlInventory.panel);
 	pnlInventory.panel.SetPos(10, 10);
 	desktop.AddObject(&winSkills.window);
-	winSkills.window.SetPos(300,5);
+	winSkills.window.SetPos(600,5);
 	#endif
 	desktop.AddObject(&pnlTraffic);
 	pnlTraffic.SetPos(10,10);
@@ -192,6 +198,10 @@ int GM_Gameworld::getMinZ() { // find out how far can we render... if anything i
 
 void GM_Gameworld::updateScene()
 {
+
+	REMOVEME_lastcreatureid = 0;
+
+
 	// TODO (ivucica#2#) test on edge of map
 	#if 0
 	#ifdef WINCE
@@ -429,6 +439,7 @@ void GM_Gameworld::updateScene()
 
 	// draw always-on-top things
 	// (currently only creature names)
+
 	int playerspeed = 0;
 	for(uint32_t i = 0; i < vpw; ++i){
 		for(uint32_t j = 0; j < vph; ++j){
@@ -449,6 +460,9 @@ void GM_Gameworld::updateScene()
 				Thing* thing = (Thing*)tile->getThingByStackPos(drawIndex); // FIXME (ivucica#3#) getThingByStackPos() should allow changing (should not be returning const)
 				if(thing){
 					if(thing->getCreature()){
+						if (thing->getCreature()->getID() != player->getId())
+							REMOVEME_lastcreatureid=thing->getCreature()->getID() ;// FIXME (ivucica#1#) ugly 'attack someone' hack, just for testing
+
 						thing->getCreature()->drawName(screenx, screeny, scale);
 						thing->getCreature()->drawSkullsShields(screenx, screeny, scale, ui);
 						if(!player || thing->getCreature()->getId() != player->getId())
@@ -525,37 +539,62 @@ void GM_Gameworld::keyPress (char key)
 			m_protocol->sendSay(SPEAK_SAY, txtConsoleEntry.GetCaption());
 		txtConsoleEntry.SetCaption("");
 	} else {
-	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
-}
+		desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+	}
+
 }
 
-void GM_Gameworld::specKeyPress (int key)
+void GM_Gameworld::specKeyPress (const SDL_keysym& key)
 {
 	Direction dir = DIRECTION_NORTH;
 	int action = 0;
-	switch (key) {
+	switch (key.sym) {
 	case SDLK_LEFT:
-		action = 0; dir = DIRECTION_WEST;
+		action = 1; dir = DIRECTION_WEST;
 		break;
 	case SDLK_RIGHT:
-		action = 0; dir = DIRECTION_EAST;
+		action = 1; dir = DIRECTION_EAST;
 		break;
 	case SDLK_UP:
-		action = 0; dir = DIRECTION_NORTH;
+		action = 1; dir = DIRECTION_NORTH;
 		break;
 	case SDLK_DOWN:
-		action = 0; dir = DIRECTION_SOUTH;
+		action = 1; dir = DIRECTION_SOUTH;
 		break;
+
+	case SDLK_F11:
+		action = 255;
+		break;
+	default:
+		action = 0;
 	}
 
 	switch (action) {
-	case 0: // do move
+	case 0: // invalid action / ignore
+		break;
+	case 1: // do move or turn
 		if (Creatures::getInstance().getPlayer()->getWalkState() == 1.) {
 			Creatures::getInstance().getPlayer()->setLookDir(dir);
-			Creatures::getInstance().getPlayer()->startWalk();
-			m_protocol->sendMove(dir);
-}
+
+			if (key.mod & KMOD_CTRL)
+				m_protocol->sendTurn(dir);
+			else {
+				Creatures::getInstance().getPlayer()->startWalk();
+				m_protocol->sendMove(dir);
+			}
+
+		}
 		break;
+
+	case 255: // debugging action
+		// FIXME (ivucica#1#) ugly 'attack someone' hack, just for testing (ctrl+a)
+		if (REMOVEME_lastcreatureid) {
+			m_protocol->sendAttackCreature(REMOVEME_lastcreatureid);
+			this->m_consoles[0].Insert(std::string("You attack creature ") + yatc_itoa(REMOVEME_lastcreatureid));
+		} else {
+			this->m_consoles[0].Insert(std::string("No onscreen creature"));
+		}
+
 	}
 
 }

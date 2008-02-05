@@ -21,7 +21,8 @@
 /// \file main.cpp
 /// This file contains the main(int,char**) function.
 
-#define MAXFPS 10
+
+unsigned int MAXFPS=10;
 
 
 #include <SDL/SDL.h>
@@ -66,12 +67,10 @@ void onKeyDown(const SDL_Event& event)
 		// ignore shiftpresses
 		break;
 
-	// TODO (ivucica#1#) Add pageup, pagedown, home, end below
-	case SDLK_LEFT:
-	case SDLK_RIGHT:
-	case SDLK_UP:
-	case SDLK_DOWN:
-		g_game->specKeyPress(key);
+	case SDLK_LEFT: case SDLK_RIGHT: case SDLK_UP: case SDLK_DOWN:
+	case SDLK_PAGEUP: case SDLK_PAGEDOWN:  case SDLK_HOME: case SDLK_END:
+	case SDLK_F1: case SDLK_F2: case SDLK_F3: case SDLK_F4: case SDLK_F5: case SDLK_F6: case SDLK_F7: case SDLK_F8: case SDLK_F9: case SDLK_F10: case SDLK_F11: case SDLK_F12:
+		g_game->specKeyPress(event.key.keysym);
 		break;
 	default:
 		// glict expects what glut usually serves: completely prepared keys,
@@ -203,6 +202,8 @@ int main(int argc, char *argv[])
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " passed\n");
 
 	options.Load();
+	if (!options.maxfps) options.maxfps = 30;
+	MAXFPS = options.maxfps;
 
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Initializing windowing...\n");

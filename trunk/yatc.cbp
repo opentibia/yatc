@@ -17,12 +17,15 @@
 					<Add option="-DUSEASSERT" />
 					<Add option="-DUSE_OPENGL" />
 					<Add option="-DHAVE_GETENV" />
+					<Add option="-D_GLIBCXX_DEBUG" />
+					<Add option="-D_GLIBCXX_DEBUG_PEDANTIC" />
 				</Compiler>
 				<Linker>
 					<Add library="GL" />
 					<Add library="GLU" />
 					<Add library="SDL" />
 					<Add library="SDL_gfx" />
+					<Add library="GLICTd" />
 				</Linker>
 			</Target>
 			<Target title="Release Unix">
@@ -41,6 +44,7 @@
 					<Add library="GLU" />
 					<Add library="SDL" />
 					<Add library="SDL_gfx" />
+					<Add library="GLICT" />
 				</Linker>
 			</Target>
 			<Target title="Debug Windows">
@@ -156,7 +160,6 @@
 			<Add directory="." />
 		</Compiler>
 		<Linker>
-			<Add library="GLICT" />
 			<Add library="gmp" />
 		</Linker>
 		<Unit filename="AUTHORS" />

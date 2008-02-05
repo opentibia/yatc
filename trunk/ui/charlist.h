@@ -93,6 +93,7 @@ public:
 	~winCharlist_t() {
 		if (lsiChars.size())
 			destroyList();
+		printf("Destroyed winCharlist\n");
 	}
 
 	void destroyList() {
