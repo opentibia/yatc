@@ -136,7 +136,6 @@ void Notifications::openWaitingList(const std::string& message, int time) {
     // TODO (ivucica#3#) ugly stub, but i'm too lazy for a proper waiting list
     std::stringstream message2;
     message2 << message << std::endl << std::endl << "Retry in " << time << "seconds";
-    printf("WAITING LIST!!!\n%s\n", message2.str().c_str());
     g_game->openMessageWindow(MESSAGE_ERROR, message2.str());
 
 }

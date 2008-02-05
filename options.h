@@ -62,6 +62,7 @@ public:
 	// [graphics]
 	int w, h, bpp;
 	bool fullscreen;
+	int maxfps;
 
 	// [network]
 	std::string server;

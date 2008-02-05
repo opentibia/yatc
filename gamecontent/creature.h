@@ -64,6 +64,9 @@ public:
 	void setLookDir(Direction dir) { m_lookdir = dir;}
 	Direction getLookDir(){ return m_lookdir;}
 
+	void setTurnDir(Direction dir) { m_turndir = dir;}
+	Direction getTurnDir(){ return m_turndir;}
+
 	Outfit_t& getOutfit() { return m_outfit;}
 	const Outfit_t& getOutfit() const { return m_outfit;}
 
@@ -89,6 +92,7 @@ protected:
 	std::string m_name;
 	uint32_t m_health;
 	Direction m_lookdir;
+	Direction m_turndir;
 
 	Outfit_t m_outfit;
 

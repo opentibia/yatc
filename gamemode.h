@@ -38,7 +38,7 @@ public:
 	virtual void updateScene() {}
 	virtual void mouseEvent (SDL_Event&) {}
 	virtual void keyPress (char key) {}
-	virtual void specKeyPress (int key) {}
+	virtual void specKeyPress (const SDL_keysym&) {}
 	virtual void doResize(float w, float h) {}
 
 	virtual void onConnectionError(int message, const char* errortext) {}

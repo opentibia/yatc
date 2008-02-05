@@ -222,7 +222,7 @@ bool ProtocolGame81::onRecv(NetworkMessage& msg)
 				if(direction > 3){
 					RAISE_PROTOCOL_ERROR("Tile Transform - direction > 3");
 				}
-				creature->setLookDir((Direction)direction);
+				creature->setTurnDir((Direction)direction);
 			}
 			else{
 				//get tile
@@ -316,16 +316,16 @@ bool ProtocolGame81::onRecv(NetworkMessage& msg)
 
 			//update creature direction
 			if(oldPos.x > newPos.x){
-				creature->setLookDir(DIRECTION_WEST);
+				creature->setLookDir(DIRECTION_WEST); creature->setTurnDir(DIRECTION_WEST);
 			}
 			else if(oldPos.x < newPos.x){
-				creature->setLookDir(DIRECTION_EAST);
+				creature->setLookDir(DIRECTION_EAST); creature->setTurnDir(DIRECTION_EAST);
 			}
 			else if(oldPos.y > newPos.y){
-				creature->setLookDir(DIRECTION_NORTH);
+				creature->setLookDir(DIRECTION_NORTH); creature->setTurnDir(DIRECTION_NORTH);
 			}
 			else if(oldPos.y < newPos.y){
-				creature->setLookDir(DIRECTION_SOUTH);
+				creature->setLookDir(DIRECTION_SOUTH); creature->setTurnDir(DIRECTION_SOUTH);
 			}
 
 			break;
@@ -1106,6 +1106,7 @@ Thing* ProtocolGame81::internalGetThing(NetworkMessage& msg)
 			return NULL;
 		}
 		creature->setLookDir((Direction)direction);
+		creature->setTurnDir((Direction)direction);
 		//
 
 		if(!internalSetOutfit(msg, creature->getOutfit())){
@@ -1140,7 +1141,7 @@ Thing* ProtocolGame81::internalGetThing(NetworkMessage& msg)
 		if(!msg.getU8(direction) || direction > 3){
 			return NULL;
 		}
-		creature->setLookDir((Direction)direction);
+		creature->setTurnDir((Direction)direction);
 
 		return creature;
 	}

@@ -118,8 +118,6 @@ GM_MainMenu::GM_MainMenu()
 
 
 
-	desktop.AddObject(&winStatus);
-	winStatus.SetVisible(false);
 
 	pnlMainMenu.btnLogIn.Focus(NULL);
 
@@ -282,10 +280,9 @@ void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller)
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	if (caller->GetCustomData())
 		((glictContainer*)caller->GetCustomData())->Focus(NULL);
-	m->desktop.RemoveObject(caller);
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Repaint.\n");
 	m->renderScene();
-	delete caller;
+	//delete caller;
 }
 
 
@@ -383,7 +380,8 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 
 	ProtocolConfig::createLoginConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption());
-	m->winStatus.SetVisible(true);
+	m->desktop.AddObject(&m->winStatus);
+	m->centerWindow(&m->winStatus);
 	m->winStatus.SetCaption("Logging in");
 	m->winStatus.SetMessage("Connecting to the server...\n");
 	m->winStatus.SetWidth(320);
@@ -425,7 +423,8 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
 	ProtocolConfig::createGameConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);
 
-	m->winStatus.SetVisible(true);
+	m->desktop.AddObject(&m->winStatus);
+	m->centerWindow(&m->winStatus);
 	m->winStatus.SetCaption("Entering game");
 	m->winStatus.SetMessage("Connecting to the server...");
 
@@ -548,7 +547,6 @@ void GM_MainMenu::winMotd_OnDismiss(glictPos* relmousepos, glictContainer* calle
 void GM_MainMenu::winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
-	m->winStatus.SetVisible(false);
 	m->pnlMainMenu.btnLogIn.Focus(NULL);
 	m->renderScene();
 
@@ -558,9 +556,9 @@ void GM_MainMenu::winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer
 void GM_MainMenu::onConnectionError(int message, const char* errortext)
 {
 	std::stringstream s;
-	s << "There was an error while connecting." << std::endl <<
-		 std::endl <<
-	     "The following may help you identify error:" << std::endl <<
+	s << //"There was an error while connecting." << std::endl <<
+		 //std::endl <<
+	     //"The following may help you identify error:" << std::endl <<
 	     errortext;
 
 	winStatus.SetCaption("Error");
@@ -573,7 +571,7 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 
 	if (options.motdnum == motdnum) {
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Motd numbers matching, not displaying motd.\n");
-		winStatus.SetVisible(false);
+		desktop.RemoveObject(&winStatus);
 		options.motdtext = text;
 		winMotd_OnDismiss(NULL, NULL);
 		renderScene();

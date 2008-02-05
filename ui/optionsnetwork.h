@@ -139,10 +139,8 @@ public:
 	}
 
 	void Init() {
-		//std::stringstream port; // FIXME (ivucica#1#) somebody should enlighten me on a clean integer=>string conversion
-		//port << options.port;
-		std::string buffer;
-		std::string port = yatc_itoa(options.port, buffer);
+		// DONE (ivucica#1#) somebody should enlighten me on a clean integer=>string conversion
+		std::string port = yatc_itoa(options.port);
 
 		txtServer.SetCaption(options.server);
 		txtPort.SetCaption(port/*.str()*/);

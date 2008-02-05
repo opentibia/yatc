@@ -68,7 +68,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	aniSize = partSize * m_obj->ydiv;
 
     if(n->getOutfit().m_looktype != 0){
-        activeframe = n->getLookDir() * spriteSize;
+        activeframe = (m_walkState == 1. ? n->getTurnDir() :  n->getLookDir()) * spriteSize; // creature must have different turning direction and looking (moving) direction... if moving, moving direction takes precendence, if standing, turning direction takes precendence
     }
 
 	float walkoffx = 0.f, walkoffy = 0.f;
@@ -123,12 +123,12 @@ void CreatureUI::drawName(int x, int y, float scale) const
 		return;
 	}
 
-	//volatile float centralizationoffset = -(g_engine->sizeText( n->getName().c_str(), "gamefont" ) / 2) - 16;
-	float centralizationoffset = 0;
+	volatile float centralizationoffset = -(g_engine->sizeText( n->getName().c_str(), "gamefont" ) / 2) + 16 - 8;
+	//float centralizationoffset = 0;
 	//printf("%g\n", centralizationoffset); // FIXME (ivucica#1#) if this is removed, centralizationoffset doesn't have proper value. remove this and investigate!
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 10 + walkoffy), 150);
+	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), 150);
 }
 
 void CreatureUI::drawSkullsShields(int x, int y, float scale, Sprite* ui) const
