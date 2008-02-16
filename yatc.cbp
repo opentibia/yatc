@@ -230,6 +230,8 @@
 		<Unit filename="itemui.cpp" />
 		<Unit filename="itemui.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="mapui.cpp" />
+		<Unit filename="mapui.h" />
 		<Unit filename="net/connection.cpp" />
 		<Unit filename="net/connection.h" />
 		<Unit filename="net/encryption.cpp" />

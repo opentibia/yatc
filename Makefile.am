@@ -19,7 +19,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		 gm_debug.cpp notifications.cpp sprite.cpp util.cpp \
 		sprdata.c font.cpp confighandler.cpp gm_gameworld.cpp \
 		skin.cpp thingui.cpp itemui.cpp creatureui.cpp effectui.cpp \
-		distanceui.cpp console.cpp \
+		distanceui.cpp mapui.cpp console.cpp \
 		bigint.cpp \
 		net/connection.cpp net/networkmessage.cpp net/protocolgame80.cpp \
 		net/protocolgame81.cpp \
@@ -32,7 +32,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		enginegl.h gm_debug.h notifications.h sprite.h util.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
 		skin.h thingui.h itemui.h creatureui.h console.h effectui.h \
-		distanceui.h \
+		distanceui.h mapui.h \
 		bigint.h fassert.h stdinttypes.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h \

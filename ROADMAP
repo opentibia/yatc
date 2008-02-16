@@ -42,6 +42,9 @@ should comment.
 * opening containers
 * private messaging with tabs
 * moving items
+* remove dependence of animations upon VALUE/g_fps, make it VALUE*(ms difference between updates with SDL_GetTicks())/1000
+
+? replacing GLICT with YATC-specific GUI
 
 0.4
 ---
