@@ -23,6 +23,7 @@
 
 #include "gamemode.h"
 #include "sprite.h"
+#include "mapui.h"
 #include "ui/inventory.h"
 #include "ui/skills.h"
 class Console;
@@ -52,10 +53,9 @@ public:
 	void onChangeSkills();
 	void onChangeStats();
 protected:
-	int getMinZ();
 
 private:
-	void drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height);
+
 
 	Sprite* ui;
 	glictContainer desktop;
@@ -69,6 +69,8 @@ private:
 	uint32_t m_startTime;
 
 	class ProtocolGame* m_protocol;
+
+	MapUI m_mapui;
 };
 
 #endif
