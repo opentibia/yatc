@@ -13,6 +13,18 @@ extern Engine* g_engine;
 MapUI::MapUI() {
 	m_x = 0;
 	m_y = 0;
+
+
+	// tilecount: width and height to render  -- "viewport" width and height
+	#ifndef WINCE
+	m_vpw=18, m_vph=14;
+	#else
+	m_vpw=8, m_vph=6;
+	#endif
+
+
+	m_w = m_vpw*32;
+	m_h = m_vph*32;
 }
 
 MapUI::~MapUI() {
@@ -20,18 +32,17 @@ MapUI::~MapUI() {
 
 void MapUI::renderMap() {
 
+	// FIXME (ivucica#2#) make renderMap use m_x,m_y and m_w,m_h
+
+
+
 	static Sprite* ui = NULL; // FIXME (ivucica#4#) move this local ui, GM_Gameworld::ui and GM_MainMenu::ui to Engine::m_ui, since over there it can be global and not reloaded every now and then
 	if (ui == NULL) {
 		ui = g_engine->createSprite("Tibia.pic", 3);
 	}
 
 
-	// tilecount: width and height to render  -- "viewport" width and height
-	#ifndef WINCE
-	const uint32_t vpw=18, vph=14;
-	#else
-	const uint32_t vpw=8, vph=6;
-	#endif
+
 
 	// set up scale
 	float scale = 1.f;
@@ -63,13 +74,13 @@ void MapUI::renderMap() {
 		ASSERT(z >= 0);
 		int offset = z - pos.z;
 
-		for(uint32_t i = 0; i < vpw; ++i){
-			for(uint32_t j = 0; j < vph; ++j){
+		for(uint32_t i = 0; i < m_vpw; ++i){
+			for(uint32_t j = 0; j < m_vph; ++j){
 
 				uint32_t tile_height = 0;
 
-				uint32_t tile_x = pos.x + i - vpw/2 - offset;
-				uint32_t tile_y = pos.y + j - vph/2 - offset;
+				uint32_t tile_x = pos.x + i - m_vpw/2 - offset;
+				uint32_t tile_y = pos.y + j - m_vph/2 - offset;
 
 				const Tile* tile = Map::getInstance().getTile(tile_x, tile_y, z);
 
@@ -191,8 +202,8 @@ void MapUI::renderMap() {
 
 				float textYOffset = (g_frameTime - (*it).getStartTime())/1000.f*0.75f;
 
-				int screenx = (int)((txtpos.x - pos.x + vpw/2 + offset + 0.4)*scaledSize + walkoffx);
-				int screeny = (int)((txtpos.y - pos.y + vph/2 + offset - textYOffset)*scaledSize + walkoffy);
+				int screenx = (int)((txtpos.x - pos.x + m_vpw/2 + offset + 0.4)*scaledSize + walkoffx);
+				int screeny = (int)((txtpos.y - pos.y + m_vph/2 + offset - textYOffset)*scaledSize + walkoffy);
 
 				g_engine->drawText((*it).getText().c_str() , "gamefont", screenx, screeny, (*it).getColor());
 				++it;
@@ -214,11 +225,11 @@ void MapUI::renderMap() {
 				const Position& fromPos = (*it)->getFromPos();
 				const Position& toPos = (*it)->getToPos();
 
-				float screenxFrom = ((fromPos.x - pos.x + vpw/2 + offset)*scaledSize + walkoffx);
-				float screenyFrom = ((fromPos.y - pos.y + vph/2 + offset)*scaledSize + walkoffy);
+				float screenxFrom = ((fromPos.x - pos.x + m_vpw/2 + offset)*scaledSize + walkoffx);
+				float screenyFrom = ((fromPos.y - pos.y + m_vph/2 + offset)*scaledSize + walkoffy);
 
-				float screenxTo = ((toPos.x - pos.x + vpw/2 + offset)*scaledSize + walkoffx);
-				float screenyTo = ((toPos.y - pos.y + vph/2 + offset)*scaledSize + walkoffy);
+				float screenxTo = ((toPos.x - pos.x + m_vpw/2 + offset)*scaledSize + walkoffx);
+				float screenyTo = ((toPos.y - pos.y + m_vph/2 + offset)*scaledSize + walkoffy);
 
 				int screenx = (int)(screenxFrom + (screenxTo - screenxFrom)*flightProgress);
 				int screeny = (int)(screenyFrom + (screenyTo - screenyFrom)*flightProgress);
@@ -234,11 +245,10 @@ void MapUI::renderMap() {
 	// (currently only creature names)
 
 	int playerspeed = 0;
-	for(uint32_t i = 0; i < vpw; ++i){
-		for(uint32_t j = 0; j < vph; ++j){
-			const Tile* tile = Map::getInstance().getTile(pos.x + i - vpw/2, pos.y + j - vph/2, pos.z);
+	for(uint32_t i = 0; i < m_vpw; ++i){
+		for(uint32_t j = 0; j < m_vph; ++j){
+			const Tile* tile = Map::getInstance().getTile(pos.x + i - m_vpw/2, pos.y + j - m_vph/2, pos.z);
 			if(!tile){
-				//printf("No tile?\n");
 				continue;
 			}
 
@@ -270,11 +280,7 @@ void MapUI::renderMap() {
 
 	if(player)
 		player->advanceWalk(playerspeed);
-
-
 }
-
-
 
 int MapUI::getMinZ() { // find out how far can we render... if anything is directly above player, then don't render above that floor
 	// FIXME (ivucica#2#) minz should be m_minz and thus be cached. code below should be called only in onWalk()
@@ -283,16 +289,13 @@ int MapUI::getMinZ() { // find out how far can we render... if anything is direc
 
 	int minz = 0;
 	for (int z = pos.z-1; z>=0; z--) {
-
 		tile = Map::getInstance().getTile(pos.x-(z-pos.z), pos.y-(z-pos.z), z);
 		if (tile && tile->getThingCount() ) {
-			//printf("Player Z: %d, minz: %d, tc: %d\n", pos.z, minz, tile->getThingCount());
 			minz = z+1;
 
 			return minz;
 		}
 	}
-	//printf("Player Z: %d, nothing above player\n", pos.z);
 	return 0;
 }
 
@@ -312,4 +315,48 @@ void MapUI::drawTileEffects(Tile* tile, int screenx, int screeny, float scale, u
 			++it;
 		}
 	}
+}
+
+
+void MapUI::useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos, bool &extended)
+{
+	// FIXME (ivucica#1#) make this use m_x,m_y and m_w,m_h
+
+	x /= 32; // divide by tile size
+	y /= 32; // we need the tile coordinates, not the mouse coordinates
+
+	printf("Click on %d %d\n", x, y);
+	printf("Limitx: 0 - %d\n", m_vpw);
+	printf("Limity: 0 - %d\n", m_vph);
+
+	if (x < 0 || x > m_vpw) {
+		stackpos = -1;
+		return;
+	}
+	if (y < 0 || y > m_vph) {
+		stackpos = -1;
+		return;
+	}
+
+	// get player position
+	Position pos = GlobalVariables::getPlayerPosition();
+
+	printf("Click on %d %d\n", x,y);
+	printf("That translates into %d %d %d\n", pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
+	// get the tile we clicked on
+	const Tile* tile = Map::getInstance().getTile(pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
+
+	// get stackpos of thing that we clicked on
+	// stub!
+	stackpos = tile->getThingCount()-1;
+
+	// get thing that we clicked on
+	thing = tile->getThingByStackPos(stackpos);
+	retx = pos.x + x - m_vpw/2;
+	rety = pos.y + y - m_vph/2;
+	retz = pos.z;
+
+	// is this an extended use
+	// stub!
+	extended = false;
 }

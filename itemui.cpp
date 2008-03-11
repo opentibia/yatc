@@ -74,10 +74,11 @@ ItemUI::ItemUI(uint16_t id) : ThingUI()
 ItemUI::~ItemUI()
 {
     ObjectType* obj = Objects::getInstance()->getItemType(m_id);
-    if(obj){
-    	obj->instancesOnMap--;
-    	if (!obj->instancesOnMap) obj->unloadGfx();
-    }
+    if (obj)
+		if(obj->instancesOnMap){
+			obj->instancesOnMap--;
+			if (!obj->instancesOnMap) obj->unloadGfx();
+		}
 }
 
 void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale, int map_x, int map_y) const
