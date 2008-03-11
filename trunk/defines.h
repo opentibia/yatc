@@ -31,8 +31,9 @@
 
 // FIXME (ivucica#5#) Perhaps this one should move to "utils.h" or sth ... but it'd suck if it'd be there alone. So find some more functions to go there
 
-struct oRGBA
+class oRGBA
 {
+	public:
 	oRGBA(float _r = 0.0f, float _g = 0.0f, float _b = 0.0f, float _a = 0.0f){ //Should contain values from 0.0f->255.0f where 255.0f = max
 		r = _r;
 		g = _g;

@@ -318,12 +318,35 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 	pos.x = ptrx;
 	pos.y = ptry;
 
+
+	if (event.button.state == SDL_PRESSED){
+		if (SDL_GetModState() & KMOD_CTRL) {
+
+			printf("It's a click\n");
+			const Thing* thing;
+			int x,y,z;
+			int stackpos;
+			bool isextended;
+
+			m_mapui.useItem(pos.x, pos.y, thing, x, y, z, stackpos, isextended);
+			if (stackpos != -1) {
+				if (!isextended) {
+					printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
+					m_protocol->sendUseItem(Position(x,y,z), thing->getID(), stackpos );
+				} else {
+					m_consoles[0].Insert(ConsoleEntry("No support for extended use yet"));
+				}
+			}
+		}
+	}
+
+
 	desktop.TransformScreenCoords(&pos);
 
 	if (event.button.state == SDL_PRESSED)
-			desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
+		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
 	if (event.button.state != SDL_PRESSED)
-			desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+		desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
 
 	// Scene();
 
