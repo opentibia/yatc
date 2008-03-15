@@ -348,10 +348,13 @@ void MapUI::useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int
 
 	// get stackpos of thing that we clicked on
 	// stub!
-	stackpos = tile->getThingCount()-1;
+	stackpos = tile->getUseStackpos();
+	//stackpos = tile->getThingCount()-1;
+
 
 	// get thing that we clicked on
 	thing = tile->getThingByStackPos(stackpos);
+
 	retx = pos.x + x - m_vpw/2;
 	rety = pos.y + y - m_vph/2;
 	retz = pos.z;

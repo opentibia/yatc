@@ -110,6 +110,38 @@ const Thing* Tile::getThingByStackPos(int32_t pos) const
 	return NULL;
 }
 
+int Tile::getUseStackpos() const
+{
+	int pos = 0;
+	int lastPos = 0;
+	for(;pos != getThingCount(); ++pos) {
+		const Thing* thing = getThingByStackPos(pos);
+		if(!thing) {
+			return 0;
+		}
+
+		const Item* item = thing->getItem();
+
+		if((item != NULL)){
+			const Thing* lastThing = getThingByStackPos(lastPos);
+
+			if(item->isAlwaysUsed()) {
+				//printf("Using item of order %d and ID %d (Always used)\n", thing->getOrder(), thing->getID());
+				return pos;
+			}
+			if( (lastThing == NULL) || (thing->getOrder() > lastThing->getOrder()) ) {
+				//printf("Using item of order %d and ID %d\n", thing->getOrder(), thing->getID());
+				lastPos = pos;
+			}
+			else {
+				//printf("Overlooking item of order %d and ID %d\n", thing->getOrder(), thing->getID());
+			}
+		}
+	}
+
+	return lastPos;
+}
+
 const Item* Tile::getGround() const
 {
 	return m_ground;

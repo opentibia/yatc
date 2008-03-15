@@ -98,6 +98,8 @@ public:
 	bool isHorizontal;
 	bool isVertical;
 	bool rotatable;
+	//items with 0x06 property
+	bool alwaysUsed;
 	uint16_t lightLevel;
 	uint16_t lightColor;
 	uint16_t xOffset;
