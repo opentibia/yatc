@@ -338,6 +338,15 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 				}
 			}
 		}
+		else if (SDL_GetModState() & KMOD_ALT) {
+			// TODO (nfries88): attacking
+		}
+		else if (SDL_GetModState() & KMOD_SHIFT) {
+			// TODO (nfries88): looking
+		}
+		else {
+			// TODO: walk by click
+		}
 	}
 
 

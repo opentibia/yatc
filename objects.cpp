@@ -75,6 +75,8 @@ ObjectType::ObjectType(uint16_t _id)
 	unk1 = 0;
 	animcount = 1;
 	numsprites = 0;
+	//0x06 property
+	alwaysUsed = false;
 
 	instancesOnMap = 0;
 }
@@ -255,7 +257,8 @@ bool Objects::loadDat(const char* filename)
 						oType->stackable = true;
 					break;
 				case 0x06: //Ladders?
-
+						//printf("Has 0x06 attribute: ID %d\n", id);
+						oType->alwaysUsed = true;
 					break;
 				case 0x07: //Useable
 						oType->useable = true;

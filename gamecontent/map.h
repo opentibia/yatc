@@ -88,6 +88,7 @@ public:
 	Thing* getThingByStackPos(int32_t pos);
 	const Thing* getThingByStackPos(int32_t pos) const;
 	const Item* getGround() const;
+	int getUseStackpos() const;
 
 	typedef std::list<Effect*> EffectList;
 	void addEffect(uint32_t effect);
