@@ -33,6 +33,7 @@ public:
 	void drawName(int x, int y, float scale) const;
 	void drawSkullsShields(int x, int y, float scale, Sprite* ui) const;
 	void startWalk() { m_preWalk = true; m_walkState = 0.f; }
+	void cancelWalk() { m_preWalk = false; m_walkState = 1.f; }
 	void confirmWalk() { m_preWalk = false; }
 	void advanceWalk(int groundspeed);
 	void getWalkOffset(float &walkoffx, float &walkoffy, float scale=1.f) const;

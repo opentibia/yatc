@@ -94,7 +94,7 @@ bool ProtocolGame81::onRecv(NetworkMessage& msg)
 			Notifications::openMessageWindow(MESSAGE_INFORMATION, infoMessage);
 			break;
 		}
-            case 0x16: //Waiting list
+		case 0x16: //Waiting list
 		{
 			MSG_READ_STRING(waitMessage);
 			MSG_READ_U8(waitTime);

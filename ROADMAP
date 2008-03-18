@@ -25,11 +25,11 @@ should comment.
 * smooth screen scrolling +
 * turning +
 * skill window +
-* fix the status window not appearing after one login failure + 
+* fix the status window not appearing after one login failure +
 
 * add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
-* attacking
-* using
+* attacking +
+* using +
 * completely fixing GL engine
 
 

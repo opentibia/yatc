@@ -354,6 +354,8 @@ int main(int argc, char *argv[])
 	delete Objects::getInstance();
 	g_skin.unloadSkin();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection and unloading related data...\n");
+	// FIXME (nfries88) it seems to crash here if the connection is still open.
+	// something in Connection::closeConnection maybe?
 	delete g_connection;
 	Map::getInstance().clear();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Saving options...\n");

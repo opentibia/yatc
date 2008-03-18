@@ -347,9 +347,7 @@ void MapUI::useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int
 	const Tile* tile = Map::getInstance().getTile(pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
 
 	// get stackpos of thing that we clicked on
-	// stub!
 	stackpos = tile->getUseStackpos();
-	//stackpos = tile->getThingCount()-1;
 
 
 	// get thing that we clicked on
@@ -362,4 +360,30 @@ void MapUI::useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int
 	// is this an extended use
 	// stub!
 	extended = false;
+}
+
+void MapUI::attackCreature(int x, int y, const Creature* &creature)
+{
+	// FIXME (ivucica#1#) make this use m_x,m_y and m_w,m_h
+
+	x /= 32; // divide by tile size
+	y /= 32; // we need the tile coordinates, not the mouse coordinates
+
+	if (x < 0 || x > m_vpw) {
+		return;
+	}
+	if (y < 0 || y > m_vph) {
+		return;
+	}
+
+	// get player position
+	Position pos = GlobalVariables::getPlayerPosition();
+
+	printf("Attack on %d %d\n", x,y);
+	printf("That translates into %d %d %d\n", pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
+	// get the tile we clicked on
+	const Tile* tile = Map::getInstance().getTile(pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
+
+	// get the creature we're attacking
+	creature = tile->getTopCreature();
 }

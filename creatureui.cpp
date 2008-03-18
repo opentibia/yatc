@@ -24,6 +24,7 @@
 #include "engine.h"
 #include "fassert.h"
 #include "gamecontent/creature.h"
+#include "gamecontent/globalvars.h"
 
 static std::map<uint32_t, Sprite*> s_spritecache;
 extern uint32_t g_frameTime;
@@ -85,6 +86,19 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		//Square around the creature
 		if(g_frameTime - n->getSquareStart() < 1000){
 			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 32, 32, oRGBA(0,0,0,0));
+		}
+
+		// FIXME: (nfries88) RGBA colors aren't as expected for me.
+		// note: lines are only 1 pixel thick. they're thicker in CIP's client.
+		//Pink square around the attacked creature
+		if(n->getID() == GlobalVariables::getAttackID()) {
+			// "Deep Pink" - may not be the right color
+			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 30, 30, oRGBA(255, 140, 7, 255));
+		}
+		//Green square around the followed creature
+		else if(n->getID() == GlobalVariables::getFollowID()) {
+			// "Lime Green" - may not be the right color
+			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 30, 30, oRGBA(50, 205, 50, 255));
 		}
 
 		for(uint32_t i = 0; i < m_obj->height; ++i){
@@ -202,7 +216,8 @@ void CreatureUI::advanceWalk(int groundspeed)
 		return;
 	}
 
-
+	// FIXME (nfries88) sometimes FPS counter is incorrect (well over 100 or only 1)
+	// causing this to be way too slow or way too fast.
 	m_walkState += (n->getSpeed() / (float)groundspeed) / g_engine->getFps();
 	if (m_walkState >= 1)
 		m_walkState = 1;

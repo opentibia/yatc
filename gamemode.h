@@ -42,11 +42,13 @@ public:
 	virtual void doResize(float w, float h) {}
 
 	virtual void onConnectionError(int message, const char* errortext) {}
+	virtual void onConnectionClosed() {}
 	virtual void openMOTD(int motdnum, const std::string& message) {}
 	virtual void openMessageWindow(WindowMessage_t type, const std::string& message) {}
 	virtual void openCharactersList(const std::list<CharacterList_t>& list, int premDays) {}
 	virtual void onEnterGame() {}
 	virtual void onWalk() {}
+	virtual void onCancelWalk() {}
 	virtual void onTextMessage(MessageType_t type, const std::string& message) {printf("Textmessage[%d]: %s\n", type, message.c_str());}
 
 	//SAY,WHISPER, YELL, MONSTER_SAY, MONSTER_YELL

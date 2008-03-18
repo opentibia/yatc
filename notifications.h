@@ -52,8 +52,8 @@ class Notifications{
 		static void onVipLogin(uint32_t id) {}
 		static void onVipLogout(uint32_t id) {}
 		static void onVipState(uint32_t id, const std::string& name, bool state) {}
-		static void onCancelWalk(Direction direction) {}
-		static void onCancelAttack() {}
+		static void onCancelWalk(Direction direction);
+		static void onCancelAttack();
 		//static void onDistanceEffect(const Position& from, const Position& to) {}
 		static void onWalk(); //(const Position& from, const Position& to) {} // for now we don't need to know this information
 		static void onChangeIcons() {}
