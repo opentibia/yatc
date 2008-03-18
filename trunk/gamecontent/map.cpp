@@ -110,6 +110,23 @@ const Thing* Tile::getThingByStackPos(int32_t pos) const
 	return NULL;
 }
 
+const Creature* Tile::getTopCreature() const
+{
+	for(int pos = 0; pos != getThingCount(); ++pos) {
+		const Thing* thing = getThingByStackPos(pos);
+		if(!thing) {
+			return NULL;
+		}
+
+		const Creature* ret = thing->getCreature();
+		if(ret) {
+			return ret;
+		}
+	}
+
+	return NULL;
+}
+
 int Tile::getUseStackpos() const
 {
 	int pos = 0;

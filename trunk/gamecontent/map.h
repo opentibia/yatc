@@ -87,6 +87,7 @@ public:
 	bool addThing(Thing* thing, bool pushThing = false);
 	Thing* getThingByStackPos(int32_t pos);
 	const Thing* getThingByStackPos(int32_t pos) const;
+	const Creature* getTopCreature() const;
 	const Item* getGround() const;
 	int getUseStackpos() const;
 

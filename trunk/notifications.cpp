@@ -47,6 +47,7 @@ void Notifications::onConnectionError(int message)
 		GlobalVariables::clear();
 		Inventory::getInstance().clear();
 		Map::getInstance().clear();
+		g_game->onConnectionClosed();
 	}
 	else{
 		g_game->onConnectionError(message, Connection::getErrorDesc(message));
@@ -149,6 +150,16 @@ void Notifications::onTextMessage(MessageType_t type, const std::string& message
 void Notifications::onEnterGame()
 {
 	g_game->onEnterGame();
+}
+
+void Notifications::onCancelWalk(Direction direction)
+{
+	g_game->onCancelWalk();
+}
+
+void Notifications::onCancelAttack()
+{
+	GlobalVariables::setAttackID(0);
 }
 
 void Notifications::onWalk()

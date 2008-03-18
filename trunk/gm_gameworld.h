@@ -43,8 +43,10 @@ public:
 	void mouseEvent(SDL_Event& event);
 
 
+	virtual void onConnectionClosed();
 
 	void onWalk();
+	void onCancelWalk();
 	void onTextMessage(MessageType_t type, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message);

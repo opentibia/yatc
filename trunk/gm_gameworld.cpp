@@ -23,6 +23,7 @@
 #include <time.h>
 #include <iomanip>
 #include "gm_gameworld.h"
+#include "gm_mainmenu.h"
 #include "engine.h"
 #include "options.h"
 #include "objects.h"
@@ -124,9 +125,9 @@ GM_Gameworld::GM_Gameworld()
 
 	#ifndef WINCE
 	desktop.AddObject(&pnlInventory.panel);
-	pnlInventory.panel.SetPos(10, 10);
+	pnlInventory.panel.SetPos(600, 20);
 	desktop.AddObject(&winSkills.window);
-	winSkills.window.SetPos(600,5);
+	winSkills.window.SetPos(600, 180);
 	#endif
 	desktop.AddObject(&pnlTraffic);
 	pnlTraffic.SetPos(10,10);
@@ -255,7 +256,11 @@ void GM_Gameworld::keyPress (char key)
 		if (txtConsoleEntry.GetCaption().size())
 			m_protocol->sendSay(SPEAK_SAY, txtConsoleEntry.GetCaption());
 		txtConsoleEntry.SetCaption("");
-	} else {
+	} else if(key != 0) {
+		// ALT and CTRL are 0.
+		// pressing ALT or CTRL will otherwise cause the text console to lose append with (char)0
+		// which is bad because it causes the string to terminate the console textbox to lose focus.
+		// It should always have focus
 		desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 	}
 
@@ -320,7 +325,18 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
 
 	if (event.button.state == SDL_PRESSED){
-		if (SDL_GetModState() & KMOD_CTRL) {
+		if (SDL_GetModState() & KMOD_ALT) {
+			// TODO (nfries88): attacking
+			printf("Attacking!\n");
+			const Creature* creature = NULL;
+			m_mapui.attackCreature(pos.x, pos.y, creature);
+			if(creature != NULL) {
+				if(creature->getID() != GlobalVariables::getPlayerID()) {
+					m_protocol->sendAttackCreature(creature->getID());
+					GlobalVariables::setAttackID(creature->getID());
+				}
+			}
+		} else if (SDL_GetModState() & KMOD_CTRL) {
 
 			printf("It's a click\n");
 			const Thing* thing;
@@ -337,16 +353,14 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 					m_consoles[0].Insert(ConsoleEntry("No support for extended use yet"));
 				}
 			}
-		}
-		else if (SDL_GetModState() & KMOD_ALT) {
-			// TODO (nfries88): attacking
-		}
-		else if (SDL_GetModState() & KMOD_SHIFT) {
+		} else if (SDL_GetModState() & KMOD_SHIFT) {
 			// TODO (nfries88): looking
+		} else {
+			// TODO (nfries88): select draggable item
 		}
-		else {
-			// TODO: walk by click
-		}
+	} else if (event.button.state == SDL_RELEASED) {
+		// TODO (nfries88): drag items
+		// TODO (nfries88): walk by clicking
 	}
 
 
@@ -361,11 +375,24 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
 }
 
+////////////// CONNECTION EVENTS //////////////////////
+void GM_Gameworld::onConnectionClosed()
+{
+	delete g_game;
+	g_game = new GM_MainMenu();
+	//todo: return to character list
+}
+
 /////////////// PROTOCOL EVENTS ///////////////////////
 
 void GM_Gameworld::onWalk()
 {
 	Creatures::getInstance().getPlayer()->confirmWalk();
+}
+
+void GM_Gameworld::onCancelWalk()
+{
+	Creatures::getInstance().getPlayer()->cancelWalk();
 }
 
 void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
@@ -407,3 +434,4 @@ void GM_Gameworld::onChangeStats()
 {
 	winSkills.updateSelf();
 }
+
