@@ -56,10 +56,12 @@ public:
 			pnlItem[i].SetCustomData(pnlItem);
 			pnlItem[i].SetOnPaint(pnlInventory_t::inventoryItemOnPaint);
 //			pnlItem[i].SetBGActiveness(true);
+			pnlItem[i].SetOnClick(pnlInventory_t::inventoryItemOnClick);
 		}
 	}
 
 	static void inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
+	static void inventoryItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
 
 	glictContainer panel; // it's a container, so it's transparent
 	glictPanel pnlItem[10];

@@ -71,6 +71,7 @@ private:
 	uint32_t m_startTime;
 
 	class ProtocolGame* m_protocol;
+	friend class pnlInventory_t;
 
 	MapUI m_mapui;
 };
