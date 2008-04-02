@@ -435,6 +435,7 @@ bool ProtocolGame81::onRecv(NetworkMessage& msg)
 			if(!Inventory::getInstance().addItem(slot, item)){
 				RAISE_PROTOCOL_ERROR("Inventory set - addItem");
 			}
+			puts("Inventory item :)");
 			break;
 		}
 		case 0x79: //inventory reset slot

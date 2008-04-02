@@ -79,7 +79,7 @@ bool RSA::encrypt(char* msg, int32_t size)
     c = t_modulo(c, m_mod);
 
     /* FIXME (ivucica#2#) we need to add bignum=>binary (meaning, convert from internal base into base 256) */
-    NativeGUIError("Please recompile with -lgmp and with #define HAVE_GMP. Internal bignums are not done yet. Thank you!", "Bignums not done");
+    NativeGUIError("Please recompile with -lgmp and with #define HAVE_GMP_H. Internal bignums are not done yet. Thank you!", "Bignums not done");
     exit(EXIT_FAILURE);
 
 

@@ -114,7 +114,23 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 	}
 
 }
-
+void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
+	glictContainer* callerclass)
+{
+	if(SDL_GetModState() & KMOD_CTRL)
+	{
+		slots_t slotid = (slots_t)((glictPanel*)callerclass - 
+			(glictPanel*)callerclass->GetCustomData() + 1);
+		if(slotid >= 0 && slotid <= 10) {
+			Item* item = Inventory::getInstance().getItem(slotid);
+			if(item != NULL) {
+				GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+				gameclass->m_protocol->sendUseItem(Position(0xFFFF, slotid, 0),
+					item->getID(), 0);
+			}
+		}
+	}
+}
 
 GM_Gameworld::GM_Gameworld()
 {
