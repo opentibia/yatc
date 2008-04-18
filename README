@@ -27,7 +27,7 @@ Authors mentioned in no particular order.
 
 YATC is a client for any game that uses Tibia-compatible protocol. It is being
 developed as a part of the OpenTibia project. We have chosen the name YATC
-since name OpenTibia Client was already taken by a project by another author.  
+since name OpenTibia Client was already taken by a project by another author.
 
 The code has taken shape, but it is still in early development. We develop
 support for SDL and OpenGL based drawing engines. GLICT is the current
@@ -35,7 +35,7 @@ user interface library. For now we can connect to the login server, display
 character list, connect to game world, display basic map, and we can move
 around.
 
-This is readme for version 0.1.
+This is readme for version 0.2 SVN.
 
 ===============================
 1. Quick logon
@@ -43,7 +43,7 @@ This is readme for version 0.1.
 If you need compile instructions, please read INSTALL. If you have already
 compiled, or you have downloaded a binary, please read on.
 
-Copy Tibia.spr, Tibia.dat and Tibia.pic from another client into YATC. We 
+Copy Tibia.spr, Tibia.dat and Tibia.pic from another client into YATC. We
 currently cannot provide these files due to copyright issues, and we have not
 created our own files. Then, start YATC. Go to Options->Network, and enter
 the server address. Then go to Enter Game and log on using your account
@@ -59,10 +59,10 @@ as tibia.spr.
 ==============================
 2. User interface - Main menu
 
-Enter Game 
- Displays login window. 
+Enter Game
+ Displays login window.
 Options
- Shows a window offering General, Graphics, Console, Hotkeys and Network 
+ Shows a window offering General, Graphics, Console, Hotkeys and Network
  options, as well as MOTD display.
 Info
  Shows info about program.
@@ -93,10 +93,10 @@ On the top left you'll find the inventory. Below it is the map. On the top
 right you will find the traffic meter. It measures the amount of bytes
 transmitted (TX), received (RX) and total (++). It also measures the same
 numbers per hour (in bytes per hour, kibibytes per hour, and mibibytes per
-hour). 
+hour).
 
 On the bottom you will find a text box which you can use to chat. Pressing
-any letter or number focuses on the textbox automatically. 
+any letter or number focuses on the textbox automatically.
 
 Use arrow keys to move.
 
@@ -105,7 +105,7 @@ Use arrow keys to move.
 
 After you first launch YATC and close it, a file named 'yatc.cfg' will be
 generated in the working directory. There are some options that are
-inaccessible from the user interface so here's documentation. The options 
+inaccessible from the user interface so here's documentation. The options
 are as follows:
 
 [window]
@@ -160,18 +160,18 @@ are as follows:
  port
   Port of server to connect to.
  otkey
-  If we're connecting to an OpenTibia server, set to 1, otherwise 0. 
+  If we're connecting to an OpenTibia server, set to 1, otherwise 0.
  protocol
-  Protocol version. Valid are 800 and 810.
+  Protocol version. Valid are 800, 810 and 811.
  overrideversion
   Version to represent to server although another protocol is used. Server
-  uses same protocol that's specified under 'protocol', but requires a 
+  uses same protocol that's specified under 'protocol', but requires a
   different version sent. (Data files must also have appropriate signatures.)
 ===========================
 7. Observed issues
 
 * Some tiles are not rendered at all.
-* If creature steps over another creature, the creatures are swapped. 
+* If creature steps over another creature, the creatures are swapped.
   (Ordering problem.)
 * Under GNU/Linux, SDL timer mechanism seems to be causing freezes.
 

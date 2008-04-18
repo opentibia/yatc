@@ -227,15 +227,18 @@ void Options::Load()
     // further parsing of some options
     // [network]
     switch (protocol_int) {
-    	case 800:
-			protocol = CLIENT_VERSION_800;
-			break;
 		default:
 		case 0:
 			protocol = CLIENT_VERSION_AUTO;
 			break;
+    	case 800:
+			protocol = CLIENT_VERSION_800;
+			break;
 		case 810:
 			protocol = CLIENT_VERSION_810;
+			break;
+		case 811:
+			protocol = CLIENT_VERSION_811;
 			break;
     }
 

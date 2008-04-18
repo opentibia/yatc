@@ -73,7 +73,8 @@ class ProtocolGame;
 enum ClientVersion_t{
 	CLIENT_VERSION_AUTO = 0, // used only in ui, feeding it elsewhere is invalid
 	CLIENT_VERSION_800 = 800,
-	CLIENT_VERSION_810 = 810
+	CLIENT_VERSION_810 = 810,
+	CLIENT_VERSION_811 = 811,
 };
 
 enum ClientOS_t{
