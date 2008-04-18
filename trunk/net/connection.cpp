@@ -33,6 +33,7 @@
 #include "protocollogin.h"
 #include "protocolgame80.h"
 #include "protocolgame81.h"
+#include "protocolgame811.h"
 #include "../debugprint.h"
 
 const char RSAKey_otserv[] = "109120132967399429278860960508995541528237502902798129123468757937266291492576446330739696001110603907230888610072655818825358503429057592827629436413108566029093628212635953836686562675849720620786279431090218017681061521755056710823876476444260558147179707119674283982419152118103759076030616683978566631413";
@@ -44,7 +45,7 @@ ProtocolConfig::ProtocolConfig()
 {
 	m_host = "localhost";
 	m_port = 7171;
-	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_810);
+	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_811);
 	setServerType(SERVER_OTSERV);
 	setVersionOverride(0); // no override
 }
@@ -66,6 +67,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 		break;
 	case CLIENT_VERSION_810:
 		m_clientVersion = CLIENT_VERSION_810;
+		break;
+	case CLIENT_VERSION_811:
+		m_clientVersion = CLIENT_VERSION_811;
 		break;
 	default:
 		ASSERT(0);
@@ -91,6 +95,11 @@ ClientVersion_t ProtocolConfig::detectVersion()
 		sprSignature == 0x475D0B01 &&
 		picSignature == 0x4742FCD7)
 	        return CLIENT_VERSION_810;
+
+	if (datSignature == 0x47F60E37 &&
+		sprSignature == 0x47EBB9B2 &&
+		picSignature == 0x4742FCD7)
+	        return CLIENT_VERSION_811;
 
 	return CLIENT_VERSION_AUTO; // failure
 }
@@ -134,6 +143,9 @@ ProtocolGame* ProtocolConfig::createGameConnection(int account, const std::strin
 		break;
 	case CLIENT_VERSION_810:
 		protocol = new ProtocolGame81(account, password, name, isGM);
+		break;
+	case CLIENT_VERSION_811:
+		protocol = new ProtocolGame811(account, password, name, isGM);
 		break;
 	default:
 		return NULL;

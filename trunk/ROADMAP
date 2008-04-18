@@ -27,11 +27,8 @@ should comment.
 * skill window +
 * fix the status window not appearing after one login failure +
 
-* add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
 * attacking +
 * using +
-* completely fixing GL engine
-
 
 0.3
 ---
@@ -43,6 +40,11 @@ should comment.
 * private messaging with tabs
 * moving items
 * remove dependence of animations upon VALUE/g_fps, make it VALUE*(ms difference between updates with SDL_GetTicks())/1000
+
+(due to lack of time, these were moved from 0.2 to 0.3)
+* add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
+* completely fixing GL engine
+
 
 ? replacing GLICT with YATC-specific GUI
 

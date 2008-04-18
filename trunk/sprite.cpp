@@ -321,7 +321,7 @@ void Sprite::templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8
 
 void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet)
 {
-	if(!templatespr){
+/*	if(!templatespr){
 		printf("!templatespr\n");
 		return;
 	}
@@ -332,7 +332,7 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 	if(!m_image){
 		printf("!m_image\n");
 		return;
-	}
+	}*/
 	for(int i=0; i < m_image->h; i++){
 		for(int j=0; j < m_image->w; j++){
 			uint32_t pixel = getPixel(j,i,m_image);

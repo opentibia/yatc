@@ -21,7 +21,7 @@ Copyright (C) 2007 OpenTibia Team
  3. Building on Windows
  4. Devpaks and Debian packages
  5. Building without OpenGL support
-
+ 6. libGLICTd.a versus libGLICT.a
 1. Requirements
 ===============
 
@@ -156,4 +156,20 @@ reason to complicate yourself the building process, trying to compile it for
 a platform that does have GL, you must not forget this since otherwise it'll
 break badly and you'll be extremely unhappy.
 
+6. libGLICTd.a versus libGLICT.a
+================================
+
+libGLICTd.a is regular GLICT, but compiled with these extra #defines:
+_GLIBCXX_DEBUG
+_GLIBCXX_DEBUG_PEDANTIC
+
+These defines make program execute slower, but it's easier to debug C++ code.
+To build Debug Unix build in Code::Blocks without libGLICTd.a, remove the
+mentioned two defines in Project Options, and in the same place change all
+references to GLICTd into GLICT. It should compile properly then even if you
+don't create a libGLICTd.a.
+
+(This is necessary because these two, although built from same code with
+same compiler, are NOT binary compatible since those modifiers change behaviour
+of G++'s implementation of STL.)
 
