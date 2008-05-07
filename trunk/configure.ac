@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([yatc],[0.2])
+AC_INIT([yatc],[0.2~rc1])
 AC_CONFIG_SRCDIR([spritesdl.h])
 AM_INIT_AUTOMAKE([foreign])
 
@@ -66,11 +66,15 @@ AC_CHECK_LIB(gmp, __gmpz_init2, ,[AC_MSG_ERROR("*** GMP library not found or < 4
 if test -n "$OPENGL_FLAGS"; then 
 	#check GL
 	AC_CHECK_HEADERS(GL/gl.h, ,[AC_MSG_ERROR("*** OpenGL header not found. (You may want to use --disable-opengl, more info in INSTALL)")])
-	AC_CHECK_LIB(GL, glLoadIdentity, ,[AC_MSG_ERROR("*** OpenGL library not found. (You may want to use --disable-opengl, more info in INSTALL)")])
+	AC_CHECK_LIB(GL, glLoadIdentity, ,[
+		AC_CHECK_LIB(opengl32, glLoadIdentity, , [AC_MSG_ERROR("*** OpenGL library not found. (You may want to use --disable-opengl, more info in INSTALL)")])
+	])
 
 	#check GLU
 	AC_CHECK_HEADERS(GL/glu.h, ,[AC_MSG_ERROR("*** GLU header not found.")])
-	AC_CHECK_LIB(GLU, gluBuild2DMipmaps, ,[AC_MSG_ERROR("*** GLU library not found.")])
+	AC_CHECK_LIB(GLU, gluBuild2DMipmaps, ,[
+		AC_CHECK_LIB(glu32, gluBuild2DMipmaps, , [AC_MSG_ERROR("*** GLU library not found.")])
+	])
 fi
 
 # check for GLICT
