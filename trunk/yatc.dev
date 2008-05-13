@@ -1,7 +1,7 @@
 [Project]
 FileName=yatc.dev
 Name=yatc
-UnitCount=92
+UnitCount=94
 Type=1
 Ver=1
 ObjFiles=
@@ -16,7 +16,7 @@ Linker=-lGLICT_@@_-lopengl32_@@_-lwsock32_@@_-lglu32_@@_-lgmp_@@_-lmingw32_@@_-l
 IsCpp=1
 Icon=
 ExeOutput=
-ObjectOutput=
+ObjectOutput=.objs
 OverrideOutput=1
 OverrideOutputName=yatc.exe
 HostApplication=
@@ -959,6 +959,26 @@ BuildCmd=
 
 [Unit92]
 FileName=gm_gameworld.h
+CompileCpp=1
+Folder=yatc
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit93]
+FileName=net\protocolgame811.cpp
+CompileCpp=1
+Folder=yatc
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit94]
+FileName=net\protocolgame811.h
 CompileCpp=1
 Folder=yatc
 Compile=1
