@@ -158,8 +158,6 @@
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-g3" />
-					<Add option="-O0" />
 					<Add option="-DUSEASSERT" />
 					<Add option="-DUSE_OPENGL" />
 				</Compiler>
