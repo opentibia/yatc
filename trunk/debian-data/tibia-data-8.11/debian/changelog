@@ -1,0 +1,12 @@
+tibia-data (8.11-1) unstable; urgency=low
+
+  * Upgraded packaging to 8.11 data files
+
+ -- Ivan Vucica <ivucica@gmail.com>  Thu, 22 May 2008 23:52:30 +0200
+
+tibia-data (8.1-1) unstable; urgency=low
+
+  * Initial packaging
+
+ -- Ivan Vucica <ivucica@gmail.com>  Sat, 02 Feb 2008 02:39:55 +0100
+
