@@ -53,6 +53,10 @@ read version
 
 
 svn revert debian/changelog
+svn revert product.h
+
+sed s/0.2SVN/$version/g product.h > product.h.new
+mv product.h.new product.h
 
 if [ -z $srcrelease ]; then
 	srcrelease='y'
@@ -60,11 +64,7 @@ fi
 
 if [ $srcrelease == 'y' ]; then
 	svn revert configure.ac
-	# temporary hack
-	sed s/0.2~rc1/0.2SVN/g configure.ac > configure.ac.new
-	mv configure.ac.new configure.ac
-	#end temporary hack
-	
+
 	sed s/0.2SVN/$version/g configure.ac > configure.ac.new
 	mv configure.ac.new configure.ac
 	
@@ -225,5 +225,5 @@ EOF
 	read
 fi
 
-echo "Reverting configure.ac"
-svn revert configure.ac
+echo "Reverting configure.ac and product.h"
+svn revert configure.ac product.h

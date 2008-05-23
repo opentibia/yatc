@@ -20,6 +20,7 @@
 
 #include "confighandler.h"
 #include "util.h"
+#include "product.h"
 ConfigHandler* configHandler = NULL;
 
 ConfigHandler::ConfigHandler()
@@ -98,7 +99,7 @@ bool ConfigHandler::saveConfig(const char* filename)
 		return false;
 	}
 
-	fprintf(f, "%s", "# This is the config file for the YATC Client\r\n");
+	fprintf(f, "%s", "# This is the config file for " PRODUCTLONGNAME "\r\n");
 	fprintf(f, "%s", "# Do not edit unless you know what you are doing!\r\n\r\n");
 
    	for(SectionVector::iterator it = sections.begin(); it != sections.end(); it++){

@@ -218,6 +218,7 @@ void CreatureUI::advanceWalk(int groundspeed)
 
 	// FIXME (nfries88) sometimes FPS counter is incorrect (well over 100 or only 1)
 	// causing this to be way too slow or way too fast.
+	// QUESTION (ivucica) i think i fixed the fps counter, does this still need rework?
 	m_walkState += (n->getSpeed() / (float)groundspeed) / g_engine->getFps();
 	if (m_walkState >= 1)
 		m_walkState = 1;

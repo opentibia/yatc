@@ -283,6 +283,7 @@
 		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
 		<Unit filename="options.h" />
+		<Unit filename="product.h" />
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug Windows" />

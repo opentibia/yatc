@@ -40,7 +40,7 @@ unsigned int MAXFPS=10;
 #include "skin.h"
 #include "config.h"
 #include "spritesdl.h" // to load icon
-
+#include "product.h"
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -129,8 +129,8 @@ void checkFile(const char *filename)
 {
 	if (!fileexists(filename)) {
 		std::stringstream s;
-		s << "Loading the data file '" << filename << "' has failed.\nPlease place '" << filename << "' in the same folder as YATC.";
-		NativeGUIError(s.str().c_str(), "YATC Fatal Error");
+		s << "Loading the data file '" << filename << "' has failed.\nPlease place '" << filename << "' in the same folder as " PRODUCTSHORT;
+		NativeGUIError(s.str().c_str(), PRODUCTSHORT " Fatal Error");
 		exit(1);
 	}
 
@@ -146,7 +146,7 @@ void checkFiles()
 void setIcon()
 {
 	g_engine = NULL;
-	SDL_WM_SetCaption("YATC v0.2 SVN", "YATC v0.2 SVN");
+	SDL_WM_SetCaption(PRODUCTNAME, PRODUCTNAME);
 	SpriteSDL *s = new SpriteSDL("Tibia.spr", 13855);
 	SpriteSDL *st = new SpriteSDL("Tibia.spr", 13575);
 	s->templatedColorize(st, 79, 94, 88, 82);
@@ -183,15 +183,15 @@ int main(int argc, char *argv[])
 
 
 	//setenv("SDL_VIDEODRIVER", "aalib", 0);
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "YATC -- YET ANOTHER TIBIA CLIENT\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, PRODUCTLONG "\n");
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "================================\n");
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version 0.2 SVN\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "version " PRODUCTVERSION "\n");
 #ifdef BUILDVERSION
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "build %s\n", BUILDVERSION);
 #endif
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " This is free software: you are free to change and redistribute it.\n"
 		" There is NO WARRANTY, to the extent permitted by law. \n"
-		" Review LICENSE in YATC distribution for details.\n");
+		" Review LICENSE in " PRODUCTSHORT " distribution for details.\n");
 
 
 	yatc_fopen_init();
@@ -213,14 +213,14 @@ int main(int argc, char *argv[])
 		out << "Couldn't initialize SDL: " << SDL_GetError() << std::endl;
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, out.str().c_str());
 
-		NativeGUIError(out.str().c_str(), "YATC Fatal Error");
+		NativeGUIError(out.str().c_str(), PRODUCTSHORT " Fatal Error");
 		exit(1);
 	}
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data...\n");
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file failed!");
-		NativeGUIError("Loading the data file 'Tibia.dat' has failed.\nPlease place 'Tibia.dat' in the same folder as YATC.", "YATC Fatal Error");
+		NativeGUIError("Loading the data file 'Tibia.dat' has failed.\nPlease place 'Tibia.dat' in the same folder as " PRODUCTSHORT ".", PRODUCTSHORT " Fatal Error");
 		exit(1);
 	}
 
@@ -269,9 +269,11 @@ int main(int argc, char *argv[])
 		SDL_Event event;
 		while(g_running){
 
-            g_engine->fpsMutexLock();
+            //g_engine->fpsMutexLock();
 
             int beginticks = SDL_GetTicks();
+            g_engine->performFpsCalc();
+
 			//first process sdl events
 			while(SDL_PollEvent(&event)){
 				switch (event.type){
@@ -339,7 +341,8 @@ int main(int argc, char *argv[])
             }
 			g_frames ++;
 
-			g_engine->fpsMutexUnlock();
+
+			//g_engine->fpsMutexUnlock();
 
 		}
 	}

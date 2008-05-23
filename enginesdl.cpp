@@ -27,6 +27,7 @@
 #include "font.h"
 #include "options.h"
 #include "util.h"
+#include "product.h"
 EngineSDL::EngineSDL()
 {
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting SDL engine\n");
@@ -106,7 +107,7 @@ void EngineSDL::doResize(int w, int h)
 	if(!m_screen){
 		char tmperr[255];
 		sprintf(tmperr, "Could not set %dx%d video mode: %s\n", m_width, m_height, SDL_GetError()); // DONE (ivucica#3#) Should report to user via msgbox
-		NativeGUIError(tmperr, "YATC SDL Engine Failed");
+		NativeGUIError(tmperr, PRODUCTSHORT " SDL Engine Failed");
 		exit(1); // this is perfectly valid, since it's really not believable that any other engine would be supported in case SDL fails to init
 	}
 
