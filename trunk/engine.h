@@ -51,19 +51,9 @@ class Engine
 
 		virtual void Flip() = 0;
 
-		static Uint32 fpsTimer(Uint32 interval, void*param);
 		uint32_t getFps() { return (uint32_t)m_fps; }
-		void fpsMutexLock() {
-		    #ifndef WIN32
-            SDL_LockMutex(m_fpsmutex);
-            #endif
-        }
-		void fpsMutexUnlock() {
-		    #ifndef WIN32
-		    SDL_UnlockMutex(m_fpsmutex);
-		    #endif
-        }
 
+        void performFpsCalc();
 
 		uint32_t m_creationTimestamp; // some engines, like GL, need this in order to know when to re-create their sprite memories
 
@@ -83,12 +73,15 @@ class Engine
 		int m_video_bpp;
 
 		float m_fps;
-		SDL_TimerID m_fpstimer;
-		SDL_mutex *m_fpsmutex;
+		SDL_TimerID m_fpstimer __attribute__((__deprecated__));
+		SDL_mutex *m_fpsmutex __attribute__((__deprecated__));
 
 		glictFont *m_sysfont, *m_minifont, *m_aafont, *m_gamefont;
 		SDL_Surface* m_screen;
 		int m_videoflags;
+
+		uint32_t m_lastfpsupdate;
+
 
 		friend class winOptionsGraphics_t;
 };

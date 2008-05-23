@@ -26,6 +26,7 @@
 #include "engine.h"
 #include "sprite.h"
 #include "options.h"
+#include "product.h"
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
@@ -308,8 +309,8 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 	std::stringstream txt;
 	unsigned char c = 169;
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
-	txt << "YATC - Yet Another Tibia Client\n"
-		<< "v0.2 SVN\n"
+	txt << PRODUCTLONG << "\n"
+		<< PRODUCTVERSION << "\n"
 		<< "\n"
 		<< c <<" 2007-2008 OpenTibia Team\n"
 		<< "\n"
@@ -318,13 +319,13 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< "Ivan Vucica\n"
 		<< "Smygflik\n"
 		<< "\n"
-		<< "YATC comes with ABSOLUTELY NO WARRANTY; \n"
+		<< PRODUCTSHORT << " comes with ABSOLUTELY NO WARRANTY; \n"
 		<< "for details see sections 11 and 12 in COPYING.\n"
 		<< "This is free software, and you are welcome \n"
 		<< "to redistribute it under certain conditions;\n"
 		<< "see COPYING for details.";
 
-	m->msgBox(txt.str().c_str(), "About YATC", &m->pnlMainMenu.btnAbout);
+	m->msgBox(txt.str().c_str(), "About " PRODUCTSHORT, &m->pnlMainMenu.btnAbout);
 }
 
 void GM_MainMenu::pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContainer* callerclass)

@@ -47,6 +47,8 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/optionsgraphics.h ui/optionsnetwork.h ui/charlist.h \
 		ui/inventory.h ui/skills.h \
 		\
+		product.h \
+		\
 		yatc.cbp yatc.dev \
 		yatc.bmp yatc.ico resources.rc \
 		autogen.sh configure.ac Makefile.in Makefile.am \

@@ -33,6 +33,7 @@
 #include "engine.h"
 #include "font.h"
 #include "options.h"
+#include "product.h"
 Engine* g_engine;
 extern int g_frames;
 int ptrx, ptry;
@@ -125,6 +126,7 @@ Engine::Engine()
 	m_fps = 0.;
 
 	g_frames = 0;
+	/*
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Setting up FPS timer\n");
 	#ifndef WIN32 // FIXME (ivucica#2#) figure out in which platforms the fps timer is done in a second thread
 	m_fpsmutex = SDL_CreateMutex();
@@ -134,41 +136,38 @@ Engine::Engine()
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "[!] Failed to set up FPS timer!\n");
 		m_fps = 5.;
 	}
+	*/
+	m_lastfpsupdate = SDL_GetTicks();
 }
 
 Engine::~Engine()
 {
-    #ifndef WIN32
+    /*#ifndef WIN32
 	SDL_DestroyMutex(m_fpsmutex);
 	#endif
-	SDL_RemoveTimer(m_fpstimer);
+	SDL_RemoveTimer(m_fpstimer);*/
 	glictDeleteFont("system");
 	glictDeleteFont("minifont");
 	glictDeleteFont("aafont");
 	glictDeleteFont("gamefont");
 }
 
-Uint32 Engine::fpsTimer(Uint32 interval, void*param)
-{
-	char caption[255];
 
-	if (!g_engine)
-		return 0;
-    #ifndef WIN32
-	SDL_LockMutex(g_engine->m_fpsmutex);
-	#endif
-	g_engine->m_fps = (g_frames / (float)interval) * 1000;
-	g_frames = 0;
+void Engine::performFpsCalc() {
+    char caption[255];
+    static int interval = 200;
 
-	sprintf(caption, "YATC v0.2 SVN - fps: %g", g_engine->m_fps );
-	SDL_WM_SetCaption(caption, "YATC v0.2 SVN");
-	#ifndef WIN32
-	SDL_UnlockMutex(g_engine->m_fpsmutex);
-	#endif
+    if (SDL_GetTicks() >= m_lastfpsupdate + interval) {
+        m_lastfpsupdate = SDL_GetTicks();
+        m_fps = g_frames * 1000 / interval;
+        g_frames = 0;
 
-	return interval;
+        sprintf(caption, PRODUCTNAME " - fps: %g", g_engine->m_fps );
+        SDL_WM_SetCaption(caption, PRODUCTNAME);
+
+    }
+
 }
-
 
 void Engine::initFont(glictFont **fnt, const char *fontname)
 {
@@ -197,4 +196,5 @@ void Engine::doResize(int w, int h)
 	options.w = w;
 	options.h = h;
 }
+
 
