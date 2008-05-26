@@ -22,7 +22,11 @@
 #define __SPRITE_H
 
 #ifdef USE_OPENGL
+#ifdef __APPLE_CC__
+	#include <OpenGL/glu.h>
+#else
 	#include <GL/glu.h>
+#endif
 #endif
 
 #include <string>

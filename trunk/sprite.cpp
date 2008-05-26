@@ -21,7 +21,11 @@
 #include <SDL/SDL_rotozoom.h> // library you need is called SDL_gfx
 
 #ifdef USE_OPENGL
-#include <GL/gl.h>
+#ifdef __APPLE_CC__
+	#include <OpenGL/gl.h>
+#else
+	#include <GL/gl.h>
+#endif
 
 #if defined WIN32 || defined WINDOWS
 #include <GL/glext.h>

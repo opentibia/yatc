@@ -20,8 +20,14 @@
 
 #ifdef USE_OPENGL
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#ifdef __APPLE_CC__
+	#include <OpenGL/gl.h>
+	#include <OpenGL/glu.h>
+#else
+	#include <GL/gl.h>
+	#include <GL/glu.h>
+#endif
+
 #ifdef WIN32
 	#include <GL/glext.h> // TODO (ivucica#1#) ivucica asks: do we really need this include?
 #endif
