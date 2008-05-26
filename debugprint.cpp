@@ -34,7 +34,11 @@
 #include "debugprint.h"
 #include "util.h"
 #if USE_OPENGL
+#ifdef __APPLE_CC__
+	#include <OpenGL/gl.h>
+#else
 	#include <GL/gl.h>
+#endif
 	#if defined(WIN32) && defined(GREMDEY)
 		#include <GL/GRemdeyExtensions.h>
 		extern PFNGLSTRINGMARKERGREMEDYPROC glStringMarkerGREMEDY;
