@@ -57,6 +57,8 @@ class Engine
 
 		uint32_t m_creationTimestamp; // some engines, like GL, need this in order to know when to re-create their sprite memories
 
+        virtual void resetClipping() {
+        }
 	protected:
 		Engine();
 		void initFont(glictFont** fnt, const char* fontname);

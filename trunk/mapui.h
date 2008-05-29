@@ -15,6 +15,7 @@ class MapUI {
 
 		void useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos, bool &extended);
 		void attackCreature(int x, int y, const Creature* &creature);
+		void lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos);
 	private:
 		int m_x, m_y;
 		int m_w, m_h;

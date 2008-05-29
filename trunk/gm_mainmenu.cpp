@@ -286,11 +286,16 @@ void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller)
 	//delete caller;
 }
 
-
+static bool s_alreadyloggedinonce = false; //  REMOVEME this serves only to prevent people from logging in twice in same session since this crashes the game
 /* ****** EVENT CALLBACKS ****** */
 void GM_MainMenu::pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
+
+    if (s_alreadyloggedinonce) {
+        m->msgBox("Sorry, you can't log in twice due to a bug in the client.", "Bug in YATC :(");
+        return;
+    }
 	m->winLogin.window.SetVisible(true);
 	m->winLogin.txtUsername.SetCaption(options.account);
 	m->winLogin.txtPassword.SetCaption(options.password);
@@ -318,6 +323,10 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< "mips\n"
 		<< "Ivan Vucica\n"
 		<< "Smygflik\n"
+		<< "nfries88\n"
+		<< "\n"
+		<< "Contributors:\n"
+		<< "mrauter\n"
 		<< "\n"
 		<< PRODUCTSHORT << " comes with ABSOLUTELY NO WARRANTY; \n"
 		<< "for details see sections 11 and 12 in COPYING.\n"
@@ -614,6 +623,7 @@ void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int
 
 void GM_MainMenu::onEnterGame()
 {
+    s_alreadyloggedinonce = true;
 	delete g_game;
 	g_game = new GM_Gameworld;
 }

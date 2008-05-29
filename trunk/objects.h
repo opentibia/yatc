@@ -149,6 +149,7 @@ public:
 	ObjectType* getEffectType(uint16_t id);
 	ObjectType* getDistanceType(uint16_t id);
 
+    bool isLoaded() { return m_datLoaded; }
 protected:
 	bool m_datLoaded;
 	static Objects* m_instance;

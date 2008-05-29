@@ -119,7 +119,7 @@ void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
 {
 	if(SDL_GetModState() & KMOD_CTRL)
 	{
-		slots_t slotid = (slots_t)((glictPanel*)callerclass - 
+		slots_t slotid = (slots_t)((glictPanel*)callerclass -
 			(glictPanel*)callerclass->GetCustomData() + 1);
 		if(slotid >= 0 && slotid <= 10) {
 			Item* item = Inventory::getInstance().getItem(slotid);
@@ -260,6 +260,7 @@ void GM_Gameworld::updateScene()
 	}
 
 	desktop.Paint();
+	g_engine->resetClipping();
 }
 
 
@@ -300,6 +301,18 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		action = 1; dir = DIRECTION_SOUTH;
 		break;
 
+    case SDLK_ESCAPE:
+    	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection...\n");
+        delete g_connection;
+        g_connection = NULL;
+        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
+        Map::getInstance().clear();
+        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying inventory...\n");
+        Inventory::getInstance().clear();
+        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Switch to main menu\n");
+        delete g_game;
+        g_game = new GM_MainMenu;
+        break;
 	case SDLK_F11:
 		action = 255;
 		break;
@@ -353,8 +366,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 				}
 			}
 		} else if (SDL_GetModState() & KMOD_CTRL) {
-
-			printf("It's a click\n");
+			printf("It's a use\n");
 			const Thing* thing;
 			int x,y,z;
 			int stackpos;
@@ -370,7 +382,16 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 				}
 			}
 		} else if (SDL_GetModState() & KMOD_SHIFT) {
-			// TODO (nfries88): looking
+		    printf("It's a look\n");
+			const Thing* thing;
+			int x,y,z;
+			int stackpos;
+
+			m_mapui.lookAtItem(pos.x, pos.y, thing, x, y, z, stackpos);
+			if (stackpos != -1) {
+                printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
+                m_protocol->sendLookItem(Position(x,y,z), thing->getID(), stackpos );
+			}
 		} else {
 			// TODO (nfries88): select draggable item
 		}
