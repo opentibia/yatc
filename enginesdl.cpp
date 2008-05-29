@@ -48,6 +48,12 @@ EngineSDL::EngineSDL()
 
 	a->addColor(.75,.75,.75);
 	b->addColor(.75,.75,.75);
+
+    #if (GLICT_APIREV >= 64)
+	glictGlobals.clipperCallback = EngineSDL::clipper_func;
+	#else
+	#warning Please upgrade GLICT to api revision 64 or greater to fix clipping problem
+	#endif
 }
 
 EngineSDL::~EngineSDL()
@@ -121,4 +127,11 @@ void EngineSDL::doResize(int w, int h)
 		SDL_SetColors(m_screen, colors, 0, sizeof(colors) / sizeof(SDL_Color));
 	}
 
+}
+
+
+
+void EngineSDL::clipper_func(float left, float right, float top, float bottom) {
+    SDL_Rect r = {left,top, right-left, bottom-top};
+    SDL_SetClipRect(((EngineSDL*)g_engine)->m_screen, &r);
 }

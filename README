@@ -89,7 +89,7 @@ you want.
 ==============================
 5. User Interface - Game
 
-On the top left you'll find the inventory. Below it is the map. On the top
+On the top right you'll find the inventory. Right of it is the map. On the top
 right you will find the traffic meter. It measures the amount of bytes
 transmitted (TX), received (RX) and total (++). It also measures the same
 numbers per hour (in bytes per hour, kibibytes per hour, and mibibytes per

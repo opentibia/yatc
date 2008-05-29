@@ -24,6 +24,15 @@
 
 unsigned int MAXFPS=10;
 
+#ifndef WIN32
+#include <signal.h>
+#include <execinfo.h>
+
+/* get REG_EIP from ucontext.h */
+//#define __USE_GNU
+#include <ucontext.h>
+#endif
+
 
 #include <SDL/SDL.h>
 #include <GLICT/globals.h>
@@ -46,6 +55,7 @@ unsigned int MAXFPS=10;
 #include "net/protocollogin.h"
 #include "net/protocolgame.h"
 #include "gamecontent/map.h"
+#include "gamecontent/inventory.h"
 bool g_running = false;
 //uint32_t keymods = 0;
 
@@ -59,7 +69,8 @@ void onKeyDown(const SDL_Event& event)
 	int key = event.key.keysym.sym;
 	switch(key){
 	case SDLK_ESCAPE:
-		g_running = false;
+		//g_running = false;
+		g_game->specKeyPress(event.key.keysym);
 		break;
 
 	case SDLK_LSHIFT:
@@ -155,6 +166,51 @@ void setIcon()
 	delete st;
 }
 
+#ifndef WIN32
+void crashhndl(int sig, siginfo_t *info,
+				   void *secret) {
+
+    void *trace[32];
+    char **messages = (char **)NULL;
+    int i, trace_size = 0;
+    ucontext_t *uc = (ucontext_t *)secret;
+
+    printf("CRASH\n");
+
+    /* Do something useful with siginfo_t */
+    if (sig == SIGSEGV)
+    printf("Got signal %d, faulty address is %p, "
+           "from %p\n", sig, (void*)info->si_addr,
+           (void*)uc->uc_mcontext.gregs[REG_EIP]);
+    else
+    printf("Got signal %d\n", sig);
+
+    trace_size = backtrace(trace, 32);
+    /* overwrite sigaction with caller's address */
+    trace[1] = (void *) uc->uc_mcontext.gregs[REG_EIP];
+
+
+
+    messages = backtrace_symbols(trace, trace_size);
+    /* skip first stack frame (points here) */
+    printf("[bt] Execution path:\n");
+    for (i=1; i<trace_size; ++i) {
+        printf("[bt] %s\n[bt]\t\t", messages[i]);
+        fflush(stdout);
+        std::stringstream x;
+        x << "addr2line -C -e yatc " << std::hex << trace[i];
+        system(x.str().c_str());
+
+    }
+    SDL_WM_GrabInput(SDL_GRAB_OFF);
+
+
+    exit(0);
+}
+#endif
+
+
+
 /// \brief Main program function
 ///
 /// This function does very little on its own. It manages some output to
@@ -163,6 +219,24 @@ void setIcon()
 /// events and sending them further into the game.
 int main(int argc, char *argv[])
 {
+
+    #ifndef WIN32
+    #ifdef _GLIBCXX_DEBUG
+
+    /* Install our signal handler */
+    struct sigaction sa;
+
+    sa.sa_sigaction = /*(void *)*/crashhndl;
+    sigemptyset (&sa.sa_mask);
+    sa.sa_flags = SA_RESTART | SA_SIGINFO;
+
+    sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGFPE, &sa, NULL);
+    #endif
+    #endif
+
+
+
 #ifdef WIN32
 	WORD wVersionRequested;
 	WSADATA wsaData;
@@ -322,7 +396,7 @@ int main(int argc, char *argv[])
                 SDL_Delay(1000/MAXFPS - (g_frameTime - beginticks) - 10);
             }
 
-            while (abs((int)SDL_GetTicks() - beginticks) < 1000/MAXFPS);
+            while ((int)abs((int)SDL_GetTicks() - beginticks) < 1000/MAXFPS);
 
 			//check connection
 			if(g_connection){
@@ -352,15 +426,27 @@ int main(int argc, char *argv[])
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Game over\n");
 
+
+	// FIXME (nfries88) it seems to crash here if the connection is still open.
+	// something in Connection::closeConnection maybe?
+	// ivucica's comment: I think it was in the ordering; previously we first unloaded .dat,
+	//                    and then we destroyed items attempting to unload graphics in the process
+	//                    But, object data including graphics and info on usage on map was already
+	//                    destroyed during .dat unload!
+	//                    I changed order, perhaps this'll fix it
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection...\n");
+	delete g_connection;
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
+	Map::getInstance().clear();
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying inventory...\n");
+	Inventory::getInstance().clear();
+
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Unloading data...\n");
 	Objects::getInstance()->unloadDat();
 	delete Objects::getInstance();
 	g_skin.unloadSkin();
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection and unloading related data...\n");
-	// FIXME (nfries88) it seems to crash here if the connection is still open.
-	// something in Connection::closeConnection maybe?
-	delete g_connection;
-	Map::getInstance().clear();
+
+
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Saving options...\n");
 	options.Save();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Finishing engine...\n");

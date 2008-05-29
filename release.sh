@@ -19,7 +19,7 @@ are met:
    may be used to endorse or promote products derived from this software
    without specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
 ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
@@ -92,6 +92,8 @@ fi
 
 if [ $win32release != "n" ]; then
 	echo "Now building Windows release..."
+	echo "Reverting config.h"
+	svn revert config.h
 	echo "Do you want full rebuild? y/[N]"
 	read win32rebuild
 	if [ -z $win32rebuild ]; then
@@ -102,7 +104,8 @@ if [ $win32release != "n" ]; then
 	else
 		win32rebuild="--build"
 	fi
-	codeblocks --target="Release MinGW32" $win32rebuild -ns yatc.cbp
+	#codeblocks --target="Release MinGW32" $win32rebuild -ns yatc.cbp
+	wine "/mnt/hda1/Program Files/CodeBlocks/codeblocks.exe" --target="Release Windows" $win32rebuild -ns yatc.cbp
 	rm -rf "yatc-$version"
 	mkdir "yatc-$version"
 	cp AUTHORS "yatc-$version"
