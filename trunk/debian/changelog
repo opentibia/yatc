@@ -1,3 +1,9 @@
+yatc (0.2-1) unstable; urgency=low 
+ 
+  * New upstream milestone release
+ 
+ -- Ivan Vucica <ivucica@gmail.com>  Fri, 30 May 2008 16:51:07 +0200 
+ 
 yatc (0.2~rc2-1) unstable; urgency=low 
  
   * New upstream release
