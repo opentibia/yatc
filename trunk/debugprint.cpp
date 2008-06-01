@@ -34,7 +34,7 @@
 #include "debugprint.h"
 #include "util.h"
 #if USE_OPENGL
-#ifdef __APPLE_CC__
+#ifdef __APPLE__
 	#include <OpenGL/gl.h>
 #else
 	#include <GL/gl.h>

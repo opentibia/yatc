@@ -20,7 +20,7 @@
 
 #ifdef USE_OPENGL
 
-#ifdef __APPLE_CC__
+#ifdef __APPLE__
 	#include <OpenGL/gl.h>
 	#include <OpenGL/glu.h>
 #else
