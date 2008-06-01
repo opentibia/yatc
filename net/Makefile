@@ -1,7 +1,8 @@
 SRCS = *.cpp
 HEAD = *.h
 OBJS = connection.o networkmessage.o protocolgame81.o protocollogin.o \
-	encryption.o	protocolgame80.o  protocolgame.o	rsa.o
+	encryption.o	protocolgame80.o  protocolgame.o	rsa.o \
+	protocolgame811.o
 
 all: __all.a
 

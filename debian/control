@@ -7,7 +7,17 @@ Standards-Version: 3.7.2
 
 Package: yatc
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, tibia-data
-Description: Yet Another Tibia Client, a client for a 2d MMORPG
- YATC, Yet Another Tibia Client, is a client for a 2d MMORPG. It currently uses
- proprietary graphics from the original game - it requires package tibia-data.
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: tibia-data
+Description: Yet Another Tibia Client, a client for a 2D MMORPG
+ YATC, Yet Another Tibia Client, is a client for a 2D MMORPG, developed as a
+ part of the OpenTibia project. It is intended to connect to OpenTibia 
+ Servers, but it is capable of connecting to proprietary server as well. 
+ .
+ Fight monsters in a fantasy world, from rats and orcs to dragons and hydras. 
+ Choose colors character for your avatar. Chat and collaborate wiht other
+ characters. Use magic spells, use magic runes. Weapons range from simple
+ clubs through short swords and maces to fire swords. Shields are also 
+ numerous.
+ .
+ YATC currently uses proprietary graphics from the original game. 
