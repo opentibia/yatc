@@ -1,3 +1,10 @@
+yatc (0.2-2) unstable; urgency=low
+
+  * No longer depends on tibia-data, now just suggests it
+  * Built using new GLICT to fix clipping issues
+
+ -- Ivan Vucica <ivucica@gmail.com>  Sun, 01 Jun 2008 16:31:23 +0200
+
 yatc (0.2-1) unstable; urgency=low 
  
   * New upstream milestone release
