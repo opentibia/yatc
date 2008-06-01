@@ -24,7 +24,7 @@
 
 unsigned int MAXFPS=10;
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(__APPLE__)
 #include <signal.h>
 #include <execinfo.h>
 
@@ -166,7 +166,7 @@ void setIcon()
 	delete st;
 }
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(__APPLE__)
 void crashhndl(int sig, siginfo_t *info,
 				   void *secret) {
 
@@ -220,7 +220,7 @@ void crashhndl(int sig, siginfo_t *info,
 int main(int argc, char *argv[])
 {
 
-    #ifndef WIN32
+    #if !defined(WIN32) && !defined(__APPLE__)
     #ifdef _GLIBCXX_DEBUG
 
     /* Install our signal handler */
