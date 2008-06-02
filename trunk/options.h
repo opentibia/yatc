@@ -64,6 +64,14 @@ public:
 	bool fullscreen;
 	int maxfps;
 
+	// [console]
+	bool infomsgs;
+	bool eventmsgs;
+	bool statusmsgs;
+	bool timestamps;
+	bool levels;
+	bool privatemsgs;
+
 	// [network]
 	std::string server;
 	int port;

@@ -58,6 +58,14 @@ Options::Options()
 	bpp = 16;
 	maxfps = 30;
 
+	// [console]
+	infomsgs = true;
+	eventmsgs = true;
+	statusmsgs = true;
+	timestamps = true;
+	levels = true;
+	privatemsgs = true;
+
 	// [network]
 	server = "change.me.now";
 	port = 7171;
@@ -146,6 +154,23 @@ void Options::Save()
 	ss.str("");
 
 
+	section = configHandler->newSection("console");
+	ss << infomsgs;
+	section->addKey("infomsgs", ss.str());
+	ss.str("");
+	ss << statusmsgs;
+	section->addKey("statusmsgs", ss.str());
+	ss.str("");
+	ss << timestamps;
+	section->addKey("timestamps", ss.str());
+	ss.str("");
+	ss << levels;
+	section->addKey("levels", ss.str());
+	ss.str("");
+	ss << privatemsgs;
+	section->addKey("privatemsgs", ss.str());
+	ss.str("");
+
 	section = configHandler->newSection("network");
 	ss << server;
 	section->addKey("server", ss.str());
@@ -215,6 +240,14 @@ void Options::Load()
 	h = atoi(configHandler->getKeyValue("graphics", "height").c_str());
 	bpp = atoi(configHandler->getKeyValue("graphics", "bpp").c_str());
 	maxfps = atoi(configHandler->getKeyValue("graphics", "maxfps").c_str());
+
+	// [console]
+    infomsgs = (atoi(configHandler->getKeyValue("console", "infomsgs").c_str()) == 1);
+    eventmsgs = (atoi(configHandler->getKeyValue("console", "eventmsgs").c_str()) == 1);
+    statusmsgs = (atoi(configHandler->getKeyValue("console", "statusmgs").c_str()) == 1);
+    timestamps = (atoi(configHandler->getKeyValue("console", "timestamps").c_str()) == 1);
+    levels = (atoi(configHandler->getKeyValue("console", "levels").c_str()) == 1);
+    privatemsgs = (atoi(configHandler->getKeyValue("console", "privatemsgs").c_str()) == 1);
 
 	// [network]
 	server = configHandler->getKeyValue("network", "server");

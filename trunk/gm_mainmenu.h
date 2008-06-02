@@ -37,6 +37,7 @@
 #include "ui/charlist.h"
 #include "ui/options.h"
 #include "ui/optionsgeneral.h"
+#include "ui/optionsconsole.h"
 #include "ui/optionsgraphics.h"
 #include "ui/optionsnetwork.h"
 
@@ -70,6 +71,7 @@ private:
 	winCharlist_t winCharlist;
 	winOptions_t winOptions;
 	winOptionsGeneral_t winOptionsGeneral;
+	winOptionsConsole_t winOptionsConsole;
 	winOptionsGraphics_t winOptionsGraphics;
 	winOptionsNetwork_t winOptionsNetwork;
 
@@ -92,6 +94,7 @@ protected:
 	static void winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnConsole_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContainer* callerclass);
@@ -99,6 +102,9 @@ protected:
 
 	static void winOptionsGeneral_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsConsole_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsConsole_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsGraphics_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);

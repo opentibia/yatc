@@ -43,6 +43,7 @@ GM_MainMenu::GM_MainMenu()
 	/* ****************** MAIN MENU *********************** */
 	desktop.AddObject(&pnlMainMenu.mainmenu);
 	pnlMainMenu.btnLogIn.SetOnClick(GM_MainMenu::pnlMainMenu_btnLogIn_OnClick);
+	pnlMainMenu.btnNetwork.SetOnClick(GM_MainMenu::winOptions_btnNetwork_OnClick); // FIXME
 	pnlMainMenu.btnOptions.SetOnClick(GM_MainMenu::pnlMainMenu_btnOptions_OnClick);
 	pnlMainMenu.btnAbout.SetOnClick(GM_MainMenu::pnlMainMenu_btnAbout_OnClick);
 	pnlMainMenu.btnExit.SetOnClick(GM_MainMenu::pnlMainMenu_btnExit_OnClick);
@@ -61,6 +62,7 @@ GM_MainMenu::GM_MainMenu()
 	/* ******************* OPTIONS ************************* */
 	desktop.AddObject(&winOptions.window);
 	winOptions.btnGeneral.SetOnClick(GM_MainMenu::winOptions_btnGeneral_OnClick);
+	winOptions.btnConsole.SetOnClick(GM_MainMenu::winOptions_btnConsole_OnClick);
 	winOptions.btnGraphics.SetOnClick(GM_MainMenu::winOptions_btnGraphics_OnClick);
 	winOptions.btnNetwork.SetOnClick(GM_MainMenu::winOptions_btnNetwork_OnClick);
 	winOptions.btnMotd.SetOnClick(GM_MainMenu::winOptions_btnMotd_OnClick);
@@ -85,6 +87,15 @@ GM_MainMenu::GM_MainMenu()
 		"\n"
 		"Show text effects allows you to turn on and off the\n"
 		"so-called \"animated text\" effects."
+		));
+
+	/* ***************** OPTIONS/CONSOLE ******************** */
+	desktop.AddObject(&winOptionsConsole.window);
+	winOptionsConsole.btnOk.SetOnClick(GM_MainMenu::winOptionsConsole_btnOk_OnClick);
+	winOptionsConsole.btnCancel.SetOnClick(GM_MainMenu::winOptionsConsole_btnCancel_OnClick);
+	winOptionsConsole.btnHelp.SetOnClick(GM_MainMenu::btnHelp_OnClick);
+	winOptionsConsole.btnHelp.SetCustomData(new std::string(
+		"Help not done."
 		));
 
 	/* ***************** OPTIONS/GRAPHICS ******************** */
@@ -173,6 +184,7 @@ void GM_MainMenu::doResize(float w, float h)
 	centerWindow(&winCharlist.window);
 	centerWindow(&winOptions.window);
 	centerWindow(&winOptionsGeneral.window);
+	centerWindow(&winOptionsConsole.window);
 	centerWindow(&winOptionsGraphics.window);
 	centerWindow(&winOptionsNetwork.window);
 	centerWindow(&winStatus);
@@ -455,6 +467,13 @@ void GM_MainMenu::winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictCont
 	m->winOptionsGeneral.window.SetVisible(true);
 	m->winOptionsGeneral.window.Focus(NULL);
 }
+void GM_MainMenu::winOptions_btnConsole_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsConsole.Init();
+	m->winOptionsConsole.window.SetVisible(true);
+	m->winOptionsConsole.window.Focus(NULL);
+}
 void GM_MainMenu::winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
@@ -488,7 +507,18 @@ void GM_MainMenu::winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, gli
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptionsGeneral.window.SetVisible(false);
 }
-/* *********GENERAL********** */
+/* *********CONSOLE********** */
+
+void GM_MainMenu::winOptionsConsole_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsConsole.Store();
+	m->winOptionsConsole.window.SetVisible(false);
+}
+void GM_MainMenu::winOptionsConsole_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
+	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winOptionsConsole.window.SetVisible(false);
+}
+/* *********GRAPHICS********** */
 
 void GM_MainMenu::winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
