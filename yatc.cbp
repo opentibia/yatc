@@ -293,7 +293,6 @@
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug Windows" />
-<!--			<Option target="Release Windows" />-->
 			<Option target="Debug MinGW32" />
 			<Option target="Release MinGW32" />
 		</Unit>
@@ -316,6 +315,7 @@
 		<Unit filename="ui/login.h" />
 		<Unit filename="ui/mainmenu.h" />
 		<Unit filename="ui/options.h" />
+		<Unit filename="ui/optionsconsole.h" />
 		<Unit filename="ui/optionsgeneral.h" />
 		<Unit filename="ui/optionsgraphics.h" />
 		<Unit filename="ui/optionsnetwork.h" />
