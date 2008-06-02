@@ -193,15 +193,6 @@ public:
 
 
 	void Init() {
-
-	// [console]
-	/*bool infomsgs;
-	bool eventmsgs;
-	bool statusmsgs;
-	bool timestamps;
-	bool levels;
-	bool privatemsgs;*/
-
 		btnInfoMsgs.SetCustomData(options.infomsgs ? (void*)1 : NULL);
 		btnInfoMsgs.SetSkin(options.infomsgs ? &g_skin.chk : &g_skin.txt);
 		btnEventMsgs.SetCustomData(options.eventmsgs? (void*)1 : NULL);
