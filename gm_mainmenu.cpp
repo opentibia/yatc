@@ -219,15 +219,24 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 	glictPos pos;
 	// FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
 	// who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave!
+	// (above is because we handle mousedown and mouseup too, and not ust mousemove)
 	pos.x = ptrx;
 	pos.y = ptry;
 
 	desktop.TransformScreenCoords(&pos);
 
-	if (event.button.state == SDL_PRESSED)
-		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
-	if (event.button.state != SDL_PRESSED)
-		desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+    if (event.type != SDL_MOUSEMOTION) {
+        if (event.button.state == SDL_PRESSED)
+            desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
+        else
+            desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+    } else {
+        #if (GLICT_APIREV >= 67)
+        desktop.CastEvent(GLICT_MOUSEMOVE, &pos, 0);
+        #else
+        #warning We need GLICT apirev 67 or greater to support basic movable windows.
+        #endif
+    }
 
 	renderScene();
 

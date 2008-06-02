@@ -383,6 +383,7 @@ int main(int argc, char *argv[])
 					case SDL_MOUSEMOTION:
 						ptrx = event.motion.x;
 						ptry = event.motion.y;
+						g_game->mouseEvent(event);
 						break;
 					default:
 						break;
