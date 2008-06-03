@@ -967,27 +967,27 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit93]
-FileName=net\protocolgame811.cpp
-CompileCpp=1
-Folder=yatc
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit94]
+[Unit95]
 FileName=net\protocolgame811.h
 CompileCpp=1
-Folder=yatc
+Folder=net
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit95]
+[Unit96]
+FileName=net\protocolgame811.cpp
+CompileCpp=1
+Folder=net
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit93]
 FileName=product.h
 CompileCpp=1
 Folder=yatc
@@ -997,7 +997,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit96]
+[Unit94]
 FileName=exchndl2.cxx
 CompileCpp=1
 Folder=yatc

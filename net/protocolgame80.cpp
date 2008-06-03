@@ -35,6 +35,11 @@ ProtocolGame80::ProtocolGame80(int account, const std::string& password, const s
 ProtocolGame(account, password, name, isGM)
 {
 	m_skipTiles = 0;
+	checkVersion();
+}
+
+void ProtocolGame80::checkVersion()
+{
 	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_800);
 }
 
@@ -51,6 +56,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 		MSG_READ_U8(cmd);
 		addServerCmd(cmd);
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Received packet 0x%02x\n", cmd);
+		// TODO (nfries88): move switch statement to a virtual function for simpler expansion
 		switch(cmd){
 		case 0x0A: //Self appear
 		{
