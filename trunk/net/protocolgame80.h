@@ -117,6 +117,9 @@ class ProtocolGame80 : public ProtocolGame
 		bool internalSetOutfit(NetworkMessage& msg, Outfit_t& outfit);
 
 		int16_t m_skipTiles;
+		
+		// protocol version assertion
+		virtual void checkVersion();
 
 		friend class ProtocolConfig;
 };
