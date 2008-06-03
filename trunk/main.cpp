@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
 		" Review LICENSE in " PRODUCTSHORT " distribution for details.\n");
 
 
-	yatc_fopen_init();
+	yatc_fopen_init(argv[0]);
 
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Checking graphics files existence...");
