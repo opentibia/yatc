@@ -110,13 +110,13 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 
 	if (__internal_fileexists(filename)) {
 		FILE *f = fopen(filename, mode);
-		if (f) 
+		if (f)
 			return f;
 	}
 
 	for (std::vector<std::string>::iterator it = searchpaths.begin(); it != searchpaths.end(); it++) {
 		std::string fn = (*it + "/" + filename).c_str();
-		if (fn[0] == '~') 
+		if (fn[0] == '~')
 			fn = std::string(getenv("HOME")) + "/" + fn.substr(1);
 
 		if (__internal_fileexists(fn.c_str())) {
@@ -148,7 +148,7 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 #define DESTDIRS ""
 #endif
 
-void yatc_fopen_init() {
+void yatc_fopen_init(char *cmdline) {
 #if (HAVE_GETENV==1)
 	const char *searchpath = getenv("YATC_PATH");
 	const char *lp;
@@ -174,11 +174,26 @@ void yatc_fopen_init() {
 #else
 	printf("Getenv() not supported; leaving searchpath empty.\n");
 #endif
+	if (cmdline) {
+		for (int i = strlen(cmdline)-1; i >= 0; i--) {
+			if (cmdline[i] == '/') {
+				char *tmp = new char[i+2];
+				memcpy(tmp, cmdline, strlen(cmdline));
+				tmp[i+1]=0;
+				searchpaths.insert(searchpaths.end(), std::string(tmp));
+				printf("Adding extra path %s\n", tmp);
+				delete[] tmp;
+				break;
+			}
+		}
+	} else {
+        printf("cmdline: null, can't be used for yatc_fopen_init()\n");
+	}
 }
 
 
 #if defined(WINCE) && defined(_MSC_VER)
-time_t time( time_t *inTT ) 
+time_t time( time_t *inTT )
 {
 SYSTEMTIME sysTimeStruct;
 FILETIME fTime;
