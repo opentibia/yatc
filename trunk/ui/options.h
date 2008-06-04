@@ -1,6 +1,12 @@
 #ifndef __UI_OPTIONS_H
 #define __UI_OPTIONS_H
 
+#include "optionsconsole.h"
+#include "optionsgeneral.h"
+#include "optionsgfxadv.h"
+#include "optionsgraphics.h"
+#include "optionsnetwork.h"
+
 class winOptions_t {
 public:
 
@@ -26,6 +32,15 @@ public:
 	glictPanel pnlSeparator2; // 9 204 -- 260 2
 
 	glictButton btnOk; // 227 215 -- 41 17
+	
+	// (nfries88) Moving as much of the options ui stuff into here as possible
+	// is this ok? [
+	winOptionsGeneral_t winOptionsGeneral;
+	winOptionsConsole_t winOptionsConsole;
+	winOptionsGraphics_t winOptionsGraphics;
+	winOptionsGraphicsAdvanced_t winOptionsGraphicsAdvanced;
+	winOptionsNetwork_t winOptionsNetwork;
+	//]
 
 	winOptions_t () {
 
@@ -145,6 +160,33 @@ public:
 		btnOk.SetCaption("Ok");
 		btnOk.SetFont("minifont",8);
 	}
+	
+	void initiateAll(glictContainer* desktop);
+
+    static void btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnConsole_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsGeneral_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsGeneral_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsConsole_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsConsole_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsGraphics_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsGraphics_btnAdvanced_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	
+	static void winOptionsGraphicsAdvanced_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsGraphicsAdvanced_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 };
 
