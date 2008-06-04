@@ -27,6 +27,9 @@
 #include <list>
 #include "gamecontent/enums.h"
 
+class winOptions_t;
+class glictContainer;
+
 class Position;
 class GameMode
 {
@@ -40,6 +43,9 @@ public:
 	virtual void keyPress (char key) {}
 	virtual void specKeyPress (const SDL_keysym&) {}
 	virtual void doResize(float w, float h) {}
+	
+	virtual void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL) {}
+	virtual winOptions_t* getOptionsWindow() { return NULL; }
 
 	virtual void onConnectionError(int message, const char* errortext) {}
 	virtual void onConnectionClosed() {}
