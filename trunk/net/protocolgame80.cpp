@@ -35,12 +35,12 @@ ProtocolGame80::ProtocolGame80(int account, const std::string& password, const s
 ProtocolGame(account, password, name, isGM)
 {
 	m_skipTiles = 0;
-	checkVersion();
+	//checkVersion(); // don't check in 8.0 since it'll always call ProtocolGame80::checkVersion(), even for 8.1 and 8.11, and thus, it'll fail
 }
 
 void ProtocolGame80::checkVersion()
 {
-	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_800);
+    ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_800);
 }
 
 ProtocolGame80::~ProtocolGame80()
