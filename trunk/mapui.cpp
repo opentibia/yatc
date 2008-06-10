@@ -108,7 +108,7 @@ void MapUI::renderMap() {
 
 				int32_t thingsCount = tile->getThingCount() - 1;
 				int32_t drawIndex = ground ? 1 : 0, lastTopIndex = 0;
-				bool drawnEffects = false;
+				bool drawnEffectsGhosts = false;
 
 				while(drawIndex <= thingsCount && drawIndex >= 0){
 
@@ -136,9 +136,10 @@ void MapUI::renderMap() {
 
 						case DRAW_CREATURE: //creatures
 							if(thingOrder != 4){
-								//Draw effects
+							    //Draw ghosting and effects
+							    drawTileGhosts(tile_x, tile_y, z, screenx, screeny, scale, tile_height);
 								drawTileEffects(const_cast<Tile*>(tile), screenx, screeny, scale, tile_height);
-								drawnEffects = true;
+								drawnEffectsGhosts = true;
 								//
 								drawState = DRAW_ITEMTOP3;
 								drawIndex = lastTopIndex;
@@ -154,9 +155,21 @@ void MapUI::renderMap() {
 							break;
 						}
 
-						thing->Blit(screenx - (int)(tile_height*8.*scale),
-									screeny - (int)(tile_height*8.*scale),
-									scale, tile_x, tile_y);
+                        bool performPaint = true;
+                        if(const Creature* c = thing->getCreature()){
+                            if(c->getWalkState() != 1. ){// it's walking?
+                                if (!((c->getLookDir() == DIRECTION_SOUTH && !c->isPreWalking()) ||
+                                    (c->getLookDir() == DIRECTION_NORTH && c->isPreWalking()) ||
+                                    (c->getLookDir() == DIRECTION_EAST && !c->isPreWalking()) ||
+                                    (c->getLookDir() == DIRECTION_WEST && c->isPreWalking())))
+                                    performPaint = false;
+                            }
+                        }
+
+						if (performPaint)
+						    thing->Blit(screenx - (int)(tile_height*8.*scale),
+							    		screeny - (int)(tile_height*8.*scale),
+								    	scale, tile_x, tile_y);
 
 						if(const Item* item = thing->getItem()){
 							if(item->hasHeight())
@@ -183,7 +196,8 @@ void MapUI::renderMap() {
 						break;
 					}
 				}
-				if(!drawnEffects){
+				if(!drawnEffectsGhosts){
+				    drawTileGhosts(tile_x, tile_y, z, screenx, screeny, scale, tile_height);
 					drawTileEffects(const_cast<Tile*>(tile), screenx, screeny, scale, tile_height);
 				}
 			}
@@ -297,6 +311,55 @@ int MapUI::getMinZ() { // find out how far can we render... if anything is direc
 		}
 	}
 	return 0;
+}
+
+void MapUI::drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height)
+{
+    // go through all tiles around it and see if any of the creatures is moving in direction of this tile
+    for (int i = -1; i <= 1; i++)
+        for (int j = -1; j <= 1; j++) {
+            if (!(i || j)) continue;
+            int tile_x = x+i;
+            int tile_y = y+j;
+            const Tile* tile = Map::getInstance().getTile(tile_x, tile_y, z);
+            if (!tile) continue;
+            int32_t thingsCount = tile->getThingCount() - 1;
+            for (int k = 1; k < thingsCount+1; k++) {
+                const Creature* c = tile->getThingByStackPos(k)->getCreature();
+
+                int screenx2=screenx, screeny2=screeny;
+
+                if (c && c->getWalkState() != 1.) {
+                    if (c->getLookDir() == DIRECTION_SOUTH && !c->isPreWalking()) continue;
+                    if (c->getLookDir() == DIRECTION_NORTH && c->isPreWalking()) continue;
+                    if (c->getLookDir() == DIRECTION_EAST && !c->isPreWalking()) continue;
+                    if (c->getLookDir() == DIRECTION_WEST && c->isPreWalking()) continue;
+                    switch (c->getLookDir()) {
+
+                        case DIRECTION_NORTH:
+                        case DIRECTION_SOUTH:
+                            if (j != -1 || i != 0) continue;
+                            tile_y -= 1;
+                            screeny2 -= 32;
+                            break;
+                        case DIRECTION_WEST:
+                        case DIRECTION_EAST:
+                            if (i != -1 || j != 0) continue;
+                            tile_x -= 1;
+                            screenx2 -= 32;
+                            break;
+
+
+                        default:
+                            continue;
+                    }
+                    c->Blit(screenx2 - (int)(tile_height*8.*scale),
+                            screeny2 - (int)(tile_height*8.*scale),
+                            scale, tile_x, tile_y);
+                }
+            }
+        }
+
 }
 
 void MapUI::drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height)

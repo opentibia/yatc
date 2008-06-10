@@ -57,7 +57,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		return;
 
 	x = x - m_obj->xOffset;
-	y = y - m_obj->xOffset;
+	y = y - m_obj->yOffset;
 
     Creature* n = (Creature*)this;
 

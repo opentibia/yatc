@@ -42,9 +42,9 @@ public:
 	virtual Creature* getCreature() {return this;}
 	virtual const Creature* getCreature() const {return this;}
 
-	bool isPlayer() { return (m_id & 0x10000000 != 0) && (m_id & 0x20000000 == 0); }
-	bool isMonster() { return (m_id & 0x40000000 != 0); }
-	bool isNpc() { return (m_id & 0x10000000 != 0) && (m_id & 0x20000000 != 0); }
+	bool isPlayer() const { return (m_id & 0x10000000 != 0) && (m_id & 0x20000000 == 0); }
+	bool isMonster() const { return (m_id & 0x40000000 != 0); }
+	bool isNpc() const { return (m_id & 0x10000000 != 0) && (m_id & 0x20000000 != 0); }
 
 	void setSquare(uint32_t color);
 	uint32_t getSquareColor(){ return m_squareColor;}
@@ -53,37 +53,37 @@ public:
 	void setMoving(const Position& oldPos);
 
 	void setId(uint32_t id){ m_id = id;}
-	uint32_t getId() { return m_id;}
+	uint32_t getId() const { return m_id;}
 
 	void setName(const std::string& name) { m_name = name;}
-	const std::string& getName() { return m_name;}
+	const std::string& getName() const { return m_name;}
 
 	void setHealth(uint32_t health) { m_health = health;}
 	uint32_t getHealth() {return m_health;}
 
 	void setLookDir(Direction dir) { m_lookdir = dir;}
-	Direction getLookDir(){ return m_lookdir;}
+	Direction getLookDir() const { return m_lookdir;}
 
 	void setTurnDir(Direction dir) { m_turndir = dir;}
-	Direction getTurnDir(){ return m_turndir;}
+	Direction getTurnDir() const { return m_turndir;}
 
 	Outfit_t& getOutfit() { return m_outfit;}
 	const Outfit_t& getOutfit() const { return m_outfit;}
 
 	void setLightLevel(uint32_t level){ m_lightLevel = level;}
-	uint32_t getLightLevel() { return m_lightLevel;}
+	uint32_t getLightLevel() const { return m_lightLevel;}
 
 	void setLightColor(uint32_t color){ m_lightColor = color;}
-	uint32_t getLightColor() { return m_lightColor;}
+	uint32_t getLightColor() const { return m_lightColor;}
 
 	void setSpeed(uint32_t speed) { m_speed = speed;}
-	uint32_t getSpeed() { return m_speed;}
+	uint32_t getSpeed() const { return m_speed;}
 
 	void setSkull(uint32_t skull) { m_skull = skull;}
-	uint32_t getSkull() { return m_skull;}
+	uint32_t getSkull() const { return m_skull;}
 
 	void setShield(uint32_t shield) { m_shield = shield;}
-	uint32_t getShield() { return m_shield;}
+	uint32_t getShield() const { return m_shield;}
 
 protected:
 	Creature();
