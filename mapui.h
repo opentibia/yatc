@@ -24,7 +24,10 @@ class MapUI {
 		uint32_t m_vph;
 	protected:
 		void drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height);
+        void drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height);
+
 		int getMinZ();
+
 };
 
 #endif

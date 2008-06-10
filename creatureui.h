@@ -37,8 +37,8 @@ public:
 	void confirmWalk() { m_preWalk = false; }
 	void advanceWalk(int groundspeed);
 	void getWalkOffset(float &walkoffx, float &walkoffy, float scale=1.f) const;
-	bool isPreWalking() {return m_preWalk;}
-	float getWalkState() {return m_walkState;}
+	bool isPreWalking() const {return m_preWalk;}
+	float getWalkState() const {return m_walkState;}
 protected:
 	void unloadGfx();
 
