@@ -203,7 +203,7 @@ const char* Connection::getErrorDesc(int message)
 	case ERROR_UNEXPECTED_RECV_ERROR:
 		return "Unexpected recv() error.";
 	case ERROR_DECRYPT_FAIL:
-		return "Decrypting of message failed.";
+		return "Decrypting of message failed. In Network options, try changing option \"OT Key\".";
 	case ERROR_WRONG_MSG_SIZE:
 		return "Message size is wrong.";
 	case ERROR_SEND_FAIL:
