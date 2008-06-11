@@ -22,7 +22,7 @@
 #include "protocolgame811.h"
 
 ProtocolGame811::ProtocolGame811(int account, const std::string& password, const std::string& name, bool isGM) :
-ProtocolGame81(account, password, name, isGM)
+ProtocolGame80(account, password, name, isGM)
 {
 	//
 }
@@ -34,5 +34,5 @@ ProtocolGame811::~ProtocolGame811()
 
 void ProtocolGame811::checkVersion()
 {
-	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_810);
+	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_811);
 }

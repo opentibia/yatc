@@ -353,60 +353,68 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 	pos.y = ptry;
 
 
-	if (event.button.state == SDL_PRESSED){
-		if (SDL_GetModState() & KMOD_ALT) {
-			// TODO (nfries88): attacking
-			printf("Attacking!\n");
-			const Creature* creature = NULL;
-			m_mapui.attackCreature(pos.x, pos.y, creature);
-			if(creature != NULL) {
-				if(creature->getID() != GlobalVariables::getPlayerID()) {
-					m_protocol->sendAttackCreature(creature->getID());
-					GlobalVariables::setAttackID(creature->getID());
-				}
-			}
-		} else if (SDL_GetModState() & KMOD_CTRL) {
-			printf("It's a use\n");
-			const Thing* thing;
-			int x,y,z;
-			int stackpos;
-			bool isextended;
-
-			m_mapui.useItem(pos.x, pos.y, thing, x, y, z, stackpos, isextended);
-			if (stackpos != -1) {
-				if (!isextended) {
-					printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
-					m_protocol->sendUseItem(Position(x,y,z), thing->getID(), stackpos );
-				} else {
-					m_consoles[0].Insert(ConsoleEntry("No support for extended use yet"));
-				}
-			}
-		} else if (SDL_GetModState() & KMOD_SHIFT) {
-		    printf("It's a look\n");
-			const Thing* thing;
-			int x,y,z;
-			int stackpos;
-
-			m_mapui.lookAtItem(pos.x, pos.y, thing, x, y, z, stackpos);
-			if (stackpos != -1) {
-                printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
-                m_protocol->sendLookItem(Position(x,y,z), thing->getID(), stackpos );
-			}
-		} else {
-			// TODO (nfries88): select draggable item
-		}
-	} else if (event.button.state == SDL_RELEASED) {
-		// TODO (nfries88): drag items
-		// TODO (nfries88): walk by clicking
-	}
-
-
 	desktop.TransformScreenCoords(&pos);
 
-	if (event.button.state == SDL_PRESSED)
-		desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
-	if (event.button.state != SDL_PRESSED)
-		desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+    if (event.type == SDL_MOUSEMOTION) {
+        #if (GLICT_APIREV >= 67)
+        desktop.CastEvent(GLICT_MOUSEMOVE, &pos, 0);
+        #else
+        #warning We need GLICT apirev 67 or greater to support basic movable windows.
+        #endif
+    } else {
+        if (event.button.state == SDL_PRESSED){
+            if (SDL_GetModState() & KMOD_ALT) {
+                // TODO (nfries88): attacking
+                printf("Attacking!\n");
+                const Creature* creature = NULL;
+                m_mapui.attackCreature(pos.x, pos.y, creature);
+                if(creature != NULL) {
+                    if(creature->getID() != GlobalVariables::getPlayerID()) {
+                        m_protocol->sendAttackCreature(creature->getID());
+                        GlobalVariables::setAttackID(creature->getID());
+                    }
+                }
+            } else if (SDL_GetModState() & KMOD_CTRL) {
+                printf("It's a use\n");
+                const Thing* thing;
+                int x,y,z;
+                int stackpos;
+                bool isextended;
+
+                m_mapui.useItem(pos.x, pos.y, thing, x, y, z, stackpos, isextended);
+                if (stackpos != -1) {
+                    if (!isextended) {
+                        printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
+                        m_protocol->sendUseItem(Position(x,y,z), thing->getID(), stackpos );
+                    } else {
+                        m_consoles[0].Insert(ConsoleEntry("No support for extended use yet"));
+                    }
+                }
+            } else if (SDL_GetModState() & KMOD_SHIFT) {
+                printf("It's a look\n");
+                const Thing* thing;
+                int x,y,z;
+                int stackpos;
+
+                m_mapui.lookAtItem(pos.x, pos.y, thing, x, y, z, stackpos);
+                if (stackpos != -1) {
+                    printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
+                    m_protocol->sendLookItem(Position(x,y,z), thing->getID(), stackpos );
+                }
+            } else {
+                // TODO (nfries88): select draggable item
+            }
+        } else if (event.button.state == SDL_RELEASED) {
+            // TODO (nfries88): drag items
+            // TODO (nfries88): walk by clicking
+        }
+
+        if (event.button.state == SDL_PRESSED)
+            desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
+        if (event.button.state != SDL_PRESSED)
+            desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+
+    }
 
 	// Scene();
 
@@ -459,7 +467,7 @@ void GM_Gameworld::onCreatureMove(uint32_t id)
 	if (id != GlobalVariables::getPlayerID() || !Creatures::getInstance().getPlayer()->isPreWalking() )
 		Creatures::getInstance().getCreature(id)->startWalk();
 	Creatures::getInstance().getCreature(id)->confirmWalk();
-	printf("Moving %d\n", id);
+//	printf("Moving %d\n", id);
 
 }
 

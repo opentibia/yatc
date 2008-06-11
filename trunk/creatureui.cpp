@@ -28,6 +28,7 @@
 
 static std::map<uint32_t, Sprite*> s_spritecache;
 extern uint32_t g_frameTime;
+extern uint32_t g_frameDiff;
 
 CreatureUI::CreatureUI() : ThingUI()
 {
@@ -216,13 +217,9 @@ void CreatureUI::advanceWalk(int groundspeed)
 		return;
 	}
 
-	// FIXME (nfries88) sometimes FPS counter is incorrect (well over 100 or only 1)
-	// causing this to be way too slow or way too fast.
-	// QUESTION (ivucica) i think i fixed the fps counter, does this still need rework?
-	m_walkState += (n->getSpeed() / (float)groundspeed) / g_engine->getFps();
+	m_walkState += (n->getSpeed() / (float)groundspeed) * (g_frameDiff/1000.);
 	if (m_walkState >= 1)
 		m_walkState = 1;
-
 }
 
 void CreatureUI::loadOutfit()

@@ -41,8 +41,7 @@ void MapUI::renderMap() {
 		ui = g_engine->createSprite("Tibia.pic", 3);
 	}
 
-
-
+    //g_engine->setClipping(64,64,14*32,10*32);
 
 	// set up scale
 	float scale = 1.f;
@@ -291,6 +290,8 @@ void MapUI::renderMap() {
 
 		}
 	}
+
+	g_engine->resetClipping();
 
 	if(player)
 		player->advanceWalk(playerspeed);

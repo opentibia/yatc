@@ -25,16 +25,19 @@
 
 	#include <assert.h>
 
-	#define ASSERT(x) assert(x)
-	#ifdef WIN32
-		#include <windows.h>
-		#include <assert.h>
+	//#ifdef WIN32
+	//	#include <windows.h>
+	//	#include <assert.h>
 
-		#define ASSERTFRIENDLY(x, y) if (!(x)) { MessageBox(HWND_DESKTOP, y, "Something unpredicted happened! :(", MB_ICONSTOP); assert(x); }
-	#else
+	//	#define ASSERTFRIENDLY(x, y) if (!(x)) { MessageBox(HWND_DESKTOP, y, "Something unpredicted happened! :(", MB_ICONSTOP); assert(x); }
+	//#else
 
-		#define ASSERTFRIENDLY(x, y) if (!(x)) { printf("Assertion failure, forcing crash. (Reason: %s)\n", y); fflush(stdout); exit(1);/*printf("%d", 43/0);*/ }
-	#endif
+	//	#define ASSERTFRIENDLY(x, y) if (!(x)) { printf("Assertion failure, forcing crash. (Reason: %s)\n", y); fflush(stdout); exit(1);/*printf("%d", 43/0);*/ }
+	//#endif
+
+	#include "util.h"
+	#define ASSERTFRIENDLY(x,y) if (!(x)) { NativeGUIError((y), "Assertion failed"); abort(); }
+	#define ASSERT(x) ASSERTFRIENDLY(x, "Assertion '" #x "' failed");
 #else
 	#define ASSERT(x)
 	#define ASSERTFRIENDLY(x, y)

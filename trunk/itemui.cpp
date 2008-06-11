@@ -73,19 +73,19 @@ ItemUI::ItemUI(uint16_t id) : ThingUI()
 
 ItemUI::~ItemUI()
 {
-    if (Objects::getInstance()->unloadDat()) {
+    if (!Objects::getInstance()->isLoaded()) {
         printf("Destroying item %d after dat was unloaded\n", m_id);
         return;
     }
     ObjectType* obj = Objects::getInstance()->getItemType(m_id);
-    printf("Destroying an item of type %d\n", m_id);
+    //printf("Destroying an item of type %d\n", m_id);
     if (obj)
 		if(obj->instancesOnMap){
 			obj->instancesOnMap--;
-			printf("Remaining: %d\n", obj->instancesOnMap);
+			//printf("Remaining: %d\n", obj->instancesOnMap);
 			if (!obj->instancesOnMap) obj->unloadGfx();
 		} else {
-		    printf("Already unloaded\n");
+		    //printf("Already unloaded\n");
 		}
 }
 

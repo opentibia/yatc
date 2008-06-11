@@ -44,9 +44,14 @@ class EngineSDL : public Engine
 			SDL_Flip(m_screen);
 		}
 
+        void setClipping(int top, int left, int width, int height) {
+            SDL_Rect r = {top, left, width, height};
+            SDL_SetClipRect(m_screen, &r);
+        }
 		void resetClipping() {
 		    SDL_SetClipRect(m_screen, NULL);
 		}
+		const char* getName() const {return "SDL 1.2";}
 
 	protected:
 

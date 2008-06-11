@@ -61,6 +61,7 @@ bool g_running = false;
 
 Connection* g_connection = NULL;
 uint32_t g_frameTime = 0;
+uint32_t g_frameDiff = 0;
 
 int g_frames;
 
@@ -390,6 +391,7 @@ int main(int argc, char *argv[])
 				}
 			}
 			//update current frame time
+			g_frameDiff = SDL_GetTicks() - g_frameTime;
 			g_frameTime = SDL_GetTicks();
 
 
