@@ -259,11 +259,13 @@ public:
 		// FIXME (ivucica#4#) insert comma after every three characters
 		s << GlobalVariables::getPlayerStat(STAT_EXPERIENCE);
 		lblExperienceRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 5);
+		lblExperienceRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblExperienceRight.SetCaption(s.str());
 
 		s.str("");
 		s << GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_LEVEL);
 		lblLevelRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 15);
+		lblLevelRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblLevelRight.SetCaption(s.str());
 
 		pbExperience.SetValue(GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_PERCENT));
@@ -273,26 +275,31 @@ public:
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_HEALTH_MAX); // TODO (ivucica#1#) check if this should be CURRENT or MAX hp
 		lblHPRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 35);
+		lblHPRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblHPRight.SetCaption(s.str());
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_MANA_MAX); // TODO (ivucica#1#) check if this should be CURRENT or MAX mp
 		lblMPRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 45);
+		lblMPRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblMPRight.SetCaption(s.str());
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_SOUL);
 		lblSPRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 55);
+		lblSPRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblSPRight.SetCaption(s.str());
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_CAPACITY);
 		lblCapRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 65);
+		lblCapRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblCapRight.SetCaption(s.str());
 
 		s.str("");
 		s << int(GlobalVariables::getPlayerStat(STAT_STAMINA) / 60) << ":" <<  std::setw(2) << std::setfill('0') << GlobalVariables::getPlayerStat(STAT_STAMINA) % 60;
 		lblStaRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 75);
+		lblStaRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblStaRight.SetCaption(s.str());
 
 		pbStamina.SetValue((GlobalVariables::getPlayerStat(STAT_STAMINA) / (56*60.)) * 100.); /* 56 hours 60 minutes is max stamina so far */
@@ -300,6 +307,7 @@ public:
 		s.str("");
 		s << GlobalVariables::getPlayerSkill(SKILL_MAGIC, SKILL_ATTR_LEVEL);
 		lblMagicLevelRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 95);
+		lblMagicLevelRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblMagicLevelRight.SetCaption(s.str());
 
 		pbMagicLevel.SetValue(GlobalVariables::getPlayerSkill(SKILL_MAGIC, SKILL_ATTR_PERCENT));
@@ -309,6 +317,7 @@ public:
 			s.str("");
 			s << GlobalVariables::getPlayerSkill((SkillList_t)(SKILL_FIST + i), SKILL_ATTR_LEVEL);
 			lblSkillRight[i].SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 125 + i*20);
+			lblSkillRight[i].SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 			lblSkillRight[i].SetCaption(s.str());
 
 			pbSkill[i].SetValue(GlobalVariables::getPlayerSkill((SkillList_t)(SKILL_FIST + i), SKILL_ATTR_PERCENT));
