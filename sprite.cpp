@@ -331,7 +331,7 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 		return;
 	}
 	if(!templatespr->getBasicImage()){
-		printf("!templatespr->getBasicImage()\n");
+		//printf("!templatespr->getBasicImage()\n");
 		return;
 	}
 	if(!m_image){

@@ -312,7 +312,7 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
         DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Switch to main menu\n");
         delete g_game;
         g_game = new GM_MainMenu;
-        break;
+        return;
 	case SDLK_F11:
 		action = 255;
 		break;
@@ -324,7 +324,7 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
 	case 0: // invalid action / ignore
 		break;
 	case 1: // do move or turn
-		if (Creatures::getInstance().getPlayer()->getWalkState() == 1.) {
+		if (!Creatures::getInstance().getPlayer()->isPreWalking()) {
 			Creatures::getInstance().getPlayer()->setLookDir(dir);
 
 			if (key.mod & KMOD_CTRL)
