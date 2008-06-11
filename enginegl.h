@@ -45,6 +45,7 @@ class EngineGL : public Engine
 			return new SpriteGL(filename, index);
 		}
 
+        virtual const char* getName() const {return "OpenGL";}
 	protected:
 
 		static void font_render(const char* txt, const void* font, float x, float y);

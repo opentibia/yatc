@@ -51,7 +51,7 @@ class Engine
 
 		virtual void Flip() = 0;
 
-		uint32_t getFps() { return (uint32_t)m_fps; }
+		uint32_t getFps() __attribute__((__deprecated__)){ return (uint32_t)m_fps; }
 
         void performFpsCalc();
 
@@ -59,6 +59,13 @@ class Engine
 
         virtual void resetClipping() {
         }
+        virtual void setClipping(int top, int left, int width, int height) {
+            static bool printedwarning = false;
+            if (printedwarning) return;
+            printedwarning = true;
+            printf("warning: engine %s did not redefine %s\n", getName(), __PRETTY_FUNCTION__);
+        }
+        virtual const char* getName() const {return "Unknown";}
 	protected:
 		Engine();
 		void initFont(glictFont** fnt, const char* fontname);
@@ -75,8 +82,8 @@ class Engine
 		int m_video_bpp;
 
 		float m_fps;
-		SDL_TimerID m_fpstimer __attribute__((__deprecated__));
-		SDL_mutex *m_fpsmutex __attribute__((__deprecated__));
+		//SDL_TimerID m_fpstimer __attribute__((__deprecated__));
+		//SDL_mutex *m_fpsmutex __attribute__((__deprecated__));
 
 		glictFont *m_sysfont, *m_minifont, *m_aafont, *m_gamefont;
 		SDL_Surface* m_screen;

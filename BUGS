@@ -2,6 +2,10 @@ This is a list of known bugs. It's a reference for us to know what to fix, and f
 
 Again: do NOT repeat the bugs stated here. Only tell about them if they're stated as FIXED but you still experience them.
 
+To report bugs and see more currently reported bugs:
+ http://tornado.zrs.hr/~ivucica/otflyspray/index.php?project=2&do=index
+Please sign in when reporting bugs on OTFlyspray!
+
 Bugs begin:
 
 * this list is not categorized ;)
@@ -11,14 +15,18 @@ Bugs begin:
 * login status box does not appear during second logon
 	- FIXED
 * dragging window does not display its contents while it is being dragged
+    - FIXED
 * dragging the box in scrollbar does not work
 * scrollbar is not skinned
 * names of creatures are not centered
+    - FIXED
 * names of creatures seem to be printed with wrong font width
 * there are differences in width of text typed out in textbox and one that appears in console
-* automake doesnt install into $prefix/games, but into $prefix/bin which is wrong 
+* automake doesnt install into $prefix/games, but into $prefix/bin which is wrong
 	- NOTBUG Possibly. People from debian-devel-games say it should
 	  be this way, and ./configure --bindir=\\\$(prefix)/games specifies
 	  the directory.
 * sdl engine knows no clipping
+    - FIXED
 * ghosting is not implemented
+    - FIXED

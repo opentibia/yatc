@@ -22,12 +22,12 @@
 #ifndef __PROTOCOLGAME811_H
 #define __PROTOCOLGAME811_H
 
-#include "protocolgame81.h"
+#include "protocolgame80.h"
 
 class Thing;
 class Item;
 
-class ProtocolGame811 : public ProtocolGame81
+class ProtocolGame811 : public ProtocolGame80
 {
 	public:
 		virtual ~ProtocolGame811();

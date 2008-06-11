@@ -79,4 +79,5 @@ void ProtocolGame::onConnect()
 	m_password = "";
 	m_name = "";
 	m_isGM = 0;
+	checkVersion();
 }

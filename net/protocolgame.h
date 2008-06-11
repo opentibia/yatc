@@ -102,6 +102,10 @@ class ProtocolGame : public Protocol
 		virtual void sendRequestQuestLog() = 0;
 		virtual void sendRequestQuest(uint16_t questid) = 0;
 
+
+		// protocol version assertion
+		virtual void checkVersion() = 0;
+
 	protected:
 
 		ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM);
