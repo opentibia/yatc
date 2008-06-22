@@ -106,6 +106,13 @@ class ProtocolGame : public Protocol
 		// protocol version assertion
 		virtual void checkVersion() = 0;
 
+
+
+        // translators
+        virtual SpeakClasses_t translateSpeakClassToInternal(char s){return (SpeakClasses_t)s;}
+        virtual char translateSpeakClassFromInternal(SpeakClasses_t s){return s;}
+
+
 	protected:
 
 		ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM);

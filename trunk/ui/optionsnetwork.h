@@ -99,6 +99,8 @@ public:
 		btnProtocol[CLIENT_VERSION_810].SetCaption("Protocol 8.1");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_811]);
 		btnProtocol[CLIENT_VERSION_811].SetCaption("Protocol 8.11");
+		window.AddObject(&btnProtocol[CLIENT_VERSION_820]);
+		btnProtocol[CLIENT_VERSION_820].SetCaption("Testserver 8.2");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_AUTO]);
 		btnProtocol[CLIENT_VERSION_AUTO].SetCaption("Autodetect");
 

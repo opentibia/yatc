@@ -54,9 +54,12 @@ read version
 
 svn revert debian/changelog
 svn revert product.h
+svn revert README
 
 sed s/0.2SVN/$version/g product.h > product.h.new
 mv product.h.new product.h
+sed s/0.2SVN/$version/g README > README.new
+mv README.new README
 
 if [ -z $srcrelease ]; then
 	srcrelease='y'
@@ -229,4 +232,4 @@ EOF
 fi
 
 echo "Reverting configure.ac and product.h"
-svn revert configure.ac product.h
+svn revert configure.ac product.h README

@@ -273,6 +273,9 @@ void Options::Load()
 		case 811:
 			protocol = CLIENT_VERSION_811;
 			break;
+		case 820:
+			protocol = CLIENT_VERSION_820;
+			break;
     }
 
 	configHandler->clear();

@@ -47,7 +47,7 @@ GM_MainMenu::GM_MainMenu()
 	pnlMainMenu.btnOptions.SetOnClick(GM_MainMenu::pnlMainMenu_btnOptions_OnClick);
 	pnlMainMenu.btnAbout.SetOnClick(GM_MainMenu::pnlMainMenu_btnAbout_OnClick);
 	pnlMainMenu.btnExit.SetOnClick(GM_MainMenu::pnlMainMenu_btnExit_OnClick);
-	
+
 	/* ****************** LOGIN SCREEN *********************** */
 	desktop.AddObject(&winLogin.window);
 	winLogin.btnOk.SetOnClick(GM_MainMenu::winLogin_btnOk_OnClick);
