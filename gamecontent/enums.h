@@ -104,7 +104,8 @@ enum SpeakClasses_t{
 	SPEAK_WHISPER       = 0x02,
 	SPEAK_YELL          = 0x03,
 
-	SPEAK_PRIVATE       = 0x04,
+	SPEAK_PRIVATE       = 0x04, // player to player, before 8.2 this was 0x04, after this is 0x06
+
 	SPEAK_BROADCAST     = 0x09,
 	SPEAK_PRIVATE_RED   = 0x0B,	//@name@text
 
@@ -118,7 +119,11 @@ enum SpeakClasses_t{
 	SPEAK_CHANNEL_UNK8  = 0x08,
 
 	SPEAK_MONSTER_SAY   = 0x10,
-	SPEAK_MONSTER_YELL  = 0x11
+	SPEAK_MONSTER_YELL  = 0x11,
+
+
+	SPEAK_PRIVATE_PN, // player to npc, from 8.2 onwards
+	SPEAK_PRIVATE_NP  // npc to player, from 8.2 onwards
 };
 
 struct CharacterList_t{

@@ -169,7 +169,7 @@ are as follows:
  otkey
   If we're connecting to an OpenTibia server, set to 1, otherwise 0.
  protocol
-  Protocol version. Valid are 800, 810 and 811.
+  Protocol version. Valid are 800, 810, 811 and 820.
  overrideversion
   Version to represent to server although another protocol is used. Server
   uses same protocol that's specified under 'protocol', but requires a
