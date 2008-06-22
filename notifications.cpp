@@ -112,6 +112,20 @@ void Notifications::onProtocolError(bool fatal)
 		}
 	}
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "********************************************************\n");
+	{
+        std::stringstream s;
+        s << "There was a protocol error." << std::endl;
+        s << std::endl;
+        s << "If you use GNU/Linux, please see your terminal for more information." << std::endl;
+        s << "If you use Windows, please see stdout.txt for more information." << std::endl;
+        s << std::endl;
+        s << "Report this bug if you are able to reproduce it." << std::endl;
+        s << "Tell us what we have to do to reproduce the bug, and provide us with" << std::endl;
+        s << "last 20 lines of stdout.txt, or the output on the terminal, depending" << std::endl;
+        s << "on your operating system." << std::endl;
+        s << std::endl;
+        NativeGUIError(s.str().c_str(), "Protocol error");
+	}
 }
 
 
