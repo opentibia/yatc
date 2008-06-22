@@ -102,6 +102,10 @@ class ProtocolGame80 : public ProtocolGame
 		virtual void sendRequestQuestLog();
 		virtual void sendRequestQuest(uint16_t questid);
 
+
+        virtual void sendCloseShop() {} // does not exist in 8.0-8.11 family of protocols
+        virtual void sendCloseNPCChannel() {} // does not exist in 8.0-8.11 family of protocols
+
 	protected:
 		ProtocolGame80(int account, const std::string& password, const std::string& name, bool isGM);
 
@@ -117,7 +121,7 @@ class ProtocolGame80 : public ProtocolGame
 		bool internalSetOutfit(NetworkMessage& msg, Outfit_t& outfit);
 
 		int16_t m_skipTiles;
-		
+
 		// protocol version assertion
 		virtual void checkVersion();
 
