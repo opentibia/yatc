@@ -103,6 +103,9 @@ class ProtocolGame82 : public ProtocolGame
 		virtual void sendRequestQuest(uint16_t questid);
 
 
+        virtual void sendCloseShop(); // player closes npc shop
+        virtual void sendCloseNPCChannel();
+
         // translators
         virtual char translateSpeakClassFromInternal(SpeakClasses_t s);
         virtual SpeakClasses_t translateSpeakClassToInternal(char s);

@@ -748,13 +748,14 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			MSG_READ_U16(level);
 			MSG_READ_U8(type);
 			SpeakClasses_t newtype = (SpeakClasses_t)translateSpeakClassToInternal((char)type);
-			switch(type){
+			switch(newtype){
 			case SPEAK_SAY:
 			case SPEAK_WHISPER:
 			case SPEAK_YELL:
 			case SPEAK_MONSTER_SAY:
 			case SPEAK_MONSTER_YELL:
-			case SPEAK_CHANNEL_Y: // npcs
+			case SPEAK_PRIVATE_NP:
+			case SPEAK_PRIVATE_PN:
 			{
 				MSG_READ_POSITION(creaturePos);
 				MSG_READ_STRING(text);
@@ -764,6 +765,8 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			case SPEAK_CHANNEL_R1:
 			case SPEAK_CHANNEL_R2:
 			case SPEAK_CHANNEL_O:
+            case SPEAK_CHANNEL_Y:
+
 			{
 				MSG_READ_U16(channelID);
 				MSG_READ_STRING(text);
@@ -866,35 +869,35 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 		{
 			MSG_READ_U8(messageType);
 			MSG_READ_STRING(text);
-			if(messageType < 0x17 || messageType > 0x26){
+			if(messageType < 0x11 || messageType > 0x26){
 				RAISE_PROTOCOL_ERROR("text message - type");
 			}
 			switch(messageType){
-			    case 0x17:
+			    case 0x11:
                     messageType = MSG_STATUS_CONSOLE_RED;
                     break;
-                case 0x19:
+                case 0x13:
                     messageType = MSG_STATUS_CONSOLE_ORNG;
                     break;
-                case 0x20:
+                case 0x14:
                     messageType = MSG_STATUS_WARNING;
                     break;
-                case 0x21:
+                case 0x15:
                     messageType = MSG_EVENT_ADVANCE;
                     break;
-                case 0x22:
+                case 0x16:
                     messageType = MSG_EVENT_DEFAULT;
                     break;
-                case 0x23:
+                case 0x17:
                     messageType = MSG_STATUS_DEFAULT;
                     break;
-                case 0x24:
+                case 0x18:
                     messageType = MSG_INFO_DESCR;
                     break;
-                case 0x25:
+                case 0x19:
                     messageType = MSG_STATUS_SMALL;
                     break;
-                case 0x26:
+                case 0x1A:
                     messageType = MSG_STATUS_CONSOLE_BLUE;
                     break;
                 default:
@@ -1723,7 +1726,16 @@ void ProtocolGame82::sendRequestUpdateContainer(uint8_t containerid)
 	m_outputMessage.addU8(containerid);
 }
 
-
+void ProtocolGame82::sendCloseShop()
+{
+    PROTOCOLGAME_SEND_FUNCTION;
+    m_outputMessage.addMessageType(0x7C);
+}
+void ProtocolGame82::sendCloseNPCChannel()
+{
+    PROTOCOLGAME_SEND_FUNCTION;
+    m_outputMessage.addMessageType(0x9E);
+}
 ///////////////////////////
 char ProtocolGame82::translateSpeakClassFromInternal(SpeakClasses_t s){
     switch(s){
@@ -1810,3 +1822,4 @@ SpeakClasses_t ProtocolGame82::translateSpeakClassToInternal(char s){
     }
     //RAISE_PROTOCOL_ERROR("speakclass translatefromint error");
 }
+

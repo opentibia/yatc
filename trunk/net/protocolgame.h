@@ -102,6 +102,8 @@ class ProtocolGame : public Protocol
 		virtual void sendRequestQuestLog() = 0;
 		virtual void sendRequestQuest(uint16_t questid) = 0;
 
+        virtual void sendCloseShop() = 0;
+        virtual void sendCloseNPCChannel() = 0;
 
 		// protocol version assertion
 		virtual void checkVersion() = 0;
