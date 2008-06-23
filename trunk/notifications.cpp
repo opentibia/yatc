@@ -33,6 +33,7 @@ std::list<std::string>::iterator g_recIt;
 #include "gamecontent/inventory.h"
 #include "gamecontent/map.h"
 #include "debugprint.h"
+#include "util.h"
 
 void Notifications::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
 {
