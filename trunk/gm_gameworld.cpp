@@ -156,8 +156,11 @@ GM_Gameworld::GM_Gameworld()
 	txtConsoleEntry.SetHeight(12);
 	txtConsoleEntry.SetCaption("");
 
+    desktop.AddObject(&pnlConsoleButtonContainer);
+    pnlConsoleButtonContainer.SetBGActiveness(false);
 
-	m_consoles.insert(m_consoles.end(), Console());
+    createConsole(); // add default console
+	m_activeconsole = getDefaultConsole();
 
 	m_startTime = time(NULL);
 
@@ -183,9 +186,14 @@ void GM_Gameworld::doResize(float w, float h)
 
 	pnlTraffic.SetPos(w-200, 0);
 
+    pnlConsoleButtonContainer.SetPos(0,glictGlobals.h-150-14);
+    pnlConsoleButtonContainer.SetWidth(glictGlobals.w);
+    pnlConsoleButtonContainer.SetHeight(14);
+
 	DEBUGPRINT(0,0,"Updating scene\n");
 	updateScene(); // FIXME (ivucica#2#) potentially dangerous during call inside constructor (map possibly not loaded yet) -- gotta check with mips if we may draw map while it still isn't received from server via initial 0x64 packet
 	DEBUGPRINT(0,0,"Scene updated\n");
+
 
 }
 
@@ -232,7 +240,7 @@ void GM_Gameworld::updateScene()
 	m_mapui.renderMap();
 
 
-	m_consoles[0].Paint(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
+	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
 
 	if (time(NULL)-m_startTime) {
 		double txbph, rxbph, trbph;
@@ -270,8 +278,36 @@ void GM_Gameworld::keyPress (char key)
 
 	txtConsoleEntry.Focus(NULL);
 	if (key==13) {
-		if (txtConsoleEntry.GetCaption().size())
-			m_protocol->sendSay(SPEAK_SAY, txtConsoleEntry.GetCaption());
+		if (txtConsoleEntry.GetCaption().size()) {
+		    bool sent = false;
+		    std::string msg = txtConsoleEntry.GetCaption();
+		    if (getActiveConsole() == getDefaultConsole()) {
+		        if (msg[0] == '*') {
+                    int i = msg.find('*',1);
+                    printf("second * found at %d\n", i);
+                    if (i!=-1) {
+                        std::string recipient = msg.substr(1,i-1);
+                        std::string newmsg = msg.substr(i+1);
+                        printf("recipient: %s\n", recipient.c_str());
+                        m_protocol->sendSay(SPEAK_PRIVATE, recipient,newmsg);
+                        Console*c = findConsole(recipient);
+                        if (c) {
+                            c->insertEntry(ConsoleEntry(newmsg, "You")); // FIXME (ivucica#3#) "you" should be name of player's character
+                        }
+                        sent = true;
+                    }
+		        }
+
+		    } else {
+		        if (getActiveConsole()->getSpeakerName().size()) {
+		            getActiveConsole()->insertEntry(ConsoleEntry(msg, "You"));
+		            m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
+		        }
+		    }
+		    if (!sent) // if we havent sent yet then use the default ...
+                m_protocol->sendSay(SPEAK_SAY, msg);
+		}
+
 		txtConsoleEntry.SetCaption("");
 	} else if(key != 0) {
 		// ALT and CTRL are 0.
@@ -339,7 +375,7 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
 
 	case 255: // debugging action
 		// FIXME (ivucica#1#) debugging action, just for testing (ctrl+a)
-		this->m_consoles[0].Insert(std::string("No debugging action"));
+		getDefaultConsole()->insertEntry(std::string("No debugging action"));
 	}
 
 }
@@ -387,7 +423,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                         printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
                         m_protocol->sendUseItem(Position(x,y,z), thing->getID(), stackpos );
                     } else {
-                        m_consoles[0].Insert(ConsoleEntry("No support for extended use yet"));
+                        getDefaultConsole()->insertEntry(ConsoleEntry("No support for extended use yet"));
                     }
                 }
             } else if (SDL_GetModState() & KMOD_SHIFT) {
@@ -442,24 +478,43 @@ void GM_Gameworld::onCancelWalk()
 
 void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
 {
-	m_consoles[0].Insert(ConsoleEntry(message));
+	getDefaultConsole()->insertEntry(ConsoleEntry(message));
 }
 
 
-//SAY,WHISPER, YELL, MONSTER_SAY, MONSTER_YELL
+//SAY,WHISPER, YELL, MONSTER_SAY, MONSTER_YELL; from 8.2 on, NPC PMs
 void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message)
 {
-	m_consoles[0].Insert(ConsoleEntry(message, name));
+    switch (type){
+    case SPEAK_PRIVATE_NP:
+    case SPEAK_PRIVATE_PN:
+        findConsole("NPCs")->insertEntry(ConsoleEntry(message, name)); // this is bad; this way we disallow potential player called "NPCs"
+        break;
+
+    default:
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, name));
+    }
+
 }
 //SPEAK_CHANNEL_Y, SPEAK_CHANNEL_R1, SPEAK_CHANNEL_R2, SPEAK_CHANNEL_O
 void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message)
 {
-	m_consoles[0].Insert(ConsoleEntry(message, name));
+	getDefaultConsole()->insertEntry(ConsoleEntry(message, name));
 }
 //SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
 void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message)
 {
-	m_consoles[0].Insert(ConsoleEntry(message, name));
+    switch (type) {
+        case SPEAK_PRIVATE:
+            findConsole(name)->insertEntry(ConsoleEntry(message, name));
+            break;
+        default: {
+            std::stringstream s;
+            s << "(private msg of unknown speakclass " << type << ")";
+            getDefaultConsole()->insertEntry(ConsoleEntry(message + s.str(), name));
+        }
+    }
+
 }
 
 void GM_Gameworld::onCreatureMove(uint32_t id)
@@ -480,3 +535,79 @@ void GM_Gameworld::onChangeStats()
 	winSkills.updateSelf();
 }
 
+
+std::vector<Console*>::iterator GM_Gameworld::findConsole_it(uint32_t channelid)
+{
+    for(std::vector<Console*>::iterator it=m_consoles.begin(); it != m_consoles.end(); it++) {
+        if ((*it)->getChannelId() == channelid) {
+            return it;
+        }
+    }
+    createConsole(channelid);
+    return m_consoles.end()-1;
+}
+std::vector<Console*>::iterator GM_Gameworld::findConsole_it(const std::string& speaker)
+{
+    for(std::vector<Console*>::iterator it=m_consoles.begin(); it != m_consoles.end(); it++) {
+        if ((*it)->getSpeakerName() == speaker) {
+            return it;
+        }
+    }
+    printf("Creating console for speaker\n");
+    createConsole(speaker);
+    printf("Success\n");
+    return m_consoles.end()-1;
+}
+
+std::vector<Console*>::iterator GM_Gameworld::findConsole_it(const Console* c)
+{
+    for(std::vector<Console*>::iterator it=m_consoles.begin(); it != m_consoles.end(); it++) {
+        if ((*it) == c) {
+            return it;
+        }
+    }
+    ASSERTFRIENDLY(c, "Code attempted to access a non-existing console")
+    return m_consoles.end();
+}
+void GM_Gameworld::pnlConsoleButton_OnClick(glictPos* relmousepos, glictContainer* caller)
+{
+    Console* c = (Console*)caller->GetCustomData();
+    GM_Gameworld* gw = (GM_Gameworld*)g_game;
+    //std::vector<Console*>::iterator cit = gw->findConsole_it(c);
+    gw->setActiveConsole(c);
+
+}
+void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
+{
+    Console* nc;
+    std::stringstream s;
+    if (channelid) {
+        nc = new Console(channelid);
+        s << channelid;
+    } else if (speaker.size()) {
+        nc = new Console(speaker);
+        s << speaker;
+    } else {
+        nc = new Console();
+        s << "Console";
+    }
+
+
+    glictPanel* p = new glictPanel;
+    p->SetCustomData(nc);
+    p->SetHeight(14);
+    p->SetCaption(s.str().c_str());
+    p->SetWidth(g_engine->sizeText(s.str().c_str(),"system"));
+    p->SetBGColor(.2,.2,.2,1.);
+    int sum=0;
+    for (std::vector<glictPanel*>::iterator it = pnlConsoleButtons.begin(); it != pnlConsoleButtons.end(); it++) {
+        (*it)->SetPos(sum,0);
+        sum += (*it)->GetWidth();
+    }
+    p->SetPos(sum,0);
+    p->SetOnClick(pnlConsoleButton_OnClick);
+    pnlConsoleButtonContainer.AddObject(p);
+    pnlConsoleButtons.push_back(p);
+
+    m_consoles.push_back(nc);
+}

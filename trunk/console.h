@@ -52,7 +52,7 @@ class ConsoleEntry {
 			m_color = c;
 			m_timestamp = time(NULL);
 		}
-		int Paint(float x, float y);
+		int paintEntry(float x, float y);
 	private:
 		std::string m_text, m_speaker;
 		ConsoleColor m_color;
@@ -61,12 +61,22 @@ class ConsoleEntry {
 class Console {
 	public:
 		Console();
+		Console(uint32_t channelid);
+		Console(std::string speakername);
 		virtual ~Console();
 
-		void Paint(float left, float top, float right, float bottom);
-		void Insert(ConsoleEntry ce);
+		void paintConsole(float left, float top, float right, float bottom);
+		void insertEntry(ConsoleEntry ce);
+
+        const std::string& getSpeakerName() const { return m_speakername; }
+        uint32_t getChannelId()  const { return m_channelid; }
+        int getConsoleId() const {return m_consoleid;}
 	private:
 		std::vector <ConsoleEntry> m_content;
 		SDL_Surface *m_surface;
+		std::string m_speakername;
+		uint32_t m_channelid;
+		int m_consoleid;
 };
+
 #endif

@@ -20,7 +20,7 @@
 
 
 // WARNING!
-// Current implementation is not completely certified.
+// Current implementation is not completely verified.
 // It's based on this thread: http://otfans.net/showthread.php?t=119929
 // This has not been thouroughly tested because, simply, there is no server
 // yet that can truly handle 8.2.
@@ -523,9 +523,10 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 		{
 			MSG_READ_POSITION(effectPos);
 			MSG_READ_U8(effect);
-			if(effect == 0 || effect > 35){
+			// FIXME (ivucica#5#) should ask Objects class if its in range and not conclude on its own
+/*			if(effect == 0 || effect > 35){
 				RAISE_PROTOCOL_ERROR("Magic effect - out of range");
-			}
+			}*/
 			Tile* tile = Map::getInstance().getTile(effectPos);
 			if(!tile){
 				RAISE_PROTOCOL_ERROR("Magic effect - !tile");
@@ -546,9 +547,10 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			MSG_READ_POSITION(fromPos);
 			MSG_READ_POSITION(toPos);
 			MSG_READ_U8(effect);
-			if(effect == 0 || effect > 28){
+			// FIXME (ivucica#5#) should ask Objects class if it's out of range and not conclude on its own
+/*			if(effect == 0 || effect > 28){
 				RAISE_PROTOCOL_ERROR("Distance shoot - out of range");
-			}
+			}*/
 			Map::getInstance().addDistanceEffect(fromPos, toPos, effect);
 			break;
 		}
@@ -748,6 +750,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			MSG_READ_U16(level);
 			MSG_READ_U8(type);
 			SpeakClasses_t newtype = (SpeakClasses_t)translateSpeakClassToInternal((char)type);
+			printf("Translated incoming %02x into %02x\n", type, newtype);
 			switch(newtype){
 			case SPEAK_SAY:
 			case SPEAK_WHISPER:
@@ -759,7 +762,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			{
 				MSG_READ_POSITION(creaturePos);
 				MSG_READ_STRING(text);
-				Notifications::onCreatureSpeak((SpeakClasses_t)type, unkSpeak, name, level, creaturePos, text);
+				Notifications::onCreatureSpeak((SpeakClasses_t)newtype, unkSpeak, name, level, creaturePos, text);
 				break;
 			}
 			case SPEAK_CHANNEL_R1:
@@ -770,7 +773,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			{
 				MSG_READ_U16(channelID);
 				MSG_READ_STRING(text);
-				Notifications::onCreatureSpeak((SpeakClasses_t)type, unkSpeak, name, level, channelID, text);
+				Notifications::onCreatureSpeak((SpeakClasses_t)newtype, unkSpeak, name, level, channelID, text);
 				break;
 			}
 			case SPEAK_PRIVATE:
@@ -778,7 +781,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			case SPEAK_PRIVATE_RED:
 			{
 				MSG_READ_STRING(text);
-				Notifications::onCreatureSpeak((SpeakClasses_t)type, unkSpeak, name, level, text);
+				Notifications::onCreatureSpeak((SpeakClasses_t)newtype, unkSpeak, name, level, text);
 				break;
 			}
 			case SPEAK_CHANNEL_UNK6:
@@ -1776,6 +1779,9 @@ char ProtocolGame82::translateSpeakClassFromInternal(SpeakClasses_t s){
             return 0x12;
         case SPEAK_MONSTER_YELL:
             return 0x13;
+
+        default: // UNK6, UNK7, UNK8 -- perhaps these are reports? those that we commented out above?
+            RAISE_PROTOCOL_WARNING("speakclass translatefrominternal failed");
     }
     //RAISE_PROTOCOL_ERROR("speakclass translatetoint error");
 }
@@ -1819,6 +1825,10 @@ SpeakClasses_t ProtocolGame82::translateSpeakClassToInternal(char s){
             return SPEAK_MONSTER_SAY;
         case 0x13:
             return SPEAK_MONSTER_YELL;
+        default:
+            printf("speakclass translatetointernal failed\n");
+            return SPEAK_SAY;
+
     }
     //RAISE_PROTOCOL_ERROR("speakclass translatefromint error");
 }

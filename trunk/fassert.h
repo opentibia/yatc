@@ -24,6 +24,7 @@
 #if defined(USEASSERT)
 
 	#include <assert.h>
+    #include <malloc.h>
 
 	//#ifdef WIN32
 	//	#include <windows.h>
@@ -36,7 +37,7 @@
 	//#endif
 
 	#include "util.h"
-	#define ASSERTFRIENDLY(x,y) if (!(x)) { NativeGUIError((y), "Assertion failed"); abort(); }
+	#define ASSERTFRIENDLY(x,y) if (!(x)) { char *res = (char*)malloc(strlen(y) + 100); sprintf(res,"%s\n\nAt file: " __FILE__ "; in line: %d", (y), __LINE__); printf("Assertion failed!\n\n%s\n", res); NativeGUIError(res, "Assertion failed"); abort(); }
 	#define ASSERT(x) ASSERTFRIENDLY(x, "Assertion '" #x "' failed");
 #else
 	#define ASSERT(x)

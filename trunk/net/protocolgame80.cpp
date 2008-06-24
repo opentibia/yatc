@@ -497,9 +497,10 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 		{
 			MSG_READ_POSITION(effectPos);
 			MSG_READ_U8(effect);
-			if(effect == 0 || effect > 35){
+			// FIXME (ivucica#5#) this check should ask the Objects class (the dat reader) and not conclude on its own what's the effects range!
+/*			if(effect == 0 || effect > 35){
 				RAISE_PROTOCOL_ERROR("Magic effect - out of range");
-			}
+			}*/
 			Tile* tile = Map::getInstance().getTile(effectPos);
 			if(!tile){
 				RAISE_PROTOCOL_ERROR("Magic effect - !tile");
@@ -520,9 +521,10 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			MSG_READ_POSITION(fromPos);
 			MSG_READ_POSITION(toPos);
 			MSG_READ_U8(effect);
-			if(effect == 0 || effect > 28){
+			// FIXME (ivucica#5#) should ask the Objects class and not conclude on its own (same as for regular magic effects)
+/*			if(effect == 0 || effect > 28){
 				RAISE_PROTOCOL_ERROR("Distance shoot - out of range");
-			}
+			}*/
 			Map::getInstance().addDistanceEffect(fromPos, toPos, effect);
 			break;
 		}
