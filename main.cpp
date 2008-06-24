@@ -399,7 +399,7 @@ int main(int argc, char *argv[])
                 SDL_Delay(1000/MAXFPS - (g_frameTime - beginticks) - 10);
             }
 
-            while ((int)abs((int)SDL_GetTicks() - beginticks) < 1000/MAXFPS);
+            while ((int)abs(((int)SDL_GetTicks()) - (int)beginticks) < (int)(1000/MAXFPS));
 
 			//check connection
 			if(g_connection){

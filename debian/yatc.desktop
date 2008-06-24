@@ -3,11 +3,13 @@ Version=1.0
 Encoding=UTF-8
 Name=YATC
 Comment=Yet Another Tibia Client
-Comment[hr]=Jao Ajoj Tako Cuckoliko
+Comment[hr]=Jos Jedan Tibia Klijent
+GenericName=Yet Another Tibia Client
+GenericName[hr]=Jos Jedan Tibia Klijent
 Exec=yatc
 StartupNotify=false
 Terminal=false
 Type=Application
 Icon=nautilus.png
-Categories=Application;Game
+Categories=Game;Adventure
 

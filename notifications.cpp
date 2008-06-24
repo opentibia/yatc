@@ -115,7 +115,10 @@ void Notifications::onProtocolError(bool fatal)
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "********************************************************\n");
 	{
         std::stringstream s;
-        s << "There was a protocol error." << std::endl;
+        if (fatal)
+            s << "There was a protocol error: " << error << std::endl;
+        else
+            s << "There was a protocol warning: " << error << std::endl;
         s << std::endl;
         s << "If you use GNU/Linux, please see your terminal for more information." << std::endl;
         s << "If you use Windows, please see stdout.txt for more information." << std::endl;

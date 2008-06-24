@@ -57,7 +57,24 @@ public:
 protected:
 
 private:
+    std::vector<Console*>::iterator getDefaultConsole_it() { return m_consoles.begin(); }
+    std::vector<Console*>::iterator findConsole_it(uint32_t channelid);
+    std::vector<Console*>::iterator findConsole_it(const std::string& speaker);
+    std::vector<Console*>::iterator findConsole_it(const Console* c);
 
+
+
+    Console* getDefaultConsole() { return *getDefaultConsole_it(); }
+    Console* findConsole(uint32_t channelid) { return *findConsole_it(channelid); }
+    Console* findConsole(const std::string& speaker) { return *findConsole_it(speaker); }
+
+    static void pnlConsoleButton_OnClick(glictPos* relmousepos, glictContainer* caller);
+
+    void createConsole(uint32_t channelid=0, const std::string& speaker="");
+    void createConsole(const std::string& speaker) { createConsole(0,speaker); }
+
+    Console* getActiveConsole() const {return m_activeconsole;}
+    void setActiveConsole(Console* i) {m_activeconsole = i;}
 
 	Sprite* ui;
 	glictContainer desktop;
@@ -65,8 +82,12 @@ private:
 	winSkills_t winSkills;
 	glictPanel pnlTraffic;
 	glictTextbox txtConsoleEntry;
+	std::vector<glictPanel*> pnlConsoleButtons;
+    glictPanel pnlConsoleButtonContainer;
 
-	std::vector<Console> m_consoles;
+
+	std::vector<Console*> m_consoles;
+	Console* m_activeconsole;
 
 	uint32_t m_startTime;
 
