@@ -197,15 +197,18 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 			fwrite(&ph, sizeof(ph), 1, fo);
 			for(j = 0; j < ph.height; j++){
 				for(k = 0; k < ph.width; k++){
+					printf("Placing %d %d on %d\n", j, k, sproffset);
 					fwrite(&sproffset, sizeof(sproffset), 1, fo);
 
 					continuationposo = ftell(fo);
 					fseek(fo, sproffset, SEEK_SET);
 					writesprite(fo, s, k * 32, j*32, &datasize);
+					printf("Its size is: %d\n", datasize);
 
 					fseek(fo, continuationposo, SEEK_SET);
 					sproffset += datasize+2;
 				}
+
 
 			}
 			fflush(fo);
