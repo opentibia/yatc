@@ -100,7 +100,7 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 
 	}
 
-	{
+	if (0) {
 		std::stringstream s, count;
 
 		if (item)
@@ -110,7 +110,7 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 		s << "Slot " << (int)slot << "\n" << count.str();
 
 
-		g_engine->drawText(s.str().c_str(), "minifont", (int)real->left + 2, (int)real->top + 2, 0);
+		g_engine->drawText(s.str().c_str(), "minifont", (int)real->left + 2, (int)real->top + 2, TEXTCOLOR_WHITE);
 	}
 
 }
@@ -144,6 +144,9 @@ GM_Gameworld::GM_Gameworld()
 	pnlInventory.panel.SetPos(600, 20);
 	desktop.AddObject(&winSkills.window);
 	winSkills.window.SetPos(600, 180);
+	desktop.AddObject(&pnlHealth.panel);
+	pnlHealth.panel.SetPos(600, 350);
+
 	#endif
 	desktop.AddObject(&pnlTraffic);
 	pnlTraffic.SetPos(10,10);
@@ -292,7 +295,7 @@ void GM_Gameworld::keyPress (char key)
                         m_protocol->sendSay(SPEAK_PRIVATE, recipient,newmsg);
                         Console*c = findConsole(recipient);
                         if (c) {
-                            c->insertEntry(ConsoleEntry(newmsg, "You")); // FIXME (ivucica#3#) "you" should be name of player's character
+                            c->insertEntry(ConsoleEntry(newmsg, "You",TEXTCOLOR_LIGHTBLUE)); // FIXME (ivucica#3#) "you" should be name of player's character
                         }
                         sent = true;
                     }
@@ -300,7 +303,7 @@ void GM_Gameworld::keyPress (char key)
 
 		    } else {
 		        if (getActiveConsole()->getSpeakerName().size()) {
-		            getActiveConsole()->insertEntry(ConsoleEntry(msg, "You"));
+		            getActiveConsole()->insertEntry(ConsoleEntry(msg, "You", TEXTCOLOR_LIGHTBLUE));
 		            m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
 		        }
 		    }
@@ -488,30 +491,54 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     switch (type){
     case SPEAK_PRIVATE_NP:
     case SPEAK_PRIVATE_PN:
-        findConsole("NPCs")->insertEntry(ConsoleEntry(message, name)); // this is bad; this way we disallow potential player called "NPCs"
+        findConsole("NPCs")->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_LIGHTBLUE)); // this is bad; this way we disallow potential player called "NPCs"
         break;
 
     default:
-        getDefaultConsole()->insertEntry(ConsoleEntry(message, name));
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_YELLOW));
     }
 
 }
 //SPEAK_CHANNEL_Y, SPEAK_CHANNEL_R1, SPEAK_CHANNEL_R2, SPEAK_CHANNEL_O
 void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message)
 {
-	getDefaultConsole()->insertEntry(ConsoleEntry(message, name));
+    TextColor_t col;
+    switch(type){
+        case SPEAK_CHANNEL_O:
+            col = TEXTCOLOR_ORANGE;
+            break;
+        case SPEAK_CHANNEL_R1:
+        case SPEAK_CHANNEL_R2:
+            col = TEXTCOLOR_RED;
+            break;
+        default:
+            col = TEXTCOLOR_YELLOW;
+    }
+	getDefaultConsole()->insertEntry(ConsoleEntry(message, name, col));
 }
 //SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
 void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message)
 {
+    TextColor_t col;
+    switch(type){
+        case SPEAK_CHANNEL_O:
+            col = TEXTCOLOR_ORANGE;
+            break;
+        case SPEAK_CHANNEL_R1:
+        case SPEAK_CHANNEL_R2:
+            col = TEXTCOLOR_RED;
+            break;
+        default:
+            col = TEXTCOLOR_YELLOW;
+    }
     switch (type) {
         case SPEAK_PRIVATE:
-            findConsole(name)->insertEntry(ConsoleEntry(message, name));
+            findConsole(name)->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_LIGHTBLUE));
             break;
         default: {
             std::stringstream s;
             s << "(private msg of unknown speakclass " << type << ")";
-            getDefaultConsole()->insertEntry(ConsoleEntry(message + s.str(), name));
+            getDefaultConsole()->insertEntry(ConsoleEntry(message + s.str(), name, TEXTCOLOR_YELLOW));
         }
     }
 
@@ -532,6 +559,7 @@ void GM_Gameworld::onChangeSkills()
 }
 void GM_Gameworld::onChangeStats()
 {
+    pnlHealth.updateSelf();
 	winSkills.updateSelf();
 }
 

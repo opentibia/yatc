@@ -26,7 +26,10 @@
 #include "mapui.h"
 #include "ui/inventory.h"
 #include "ui/skills.h"
+#include "ui/health.h"
+
 class Console;
+
 
 
 class Tile;
@@ -79,6 +82,7 @@ private:
 	Sprite* ui;
 	glictContainer desktop;
 	pnlInventory_t pnlInventory;
+	pnlHealth_t pnlHealth;
 	winSkills_t winSkills;
 	glictPanel pnlTraffic;
 	glictTextbox txtConsoleEntry;

@@ -14,6 +14,8 @@ class Font{
 
 		int getWidth(char t) { return charw[(unsigned char)t]; }
 		int getHeight(char t) { return charh[(unsigned char)t]; }
+		void addColor(float r, float g, float b);
+		void resetColor();
 	private:
 		Sprite* pic;
 		int charx[256], chary[256], charw[256], charh[256];

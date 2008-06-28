@@ -192,3 +192,17 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			break;
 	}
 }
+
+void Font::addColor(float r, float g, float b)
+{
+    // FIXME (ivucica#2#) this is a highly unoptimized way of coloring fonts.
+    //printf("%s\n", __PRETTY_FUNCTION__);
+    if (!this) {printf("NO THIS\n");return;}
+    if (!pic) {printf("NO PIC\n");return;}
+	pic->addColor(r,g,b);
+}
+
+void Font::resetColor()
+{
+	pic->resetColor();
+}

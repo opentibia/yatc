@@ -148,6 +148,13 @@ void GM_Debug::renderScene()
 	if(thing)
 		thing->Blit(100,50);
 
+    std::stringstream testchar;
+    testchar << (char)('u'+32);
+
+    for (int i = 0; i < 255; i++) {
+        g_engine->drawText(testchar.str().c_str(), "system", 0+(i%8)*12,300+(i/8)*12, i);
+    }
+
 	desktop.RememberTransformations();
 	desktop.Paint();
 

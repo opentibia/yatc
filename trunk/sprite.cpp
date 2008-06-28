@@ -415,11 +415,15 @@ uint32_t Sprite::getPixel(int x, int y, SDL_Surface *img)
         img = m_image;
 	int bpp = img->format->BytesPerPixel;
 
+    if (!img->pixels) {
+        //DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Trying to read a pixel from a NIL array - %d, %d on a %dx%d image\n", x, y, img->w, img->h);
+        return 0;
+    }
 	/* Here p is the address to the pixel we want to retrieve */
 	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
 
 	if (x >= img->w || y >= img->h)
-		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "Trying to read a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, img->w, img->h);
+		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Trying to read a pixel out of boundaries - %d, %d on a %dx%d image\n", x, y, img->w, img->h);
 
 
 	switch(bpp){
@@ -491,14 +495,26 @@ void Sprite::addColor(float r, float g, float b)
 	if(r == m_r && g == m_g && b == m_b){
 		return;
 	}
+	SDL_LockSurface(m_image);
+	SDL_LockSurface(m_coloredimage);
+
 	for(int i = 0; i < m_image->w; i++){
 		for(int j =0; j < m_image->h; j++){
-			SDL_GetRGBA(pv=getPixel(i,j, getImage()), getImage()->format, &ro, &go, &bo, &ao);
+		    if (!getBasicImage()) {
+		        printf("I don't have an image!\n");
+		    }
+		    if (!getBasicImage()->pixels) {
+		        printf("I don't have image's pixels!\n");
+		    }
+			SDL_GetRGBA(pv=getPixel(i,j, m_image), m_image->format, &ro, &go, &bo, &ao);
 			if(ao){
-				putPixel(i, j, SDL_MapRGBA(getImage()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
+				putPixel(i, j, SDL_MapRGBA(m_image->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
 			}
 		}
 	}
+
+	SDL_UnlockSurface(m_image);
+	SDL_UnlockSurface(m_coloredimage);
 	m_r = r; m_g = g; m_b = b;
 	Stretch(getImage()->w, getImage()->h, -1, true);
 }

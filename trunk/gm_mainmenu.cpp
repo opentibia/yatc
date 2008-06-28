@@ -62,6 +62,11 @@ GM_MainMenu::GM_MainMenu()
     winOptions.initiateAll(&desktop);
 
 
+    Font* mf = (Font*)(glictFindFont("minifont")->GetFontParam());
+    mf->resetColor();
+    mf = (Font*)(glictFindFont("system")->GetFontParam());
+    mf->addColor(.75,.75,.75);
+
 	pnlMainMenu.btnLogIn.Focus(NULL);
 
 	if (options.ui_compat) {
