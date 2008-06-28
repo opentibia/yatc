@@ -80,7 +80,7 @@ int prob;
 
 int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *datasize)
 {
-	// adaptation of algorithm from Trooper's editor
+    /* adaptation of algorithm from Trooper's editor */
 	int sizepos;
 	unsigned long i;
 	uint16_t chunksize;
@@ -89,16 +89,16 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 	char DO_DEBUG = 0;
 
 	SDL_LockSurface(surface);
-	
-	i = 0; // i == datasize
+
+	i = 0; /* i == datasize */
 	sizepos = ftell(f);
 					if (sizepos == 936424) DO_DEBUG = 1;
 	fseek(f, 2, SEEK_CUR);
 	while (i < 1024) {
 
-	
+
 		// transparency
-		chunksize = 0; 
+		chunksize = 0;
 		while (i < 1024) {
 			unsigned char rgba[4];
 			uint32_t color = getPixel(surface, offx + (i%32), offy + (i/32));
@@ -106,26 +106,25 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 
 			SDL_GetRGBA(color, surface->format, rgba, rgba+1, rgba+2, rgba+3);
 			transparent = (*(rgba) >= 252 && *(rgba+1) <= 3 && *(rgba+2) >= 252);
-			
-			if (!transparent) 
+
+			if (!transparent)
 				break;
 
 			if (DO_DEBUG) printf(".%c", /*transparent, /*((color/256) % 200 + 32), */((i%32 == 31) ? '\n' : 0));
 
 			i++;
-			chunksize++; 
+			chunksize++;
 		}
 		fwrite(&chunksize, 2, 1, f);
-//		printf("\n");
 
 		if (i >= 1024) break;
 		if (transparent) break;
 		// solid
 		chunksizepos = ftell(f);
 		fseek(f, 2, SEEK_CUR);
-		
+
 		chunksize = 0;
-		
+
 		while (i < 1024) {
 			unsigned char rgba[4];
 			uint32_t color = getPixel(surface, offx + (i%32), offy + (i/32));
@@ -133,26 +132,24 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 
 			SDL_GetRGBA(color, surface->format, rgba, rgba+1, rgba+2, rgba+3);
 			transparent = (*(rgba) >= 252 && *(rgba+1) <= 3 && *(rgba+2) >= 252);
-			
+
 			if (transparent)
 				break;
-				
-			
+
+
 			if (DO_DEBUG) printf("%c%c", /*transparent,*/((color/256) % 200 + 32), ((i%32 == 31) ? '\n' : 0));
 
 			fwrite(rgba, 3, 1, f);
-			
+
 			i++;
 			chunksize++;
 		}
 
-//		printf("\n");
-
 		fseek(f, chunksizepos, SEEK_SET);
 		fwrite(&chunksize, 2, 1, f);
-		
+
 		fseek(f, chunksize*3, SEEK_CUR);
-		
+
 	}
 
 	i = ftell(f)-sizepos-2;
@@ -161,8 +158,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 	fseek(f, sizepos, SEEK_SET);
 	fwrite(&i, 2, 1, f);
 	*datasize = i;
-	
-	//printf("\n\n");
+
 	SDL_UnlockSurface(surface);
 	return 0;
 }

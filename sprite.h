@@ -56,6 +56,7 @@ class Sprite
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float width, float height) = 0;
 		virtual void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth) = 0; // stretch from SRCWxSRCH to DESTWxDESTH
         virtual void addColor(float r, float g, float b);
+        virtual void resetColor() {addColor(1,1,1); }
         void templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet);
 		void templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b);
 

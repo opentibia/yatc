@@ -122,6 +122,16 @@ Skin::Skin() {
     tmmb  = NULL;
     tmmbr = NULL;
 
+    invtl = NULL;
+    invt  = NULL;
+    invtr = NULL;
+    invl  = NULL;
+    invc  = NULL;
+    invr  = NULL;
+    invbl = NULL;
+    invb  = NULL;
+    invbr = NULL;
+
 
 }
 Skin::~Skin() {
@@ -202,6 +212,18 @@ void Skin::loadSkin() {
     tmm.SetBL		(tmmbl = new skinImage(44,		231,	5,		5));
     tmm.SetBottom	(tmmb  = new skinImage(43,		219,	32,		5));
     tmm.SetBR		(tmmbr = new skinImage(49,		231,	5,		5));
+
+
+
+    inv.SetTL		(invtl = new skinImage(186,		64, 	1,		1));
+    inv.SetTop		(invt  = new skinImage(187,		64, 	31,		1));
+    inv.SetTR		(invtr = new skinImage(219,		64, 	1,		1));
+    inv.SetLeft		(invl  = new skinImage(186,		65,	    1,		31));
+    inv.SetCenter	(invc  = new skinImage(187,		65,	    31,		31));
+    inv.SetRight	(invr  = new skinImage(219,		65,	    1,		31));
+    inv.SetBL		(invbl = new skinImage(186,		97, 	1,		1));
+    inv.SetBottom	(invb  = new skinImage(187,		97,	    31,		1));
+    inv.SetBR		(invbr = new skinImage(219,		97,	    1,		1));
 
 }
 
@@ -345,6 +367,28 @@ void Skin::unloadSkin() {
     tmm.SetBL(NULL);
     tmm.SetBottom(NULL);
     tmm.SetBR(NULL);
+
+//    printf("[Skin::unloadSkin] Unloading inventory element skin...\n");
+
+    if (invtl) delete invtl; invtl = NULL;
+    if (invt)  delete invt;  invt  = NULL;
+    if (invtr) delete invtr; invtr = NULL;
+    if (invl)  delete invl;  invl  = NULL;
+    if (invc)  delete invc;  invc  = NULL;
+    if (invr)  delete invr;  invr  = NULL;
+    if (invbl) delete invbl; invbl = NULL;
+    if (invb)  delete invb;  invb  = NULL;
+    if (invbr) delete invbr; invbr = NULL;
+
+    inv.SetTL(NULL);
+    inv.SetTop(NULL);
+    inv.SetTR(NULL);
+    inv.SetLeft(NULL);
+    inv.SetCenter(NULL);
+    inv.SetRight(NULL);
+    inv.SetBL(NULL);
+    inv.SetBottom(NULL);
+    inv.SetBR(NULL);
 
 
 //	delete m_uisprite; // FIXME (ivucica#1#) implement skin with simpleton, might remedy a problem on windows with this throwing an error

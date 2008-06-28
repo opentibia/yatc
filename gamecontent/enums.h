@@ -155,4 +155,19 @@ struct Outfit_t{
 	uint32_t m_addons;
 };
 
+enum TextColor_t {
+        TEXTCOLOR_BLUE        = 5,
+        TEXTCOLOR_LIGHTBLUE   = 35,
+        TEXTCOLOR_LIGHTGREEN  = 30,
+        TEXTCOLOR_PURPLE      = 83,
+        TEXTCOLOR_LIGHTGREY   = 129,
+        TEXTCOLOR_DARKRED     = 144,
+        TEXTCOLOR_RED         = 180,
+        TEXTCOLOR_ORANGE      = 198,
+        TEXTCOLOR_YELLOW      = 210,
+        TEXTCOLOR_WHITE       = 215,
+        TEXTCOLOR_NONE        = 255
+};
+
+
 #endif

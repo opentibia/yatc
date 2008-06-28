@@ -184,7 +184,24 @@ void Engine::initFont(glictFont **fnt, const char *fontname)
 void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t color)
 {
 	// TODO (ivucica#2#) stub -- we'll just render in white for now. later we must recolor, and paint it ourselves instead of delegating to glic
-	glictFontRender(text, font, x, y);
+	// DONE (ivucica#2#) perhaps this will do now?
+	Font *f = (Font*)(glictFindFont(font)->GetFontParam());
+	if (!f)
+        glictFontRender(text, font, x, y);
+    else
+    {
+        float r = (color % 6) / 5.;
+        float g = ((color / 6) % 6) / 5.;
+        float b = (color / 36) / 5.;
+
+        if (color!=215)
+            f->addColor(r,g,b);
+        else if (color == 255) // we'll just use otherwise useless 255 for drawing with 0.75, 0.75, 0.75 if needed
+            f->addColor(0.75, 0.75, 0.75);
+        else
+            f->resetColor();
+        glictFontRender(text, font, x, y);
+    }
 }
 
 void Engine::doResize(int w, int h)

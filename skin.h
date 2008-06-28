@@ -46,8 +46,9 @@ private:
 	skinImage *txttl, *txtt, *txttr, *txtl, *txtc, *txtr, *txtbl, *txtb, *txtbr;
 	skinImage *chktl, *chkt, *chktr, *chkl, *chkc, *chkr, *chkbl, *chkb, *chkbr;
 	skinImage *tmmtl, *tmmt, *tmmtr, *tmml, *tmmc, *tmmr, *tmmbl, *tmmb, *tmmbr;
+	skinImage *invtl, *invt, *invtr, *invl, *invc, *invr, *invbl, *invb, *invbr;
 public:
-	glictSkinner chk, tmm;
+	glictSkinner chk, tmm, inv;
 	glictSkinner txt;
 
 	friend class skinImage;

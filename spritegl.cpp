@@ -82,8 +82,8 @@ void SpriteGL::buildGLTexture() {
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	GLint ret = gluBuild2DMipmaps(GL_TEXTURE_2D,
 						GL_RGBA,
 						getImage()->w, getImage()->h,
@@ -114,7 +114,6 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
     if (m_engineCreationTimestamp != g_engine->m_creationTimestamp) { // we need to recreate the texture since the context was invalidated in the meantime
         buildGLTexture();
     }
-
 	glEnable(GL_TEXTURE_2D);
 
 	glMatrixMode(GL_MODELVIEW);

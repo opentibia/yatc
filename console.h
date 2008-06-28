@@ -26,26 +26,18 @@
 #include <string>
 #include <SDL/SDL.h>
 #include "stdinttypes.h"
-enum ConsoleColor {
-	CONRED = 0,
-	CONBLUE = 1,
-	CONYELLOW = 2,
-	CONORANGE = 3,
-	CONLTBLUE = 4,
-	CONGREEN = 5,
-	CONWHITE = 6
-};
+#include "gamecontent/enums.h"
 
 class ConsoleEntry {
 	public:
-		ConsoleEntry(std::string text, ConsoleColor c=CONWHITE)
+		ConsoleEntry(std::string text, TextColor_t c=TEXTCOLOR_WHITE)
 		{
 			m_text = text;
 			m_speaker = "";
 			m_color = c;
 			m_timestamp = time(NULL);
 		}
-		ConsoleEntry(std::string text, std::string speaker, ConsoleColor c=CONYELLOW)
+		ConsoleEntry(std::string text, std::string speaker, TextColor_t c=TEXTCOLOR_WHITE)
 		{
 			m_text = text;
 			m_speaker = speaker;
@@ -55,7 +47,7 @@ class ConsoleEntry {
 		int paintEntry(float x, float y);
 	private:
 		std::string m_text, m_speaker;
-		ConsoleColor m_color;
+		TextColor_t m_color;
 		uint32_t m_timestamp;
 };
 class Console {

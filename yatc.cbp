@@ -257,7 +257,6 @@
 		<Unit filename="gm_gameworld.h" />
 		<Unit filename="gm_mainmenu.cpp" />
 		<Unit filename="gm_mainmenu.h">
-			<Option compile="1" />
 			<Option weight="45" />
 		</Unit>
 		<Unit filename="itemui.cpp" />
@@ -313,6 +312,7 @@
 		<Unit filename="thingui.cpp" />
 		<Unit filename="thingui.h" />
 		<Unit filename="ui/charlist.h" />
+		<Unit filename="ui/health.h" />
 		<Unit filename="ui/inventory.h" />
 		<Unit filename="ui/login.h" />
 		<Unit filename="ui/mainmenu.h" />

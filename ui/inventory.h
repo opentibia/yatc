@@ -26,7 +26,9 @@
 #include <GLICT/panel.h>
 #include <GLICT/textbox.h>
 #include <GLICT/button.h>
+#include <GLICT/window.h>
 
+#include "skin.h"
 
 class pnlInventory_t {
 public:
@@ -43,7 +45,7 @@ public:
             8, 91,  // ring
             83, 91};// hand
 
-
+        panel.SetCaption("Inventory");
 		panel.SetHeight(150);
 		panel.SetWidth(150);
 		for (int i = 0; i < 10; i++) {
@@ -57,13 +59,14 @@ public:
 			pnlItem[i].SetOnPaint(pnlInventory_t::inventoryItemOnPaint);
 //			pnlItem[i].SetBGActiveness(true);
 			pnlItem[i].SetOnClick(pnlInventory_t::inventoryItemOnClick);
+			pnlItem[i].SetSkin(&g_skin.inv);
 		}
 	}
 
 	static void inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
 	static void inventoryItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
 
-	glictContainer panel; // it's a container, so it's transparent
+	/*glictContainer*/glictWindow panel; // it's a container, so it's transparent
 	glictPanel pnlItem[10];
 
 };

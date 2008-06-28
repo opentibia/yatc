@@ -22,7 +22,7 @@
 /// This file contains the main(int,char**) function.
 
 
-unsigned int MAXFPS=10;
+unsigned int MAXFPS=50;
 
 #if !defined(WIN32) && !defined(__APPLE__)
 #include <signal.h>
@@ -141,7 +141,10 @@ void checkFile(const char *filename)
 {
 	if (!fileexists(filename)) {
 		std::stringstream s;
-		s << "Loading the data file '" << filename << "' has failed.\nPlease place '" << filename << "' in the same folder as " PRODUCTSHORT;
+		s << "Loading the data file '" << filename << "' has failed.\n";
+		s << "Please place '" << filename << "' in the same folder as " PRODUCTSHORT << ".\n";
+		s << "If you are a Debian user, you may have forgotten to install\n";
+		s << "the 'tibia-data' or 'yatc-data' package.";
 		NativeGUIError(s.str().c_str(), PRODUCTSHORT " Fatal Error");
 		exit(1);
 	}
