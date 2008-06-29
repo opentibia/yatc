@@ -56,9 +56,9 @@ svn revert debian/changelog
 svn revert product.h
 svn revert README
 
-sed s/0.2SVN/$version/g product.h > product.h.new
+sed s/0.2.1SVN/$version/g product.h > product.h.new
 mv product.h.new product.h
-sed s/0.2SVN/$version/g README > README.new
+sed s/0.2.1SVN/$version/g README > README.new
 mv README.new README
 
 if [ -z $srcrelease ]; then
@@ -68,7 +68,7 @@ fi
 if [ $srcrelease == 'y' ]; then
 	svn revert configure.ac
 
-	sed s/0.2SVN/$version/g configure.ac > configure.ac.new
+	sed s/0.2.1SVN/$version/g configure.ac > configure.ac.new
 	mv configure.ac.new configure.ac
 	
 	echo "Now building source release..."

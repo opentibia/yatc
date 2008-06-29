@@ -305,6 +305,7 @@ void GM_Gameworld::keyPress (char key)
 		        if (getActiveConsole()->getSpeakerName().size()) {
 		            getActiveConsole()->insertEntry(ConsoleEntry(msg, "You", TEXTCOLOR_LIGHTBLUE));
 		            m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
+		            sent = true;
 		        }
 		    }
 		    if (!sent) // if we havent sent yet then use the default ...
