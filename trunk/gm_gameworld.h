@@ -79,6 +79,7 @@ private:
     Console* getActiveConsole() const {return m_activeconsole;}
     void setActiveConsole(Console* i) {m_activeconsole = i;}
 
+    /* PRIMARY GUI */
 	Sprite* ui;
 	glictContainer desktop;
 	pnlInventory_t pnlInventory;
@@ -88,12 +89,25 @@ private:
 	glictTextbox txtConsoleEntry;
 	std::vector<glictPanel*> pnlConsoleButtons;
     glictPanel pnlConsoleButtonContainer;
+    /* END PRIMARY GUI */
 
 
 	std::vector<Console*> m_consoles;
 	Console* m_activeconsole;
 
 	uint32_t m_startTime;
+
+    SDL_Cursor *m_cursorBasic, *m_cursorUse;
+
+	const Thing* m_extendedthing; // when this is not NULL, we're in extended use mode
+    Position m_extendedpos;
+    int m_extendedstackpos;
+
+    glictPos m_dragBegin;
+    bool m_draggingPrep;
+    bool m_dragging;
+
+
 
 	class ProtocolGame* m_protocol;
 	friend class pnlInventory_t;

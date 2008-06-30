@@ -65,6 +65,9 @@ class Sprite
 
 		void setAsIcon();// used only once, in main
 
+		SDL_Cursor* createCursor(int topx, int topy, int w, int h, int hot_x, int hot_y);
+
+
 	protected:
 		Sprite(const Sprite& original);
 
@@ -76,7 +79,6 @@ class Sprite
 		#ifdef USE_OPENGL
 		GLuint getPixelFormat() { return m_pixelformat; }
 		#endif
-
 
 		std::string m_filename; int m_index;
 		float m_r, m_g, m_b;
