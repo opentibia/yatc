@@ -214,3 +214,14 @@ void Notifications::onChangeSkills()
 {
 	g_game->onChangeSkills();
 }
+
+//open/close container
+void Notifications::openContainer(int cid)
+{
+	g_game->openContainer(cid);
+}
+
+void Notifications::closeContainer(int cid)
+{
+	g_game->closeContainer(cid);
+}

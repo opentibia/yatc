@@ -27,6 +27,7 @@
 #include "ui/inventory.h"
 #include "ui/skills.h"
 #include "ui/health.h"
+#include "ui/container.h"
 
 class Console;
 
@@ -79,6 +80,9 @@ private:
     Console* getActiveConsole() const {return m_activeconsole;}
     void setActiveConsole(Console* i) {m_activeconsole = i;}
 
+    void openContainer(uint32_t cid);
+    void closeContainer(uint32_t cid);
+
     /* PRIMARY GUI */
 	Sprite* ui;
 	glictContainer desktop;
@@ -89,6 +93,8 @@ private:
 	glictTextbox txtConsoleEntry;
 	std::vector<glictPanel*> pnlConsoleButtons;
     glictPanel pnlConsoleButtonContainer;
+
+    std::vector<winContainer_t*> containers;
     /* END PRIMARY GUI */
 
 
@@ -111,6 +117,7 @@ private:
 
 	class ProtocolGame* m_protocol;
 	friend class pnlInventory_t;
+	friend class winContainer_t;
 
 	MapUI m_mapui;
 };

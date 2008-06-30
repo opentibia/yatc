@@ -37,6 +37,8 @@
 #include "gamecontent/inventory.h"
 #include "util.h"
 
+#include "ui/container.h"
+
 #ifdef _MSC_VER
 #define time _time64
 #endif
@@ -131,6 +133,35 @@ void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
 		}
 	}
 }
+
+// TODO (nfries88) move these to ui/container.cpp?
+void winContainer_t::containerItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
+	winContainer_t* window = (winContainer_t*)caller->GetCustomData();
+	uint32_t slot_id = window->getSlotId(caller);
+	Item* item = window->container->getItem(slot_id);
+
+	if(item != NULL)
+	{
+		item->Blit((int)real->left, (int)real->top, 1.f);
+	}
+}
+
+void winContainer_t::containersItemOnClick(glictPos *relmousepos, glictContainer* callerclass)
+{
+	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
+	uint32_t slot_id = window->getSlotId(callerclass);
+	Item* item = window->container->getItem(slot_id);
+
+	if(SDL_GetModState() & KMOD_CTRL && item != NULL)
+	{
+		GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+		gameclass->m_protocol->sendUseItem(
+			Position(0xFFFF, window->containerId, slot_id),
+			item->getID(), 0);
+	}
+}
+
 
 GM_Gameworld::GM_Gameworld()
 {
@@ -690,4 +721,35 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     pnlConsoleButtons.push_back(p);
 
     m_consoles.push_back(nc);
+}
+
+void GM_Gameworld::openContainer(uint32_t cid)
+{
+	Container* container = Containers::getInstance().getContainer(cid);
+	winContainer_t* window = new winContainer_t(container, cid);
+
+	desktop.AddObject(&window->window);
+	containers.push_back(window);
+}
+
+void GM_Gameworld::closeContainer(uint32_t cid)
+{
+	winContainer_t* window = NULL;
+
+	std::vector<winContainer_t*>::iterator it = containers.begin();
+	for(;it != containers.end(); ++it)
+	{
+		if((*it)->containerId == cid)
+		{
+			window = (*it);
+			break;
+		}
+	}
+
+	if(window)
+	{
+		desktop.RemoveObject(&window->window);
+		containers.erase(it);
+		delete window;
+	}
 }

@@ -43,7 +43,7 @@ public:
 	virtual void keyPress (char key) {}
 	virtual void specKeyPress (const SDL_keysym&) {}
 	virtual void doResize(float w, float h) {}
-	
+
 	virtual void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL) {}
 	virtual winOptions_t* getOptionsWindow() { return NULL; }
 
@@ -71,6 +71,9 @@ public:
 
 	virtual void onChangeSkills() {}
 	virtual void onChangeStats() {}
+
+	virtual void openContainer(uint32_t cid) {};
+    virtual void closeContainer(uint32_t cid) {};
 };
 
 extern GameMode* g_game;

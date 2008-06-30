@@ -92,8 +92,8 @@ class Notifications{
 		static void openRelogin(){}
 
 		//open/close container
-		static void openContainer(int cid){}
-		static void closeContainer(int cid){}
+		static void openContainer(int cid);
+		static void closeContainer(int cid);
 
 		//channels
 		static void openChannelList(const std::list<ChannelList_t>& list){}
