@@ -384,32 +384,13 @@ void MapUI::drawTileEffects(Tile* tile, int screenx, int screeny, float scale, u
 
 void MapUI::useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos, bool &extended)
 {
-	// FIXME (ivucica#1#) make this use m_x,m_y and m_w,m_h
+	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
 
-	x /= 32; // divide by tile size
-	y /= 32; // we need the tile coordinates, not the mouse coordinates
-
-	printf("Click on %d %d\n", x, y);
-	printf("Limitx: 0 - %d\n", m_vpw);
-	printf("Limity: 0 - %d\n", m_vph);
-
-	if (x < 0 || x > m_vpw) {
-		stackpos = -1;
-		return;
-	}
-	if (y < 0 || y > m_vph) {
-		stackpos = -1;
-		return;
-	}
-
-	// get player position
-	Position pos = GlobalVariables::getPlayerPosition();
-
-	printf("Click on %d %d\n", x,y);
-	printf("That translates into %d %d %d\n", pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
-	// get the tile we clicked on
-	const Tile* tile = Map::getInstance().getTile(pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
-
+    if (!tile) {
+        thing = NULL;
+        stackpos = -1;
+        return;
+    }
 	// get stackpos of thing that we clicked on
 	stackpos = tile->getUseStackpos();
 
@@ -417,45 +398,65 @@ void MapUI::useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int
 	// get thing that we clicked on
 	thing = tile->getThingByStackPos(stackpos);
 
-	retx = pos.x + x - m_vpw/2;
-	rety = pos.y + y - m_vph/2;
-	retz = pos.z;
-
 	// is this an extended use
-	// stub!
-	extended = false;
+	if (thing->getItem()->isExtendedUseable())
+        extended = true;
+    else
+        extended = false;
 }
 
 void MapUI::attackCreature(int x, int y, const Creature* &creature)
 {
-	// FIXME (ivucica#1#) make this use m_x,m_y and m_w,m_h
+	// get the creature we're attacking from the tile we're clicking on
 
-	x /= 32; // divide by tile size
-	y /= 32; // we need the tile coordinates, not the mouse coordinates
-
-	if (x < 0 || x > m_vpw) {
-		return;
+	if(Tile* t=translateClickToTile(x,y)){
+        creature = t->getTopCreature();
+	} else {
+	    creature = NULL;
 	}
-	if (y < 0 || y > m_vph) {
-		return;
-	}
-
-	// get player position
-	Position pos = GlobalVariables::getPlayerPosition();
-
-	printf("Attack on %d %d\n", x,y);
-	printf("That translates into %d %d %d\n", pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
-	// get the tile we clicked on
-	const Tile* tile = Map::getInstance().getTile(pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
-
-	// get the creature we're attacking
-	creature = tile->getTopCreature();
 }
 
 
 void MapUI::lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos)
 {
-	// FIXME (ivucica#1#) make this use m_x,m_y and m_w,m_h
+    Position p;
+	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
+
+    if(!tile){
+        thing = NULL;
+        stackpos = -1;
+        return;
+    }
+	// get stackpos of thing that we clicked on
+	stackpos = tile->getUseStackpos();
+
+	// get thing that we clicked on
+    thing = tile->getThingByStackPos(stackpos);
+
+}
+
+
+void MapUI::dragThing(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos)
+{
+    Position p;
+	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
+
+    if(!tile){
+        thing = NULL;
+        stackpos = -1;
+        return;
+    }
+	// get stackpos of thing that we clicked on
+	stackpos = tile->getThingCount()-1;
+
+	// get thing that we clicked on
+    thing = tile->getThingByStackPos(stackpos);
+
+}
+
+Tile* MapUI::translateClickToTile(int x, int y, int &retx, int &rety, int &retz)
+{
+    // FIXME (ivucica#1#) make this use m_x,m_y and m_w,m_h
 
 	x /= 32; // divide by tile size
 	y /= 32; // we need the tile coordinates, not the mouse coordinates
@@ -465,12 +466,10 @@ void MapUI::lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, 
 	printf("Limity: 0 - %d\n", m_vph);
 
 	if (x < 0 || x > m_vpw) {
-		stackpos = -1;
-		return;
+		return NULL;
 	}
 	if (y < 0 || y > m_vph) {
-		stackpos = -1;
-		return;
+		return NULL;
 	}
 
 	// get player position
@@ -479,18 +478,12 @@ void MapUI::lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, 
 	printf("Click on %d %d\n", x,y);
 	printf("That translates into %d %d %d\n", pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
 	// get the tile we clicked on
-	const Tile* tile = Map::getInstance().getTile(pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
-
-	// get stackpos of thing that we clicked on
-	stackpos = tile->getUseStackpos();
+	Tile* tile = Map::getInstance().getTile(pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
 
 
-	// get thing that we clicked on
-	thing = tile->getThingByStackPos(stackpos);
 
 	retx = pos.x + x - m_vpw/2;
 	rety = pos.y + y - m_vph/2;
 	retz = pos.z;
+	return tile;
 }
-
-

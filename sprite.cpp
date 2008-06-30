@@ -529,3 +529,50 @@ void Sprite::setAsIcon()
 
 	SDL_WM_SetIcon(m_image, NULL);
 }
+
+
+SDL_Cursor* Sprite::createCursor(int topx, int topy, int w, int h, int hot_x, int hot_y)
+{
+  int i, row, col;
+  Uint8 data[4*32];
+  Uint8 mask[4*32];
+  //int hot_x, hot_y;
+
+  i = -1;
+  for ( row=0; row<32; ++row ) {
+    for ( col=0; col<32; ++col ) {
+      if ( col % 8 ) {
+        data[i] <<= 1;
+        mask[i] <<= 1;
+      } else {
+        ++i;
+        data[i] = mask[i] = 0;
+      }
+
+      if (col < w && row < h) {
+        uint32_t pv;
+        uint8_t r,g,b,a;
+
+        SDL_GetRGBA(pv=getPixel(topx+col, topy+row, m_image), m_image->format, &r, &g, &b, &a);
+
+        if(a == 0){
+            // transparent
+        } else if (r == 0 && g == 0 && b == 0) { // black
+            data[i] |= 0x01;
+            mask[i] |= 0x01;
+        } else { // white
+            mask[i] |= 0x01;
+        }
+      } else { // if out of boundaries, then leave
+
+      }
+
+    }
+  }
+  //sscanf(image[4+row], "%d,%d", &hot_x, &hot_y);
+  //hot_x = 16;
+  //hot_y = 16;
+
+  return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
+}
+

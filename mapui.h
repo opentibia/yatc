@@ -16,6 +16,11 @@ class MapUI {
 		void useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos, bool &extended);
 		void attackCreature(int x, int y, const Creature* &creature);
 		void lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos);
+		void dragThing(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos);
+
+        Tile* translateClickToTile(int x, int y, int &absx, int &absy, int &absz);
+        Tile* translateClickToTile(int x, int y) {int ax,ay,az; return translateClickToTile(x,y,ax,ay,az);}
+
 	private:
 		int m_x, m_y;
 		int m_w, m_h;

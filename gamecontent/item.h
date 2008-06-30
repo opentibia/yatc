@@ -42,6 +42,7 @@ public:
 	bool isStackable() const { return m_it->stackable; }
 	bool isSplash() const { return m_it->splash; }
 	bool isFluidContainer() const { return m_it->fluidContainer; }
+    bool isExtendedUseable() const { return m_it->useable; }
 	// items with 0x06 property?
 	bool isAlwaysUsed() const { return m_it->alwaysUsed; }
 

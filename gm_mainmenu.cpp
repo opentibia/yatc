@@ -36,9 +36,12 @@ extern Connection* g_connection;
 extern bool g_running;
 
 
+void resetDefaultCursor();
+
 GM_MainMenu::GM_MainMenu()
 {
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n");
+    resetDefaultCursor();
 
     /* ****************** MAIN MENU *********************** */
 	desktop.AddObject(&pnlMainMenu.mainmenu);

@@ -44,7 +44,7 @@
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
 
-
+void resetDefaultCursor();
 
 /* TODO (ivucica#5#) move this to ui/inventory.cpp (don't do it until compiling of stuff in ui/ has been assured with autoconf)*/
 void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
@@ -167,8 +167,14 @@ GM_Gameworld::GM_Gameworld()
 
 	m_startTime = time(NULL);
 
-	doResize(glictGlobals.w, glictGlobals.h);
+	m_extendedthing = NULL;
 
+    m_cursorBasic = ui->createCursor(290,12,11,19, 1, 1);
+    m_cursorUse = ui->createCursor(310,12,19,19, 9, 9);
+
+    SDL_SetCursor(m_cursorBasic);
+
+	doResize(glictGlobals.w, glictGlobals.h);
 
 }
 
@@ -401,10 +407,32 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         #else
         #warning We need GLICT apirev 67 or greater to support basic movable windows.
         #endif
+
+        if (m_draggingPrep && !m_dragging) {
+            if (abs(int(pos.x - m_dragBegin.x)) > 2 || abs(int(pos.y - m_dragBegin.y)) > 2) {
+                m_dragging = true;
+                SDL_SetCursor(m_cursorUse);
+            }
+        }
     } else {
+
         if (event.button.state == SDL_PRESSED){
-            if (SDL_GetModState() & KMOD_ALT) {
-                // TODO (nfries88): attacking
+            if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
+                // just ignore
+            } else if (m_extendedthing){ // otherwise handle as appropriate
+                printf("Performing extended use\n");
+                const Thing* thing;
+                int x,y,z;
+                int stackpos;
+                bool isextended;
+
+                m_mapui.useItem(pos.x, pos.y, thing, x, y, z, stackpos, isextended);
+                if (stackpos != -1)
+                    m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
+                                                Position(x,y,z), thing->getID(), stackpos);
+                SDL_SetCursor(m_cursorBasic);
+                m_extendedthing = NULL;
+            } else if (SDL_GetModState() & KMOD_ALT) {
                 printf("Attacking!\n");
                 const Creature* creature = NULL;
                 m_mapui.attackCreature(pos.x, pos.y, creature);
@@ -422,12 +450,16 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 bool isextended;
 
                 m_mapui.useItem(pos.x, pos.y, thing, x, y, z, stackpos, isextended);
-                if (stackpos != -1) {
-                    if (!isextended) {
+
+                if(stackpos != -1){
+                    if(!isextended){
                         printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
                         m_protocol->sendUseItem(Position(x,y,z), thing->getID(), stackpos );
                     } else {
-                        getDefaultConsole()->insertEntry(ConsoleEntry("No support for extended use yet"));
+                        m_extendedthing = thing;
+                        m_extendedstackpos = stackpos;
+                        m_extendedpos = Position(x,y,z);
+                        SDL_SetCursor(m_cursorUse);
                     }
                 }
             } else if (SDL_GetModState() & KMOD_SHIFT) {
@@ -442,17 +474,36 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                     m_protocol->sendLookItem(Position(x,y,z), thing->getID(), stackpos );
                 }
             } else {
-                // TODO (nfries88): select draggable item
+                // just remember where we began the drag, for later comparison
+                m_dragBegin = pos;
+                m_draggingPrep = true;
             }
         } else if (event.button.state == SDL_RELEASED) {
-            // TODO (nfries88): drag items
-            // TODO (nfries88): walk by clicking
-        }
+            if (desktop.CastEvent(GLICT_MOUSEUP, &pos, 0)){
+                // ignore if it was handled by glict
+            } else {
+                // TODO (nfries88): drag items
+                // TODO (nfries88): walk by clicking
+                if (m_dragging){
+                    const Thing* sthing;
+                    int sx,sy,sz;
+                    int sstackpos;
 
-        if (event.button.state == SDL_PRESSED)
-            desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
-        if (event.button.state != SDL_PRESSED)
-            desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+                    int dx,dy,dz;
+
+
+                    m_dragging = false;
+                    SDL_SetCursor(m_cursorBasic);
+                    printf("Released from drag\n");
+
+                    m_mapui.dragThing(m_dragBegin.x, m_dragBegin.y, sthing, sx, sy, sz, sstackpos);
+                    m_mapui.translateClickToTile(pos.x,pos.y,dx,dy,dz);
+                    //TODO (ivucica#3#): drag count window
+                    m_protocol->sendThrow(Position(sx,sy,sz), sthing->getID(), sstackpos, Position(dx,dy,dz), 1);
+                }
+                m_draggingPrep = false;
+            }
+        }
 
     }
 
