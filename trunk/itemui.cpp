@@ -22,6 +22,9 @@
 #include "engine.h"
 #include "fassert.h"
 
+#include "util.h"
+#include "gamecontent/enums.h"
+
 
 extern uint32_t g_frameTime;
 
@@ -161,4 +164,19 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 			}
 		}
 	}
+
+	if(map_x == 0 && map_y == 0 && (obj->rune || obj->stackable)) {
+		BlitCount(x, y, count, scale);
+	}
+}
+
+void ItemUI::BlitCount(int x, int y, uint8_t count, float scale) const
+{
+	std::string cntText = yatc_itoa(count);
+
+	// calculate position for count
+	x += int(32.f * scale) - int(g_engine->sizeText(cntText.c_str(), "gamefont"));
+	y += int(32.f * scale) - 12;
+
+	g_engine->drawText(cntText.c_str(), "gamefont", x, y, TEXTCOLOR_WHITE);
 }
