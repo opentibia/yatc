@@ -1,7 +1,7 @@
 #ifndef __UI_CONTAINER_H
 #define __UI_CONTAINER_H
 
-#include "..\gamecontent\container.h"
+#include "../gamecontent/container.h" // @Nate: please don't use backslashes; windows does tolerate slash, but unix does not tolerate backslash!
 #include <cmath>
 
 class winContainer_t {
@@ -11,9 +11,22 @@ public:
 		containerId = cid;
 
 		window.SetCaption(container->getName());
-		// wide enough to display 4 items per row, tall enough to display all rows
-		window.SetWidth(150);
-		window.SetHeight(4 + (36*(container->getCapacity()/4)));
+		// wide enough to display 4 items per row, tall enough to display all rows or three rows, whichever is smalle
+		window.SetWidth(150 + 10); // 10 == for scrollbar
+		window.SetHeight(MIN(4+36*3, 4 + (36*ceil(container->getCapacity()/4.))));
+
+        // we're adding a winpanel object.
+        // sadly, glictWindow does not have virtualsize handling implemented.
+        // glictPanel does have virtual size; we'll add subpanels into glictPanel
+        // which'll be of the same size as the window itself, and the only object
+        // on the window.
+		window.AddObject(&winpanel);
+		winpanel.SetBGActiveness(false);
+		winpanel.SetPos(0,0);
+		winpanel.SetWidth(150 + 10); // same size as for window
+		winpanel.SetHeight(MIN(4+36*3, 4 + (36*ceil(container->getCapacity()/4.))));
+		// virtual size is always to display all rows
+		winpanel.SetVirtualSize(160, 4 + (36*ceil(container->getCapacity()/4.)));
 
 		for(uint32_t i = 0; i != container->getCapacity(); ++i)
 		{
@@ -26,8 +39,9 @@ public:
 			panel->SetCustomData(this);
 			panel->SetOnPaint(winContainer_t::containerItemOnPaint);
 			panel->SetOnClick(winContainer_t::containersItemOnClick);
+			panel->SetSkin(&g_skin.inv);
 
-			window.AddObject(panel);
+			winpanel.AddObject(panel);
 			pnlItems.push_back(panel);
 		}
 	}
@@ -53,6 +67,7 @@ public:
 	}
 
 	glictWindow window;
+	glictPanel winpanel;
 	// we use a list of items in the container class, so I'm doing it here too
 	typedef std::list<glictPanel*> PanelList;
 	PanelList pnlItems;
