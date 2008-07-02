@@ -59,12 +59,17 @@ public:
 			pnlItem[i].SetOnPaint(pnlInventory_t::inventoryItemOnPaint);
 //			pnlItem[i].SetBGActiveness(true);
 			pnlItem[i].SetOnClick(pnlInventory_t::inventoryItemOnClick);
+			pnlItem[i].SetOnMouseUp(pnlInventory_t::inventoryItemOnMouseUp);
+			pnlItem[i].SetOnMouseDown(pnlInventory_t::inventoryItemOnMouseDown);
 			pnlItem[i].SetSkin(&g_skin.inv);
 		}
 	}
 
 	static void inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
 	static void inventoryItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
+	static void inventoryItemOnMouseUp(glictPos *relmousepos, glictContainer* callerclass);
+	static void inventoryItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
+
 
 	/*glictContainer*/glictWindow panel; // it's a container, so it's transparent
 	glictPanel pnlItem[10];

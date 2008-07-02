@@ -34,26 +34,30 @@ public:
 
 	Item* getItem(uint32_t slot);
 	bool addItem(Item* item);
+    bool addItemInitial(Item* item);
 	bool removeItem(uint32_t slot);
 	bool updateItem(uint32_t slot, Item* newitem);
 
 	void setItemId(uint16_t itemid) { m_itemid = itemid;}
-	uint16_t getItemId() { return m_itemid;}
+	uint16_t getItemId() const { return m_itemid;}
 
 	void setName(const std::string& name){ m_name = name;}
-	std::string getName() { return m_name;}
+	std::string getName() const { return m_name;}
 
 	void setCapacity(uint32_t cap){ m_capacity = cap;}
-	uint32_t getCapacity(){ return m_capacity;}
+	uint32_t getCapacity() const { return m_capacity;}
 
 	void setHasParent(bool v){ m_hasParent = v;}
-	bool getHasParent() { return m_hasParent;}
+	bool getHasParent() const { return m_hasParent;}
 
-	int32_t getSize(){ return m_items.size();}
+	int32_t getSize() const { return m_items.size();}
+
+	uint32_t getId() const {return m_id;}
 
 private:
 
 	Container();
+	Container(uint32_t id);
 
 	typedef std::list<Item*> ItemList;
 	ItemList m_items;
@@ -62,6 +66,8 @@ private:
 	uint32_t m_capacity;
 	std::string m_name;
 	bool m_hasParent;
+
+	uint32_t m_id;
 
 	friend class Containers;
 };

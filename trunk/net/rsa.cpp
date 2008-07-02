@@ -19,6 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <stdlib.h> // REMOVE ME as well
+#include <string.h> // memset
 #include "../util.h" // REMOVE ME after fixing bignum=>binary
 #include "rsa.h"
 #include "../fassert.h"

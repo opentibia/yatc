@@ -134,7 +134,39 @@ void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
 	}
 }
 
+void pnlInventory_t::inventoryItemOnMouseUp(glictPos *relmousepos,
+	glictContainer* callerclass)
+{
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+	if (gw->isDragging())
+	{
+        slots_t slotid = (slots_t)((glictPanel*)callerclass -
+			(glictPanel*)callerclass->GetCustomData() + 1);
+		if(slotid >= 0 && slotid <= 10) {
+            Position dest(0xFFFF, slotid, 0);
+            if (gw->m_dragThing)
+                gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, 1);
+		}
+        gw->dismissDrag();
+	}
+}
+
+void pnlInventory_t::inventoryItemOnMouseDown(glictPos *relmousepos,
+	glictContainer* callerclass)
+{
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+
+    slots_t slotid = (slots_t)((glictPanel*)callerclass -
+        (glictPanel*)callerclass->GetCustomData() + 1);
+    if(slotid >= 0 && slotid <= 10) {
+        gw->setDragInv(slotid);
+    } else {
+        gw->setDragInv(SLOT_NONE);
+    }
+}
+
 // TODO (nfries88) move these to ui/container.cpp?
+// TODO (ivucica#3#) yes, please! don't forget to update automake, codeblocks AND devcpp projects
 void winContainer_t::containerItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
 	winContainer_t* window = (winContainer_t*)caller->GetCustomData();
@@ -147,7 +179,7 @@ void winContainer_t::containerItemOnPaint(glictRect *real, glictRect *clipped, g
 	}
 }
 
-void winContainer_t::containersItemOnClick(glictPos *relmousepos, glictContainer* callerclass)
+void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer* callerclass)
 {
 	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
 	uint32_t slot_id = window->getSlotId(callerclass);
@@ -157,9 +189,46 @@ void winContainer_t::containersItemOnClick(glictPos *relmousepos, glictContainer
 	{
 		GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
 		gameclass->m_protocol->sendUseItem(
-			Position(0xFFFF, window->containerId, slot_id),
+			Position(0xFFFF, window->containerId | 0x40, slot_id),
 			item->getID(), 0);
 	}
+}
+
+
+void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
+	glictContainer* callerclass)
+{
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+
+	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
+    uint32_t slot_id = window->getSlotId(callerclass);
+	Item* item = window->container->getItem(slot_id);
+	uint32_t id = window->container->getId();
+
+	if (gw->isDragging())
+	{
+	    if (gw->m_dragThing)
+	    {
+            Position dest(0xFFFF, id | 0x40, slot_id);
+            printf("Throwing %d %d %d (item %d) onto %d %d %d\n", gw->m_dragPos.x, gw->m_dragPos.y, gw->m_dragPos.z, gw->m_dragThing->getID(), dest.x, dest.y, dest.z);
+            gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, 1);
+	    }
+        gw->dismissDrag();
+
+	}
+}
+
+void winContainer_t::containerItemOnMouseDown(glictPos *relmousepos,
+	glictContainer* callerclass)
+{
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+
+    winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
+    uint32_t slot_id = window->getSlotId(callerclass);
+	uint32_t id = window->container->getId();
+
+    gw->setDragCtr(id, slot_id);
+
 }
 
 
@@ -199,9 +268,14 @@ GM_Gameworld::GM_Gameworld()
 	m_startTime = time(NULL);
 
 	m_extendedthing = NULL;
+    m_dragging = false;
+    m_draggingInv = SLOT_NONE;
+    m_draggingCtrId = m_draggingCtrSlot = -1;
+    m_dragThing = false;
 
     m_cursorBasic = ui->createCursor(290,12,11,19, 1, 1);
     m_cursorUse = ui->createCursor(310,12,19,19, 9, 9);
+
 
     SDL_SetCursor(m_cursorBasic);
 
@@ -241,10 +315,6 @@ void GM_Gameworld::doResize(float w, float h)
 
 void GM_Gameworld::updateScene()
 {
-
-
-
-
 	// TODO (ivucica#2#) test on edge of map
 	#if 0
 	#ifdef WINCE
@@ -429,7 +499,6 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 	pos.x = ptrx;
 	pos.y = ptry;
 
-
 	desktop.TransformScreenCoords(&pos);
 
     if (event.type == SDL_MOUSEMOTION) {
@@ -438,11 +507,23 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         #else
         #warning We need GLICT apirev 67 or greater to support basic movable windows.
         #endif
-
         if (m_draggingPrep && !m_dragging) {
+            printf("Move %g %g compared to %g %g\n", pos.x, pos.y, m_dragBegin.x, m_dragBegin.y);
             if (abs(int(pos.x - m_dragBegin.x)) > 2 || abs(int(pos.y - m_dragBegin.y)) > 2) {
-                m_dragging = true;
+                int x,y,z;
+                m_dragging = true; // TODO (ivucica#5#) kick out m_dragging; m_dragThing can be NULL when we're not draggging
                 SDL_SetCursor(m_cursorUse);
+
+                if (m_draggingInv == SLOT_NONE && m_draggingCtrId == -1){ // not throwing from inventory nor from a container?
+                    m_mapui.dragThing(m_dragBegin.x, m_dragBegin.y, m_dragThing, x,y,z, m_dragStackPos);
+                    m_dragPos = Position(x,y,z);
+                }
+                else if (m_draggingInv != SLOT_NONE){ // throwing from inventory
+                    m_dragPos = Position(0xFFFF, m_draggingInv, 0);
+                } else {
+                    m_dragPos = Position(0xFFFF, m_draggingCtrId | 0x40, m_draggingCtrSlot);
+                }
+
             }
         }
     } else {
@@ -450,6 +531,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         if (event.button.state == SDL_PRESSED){
             if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
                 // just ignore
+
             } else if (m_extendedthing){ // otherwise handle as appropriate
                 printf("Performing extended use\n");
                 const Thing* thing;
@@ -508,32 +590,34 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 // just remember where we began the drag, for later comparison
                 m_dragBegin = pos;
                 m_draggingPrep = true;
+                m_draggingInv = SLOT_NONE; // we're NOT dragging from inventory
+                m_draggingCtrId = m_draggingCtrSlot = -1;
             }
         } else if (event.button.state == SDL_RELEASED) {
             if (desktop.CastEvent(GLICT_MOUSEUP, &pos, 0)){
                 // ignore if it was handled by glict
+                dismissDrag();
             } else {
                 // TODO (nfries88): drag items
                 // TODO (nfries88): walk by clicking
                 if (m_dragging){
-                    const Thing* sthing;
-                    int sx,sy,sz;
-                    int sstackpos;
 
                     int dx,dy,dz;
 
 
-                    m_dragging = false;
-                    SDL_SetCursor(m_cursorBasic);
-                    printf("Released from drag\n");
 
-                    m_mapui.dragThing(m_dragBegin.x, m_dragBegin.y, sthing, sx, sy, sz, sstackpos);
                     m_mapui.translateClickToTile(pos.x,pos.y,dx,dy,dz);
                     //TODO (ivucica#3#): drag count window
-                    m_protocol->sendThrow(Position(sx,sy,sz), sthing->getID(), sstackpos, Position(dx,dy,dz), 1);
+                    m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, Position(dx,dy,dz), 1);
+
+                    dismissDrag();
+                    printf("Released from drag\n");
+
                 }
                 m_draggingPrep = false;
             }
+        } else {
+            printf("unknown event\n");
         }
 
     }
@@ -752,4 +836,38 @@ void GM_Gameworld::closeContainer(uint32_t cid)
 		containers.erase(it);
 		delete window;
 	}
+}
+
+void GM_Gameworld::setDragInv(slots_t slotid) {
+    m_draggingInv = slotid;
+    Item* item = Inventory::getInstance().getItem(slotid);
+    if(item != NULL) {
+        printf("Dragging inv begins here %d %d\n", ptrx, ptry);
+        m_dragging = false;
+        m_draggingPrep = true;
+        m_draggingCtrId = m_draggingCtrSlot = -1;
+        m_dragBegin.x = ptrx;
+        m_dragBegin.y = ptry;
+        m_dragThing = item;
+        m_dragPos = Position(0xFFFF, slotid, 0);
+        m_dragStackPos = 0;
+    }
+}
+
+void GM_Gameworld::setDragCtr(uint32_t containerid, uint32_t slotid) {
+
+    m_draggingCtrId = containerid;
+    m_draggingCtrSlot = slotid;
+    Item* item = Containers::getInstance().getContainer(containerid)->getItem(slotid);
+    if(item != NULL) {
+        printf("Dragging ctr begins here %d %d\n", ptrx, ptry);
+        m_dragging = false;
+        m_draggingPrep = true;
+        m_draggingInv = SLOT_NONE;
+        m_dragBegin.x = ptrx;
+        m_dragBegin.y = ptry;
+        m_dragThing = item;
+        m_dragPos = Position(0xFFFF, containerid | 0x40, slotid);
+        m_dragStackPos = 0;
+    }
 }

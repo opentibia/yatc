@@ -42,13 +42,13 @@ public:
 	virtual Creature* getCreature() {return this;}
 	virtual const Creature* getCreature() const {return this;}
 
-	bool isPlayer() const { return (m_id & 0x10000000 != 0) && (m_id & 0x20000000 == 0); }
-	bool isMonster() const { return (m_id & 0x40000000 != 0); }
-	bool isNpc() const { return (m_id & 0x10000000 != 0) && (m_id & 0x20000000 != 0); }
+	bool isPlayer() const { return ((m_id & 0x10000000) != 0) && ((m_id & 0x20000000) == 0); }
+	bool isMonster() const { return ((m_id & 0x40000000) != 0); }
+	bool isNpc() const { return ((m_id & 0x10000000) != 0) && ((m_id & 0x20000000) != 0); }
 
 	void setSquare(uint32_t color);
-	uint32_t getSquareColor(){ return m_squareColor;}
-	uint32_t getSquareStart() { return m_squareStartTime;}
+	uint32_t getSquareColor() const { return m_squareColor;}
+	uint32_t getSquareStart() const { return m_squareStartTime;}
 
 	void setMoving(const Position& oldPos);
 
