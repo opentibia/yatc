@@ -103,12 +103,12 @@ ClientVersion_t ProtocolConfig::detectVersion()
 	if (datSignature == 0x47F60E37 &&
 		sprSignature == 0x47EBB9B2 &&
 		picSignature == 0x4742FCD7)
-	        return CLIENT_VERSION_811;;
-    // FIXME (ivucica#1#) WARNING WARNING WARNING!!! Testclient ids!!!
-	if (datSignature == 0x485280E0 &&
-		sprSignature == 0x485280BF &&
+	        return CLIENT_VERSION_811;
+
+	if (datSignature == 0x486905AA &&
+		sprSignature == 0x4868ECC9 &&
 		picSignature == 0x48562106)
-	        return CLIENT_VERSION_820;
+		return CLIENT_VERSION_820;
 
 	return CLIENT_VERSION_AUTO; // failure
 }
