@@ -190,7 +190,7 @@ void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer*
 		GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
 		gameclass->m_protocol->sendUseItem(
 			Position(0xFFFF, window->containerId | 0x40, slot_id),
-			item->getID(), 0);
+			item->getID(), slot_id);
 	}
 }
 
@@ -868,6 +868,6 @@ void GM_Gameworld::setDragCtr(uint32_t containerid, uint32_t slotid) {
         m_dragBegin.y = ptry;
         m_dragThing = item;
         m_dragPos = Position(0xFFFF, containerid | 0x40, slotid);
-        m_dragStackPos = 0;
+        m_dragStackPos = slotid;
     }
 }
