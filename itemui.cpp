@@ -82,7 +82,7 @@ ItemUI::~ItemUI()
     }
     ObjectType* obj = Objects::getInstance()->getItemType(m_id);
     //printf("Destroying an item of type %d\n", m_id);
-    if (obj)
+    if (obj) {
 		if(obj->instancesOnMap){
 			obj->instancesOnMap--;
 			//printf("Remaining: %d\n", obj->instancesOnMap);
@@ -90,6 +90,7 @@ ItemUI::~ItemUI()
 		} else {
 		    //printf("Already unloaded\n");
 		}
+    }
 }
 
 void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale, int map_x, int map_y) const

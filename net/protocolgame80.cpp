@@ -361,7 +361,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 				if(!item){
 					RAISE_PROTOCOL_ERROR("Container Open - !item");
 				}
-				if(!container->addItem(item)){
+				if(!container->addItemInitial(item)){
 					RAISE_PROTOCOL_ERROR("Container Open - addItem");
 				}
 			}

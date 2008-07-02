@@ -58,6 +58,19 @@ public:
 	void onCreatureMove(uint32_t id);
 	void onChangeSkills();
 	void onChangeStats();
+    void openContainer(uint32_t cid);
+    void closeContainer(uint32_t cid);
+
+	bool isDragging() const {return m_dragging;}
+	void dismissDrag() { if (m_dragging) SDL_SetCursor(m_cursorBasic); m_dragging = false; m_draggingPrep = false; }
+	void getDragData(const Thing*& dragThing, Position& dragPos, int& dragStackPos) const {
+	    dragThing = m_dragThing;
+	    dragPos = m_dragPos;
+	    dragStackPos = m_dragStackPos;
+	}
+	void setDragInv(slots_t slot);
+	void setDragCtr(uint32_t containerid, uint32_t slotid);
+
 protected:
 
 private:
@@ -80,8 +93,6 @@ private:
     Console* getActiveConsole() const {return m_activeconsole;}
     void setActiveConsole(Console* i) {m_activeconsole = i;}
 
-    void openContainer(uint32_t cid);
-    void closeContainer(uint32_t cid);
 
     /* PRIMARY GUI */
 	Sprite* ui;
@@ -114,6 +125,12 @@ private:
     bool m_dragging;
 
 
+    const Thing* m_dragThing;
+    Position m_dragPos;
+    int m_dragStackPos;
+
+    slots_t m_draggingInv;
+    uint32_t m_draggingCtrId, m_draggingCtrSlot;
 
 	class ProtocolGame* m_protocol;
 	friend class pnlInventory_t;

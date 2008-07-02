@@ -25,6 +25,8 @@
 #include "../stdinttypes.h"
 
 enum slots_t {
+    SLOT_NONE = -1,
+
 	SLOT_FIRST = 1,
 	SLOT_HEAD = SLOT_FIRST,
 	SLOT_NECKLACE = 2,

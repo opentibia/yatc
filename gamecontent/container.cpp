@@ -27,8 +27,15 @@ Container::Container()
 	m_itemid = 0;
 	m_capacity = 20;
 	m_hasParent = false;
+	m_id = 0;
 }
-
+Container::Container(uint32_t id)
+{
+	m_itemid = 0;
+	m_capacity = 20;
+	m_hasParent = false;
+	m_id = id;
+}
 Container::~Container()
 {
 	for(ItemList::iterator it = m_items.begin(); it != m_items.end(); ++it){
@@ -55,6 +62,21 @@ Item* Container::getItem(uint32_t slot)
 		}
 	}
 	return NULL;
+}
+
+
+bool Container::addItemInitial(Item* item)
+{
+    // from my experience with TO, initial adding of items is REVERSE than normal additem
+    // that means, when initially added (in this function, addItemInitial), items are added
+    // at the end
+    // later, items are added on the beginning, in the addItem() function
+	if(m_items.size() == m_capacity){
+		// TODO (mips_act#3#): Handle error...
+		return false;
+	}
+	m_items.push_back(item);
+	return true;
 }
 
 bool Container::addItem(Item* item)
@@ -159,7 +181,7 @@ Container* Containers::createContainer(uint32_t id)
 		// TODO (mips_act#3#): Handle error...?
 		delete m_containers[id];
 	}
-	Container* container = new Container;
+	Container* container = new Container(id);
 	m_containers[id] = container;
 	return container;
 }

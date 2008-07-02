@@ -38,7 +38,10 @@ public:
 			panel->SetCaption("");
 			panel->SetCustomData(this);
 			panel->SetOnPaint(winContainer_t::containerItemOnPaint);
-			panel->SetOnClick(winContainer_t::containersItemOnClick);
+			panel->SetOnClick(winContainer_t::containerItemOnClick);
+			panel->SetOnMouseDown(winContainer_t::containerItemOnMouseDown);
+			panel->SetOnMouseUp(winContainer_t::containerItemOnMouseUp);
+
 			panel->SetSkin(&g_skin.inv);
 
 			winpanel.AddObject(panel);
@@ -57,7 +60,7 @@ public:
 
 	inline uint32_t getSlotId(glictContainer* pnl)
 	{
-		uint32_t slot_id = 1;
+		uint32_t slot_id = 0;
 		for(PanelList::iterator it = pnlItems.begin(); it != pnlItems.end(); ++it,
 			++slot_id)
 		{
@@ -77,7 +80,10 @@ public:
 	uint32_t containerId;
 
 	static void containerItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
-	static void containersItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
+	static void containerItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
+    static void containerItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
+	static void containerItemOnMouseUp(glictPos *relmousepos, glictContainer* callerclass);
+
 };
 
 #endif

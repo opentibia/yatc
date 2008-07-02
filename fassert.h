@@ -25,6 +25,8 @@
 
 	#include <assert.h>
     #include <malloc.h>
+    #include <string.h> // strlen
+    #include <stdlib.h> // abort
 
 	//#ifdef WIN32
 	//	#include <windows.h>

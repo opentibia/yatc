@@ -20,6 +20,7 @@
 
 #include <string>
 #include <sstream>
+#include <stdlib.h> // atoi
 #include "options.h"
 #include "confighandler.h"
 #include "util.h"
