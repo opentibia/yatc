@@ -225,3 +225,13 @@ void Notifications::closeContainer(int cid)
 {
 	g_game->closeContainer(cid);
 }
+
+//tutorials
+void Notifications::showTutorial(uint8_t tutorialId)
+{
+}
+
+//minimap mark
+void Notifications::addMapMark(uint8_t icon, const Position& pos, const std::string& desc)
+{
+}

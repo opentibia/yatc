@@ -1011,6 +1011,18 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			Notifications::onVipLogout(creatureID);
 			break;
 		}
+		case 0xDC: // show tutorial
+		{
+			MSG_READ_U8(tutorialID);
+			Notifications::showTutorial(tutorialID);
+		}
+		case 0xDD: // minimap mark
+		{
+			MSG_READ_POSITION(myPos);
+			MSG_READ_U8(icon);
+			MSG_READ_STRING(desc);
+			Notifications::addMapMark(icon, myPos, desc);
+		}
 		case 0xF0: //quest list
 		{
 			//TODO.GUI
