@@ -102,6 +102,12 @@ class Notifications{
 		static void closePrivateChannel(int id){}
 		static void openPrivatePlayerChat(const std::string& name){}
 
+		//tutorials
+		static void showTutorial(uint8_t tutorialId);
+
+		//minimap mark
+		static void addMapMark(uint8_t icon, const Position& pos, const std::string& desc);
+
 		//TODO. Rule violation
 
 		//TODO. Quest windows
