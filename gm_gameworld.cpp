@@ -648,7 +648,13 @@ void GM_Gameworld::onCancelWalk()
 
 void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
 {
-	getDefaultConsole()->insertEntry(ConsoleEntry(message));
+	switch (type){
+	case MSG_INFO_DESCR:
+		getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_LIGHTGREEN));
+		break;
+	default:
+		getDefaultConsole()->insertEntry(ConsoleEntry(message));
+	}
 }
 
 
@@ -659,8 +665,11 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     case SPEAK_PRIVATE_NP:
     case SPEAK_PRIVATE_PN:
         findConsole("NPCs")->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_LIGHTBLUE)); // this is bad; this way we disallow potential player called "NPCs"
-        break;
-
+        break; 
+    case SPEAK_MONSTER_SAY:
+    case SPEAK_MONSTER_YELL:
+         getDefaultConsole()->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_ORANGE));
+         break;
     default:
         getDefaultConsole()->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_YELLOW));
     }
