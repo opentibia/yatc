@@ -1015,6 +1015,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 		{
 			MSG_READ_U8(tutorialID);
 			Notifications::showTutorial(tutorialID);
+			break;
 		}
 		case 0xDD: // minimap mark
 		{
@@ -1022,6 +1023,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			MSG_READ_U8(icon);
 			MSG_READ_STRING(desc);
 			Notifications::addMapMark(icon, myPos, desc);
+			break;
 		}
 		case 0xF0: //quest list
 		{
