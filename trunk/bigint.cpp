@@ -56,6 +56,7 @@
 #include <iostream>
 #include <sstream>
 #include <math.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -67,156 +68,10 @@ using namespace std;
 #define max(x,y) ((x) > (y) ? (x) : (y))
 #endif
 
-class BigInt
-{
-    private:
-        char *digits;
-        int size;            // number of used bytes (digits)
-        int capacity;        // size of digits
-        int sign;            // -1, 0 or +1
 
-    public:
-        /** Creates a BigInt with initial value n and initial capacity cap **/
-        BigInt( int n, int cap );
-
-        /** Creates a BigInt with initial value n **/
-        BigInt( int n );
-
-        /** Creates a BigInt with initial value floor( d ) **/
-        BigInt( long double d );
-
-        /** Creates a BigInt with value 0 **/
-        BigInt();
-
-        /** Creates a BigInt by reading the value from a string **/
-        BigInt( string s );
-
-        /** Creates a BigInt by reading the value from a C string **/
-        BigInt( const char s[] );
-
-        /** Copy constructor **/
-        BigInt( const BigInt &n );
-
-        /** Assignment operators **/
-        const BigInt &operator=( const BigInt &n );
-        const BigInt &operator=( int n );
-
-        /** Cleans up **/
-        ~BigInt();
-
-        /** Removes any leading zeros and adjusts the sign **/
-        void normalize();
-
-        /** Returns the sign of n: -1, 0 or 1 **/
-        static int sig( int n );
-
-        /** Returns the sign of n: -1, 0 or 1 **/
-        static int sig( long double n );
-
-        /** Returns the number of decimal digits **/
-        inline int length() { return size; }
-
-        /** Arithmetic **/
-        BigInt operator++();
-        BigInt operator++( int );
-        BigInt operator--();
-        BigInt operator--( int );
-        BigInt operator-();
-        BigInt operator+ ( int n    );
-        BigInt operator+ ( BigInt n );
-        BigInt&operator+=( int n    );
-        BigInt&operator+=( BigInt n );
-        BigInt operator- ( int n    );
-        BigInt operator- ( BigInt n );
-        BigInt&operator-=( int n    );
-        BigInt&operator-=( BigInt n );
-        BigInt operator* ( int n    );
-        BigInt operator* ( BigInt n );
-        void   operator*=( int n    );
-        void   operator*=( BigInt n );
-        BigInt operator/ ( int n    );
-        BigInt operator/ ( BigInt n );
-        void   operator/=( int n    );
-        void   operator/=( BigInt n );
-        int    operator% ( int n    );
-        BigInt operator% ( BigInt n );
-        void   operator%=( int n    );
-        void   operator%=( BigInt n );
-        int divide( int n );              // Divides storing quotient in *this and returning the remainder
-        BigInt divide( BigInt n );        // Divides storing quotient in *this and returning the remainder
-        BigInt operator* ( long double n ); // Multiplies by a double and truncates (always under-estimates!)
-        void   operator*=( long double n ); // Multiplies by a double and truncates (always under-estimates!)
-
-        /** Bitwise arithmetic **/
-        BigInt operator<< ( int n    );
-        void   operator<<=( int n    );
-        BigInt operator>> ( int n    );   // Works differently for negative numbers
-        void   operator>>=( int n    );   // Works differently for negative numbers
-/*
-        BigInt operator&  ( int n    );
-        BigInt operator&  ( BigInt n );
-        void   operator&= ( int n    );
-        void   operator&= ( BigInt n );
-        BigInt operator|  ( int n    );
-        BigInt operator|  ( BigInt n );
-        void   operator|= ( int n    );
-        void   operator|= ( BigInt n );
-        BigInt operator^  ( int n    );
-        BigInt operator^  ( BigInt n );
-        void   operator^= ( int n    );
-        void   operator^= ( BigInt n );
-        BigInt operator~();
-*/
-        /** Concatenation ;-) **/
-        BigInt operator,( int n );
-        BigInt operator,( BigInt n );
-
-        /** Casting **/
-        bool operator!();
-        operator bool();
-        //operator int();   //XXX: Don't do this!!! It takes precedence over operator+(int,BigInt)
-        operator string();
-
-        /** Comparison **/
-        bool operator<( BigInt n );
-        bool operator>( BigInt n );
-        bool operator==( BigInt n );
-        bool operator<=( BigInt n );
-        bool operator>=( BigInt n );
-        bool operator<( int n );
-        bool operator>( int n );
-        bool operator==( int n );
-        bool operator<=( int n );
-        bool operator>=( int n );
-        int compare( BigInt n );
-
-        /** Returns the lowest value as an integer (watch out for overflow) **/
-        int toInt();
-
-        /** Returns the value as a decimal string **/
-        string toString();
-
-        /** Outputs decimal value to stdout **/
-        void print();
-
-        /** Outputs the decimal value, with commas **/
-        void printWithCommas( ostream &out );
-
-    private:
-        /** Expansion **/
-        void grow();
-
-    /** I/O Friends **/
-    friend istream &operator>>( istream &in, BigInt &n );
-    friend ostream &operator<<( ostream &out, BigInt n );
-
-    /** Logarithms **/
-    friend long double log2( BigInt x, long double epsilon );
-    inline friend long double log( BigInt x, long double epsilon );
-    inline friend long double log10( BigInt x, long double epsilon );
-    inline friend long double lg( BigInt x, long double epsilon );
-    inline friend long double ln( BigInt x, long double epsilon );
-};
+/* ivucica: REPLACED CLASS DECLARATION WITH THE INCLUDE */
+#include "bigint.h"
+/* ivucica: REPLACED CLASS DECLARATION WITH THE INCLUDE */
 
 BigInt operator+( int m, BigInt &n )
 {
@@ -1277,3 +1132,34 @@ inline long double ln( BigInt x, long double epsilon = 0.000000000000001 )
     return 0;
 }
 */
+
+char* bigint_toBase(BigInt i, int base, int &len) {
+    std::stringstream res;
+    char* ret;
+    len = 0;
+    while (i) {
+        BigInt rbi = t_modulo(i, BigInt(base));
+        int r = rbi.toInt();
+        if (base < 36) {
+            if (r < 10)
+                r += '0';
+            else
+                r += 'A'-10;
+        }
+        printf("%c\n", r);
+        i = i / base;
+
+        res << char(r);
+        //printf("%s\n", res.str().c_str());
+        len++;
+
+    }
+    std::stringstream out;
+    for (int i = res.str().size()-1; i >= 0; i--) {
+        out << res.str()[i];
+    }
+    ret = (char*)malloc(len+1);
+    memcpy(ret, out.str().c_str(), len);
+    ret[len] = 0;
+    return ret;
+}

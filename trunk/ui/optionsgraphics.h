@@ -24,7 +24,7 @@ public:
 
 	// 15 16, 198 20
 	glictPanel pnlFullscreen;
-	glictButton btnFullscreen;
+	glictPanel btnFullscreen;
 	glictPanel lblFullscreen;
 
 	glictPanel lblResolutions; // 14 52, 194 12
@@ -133,7 +133,8 @@ public:
 
 	void Init() {
 
-		btnFullscreen.SetCaption(options.fullscreen ? "X" : "");
+		btnFullscreen.SetCustomData(options.fullscreen ? (void*)1 : NULL);
+        btnFullscreen.SetSkin(options.fullscreen ? &g_skin.chk : &g_skin.txt);
 
 		currentres.w = 0; currentres.h = 0; currentres.bpp = 0;
 		for (std::vector<glictPanel*>::iterator it = lsiResolutions.begin(); it != lsiResolutions.end(); it++) {
@@ -148,19 +149,24 @@ public:
 	}
 
 	void Store() {
-		options.fullscreen = (btnFullscreen.GetCaption() == "X");
+	    options.fullscreen = (btnFullscreen.GetCustomData() != NULL);
 		if (currentres.w) {
 			options.w = currentres.w; options.h = currentres.h; options.bpp = currentres.bpp;
 			g_engine->doResize(currentres.w, currentres.h);
 		}
+        options.Save();
 
 	}
 
+
 	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
-		if (caller->GetCaption() == "X")
-			caller->SetCaption("");
-		else
-			caller->SetCaption("X");
+		if ((long)caller->GetCustomData() == 1) {
+			caller->SetCustomData(NULL);
+			((glictPanel*)caller)->SetSkin(&g_skin.txt);
+		} else {
+			caller->SetCustomData((void*)1);
+			((glictPanel*)caller)->SetSkin(&g_skin.chk);
+		}
 	}
 	static void OnListbox(glictPos* pos, glictContainer *caller) {
 		// worthy oriental gentlemen ;)
@@ -227,6 +233,11 @@ public:
 		res->SetCustomData(data);
 		res->SetCaption(s.str());
 		res->SetFont("aafont");
+		#if GLICT_APIREV < 68
+		#warning Aesthetic corrections on listboxes wont work without GLICT of apirev 68+
+		#else
+		res->SetTextOffset(4,2);
+		#endif
 
 		lsiResolutions.insert(lsiResolutions.end(), res);
 		lstResolutions.AddObject(res);

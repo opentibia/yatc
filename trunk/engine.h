@@ -66,6 +66,8 @@ class Engine
             printf("warning: engine %s did not redefine %s\n", getName(), __PRETTY_FUNCTION__);
         }
         virtual const char* getName() const {return "Unknown";}
+        virtual bool hasSDL() const { return true; }
+        virtual bool hasGL() const { return false; }
 	protected:
 		Engine();
 		void initFont(glictFont** fnt, const char* fontname);
