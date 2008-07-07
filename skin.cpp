@@ -132,6 +132,66 @@ Skin::Skin() {
     invb  = NULL;
     invbr = NULL;
 
+    scutl = NULL;
+    scut  = NULL;
+    scutr = NULL;
+    scul  = NULL;
+    scuc  = NULL;
+    scur  = NULL;
+    scubl = NULL;
+    scub  = NULL;
+    scubr = NULL;
+
+    shutl = NULL;
+    shut  = NULL;
+    shutr = NULL;
+    shul  = NULL;
+    shuc  = NULL;
+    shur  = NULL;
+    shubl = NULL;
+    shub  = NULL;
+    shubr = NULL;
+
+    scdtl = NULL;
+    scdt  = NULL;
+    scdtr = NULL;
+    scdl  = NULL;
+    scdc  = NULL;
+    scdr  = NULL;
+    scdbl = NULL;
+    scdb  = NULL;
+    scdbr = NULL;
+
+    shdtl = NULL;
+    shdt  = NULL;
+    shdtr = NULL;
+    shdl  = NULL;
+    shdc  = NULL;
+    shdr  = NULL;
+    shdbl = NULL;
+    shdb  = NULL;
+    shdbr = NULL;
+
+    scbtl = NULL;
+    scbt  = NULL;
+    scbtr = NULL;
+    scbl  = NULL;
+    scbc  = NULL;
+    scbr  = NULL;
+    scbbl = NULL;
+    scbb  = NULL;
+    scbbr = NULL;
+
+    scptl = NULL;
+    scpt  = NULL;
+    scptr = NULL;
+    scpl  = NULL;
+    scpc  = NULL;
+    scpr  = NULL;
+    scpbl = NULL;
+    scpb  = NULL;
+    scpbr = NULL;
+
 
 }
 Skin::~Skin() {
@@ -224,7 +284,81 @@ void Skin::loadSkin() {
     inv.SetBL		(invbl = new skinImage(186,		97, 	1,		1));
     inv.SetBottom	(invb  = new skinImage(187,		97,	    31,		1));
     inv.SetBR		(invbr = new skinImage(219,		97,	    1,		1));
+#if GLICT_APIREV < 68
+#warning Skinned scrollbar buttons need at least GLICT apirev 68
+#else
+    scu.SetTL		(scutl = NULL);
+    scu.SetTop		(scut  = NULL);
+    scu.SetTR		(scutr = NULL);
+    scu.SetLeft		(scul  = NULL);
+    scu.SetCenter	(scuc  = new skinImage(232,		64,	    12,		12));
+    scu.SetRight	(scur  = NULL);
+    scu.SetBL		(scubl = NULL);
+    scu.SetBottom	(scub  = NULL);
+    scu.SetBR		(scubr = NULL);
 
+    glictGlobals.scrollbarUpperSkin = &scu;
+
+    shu.SetTL		(shutl = NULL);
+    shu.SetTop		(shut  = NULL);
+    shu.SetTR		(shutr = NULL);
+    shu.SetLeft		(shul  = NULL);
+    shu.SetCenter	(shuc  = new skinImage(234,		122,    12,		12));
+    shu.SetRight	(shur  = NULL);
+    shu.SetBL		(shubl = NULL);
+    shu.SetBottom	(shub  = NULL);
+    shu.SetBR		(shubr = NULL);
+
+    glictGlobals.scrollbarUpperHighlightSkin = &shu;
+
+    scd.SetTL		(scdtl = NULL);
+    scd.SetTop		(scdt  = NULL);
+    scd.SetTR		(scdtr = NULL);
+    scd.SetLeft		(scdl  = NULL);
+    scd.SetCenter	(scdc  = new skinImage(244,		64,	    12,		12));
+    scd.SetRight	(scdr  = NULL);
+    scd.SetBL		(scdbl = NULL);
+    scd.SetBottom	(scdb  = NULL);
+    scd.SetBR		(scdbr = NULL);
+
+    glictGlobals.scrollbarLowerSkin = &scd;
+
+    shd.SetTL		(shdtl = NULL);
+    shd.SetTop		(shdt  = NULL);
+    shd.SetTR		(shdtr = NULL);
+    shd.SetLeft		(shdl  = NULL);
+    shd.SetCenter	(shdc  = new skinImage(246,		122,    12,		12));
+    shd.SetRight	(shdr  = NULL);
+    shd.SetBL		(shdbl = NULL);
+    shd.SetBottom	(shdb  = NULL);
+    shd.SetBR		(shdbr = NULL);
+
+    glictGlobals.scrollbarLowerHighlightSkin = &shd;
+
+    scb.SetTL		(scbtl = NULL);
+    scb.SetTop		(scbt  = NULL);
+    scb.SetTR		(scbtr = NULL);
+    scb.SetLeft		(scbl  = NULL);
+    scb.SetCenter	(scbc  = new skinImage(220,		64,    12,		12));
+    scb.SetRight	(scbr  = NULL);
+    scb.SetBL		(scbbl = NULL);
+    scb.SetBottom	(scbb  = NULL);
+    scb.SetBR		(scbbr = NULL);
+
+    glictGlobals.scrollbarDragSkin = &scb;
+
+    scp.SetTL		(scptl = NULL);
+    scp.SetTop		(scpt  = NULL);
+    scp.SetTR		(scptr = NULL);
+    scp.SetLeft		(scpl  = new skinImage(264,		0,     1,		96));
+    scp.SetCenter	(scpc  = new skinImage(265,		0,     10,		96));
+    scp.SetRight	(scpr  = new skinImage(275,		0,     1,		96));
+    scp.SetBL		(scpbl = NULL);
+    scp.SetBottom	(scpb  = NULL);
+    scp.SetBR		(scpbr = NULL);
+
+    glictGlobals.scrollbarPanelSkin = &scp;
+#endif
 }
 
 void Skin::unloadSkin() {
@@ -251,6 +385,9 @@ void Skin::unloadSkin() {
     win.SetBL(NULL);
     win.SetBottom(NULL);
     win.SetBR(NULL);
+
+    glictGlobals.windowBodySkin = NULL;
+
 
 
 //    printf("[Skin::unloadSkin] Unloading button skin...\n");
@@ -324,6 +461,9 @@ void Skin::unloadSkin() {
     txt.SetBottom(NULL);
     txt.SetBR(NULL);
 
+    glictGlobals.textboxSkin = NULL;
+
+
 //    printf("[Skin::unloadSkin] Unloading checkbox skin...\n");
 
     if (chktl) delete chktl; chktl = NULL;
@@ -390,7 +530,141 @@ void Skin::unloadSkin() {
     inv.SetBottom(NULL);
     inv.SetBR(NULL);
 
+#if GLICT_APIREV < 68
+#warning Skinned scrollbar buttons need at least GLICT apirev 68
+#else
+    if (scutl) delete scutl; scutl = NULL;
+    if (scut)  delete scut;  scut  = NULL;
+    if (scutr) delete scutr; scutr = NULL;
+    if (scul)  delete scul;  scul  = NULL;
+    if (scuc)  delete scuc;  scuc  = NULL;
+    if (scur)  delete scur;  scur  = NULL;
+    if (scubl) delete scubl; scubl = NULL;
+    if (scub)  delete scub;  scub  = NULL;
+    if (scubr) delete scubr; scubr = NULL;
 
-//	delete m_uisprite; // FIXME (ivucica#1#) implement skin with simpleton, might remedy a problem on windows with this throwing an error
+    scu.SetTL(NULL);
+    scu.SetTop(NULL);
+    scu.SetTR(NULL);
+    scu.SetLeft(NULL);
+    scu.SetCenter(NULL);
+    scu.SetRight(NULL);
+    scu.SetBL(NULL);
+    scu.SetBottom(NULL);
+    scu.SetBR(NULL);
+
+    glictGlobals.scrollbarUpperSkin = NULL;
+
+    if (shutl) delete shutl; shutl = NULL;
+    if (shut)  delete shut;  shut  = NULL;
+    if (shutr) delete shutr; shutr = NULL;
+    if (shul)  delete shul;  shul  = NULL;
+    if (shuc)  delete shuc;  shuc  = NULL;
+    if (shur)  delete shur;  shur  = NULL;
+    if (shubl) delete shubl; shubl = NULL;
+    if (shub)  delete shub;  shub  = NULL;
+    if (shubr) delete shubr; shubr = NULL;
+
+    shu.SetTL(NULL);
+    shu.SetTop(NULL);
+    shu.SetTR(NULL);
+    shu.SetLeft(NULL);
+    shu.SetCenter(NULL);
+    shu.SetRight(NULL);
+    shu.SetBL(NULL);
+    shu.SetBottom(NULL);
+    shu.SetBR(NULL);
+
+    glictGlobals.scrollbarUpperHighlightSkin = NULL;
+
+
+    if (scdtl) delete scdtl; scdtl = NULL;
+    if (scdt)  delete scdt;  scdt  = NULL;
+    if (scdtr) delete scdtr; scdtr = NULL;
+    if (scdl)  delete scdl;  scdl  = NULL;
+    if (scdc)  delete scdc;  scdc  = NULL;
+    if (scdr)  delete scdr;  scdr  = NULL;
+    if (scdbl) delete scdbl; scdbl = NULL;
+    if (scdb)  delete scdb;  scdb  = NULL;
+    if (scdbr) delete scdbr; scdbr = NULL;
+
+    scd.SetTL(NULL);
+    scd.SetTop(NULL);
+    scd.SetTR(NULL);
+    scd.SetLeft(NULL);
+    scd.SetCenter(NULL);
+    scd.SetRight(NULL);
+    scd.SetBL(NULL);
+    scd.SetBottom(NULL);
+    scd.SetBR(NULL);
+
+    glictGlobals.scrollbarLowerSkin = NULL;
+
+    if (shdtl) delete shdtl; shdtl = NULL;
+    if (shdt)  delete shdt;  shdt  = NULL;
+    if (shdtr) delete shdtr; shdtr = NULL;
+    if (shdl)  delete shdl;  shdl  = NULL;
+    if (shdc)  delete shdc;  shdc  = NULL;
+    if (shdr)  delete shdr;  shdr  = NULL;
+    if (shdbl) delete shdbl; shdbl = NULL;
+    if (shdb)  delete shdb;  shdb  = NULL;
+    if (shdbr) delete shdbr; shdbr = NULL;
+
+    shd.SetTL(NULL);
+    shd.SetTop(NULL);
+    shd.SetTR(NULL);
+    shd.SetLeft(NULL);
+    shd.SetCenter(NULL);
+    shd.SetRight(NULL);
+    shd.SetBL(NULL);
+    shd.SetBottom(NULL);
+    shd.SetBR(NULL);
+
+    glictGlobals.scrollbarLowerHighlightSkin = NULL;
+
+    if (scbtl) delete scbtl; scbtl = NULL;
+    if (scbt)  delete scbt;  scbt  = NULL;
+    if (scbtr) delete scbtr; scbtr = NULL;
+    if (scbl)  delete scbl;  scbl  = NULL;
+    if (scbc)  delete scbc;  scbc  = NULL;
+    if (scbr)  delete scbr;  scbr  = NULL;
+    if (scbbl) delete scbbl; scbbl = NULL;
+    if (scbb)  delete scbb;  scbb  = NULL;
+    if (scbbr) delete scbbr; scbbr = NULL;
+
+    scb.SetTL(NULL);
+    scb.SetTop(NULL);
+    scb.SetTR(NULL);
+    scb.SetLeft(NULL);
+    scb.SetCenter(NULL);
+    scb.SetRight(NULL);
+    scb.SetBL(NULL);
+    scb.SetBottom(NULL);
+    scb.SetBR(NULL);
+
+    glictGlobals.scrollbarDragSkin = NULL;
+
+    if (scptl) delete scptl; scptl = NULL;
+    if (scpt)  delete scpt;  scpt  = NULL;
+    if (scptr) delete scptr; scptr = NULL;
+    if (scpl)  delete scpl;  scpl  = NULL;
+    if (scpc)  delete scpc;  scpc  = NULL;
+    if (scpr)  delete scpr;  scpr  = NULL;
+    if (scpbl) delete scpbl; scpbl = NULL;
+    if (scpb)  delete scpb;  scpb  = NULL;
+    if (scpbr) delete scpbr; scpbr = NULL;
+
+    scp.SetTL(NULL);
+    scp.SetTop(NULL);
+    scp.SetTR(NULL);
+    scp.SetLeft(NULL);
+    scp.SetCenter(NULL);
+    scp.SetRight(NULL);
+    scp.SetBL(NULL);
+    scp.SetBottom(NULL);
+    scp.SetBR(NULL);
+
+    glictGlobals.scrollbarPanelSkin = NULL;
+#endif
 }
 

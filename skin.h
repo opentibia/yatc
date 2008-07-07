@@ -37,16 +37,28 @@ public:
 private:
 	Sprite *m_uisprite;
 
-	skinImage *wintl, *wint, *wintr, *winl, *winc, *winr, *winbl, *winb, *winbr;
+	skinImage *wintl, *wint, *wintr, *winl, *winc, *winr, *winbl, *winb, *winbr; // window
 	glictSkinner win;
-	skinImage *btntl, *btnt, *btntr, *btnl, *btnc, *btnr, *btnbl, *btnb, *btnbr;
+	skinImage *btntl, *btnt, *btntr, *btnl, *btnc, *btnr, *btnbl, *btnb, *btnbr; // button
 	glictSkinner btn;
-	skinImage *bthtl, *btht, *bthtr, *bthl, *bthc, *bthr, *bthbl, *bthb, *bthbr;
+	skinImage *bthtl, *btht, *bthtr, *bthl, *bthc, *bthr, *bthbl, *bthb, *bthbr; // button highlighted
 	glictSkinner bth;
-	skinImage *txttl, *txtt, *txttr, *txtl, *txtc, *txtr, *txtbl, *txtb, *txtbr;
-	skinImage *chktl, *chkt, *chktr, *chkl, *chkc, *chkr, *chkbl, *chkb, *chkbr;
-	skinImage *tmmtl, *tmmt, *tmmtr, *tmml, *tmmc, *tmmr, *tmmbl, *tmmb, *tmmbr;
-	skinImage *invtl, *invt, *invtr, *invl, *invc, *invr, *invbl, *invb, *invbr;
+	skinImage *txttl, *txtt, *txttr, *txtl, *txtc, *txtr, *txtbl, *txtb, *txtbr; // textbox
+	skinImage *chktl, *chkt, *chktr, *chkl, *chkc, *chkr, *chkbl, *chkb, *chkbr; // checkbox
+	skinImage *tmmtl, *tmmt, *tmmtr, *tmml, *tmmc, *tmmr, *tmmbl, *tmmb, *tmmbr; // tibia main menu panel
+	skinImage *invtl, *invt, *invtr, *invl, *invc, *invr, *invbl, *invb, *invbr; // inventory item panel bg
+	skinImage *scutl, *scut, *scutr, *scul, *scuc, *scur, *scubl, *scub, *scubr; // scrollbar up button
+	glictSkinner scu;
+	skinImage *shutl, *shut, *shutr, *shul, *shuc, *shur, *shubl, *shub, *shubr; // scrollbar up button, highlighted
+	glictSkinner shu;
+	skinImage *scdtl, *scdt, *scdtr, *scdl, *scdc, *scdr, *scdbl, *scdb, *scdbr; // scrollbar dn button
+	glictSkinner scd;
+	skinImage *shdtl, *shdt, *shdtr, *shdl, *shdc, *shdr, *shdbl, *shdb, *shdbr; // scrollbar dn button, highlighted
+	glictSkinner shd;
+	skinImage *scbtl, *scbt, *scbtr, *scbl, *scbc, *scbr, *scbbl, *scbb, *scbbr; // scrollbar drag button
+	glictSkinner scb;
+	skinImage *scptl, *scpt, *scptr, *scpl, *scpc, *scpr, *scpbl, *scpb, *scpbr; // scrollbar panel bg
+	glictSkinner scp;
 public:
 	glictSkinner chk, tmm, inv;
 	glictSkinner txt;

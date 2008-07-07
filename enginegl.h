@@ -46,6 +46,7 @@ class EngineGL : public Engine
 		}
 
         virtual const char* getName() const {return "OpenGL";}
+        bool hasGL() const { return true; }
 	protected:
 
 		static void font_render(const char* txt, const void* font, float x, float y);

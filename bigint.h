@@ -165,9 +165,11 @@ template <typename T> T t_power (T x, int n) {
 
 template <typename T> T t_modulo (const T x_x, const T y) {
     // FIXME (ivucica#1#) ugly slow hack. repeated subtraction "algorithm".
-
-    for (T x = x_x; x > y; x -= y);
-    return y;
+    T x;
+    for (x = x_x; x >= y; x -= y);
+    return x;
 }
+
+char* bigint_toBase(BigInt i, int base, int& len);
 
 #endif

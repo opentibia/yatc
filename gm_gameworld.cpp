@@ -269,9 +269,11 @@ GM_Gameworld::GM_Gameworld()
 
 	m_extendedthing = NULL;
     m_dragging = false;
+    m_draggingPrep = false;
     m_draggingInv = SLOT_NONE;
     m_draggingCtrId = m_draggingCtrSlot = -1;
     m_dragThing = false;
+
 
     m_cursorBasic = ui->createCursor(290,12,11,19, 1, 1);
     m_cursorUse = ui->createCursor(310,12,19,19, 9, 9);
@@ -665,7 +667,7 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     case SPEAK_PRIVATE_NP:
     case SPEAK_PRIVATE_PN:
         findConsole("NPCs")->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_LIGHTBLUE)); // this is bad; this way we disallow potential player called "NPCs"
-        break; 
+        break;
     case SPEAK_MONSTER_SAY:
     case SPEAK_MONSTER_YELL:
          getDefaultConsole()->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_ORANGE));

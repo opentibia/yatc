@@ -277,20 +277,36 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 {
 	std::stringstream txt;
 	unsigned char c = 169;
+    unsigned char b = 149; // bullet
+
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	SDL_version sdl_compilever;
+	SDL_VERSION(&sdl_compilever);
 	txt << PRODUCTLONG << "\n"
 		<< PRODUCTVERSION << "\n"
 		<< "\n"
 		<< c <<" 2007-2008 OpenTibia Team\n"
 		<< "\n"
+		<< "Current engine: " << g_engine->getName() << "\n"
+		<< "Uses SDL: " << int(SDL_Linked_Version()->major) << "." << int(SDL_Linked_Version()->minor) << "." << int(SDL_Linked_Version()->patch) << " (compiled with: " << int(sdl_compilever.major) <<"."<< int(sdl_compilever.minor) <<"."<< int(sdl_compilever.patch) << ")\n"
+		<< "Uses GLICT API rev: " << int(GLICT_APIREV) << "\n"
+		#ifdef USE_OPENGL
+		<< "Uses OpenGL: ";
+		if (g_engine->hasGL())
+            txt << glGetString(GL_VENDOR)  << " " << glGetString(GL_VERSION) << "\n";
+		else
+            txt << "[for info run with GL engine]\n";
+        txt
+		#endif
+		<< "\n"
 		<< "Programmed by (in no particular order):\n"
-		<< "mips\n"
-		<< "Ivan Vucica\n"
-		<< "Smygflik\n"
-		<< "nfries88\n"
+		<< b << " mips\n"
+		<< b << " Ivan Vucica\n"
+		<< b << " Smygflik\n"
+		<< b << " nfries88\n"
 		<< "\n"
 		<< "Contributors:\n"
-		<< "mrauter\n"
+		<< b << " mrauter\n"
 		<< "\n"
 		<< PRODUCTSHORT << " comes with ABSOLUTELY NO WARRANTY; \n"
 		<< "for details see sections 11 and 12 in COPYING.\n"

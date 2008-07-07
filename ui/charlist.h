@@ -139,6 +139,11 @@ public:
 		res->SetCaption(s.str());
 		res->SetFont("aafont");
 		res->SetFocusable(false);
+		#if GLICT_APIREV < 68
+		#warning Aesthetic corrections on listboxes wont work without GLICT of apirev 68+
+		#else
+		res->SetTextOffset(4,2);
+		#endif
 
 		lsiChars.insert(lsiChars.end(), res);
 		lstChars.AddObject(res);

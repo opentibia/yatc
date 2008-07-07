@@ -21,6 +21,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <stdlib.h>
+#include <string.h>
 #include "config.h"
 #include "util.h"
 
