@@ -105,7 +105,7 @@ ClientVersion_t ProtocolConfig::detectVersion()
 		picSignature == 0x4742FCD7)
 	        return CLIENT_VERSION_811;
 
-	if (datSignature == 0x486905AA &&
+	if ((datSignature == 0x486905AA || datSignature == 0x486CCA2B) && // for original release and first patch
 		sprSignature == 0x4868ECC9 &&
 		picSignature == 0x48562106)
 		return CLIENT_VERSION_820;
