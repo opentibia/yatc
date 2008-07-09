@@ -35,6 +35,7 @@
 #include "protocolgame81.h"
 #include "protocolgame811.h"
 #include "protocolgame82.h"
+#include "protocolgame821.h"
 #include "../debugprint.h"
 
 const char RSAKey_otserv[] = "109120132967399429278860960508995541528237502902798129123468757937266291492576446330739696001110603907230888610072655818825358503429057592827629436413108566029093628212635953836686562675849720620786279431090218017681061521755056710823876476444260558147179707119674283982419152118103759076030616683978566631413";
@@ -46,7 +47,7 @@ ProtocolConfig::ProtocolConfig()
 {
 	m_host = "localhost";
 	m_port = 7171;
-	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_811);
+	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_821);
 	setServerType(SERVER_OTSERV);
 	setVersionOverride(0); // no override
 }
@@ -75,6 +76,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	case CLIENT_VERSION_820:
 		m_clientVersion = CLIENT_VERSION_820;
 		break;
+	case CLIENT_VERSION_821:
+		m_clientVersion = CLIENT_VERSION_821;
+		break;
 	default:
 		ASSERT(0);
 		break;
@@ -89,7 +93,7 @@ ClientVersion_t ProtocolConfig::detectVersion()
 	uint32_t sprSignature = ProtocolConfig::readSignature("Tibia.spr");
 	uint32_t picSignature = ProtocolConfig::readSignature("Tibia.pic");
 
-	printf("%08x %08x %08x\n", datSignature, sprSignature, picSignature);
+	printf("Data file signatures: %08x %08x %08x\n", datSignature, sprSignature, picSignature);
 	if (datSignature == 0x467FD7E6 &&
 		sprSignature == 0x467F9E74 &&
 		picSignature == 0x45670923)
@@ -105,10 +109,15 @@ ClientVersion_t ProtocolConfig::detectVersion()
 		picSignature == 0x4742FCD7)
 	        return CLIENT_VERSION_811;
 
-	if ((datSignature == 0x486905AA || datSignature == 0x486CCA2B) && // for original release and first patch
+	if (datSignature == 0x486905AA &&  // 8.20 minipatch uses datafiles from 8.21
 		sprSignature == 0x4868ECC9 &&
 		picSignature == 0x48562106)
 		return CLIENT_VERSION_820;
+
+	if (datSignature == 0x486CCA2B &&
+		sprSignature == 0x4868ECC9 &&
+		picSignature == 0x48562106)
+		return CLIENT_VERSION_821;
 
 	return CLIENT_VERSION_AUTO; // failure
 }
@@ -158,6 +167,9 @@ ProtocolGame* ProtocolConfig::createGameConnection(int account, const std::strin
 		break;
 	case CLIENT_VERSION_820:
 		protocol = new ProtocolGame82(account, password, name, isGM);
+		break;
+	case CLIENT_VERSION_821:
+		protocol = new ProtocolGame821(account, password, name, isGM);
 		break;
 	default:
 		return NULL;
