@@ -32,7 +32,7 @@ public:
 	glictPanel pnlSeparator2; // 9 204 -- 260 2
 
 	glictButton btnOk; // 227 215 -- 41 17
-	
+
 	// (nfries88) Moving as much of the options ui stuff into here as possible
 	// is this ok? [
 	winOptionsGeneral_t winOptionsGeneral;
@@ -160,7 +160,7 @@ public:
 		btnOk.SetCaption("Ok");
 		btnOk.SetFont("minifont",8);
 	}
-	
+
 	void initiateAll(glictContainer* desktop);
 
     static void btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerclass);
@@ -181,7 +181,7 @@ public:
 	static void winOptionsGraphics_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsGraphics_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsGraphics_btnAdvanced_OnClick(glictPos* relmousepos, glictContainer* callerclass);
-	
+
 	static void winOptionsGraphicsAdvanced_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsGraphicsAdvanced_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 

@@ -54,6 +54,7 @@ unsigned int MAXFPS=50;
 #include "net/connection.h"
 #include "net/protocollogin.h"
 #include "net/protocolgame.h"
+#include "gamecontent/creature.h"
 #include "gamecontent/map.h"
 #include "gamecontent/inventory.h"
 bool g_running = false;
@@ -458,12 +459,17 @@ int main(int argc, char *argv[])
 	delete g_connection;
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
 	Map::getInstance().clear();
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying creature cache...\n");
+	Creatures::getInstance().clear();
+	Creatures::destroyInstance();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying inventory...\n");
 	Inventory::getInstance().clear();
 
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Unloading data...\n");
 	Objects::getInstance()->unloadDat();
-	delete Objects::getInstance();
+    Objects::destroyInstance();
+
+    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Unloading skin...\n");
 	g_skin.unloadSkin();
 
 

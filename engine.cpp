@@ -39,12 +39,12 @@ extern int g_frames;
 int ptrx, ptry;
 
 // first we'll define all the C-style callbacks we'll use elsewhere
-void Engine::draw_rectangle(float left, float right, float top, float bottom, glictColor &col)
+void Engine::draw_rectangle(float left, float right, float top, float bottom, GLICTCOLORCONST glictColor &col)
 {
 	g_engine->drawRectangle((int)left, (int)top, (int)(right-left), (int)(bottom-top), oRGBA(col.r * 255, col.g * 255, col.b * 255, col.a * 255));
 }
 
-void Engine::draw_rectangle_lines(float left, float right, float top, float bottom, glictColor &col)
+void Engine::draw_rectangle_lines(float left, float right, float top, float bottom, GLICTCOLORCONST glictColor &col)
 {
 	g_engine->drawRectangleLines((int)left, (int)top, (int)(right-left), (int)(bottom-top), oRGBA(col.r * 255, col.g * 255, col.b * 255, col.a * 255));
 }
@@ -145,7 +145,7 @@ Engine::~Engine()
 
 void Engine::performFpsCalc() {
     char caption[255];
-    static int interval = 200;
+    static int interval = 1000;
 
     if (SDL_GetTicks() >= m_lastfpsupdate + interval) {
         m_lastfpsupdate = SDL_GetTicks();

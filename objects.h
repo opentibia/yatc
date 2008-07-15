@@ -140,6 +140,7 @@ public:
 	~Objects();
 
 	static Objects* getInstance();
+	static void destroyInstance() { delete m_instance; m_instance = NULL; }
 
 	bool unloadDat();
 	bool loadDat(const char* filename);

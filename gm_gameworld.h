@@ -46,6 +46,9 @@ public:
 	void doResize(float w, float h);
 	void mouseEvent(SDL_Event& event);
 
+    void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);
+    static void MBOnDismiss(glictPos* pos, glictContainer* caller);
+
 
 	virtual void onConnectionClosed();
 
@@ -60,6 +63,7 @@ public:
 	void onChangeStats();
     void openContainer(uint32_t cid);
     void closeContainer(uint32_t cid);
+    void showTutorial(uint8_t id);
 
 	bool isDragging() const {return m_dragging;}
 	void dismissDrag() { if (m_dragging) SDL_SetCursor(m_cursorBasic); m_dragging = false; m_draggingPrep = false; }

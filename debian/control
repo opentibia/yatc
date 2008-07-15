@@ -3,7 +3,7 @@ Section: contrib/games
 Priority: extra
 Maintainer: Ivan Vucica <ivucica@gmail.com>
 Build-Depends: debhelper (>= 5), autotools-dev
-Standards-Version: 3.7.2
+Standards-Version: 3.8.0
 
 Package: yatc
 Architecture: any

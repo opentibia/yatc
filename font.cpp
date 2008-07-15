@@ -51,7 +51,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 				}
 			}
 
-			charh[(unsigned char)'\n'] = 14;
+			charh[(unsigned char)'\n'] = 12;
 
 			charw[(unsigned char)' '] = 2;
 			charw[(unsigned char)'.'] = 2;
@@ -63,6 +63,10 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'_'] = 7; charh[(unsigned char)'_'] = 10;
 			charw[(unsigned char)'('] = 4; charh[(unsigned char)'('] = 10;
 			charw[(unsigned char)')'] = 4; charh[(unsigned char)')'] = 10;
+			charw[(unsigned char)'['] = 4; charh[(unsigned char)'['] = 10;
+			charw[(unsigned char)']'] = 4; charh[(unsigned char)']'] = 10;
+			charw[(unsigned char)'{'] = 4; charh[(unsigned char)'{'] = 10;
+			charw[(unsigned char)'}'] = 4; charh[(unsigned char)'}'] = 10;
 
 			charw[(unsigned char)'0'] = 6;
 			charw[(unsigned char)'1'] = 4;

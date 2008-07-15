@@ -879,6 +879,9 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			    case 0x11:
                     messageType = MSG_STATUS_CONSOLE_RED;
                     break;
+                case 0x12:
+                    messageType = MSG_EVENT_DEFAULT; // broadcast from raid script
+                    break;
                 case 0x13:
                     messageType = MSG_STATUS_CONSOLE_ORNG;
                     break;
@@ -903,6 +906,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
                 case 0x1A:
                     messageType = MSG_STATUS_CONSOLE_BLUE;
                     break;
+
                 default:
                     RAISE_PROTOCOL_ERROR("text message - 8.2 translation problem");
 			}

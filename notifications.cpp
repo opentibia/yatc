@@ -229,6 +229,7 @@ void Notifications::closeContainer(int cid)
 //tutorials
 void Notifications::showTutorial(uint8_t tutorialId)
 {
+    g_game->showTutorial(tutorialId);
 }
 
 //minimap mark
