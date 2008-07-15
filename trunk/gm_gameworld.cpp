@@ -443,6 +443,11 @@ void GM_Gameworld::keyPress (char key)
 		        }
 
 		    } else {
+		        if (getActiveConsole()->getSpeakerName() == "NPCs") { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
+		            getActiveConsole()->insertEntry(ConsoleEntry(msg, "You", TEXTCOLOR_LIGHTBLUE));
+		            m_protocol->sendSay(SPEAK_PRIVATE_PN, msg);
+		            sent = true;
+		        } else
 		        if (getActiveConsole()->getSpeakerName().size()) {
 		            getActiveConsole()->insertEntry(ConsoleEntry(msg, "You", TEXTCOLOR_LIGHTBLUE));
 		            m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
