@@ -474,7 +474,10 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
             MSG_READ_U32(cash);
             break;
         }
-
+        case 0x7C: // close shop opened with 0x7A
+        {
+            break;
+        }
 		case 0x7D: //safe-trade request - ack
 		case 0x7E: //safe-trade request - no-ack
 		{
