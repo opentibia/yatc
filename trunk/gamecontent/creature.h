@@ -117,8 +117,12 @@ public:
 	~Creatures() {}
 
 	static Creatures& getInstance(){
-		static Creatures instance;
-		return instance;
+	    if (!m_instance) m_instance = new Creatures;
+		return *m_instance;
+	}
+	static void destroyInstance() {
+	    delete m_instance;
+	    m_instance = NULL;
 	}
 	void clear();
 
@@ -141,6 +145,8 @@ private:
 
 	typedef std::map<uint32_t, uint16_t> CreatureMap;
 	CreatureMap m_creaturesId;
+
+	static Creatures* m_instance;
 };
 
 #endif

@@ -124,6 +124,7 @@ Objects::~Objects()
 Objects* Objects::getInstance()
 {
 	// TODO (mips_act#3#): Choose Object instance depending on selected version
+
 	if(!m_instance)
 		m_instance = new Objects();
 

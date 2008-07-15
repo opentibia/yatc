@@ -22,6 +22,7 @@
 #include "globalvars.h"
 
 extern uint32_t g_frameTime;
+Creatures* Creatures::m_instance = NULL;
 
 //*********** Creature **************
 Creature::Creature()
@@ -152,6 +153,9 @@ void Creatures::clear()
 {
 	m_creaturesId.clear();
 	for(uint32_t i = 0; i < CREATURES_ARRAY; ++i){
+	    m_creaturesArray[i].unloadGfx();
 		m_creaturesArray[i].m_id = 0;
 	}
+
+
 }

@@ -13,6 +13,8 @@ public:
 	glictButton btnEngineOGL;       // 84 30
 	//glictButton btnEngineDX9;     // 154 30
 
+    glictButton *activeEngine;
+    glictButton *activeEngineOriginal;
 
 	// 9 277, 244 2
 	glictPanel pnlSeparator;
@@ -30,7 +32,7 @@ public:
 		// Select Graphics Engine
 		window.AddObject(&lblEngine);
 		lblEngine.SetPos(14, 17);
-		lblEngine.SetWidth(135);
+		lblEngine.SetWidth(135 + 15); // 15 is just a failsafe
 		lblEngine.SetHeight(14);
 		lblEngine.SetCaption("Select Graphics Options:");
 		lblEngine.SetFont("aafont");
@@ -42,7 +44,7 @@ public:
 		btnEngineSDL.SetHeight(18);
 		btnEngineSDL.SetCaption("SDL");
 		btnEngineSDL.SetFont("minifont",8);
-		btnEngineSDL.SetCustomData((void*)0);
+		btnEngineSDL.SetCustomData(this);
 		btnEngineSDL.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeEngine);
 
 		window.AddObject(&btnEngineOGL);
@@ -51,7 +53,7 @@ public:
 		btnEngineOGL.SetHeight(18);
 		btnEngineOGL.SetCaption("OpenGL");
 		btnEngineOGL.SetFont("minifont",8);
-		btnEngineOGL.SetCustomData((void*)1);
+		btnEngineOGL.SetCustomData(this);
 		btnEngineOGL.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeEngine);
 
 		//window.AddObject(&btnEngineDX);
@@ -94,7 +96,20 @@ public:
 
 
 	void Init() {
-		//
+	    btnEngineSDL.SetHold(false);
+	    btnEngineOGL.SetHold(false);
+		switch (options.engine) {
+		    default:
+		    case ENGINE_SDL:
+                btnEngineSDL.SetHold(true);
+                activeEngine = &btnEngineSDL;
+                break;
+            case ENGINE_OPENGL:
+                btnEngineOGL.SetHold(true);
+                activeEngine = &btnEngineOGL;
+                break;
+		}
+		activeEngineOriginal = activeEngine;
 	}
 
 	void Store() {
@@ -102,15 +117,21 @@ public:
 		options.Save();
 	}
 
-	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
-		if (caller->GetCaption() == "X")
-			caller->SetCaption("");
-		else
-			caller->SetCaption("X");
-	}
-	
 	static void OnChangeEngine(glictPos* pos, glictContainer *caller) {
 		//int engineType = (int)caller->GetCustomData();
+		winOptionsGraphicsAdvanced_t* woga = (winOptionsGraphicsAdvanced_t*)(caller->GetCustomData());
+		woga->activeEngine->SetHold(false);
+
+		options.engine = ENGINE_SDL; // default
+		if (caller == &woga->btnEngineSDL) {
+		    options.engine = ENGINE_SDL;
+		}
+		if (caller == &woga->btnEngineOGL) {
+		    options.engine = ENGINE_OPENGL;
+		}
+		woga->activeEngine = (glictButton*)caller;
+		woga->activeEngine->SetHold(true);
+
 		//Engine* engine = NULL;
   		//switch(engineType) {
 		//#ifdef USE_OPENGL
@@ -132,3 +153,4 @@ public:
 };
 
 #endif
+

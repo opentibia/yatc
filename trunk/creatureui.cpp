@@ -110,7 +110,10 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 				int draw_x = (int)(x - j*32*scale + walkoffx);
 				int draw_y = (int)(y - i*32*scale + walkoffy);
 
-                m_gfx[activeframe + aframes]->Blit(draw_x, draw_y, 0, 0, 32, 32, 32*scale, 32*scale);
+                if (m_gfx[activeframe + aframes])
+                    m_gfx[activeframe + aframes]->Blit(draw_x, draw_y, 0, 0, 32, 32, 32*scale, 32*scale);
+                else
+                    printf("Warning: rendering creature failed since sprite %d is NULL\n", activeframe+aframes);
 
                 if(m_obj->ydiv != 1){
                 	if(n->getOutfit().m_addons & 1){

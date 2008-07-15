@@ -329,10 +329,13 @@
 		<Unit filename="ui/options.h" />
 		<Unit filename="ui/optionsconsole.h" />
 		<Unit filename="ui/optionsgeneral.h" />
+		<Unit filename="ui/optionsgfxadv.h" />
 		<Unit filename="ui/optionsgraphics.h" />
 		<Unit filename="ui/optionsnetwork.h" />
 		<Unit filename="ui/optionsui.cpp" />
 		<Unit filename="ui/skills.h" />
+		<Unit filename="ui/tutorialhints.cpp" />
+		<Unit filename="ui/tutorialhints.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Unit filename="yatc.cfg" />

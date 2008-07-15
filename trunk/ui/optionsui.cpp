@@ -65,7 +65,7 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 		"your computer that the client can use while in fullscreen."
 		));
 	winOptionsGraphics.btnAdvancedSettings.SetOnClick(winOptions_t::winOptionsGraphics_btnAdvanced_OnClick);
-	
+
 	/* ************ OPTIONS/ADVANCED GRAPHICS *************** */
 	desktop->AddObject(&winOptionsGraphicsAdvanced.window);
 	winOptionsGraphicsAdvanced.btnOk.SetOnClick(winOptions_t::winOptionsGraphicsAdvanced_btnOk_OnClick);
@@ -243,8 +243,12 @@ void winOptions_t::winOptionsGraphicsAdvanced_btnOk_OnClick(glictPos* relmousepo
 			g_engine = new EngineSDL;
 		}
 	}
+	#else
+    if (winOptions->winOptionsGraphicsAdvanced.activeEngine != winOptions->winOptionsGraphicsAdvanced.activeEngineOriginal)
+        g_game->msgBox("Restart is required to apply engine change.", "Engine change");
 	#endif
 	winOptions->winOptionsGraphicsAdvanced.window.SetVisible(false);
+
 }
 
 void winOptions_t::winOptionsGraphicsAdvanced_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)

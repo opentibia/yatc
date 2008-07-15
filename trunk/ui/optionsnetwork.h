@@ -145,8 +145,7 @@ public:
 	}
 
 	void Init() {
-		// DONE (ivucica#1#) somebody should enlighten me on a clean integer=>string conversion
-		std::string port = yatc_itoa(options.port);
+	    std::string port = yatc_itoa(options.port);
 
 		txtServer.SetCaption(options.server);
 		txtPort.SetCaption(port/*.str()*/);

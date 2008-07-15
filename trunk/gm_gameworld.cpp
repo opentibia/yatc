@@ -38,6 +38,7 @@
 #include "util.h"
 
 #include "ui/container.h"
+#include "ui/tutorialhints.h"
 
 #ifdef _MSC_VER
 #define time _time64
@@ -119,18 +120,18 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
 	glictContainer* callerclass)
 {
-	if(SDL_GetModState() & KMOD_CTRL)
-	{
-		slots_t slotid = (slots_t)((glictPanel*)callerclass -
-			(glictPanel*)callerclass->GetCustomData() + 1);
-		if(slotid >= 0 && slotid <= 10) {
-			Item* item = Inventory::getInstance().getItem(slotid);
-			if(item != NULL) {
-				GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-				gameclass->m_protocol->sendUseItem(Position(0xFFFF, slotid, 0),
-					item->getID(), 0);
-			}
-		}
+    GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+    slots_t slotid = (slots_t)((glictPanel*)callerclass -
+        (glictPanel*)callerclass->GetCustomData() + 1);
+    Position p(0xFFFF, slotid, 0);
+    if(slotid >= 0 && slotid <= 10)
+    {
+        Item* item = Inventory::getInstance().getItem(slotid);
+        if(SDL_GetModState() & KMOD_CTRL && item)
+            gameclass->m_protocol->sendUseItem(p, item->getID(), 0);
+		else
+		if(SDL_GetModState() & KMOD_SHIFT && item)
+            gameclass->m_protocol->sendLookItem(p, item->getID(), 0);
 	}
 }
 
@@ -184,14 +185,17 @@ void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer*
 	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
 	uint32_t slot_id = window->getSlotId(callerclass);
 	Item* item = window->container->getItem(slot_id);
+    Position p(0xFFFF, window->containerId | 0x40, slot_id);
+    GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
 
-	if(SDL_GetModState() & KMOD_CTRL && item != NULL)
-	{
+	if(SDL_GetModState() & KMOD_CTRL && item)
+		gameclass->m_protocol->sendUseItem(p, item->getID(), slot_id);
+	else
+	if(SDL_GetModState() & KMOD_SHIFT && item)
 		GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-		gameclass->m_protocol->sendUseItem(
-			Position(0xFFFF, window->containerId | 0x40, slot_id),
-			item->getID(), slot_id);
-	}
+		gameclass->m_protocol->sendLookItem(
+			p, item->getID(), slot_id);
+
 }
 
 
@@ -288,6 +292,34 @@ GM_Gameworld::GM_Gameworld()
 GM_Gameworld::~GM_Gameworld ()
 {
 	delete ui;
+
+
+    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection...\n");
+	delete g_connection;
+	g_connection = NULL;
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
+	Map::getInstance().clear();
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying creature cache...\n");
+	Creatures::getInstance().clear();
+	Creatures::destroyInstance();
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying inventory...\n");
+	Inventory::getInstance().clear();
+
+
+    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Unloading data...\n");
+	Objects::getInstance()->unloadDat();
+	Objects::destroyInstance();
+
+
+
+
+
+    if(!Objects::getInstance()->loadDat("Tibia.dat")){
+        NativeGUIError("Tibia.dat suddenly disappeared during client's runtime.", "What?!");
+    }
+
+
+
 }
 
 
@@ -881,4 +913,47 @@ void GM_Gameworld::setDragCtr(uint32_t containerid, uint32_t slotid) {
         m_dragPos = Position(0xFFFF, containerid | 0x40, slotid);
         m_dragStackPos = slotid;
     }
+}
+
+void GM_Gameworld::showTutorial(uint8_t id) {
+    if (UITutorialHints::getInstance().showHint(id))
+        this->msgBox(UITutorialHints::getInstance().getTutorialHint(id).c_str(), "Tutorial Hint");
+}
+
+
+void GM_Gameworld::msgBox (const char* mbox, const char* title, glictContainer* focusondismiss)
+{
+	glictSize s;
+	glictMessageBox *mb;
+	desktop.AddObject(mb = new glictMessageBox);
+
+	mb->SetCaption(title);
+	mb->SetMessage(mbox);
+
+	mb->SetHeight(glictFontNumberOfLines(mbox)*14 + 35);
+	int size1 = (int)glictFontSize(title, "system");
+	int size2 = (int)glictFontSize(mbox, "system");
+	mb->SetWidth(MAX(size1, size2));
+	mb->Focus(NULL);
+
+	mb->GetSize(&s);
+
+	mb->SetPos(glictGlobals.w / 2 - s.w / 2, glictGlobals.h/ 2 - s.h / 2);
+
+	mb->SetOnDismiss(GM_Gameworld::MBOnDismiss);
+
+	mb->SetCustomData(focusondismiss);
+
+}
+
+void GM_Gameworld::MBOnDismiss(glictPos* pos, glictContainer* caller)
+{
+	GM_Gameworld* m = (GM_Gameworld*)g_game;
+	if (caller->GetCustomData()) {
+		glictContainer* focusOnDismiss = (glictContainer*)caller->GetCustomData();
+		focusOnDismiss->SetVisible(true);
+		focusOnDismiss->Focus(NULL);
+	}
+
+	//delete caller;
 }

@@ -44,7 +44,7 @@ public:
 	virtual void specKeyPress (const SDL_keysym&) {}
 	virtual void doResize(float w, float h) {}
 
-	virtual void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL) {}
+	virtual void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL) {printf("Warning: %s not redefined\n",__PRETTY_FUNCTION__ ); }
 	virtual winOptions_t* getOptionsWindow() { return NULL; }
 
 	virtual void onConnectionError(int message, const char* errortext) {}
@@ -74,6 +74,8 @@ public:
 
 	virtual void openContainer(uint32_t cid) {};
     virtual void closeContainer(uint32_t cid) {};
+
+    virtual void showTutorial(uint8_t id) {}
 };
 
 extern GameMode* g_game;

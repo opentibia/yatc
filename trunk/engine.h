@@ -22,6 +22,7 @@
 #define __ENGINE_H
 
 #include <GLICT/fonts.h>
+#include <GLICT/globals.h>
 #include <SDL/SDL.h>
 #include "debugprint.h"
 #include "defines.h"
@@ -74,8 +75,16 @@ class Engine
 
 		friend void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h);
 
-		static void draw_rectangle(float left, float right, float top, float bottom, glictColor &col);
-		static void draw_rectangle_lines(float left, float right, float top, float bottom, glictColor &col);
+
+#if (GLICT_APIREV < 69)
+#define GLICTCOLORCONST
+#warning Please upgrade to GLICT APIREV 69+
+#else
+#define GLICTCOLORCONST const
+#endif
+
+		static void draw_rectangle(float left, float right, float top, float bottom, GLICTCOLORCONST glictColor &col);
+		static void draw_rectangle_lines(float left, float right, float top, float bottom, GLICTCOLORCONST glictColor &col);
 		static void font_render(const char* txt, const void* font, float fontsize, float x, float y);
 		static float font_size(const char* txt, const void* font, float fontsize);
 
