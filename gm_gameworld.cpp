@@ -145,6 +145,7 @@ void pnlInventory_t::inventoryItemOnMouseUp(glictPos *relmousepos,
 			(glictPanel*)callerclass->GetCustomData() + 1);
 		if(slotid >= 0 && slotid <= 10) {
             Position dest(0xFFFF, slotid, 0);
+            // TODO (nfries88?): stackable throw dialogue
             if (gw->m_dragThing)
                 gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, 1);
 		}
@@ -188,14 +189,13 @@ void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer*
     Position p(0xFFFF, window->containerId | 0x40, slot_id);
     GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
 
-	if(SDL_GetModState() & KMOD_CTRL && item)
+	if(SDL_GetModState() & KMOD_CTRL && item) {
 		gameclass->m_protocol->sendUseItem(p, item->getID(), slot_id);
-	else
-	if(SDL_GetModState() & KMOD_SHIFT && item)
+	}
+	else if(SDL_GetModState() & KMOD_SHIFT && item) {
 		GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-		gameclass->m_protocol->sendLookItem(
-			p, item->getID(), slot_id);
-
+		gameclass->m_protocol->sendLookItem(p, item->getID(), slot_id);
+	}
 }
 
 
@@ -206,7 +206,7 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 
 	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
     uint32_t slot_id = window->getSlotId(callerclass);
-	Item* item = window->container->getItem(slot_id);
+//	Item* item = window->container->getItem(slot_id);
 	uint32_t id = window->container->getId();
 
 	if (gw->isDragging())
@@ -215,6 +215,7 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 	    {
             Position dest(0xFFFF, id | 0x40, slot_id);
             printf("Throwing %d %d %d (item %d) onto %d %d %d\n", gw->m_dragPos.x, gw->m_dragPos.y, gw->m_dragPos.z, gw->m_dragThing->getID(), dest.x, dest.y, dest.z);
+            // TODO (nfries88?): stackable throw dialogue
             gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, 1);
 	    }
         gw->dismissDrag();
@@ -234,7 +235,6 @@ void winContainer_t::containerItemOnMouseDown(glictPos *relmousepos,
     gw->setDragCtr(id, slot_id);
 
 }
-
 
 GM_Gameworld::GM_Gameworld()
 {
@@ -287,6 +287,7 @@ GM_Gameworld::GM_Gameworld()
 
 	doResize(glictGlobals.w, glictGlobals.h);
 
+	winMove = NULL;
 }
 
 GM_Gameworld::~GM_Gameworld ()
@@ -554,7 +555,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 SDL_SetCursor(m_cursorUse);
 
                 if (m_draggingInv == SLOT_NONE && m_draggingCtrId == -1){ // not throwing from inventory nor from a container?
-                    m_mapui.dragThing(m_dragBegin.x, m_dragBegin.y, m_dragThing, x,y,z, m_dragStackPos);
+                    m_mapui.dragThing((int)m_dragBegin.x, (int)m_dragBegin.y, m_dragThing, x,y,z, m_dragStackPos);
                     m_dragPos = Position(x,y,z);
                 }
                 else if (m_draggingInv != SLOT_NONE){ // throwing from inventory
@@ -578,7 +579,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 int stackpos;
                 bool isextended;
 
-                m_mapui.useItem(pos.x, pos.y, thing, x, y, z, stackpos, isextended);
+                m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
                 if (stackpos != -1)
                     m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
                                                 Position(x,y,z), thing->getID(), stackpos);
@@ -587,7 +588,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             } else if (SDL_GetModState() & KMOD_ALT) {
                 printf("Attacking!\n");
                 const Creature* creature = NULL;
-                m_mapui.attackCreature(pos.x, pos.y, creature);
+                m_mapui.attackCreature((int)pos.x, (int)pos.y, creature);
                 if(creature != NULL) {
                     if(creature->getID() != GlobalVariables::getPlayerID()) {
                         m_protocol->sendAttackCreature(creature->getID());
@@ -601,7 +602,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 int stackpos;
                 bool isextended;
 
-                m_mapui.useItem(pos.x, pos.y, thing, x, y, z, stackpos, isextended);
+                m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
 
                 if(stackpos != -1){
                     if(!isextended){
@@ -620,7 +621,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 int x,y,z;
                 int stackpos;
 
-                m_mapui.lookAtItem(pos.x, pos.y, thing, x, y, z, stackpos);
+                m_mapui.lookAtItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos);
                 if (stackpos != -1) {
                     printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
                     m_protocol->sendLookItem(Position(x,y,z), thing->getID(), stackpos );
@@ -645,7 +646,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
 
 
-                    m_mapui.translateClickToTile(pos.x,pos.y,dx,dy,dz);
+                    m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz);
                     //TODO (ivucica#3#): drag count window
                     m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, Position(dx,dy,dz), 1);
 
@@ -845,7 +846,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     int sum=0;
     for (std::vector<glictPanel*>::iterator it = pnlConsoleButtons.begin(); it != pnlConsoleButtons.end(); it++) {
         (*it)->SetPos(sum,0);
-        sum += (*it)->GetWidth();
+        sum += (int)(*it)->GetWidth();
     }
     p->SetPos(sum,0);
     p->SetOnClick(pnlConsoleButton_OnClick);

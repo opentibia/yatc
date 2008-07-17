@@ -79,7 +79,7 @@ public:
 		scbMaxFPS.SetStep(5);
 		scbMaxFPS.SetValue(30);
 		scbMaxFPS.SetCustomData(this);
-		//scbMaxFPS.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeFPS);
+		scbMaxFPS.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeFPS);
 
 		window.AddObject(&lblMaxFPS);
 		lblMaxFPS.SetPos(13, 213);
@@ -143,16 +143,15 @@ public:
 	}
 
 	static void OnChangeEngine(glictPos* pos, glictContainer *caller) {
-		//int engineType = (int)caller->GetCustomData();
 		winOptionsGraphicsAdvanced_t* woga = (winOptionsGraphicsAdvanced_t*)(caller->GetCustomData());
 		woga->activeEngine->SetHold(false);
 
-		options.engine = ENGINE_SDL; // default
+		enginelist_t engineType = ENGINE_SDL;
 		if (caller == &woga->btnEngineSDL) {
-		    options.engine = ENGINE_SDL;
+		    engineType = ENGINE_SDL;
 		}
-		if (caller == &woga->btnEngineOGL) {
-		    options.engine = ENGINE_OPENGL;
+		else if (caller == &woga->btnEngineOGL) {
+		    engineType = ENGINE_OPENGL;
 		}
 		woga->activeEngine = (glictButton*)caller;
 		woga->activeEngine->SetHold(true);
@@ -170,9 +169,15 @@ public:
 		//}
 		//if(engine->isSupported()) {
 		//	delete g_engine;
-		//  g_engine = engine;
-		//  options.engine = engineType;
+		//	g_engine = engine;
+			options.engine = engineType;
 		//}
+	}
+
+	static void OnChangeFPS(glictPos* pos, glictContainer *caller) {
+		glictScrollbar* sb = (glictScrollbar*)caller;
+		options.maxfps = sb->GetValue();
+		DEBUGPRINT(0, 0, "New FPS: %d\n", options.maxfps);
 	}
 
 };
