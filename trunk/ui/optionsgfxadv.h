@@ -13,6 +13,9 @@ public:
 	glictButton btnEngineOGL;       // 84 30
 	//glictButton btnEngineDX9;     // 154 30
 
+    glictPanel lblMaxFPS; // 13 213 , 230 12
+	glictScrollbar scbMaxFPS; // 13 229, 230 12
+
     glictButton *activeEngine;
     glictButton *activeEngineOriginal;
 
@@ -34,7 +37,7 @@ public:
 		lblEngine.SetPos(14, 17);
 		lblEngine.SetWidth(135 + 15); // 15 is just a failsafe
 		lblEngine.SetHeight(14);
-		lblEngine.SetCaption("Select Graphics Options:");
+		lblEngine.SetCaption("Select graphics engine:");
 		lblEngine.SetFont("aafont");
 		lblEngine.SetBGActiveness(false);
 
@@ -64,6 +67,28 @@ public:
 		//btnEngineDX.SetFont("minifont",8);
 		//btnEngineDX.SetCustomData((void*)2);
 		//btnEngineDX.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeEngine);
+
+
+        // scrollbar for fps
+		window.AddObject(&scbMaxFPS);
+		scbMaxFPS.SetPos(13,229);
+		scbMaxFPS.SetWidth(230);
+		scbMaxFPS.SetHeight(12);
+		scbMaxFPS.SetMin(10);
+		scbMaxFPS.SetMax(80);
+		scbMaxFPS.SetStep(5);
+		scbMaxFPS.SetValue(30);
+		scbMaxFPS.SetCustomData(this);
+		//scbMaxFPS.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeFPS);
+
+		window.AddObject(&lblMaxFPS);
+		lblMaxFPS.SetPos(13, 213);
+		lblMaxFPS.SetWidth(230);
+		lblMaxFPS.SetHeight(12);
+		lblMaxFPS.SetCaption("Adjust framerate limit: XX");
+		lblMaxFPS.SetBGActiveness(false);
+		lblMaxFPS.SetCustomData(this);
+
 
 		// Bottom stuff, every window has 'em.
 		window.AddObject(&pnlSeparator);
