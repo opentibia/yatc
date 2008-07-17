@@ -28,6 +28,7 @@
 #include "ui/skills.h"
 #include "ui/health.h"
 #include "ui/container.h"
+#include "ui/itemmove.h"
 
 class Console;
 
@@ -110,6 +111,8 @@ private:
     glictPanel pnlConsoleButtonContainer;
 
     std::vector<winContainer_t*> containers;
+
+    winItemMove_t* winMove;
     /* END PRIMARY GUI */
 
 
