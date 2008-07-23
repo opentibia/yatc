@@ -295,7 +295,7 @@ GM_Gameworld::~GM_Gameworld ()
 	delete ui;
 
 
-    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection...\n");
+    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection from gameworld...\n");
 	delete g_connection;
 	g_connection = NULL;
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
@@ -489,11 +489,14 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		break;
 
     case SDLK_ESCAPE:
-    	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection...\n");
+    	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection from gameworld by esc...\n");
         delete g_connection;
         g_connection = NULL;
         DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
         Map::getInstance().clear();
+        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying creature cache...\n");
+        Creatures::getInstance().clear();
+        Creatures::destroyInstance();
         DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying inventory...\n");
         Inventory::getInstance().clear();
         DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Switch to main menu\n");

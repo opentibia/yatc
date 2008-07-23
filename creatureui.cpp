@@ -232,6 +232,8 @@ void CreatureUI::loadOutfit()
 
 	Outfit_t outfit = n->getOutfit();
 
+    unloadGfx();
+
 	if(!outfit.m_looktype && !outfit.m_lookitem){
 		m_obj = NULL;
 		unloadGfx();
