@@ -141,6 +141,7 @@ void Creatures::removeCreature(uint32_t id)
 
 	CreatureMap::iterator it = m_creaturesId.find(id);
 	if(it != m_creaturesId.end()){
+        m_creaturesArray[it->second].unloadGfx();
 		m_creaturesArray[it->second].m_id = 0;
 		m_creaturesId.erase(it);
 	}
