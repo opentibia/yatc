@@ -51,7 +51,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		gamecontent/thing.h \
 		ui/login.h ui/mainmenu.h ui/options.h ui/optionsgeneral.h \
 		ui/optionsgraphics.h ui/optionsconsole.h ui/optionsnetwork.h \
-		ui/charlist.h ui/tutorialhints.h \
+		ui/charlist.h ui/tutorialhints.h ui/itemmove.h \
 		ui/inventory.h ui/skills.h \
 		\
 		product.h \
