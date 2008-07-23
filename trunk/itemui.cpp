@@ -138,6 +138,8 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 		if(obj->splash || obj->fluidContainer){
 			if(count < sizeof(fluidColorMap)/sizeof(int)){
 				activeframe = fluidColorMap[count];
+				if (activeframe >= obj->numsprites) // for items like serverid 2014 which are fluid containers but with no visible variation
+                    activeframe = 0;
 			}
 			else{
 				activeframe = animationTime % obj->numsprites;
@@ -156,8 +158,35 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float 
 		for(uint32_t k = 0; k < obj->blendframes; ++k){ // note: if it's anything except item, there won't be blendframes...
 			for(uint32_t i = 0; i < obj->height; ++i){
 				for(uint32_t j = 0; j < obj->width; ++j){
+                    if (activeframe >= obj->numsprites) {
+                        printf("warning: active: %d out of %d (itemid %d)\n", activeframe, obj->numsprites, m_id);
+                        printf("generated from: \n"
+                            "(map_x[%d] %% obj->xdiv[%d] + (map_y[%d] %% obj->ydiv[%d])[%d]*obj->xdiv[%d]   [%d] + \n"
+							"(animationTime[%d] %% obj->animcount[%d])[%d]*obj->xdiv*obj->ydiv[%d])  [%d]* \n"
+							"spriteSize[%d];\n",
+							map_x,
+							obj->xdiv,
+							map_y,
+                            obj->ydiv,
+							(map_y % obj->ydiv),
+							obj->xdiv,
+							(map_y % obj->ydiv)*obj->xdiv,
 
+							animationTime,
+							obj->animcount,
+							animationTime % obj->animcount,
+							(animationTime % obj->animcount)*obj->xdiv*obj->ydiv,
+
+							(map_x % obj->xdiv + (map_y % obj->ydiv)*obj->xdiv +
+							(animationTime % obj->animcount)*obj->xdiv*obj->ydiv),
+							spriteSize
+							 );
+                        printf("Sizeof fluidcolormap: %d\n", sizeof(fluidColorMap));
+                        printf("Count: %d\n", count);
+                        continue;
+                    }
 					ASSERT(activeframe < obj->numsprites);
+					ASSERT(obj->getGfx()[activeframe]);
 
 					obj->getGfx()[activeframe]->Blit(x - j*32*scale, y - i*32*scale, 0, 0, 32, 32, 32*scale, 32*scale);
 					activeframe++;
