@@ -455,8 +455,9 @@ int main(int argc, char *argv[])
 	//                    But, object data including graphics and info on usage on map was already
 	//                    destroyed during .dat unload!
 	//                    I changed order, perhaps this'll fix it
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection...\n");
+	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection from main...\n");
 	delete g_connection;
+	g_connection = NULL;
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
 	Map::getInstance().clear();
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying creature cache...\n");

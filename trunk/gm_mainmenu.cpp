@@ -334,6 +334,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	m->winLogin.window.SetVisible(false);
 
 	if(g_connection){
+	    printf("Destroying connection from mainmenu for login\n");
 		delete g_connection;
 		g_connection = NULL;
 	}
@@ -400,6 +401,7 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 
 	m->winCharlist.window.SetVisible(false);
 	if(g_connection){
+	    printf("Destroying connection from main menu for entering game\n");
 		delete g_connection;
 		g_connection = NULL;
 	}
@@ -423,6 +425,7 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 void GM_MainMenu::winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
+	m->winCharlist.destroyList();
 	m->winCharlist.window.SetVisible(false);
 }
 
@@ -526,6 +529,8 @@ void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int
 void GM_MainMenu::onEnterGame()
 {
     //s_alreadyloggedinonce = true;
+    winCharlist.destroyList();
+
 	delete g_game;
 	g_game = new GM_Gameworld;
 }
