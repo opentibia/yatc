@@ -518,6 +518,7 @@ void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& tex
 
 void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
 {
+    winCharlist.destroyList();
 	winCharlist.generateList(list, premDays);
 	renderUI();
 }
