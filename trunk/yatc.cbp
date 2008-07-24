@@ -304,6 +304,7 @@
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug Windows" />
+			<Option target="Release Windows" />
 			<Option target="Debug MinGW32" />
 			<Option target="Release MinGW32" />
 		</Unit>
@@ -345,7 +346,6 @@
 			<code_completion />
 			<envvars />
 			<debugger />
-			<lib_finder />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
