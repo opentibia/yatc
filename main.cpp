@@ -161,6 +161,7 @@ void checkFiles()
 
 void setIcon()
 {
+    printf("Setting icon\n");
 	g_engine = NULL;
 	SDL_WM_SetCaption(PRODUCTNAME, PRODUCTNAME);
 	SpriteSDL *s = new SpriteSDL("Tibia.spr", 13855);

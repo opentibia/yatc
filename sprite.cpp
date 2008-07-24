@@ -521,7 +521,7 @@ void Sprite::addColor(float r, float g, float b)
 
 void Sprite::setAsIcon()
 {
-	#ifndef WINCE
+	#ifdef WINCE
 	return; // sdl for wince doesnt uspport runtime icons anyway
 	#endif
 	if(!m_image)
