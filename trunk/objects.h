@@ -73,6 +73,7 @@ public:
     // item only functions (perhaps later they will apply for effects too)
     void loadGfx();
     void unloadGfx();
+    bool isGfxLoaded() const;
 	const std::vector<Sprite*>& getGfx() const;
 	int instancesOnMap; // how many times itemUI for this one was spawned
 
@@ -143,6 +144,7 @@ public:
 	static void destroyInstance() { delete m_instance; m_instance = NULL; }
 
 	bool unloadDat();
+    void unloadGfx();
 	bool loadDat(const char* filename);
 
 	ObjectType* getItemType(uint16_t id);

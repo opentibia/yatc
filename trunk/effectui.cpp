@@ -73,6 +73,9 @@ void EffectUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 					(animationTime % m_obj->animcount)*m_obj->xdiv*m_obj->ydiv)*
 					spriteSize;
 
+    if (!m_obj->isGfxLoaded())
+        m_obj->loadGfx();
+
 	for(uint32_t k = 0; k < m_obj->blendframes; ++k){
 		for(uint32_t i = 0; i < m_obj->height; ++i){
 			for(uint32_t j = 0; j < m_obj->width; ++j){

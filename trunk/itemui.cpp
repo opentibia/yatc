@@ -93,13 +93,16 @@ ItemUI::~ItemUI()
     }
 }
 
-void ItemUI::BlitItem(int x, int y, uint8_t count, const ObjectType* obj, float scale, int map_x, int map_y) const
+void ItemUI::BlitItem(int x, int y, uint8_t count, ObjectType* obj, float scale, int map_x, int map_y) const
 {
 	if(!obj)
 		return;
 
 	x = x - obj->xOffset;
 	y = y - obj->xOffset;
+
+    if (!obj->isGfxLoaded())
+        obj->loadGfx();
 
 	if(obj->stackable){
 

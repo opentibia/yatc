@@ -110,6 +110,10 @@ const std::vector<Sprite*>& ObjectType::getGfx() const {
     return m_gfx;
 }
 
+bool ObjectType::isGfxLoaded() const {
+    return (m_gfx.size()) || (numsprites != 0);
+}
+
 Objects::Objects() : m_item(8192), m_outfit(256),
 	m_effect(32), m_distance(32)
 {
@@ -175,6 +179,37 @@ bool Objects::unloadDat()
 	}
 	return true;
 }
+
+
+
+void Objects::unloadGfx()
+{
+	if(m_datLoaded){
+		unsigned int i = 0;
+		while(ObjectType* oType = m_item.getElement(i)){
+			oType->unloadGfx();
+			++i;
+		}
+		i = 0;
+		while(ObjectType* oType = m_outfit.getElement(i)){
+			oType->unloadGfx();
+			++i;
+		}
+		i = 0;
+		while(ObjectType* oType = m_effect.getElement(i)){
+			oType->unloadGfx();
+			++i;
+		}
+		i = 0;
+		while(ObjectType* oType = m_distance.getElement(i)){
+			oType->unloadGfx();
+			++i;
+		}
+	}
+}
+
+
+
 
 bool Objects::loadDat(const char* filename)
 {

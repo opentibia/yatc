@@ -249,6 +249,10 @@ void CreatureUI::loadOutfit()
 		m_obj = Objects::getInstance()->getOutfitType(outfit.m_looktype);
     }
 
+
+    if (!m_obj->isGfxLoaded())
+        m_obj->loadGfx();
+
 	for(uint32_t i = 0; i < m_obj->numsprites ; i++){
 		Sprite* spr;
 
