@@ -60,7 +60,7 @@ public:
 protected:
 
 	Item(uint16_t id, uint8_t count);
-	const ObjectType* m_it;
+	ObjectType* m_it;
 	uint16_t m_id;
 	uint8_t m_count;
 };

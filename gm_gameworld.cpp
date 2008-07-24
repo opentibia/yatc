@@ -22,6 +22,7 @@
 #include <sstream>
 #include <time.h>
 #include <iomanip>
+#include "product.h"
 #include "gm_gameworld.h"
 #include "gm_mainmenu.h"
 #include "engine.h"
@@ -426,6 +427,23 @@ void GM_Gameworld::keyPress (char key)
 		if (txtConsoleEntry.GetCaption().size()) {
 		    bool sent = false;
 		    std::string msg = txtConsoleEntry.GetCaption();
+		    if (msg[0] == '@') {
+		        printf("Local client command\n");
+		        int i = msg.find(' ',1);
+		        std::string command = msg.substr(1,i-1);
+
+		        if (command == "reloadgfx" && !sent) {
+                    getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Unloading graphics", TEXTCOLOR_WHITE));
+                    printf("Unloading graphics\n");
+                    Objects::getInstance()->unloadGfx();
+                    getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Reloading graphics", TEXTCOLOR_WHITE));
+                    printf("Reloading graphics\n");
+                    sent = true;
+		        }
+		        if (!sent)
+                    getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT": Unknown command", TEXTCOLOR_RED));
+		        sent = true;
+		    } else
 		    if (getActiveConsole() == getDefaultConsole()) {
 		        if (msg[0] == '*') {
                     int i = msg.find('*',1);
