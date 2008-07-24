@@ -16,3 +16,9 @@ Perhaps I'll later on look for better SDL devpak but atm this is mainly for
 my convenience and not yours ;)
 
 Ivan Vucica
+
+
+
+EDIT: I have updated SDL. It's a downgrade from 1.2.11 to 1.2.8 but should 
+have correct directory structure. I may search for correct 1.2.12 devpak on 
+my computer.
