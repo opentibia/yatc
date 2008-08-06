@@ -35,6 +35,8 @@ class SpriteGL : public Sprite
 		void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
 		void buildGLTexture();
 		void addColor(float r, float g, float b);
+		void templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet);
+        void destroyGLTexture();
 	private:
 		GLuint m_texture;
 		double m_multiplierx, m_multipliery;

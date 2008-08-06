@@ -101,8 +101,9 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, ObjectType* obj, float scale,
 	x = x - obj->xOffset;
 	y = y - obj->xOffset;
 
-    if (!obj->isGfxLoaded())
+    if (!obj->isGfxLoaded()) {
         obj->loadGfx();
+    }
 
 	if(obj->stackable){
 
@@ -189,6 +190,7 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, ObjectType* obj, float scale,
                         continue;
                     }
 					ASSERT(activeframe < obj->numsprites);
+					ASSERT(obj->getGfx().size() > activeframe);
 					ASSERT(obj->getGfx()[activeframe]);
 
 					obj->getGfx()[activeframe]->Blit(x - j*32*scale, y - i*32*scale, 0, 0, 32, 32, 32*scale, 32*scale);

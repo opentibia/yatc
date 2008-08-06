@@ -47,9 +47,9 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/tibia-data.
-	cp -H Tibia.spr $(CURDIR)/debian/tibia-data/usr/games/share
-	cp -H Tibia.pic $(CURDIR)/debian/tibia-data/usr/games/share
-	cp -H Tibia.dat $(CURDIR)/debian/tibia-data/usr/games/share
+	cp -H Tibia.spr $(CURDIR)/debian/tibia-data/usr/share/games
+	cp -H Tibia.pic $(CURDIR)/debian/tibia-data/usr/share/games
+	cp -H Tibia.dat $(CURDIR)/debian/tibia-data/usr/share/games
 
 
 # Build architecture-independent files here.

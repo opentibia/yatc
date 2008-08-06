@@ -124,6 +124,7 @@ public:
 	    delete m_instance;
 	    m_instance = NULL;
 	}
+	void unloadGfx();
 	void clear();
 
 	Creature* getPlayer();
