@@ -300,6 +300,8 @@
 		<Unit filename="objects.h" />
 		<Unit filename="options.cpp" />
 		<Unit filename="options.h" />
+		<Unit filename="popup.cpp" />
+		<Unit filename="popup.h" />
 		<Unit filename="product.h" />
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />

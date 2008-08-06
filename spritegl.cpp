@@ -41,14 +41,13 @@ extern bool g_running;
 SpriteGL::SpriteGL(const std::string& filename, int index) :
 Sprite(filename, index)
 {
+    m_texture = GL_INVALID_VALUE;
 	buildGLTexture();
 }
 
 SpriteGL::~SpriteGL()
 {
-	if(m_texture != GL_INVALID_VALUE){
-		glDeleteTextures(1, &m_texture);
-	}
+    destroyGLTexture();
 }
 
 void SpriteGL::addColor(float r, float g, float b)
@@ -63,6 +62,8 @@ void SpriteGL::buildGLTexture() {
 	if(!getImage())
 		return;
 
+    destroyGLTexture();
+
     m_engineCreationTimestamp = 0;
 
     if(!g_running)
@@ -73,7 +74,7 @@ void SpriteGL::buildGLTexture() {
 
 	//Stretch(nextpow(this->getWidth()), nextpow(this->getHeight()), true);
 	//printf("Stretch %p\n", this);
-
+    printf(".");
 	m_multiplierx = 1.;
 	m_multipliery = 1.;
 
@@ -151,6 +152,14 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 
 	glPopMatrix();
 }
-
-
+void SpriteGL::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet)
+{
+}
+void SpriteGL::destroyGLTexture()
+{
+    if(m_texture != GL_INVALID_VALUE){
+		glDeleteTextures(1, &m_texture);
+	}
+}
 #endif
+

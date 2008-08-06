@@ -160,3 +160,11 @@ void Creatures::clear()
 
 
 }
+void Creatures::unloadGfx()
+{
+	for(uint32_t i = 0; i < CREATURES_ARRAY; ++i){
+	    m_creaturesArray[i].unloadGfx();
+	}
+
+
+}

@@ -111,7 +111,7 @@ const std::vector<Sprite*>& ObjectType::getGfx() const {
 }
 
 bool ObjectType::isGfxLoaded() const {
-    return (m_gfx.size()) || (numsprites != 0);
+    return (m_gfx.size()) && (numsprites != 0);
 }
 
 Objects::Objects() : m_item(8192), m_outfit(256),
@@ -138,7 +138,7 @@ Objects* Objects::getInstance()
 bool Objects::unloadDat()
 {
 	if(m_datLoaded){
-		unsigned int i = 0;
+		unsigned int i = 100;
 		while(ObjectType* oType = m_item.getElement(i)){
 			if(oType->imageData != NULL){
 				delete[] oType->imageData;
@@ -147,7 +147,8 @@ bool Objects::unloadDat()
 			delete oType;
 			++i;
 		}
-		i = 0;
+		printf("Unloaded %d item objects\n",i);
+		i = 1;
 		while(ObjectType* oType = m_outfit.getElement(i)){
 			if(oType->imageData != NULL){
 				delete[] oType->imageData;
@@ -156,7 +157,8 @@ bool Objects::unloadDat()
 			delete oType;
 			++i;
 		}
-		i = 0;
+		printf("Unloaded %d outfit objects\n",i);
+		i = 1;
 		while(ObjectType* oType = m_effect.getElement(i)){
 			if(oType->imageData != NULL){
 				delete[] oType->imageData;
@@ -165,7 +167,8 @@ bool Objects::unloadDat()
 			delete oType;
 			++i;
 		}
-		i = 0;
+		printf("Unloaded %d effect objects\n",i);
+		i = 1;
 		while(ObjectType* oType = m_distance.getElement(i)){
 			if(oType->imageData != NULL){
 				delete[] oType->imageData;
@@ -174,6 +177,7 @@ bool Objects::unloadDat()
 			delete oType;
 			++i;
 		}
+		printf("Unloaded %d distance objects\n",i);
 
 		m_datLoaded = false;
 	}
@@ -185,26 +189,30 @@ bool Objects::unloadDat()
 void Objects::unloadGfx()
 {
 	if(m_datLoaded){
-		unsigned int i = 0;
+		unsigned int i = 100;
 		while(ObjectType* oType = m_item.getElement(i)){
 			oType->unloadGfx();
 			++i;
 		}
-		i = 0;
+		printf("Unloaded %d item gfx\n",i);
+		i = 1;
 		while(ObjectType* oType = m_outfit.getElement(i)){
 			oType->unloadGfx();
 			++i;
 		}
-		i = 0;
+		printf("Unloaded %d outfit gfx\n",i);
+		i = 1;
 		while(ObjectType* oType = m_effect.getElement(i)){
 			oType->unloadGfx();
 			++i;
 		}
-		i = 0;
+		printf("Unloaded %d effect gfx\n",i);
+		i = 1;
 		while(ObjectType* oType = m_distance.getElement(i)){
 			oType->unloadGfx();
 			++i;
 		}
+		printf("Unloaded %d distance gfx\n",i);
 	}
 }
 

@@ -436,6 +436,7 @@ void GM_Gameworld::keyPress (char key)
                     getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Unloading graphics", TEXTCOLOR_WHITE));
                     printf("Unloading graphics\n");
                     Objects::getInstance()->unloadGfx();
+                    Creatures::getInstance().unloadGfx(); // unload colored outfit for each creature instance
                     getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Reloading graphics", TEXTCOLOR_WHITE));
                     printf("Reloading graphics\n");
                     sent = true;

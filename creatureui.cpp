@@ -62,6 +62,13 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 
     Creature* n = (Creature*)this;
 
+    if (!m_gfx.size()) {
+        if (m_obj->numsprites > 0) {
+            printf("Reloading creature\n");
+            loadOutfit();
+        }
+    }
+
     uint32_t activeframe = 0;
 
     uint32_t spriteSize, partSize, aniSize;
@@ -250,8 +257,10 @@ void CreatureUI::loadOutfit()
     }
 
 
-    if (!m_obj->isGfxLoaded())
+    if (!m_obj->isGfxLoaded()) {
+        printf("Reload gfx\n");
         m_obj->loadGfx();
+    }
 
 	for(uint32_t i = 0; i < m_obj->numsprites ; i++){
 		Sprite* spr;
@@ -268,7 +277,6 @@ void CreatureUI::loadOutfit()
             	spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
             	Sprite* templatespr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i + m_obj->height * m_obj->width]);
 				spr->templatedColorize(templatespr, outfit.m_lookhead, outfit.m_lookbody, outfit.m_looklegs, outfit.m_lookfeet);
-
 				delete templatespr;
             }
         }
