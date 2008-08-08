@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="YATC"
 	ProjectGUID="{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}"
 	RootNamespace="YATC"
@@ -288,6 +288,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\mapui.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\net\networkmessage.cpp"
 				>
 			</File>
@@ -304,6 +308,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ui\optionsui.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\popup.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\net\protocolgame.cpp"
 				>
 			</File>
@@ -313,6 +325,18 @@
 			</File>
 			<File
 				RelativePath=".\net\protocolgame81.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\net\protocolgame811.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\net\protocolgame82.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\net\protocolgame821.cpp"
 				>
 			</File>
 			<File
@@ -345,6 +369,10 @@
 			</File>
 			<File
 				RelativePath=".\thingui.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ui\tutorialhints.cpp"
 				>
 			</File>
 			<File
@@ -387,6 +415,10 @@
 			</File>
 			<File
 				RelativePath=".\gamecontent\container.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ui\container.h"
 				>
 			</File>
 			<File
@@ -462,11 +494,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ui\health.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ui\inventory.h"
+				>
+			</File>
+			<File
 				RelativePath=".\gamecontent\inventory.h"
 				>
 			</File>
 			<File
 				RelativePath=".\gamecontent\item.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ui\itemmove.h"
 				>
 			</File>
 			<File
@@ -483,6 +527,10 @@
 			</File>
 			<File
 				RelativePath=".\gamecontent\map.h"
+				>
+			</File>
+			<File
+				RelativePath=".\mapui.h"
 				>
 			</File>
 			<File
@@ -506,7 +554,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ui\optionsconsole.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ui\optionsgeneral.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ui\optionsgfxadv.h"
 				>
 			</File>
 			<File
@@ -518,7 +574,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\popup.h"
+				>
+			</File>
+			<File
 				RelativePath=".\gamecontent\position.h"
+				>
+			</File>
+			<File
+				RelativePath=".\product.h"
 				>
 			</File>
 			<File
@@ -534,11 +598,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\net\protocolgame811.h"
+				>
+			</File>
+			<File
+				RelativePath=".\net\protocolgame82.h"
+				>
+			</File>
+			<File
+				RelativePath=".\net\protocolgame821.h"
+				>
+			</File>
+			<File
 				RelativePath=".\net\protocollogin.h"
 				>
 			</File>
 			<File
 				RelativePath=".\net\rsa.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ui\skills.h"
 				>
 			</File>
 			<File
@@ -571,6 +651,10 @@
 			</File>
 			<File
 				RelativePath=".\thingui.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ui\tutorialhints.h"
 				>
 			</File>
 			<File

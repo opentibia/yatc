@@ -65,7 +65,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
     if (!m_gfx.size()) {
         if (m_obj->numsprites > 0) {
             printf("Reloading creature\n");
-            loadOutfit();
+            //loadOutfit();
         }
     }
 

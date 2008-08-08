@@ -2,9 +2,9 @@
 #define __UI_OPTIONSNETWORK_H
 
 //#include <sstream> // FIXME (ivucica#1#): remove me after cleaning up the int=>str conversion
-#include "util.h"
+#include "../util.h"
 #include <map>
-#include "net/connection.h"
+#include "../net/connection.h"
 class winOptionsNetwork_t {
 public:
 

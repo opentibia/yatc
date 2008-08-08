@@ -7,7 +7,7 @@
 
 #include "../options.h"
 #include "options.h"
-#include "gamemode.h"
+#include "../gamemode.h"
 
 
 void winOptions_t::initiateAll(glictContainer* desktop)
