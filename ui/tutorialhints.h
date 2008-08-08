@@ -23,6 +23,7 @@
 
 #include <string>
 #include <map>
+#include "../stdinttypes.h"
 
 class UITutorialHints {
     public:

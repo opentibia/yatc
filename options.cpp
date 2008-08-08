@@ -73,6 +73,13 @@ Options::Options()
 	otkey = true;
 	protocol = CLIENT_VERSION_AUTO;
 	overrideversion = 0;
+
+
+
+#ifdef WINCE
+	w = 240;
+	h = 320;
+#endif
 }
 
 Options::~Options()

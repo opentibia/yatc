@@ -1,7 +1,7 @@
 #ifndef __UI_OPTIONSCONSOLE_H
 #define __UI_OPTIONSCONSOLE_H
 
-#include "skin.h"
+#include "../skin.h"
 
 class winOptionsConsole_t {
 public:

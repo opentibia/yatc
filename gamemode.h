@@ -27,6 +27,10 @@
 #include <list>
 #include "gamecontent/enums.h"
 
+#if defined(_MSC_VER) && !defined(__PRETTY_FUNCTION__)
+#define __PRETTY_FUNCTION__ "(msvc)"
+#endif
+
 class winOptions_t;
 class glictContainer;
 

@@ -1,7 +1,7 @@
 #ifndef __UI_OPTIONSGENERAL_H
 #define __UI_OPTIONSGENERAL_H
 
-#include "skin.h"
+#include "../skin.h"
 
 class winOptionsGeneral_t {
 public:

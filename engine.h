@@ -32,6 +32,10 @@
 #include "fassert.h"
 struct glictColor;
 
+#if defined(_MSC_VER) && !defined(__PRETTY_FUNCTION__)
+#define __PRETTY_FUNCTION__ "(msvc)"
+#endif
+
 class Engine
 {
 	public:
@@ -51,8 +55,6 @@ class Engine
 		virtual Sprite* createSprite(const std::string& filename, int index = 0) = 0;
 
 		virtual void Flip() = 0;
-
-		uint32_t getFps() __attribute__((__deprecated__)){ return (uint32_t)m_fps; }
 
         void performFpsCalc();
 

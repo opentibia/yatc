@@ -1,7 +1,7 @@
 #ifndef __UI_OPTIONSGFXADV_H
 #define __UI_OPTIONSGFXADV_H
 
-#include "engine.h"
+#include "../engine.h"
 
 class winOptionsGraphicsAdvanced_t {
 public:

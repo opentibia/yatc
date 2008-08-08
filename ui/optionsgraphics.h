@@ -3,7 +3,7 @@
 
 #include <GLICT/list.h>
 #include <sstream>
-#include "engine.h"
+#include "../engine.h"
 class winOptionsGraphics_t {
 public:
 

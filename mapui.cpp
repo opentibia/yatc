@@ -1,4 +1,6 @@
+#ifndef _MSC_VER
 #include <stdint.h>
+#endif
 #include "gamecontent/globalvars.h"
 #include "gamecontent/creature.h"
 #include "gamecontent/item.h"
