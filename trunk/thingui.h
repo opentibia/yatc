@@ -29,7 +29,6 @@ public:
 	virtual ~ThingUI() {}
 
 	virtual void Blit(int x, int y, float scale = 1., int map_x = 0, int map_y = 0) const = 0;
-
 };
 
 #endif

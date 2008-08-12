@@ -41,7 +41,8 @@ void resetDefaultCursor();
 GM_MainMenu::GM_MainMenu()
 {
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n");
-    resetDefaultCursor();
+    //resetDefaultCursor();
+    SDL_SetCursor(g_engine->m_cursorBasic);
 
     /* ****************** MAIN MENU *********************** */
 	desktop.AddObject(&pnlMainMenu.mainmenu);
@@ -315,6 +316,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< "see COPYING for details.";
 
 	m->msgBox(txt.str().c_str(), "About " PRODUCTSHORT, &m->pnlMainMenu.btnAbout);
+
 }
 
 void GM_MainMenu::pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContainer* callerclass)

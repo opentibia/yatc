@@ -124,6 +124,8 @@ Engine::Engine()
 	initFont(&m_gamefont, "gamefont");
 
 	m_fps = 0.;
+    m_ui = NULL;
+    m_cursorBasic = m_cursorUse = NULL;
 
 	g_frames = 0;
 

@@ -89,8 +89,12 @@ ObjectType::~ObjectType()
 
 void ObjectType::loadGfx()
 {
+    ASSERT(imageData)
+
     if (m_gfx.size() != numsprites) { // graphics not loaded yet?
         for(uint32_t i = 0; i < numsprites; i++){
+            printf("ObjectType::loadGfx Numsprites: %d\n", numsprites);
+
             m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", imageData[i]));
         }
     }
@@ -111,6 +115,7 @@ const std::vector<Sprite*>& ObjectType::getGfx() const {
 }
 
 bool ObjectType::isGfxLoaded() const {
+    ASSERT(imageData);
     return (m_gfx.size()) && (numsprites != 0);
 }
 
@@ -221,13 +226,17 @@ void Objects::unloadGfx()
 
 bool Objects::loadDat(const char* filename)
 {
-	if(m_datLoaded)
+	if(m_datLoaded) {
+	    printf("LOADING DATA FILE %s BUT ALREADY LOADED\n", filename);
 		return false;
+	}
 
 	uint16_t id = 100;
 	int32_t size;
 	uint16_t read_short, read_short2;
 	uint32_t maxObjects = 0;
+
+    printf("LOADING DATA FILE %s\n", filename);
 
 	FILE *fp = yatc_fopen(filename, "rb");
 	if(!fp){
@@ -417,6 +426,8 @@ bool Objects::loadDat(const char* filename)
 		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->unk1;
 
 		oType->imageData = new uint16_t[oType->numsprites];
+
+        ASSERT(oType->imageData);
 
 		for(unsigned int i = 0; i < oType->numsprites; i++) {
 			fread(&oType->imageData[i], sizeof(uint16_t), 1, fp);

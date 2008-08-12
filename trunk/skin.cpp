@@ -36,16 +36,16 @@ skinImage::skinImage(float x, float y, float w, float h) {
 	m_x = x;
 	m_y = y;
 	if (w == -1)
-		if (g_skin.m_uisprite)
-			m_width = g_skin.m_uisprite->getWidth();
+		if (g_engine->getUISprite())
+			m_width = g_engine->getUISprite()->getWidth();
 		else
 			m_width = 0;
 	else
 		m_width = w;
 
 	if (h == -1)
-		if (g_skin.m_uisprite)
-			m_height = g_skin.m_uisprite->getHeight();
+		if (g_engine->getUISprite())
+			m_height = g_engine->getUISprite()->getHeight();
 		else
 			m_height = 0;
 	else
@@ -54,7 +54,7 @@ skinImage::skinImage(float x, float y, float w, float h) {
 }
 
 void skinImage::Paint(float destx, float desty, float w, float h) {
-	g_skin.m_uisprite->Blit(destx + glictGlobals.translation.x, desty + glictGlobals.translation.y, m_x, m_y, w, h);
+	g_engine->getUISprite()->Blit(destx + glictGlobals.translation.x, desty + glictGlobals.translation.y, m_x, m_y, w, h);
 }
 
 
@@ -199,10 +199,6 @@ Skin::~Skin() {
 
 }
 void Skin::loadSkin() {
-
-
-	m_uisprite = g_engine->createSprite("Tibia.pic", 3);
-
     win.SetTL		(wintl = new skinImage(106,	183,	4,		17));
     win.SetTop		(wint  = new skinImage(114,	183,	96,		17));
     win.SetTR		(wintr = new skinImage(110,	183,	4,		17));

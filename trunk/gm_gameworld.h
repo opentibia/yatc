@@ -67,7 +67,7 @@ public:
     void showTutorial(uint8_t id);
 
 	bool isDragging() const {return m_dragging;}
-	void dismissDrag() { if (m_dragging) SDL_SetCursor(m_cursorBasic); m_dragging = false; m_draggingPrep = false; }
+	void dismissDrag() { if (m_dragging) SDL_SetCursor(g_engine->m_cursorBasic); m_dragging = false; m_draggingPrep = false; }
 	void getDragData(const Thing*& dragThing, Position& dragPos, int& dragStackPos) const {
 	    dragThing = m_dragThing;
 	    dragPos = m_dragPos;
@@ -100,7 +100,6 @@ private:
 
 
     /* PRIMARY GUI */
-	Sprite* ui;
 	glictContainer desktop;
 	pnlInventory_t pnlInventory;
 	pnlHealth_t pnlHealth;
@@ -121,7 +120,6 @@ private:
 
 	uint32_t m_startTime;
 
-    SDL_Cursor *m_cursorBasic, *m_cursorUse;
 
 	const Thing* m_extendedthing; // when this is not NULL, we're in extended use mode
     Position m_extendedpos;
