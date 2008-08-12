@@ -154,6 +154,9 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 }
 void SpriteGL::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet)
 {
+    Sprite::templatedColorize(templatespr, head, body, legs, feet);
+    destroyGLTexture();
+    buildGLTexture();
 }
 void SpriteGL::destroyGLTexture()
 {

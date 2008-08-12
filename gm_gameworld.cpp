@@ -53,10 +53,6 @@ void resetDefaultCursor();
 /* TODO (ivucica#5#) move this to ui/inventory.cpp (don't do it until compiling of stuff in ui/ has been assured with autoconf)*/
 void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
-	static Sprite* ui = NULL; // FIXME (ivucica#4#) move this local ui, GM_Gameworld::ui and GM_MainMenu::ui to Engine::m_ui, since over there it can be global and not reloaded every now and then
-	if (ui == NULL) {
-		ui = g_engine->createSprite("Tibia.pic", 3);
-	}
 
 	slots_t slot = (slots_t)((glictPanel*)caller - (glictPanel*)caller->GetCustomData() + 1); // customdata stores the address of pnlItem[0], and caller is pnlItem[slot]...
 
@@ -100,7 +96,7 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 			break;
 		}
 
-		ui->Blit((int)real->left, (int)real->top, 96 + 32 * (int_slot % 5), 32 * (int_slot / 5), 32, 32);
+		g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 96 + 32 * (int_slot % 5), 32 * (int_slot / 5), 32, 32);
 
 	}
 
@@ -241,7 +237,6 @@ GM_Gameworld::GM_Gameworld()
 {
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting gameworld...\n");
 
-	ui = g_engine->createSprite("Tibia.pic", 3);
 	m_protocol = (ProtocolGame*)g_connection->getProtocol();
 
 	#ifndef WINCE
@@ -279,23 +274,17 @@ GM_Gameworld::GM_Gameworld()
     m_draggingCtrId = m_draggingCtrSlot = -1;
     m_dragThing = false;
 
-
-    m_cursorBasic = ui->createCursor(290,12,11,19, 1, 1);
-    m_cursorUse = ui->createCursor(310,12,19,19, 9, 9);
-
-
-    SDL_SetCursor(m_cursorBasic);
-
 	doResize(glictGlobals.w, glictGlobals.h);
 
 	winMove = NULL;
+
+    SDL_SetCursor(g_engine->m_cursorBasic);
+
+
 }
 
 GM_Gameworld::~GM_Gameworld ()
 {
-	delete ui;
-
-
     DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection from gameworld...\n");
 	delete g_connection;
 	g_connection = NULL;
@@ -377,7 +366,7 @@ void GM_Gameworld::updateScene()
 	#ifndef WINCE
 	for(int i = 0; i < options.w; i += 96){
 		for(int j = 0; j < options.h; j += 96){
-			ui->Blit(i, j, 0, 0, 96, 96);
+			g_engine->getUISprite()->Blit(i, j, 0, 0, 96, 96);
 		}
 	}
 	#endif
@@ -439,6 +428,7 @@ void GM_Gameworld::keyPress (char key)
                     Creatures::getInstance().unloadGfx(); // unload colored outfit for each creature instance
                     getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Reloading graphics", TEXTCOLOR_WHITE));
                     printf("Reloading graphics\n");
+                    Creatures::getInstance().loadGfx();
                     sent = true;
 		        }
 		        if (!sent)
@@ -574,7 +564,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             if (abs(int(pos.x - m_dragBegin.x)) > 2 || abs(int(pos.y - m_dragBegin.y)) > 2) {
                 int x,y,z;
                 m_dragging = true; // TODO (ivucica#5#) kick out m_dragging; m_dragThing can be NULL when we're not draggging
-                SDL_SetCursor(m_cursorUse);
+                SDL_SetCursor(g_engine->m_cursorUse);
 
                 if (m_draggingInv == SLOT_NONE && m_draggingCtrId == -1){ // not throwing from inventory nor from a container?
                     m_mapui.dragThing((int)m_dragBegin.x, (int)m_dragBegin.y, m_dragThing, x,y,z, m_dragStackPos);
@@ -605,7 +595,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 if (stackpos != -1)
                     m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
                                                 Position(x,y,z), thing->getID(), stackpos);
-                SDL_SetCursor(m_cursorBasic);
+                SDL_SetCursor(g_engine->m_cursorBasic);
                 m_extendedthing = NULL;
             } else if (SDL_GetModState() & KMOD_ALT) {
                 printf("Attacking!\n");
@@ -634,7 +624,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                         m_extendedthing = thing;
                         m_extendedstackpos = stackpos;
                         m_extendedpos = Position(x,y,z);
-                        SDL_SetCursor(m_cursorUse);
+                        SDL_SetCursor(g_engine->m_cursorUse);
                     }
                 }
             } else if (SDL_GetModState() & KMOD_SHIFT) {

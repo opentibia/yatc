@@ -45,11 +45,20 @@ EngineGL::EngineGL()
 	glictGlobals.drawPartialOut = true;
 	glictGlobals.clippingMode = GLICT_SCISSORTEST;
 
-	// FIXME (ivucica#2#) we should save the Font* somewhere so we can delete; it... perhaps glictFont() should have a GetFontParam
-	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, createSprite("Tibia.pic", 2)));
+    Sprite*a,*b;
+
+	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, a=createSprite("Tibia.pic", 2)));
 	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
-	m_aafont->SetFontParam(new Font("Tibia.pic", 7, createSprite("Tibia.pic", 7)));
+	m_aafont->SetFontParam(new Font("Tibia.pic", 7, b=createSprite("Tibia.pic", 7)));
 	m_gamefont->SetFontParam(new Font("Tibia.pic", 4, createSprite("Tibia.pic", 4)));
+
+	a->addColor(.75,.75,.75);
+	b->addColor(.75,.75,.75);
+
+    m_ui = createSprite("Tibia.pic", 3);
+
+    m_cursorBasic = m_ui->createCursor(290,12,11,19, 1, 1);
+    m_cursorUse = m_ui->createCursor(310,12,19,19, 9, 9);
 
 	initEngine();
 
@@ -63,6 +72,7 @@ EngineGL::~EngineGL()
 		delete (Font*)m_minifont->GetFontParam();
 		delete (Font*)m_aafont->GetFontParam();
 		delete (Font*)m_gamefont->GetFontParam();
+		delete m_ui;
 	}
 }
 

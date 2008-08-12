@@ -71,6 +71,10 @@ class Engine
         virtual const char* getName() const {return "Unknown";}
         virtual bool hasSDL() const { return true; }
         virtual bool hasGL() const { return false; }
+        Sprite* getUISprite() { ASSERTFRIENDLY(m_ui, "Apparently UI sprite was not loaded. Report this to developers ASAP."); return m_ui; }
+
+
+        SDL_Cursor *m_cursorBasic, *m_cursorUse;
 	protected:
 		Engine();
 		void initFont(glictFont** fnt, const char* fontname);
@@ -95,8 +99,6 @@ class Engine
 		int m_video_bpp;
 
 		float m_fps;
-		//SDL_TimerID m_fpstimer __attribute__((__deprecated__));
-		//SDL_mutex *m_fpsmutex __attribute__((__deprecated__));
 
 		glictFont *m_sysfont, *m_minifont, *m_aafont, *m_gamefont;
 		SDL_Surface* m_screen;
@@ -104,6 +106,7 @@ class Engine
 
 		uint32_t m_lastfpsupdate;
 
+		Sprite* m_ui;
 
 		friend class winOptionsGraphics_t;
 };

@@ -35,7 +35,6 @@ public:
 
 
 private:
-	Sprite *m_uisprite;
 
 	skinImage *wintl, *wint, *wintr, *winl, *winc, *winr, *winbl, *winb, *winbr; // window
 	glictSkinner win;

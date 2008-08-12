@@ -31,7 +31,7 @@ public:
 	virtual void Blit(int x, int y, float scale = 1., int map_x = 0, int map_y = 0) const;
 	void loadOutfit();
 	void drawName(int x, int y, float scale) const;
-	void drawSkullsShields(int x, int y, float scale, Sprite* ui) const;
+	void drawSkullsShields(int x, int y, float scale) const;
 	void startWalk() { m_preWalk = true; m_walkState = 0.f; }
 	void cancelWalk() { m_preWalk = false; m_walkState = 1.f; }
 	void confirmWalk() { m_preWalk = false; }
@@ -39,8 +39,11 @@ public:
 	void getWalkOffset(float &walkoffx, float &walkoffy, float scale=1.f) const;
 	bool isPreWalking() const {return m_preWalk;}
 	float getWalkState() const {return m_walkState;}
+	bool isLoaded() const;
+	void resetSelf();
 protected:
 	void unloadGfx();
+	void setupObject();
 
 private:
 	ObjectType *m_obj;

@@ -38,10 +38,6 @@ void MapUI::renderMap() {
 
 
 
-	static Sprite* ui = NULL; // FIXME (ivucica#4#) move this local ui, GM_Gameworld::ui and GM_MainMenu::ui to Engine::m_ui, since over there it can be global and not reloaded every now and then
-	if (ui == NULL) {
-		ui = g_engine->createSprite("Tibia.pic", 3);
-	}
 
     //g_engine->setClipping(64,64,14*32,10*32);
 
@@ -280,7 +276,7 @@ void MapUI::renderMap() {
 					if(thing->getCreature()){
 
 						thing->getCreature()->drawName(screenx, screeny, scale);
-						thing->getCreature()->drawSkullsShields(screenx, screeny, scale, ui);
+						thing->getCreature()->drawSkullsShields(screenx, screeny, scale);
 						if(!player || thing->getCreature()->getId() != player->getId())
 							thing->getCreature()->advanceWalk(groundspeed);
 						else

@@ -112,6 +112,7 @@ Creature* Creatures::getPlayer()
 Creature* Creatures::getCreature(uint32_t id)
 {
 	CreatureMap::iterator it = m_creaturesId.find(id);
+	ASSERT(id)
 	if(it != m_creaturesId.end()){
 		return &m_creaturesArray[it->second];
 	}
@@ -155,7 +156,8 @@ void Creatures::clear()
 	m_creaturesId.clear();
 	for(uint32_t i = 0; i < CREATURES_ARRAY; ++i){
 	    m_creaturesArray[i].unloadGfx();
-		m_creaturesArray[i].m_id = 0;
+		m_creaturesArray[i].resetSelf();
+		//m_creaturesArray[i].m_id = 0;
 	}
 
 
@@ -166,5 +168,17 @@ void Creatures::unloadGfx()
 	    m_creaturesArray[i].unloadGfx();
 	}
 
+
+}
+
+void Creatures::loadGfx()
+{
+    for(uint32_t i = 0; i < CREATURES_ARRAY; ++i){
+        if (!m_creaturesArray[i].m_id)
+            continue;
+        m_creaturesArray[i].setupObject();
+        if(!m_creaturesArray[i].isLoaded())
+            m_creaturesArray[i].loadOutfit();
+    }
 
 }

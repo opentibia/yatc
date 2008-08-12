@@ -47,6 +47,11 @@ EngineSDL::EngineSDL()
 	a->addColor(.75,.75,.75);
 	b->addColor(.75,.75,.75);
 
+    m_ui = createSprite("Tibia.pic", 3);
+
+    m_cursorBasic = m_ui->createCursor(290,12,11,19, 1, 1);
+    m_cursorUse = m_ui->createCursor(310,12,19,19, 9, 9);
+
     #if (GLICT_APIREV >= 64)
 	glictGlobals.clipperCallback = EngineSDL::clipper_func;
 	#else
