@@ -429,6 +429,7 @@ void GM_Gameworld::keyPress (char key)
                     getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Reloading graphics", TEXTCOLOR_WHITE));
                     printf("Reloading graphics\n");
                     Creatures::getInstance().loadGfx();
+                    g_engine->reloadGlobalGfx();
                     sent = true;
 		        }
 		        if (!sent)

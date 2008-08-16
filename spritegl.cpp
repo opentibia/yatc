@@ -52,9 +52,9 @@ SpriteGL::~SpriteGL()
 
 void SpriteGL::addColor(float r, float g, float b)
 {
-    m_r = r;
+    m_r = b;
     m_g = g;
-    m_b = b;
+    m_b = r;
 }
 
 void SpriteGL::buildGLTexture() {
@@ -82,6 +82,7 @@ void SpriteGL::buildGLTexture() {
 
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &m_texture);
+	printf("Putting %s[%d] into %d.\n", m_filename.c_str(), m_index, m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -117,14 +118,10 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
     }
 	glEnable(GL_TEXTURE_2D);
 
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
-	float spriteWidth = getWidth()  / m_multiplierx ;
-	float spriteHeight = getHeight()  / m_multipliery;
+	double spriteWidth = getWidth()  / m_multiplierx ;
+	double spriteHeight = getHeight()  / m_multipliery;
 
 	glAlphaFunc(GL_GEQUAL, .80);
 	glEnable(GL_ALPHA_TEST);
@@ -133,18 +130,19 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
     if(m_r != 1. || m_g != 1. || m_b != 1.)
         glColor4f(m_r, m_g, m_b, 1.);
 
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBegin(GL_QUADS);
-		glTexCoord2f((srcx)/spriteWidth, (srcy )/spriteHeight);
-		glVertex2f(destx , desty );
+		glTexCoord2d((srcx)/spriteWidth, (srcy)/spriteHeight);
+		glVertex2d(destx, desty);
 
-		glTexCoord2f((srcx)/spriteWidth, (srcy + srcheight / m_multipliery)/spriteHeight);
-		glVertex2f(destx , desty + destheight);
+		glTexCoord2d((srcx)/spriteWidth, (srcy + (srcheight) / m_multipliery )/spriteHeight);
+		glVertex2d(destx, desty + destheight);
 
-		glTexCoord2f((srcx + srcwidth / m_multiplierx)/spriteWidth, (srcy + srcheight / m_multipliery)/spriteHeight);
-		glVertex2f(destx + destwidth, desty + destheight);
+		glTexCoord2d((srcx + (srcwidth) / m_multiplierx)/spriteWidth, (srcy + (srcheight) / m_multipliery)/spriteHeight);
+		glVertex2d(destx + destwidth, desty + destheight);
 
-		glTexCoord2f((srcx + srcwidth / m_multiplierx)/spriteWidth, (srcy) /spriteHeight);
-		glVertex2f(destx + destwidth, desty);
+		glTexCoord2d((srcx + (srcwidth) / m_multiplierx)/spriteWidth, (srcy) /spriteHeight);
+		glVertex2d(destx + destwidth, desty);
 	glEnd();
 
     if(m_r != 1. || m_g != 1. || m_b != 1.)
@@ -161,6 +159,7 @@ void SpriteGL::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body
 void SpriteGL::destroyGLTexture()
 {
     if(m_texture != GL_INVALID_VALUE){
+        printf("Destroying texture %d.\n", m_texture);
 		glDeleteTextures(1, &m_texture);
 	}
 }

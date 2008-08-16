@@ -38,6 +38,8 @@ Engine* g_engine;
 extern int g_frames;
 int ptrx, ptry;
 
+void resetDefaultCursor();
+
 // first we'll define all the C-style callbacks we'll use elsewhere
 void Engine::draw_rectangle(float left, float right, float top, float bottom, GLICTCOLORCONST glictColor &col)
 {
@@ -127,7 +129,10 @@ Engine::Engine()
     m_ui = NULL;
     m_cursorBasic = m_cursorUse = NULL;
 
-	g_frames = 0;
+    // remember default cursor
+    resetDefaultCursor();
+
+    g_frames = 0;
 
 	m_lastfpsupdate = SDL_GetTicks();
 }
@@ -142,6 +147,7 @@ Engine::~Engine()
 	glictDeleteFont("minifont");
 	glictDeleteFont("aafont");
 	glictDeleteFont("gamefont");
+	delete m_ui;
 }
 
 
@@ -207,3 +213,9 @@ void Engine::doResize(int w, int h)
 }
 
 
+
+void Engine::reloadGlobalGfx()
+{
+    delete m_ui;
+    m_ui = createSprite("Tibia.spr", 3);
+}

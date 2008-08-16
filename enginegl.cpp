@@ -36,6 +36,7 @@ EngineGL::EngineGL()
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting OpenGL engine\n");
 	m_screen = NULL;
 
+    SDL_ShowCursor(0);
 	doResize(m_width, m_height);
 
 	if(!m_screen)
@@ -56,9 +57,10 @@ EngineGL::EngineGL()
 	b->addColor(.75,.75,.75);
 
     m_ui = createSprite("Tibia.pic", 3);
-
     m_cursorBasic = m_ui->createCursor(290,12,11,19, 1, 1);
     m_cursorUse = m_ui->createCursor(310,12,19,19, 9, 9);
+    SDL_ShowCursor(1);
+    SDL_SetCursor(m_cursorBasic);
 
 	initEngine();
 
