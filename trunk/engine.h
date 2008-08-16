@@ -73,7 +73,7 @@ class Engine
         virtual bool hasGL() const { return false; }
         Sprite* getUISprite() { ASSERTFRIENDLY(m_ui, "Apparently UI sprite was not loaded. Report this to developers ASAP."); return m_ui; }
 
-
+        virtual void reloadGlobalGfx();
         SDL_Cursor *m_cursorBasic, *m_cursorUse;
 	protected:
 		Engine();

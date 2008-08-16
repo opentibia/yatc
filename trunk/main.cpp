@@ -349,9 +349,8 @@ int main(int argc, char *argv[])
 		g_skin.loadSkin();
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Skin has been loaded\n");
 
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Remembering default cursor...\n");
-        resetDefaultCursor();
 
+        resetDefaultCursor();
 		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Constructing gamemode...\n");
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
