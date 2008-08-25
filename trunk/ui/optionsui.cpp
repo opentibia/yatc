@@ -17,6 +17,7 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 	btnGeneral.SetOnClick(winOptions_t::winOptions_btnGeneral_OnClick);
 	btnConsole.SetOnClick(winOptions_t::winOptions_btnConsole_OnClick);
 	btnGraphics.SetOnClick(winOptions_t::winOptions_btnGraphics_OnClick);
+	btnHotkeys.SetOnClick(winOptions_t::winOptions_btnHotkeys_OnClick);
 	btnNetwork.SetOnClick(winOptions_t::winOptions_btnNetwork_OnClick);
 	btnMotd.SetOnClick(winOptions_t::winOptions_btnMotd_OnClick);
 	btnOk.SetOnClick(winOptions_t::winOptions_btnOk_OnClick);
@@ -76,6 +77,16 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 		"TODO"
 		));
 
+	/* ***************** OPTIONS/HOTKEYS ******************** */
+	desktop->AddObject(&winOptionsHotkeys.window);
+	winOptionsHotkeys.btnOk.SetOnClick(winOptions_t::winOptionsHotkeys_btnOk_OnClick);
+	winOptionsHotkeys.btnCancel.SetOnClick(winOptions_t::winOptionsHotkeys_btnCancel_OnClick);
+	//winOptionsHotkeys.btnHelp.SetOnClick(winOptions_t::btnHelp_OnClick);
+	//winOptionsHotkeys.btnHelp.SetCustomData(new std::string(
+  //  // TODO
+  //  "TODO"
+  //  ));
+
 	/* ***************** OPTIONS/NETWORK ******************** */
 	desktop->AddObject(&winOptionsNetwork.window);
 	winOptionsNetwork.btnOk.SetOnClick(winOptions_t::winOptionsNetwork_btnOk_OnClick);
@@ -123,6 +134,15 @@ void winOptions_t::winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictCo
 	winOptions->winOptionsGraphics.Init();
 	winOptions->winOptionsGraphics.window.SetVisible(true);
 	winOptions->winOptionsGraphics.window.Focus(NULL);
+}
+
+void winOptions_t::winOptions_btnHotkeys_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	winOptions_t* winOptions = g_game->getOptionsWindow();
+	winOptions->window.SetVisible(false);
+	winOptions->winOptionsHotkeys.Init();
+	winOptions->winOptionsHotkeys.window.SetVisible(true);
+	winOptions->winOptionsHotkeys.window.Focus(NULL);
 }
 
 void winOptions_t::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -257,6 +277,23 @@ void winOptions_t::winOptionsGraphicsAdvanced_btnCancel_OnClick(glictPos* relmou
 	winOptions->winOptionsGraphics.window.SetVisible(true);
 	winOptions->winOptionsGraphics.window.Focus(NULL);
 	winOptions->winOptionsGraphicsAdvanced.window.SetVisible(false);
+}
+
+/* *********HOTKEYS********** */
+void winOptions_t::winOptionsHotkeys_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	winOptions_t* winOptions = g_game->getOptionsWindow();
+	winOptions->window.SetVisible(true);
+	winOptions->window.Focus(NULL);
+	winOptions->winOptionsHotkeys.Store();
+	winOptions->winOptionsHotkeys.window.SetVisible(false);
+}
+void winOptions_t::winOptionsHotkeys_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	winOptions_t* winOptions = g_game->getOptionsWindow();
+	winOptions->window.SetVisible(true);
+	winOptions->window.Focus(NULL);
+	winOptions->winOptionsHotkeys.window.SetVisible(false);
 }
 
 /* *********NETWORK********** */

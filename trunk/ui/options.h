@@ -5,6 +5,7 @@
 #include "optionsgeneral.h"
 #include "optionsgfxadv.h"
 #include "optionsgraphics.h"
+#include "optionshotkeys.h"
 #include "optionsnetwork.h"
 
 class winOptions_t {
@@ -39,6 +40,7 @@ public:
 	winOptionsConsole_t winOptionsConsole;
 	winOptionsGraphics_t winOptionsGraphics;
 	winOptionsGraphicsAdvanced_t winOptionsGraphicsAdvanced;
+  winOptionsHotkeys_t winOptionsHotkeys;
 	winOptionsNetwork_t winOptionsNetwork;
 	//]
 
@@ -168,6 +170,7 @@ public:
 	static void winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnConsole_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnGraphics_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptions_btnHotkeys_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
@@ -184,6 +187,9 @@ public:
 
 	static void winOptionsGraphicsAdvanced_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsGraphicsAdvanced_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void winOptionsHotkeys_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsHotkeys_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
