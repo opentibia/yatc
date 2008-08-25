@@ -73,9 +73,6 @@ public:
 		lblLevelRight.SetCaption("0");
 
 
-		#if (GLICT_APIREV < 63)
-		#warning You should upgrade to GLICT apirev 63 or greater to have progressbar in skills window work correctly.
-		#endif
 		container.AddObject(&pbExperience);
 
 		pbExperience.SetPos(5, 25);
@@ -162,9 +159,6 @@ public:
 		lblStaRight.SetCaption("0");
 
 
-		#if (GLICT_APIREV < 63)
-		#warning You should upgrade to GLICT apirev 63 or greater to have progressbar in skills window work correctly.
-		#endif
 		container.AddObject(&pbStamina);
 
 		pbStamina.SetPos(5, 85);
@@ -188,9 +182,6 @@ public:
 		lblMagicLevelRight.SetCaption("0");
 
 
-		#if (GLICT_APIREV < 63)
-		#warning You should upgrade to GLICT apirev 63 or greater to have progressbar in skills window work correctly.
-		#endif
 		container.AddObject(&pbMagicLevel);
 
 		pbMagicLevel.SetPos(5, 105);
@@ -232,9 +223,6 @@ public:
 			lblSkillRight[i].SetCaption("0");
 
 
-			#if (GLICT_APIREV < 63)
-			#warning You should upgrade to GLICT apirev 63 or greater to have progressbar in skills window work correctly.
-			#endif
 			container.AddObject(&pbSkill[i]);
 
 			pbSkill[i].SetPos(5, 135 + i*20);

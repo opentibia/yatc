@@ -74,7 +74,6 @@ EngineGL::~EngineGL()
 		delete (Font*)m_minifont->GetFontParam();
 		delete (Font*)m_aafont->GetFontParam();
 		delete (Font*)m_gamefont->GetFontParam();
-		delete m_ui;
 	}
 }
 

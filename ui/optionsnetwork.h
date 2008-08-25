@@ -156,16 +156,12 @@ public:
 		btnOTKey.SetSkin(options.otkey ? &g_skin.chk : &g_skin.txt);
 
 		currentversion = options.protocol;
-		#if (GLICT_APIREV < 52)
-		#warning Update your GLICT to rev52 or newer; OptionsNetwork will not work correctly until you do.
-		#else
 		for (std::map<ClientVersion_t, glictButton>::iterator it = btnProtocol.begin(); it != btnProtocol.end(); it++) {
 			if (it->first == currentversion)
 				it->second.SetHold(true);
 			else
 				it->second.SetHold(false);
 		}
-		#endif
 	}
 
 	void Store() {
@@ -193,18 +189,10 @@ public:
 			if (&it->second == b) {
 				won->currentversion = it->first;
 			} else {
-				#if (GLICT_APIREV < 52)
-				#warning Update your GLICT to rev52 or newer; OptionsNetwork will not work correctly until you do.
-				#else
 				it->second.SetHold(false);
-				#endif
 			}
 		}
-		#if (GLICT_APIREV < 52)
-		#warning Update your GLICT to rev52 or newer; OptionsNetwork will not work correctly until you do.
-		#else
 		b->SetHold(true);
-		#endif
 	}
 
 };
