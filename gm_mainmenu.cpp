@@ -121,6 +121,7 @@ void GM_MainMenu::doResize(float w, float h)
 	centerWindow(&winOptions.winOptionsConsole.window);
 	centerWindow(&winOptions.winOptionsGraphics.window);
 	centerWindow(&winOptions.winOptionsGraphicsAdvanced.window);
+	centerWindow(&winOptions.winOptionsHotkeys.window);
 	centerWindow(&winOptions.winOptionsNetwork.window);
 	centerWindow(&winStatus);
 
@@ -298,10 +299,11 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< b << " mips\n"
 		<< b << " Ivan Vucica\n"
 		<< b << " Smygflik\n"
-		<< b << " nfries88\n"
+		<< b << " Nate Fries\n"
 		<< "\n"
 		<< "Contributors:\n"
 		<< b << " mrauter\n"
+		<< b << " Mariusz Gliwinski\n"
 		<< "\n"
 		<< PRODUCTSHORT << " comes with ABSOLUTELY NO WARRANTY; \n"
 		<< "for details see sections 11 and 12 in COPYING.\n"

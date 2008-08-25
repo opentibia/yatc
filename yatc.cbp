@@ -337,6 +337,7 @@
 		<Unit filename="ui/optionsgeneral.h" />
 		<Unit filename="ui/optionsgfxadv.h" />
 		<Unit filename="ui/optionsgraphics.h" />
+		<Unit filename="ui/optionshotkeys.h" />
 		<Unit filename="ui/optionsnetwork.h" />
 		<Unit filename="ui/optionsui.cpp" />
 		<Unit filename="ui/skills.h" />
@@ -352,4 +353,3 @@
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
-
