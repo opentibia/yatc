@@ -74,15 +74,9 @@ GM_MainMenu::GM_MainMenu()
 	pnlMainMenu.btnLogIn.Focus(NULL);
 
 	if (options.ui_compat) {
-		#if (GLICT_APIREV >= 50)
 		glictGlobals.drawFocus = true;
-		#else
-		#warning Drawing focus requires at least GLICT revision 50. Please upgrade GLICT. (Compiling will proceed, but this feature will not be available.)
-		#endif
 	} else {
-		#if (GLICT_APIREV >= 50)
 		glictGlobals.drawFocus = false;
-		#endif
 	}
 
 	if (g_engine) {

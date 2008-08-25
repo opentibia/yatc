@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
-#include "..\..\sprdata.h"
+#include "../../sprdata.h"
 void problem(const char* txt) {
     fprintf(stderr, "sprtool: %s\n", txt);
     exit(1);

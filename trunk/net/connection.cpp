@@ -181,7 +181,7 @@ ProtocolGame* ProtocolConfig::createGameConnection(int account, const std::strin
 		protocol = new ProtocolGame821(account, password, name, isGM);
 		break;
 	case CLIENT_VERSION_822:
-		protocol = new ProtocolGame822(account, password, name, isGM);
+ 		protocol = new ProtocolGame822(account, password, name, isGM);
 		break;
 	default:
 		return NULL;

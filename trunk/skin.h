@@ -2,11 +2,6 @@
 #define __SKIN_H
 
 #include <GLICT/globals.h>
-
-#if (GLICT_APIREV < 49)
-#error You must update GLICT to at least revision 49 for skins to compile correctly.
-#endif
-
 #include <GLICT/image.h>
 #include "sprite.h"
 #include "engine.h"

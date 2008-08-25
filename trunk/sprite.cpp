@@ -81,6 +81,20 @@ Sprite::Sprite(const std::string& filename, int index)
 
 Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int h)
 {
+
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    uint32_t rmask = 0xff000000;
+    uint32_t gmask = 0x00ff0000;
+    uint32_t bmask = 0x0000ff00;
+    uint32_t amask = 0x000000ff;
+#else
+    uint32_t rmask = 0x000000ff;
+    uint32_t gmask = 0x0000ff00;
+    uint32_t bmask = 0x00ff0000;
+    uint32_t amask = 0xff000000;
+#endif
+
+
 	#ifdef USE_OPENGL
 	m_pixelformat = GL_NONE;
 	#endif
@@ -100,7 +114,7 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 		return;
 	}
 
-	SDL_Surface* ns = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+	SDL_Surface* ns = SDL_CreateRGBSurface(SDL_HWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
 	SDL_Rect src = {x,y,w,h};
 	SDL_Rect dst = {0,0,w,h};
 	SDL_BlitSurface(m_image, &src, ns, &dst);
@@ -108,7 +122,7 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 	SDL_FreeSurface(m_image);
 	SDL_FreeSurface(m_coloredimage);
 	m_image = ns;
-	m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+	m_coloredimage = SDL_CreateRGBSurface(SDL_HWSURFACE, m_image->w, m_image->h, 32, rmask, gmask, bmask, amask);
 }
 
 
@@ -136,6 +150,19 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	if(extbegins != std::string::npos){
 		extension = filename.substr(extbegins, filename.length() - extbegins);
 	}
+
+
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    uint32_t rmask = 0xff000000;
+    uint32_t gmask = 0x00ff0000;
+    uint32_t bmask = 0x0000ff00;
+    uint32_t amask = 0x000000ff;
+#else
+    uint32_t rmask = 0x000000ff;
+    uint32_t gmask = 0x0000ff00;
+    uint32_t bmask = 0x00ff0000;
+    uint32_t amask = 0xff000000;
+#endif
 
 
 	// print loading status (useful for slow machines such as wince; on the other hand, flipping too often causes slowness, too)
@@ -190,7 +217,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		fread(&where, sizeof(where), 1, f);
 
 		// create surface where we'll store data, and fill it with transparency
-		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000); // FIXME (ivucica#5#) Potentially unportable to architectures with different endianess, take a look at SDL docs and make all Liliputtans happy
+		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, rmask, gmask, bmask, amask);
 		if(!m_image){
 			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY,"[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			goto loadFail;
@@ -219,7 +246,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
 
 		#ifdef USE_OPENGL
-		m_pixelformat = GL_BGRA;
+		m_pixelformat = GL_RGBA;
 		#endif
 		m_loaded = true;
 	}
@@ -244,7 +271,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			fread(&ph, sizeof(ph), 1, f);
 
 			if(i == index){
-				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, rmask, gmask, bmask, amask);
 				if (!s) {
 					DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Failed to create surface of size %dx%d\n", ph.width*32, ph.height*32);
 					fclose(f);
@@ -279,7 +306,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		fclose(f);
 		m_image = s;
 		#ifdef USE_OPENGL
-		m_pixelformat = GL_BGRA;
+		m_pixelformat = GL_RGBA;
 		#endif
 		m_loaded = true;
 	}
@@ -291,7 +318,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	m_filename = filename;
 	m_index = index;
 
-	m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, 0xFF, 0xFF00, 0xFF0000, 0xFF000000);
+	m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, rmask, gmask, bmask, amask);
 
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(m_image->format, 0xFF, 0, 0xFF)); // magenta is transparent
 
