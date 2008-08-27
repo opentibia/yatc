@@ -103,7 +103,7 @@ GM_MainMenu::~GM_MainMenu()
 
 void GM_MainMenu::updateScene()
 {
-    if (options.engine == ENGINE_OPENGL) {
+    if (g_engine->hasGL()) {
         renderScene();
     }
 }
@@ -139,7 +139,7 @@ void GM_MainMenu::renderScene()
 void GM_MainMenu::renderUI()
 {
 #ifdef USE_OPENGL
-	if (options.engine == ENGINE_OPENGL) {
+	if (g_engine->hasGL()) {
 		glEnable(GL_SCISSOR_TEST);
 		desktop.Paint();
 		glDisable(GL_SCISSOR_TEST);
