@@ -380,7 +380,8 @@ bool Objects::loadDat(const char* filename)
 					break;
 				case 0x1A:
 						oType->hasHeight = true;
-						fread(&read_short, sizeof(read_short), 1, fp); //?
+						// (should be) the height change in px; Tibia always uses 8
+						fread(&read_short, sizeof(read_short), 1, fp); // ?
 					break;
 				case 0x1B://draw with height offset for all parts (2x2) of the sprite
 

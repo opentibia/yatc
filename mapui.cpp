@@ -92,6 +92,8 @@ void MapUI::renderMap() {
 				const Item* ground = tile->getGround();
 				if(ground){
 					ground->Blit(screenx, screeny, scale, tile_x, tile_y);
+					if(ground->hasHeight())
+						tile_height++;
 				}
 
 				enum drawingStates_t{
