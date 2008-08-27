@@ -144,7 +144,26 @@ void pnlInventory_t::inventoryItemOnMouseUp(glictPos *relmousepos,
             Position dest(0xFFFF, slotid, 0);
             // TODO (nfries88?): stackable throw dialogue
             if (gw->m_dragThing)
-                gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, 1);
+            {
+            	const Item* dragItem = gw->m_dragThing->getItem();
+				uint8_t count = 1;
+				bool throwDialog = false;
+
+				if(dragItem && dragItem->isStackable())
+				{
+					if(SDL_GetModState() & KMOD_CTRL)
+						count = dragItem->getCount();
+					else
+						throwDialog = true;
+				}
+				// TODO (nfries88?): FIX stackable throw dialogue
+				//if(!throwDialog)
+					gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, count);
+				/*else {
+					gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
+					gw->winMove.window.SetVisible(true);
+				*/
+            }
 		}
         gw->dismissDrag();
 	}
@@ -211,9 +230,26 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 	    if (gw->m_dragThing)
 	    {
             Position dest(0xFFFF, id | 0x40, slot_id);
+            const Item* dragItem = gw->m_dragThing->getItem();
+            uint8_t count = 1;
+            bool throwDialog = false;
+
             printf("Throwing %d %d %d (item %d) onto %d %d %d\n", gw->m_dragPos.x, gw->m_dragPos.y, gw->m_dragPos.z, gw->m_dragThing->getID(), dest.x, dest.y, dest.z);
-            // TODO (nfries88?): stackable throw dialogue
-            gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, 1);
+
+            if(dragItem && dragItem->isStackable())
+            {
+            	if(SDL_GetModState() & KMOD_CTRL)
+            		count = dragItem->getCount();
+            	else
+					throwDialog = true;
+            }
+            // TODO (nfries88?): FIX stackable throw dialogue
+            //if(!throwDialog)
+				gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, count);
+            /*else {
+				gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
+				gw->winMove.window.SetVisible(true);
+			*/
 	    }
         gw->dismissDrag();
 
@@ -231,6 +267,20 @@ void winContainer_t::containerItemOnMouseDown(glictPos *relmousepos,
 
     gw->setDragCtr(id, slot_id);
 
+}
+
+
+void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
+{
+	GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+
+	winItemMove_t* win = (winItemMove_t*)caller->GetCustomData();
+	if(win)
+	{
+		gw->m_protocol->sendThrow(win->fromPos, win->itemid, win->fromStack,
+									win->toPos, win->sbCt.GetValue());
+		win->window.SetVisible(false);
+	}
 }
 
 GM_Gameworld::GM_Gameworld()
@@ -258,6 +308,8 @@ GM_Gameworld::GM_Gameworld()
 	desktop.AddObject(&txtConsoleEntry);
 	txtConsoleEntry.SetHeight(12);
 	txtConsoleEntry.SetCaption("");
+	desktop.AddObject(&winMove.window);
+	winMove.window.SetVisible(false);
 
     desktop.AddObject(&pnlConsoleButtonContainer);
     pnlConsoleButtonContainer.SetBGActiveness(false);
@@ -275,8 +327,6 @@ GM_Gameworld::GM_Gameworld()
     m_dragThing = false;
 
 	doResize(glictGlobals.w, glictGlobals.h);
-
-	winMove = NULL;
 
     SDL_SetCursor(g_engine->m_cursorBasic);
 

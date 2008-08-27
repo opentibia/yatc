@@ -313,3 +313,33 @@ void winOptions_t::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, gl
 	winOptions->window.Focus(NULL);
 	winOptions->winOptionsNetwork.window.SetVisible(false);
 }
+
+void winOptionsHotkeys_t::drawObject(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
+	// TODO(nfries88)
+}
+
+void winOptionsHotkeys_t::onSelectObj(glictPos* pos, glictContainer *caller)
+{
+	// TODO(nfries88)
+}
+
+void winOptionsHotkeys_t::onClearObj(glictPos* pos, glictContainer *caller)
+{
+	// TODO(nfries88)
+}
+
+void winOptionsHotkeys_t::onObjUse_Self(glictPos* pos, glictContainer *caller)
+{
+	// TODO(nfries88)
+}
+
+void winOptionsHotkeys_t::onObjUse_Target(glictPos* pos, glictContainer *caller)
+{
+	// TODO(nfries88)
+}
+
+void winOptionsHotkeys_t::onObjUse_Crosshair(glictPos* pos, glictContainer *caller)
+{
+	// TODO(nfries88)
+}
