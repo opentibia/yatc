@@ -42,16 +42,30 @@ public:
 	glictButton btnOk;		// 123 89 43x20
 	glictButton btnCancel;	// 176 89 43x20
 
-	const Item* item;
-	const Position& fromPos;
-	const Position& toPos;
+	Position fromPos;
+	Position toPos;
 	Item* dispItem;			// item to display in the window
+	uint16_t itemid;
+	uint8_t maxct;
+	uint8_t fromStack;
 
-	winItemMove_t(const Item* _item, const Position& from, const Position& to)
-		: item(_item), fromPos(from), toPos(to)
+	winItemMove_t()
 	{
-		dispItem = Item::CreateItem(item->getID(), item->getCount());
+		initUI();
+	}
 
+	winItemMove_t(uint16_t _id, uint8_t _count, Position from, Position to, uint8_t _stack)
+		: fromPos(from), toPos(to), itemid(_id), maxct(_count), fromStack(_stack)
+	{
+		dispItem = Item::CreateItem(_id, _count);
+
+		initUI();
+
+		sbCt.SetValue(_count);
+	}
+
+	void initUI()
+	{
 		window.SetCaption("Move Objects");
 		window.SetWidth(228);
 		window.SetHeight(115);
@@ -60,7 +74,7 @@ public:
 		sbCt.SetPos(59, 48);
 		sbCt.SetWidth(155);
 		sbCt.SetHeight(12);
-		sbCt.SetValue((int)item->getCount());
+		sbCt.SetValue(1);
 		sbCt.SetOnClick(winItemMove_t::onChangeCount);
 
 		window.AddObject(&lblTxt);
@@ -81,28 +95,42 @@ public:
 		pnlSep.SetWidth(210);
 		pnlSep.SetHeight(2);
 
+		window.AddObject(&btnOk);
 		btnOk.SetPos(123, 89);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(20);
-		//btnOk.SetOnClick(winItemMove_t::moveItem);
+		btnOk.SetCaption("Ok");
+		btnOk.SetCustomData(this);
+		btnOk.SetOnClick(winItemMove_t::moveItem);
 
-		btnOk.SetPos(176, 89);
-		btnOk.SetWidth(43);
-		btnOk.SetHeight(20);
-		//btnOk.SetOnClick(winItemMove_t::onCancel);
+		window.AddObject(&btnCancel);
+		btnCancel.SetPos(176, 89);
+		btnCancel.SetWidth(43);
+		btnCancel.SetHeight(20);
+		btnCancel.SetCaption("Cancel");
+		btnOk.SetOnClick(winItemMove_t::onCancel);
 	}
 
 	static void onChangeCount(glictPos* pos, glictContainer *caller)
 	{
 		winItemMove_t* witm = (winItemMove_t*)(caller->GetCustomData());
-		delete witm->dispItem;
-		witm->dispItem = Item::CreateItem(witm->item->getID(), (uint8_t)witm->sbCt.GetValue());
+		if(witm->sbCt.GetValue() <= witm->maxct) {
+			if(witm->dispItem != NULL)
+				delete witm->dispItem;
+			witm->dispItem = Item::CreateItem(witm->itemid, (uint8_t)witm->sbCt.GetValue());
+		}
 	}
 
 	static void drawItem(glictRect *real, glictRect *clipped, glictContainer *caller)
 	{
 		winItemMove_t* witm = (winItemMove_t*)(caller->GetCustomData());
 		witm->dispItem->Blit((int)real->left, (int)real->top);
+	}
+
+	static void moveItem(glictPos* pos, glictContainer *caller);
+	static void onCancel(glictPos* pos, glictContainer *caller)
+	{
+		// do nothing?
 	}
 };
 

@@ -111,7 +111,7 @@ private:
 
     std::vector<winContainer_t*> containers;
 
-    winItemMove_t* winMove;
+    winItemMove_t winMove;
     /* END PRIMARY GUI */
 
 
@@ -140,6 +140,7 @@ private:
 	class ProtocolGame* m_protocol;
 	friend class pnlInventory_t;
 	friend class winContainer_t;
+	friend class winItemMove_t;
 
 	MapUI m_mapui;
 };
