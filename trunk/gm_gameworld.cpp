@@ -142,8 +142,7 @@ void pnlInventory_t::inventoryItemOnMouseUp(glictPos *relmousepos,
 			(glictPanel*)callerclass->GetCustomData() + 1);
 		if(slotid >= 0 && slotid <= 10) {
             Position dest(0xFFFF, slotid, 0);
-            // TODO (nfries88?): stackable throw dialogue
-            if (gw->m_dragThing)
+            /*if (gw->m_dragThing)
             {
             	const Item* dragItem = gw->m_dragThing->getItem();
 				uint8_t count = 1;
@@ -157,13 +156,14 @@ void pnlInventory_t::inventoryItemOnMouseUp(glictPos *relmousepos,
 						throwDialog = true;
 				}
 				// TODO (nfries88?): FIX stackable throw dialogue
-				//if(!throwDialog)
+				//if(!throwDialog) {
 					gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, count);
-				/*else {
+				/*} else {
 					gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
 					gw->winMove.window.SetVisible(true);
-				*/
-            }
+				}*/
+            //}
+            gw->dragComplete(dest);
 		}
         gw->dismissDrag();
 	}
@@ -227,9 +227,10 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 
 	if (gw->isDragging())
 	{
-	    if (gw->m_dragThing)
+		Position dest(0xFFFF, id | 0x40, slot_id);
+	    /*if (gw->m_dragThing)
 	    {
-            Position dest(0xFFFF, id | 0x40, slot_id);
+
             const Item* dragItem = gw->m_dragThing->getItem();
             uint8_t count = 1;
             bool throwDialog = false;
@@ -244,13 +245,14 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 					throwDialog = true;
             }
             // TODO (nfries88?): FIX stackable throw dialogue
-            //if(!throwDialog)
+            //if(!throwDialog) {
 				gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, count);
-            /*else {
+            /*} else {
 				gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
 				gw->winMove.window.SetVisible(true);
-			*/
-	    }
+			}*/
+	    //}
+	    gw->dragComplete(dest);
         gw->dismissDrag();
 
 	}
@@ -706,13 +708,29 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 if (m_dragging){
 
                     int dx,dy,dz;
-
-
-
                     m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz);
-                    //TODO (ivucica#3#): drag count window
-                    m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, Position(dx,dy,dz), 1);
+                    Position dest(dx, dy, dz);
 
+					/*const Item* dragItem = m_dragThing->getItem();
+					uint8_t count = 1;
+					bool throwDialog = false;
+
+					if(dragItem && dragItem->isStackable())
+					{
+						if(SDL_GetModState() & KMOD_CTRL)
+							count = dragItem->getCount();
+						else
+							throwDialog = true;
+					}
+
+                    // TODO (nfries88?): FIX stackable throw dialogue
+					//if(!throwDialog) {
+						m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, Position(dx,dy,dz), count);
+					/*} else {
+						gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
+						gw->winMove.window.SetVisible(true);
+					}*/
+					dragComplete(dest);
                     dismissDrag();
                     printf("Released from drag\n");
 
@@ -982,6 +1000,33 @@ void GM_Gameworld::setDragCtr(uint32_t containerid, uint32_t slotid) {
         m_dragPos = Position(0xFFFF, containerid | 0x40, slotid);
         m_dragStackPos = slotid;
     }
+}
+
+void GM_Gameworld::dragComplete(Position& toPos)
+{
+	if (m_dragThing)
+	{
+		const Item* dragItem = m_dragThing->getItem();
+		uint8_t count = 1;
+		bool throwDialog = false;
+
+		if(dragItem && dragItem->isStackable())
+		{
+			if(SDL_GetModState() & KMOD_CTRL)
+				count = dragItem->getCount();
+			else
+				throwDialog = true;
+		}
+		// TODO (nfries88?): FIX stackable throw dialogue
+		//if(!throwDialog) {
+			m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, toPos, count);
+		/*}
+		else {
+			gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
+			gw->winMove.window.SetVisible(true);
+		}*/
+	}
+
 }
 
 void GM_Gameworld::showTutorial(uint8_t id) {

@@ -354,9 +354,17 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 				RAISE_PROTOCOL_ERROR("Open container - size > cap");
 			}
 
-			Container* container = Containers::getInstance().createContainer(cid);
-			if(!container){
-				RAISE_PROTOCOL_ERROR("Open container - !container");
+			// NOTE (nfries88)
+			// The server sends a message to open a container when it is moved client-side
+			// In the event of it already being opened, don't remake it
+			// but allow updates.
+			Container* container = Containers::getInstance().getContainer(cid);
+			bool wasOpened = (container != NULL);
+			if(container == NULL) {
+				container = Containers::getInstance().createContainer(cid);
+				if(!container){
+					RAISE_PROTOCOL_ERROR("Open container - !container");
+				}
 			}
 			container->setName(name);
 			container->setItemId(itemid);
@@ -368,12 +376,22 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 				if(!item){
 					RAISE_PROTOCOL_ERROR("Container Open - !item");
 				}
-				if(!container->addItemInitial(item)){
+				// When the server sends a message to open a container that's already opened
+				if(container->getItem(i)) {
+					if(!container->updateItem(i, item)) {
+						RAISE_PROTOCOL_ERROR("Container Open - updateItem");
+					}
+				}
+				else if(!container->addItemInitial(item)){
 					RAISE_PROTOCOL_ERROR("Container Open - addItem");
 				}
 			}
 
-			Notifications::openContainer(cid);
+			// TODO (nfries88): instead of having this here, move a check for
+			//	previously-opened containers in GM_Gameworld::openContainer
+			if(!wasOpened) {
+				Notifications::openContainer(cid);
+			}
 			break;
 		}
 		case 0x6F: //close container

@@ -75,6 +75,7 @@ public:
 	}
 	void setDragInv(slots_t slot);
 	void setDragCtr(uint32_t containerid, uint32_t slotid);
+	void dragComplete(Position& toPos);
 
 protected:
 
