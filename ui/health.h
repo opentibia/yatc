@@ -90,27 +90,36 @@ public:
 
 	}
 
-    static void paintHealth(glictRect *real, glictRect *clipped, glictContainer *caller){
-        //pnlHealth_t* ph = ((pnlHealth_t*)caller->GetCustomData());
-        g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 220,76, 12,11);
-    }
-    static void paintMana(glictRect *real, glictRect *clipped, glictContainer *caller){
-        //pnlHealth_t* ph = ((pnlHealth_t*)caller->GetCustomData());
-        g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 220,87, 12,11);
-    }
-    static void paintHealthBar(glictRect *real, glictRect *clipped, glictContainer *caller){
-        float health = ((float)GlobalVariables::getPlayerStat(STAT_HEALTH))/GlobalVariables::getPlayerStat(STAT_HEALTH_MAX);
-        //pnlHealth_t* ph = ((pnlHealth_t*)caller->GetCustomData());
+	static void paintHealth(glictRect *real, glictRect *clipped, glictContainer *caller){
+		//pnlHealth_t* ph = ((pnlHealth_t*)caller->GetCustomData());
+		g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 220,76, 12,11);
+	}
+	static void paintMana(glictRect *real, glictRect *clipped, glictContainer *caller){
+		//pnlHealth_t* ph = ((pnlHealth_t*)caller->GetCustomData());
+		g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 220,87, 12,11);
+	}
+	static void paintHealthBar(glictRect *real, glictRect *clipped, glictContainer *caller){
+		uint32_t healthmax = GlobalVariables::getPlayerStat(STAT_HEALTH_MAX);
+		float health = 0.f;
+		if(healthmax != 0) {
+			health = ((float)GlobalVariables::getPlayerStat(STAT_HEALTH))/healthmax;
+		}
+		//pnlHealth_t* ph = ((pnlHealth_t*)caller->GetCustomData());
 
-        g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 96,75, 90 * health,11);
-        g_engine->getUISprite()->Blit(floor((int)real->left + 90*health), (int)real->top, floor(96 + 90*health),64, ceil(90 * (1-health)),11);
-    }
-    static void paintManaBar(glictRect *real, glictRect *clipped, glictContainer *caller){
-        float mana = ((float)GlobalVariables::getPlayerStat(STAT_MANA))/GlobalVariables::getPlayerStat(STAT_MANA_MAX);
-        //pnlHealth_t* ph = ((pnlHealth_t*)caller->GetCustomData());
-        g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 96, 86, 90*mana,11);
-        g_engine->getUISprite()->Blit(floor((int)real->left + 90*mana), (int)real->top, floor(96 + 90*mana),64, ceil(90 * (1-mana)),11);
-    }
+		g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 96,75, 90 * health,11);
+		g_engine->getUISprite()->Blit(floor((int)real->left + 90*health), (int)real->top, floor(96 + 90*health),64, ceil(90 * (1-health)),11);
+	}
+	static void paintManaBar(glictRect *real, glictRect *clipped, glictContainer *caller){
+		uint32_t manamax = GlobalVariables::getPlayerStat(STAT_MANA_MAX);
+		float mana = 0.f;
+		if(manamax != 0) {
+			mana = ((float)GlobalVariables::getPlayerStat(STAT_MANA))/manamax;
+		}
+		//pnlHealth_t* ph = ((pnlHealth_t*)caller->GetCustomData());
+
+		g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 96, 86, 90*mana,11);
+		g_engine->getUISprite()->Blit(floor((int)real->left + 90*mana), (int)real->top, floor(96 + 90*mana),64, ceil(90 * (1-mana)),11);
+	}
 
 
     void updateSelf() {
