@@ -665,7 +665,6 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                     int dx,dy,dz;
                     m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz);
                     Position dest(dx, dy, dz);
-
 					dragComplete(dest);
                     dismissDrag();
                     printf("Released from drag\n");
@@ -948,19 +947,18 @@ void GM_Gameworld::dragComplete(Position& toPos)
 
 		if(dragItem && dragItem->isStackable())
 		{
-			if(SDL_GetModState() & KMOD_CTRL)
+			if(SDL_GetModState() & KMOD_CTRL && dragItem->getCount() > 1)
 				count = dragItem->getCount();
 			else
 				throwDialog = true;
 		}
-		// TODO (nfries88?): FIX stackable throw dialogue
-		//if(!throwDialog) {
+
+		if(!throwDialog) {
 			m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, toPos, count);
-		/*}
+		}
 		else {
-			gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
-			gw->winMove.window.SetVisible(true);
-		}*/
+			winMove.open(dragItem->getID(), dragItem->getCount(), m_dragPos, toPos, m_dragStackPos);
+		}
 	}
 
 }

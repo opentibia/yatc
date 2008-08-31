@@ -110,8 +110,11 @@ public:
 	pnlObjView.SetPos(18, 258);
 	pnlObjView.SetHeight(53);
 	pnlObjView.SetWidth(53);
+	pnlObjView.SetCustomData(this);
 	pnlObjView.SetOnPaint(&winOptionsHotkeys_t::drawObject);
-	pnlObjView.SetBGActiveness(false);
+	//pnlObjView.SetBGActiveness(false);
+	pnlObjView.SetBGColor(.1,.1,.1,1);
+	pnlObjView.SetSkin(&g_skin.inv);
 
 	window.AddObject(&btnSelectObj);
 	btnSelectObj.SetPos(82, 258);

@@ -28,7 +28,7 @@
 #include <GLICT/button.h>
 #include <GLICT/window.h>
 
-#include "skin.h"
+#include "../skin.h"
 
 class pnlInventory_t {
 public:

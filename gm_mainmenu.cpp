@@ -394,11 +394,11 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	std::stringstream ips;
 	std::string ip;
 
-	/*if(!m->winCharlist.lsiChars.size()) {
-		printf("This account has no characters!\n");
+	if(!m->winCharlist.lsiChars.size()) {
+		//printf("This account has no characters!\n");
 		m->winCharlist.window.SetVisible(false);
 		return;
-	}*/
+	}
 
 	ips << (ipnum & 0xFF) << "." << ((ipnum & 0xFF00) >> 8) << "." << ((ipnum & 0xFF0000) >> 16) << "." << ((ipnum & 0xFF000000) >> 24);
 	ip = ips.str();
