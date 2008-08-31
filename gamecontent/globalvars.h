@@ -63,6 +63,9 @@ public:
 	static uint32_t getPlayerSkill(SkillList_t skill, SkillAttr_t attr );
 	static void setPlayerSkill(SkillList_t skill, SkillAttr_t attr, uint32_t v);
 
+	static uint32_t getPlayerCash() { return m_cash; }
+	static void setPlayerCash(uint32_t money) { m_cash = money; }
+
 protected:
 	GlobalVariables(){}
 
@@ -82,6 +85,8 @@ protected:
 
 	static uint32_t m_stats[STAT_LAST];
 	static uint32_t m_skills[SKILL_LAST][SKILL_ATTR_LAST];
+
+	static uint32_t m_cash;
 };
 
 #endif

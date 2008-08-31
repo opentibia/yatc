@@ -37,6 +37,7 @@
 #include "../gamecontent/creature.h"
 #include "../gamecontent/container.h"
 #include "../gamecontent/inventory.h"
+#include "../gamecontent/shop.h"
 
 ProtocolGame82::ProtocolGame82(int account, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame(account, password, name, isGM)
@@ -105,7 +106,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			Notifications::openMessageWindow(MESSAGE_INFORMATION, infoMessage);
 			break;
 		}
-            case 0x16: //Waiting list
+		case 0x16: //Waiting list
 		{
 			MSG_READ_STRING(waitMessage);
 			MSG_READ_U8(waitTime);
@@ -477,6 +478,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 		case 0x7A: // npc inventory listing for 8.2+, thomac decoded: see http://otfans.net/showpost.php?p=1004578&postcount=59
 		{
 		    // FIXME STUB!!!!!
+		    std::list<ShopItem> shopList;
 		    MSG_READ_U8(size);
 		    for(uint32_t i = 0; i < size; ++i){
 				MSG_READ_U16(itemid);
@@ -484,16 +486,20 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 				MSG_READ_STRING(itemname);
 				MSG_READ_U32(buyprice);
 				MSG_READ_U32(sellprice);
+				shopList.push_back(ShopItem(itemname, itemid, runecharges, buyprice, sellprice));
 			}
+			Notifications::openShopWindow(shopList);
 			break;
 		}
 		case 0x7B: // player's cash
         {
             MSG_READ_U32(cash);
+            GlobalVariables::setPlayerCash(cash);
             break;
         }
         case 0x7C: // close shop opened with 0x7A
         {
+        	Notifications::closeShopWindow();
             break;
         }
 		case 0x7D: //safe-trade request - ack

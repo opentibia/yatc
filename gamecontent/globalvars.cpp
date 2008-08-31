@@ -31,6 +31,7 @@ uint8_t GlobalVariables::m_GMActions[32] = {0};
 uint32_t GlobalVariables::m_playerIcons = 0;
 uint32_t GlobalVariables::m_stats[STAT_LAST] = {0};
 uint32_t GlobalVariables::m_skills[SKILL_LAST][2] = {{0}};
+uint32_t GlobalVariables::m_cash = 0;
 
 void GlobalVariables::clear()
 {

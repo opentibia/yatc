@@ -27,6 +27,7 @@
 #include "gamecontent/enums.h"
 
 class Position;
+class ShopItem;
 
 class Notifications{
 	public:
@@ -81,6 +82,10 @@ class Notifications{
 		//open trade window
 		static void openTradeWindow(bool ack){}
 		static void closeTradeWindow(){}
+
+		//open shop window
+		static void openShopWindow(const std::list<ShopItem>& itemlist);
+		static void closeShopWindow();
 
 		//open house window
 		static void openHouseText(int windowId, int unk, const std::string& text){}

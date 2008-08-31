@@ -28,6 +28,7 @@ std::list<std::string> g_recFiles;
 std::list<std::string>::iterator g_recIt;
 
 #include "gamecontent/container.h"
+#include "gamecontent/shop.h"
 #include "gamecontent/creature.h"
 #include "gamecontent/globalvars.h"
 #include "gamecontent/inventory.h"
@@ -224,6 +225,16 @@ void Notifications::openContainer(int cid)
 void Notifications::closeContainer(int cid)
 {
 	g_game->closeContainer(cid);
+}
+
+//open/close shop
+void Notifications::openShopWindow(const std::list<ShopItem>& itemlist)
+{
+	//g_game->openShop(itemlist);
+}
+void Notifications::closeShopWindow()
+{
+	//g_game->closeShop();
 }
 
 //tutorials
