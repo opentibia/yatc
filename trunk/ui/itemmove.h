@@ -28,6 +28,7 @@
 #include <GLICT/window.h>
 
 #include "../gamecontent/item.h"
+#include "../skin.h"
 
 //TODO (nfries88) actually implement this and make sure it works.
 
@@ -51,21 +52,6 @@ public:
 
 	winItemMove_t()
 	{
-		initUI();
-	}
-
-	winItemMove_t(uint16_t _id, uint8_t _count, Position from, Position to, uint8_t _stack)
-		: fromPos(from), toPos(to), itemid(_id), maxct(_count), fromStack(_stack)
-	{
-		dispItem = Item::CreateItem(_id, _count);
-
-		initUI();
-
-		sbCt.SetValue(_count);
-	}
-
-	void initUI()
-	{
 		window.SetCaption("Move Objects");
 		window.SetWidth(228);
 		window.SetHeight(115);
@@ -75,6 +61,7 @@ public:
 		sbCt.SetWidth(155);
 		sbCt.SetHeight(12);
 		sbCt.SetValue(1);
+		sbCt.SetCustomData(this);
 		sbCt.SetOnClick(winItemMove_t::onChangeCount);
 
 		window.AddObject(&lblTxt);
@@ -82,6 +69,7 @@ public:
 		lblTxt.SetPos(59, 17);
 		lblTxt.SetWidth(143);
 		lblTxt.SetHeight(24);
+		lblTxt.SetBGActiveness(false);
 
 		window.AddObject(&pnlItem);
 		pnlItem.SetPos(15, 15);
@@ -89,6 +77,10 @@ public:
 		pnlItem.SetHeight(32);
 		pnlItem.SetCustomData(this);
 		pnlItem.SetOnPaint(winItemMove_t::drawItem);
+		//pnlItem.SetBGActiveness(false);
+		pnlItem.SetCaption("");
+		pnlItem.SetBGColor(.1,.1,.1,1);
+		pnlItem.SetSkin(&g_skin.inv);
 
 		window.AddObject(&pnlSep);
 		pnlSep.SetPos(10, 80);
@@ -108,7 +100,29 @@ public:
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(20);
 		btnCancel.SetCaption("Cancel");
-		btnOk.SetOnClick(winItemMove_t::onCancel);
+		btnCancel.SetCustomData(this);
+		btnCancel.SetOnClick(winItemMove_t::onCancel);
+	}
+
+	void open(uint16_t _id, uint8_t _count, Position from, Position to, uint8_t _stack)
+	{
+		fromPos = from;
+		toPos = to;
+		itemid = _id;
+		maxct = _count;
+		fromStack = _stack;
+
+		if(dispItem != NULL) {
+			delete dispItem;
+		}
+
+		dispItem = Item::CreateItem(_id, _count);
+
+		sbCt.SetMin(1);
+		sbCt.SetMax(_count);
+		sbCt.SetStep(1);
+		sbCt.SetValue(_count);
+		window.SetVisible(true);
 	}
 
 	static void onChangeCount(glictPos* pos, glictContainer *caller)
@@ -130,7 +144,8 @@ public:
 	static void moveItem(glictPos* pos, glictContainer *caller);
 	static void onCancel(glictPos* pos, glictContainer *caller)
 	{
-		// do nothing?
+		winItemMove_t* win = (winItemMove_t*)caller->GetCustomData();
+		win->window.SetVisible(false);
 	}
 };
 

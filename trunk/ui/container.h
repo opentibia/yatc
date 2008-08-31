@@ -1,7 +1,7 @@
 #ifndef __UI_CONTAINER_H
 #define __UI_CONTAINER_H
 
-#include "../gamecontent/container.h" // @Nate: please don't use backslashes; windows does tolerate slash, but unix does not tolerate backslash!
+#include "../gamecontent/container.h"
 #include <cmath>
 
 class winContainer_t {

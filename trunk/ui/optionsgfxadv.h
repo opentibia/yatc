@@ -3,6 +3,8 @@
 
 #include "../engine.h"
 
+#include <sstream>
+
 class winOptionsGraphicsAdvanced_t {
 public:
 	glictWindow window;
@@ -26,6 +28,8 @@ public:
 	glictButton btnOk; // 153 286
 	glictButton btnCancel; // 206 286
 	winOptionsGraphicsAdvanced_t () {
+		std::stringstream ss;
+
 		window.SetVisible(false);
 		window.SetHeight(317);
 		window.SetWidth(263);
@@ -77,7 +81,7 @@ public:
 		scbMaxFPS.SetMin(10);
 		scbMaxFPS.SetMax(80);
 		scbMaxFPS.SetStep(5);
-		scbMaxFPS.SetValue(30);
+		scbMaxFPS.SetValue(options.maxfps);
 		scbMaxFPS.SetCustomData(this);
 		scbMaxFPS.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeFPS);
 
@@ -85,7 +89,14 @@ public:
 		lblMaxFPS.SetPos(13, 213);
 		lblMaxFPS.SetWidth(230);
 		lblMaxFPS.SetHeight(12);
-		lblMaxFPS.SetCaption("Adjust framerate limit: XX");
+		//lblMaxFPS.SetCaption("Adjust framerate limit: XX");
+		ss << "Adjust framerate limit: ";
+		if(options.maxfps >= 80) {
+			ss << "MAX";
+		} else {
+			ss << options.maxfps;
+		}
+		lblMaxFPS.SetCaption(ss.str());
 		lblMaxFPS.SetBGActiveness(false);
 		lblMaxFPS.SetCustomData(this);
 
@@ -176,8 +187,19 @@ public:
 
 	static void OnChangeFPS(glictPos* pos, glictContainer *caller) {
 		glictScrollbar* sb = (glictScrollbar*)caller;
+		winOptionsGraphicsAdvanced_t* win = (winOptionsGraphicsAdvanced_t*)caller->GetCustomData();
+		std::stringstream ss;
+
 		options.maxfps = sb->GetValue();
 		DEBUGPRINT(0, 0, "New FPS: %d\n", options.maxfps);
+
+		ss << "Adjust framerate limit: ";
+		if(options.maxfps >= 80) {
+			ss << "MAX";
+		} else {
+			ss << options.maxfps;
+		}
+		win->lblMaxFPS.SetCaption(ss.str());
 	}
 
 };
