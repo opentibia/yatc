@@ -142,27 +142,6 @@ void pnlInventory_t::inventoryItemOnMouseUp(glictPos *relmousepos,
 			(glictPanel*)callerclass->GetCustomData() + 1);
 		if(slotid >= 0 && slotid <= 10) {
             Position dest(0xFFFF, slotid, 0);
-            /*if (gw->m_dragThing)
-            {
-            	const Item* dragItem = gw->m_dragThing->getItem();
-				uint8_t count = 1;
-				bool throwDialog = false;
-
-				if(dragItem && dragItem->isStackable())
-				{
-					if(SDL_GetModState() & KMOD_CTRL)
-						count = dragItem->getCount();
-					else
-						throwDialog = true;
-				}
-				// TODO (nfries88?): FIX stackable throw dialogue
-				//if(!throwDialog) {
-					gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, count);
-				/*} else {
-					gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
-					gw->winMove.window.SetVisible(true);
-				}*/
-            //}
             gw->dragComplete(dest);
 		}
         gw->dismissDrag();
@@ -228,30 +207,6 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 	if (gw->isDragging())
 	{
 		Position dest(0xFFFF, id | 0x40, slot_id);
-	    /*if (gw->m_dragThing)
-	    {
-
-            const Item* dragItem = gw->m_dragThing->getItem();
-            uint8_t count = 1;
-            bool throwDialog = false;
-
-            printf("Throwing %d %d %d (item %d) onto %d %d %d\n", gw->m_dragPos.x, gw->m_dragPos.y, gw->m_dragPos.z, gw->m_dragThing->getID(), dest.x, dest.y, dest.z);
-
-            if(dragItem && dragItem->isStackable())
-            {
-            	if(SDL_GetModState() & KMOD_CTRL)
-            		count = dragItem->getCount();
-            	else
-					throwDialog = true;
-            }
-            // TODO (nfries88?): FIX stackable throw dialogue
-            //if(!throwDialog) {
-				gw->m_protocol->sendThrow(gw->m_dragPos, gw->m_dragThing->getID(), gw->m_dragStackPos, dest, count);
-            /*} else {
-				gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
-				gw->winMove.window.SetVisible(true);
-			}*/
-	    //}
 	    gw->dragComplete(dest);
         gw->dismissDrag();
 
@@ -711,25 +666,6 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                     m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz);
                     Position dest(dx, dy, dz);
 
-					/*const Item* dragItem = m_dragThing->getItem();
-					uint8_t count = 1;
-					bool throwDialog = false;
-
-					if(dragItem && dragItem->isStackable())
-					{
-						if(SDL_GetModState() & KMOD_CTRL)
-							count = dragItem->getCount();
-						else
-							throwDialog = true;
-					}
-
-                    // TODO (nfries88?): FIX stackable throw dialogue
-					//if(!throwDialog) {
-						m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, Position(dx,dy,dz), count);
-					/*} else {
-						gw->winMove = winItemMove_t(dragItem->getID(), dragItem->getCount(), gw->m_dragPos, dest, gw->m_dragStackPos);
-						gw->winMove.window.SetVisible(true);
-					}*/
 					dragComplete(dest);
                     dismissDrag();
                     printf("Released from drag\n");
