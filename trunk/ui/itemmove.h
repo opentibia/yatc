@@ -102,6 +102,8 @@ public:
 		btnCancel.SetCaption("Cancel");
 		btnCancel.SetCustomData(this);
 		btnCancel.SetOnClick(winItemMove_t::onCancel);
+
+		dispItem = NULL;
 	}
 
 	void open(uint16_t _id, uint8_t _count, Position from, Position to, uint8_t _stack)
