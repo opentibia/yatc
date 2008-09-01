@@ -947,9 +947,9 @@ void GM_Gameworld::dragComplete(Position& toPos)
 
 		if(dragItem && dragItem->isStackable())
 		{
-			if(SDL_GetModState() & KMOD_CTRL && dragItem->getCount() > 1)
+			if(SDL_GetModState() & KMOD_CTRL)
 				count = dragItem->getCount();
-			else
+			else if(dragItem->getCount() > 1)
 				throwDialog = true;
 		}
 
