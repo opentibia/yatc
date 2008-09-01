@@ -241,6 +241,7 @@
 		<Unit filename="gamecontent\item.h" />
 		<Unit filename="gamecontent\map.cpp" />
 		<Unit filename="gamecontent\map.h" />
+		<Unit filename="gamecontent\shop.h" />
 		<Unit filename="gamecontent\thing.h" />
 		<Unit filename="gamemode.cpp" />
 		<Unit filename="gamemode.h" />
@@ -339,6 +340,7 @@
 		<Unit filename="ui\optionshotkeys.h" />
 		<Unit filename="ui\optionsnetwork.h" />
 		<Unit filename="ui\optionsui.cpp" />
+		<Unit filename="ui\shop.h" />
 		<Unit filename="ui\skills.h" />
 		<Unit filename="ui\tutorialhints.cpp" />
 		<Unit filename="ui\tutorialhints.h" />
