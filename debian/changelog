@@ -1,3 +1,9 @@
+yatc (0.2.1-1) unstable; urgency=low 
+ 
+  * New upstream release
+ 
+ -- Ivan Vucica <ivucica@gmail.com>  Tue, 02 Sep 2008 18:53:08 +0200 
+ 
 yatc (0.2-2) unstable; urgency=low
 
   * No longer depends on tibia-data, now just suggests it

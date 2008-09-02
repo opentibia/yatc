@@ -307,7 +307,6 @@
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug Windows" />
-			<Option target="Release Windows" />
 			<Option target="Debug MinGW32" />
 			<Option target="Release MinGW32" />
 		</Unit>
