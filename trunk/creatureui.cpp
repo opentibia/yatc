@@ -44,8 +44,8 @@ CreatureUI::~CreatureUI()
 
 void CreatureUI::resetSelf()
 {
-    unloadGfx();
-    m_obj = NULL;
+	unloadGfx();
+	m_obj = NULL;
 
 	m_preWalk = false;
 	m_walkState = 1.f;

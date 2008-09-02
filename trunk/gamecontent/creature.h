@@ -85,6 +85,8 @@ public:
 	void setShield(uint32_t shield) { m_shield = shield;}
 	uint32_t getShield() const { return m_shield;}
 
+
+	void resetSelf() { CreatureUI::resetSelf(); m_id = 0; }
 protected:
 	Creature();
 

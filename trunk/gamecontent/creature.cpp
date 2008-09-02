@@ -142,12 +142,14 @@ void Creatures::removeCreature(uint32_t id)
 
 	CreatureMap::iterator it = m_creaturesId.find(id);
 	if(it != m_creaturesId.end()){
-        m_creaturesArray[it->second].unloadGfx();
-		m_creaturesArray[it->second].m_id = 0;
+		m_creaturesArray[it->second].unloadGfx();
+		//m_creaturesArray[it->second].m_id = 0;
+		m_creaturesArray[it->second].resetSelf();
 		m_creaturesId.erase(it);
 	}
 	else{
 		// TODO (mips_act#3#): Handle error...
+		printf("!=!=! Creatures::removeCreature: error removing unknown creature\n");
 	}
 }
 
@@ -155,7 +157,7 @@ void Creatures::clear()
 {
 	m_creaturesId.clear();
 	for(uint32_t i = 0; i < CREATURES_ARRAY; ++i){
-	    m_creaturesArray[i].unloadGfx();
+		m_creaturesArray[i].unloadGfx();
 		m_creaturesArray[i].resetSelf();
 		//m_creaturesArray[i].m_id = 0;
 	}
