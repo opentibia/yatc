@@ -191,6 +191,19 @@ EOF
 		echo "Will modify a copy of changelog at later time"
 	fi
 
+	if [ $srcrelease == 'n' ]; then
+		echo "Source release was not built."
+		echo "First preparing for building source tarball."
+	        echo "Running autogen.sh..."
+	        echo ""
+	        ./autogen.sh
+	        echo "Running configure..."
+	        echo ""
+	        ./configure
+		echo "Let's move on."
+	fi
+
+
 	echo "Preparing a source tarball"
 	make dist
 
