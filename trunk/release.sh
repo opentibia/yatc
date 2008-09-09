@@ -61,16 +61,19 @@ mv product.h.new product.h
 sed s/0.2.1SVN/$version/g README > README.new
 mv README.new README
 
+svn revert configure.ac
+
+sed s/0.2.1SVN/$version/g configure.ac > configure.ac.new
+mv configure.ac.new configure.ac
+
+
+
 if [ -z $srcrelease ]; then
 	srcrelease='y'
 fi
 
 if [ $srcrelease == 'y' ]; then
-	svn revert configure.ac
 
-	sed s/0.2.1SVN/$version/g configure.ac > configure.ac.new
-	mv configure.ac.new configure.ac
-	
 	echo "Now building source release..."
 	echo ""
 	echo "Running autogen.sh..."
@@ -146,7 +149,6 @@ if [ $debrelease != "n" ]; then
 	cat - << EOF > .tmpdebchangelog
 yatc (${version}-1) unstable; urgency=low 
  
-  * Enter description here, perhaps this below will suffice
   * New upstream release
  
  -- ${debianiser}  ${debchangelogdate} 
@@ -158,8 +160,22 @@ EOF
 	echo "You MUST edit it or it will look quite silly"
 	echo "(at least remove:  * Enter description here, perhaps this will suffice)"
 	echo ""
-	read
-	sensible-editor .tmpdebchangelog
+	echo "Skip editing? (Always just press enter, only when running in a script enter Y!)"
+	echo ""
+	read skipedit
+	echo $skipedit
+	
+	if [ $skipedit != "y" ]; then
+		exit
+		sensible-editor .tmpdebchangelog
+	else
+		echo "Command to run instead?"
+		read replacementcmd
+		if [ ! -z $replacementcmd ]; then
+			echo "Running $replacementcmd"
+			$replacementcmd
+		fi
+	fi
 	echo ""
 	echo ""
 	echo "I hope you edited it."
