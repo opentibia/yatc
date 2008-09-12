@@ -147,11 +147,11 @@ if [ $debrelease != "n" ]; then
 	debchangelogdate=`date -R`
 
 	cat - << EOF > .tmpdebchangelog
-yatc (${version}-1) unstable; urgency=low 
+yatc (${version}-1) unstable; urgency=low
  
   * New upstream release
  
- -- ${debianiser}  ${debchangelogdate} 
+ -- ${debianiser}  ${debchangelogdate}
  
 EOF
 	echo ""
@@ -163,10 +163,10 @@ EOF
 	echo "Skip editing? (Always just press enter, only when running in a script enter Y!)"
 	echo ""
 	read skipedit
+	echo "You entered: "
 	echo $skipedit
 	
-	if [ $skipedit != "y" ]; then
-		exit
+	if [ "$skipedit" != "y" ]; then
 		sensible-editor .tmpdebchangelog
 	else
 		echo "Command to run instead?"
