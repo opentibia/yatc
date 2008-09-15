@@ -173,6 +173,7 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
         #warning We need GLICT apirev 67 or greater to support basic movable windows.
         #endif
     }
+    g_engine->resetClipping();
 
 	renderScene();
 

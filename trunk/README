@@ -41,7 +41,7 @@ user interface library. For now we can connect to the login server, display
 character list, connect to game world, display basic map, and we can move
 around.
 
-This is readme for version 0.2 SVN.
+This is readme for version 0.2.2SVN.
 
 Please visit our site:
  http://sites.google.com/site/yatcclient
@@ -62,7 +62,7 @@ created our own files. Then, start YATC. Go to Options->Network, and enter
 the server address. Then go to Enter Game and log on using your account
 number and password.
 
-We currently support protocols 8.0 and 8.1. Autodetection will see from which
+We currently support protocols 8.0 to 8.22. Autodetection will see from which
 version of the client you have copied the files and will use the appropriate
 protocol. You can manually switch protocol in Options->Network.
 
