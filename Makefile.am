@@ -27,7 +27,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		net/protocolgame821.cpp net/protocolgame822.cpp \
 		net/rsa.cpp net/encryption.cpp net/protocolgame.cpp net/protocollogin.cpp \
 		\
-		ui/optionsui.cpp ui/tutorialhints.cpp ui/container.cpp ui/inventory.cpp \
+		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp ui/uiinventory.cpp \
 		\
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
 		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
