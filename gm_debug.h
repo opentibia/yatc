@@ -30,6 +30,8 @@
 #include "sprite.h"
 #include "thingui.h"
 
+#include "popup.h"
+
 class GM_Debug : public GameMode
 {
 public:
@@ -40,6 +42,10 @@ public:
 	void renderScene();
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
+
+
+    void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);
+    static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 
 private:
 
@@ -57,6 +63,8 @@ private:
 	Sprite* background;
 	Sprite* spr;
 	ThingUI* thing;
+    Popup* popup;
+    bool killpopup;
 };
 
 #endif
