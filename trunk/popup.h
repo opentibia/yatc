@@ -20,10 +20,34 @@
 //
 // So, let's get crackin', then :)
 
+#include <string>
+#include <vector>
+#include <GLICT/panel.h>
+#include <GLICT/list.h>
+
+typedef void (*popupCallback_t)() ;
+
+struct PopupItem {
+    std::string txt;
+
+    glictPanel pnl;
+    popupCallback_t cb;
+};
+
 class Popup {
 public:
-    Popup() {}
-    ~Popup() {}
+    Popup();
+    ~Popup();
+
+    void addItem(const std::string &txt, popupCallback_t cb);
+    void mouseOver(float x, float y);
+    static void onClick(glictPos* pos, glictContainer *caller);
+
+    glictList* getGlictList() { return &list; }
+
+private:
+    glictList list;
+    std::vector<PopupItem*> items;
 };
 
 #endif
