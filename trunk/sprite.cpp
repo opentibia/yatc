@@ -517,16 +517,16 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
 
 void Sprite::addColor(float r, float g, float b)
 {
-	uint8_t ro, go, bo, ao;  // old rgba
-	uint32_t pv; // pixel value
+	register uint8_t ro, go, bo, ao;  // old rgba
+	register uint32_t pv; // pixel value
 	if(r == m_r && g == m_g && b == m_b){
 		return;
 	}
 	SDL_LockSurface(m_image);
 	SDL_LockSurface(m_coloredimage);
 
-	for(int i = 0; i < m_image->w; i++){
-		for(int j =0; j < m_image->h; j++){
+	for(register int i = 0; i < m_image->w; i++){
+		for(register int j =0; j < m_image->h; j++){
 		    if (!getBasicImage()) {
 		        printf("I don't have an image!\n");
 		    }

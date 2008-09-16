@@ -45,7 +45,8 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
 		while(SDL_LockSurface(getColoredImage()) < 0 ){
 				SDL_Delay(10);
 		}
-		// FIXME (ivucica#1#) i forgot that we need to re-write image pixels here!
+		loadSurfaceFromFile(m_filename, m_index);
+
 		SDL_UnlockSurface(getColoredImage());
 	}
 }

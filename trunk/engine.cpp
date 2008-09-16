@@ -181,8 +181,6 @@ void Engine::initFont(glictFont **fnt, const char *fontname)
 
 void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t color)
 {
-	// TODO (ivucica#2#) stub -- we'll just render in white for now. later we must recolor, and paint it ourselves instead of delegating to glic
-	// DONE (ivucica#2#) perhaps this will do now?
 	Font *f = (Font*)(glictFindFont(font)->GetFontParam());
 	if (!f)
         glictFontRender(text, font, x, y);

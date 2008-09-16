@@ -33,10 +33,11 @@ static uint32_t getPixel(SDL_Surface *surface, int x, int y);
 
 int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 {
-	uint16_t size;
-	uint16_t destination=0;
-	int i,j;
-	int transparent = 1;
+    uint16_t size;
+	register uint16_t destination=0;
+	size_t i=0;
+	register uint16_t j=0;
+	register char transparent = 1;
 
 	fread(&size, 2, 1, f);
 	if (size > 3444) {
@@ -49,7 +50,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 
 	for(i = ftell(f); ftell(f) < i + size-1; ){
 		uint16_t pixelchunksize;
-		uint32_t color=0;
+		register uint32_t color=0;
 		unsigned char rgba[3];
 		fread(&pixelchunksize, 2, 1, f);
 		if(pixelchunksize > 3076){
@@ -86,7 +87,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 	uint16_t chunksize;
 	unsigned long chunksizepos;
 	unsigned char transparent=1;
-	char DO_DEBUG = 0;
+    #define debugprintf printf
 
 	SDL_LockSurface(surface);
 
@@ -110,7 +111,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 			if (!transparent)
 				break;
 
-			if (DO_DEBUG) printf(".%c", ((i%32 == 31) ? '\n' : 0));
+			debugprintf(".%c", ((i%32 == 31) ? '\n' : 0));
 
 			i++;
 			chunksize++;
@@ -137,7 +138,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 				break;
 
 
-			if (DO_DEBUG) printf("%c%c", ((color/256) % 200 + 32), ((i%32 == 31) ? '\n' : 0));
+			debugprintf("%c%c", ((color/256) % 200 + 32), ((i%32 == 31) ? '\n' : 0));
 
 			fwrite(rgba, 3, 1, f);
 

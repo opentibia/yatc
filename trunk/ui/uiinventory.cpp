@@ -1,5 +1,5 @@
 #include <sstream>
-#include "inventory.h"
+#include "uiinventory.h"
 #include "../gm_gameworld.h"
 #include "../gamecontent/enums.h"
 #include "../gamecontent/item.h"

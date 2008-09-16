@@ -104,7 +104,7 @@ void SpriteGL::buildGLTexture() {
 
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &m_texture);
-	printf("Putting %s[%d] into %d.\n", m_filename.c_str(), m_index, m_texture);
+	//printf("Putting %s[%d] into %d.\n", m_filename.c_str(), m_index, m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -182,7 +182,7 @@ void SpriteGL::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body
 void SpriteGL::destroyGLTexture()
 {
     if(m_texture != GL_INVALID_VALUE){
-        printf("Destroying texture %d.\n", m_texture);
+        //printf("Destroying texture %d.\n", m_texture);
 		glDeleteTextures(1, &m_texture);
 	}
 }

@@ -49,10 +49,6 @@ class EngineGL : public Engine
         bool hasGL() const { return true; }
 	protected:
 
-		static void font_render(const char* txt, const void* font, float x, float y);
-		static void font_drawchar(char t, Sprite* img, int x1, int y1);
-		static float font_size(const char* txt, const void* font);
-
 		void initEngine();
 };
 
