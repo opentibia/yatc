@@ -263,8 +263,8 @@ void CreatureUI::loadOutfit()
                 continue;
             }
             else{
-                printf("check i + m_obj->height * m_obj->width < m_obj->numsprites\n");
-                printf(" -II-            %d                    <      %d \n", i + m_obj->height * m_obj->width, m_obj->numsprites);
+                //printf("check i + m_obj->height * m_obj->width < m_obj->numsprites\n");
+                //printf(" -II-            %d                    <      %d \n", i + m_obj->height * m_obj->width, m_obj->numsprites);
             	ASSERT(i + m_obj->height * m_obj->width < m_obj->numsprites);
             	ASSERT(m_obj->imageData)
 
@@ -288,6 +288,10 @@ void CreatureUI::loadOutfit()
 
 bool CreatureUI::isLoaded() const {
     if (!m_gfx.size()) {
+        if (!m_obj) {
+            printf("No object, need to reload gfx\n");
+            return false;
+        }
         if (m_obj->numsprites > 0) {
             printf("Need to reload gfx\n");
             return false;
@@ -315,7 +319,10 @@ void CreatureUI::setupObject() {
         else{
             m_obj = Objects::getInstance()->getOutfitType(outfit.m_looktype);
         }
-
+        if (!m_obj) {
+            printf("Could not load outfit of type %d\n", outfit.m_looktype);
+            return;
+        }
         if (!m_obj->isGfxLoaded()) {
             printf("(Need to load gfx first)\n");
             m_obj->loadGfx();
