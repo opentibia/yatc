@@ -36,8 +36,8 @@
 #include "console.h"
 #include "gamecontent/inventory.h"
 #include "util.h"
+#include "popup.h"
 
-#include "ui/container.h"
 #include "ui/tutorialhints.h"
 
 #ifdef _MSC_VER
@@ -48,6 +48,8 @@ extern Connection* g_connection;
 extern uint32_t g_frameTime;
 
 void resetDefaultCursor();
+
+void tmp(){((GM_Gameworld*)g_game)->msgBox("You made a choice", "Wat?");}
 
 
 void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
@@ -105,6 +107,8 @@ GM_Gameworld::GM_Gameworld()
     m_draggingInv = SLOT_NONE;
     m_draggingCtrId = m_draggingCtrSlot = -1;
     m_dragThing = false;
+
+    m_popup = NULL;
 
 	doResize(glictGlobals.w, glictGlobals.h);
 
@@ -167,7 +171,6 @@ void GM_Gameworld::doResize(float w, float h)
 }
 
 
-
 void GM_Gameworld::updateScene()
 {
 	// TODO (ivucica#2#) test on edge of map
@@ -201,7 +204,6 @@ void GM_Gameworld::updateScene()
 	}
 	#endif
 
-
 	m_mapui.renderMap();
 
 
@@ -216,9 +218,9 @@ void GM_Gameworld::updateScene()
 		rxbph = (g_connection->getRecv() * 3600. / (time(NULL)-m_startTime));
 		trbph = (g_connection->getTraffic() * 3600. / (time(NULL)-m_startTime));
 
-		txs = (txbph < 1024 ? "Bph" : (txbph < 1024*1024 ? "KBph" : "MBph"));
-		rxs = (rxbph < 1024 ? "Bph" : (rxbph < 1024*1024 ? "KBph" : "MBph"));
-		trs = (trbph < 1024 ? "Bph" : (trbph < 1024*1024 ? "KBph" : "MBph"));
+		txs = (txbph < 1024 ? "B/h" : (txbph < 1024*1024 ? "kiB/h" : "MiB/h"));
+		rxs = (rxbph < 1024 ? "B/h" : (rxbph < 1024*1024 ? "kiB/h" : "MiB/h"));
+		trs = (trbph < 1024 ? "B/h" : (trbph < 1024*1024 ? "kiB/h" : "MiB/h"));
 
 		txbph /= (txbph < 1024 ? 1 : (txbph < 1024*1024 ? 1024 : 1024*1024));
 		rxbph /= (rxbph < 1024 ? 1: (rxbph < 1024*1024 ? 1024 : 1024*1024));
@@ -232,8 +234,18 @@ void GM_Gameworld::updateScene()
 		pnlTraffic.SetCaption(s.str());
 	}
 
+    if (m_popup)
+        if (m_popup->wantsDeath()) {
+            desktop.RemoveObject(m_popup->getGlictList());
+            desktop.DelayedRemove();
+            delete m_popup;
+            m_popup = NULL;
+
+        }
+
 	desktop.Paint();
 	g_engine->resetClipping();
+
 }
 
 
@@ -384,6 +396,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
 	desktop.TransformScreenCoords(&pos);
 
+
     if (event.type == SDL_MOUSEMOTION) {
         #if (GLICT_APIREV >= 67)
         desktop.CastEvent(GLICT_MOUSEMOVE, &pos, 0);
@@ -409,8 +422,28 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
             }
         }
-    } else {
+        if (m_popup) {
+            m_popup->mouseOver(pos.x,pos.y);
+        }
+    } else if (event.button.button == SDL_BUTTON_LEFT) {
+        if (m_popup) { // handle popup menu before attempting anything else
+            if (event.button.state == SDL_PRESSED){
+                if (m_popup->getGlictList()->CastEvent(GLICT_MOUSEDOWN, &pos, 0, NULL)){ // if event got handled by glict
+                    // ignore
+                } else {
+                    // it has to die anyways
+                    m_popup->wantsDeath();
+                }
+            } else  {// released
+                if (m_popup->getGlictList()->CastEvent(GLICT_MOUSEUP, &pos, 0, NULL)){ // if event got handled by glict
+                    // ignore
+                } else {
+                    // it has to die anyways
+                    m_popup->wantsDeath();
+                }
 
+            }
+        } else
         if (event.button.state == SDL_PRESSED){
             if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
                 // just ignore
@@ -493,12 +526,30 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                     printf("Released from drag\n");
 
                 }
+                dismissDrag();
                 m_draggingPrep = false;
             }
         } else {
-            printf("unknown event\n");
+            printf("unknown event - %d\n", event.button.state);
         }
 
+    } else if (event.button.button == SDL_BUTTON_RIGHT) {
+        if (event.button.state == SDL_PRESSED){
+
+            // just ignore
+
+        } else
+        if (event.button.state == SDL_RELEASED) {
+            if (!m_popup) {
+                m_popup = new Popup();
+                desktop.AddObject(m_popup->getGlictList());
+                m_popup->addItem("Test", tmp);
+                m_popup->addItem("Test 123", tmp);
+                m_popup->getGlictList()->SetPos(pos);
+            } else {
+                m_popup->prepareToDie();
+            }
+        }
     }
 
 	// Scene();

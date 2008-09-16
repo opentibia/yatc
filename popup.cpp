@@ -1,5 +1,6 @@
 #include "popup.h"
 Popup::Popup() {
+    wantdeath = false;
 }
 Popup::~Popup() {
     for (std::vector<PopupItem*>::iterator it = items.begin(); it != items.end(); it++) {
@@ -20,6 +21,7 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb) {
     pi->pnl.SetFont("aafont");
     pi->pnl.SetFocusable(false);
     pi->pnl.SetBGColor(.4, .4, .4, 1.);
+    pi->parent = this;
     items.push_back(pi);
     list.AddObject(&pi->pnl);
 
@@ -27,12 +29,15 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb) {
     list.SetWidth(150);
     list.SetBGColor(.1, .1, .1,1);
 
+
+
 }
 
 void Popup::onClick(glictPos* pos, glictContainer *caller) {
     PopupItem* pi = (PopupItem*)caller->GetCustomData();
     if (pi->cb)
         pi->cb();
+    pi->parent->prepareToDie();
 }
 
 void Popup::mouseOver(float x, float y) {
@@ -41,13 +46,18 @@ void Popup::mouseOver(float x, float y) {
 
         pi->pnl.SetBGActiveness(false);
     }
-    printf("Deactivated all\n");
-    printf("Now at %g %g\n", x,y);
-    if (x >= list.GetX() && x < list.GetX() + list.GetWidth() && y >= list.GetY() && y < list.GetY() + list.GetHeight()) {
+    if (cursorInside(x,y)) {
         y -= list.GetY();
         y /= 12;
-        items[y]->pnl.SetBGActiveness(true);
-        printf("Activating %g\n", y);
+        if (y < items.size())
+            items[y]->pnl.SetBGActiveness(true);
+        else
+            printf("Warning: popup trid to highligh nonexisting listitem\n");
     }
+
+}
+
+bool Popup::cursorInside(float x, float y) {
+    return (x >= list.GetX() && x < list.GetX() + list.GetWidth() && y >= list.GetY() && y < list.GetY() + list.GetHeight());
 
 }

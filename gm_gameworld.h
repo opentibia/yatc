@@ -31,10 +31,9 @@
 #include "ui/itemmove.h"
 
 class Console;
-
-
-
 class Tile;
+class ProtocolGame;
+class Popup;
 
 class GM_Gameworld : public GameMode {
 public:
@@ -138,12 +137,15 @@ private:
     slots_t m_draggingInv;
     uint32_t m_draggingCtrId, m_draggingCtrSlot;
 
-	class ProtocolGame* m_protocol;
+	ProtocolGame* m_protocol;
 	friend class pnlInventory_t;
 	friend class winContainer_t;
 	friend class winItemMove_t;
 
 	MapUI m_mapui;
+
+    Popup* m_popup;
+
 };
 
 #endif
