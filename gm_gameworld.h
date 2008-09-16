@@ -24,10 +24,10 @@
 #include "gamemode.h"
 #include "sprite.h"
 #include "mapui.h"
-#include "ui/inventory.h"
+#include "ui/uiinventory.h"
 #include "ui/skills.h"
 #include "ui/health.h"
-#include "ui/container.h"
+#include "ui/uicontainer.h"
 #include "ui/itemmove.h"
 
 class Console;

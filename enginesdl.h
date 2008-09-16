@@ -55,9 +55,6 @@ class EngineSDL : public Engine
 
 	protected:
 
-		static void font_render(const char* txt, const void* font, float x, float y);
-		static void font_drawchar(char t, SpriteSDL* img, int x1, int y1);
-		static float font_size(const char* txt, const void* font);
 		static void clipper_func(float left, float right, float top, float bottom);
 };
 

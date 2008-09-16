@@ -36,9 +36,6 @@ void MapUI::renderMap() {
 
 	// FIXME (ivucica#2#) make renderMap use m_x,m_y and m_w,m_h
 
-
-
-
     g_engine->setClipping(64,64,15*32,11*32);
 
 	// set up scale

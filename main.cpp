@@ -294,7 +294,6 @@ int main(int argc, char *argv[])
 	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " passed\n");
 
 	options.Load();
-	if (!options.maxfps) options.maxfps = 30;
 	MAXFPS = options.maxfps;
 
 
@@ -323,6 +322,7 @@ int main(int argc, char *argv[])
 	SDL_EnableUNICODE(1);
 
 	try{
+	    g_engine = NULL; // set to null, in case anything that happens inside engine constructor wants to know we're just constructing
 		switch(options.engine){
 			#ifdef USE_OPENGL
 			case ENGINE_OPENGL:
@@ -341,6 +341,7 @@ int main(int argc, char *argv[])
 		if(!g_engine->isSupported()){
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "The selected graphics engine is not supported. Falling back to SDL.");
 			delete g_engine;
+			g_engine = NULL; // set to null, in case anything that happens inside engine constructor wants to know we're just constructing
 			options.engine = ENGINE_SDL;
 			g_engine = new EngineSDL;
 		}
@@ -414,11 +415,14 @@ int main(int argc, char *argv[])
 			g_frameTime = SDL_GetTicks();
 
 
-            if(g_frameTime - beginticks < 1000/MAXFPS - 10){
-                SDL_Delay(1000/MAXFPS - (g_frameTime - beginticks) - 10);
+            if (MAXFPS) {
+                if(g_frameTime - beginticks < 1000/MAXFPS - 10){
+                    SDL_Delay(1000/MAXFPS - (g_frameTime - beginticks) - 10);
+                }
+                while ((int)abs(((int)SDL_GetTicks()) - (int)beginticks) < (int)(1000/MAXFPS));
             }
 
-            while ((int)abs(((int)SDL_GetTicks()) - (int)beginticks) < (int)(1000/MAXFPS));
+
 
 			//check connection
 			if(g_connection){

@@ -31,6 +31,10 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 
 	pic = spr;
+	m_filename = fn;
+	m_index = index;
+	m_currentcolorized = pic;
+	m_currentcolor = 0x00FFFFFF;
 
 	// to start with something, we'll presume we're loading all from .pic file ...
 
@@ -196,17 +200,37 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			break;
 	}
 }
+Font::~Font() {
+    delete pic;
+    for(FontColorizedsMap::iterator it = m_colorized.begin(); it != m_colorized.end(); it++) {
+        delete it->second;
+    }
+}
 
 void Font::addColor(float r, float g, float b)
 {
-    // FIXME (ivucica#2#) this is a highly unoptimized way of coloring fonts.
-    //printf("%s\n", __PRETTY_FUNCTION__);
-    if (!this) {printf("NO THIS\n");return;}
-    if (!pic) {printf("NO PIC\n");return;}
-	pic->addColor(r,g,b);
+    m_currentcolor = (int(r*255) << 16 | int(g*255) << 8 | int(b*255));
+
+    if (m_currentcolor == 0x00FFFFFF) { // if we try to fetch white, this is the original color, so fall back to it and do nothing more
+        m_currentcolorized = pic;
+        return;
+    }
+
+    FontColorizedsMap::iterator it;
+    if ((it = m_colorized.find(m_currentcolor)) != m_colorized.end()) { // if we found it cached, go on
+        m_currentcolorized = it->second;
+        return;
+    }
+    if (g_engine) {
+        Sprite *s = g_engine->createSprite(m_filename, m_index);
+
+        s->addColor(r,g,b);
+
+        m_colorized[m_currentcolor] = s;
+    }
 }
 
 void Font::resetColor()
 {
-	pic->resetColor();
+	addColor(1,1,1); // setting it to white effectively resets the color
 }
