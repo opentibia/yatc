@@ -32,6 +32,7 @@ struct PopupItem {
 
     glictPanel pnl;
     popupCallback_t cb;
+    class Popup* parent;
 };
 
 class Popup {
@@ -45,9 +46,14 @@ public:
 
     glictList* getGlictList() { return &list; }
 
+    void prepareToDie() { wantdeath = true; }
+    bool wantsDeath() const { return wantdeath; }
+    bool cursorInside(float x, float y);
+
 private:
     glictList list;
     std::vector<PopupItem*> items;
+    bool wantdeath;
 };
 
 #endif
