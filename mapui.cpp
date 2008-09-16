@@ -39,7 +39,7 @@ void MapUI::renderMap() {
 
 
 
-    //g_engine->setClipping(64,64,14*32,10*32);
+    g_engine->setClipping(64,64,15*32,11*32);
 
 	// set up scale
 	float scale = 1.f;
