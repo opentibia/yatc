@@ -209,6 +209,10 @@ Font::~Font() {
 
 void Font::addColor(float r, float g, float b)
 {
+    // THIS NEEDS TO BE CORRECTED!
+    // This is only needed under SDL engine.
+    // Under OpenGL engine we should do the old method (just plain pic->addColor())
+    // Under GL it creates unneeded duplicate textures which serve no useful purpose.
     m_currentcolor = (int(r*255) << 16 | int(g*255) << 8 | int(b*255));
 
     if (m_currentcolor == 0x00FFFFFF) { // if we try to fetch white, this is the original color, so fall back to it and do nothing more
