@@ -13,6 +13,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-pg" />
 					<Add option="-g3" />
 					<Add option="-DUSEASSERT" />
 					<Add option="-DUSE_OPENGL" />
@@ -21,6 +22,7 @@
 					<Add option="-D_GLIBCXX_DEBUG_PEDANTIC" />
 				</Compiler>
 				<Linker>
+					<Add option="-pg" />
 					<Add library="GL" />
 					<Add library="GLU" />
 					<Add library="SDL" />
@@ -35,7 +37,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-O3" />
 					<Add option="-DUSE_OPENGL" />
 				</Compiler>
 				<Linker>
@@ -177,6 +179,7 @@
 			<Add alias="All" targets="Debug Unix;Release Unix;Debug Windows;Release Windows;" />
 		</VirtualTargets>
 		<Compiler>
+			<Add option="-fexpensive-optimizations" />
 			<Add option="-Wall" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
 			<Add option="-DHAVE_GMP_H=1" />
@@ -325,9 +328,7 @@
 		<Unit filename="thingui.cpp" />
 		<Unit filename="thingui.h" />
 		<Unit filename="ui/charlist.h" />
-		<Unit filename="ui/container.h" />
 		<Unit filename="ui/health.h" />
-		<Unit filename="ui/inventory.h" />
 		<Unit filename="ui/itemmove.h" />
 		<Unit filename="ui/login.h" />
 		<Unit filename="ui/mainmenu.h" />
@@ -344,7 +345,9 @@
 		<Unit filename="ui/tutorialhints.cpp" />
 		<Unit filename="ui/tutorialhints.h" />
 		<Unit filename="ui/uicontainer.cpp" />
+		<Unit filename="ui/uicontainer.h" />
 		<Unit filename="ui/uiinventory.cpp" />
+		<Unit filename="ui/uiinventory.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Unit filename="yatc.cfg" />
