@@ -340,7 +340,6 @@
 		<Unit filename="ui/optionshotkeys.h" />
 		<Unit filename="ui/optionsnetwork.h" />
 		<Unit filename="ui/optionsui.cpp" />
-		<Unit filename="ui/shop.h" />
 		<Unit filename="ui/skills.h" />
 		<Unit filename="ui/tutorialhints.cpp" />
 		<Unit filename="ui/tutorialhints.h" />
@@ -348,6 +347,8 @@
 		<Unit filename="ui/uicontainer.h" />
 		<Unit filename="ui/uiinventory.cpp" />
 		<Unit filename="ui/uiinventory.h" />
+		<Unit filename="ui/uishop.cpp" />
+		<Unit filename="ui/uishop.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Unit filename="yatc.cfg" />
