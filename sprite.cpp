@@ -201,7 +201,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 
 		if (index < 1) {
-			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Invalid index %d\n", index);
+			if (index) DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Invalid index %d\n", index);
 			fclose(f);
 			goto loadFail;
 		}

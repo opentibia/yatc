@@ -29,6 +29,7 @@
 #include "ui/health.h"
 #include "ui/uicontainer.h"
 #include "ui/itemmove.h"
+#include "ui/uishop.h"
 
 class Console;
 class Tile;
@@ -61,9 +62,13 @@ public:
 	void onCreatureMove(uint32_t id);
 	void onChangeSkills();
 	void onChangeStats();
+	void onUpdatePlayerCash(uint32_t newcash);
     void openContainer(uint32_t cid);
     void closeContainer(uint32_t cid);
+    void openShopWindow(const std::list<ShopItem>& itemlist);
+    void closeShopWindow();
     void showTutorial(uint8_t id);
+
 
 	bool isDragging() const {return m_dragging;}
 	void dismissDrag() { if (m_dragging) SDL_SetCursor(g_engine->m_cursorBasic); m_dragging = false; m_draggingPrep = false; }
@@ -104,6 +109,7 @@ private:
 	pnlInventory_t pnlInventory;
 	pnlHealth_t pnlHealth;
 	winSkills_t winSkills;
+	winShop_t winShop;
 	glictPanel pnlTraffic;
 	glictTextbox txtConsoleEntry;
 	std::vector<glictPanel*> pnlConsoleButtons;
@@ -141,6 +147,7 @@ private:
 	friend class pnlInventory_t;
 	friend class winContainer_t;
 	friend class winItemMove_t;
+	friend class winShop_t;
 
 	MapUI m_mapui;
 

@@ -230,13 +230,17 @@ void Notifications::closeContainer(int cid)
 //open/close shop
 void Notifications::openShopWindow(const std::list<ShopItem>& itemlist)
 {
-	//g_game->openShop(itemlist);
+	g_game->openShopWindow(itemlist);
 }
 void Notifications::closeShopWindow()
 {
-	//g_game->closeShop();
+	g_game->closeShopWindow();
 }
 
+// when we receive player cash, we may need to update shop window
+void Notifications::onUpdatePlayerCash(uint32_t newcash) {
+    g_game->onUpdatePlayerCash(newcash);
+}
 //tutorials
 void Notifications::showTutorial(uint8_t tutorialId)
 {
