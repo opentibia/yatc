@@ -427,7 +427,7 @@ void Connection::executeNetwork()
 #else
 			// Since Windows Mobile 2003 (WINCE4.20) seems to set 120 in WSAGetLastError() which stands for something
 			// like CALLNOTIMPLEMENTED we'll just stub this to successful connection and pray it works ;)
-			DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "WINCE Connection\n");
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "WINCE Connection\n");
 			m_state = STATE_CONNECTED;
 			m_protocol->onConnect();
 #endif

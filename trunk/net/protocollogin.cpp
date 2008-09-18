@@ -43,7 +43,7 @@ void ProtocolLogin::onConnect()
 	output.addU32(config.getPicSignature());
 
 
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Logging on with version: %d dat: %08x spr: %08x pic: %08x\n", config.getVersionOverride() ? config.getVersionOverride() : config.getClientVersion(), config.getDatSignature(), config.getSprSignature(), config.getPicSignature());
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Logging on with version: %d dat: %08x spr: %08x pic: %08x\n", config.getVersionOverride() ? config.getVersionOverride() : config.getClientVersion(), config.getDatSignature(), config.getSprSignature(), config.getPicSignature());
 
 
 	int sizeBefore = output.getSize();
@@ -86,7 +86,7 @@ bool ProtocolLogin::onRecv(NetworkMessage& msg)
 	while(msg.getReadSize() > 0){
 		MSG_READ_U8(cmd);
 		addServerCmd(cmd);
-		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Received packet 0x%02x\n", cmd);
+		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Received packet 0x%02x\n", cmd);
 		switch(cmd){
 		case 0x0A: //Error message
 		{

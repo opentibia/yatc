@@ -44,6 +44,7 @@
 #include "sprdata.h"
 #include <math.h>
 #include "gamecontent/creature.h"
+#include "product.h"
 
 #pragma pack(1)
 typedef struct {
@@ -176,11 +177,10 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		}
 	#endif
 
-
 	if(extension == "bmp"){
 		m_image = SDL_LoadBMP(filename.c_str());
 		if(!m_image){
-			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] SDL_LoadBMP file: %s\n", filename.c_str());
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] SDL_LoadBMP failed on file: %s\n", filename.c_str());
 			return;
 		}
 		#ifdef USE_OPENGL
@@ -193,14 +193,15 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		uint16_t sprcount;
 		uint32_t where;
 
-		FILE *f = fopen(filename.c_str(), "rb");
+		FILE *f = yatc_fopen(filename.c_str(), "rb");
 		if(!f){
-			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY,"[Sprite::loadSurfaceFromFile] Sprite file %s not found\n", filename.c_str());
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR,"[Sprite::loadSurfaceFromFile] Sprite file %s not found\n", filename.c_str());
 			return;
 		}
 
+
 		if (index < 1) {
-			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY,"[Sprite::loadSurfaceFromFile] Invalid index %d\n", index);
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Invalid index %d\n", index);
 			fclose(f);
 			goto loadFail;
 		}
@@ -208,7 +209,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		fread(&signature, sizeof(signature), 1, f);
 		fread(&sprcount, sizeof(sprcount), 1, f);
 		if(index >= sprcount){// i can't do this, captain, there's not enough power
-			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] Loading spr index %d while we have %d sprites in file.\n", index, sprcount);
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Loading spr index %d while we have %d sprites in file.\n", index, sprcount);
 			goto loadFail; // she won't hold it much longer
 		}
 
@@ -219,7 +220,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		// create surface where we'll store data, and fill it with transparency
 		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, rmask, gmask, bmask, amask);
 		if(!m_image){
-			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY,"[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			goto loadFail;
 		}
 
@@ -235,7 +236,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
             fgetc(f); fgetc(f); fgetc(f); // TODO (ivucica#4#) maybe we should figure out what do these do?
             if (readSprData(f, m_image, 0, 0)) {
                 // error happened
-                DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] Problem in readSprData()\n");
+                DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Problem in readSprData()\n");
                 SDL_FreeSurface(m_image);
                 m_image = NULL;
                 fclose(f);
@@ -261,7 +262,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 		f = yatc_fopen(filename.c_str(), "rb");
 		if(!f){
-			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Sprite::loadSurfaceFromFile] Picture file %s not found\n", filename.c_str());
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Picture file %s not found\n", filename.c_str());
 			goto loadFail;
 		}
 
@@ -273,7 +274,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			if(i == index){
 				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, rmask, gmask, bmask, amask);
 				if (!s) {
-					DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Failed to create surface of size %dx%d\n", ph.width*32, ph.height*32);
+					DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "Failed to create surface of size %dx%d\n", ph.width*32, ph.height*32);
 					fclose(f);
 					goto loadFail;
 				}
@@ -504,14 +505,14 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
 	if (w == m_image->w && h == m_image->h)
         return;
 
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Stretching to %g %g\n", w, h);
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Stretching to %g %g\n", w, h);
 #ifndef _MSC_VER
 	m_stretchimage = zoomSurface(img, w/img->w, h/img->h, smooth);
 #else
 	return;
 #endif
 
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "New size: %d %d\n", m_stretchimage->w, m_stretchimage->h);
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "New size: %d %d\n", m_stretchimage->w, m_stretchimage->h);
 
 }
 
@@ -551,8 +552,11 @@ void Sprite::setAsIcon()
 	#ifdef WINCE
 	return; // sdl for wince doesnt uspport runtime icons anyway
 	#endif
-	if(!m_image)
-		NativeGUIError("Issue", "Yes");
+	if(!m_image) {
+	    std::stringstream s;
+	    s << "Did not find source image for setting the icon. Probably " << PRODUCTSHORT << " did not find '" << m_filename << "'.";
+		NativeGUIError(s.str().c_str(), "Error");
+	}
 
 	SDL_WM_SetIcon(m_image, NULL);
 }

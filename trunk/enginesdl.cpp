@@ -30,7 +30,7 @@
 #include "product.h"
 EngineSDL::EngineSDL()
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting SDL engine\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting SDL engine\n");
 
 	m_screen = NULL;
 
@@ -65,7 +65,7 @@ EngineSDL::EngineSDL()
 
 EngineSDL::~EngineSDL()
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Closing SDL engine\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Closing SDL engine\n");
 	delete (Font*)m_sysfont->GetFontParam();
 	delete (Font*)m_minifont->GetFontParam();
 	delete (Font*)m_aafont->GetFontParam();

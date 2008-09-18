@@ -67,7 +67,7 @@ void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
 
 GM_Gameworld::GM_Gameworld()
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting gameworld...\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting gameworld...\n");
 
 	m_protocol = (ProtocolGame*)g_connection->getProtocol();
 
@@ -119,19 +119,19 @@ GM_Gameworld::GM_Gameworld()
 
 GM_Gameworld::~GM_Gameworld ()
 {
-    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection from gameworld...\n");
+    DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Terminating protocol connection from gameworld...\n");
 	delete g_connection;
 	g_connection = NULL;
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Destroying map...\n");
 	Map::getInstance().clear();
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying creature cache...\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Destroying creature cache...\n");
 	Creatures::getInstance().clear();
 	Creatures::destroyInstance();
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying inventory...\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Destroying inventory...\n");
 	Inventory::getInstance().clear();
 
 
-    DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Unloading data...\n");
+    DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Unloading data...\n");
 	Objects::getInstance()->unloadDat();
 	Objects::destroyInstance();
 
@@ -341,17 +341,17 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		break;
 
     case SDLK_ESCAPE:
-    	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Terminating protocol connection from gameworld by esc...\n");
+    	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Terminating protocol connection from gameworld by esc...\n");
         delete g_connection;
         g_connection = NULL;
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying map...\n");
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Destroying map...\n");
         Map::getInstance().clear();
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying creature cache...\n");
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Destroying creature cache...\n");
         Creatures::getInstance().clear();
         Creatures::destroyInstance();
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Destroying inventory...\n");
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Destroying inventory...\n");
         Inventory::getInstance().clear();
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Switch to main menu\n");
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Switch to main menu\n");
         delete g_game;
         g_game = new GM_MainMenu;
         return;
@@ -852,7 +852,7 @@ void GM_Gameworld::msgBox (const char* mbox, const char* title, glictContainer* 
 	mb->SetCaption(title);
 	mb->SetMessage(mbox);
 
-	mb->SetHeight(glictFontNumberOfLines(mbox)*14 + 35);
+	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35);
 	int size1 = (int)glictFontSize(title, "system");
 	int size2 = (int)glictFontSize(mbox, "system");
 	mb->SetWidth(MAX(size1, size2));

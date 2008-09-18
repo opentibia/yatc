@@ -4,11 +4,15 @@
 #include <GLICT/panel.h>
 #include <GLICT/button.h>
 #include <GLICT/textbox.h>
+#include <sstream>
 
 #include "../options.h"
 #include "options.h"
 #include "../gamemode.h"
+#include "../product.h"
 
+
+extern unsigned int MAXFPS;
 
 void winOptions_t::initiateAll(glictContainer* desktop)
 {
@@ -72,9 +76,30 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 	winOptionsGraphicsAdvanced.btnOk.SetOnClick(winOptions_t::winOptionsGraphicsAdvanced_btnOk_OnClick);
 	winOptionsGraphicsAdvanced.btnCancel.SetOnClick(winOptions_t::winOptionsGraphicsAdvanced_btnCancel_OnClick);
 	winOptionsGraphicsAdvanced.btnHelp.SetOnClick(winOptions_t::btnHelp_OnClick);
+	std::stringstream s;
+	unsigned char b = 149; // bullet
+	s <<"We offer two graphical engines:\n" <<
+        b << "SDL 1.2 is a 2D software rendering library. It should be\n"
+        "  slowest, but since it is the most maintained engine, it runs\n"
+        "  at reasonable speed and even faster than OpenGL engine, with\n"
+        "  fewer glitches. That can, of course, change anytime.\n" <<
+        b << "OpenGL is a 3D hardware-accelerated graphical library.\n"
+        "  To make use of it, make sure you have latest graphic card\n"
+        "  drivers. Those provided by Microsoft will be insufficient.\n"
+        "  Due to SDL-centric design, OpenGL was not given much thought\n"
+        "  and is currently not recommended since it will be much slower\n"
+        "  on most laptops and perhaps on many desktops.\n"
+        "RECOMMENDED: Choose SDL. But, try what works better for you.\n"
+        "\n"
+        "To apply graphical engine change, you need to restart\n"
+        << PRODUCTSHORT << ".\n"
+        "\n"
+        "To choose maximum FPS (reducing the CPU and graphics card usage\n"
+        "resulting in less power usage, quieter operation and reduced\n"
+        "CPU temperature) use the scrollbar below. Note, though, FPS \n"
+        "limiting is only approximate.";
 	winOptionsGraphicsAdvanced.btnHelp.SetCustomData(new std::string(
-		// TODO (nfries88)
-		"TODO"
+		s.str()
 		));
 
 	/* ***************** OPTIONS/HOTKEYS ******************** */
@@ -267,6 +292,8 @@ void winOptions_t::winOptionsGraphicsAdvanced_btnOk_OnClick(glictPos* relmousepo
     if (winOptions->winOptionsGraphicsAdvanced.activeEngine != winOptions->winOptionsGraphicsAdvanced.activeEngineOriginal)
         g_game->msgBox("Restart is required to apply engine change.", "Engine change");
 	#endif
+	MAXFPS=options.maxfps;
+	options.Save();
 	winOptions->winOptionsGraphicsAdvanced.window.SetVisible(false);
 
 }
@@ -274,6 +301,8 @@ void winOptions_t::winOptionsGraphicsAdvanced_btnOk_OnClick(glictPos* relmousepo
 void winOptions_t::winOptionsGraphicsAdvanced_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	winOptions_t* winOptions = g_game->getOptionsWindow();
+	options.maxfps=MAXFPS;
+	options.Save();
 	winOptions->winOptionsGraphics.window.SetVisible(true);
 	winOptions->winOptionsGraphics.window.Focus(NULL);
 	winOptions->winOptionsGraphicsAdvanced.window.SetVisible(false);

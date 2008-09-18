@@ -55,7 +55,7 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 	while(!msg.eof()){
 		MSG_READ_U8(cmd);
 		addServerCmd(cmd);
-		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Received packet 0x%02x\n", cmd);
+		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Received packet 0x%02x\n", cmd);
 		// TODO (nfries88): move switch statement to a virtual function for simpler expansion
 		switch(cmd){
 		case 0x0A: //Self appear
