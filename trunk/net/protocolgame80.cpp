@@ -117,6 +117,11 @@ bool ProtocolGame80::onRecv(NetworkMessage& msg)
 			Notifications::openRelogin();
 			break;
 		}
+		case 0x32: //Can report bugs
+		{
+		    MSG_READ_U8(reportBugs);
+		    break;
+		}
 		case 0x64: //Map description
 		{
 			MSG_READ_POSITION(currentPos);

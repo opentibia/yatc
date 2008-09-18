@@ -119,11 +119,16 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			sendPing();
 			break;
 		}
-		case 0x28: //Relogin window
+		case 0x28: //Relogin window -- this happens when you die
 		{
 			//no data
 			Notifications::openRelogin();
 			break;
+		}
+		case 0x32: //Can report bugs
+		{
+		    MSG_READ_U8(reportBugs);
+		    break;
 		}
 		case 0x64: //Map description
 		{
@@ -495,6 +500,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
         {
             MSG_READ_U32(cash);
             GlobalVariables::setPlayerCash(cash);
+            Notifications::onUpdatePlayerCash(cash);
             break;
         }
         case 0x7C: // close shop opened with 0x7A

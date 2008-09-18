@@ -72,6 +72,7 @@ class Notifications{
 		static void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
 			const std::string& message);
 		static void onCreatureMove(uint32_t id);
+		static void onUpdatePlayerCash(uint32_t newcash);
 
 		//**** Open/Close inGame windows ****
 		//open item text window

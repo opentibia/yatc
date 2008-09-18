@@ -142,14 +142,14 @@ public:
 	btnUseTarget.SetPos(181, 290);
 	btnUseTarget.SetHeight(20);
 	btnUseTarget.SetWidth(86);
-	btnUseTarget.SetCaption("Use on yourself");
+	btnUseTarget.SetCaption("Use on target");
 	btnUseTarget.SetOnClick(&winOptionsHotkeys_t::onObjUse_Target);
 	btnUseTarget.SetFont("minifont", 8);
 	window.AddObject(&btnUseCrosshair);
 	btnUseCrosshair.SetPos(181, 324);
 	btnUseCrosshair.SetHeight(20);
 	btnUseCrosshair.SetWidth(86);
-	btnUseCrosshair.SetCaption("Use on yourself");
+	btnUseCrosshair.SetCaption("Use on crosshair");
 	btnUseCrosshair.SetOnClick(&winOptionsHotkeys_t::onObjUse_Crosshair);
 	btnUseCrosshair.SetFont("minifont", 8);
 

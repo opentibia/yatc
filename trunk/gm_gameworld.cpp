@@ -78,6 +78,9 @@ GM_Gameworld::GM_Gameworld()
 	winSkills.window.SetPos(600, 180);
 	desktop.AddObject(&pnlHealth.panel);
 	pnlHealth.panel.SetPos(600, 350);
+	desktop.AddObject(&winShop.window);
+	winShop.window.SetPos(600,450);
+	winShop.window.SetVisible(false);
 
 	#endif
 	desktop.AddObject(&pnlTraffic);
@@ -772,9 +775,21 @@ void GM_Gameworld::closeContainer(uint32_t cid)
 	if(window)
 	{
 		desktop.RemoveObject(&window->window);
+		desktop.DelayedRemove();
 		containers.erase(it);
 		delete window;
 	}
+}
+
+void GM_Gameworld::openShopWindow(const std::list<ShopItem>& itemlist) {
+    winShop.window.SetVisible(true);
+    winShop.generateList(itemlist);
+}
+void GM_Gameworld::closeShopWindow() {
+}
+
+void GM_Gameworld::onUpdatePlayerCash(uint32_t newcash) {
+    printf("New cash: %d\n", newcash);
 }
 
 void GM_Gameworld::setDragInv(slots_t slotid) {

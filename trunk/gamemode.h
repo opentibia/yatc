@@ -35,6 +35,7 @@ class winOptions_t;
 class glictContainer;
 
 class Position;
+class ShopItem;
 class GameMode
 {
 protected:
@@ -70,6 +71,7 @@ public:
 	//SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
 	virtual void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
 		const std::string& message) {}
+    virtual void onUpdatePlayerCash(uint32_t newcash) {}
 
 	virtual void onCreatureMove(uint32_t id) {}
 
@@ -79,7 +81,12 @@ public:
 	virtual void openContainer(uint32_t cid) {};
     virtual void closeContainer(uint32_t cid) {};
 
+    virtual void openShopWindow(const std::list<ShopItem>& itemlist) {}
+    virtual void closeShopWindow() {}
+
     virtual void showTutorial(uint8_t id) {}
+
+
 };
 
 extern GameMode* g_game;

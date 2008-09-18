@@ -153,7 +153,7 @@ public:
 		res->SetTextOffset(4,2);
 		#endif
 
-		lsiChars.insert(lsiChars.end(), res);
+		lsiChars.push_back(res);
 		lstChars.AddObject(res);
 
 		if (lsiChars.size() == 1) {
