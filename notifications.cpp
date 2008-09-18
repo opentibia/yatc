@@ -61,59 +61,59 @@ void Notifications::onProtocolError(bool fatal)
 {
 	Protocol* protocol = g_connection->getProtocol();
 	std::string error = protocol->getErrorDesc();
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "\n********************************************************\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "\n********************************************************\n");
 	if(fatal){
-		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "PROTOCOL ERROR: %s\n", error.c_str());
+		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "PROTOCOL ERROR: %s\n", error.c_str());
 	}
 	else{
-		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "PROTOCOL WARNING: %s\n", error.c_str());
+		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "PROTOCOL WARNING: %s\n", error.c_str());
 	}
 	const std::list<uint8_t>& serverCmd = protocol->getLastServerCmd();
 	std::list<uint8_t>::const_iterator it;
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Last received cmd: ");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Last received cmd: ");
 	for(it = serverCmd.begin(); it != serverCmd.end(); ++it){
-		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%02x ", *it);
+		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "%02x ", *it);
 	}
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "\n");
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Total Received: %d\n", protocol->getCurrentMsgN());
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Total Received: %d\n", protocol->getCurrentMsgN());
 	const NetworkMessage* msg = protocol->getCurrentMsg();
 	if(msg){
 		const unsigned char* buffer = (const unsigned char*)msg->getBuffer();
 		if(buffer){
 			int32_t msgRealSize = msg->getSize() - msg->getStart();
-			DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Last received msg: (%x/%x)\n", (int)((long)msg->getReadBuffer() - (long)msg->getBuffer()), msgRealSize);
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Last received msg: (%x/%x)\n", (int)((long)msg->getReadBuffer() - (long)msg->getBuffer()), msgRealSize);
 			#define LINE_SIZE 16
 			for(int32_t i = 0; i < msgRealSize; i += LINE_SIZE){
 				int32_t pos = i;
-				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%04x : ", i);
+				DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "%04x : ", i);
 				for(int32_t j = 0; j < LINE_SIZE; ++j, ++pos){
 					if(pos < msgRealSize){
-						DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%02x ", buffer[pos]);
+						DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "%02x ", buffer[pos]);
 					}
 					else{
-						DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "   ");
+						DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "   ");
 					}
 				}
-				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "; ");
+				DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "; ");
 				pos = i;
 				for(uint32_t j = 0; j < LINE_SIZE; ++j, ++pos){
 					if(pos < msgRealSize){
 						if(buffer[pos] >= 32 && buffer[pos] < 127){
-							DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%c", buffer[pos]);
+							DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "%c", buffer[pos]);
 						}
 						else{
-							DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, ".");
+							DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, ".");
 						}
 					}
 					else{
-						DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, " ");
+						DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, " ");
 					}
 				}
-				DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "\n");
+				DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "\n");
 			}
 		}
 	}
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "********************************************************\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "********************************************************\n");
 	{
         std::stringstream s;
         if (fatal)
@@ -162,7 +162,7 @@ void Notifications::openWaitingList(const std::string& message, int time) {
 
 void Notifications::onTextMessage(MessageType_t type, const std::string& message)
 {
-	//DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "%s\n", message.c_str());
+	//DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "%s\n", message.c_str());
 	g_game->onTextMessage(type, message);
 }
 

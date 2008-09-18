@@ -40,7 +40,7 @@ void resetDefaultCursor();
 
 GM_MainMenu::GM_MainMenu()
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting main menu...\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting main menu...\n");
     //resetDefaultCursor();
     SDL_SetCursor(g_engine->m_cursorBasic);
 
@@ -218,7 +218,7 @@ void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* f
 	mb->SetCaption(title);
 	mb->SetMessage(mbox);
 
-	mb->SetHeight(glictFontNumberOfLines(mbox)*14 + 35);
+	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35);
 	int size1 = (int)glictFontSize(title, "system");
 	int size2 = (int)glictFontSize(mbox, "system");
 	mb->SetWidth(MAX(size1, size2));
@@ -242,7 +242,7 @@ void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller)
 		focusOnDismiss->SetVisible(true);
 		focusOnDismiss->Focus(NULL);
 	}
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Repaint.\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Repaint.\n");
 	m->renderScene();
 	//delete caller;
 }
@@ -254,7 +254,7 @@ void GM_MainMenu::pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictConta
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 
     //if (s_alreadyloggedinonce && !options.ui_compat) {
-        //m->msgBox("Sorry, you can't log in twice due to a bug in the client.", "Bug in YATC :(");
+        //m->msgBox("Sorry, you can't log in twice due to a bug in the client.", "Bug in " PRODUCTSHORT " :(");
         //return;
     //}
 	m->winLogin.window.SetVisible(true);
@@ -376,7 +376,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	m->winStatus.SetMessage("Connecting to the server...\n");
 	m->winStatus.SetWidth(320);
 	m->winStatus.SetEnabled(false);
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "SetVisible...\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "SetVisible...\n");
 }
 
 void GM_MainMenu::winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -489,7 +489,7 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 {
 
 	if (options.motdnum == motdnum) {
-		DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Motd numbers matching, not displaying motd.\n");
+		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Motd numbers matching, not displaying motd.\n");
 		desktop.RemoveObject(&winStatus);
 		options.motdtext = text;
 		winMotd_OnDismiss(NULL, NULL);

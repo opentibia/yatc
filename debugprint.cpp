@@ -73,6 +73,10 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 		FILE *lf = yatc_fopen("log.txt", "a");
 		#endif
 
+        if (msgdebuglevel < 0) {
+            printf("<*!*> ");
+        }
+
 		switch (type) {
 			default:
 				printf(tx);

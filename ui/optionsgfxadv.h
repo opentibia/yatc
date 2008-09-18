@@ -78,7 +78,7 @@ public:
 		scbMaxFPS.SetPos(13,229);
 		scbMaxFPS.SetWidth(230);
 		scbMaxFPS.SetHeight(12);
-		scbMaxFPS.SetMin(10);
+		scbMaxFPS.SetMin(0);
 		scbMaxFPS.SetMax(80);
 		scbMaxFPS.SetStep(5);
 		scbMaxFPS.SetValue(options.maxfps);
@@ -91,8 +91,8 @@ public:
 		lblMaxFPS.SetHeight(12);
 		//lblMaxFPS.SetCaption("Adjust framerate limit: XX");
 		ss << "Adjust framerate limit: ";
-		if(options.maxfps >= 80) {
-			ss << "MAX";
+		if(options.maxfps == 0) {
+			ss << "Unlimited";
 		} else {
 			ss << options.maxfps;
 		}
@@ -194,8 +194,8 @@ public:
 		DEBUGPRINT(0, 0, "New FPS: %d\n", options.maxfps);
 
 		ss << "Adjust framerate limit: ";
-		if(options.maxfps >= 80) {
-			ss << "MAX";
+		if(options.maxfps == 0) {
+			ss << "Unlimited";
 		} else {
 			ss << options.maxfps;
 		}

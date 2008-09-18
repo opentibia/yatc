@@ -49,6 +49,14 @@ private:
 	glictSkinner scd;
 	skinImage *shdtl, *shdt, *shdtr, *shdl, *shdc, *shdr, *shdbl, *shdb, *shdbr; // scrollbar dn button, highlighted
 	glictSkinner shd;
+	skinImage *scltl, *sclt, *scltr, *scll, *sclc, *sclr, *sclbl, *sclb, *sclbr; // scrollbar lt button
+	glictSkinner scl;
+	skinImage *shltl, *shlt, *shltr, *shll, *shlc, *shlr, *shlbl, *shlb, *shlbr; // scrollbar lt button, highlighted
+	glictSkinner shl;
+	skinImage *scrtl, *scrt, *scrtr, *scrl, *scrc, *scrr, *scrbl, *scrb, *scrbr; // scrollbar rt button
+	glictSkinner scr;
+	skinImage *shrtl, *shrt, *shrtr, *shrl, *shrc, *shrr, *shrbl, *shrb, *shrbr; // scrollbar rt button, highlighted
+	glictSkinner shr;
 	skinImage *scbtl, *scbt, *scbtr, *scbl, *scbc, *scbr, *scbbl, *scbb, *scbbr; // scrollbar drag button
 	glictSkinner scb;
 	skinImage *scptl, *scpt, *scptr, *scpl, *scpc, *scpr, *scpbl, *scpb, *scpbr; // scrollbar panel bg

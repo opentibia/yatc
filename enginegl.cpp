@@ -33,7 +33,7 @@
 #include "font.h"
 EngineGL::EngineGL()
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Starting OpenGL engine\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting OpenGL engine\n");
 	m_screen = NULL;
 
     SDL_ShowCursor(0);
@@ -68,7 +68,7 @@ EngineGL::EngineGL()
 
 EngineGL::~EngineGL()
 {
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Closing OpenGL engine\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Closing OpenGL engine\n");
 	if (m_screen) {
 		delete (Font*)m_sysfont->GetFontParam();
 		delete (Font*)m_minifont->GetFontParam();

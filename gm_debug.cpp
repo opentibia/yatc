@@ -82,16 +82,16 @@ void GM_Debug::ExitOnClick(glictPos* relmousepos, glictContainer* callerclass)
 void GM_Debug::UpdateOnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Debug *gd = (GM_Debug*)g_game;
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Deleting spr\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Deleting spr\n");
 	delete gd->spr;
-	DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Deleting thing\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Deleting thing\n");
 	delete gd->thing;
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Creating spr\n");
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Creating spr\n");
 
 	gd->spr = g_engine->createSprite("Tibia.spr", atoi(gd->txtSprite.GetCaption().c_str()));
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Creating thing\n");
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Creating thing\n");
 	gd->thing = Item::CreateItem(atoi(gd->txtItem.GetCaption().c_str()), 1);
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "GREATNESS!\n");
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "GREATNESS!\n");
 
 }
 
@@ -150,7 +150,7 @@ GM_Debug::GM_Debug()
 		//background->addColor(.5, 1., 1.);
 	}
 	else{  // i think that if g_engine does not exist, we might as well crash. what do you think, guys? ivucica
-		NativeGUIError("Somehow, engine managed to not initialize.", "YATC Fatal Error");
+		NativeGUIError("Somehow, engine managed to not initialize.", PRODUCTSHORT " Fatal Error");
 		exit(1);
 	}
 }
@@ -203,7 +203,7 @@ void GM_Debug::mouseEvent(SDL_Event& event)
 	desktop.TransformScreenCoords(&pos);
 
     if (event.type != SDL_MOUSEMOTION)
-        DEBUGPRINT(DEBUGPRINT_NORMAL, DEBUGPRINT_LEVEL_OBLIGATORY, "Casting click on %g %g (%d %d)\n", pos.x, pos.y, ptrx, ptry);
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Casting click on %g %g (%d %d)\n", pos.x, pos.y, ptrx, ptry);
 
     bool hadpopup = false;
     if (popup) {
@@ -280,7 +280,7 @@ void GM_Debug::msgBox (const char* mbox, const char* title, glictContainer* focu
 	mb->SetCaption(title);
 	mb->SetMessage(mbox);
 
-	mb->SetHeight(glictFontNumberOfLines(mbox)*14 + 35);
+	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35);
 	int size1 = (int)glictFontSize(title, "system");
 	int size2 = (int)glictFontSize(mbox, "system");
 	mb->SetWidth(MAX(size1, size2));
