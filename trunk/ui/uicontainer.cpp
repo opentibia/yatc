@@ -87,8 +87,16 @@ void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer*
     Position p(0xFFFF, window->containerId | 0x40, slot_id);
     GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
 
+    if (gameclass->isExtendedUsing()) {
+        gameclass->performExtendedUse(p, item, 0);
+    } else
 	if(SDL_GetModState() & KMOD_CTRL && item) {
-		gameclass->m_protocol->sendUseItem(p, item->getID(), slot_id);
+
+	    if (!item->isExtendedUseable()) {
+            gameclass->m_protocol->sendUseItem (p, item->getID(), slot_id);
+        } else {
+            gameclass->beginExtendedUse(item, slot_id, p);
+        }
 	}
 	else if(SDL_GetModState() & KMOD_SHIFT && item) {
 		GM_Gameworld* gameclass = (GM_Gameworld*)g_game;

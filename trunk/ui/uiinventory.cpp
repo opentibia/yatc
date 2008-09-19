@@ -78,8 +78,16 @@ void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
     if(slotid >= 0 && slotid <= 10)
     {
         Item* item = Inventory::getInstance().getItem(slotid);
+
+        if (gameclass->isExtendedUsing()) {
+            gameclass->performExtendedUse(p, item, 0);
+        } else
         if(SDL_GetModState() & KMOD_CTRL && item)
-            gameclass->m_protocol->sendUseItem(p, item->getID(), 0);
+            if (!item->isExtendedUseable()) {
+                gameclass->m_protocol->sendUseItem (p, item->getID(), 0);
+            } else {
+                gameclass->beginExtendedUse(item, 0, p);
+            }
 		else
 		if(SDL_GetModState() & KMOD_SHIFT && item)
             gameclass->m_protocol->sendLookItem(p, item->getID(), 0);

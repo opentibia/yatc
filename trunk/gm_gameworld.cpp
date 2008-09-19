@@ -451,7 +451,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
                 // just ignore
 
-            } else if (m_extendedthing){ // otherwise handle as appropriate
+            } else if (isExtendedUsing()){ // otherwise handle as appropriate
                 printf("Performing extended use\n");
                 const Thing* thing;
                 int x,y,z;
@@ -459,11 +459,8 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 bool isextended;
 
                 m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
-                if (stackpos != -1)
-                    m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
-                                                Position(x,y,z), thing->getID(), stackpos);
-                SDL_SetCursor(g_engine->m_cursorBasic);
-                m_extendedthing = NULL;
+                performExtendedUse(Position(x,y,z), thing, stackpos);
+
             } else if (SDL_GetModState() & KMOD_ALT) {
                 printf("Attacking!\n");
                 const Creature* creature = NULL;
@@ -488,10 +485,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                         printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
                         m_protocol->sendUseItem(Position(x,y,z), thing->getID(), stackpos );
                     } else {
-                        m_extendedthing = thing;
-                        m_extendedstackpos = stackpos;
-                        m_extendedpos = Position(x,y,z);
-                        SDL_SetCursor(g_engine->m_cursorUse);
+                        beginExtendedUse(thing,stackpos,Position(x,y,z));
                     }
                 }
             } else if (SDL_GetModState() & KMOD_SHIFT) {
@@ -557,6 +551,20 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
 	// Scene();
 
+}
+
+void GM_Gameworld::beginExtendedUse(const Thing* thing, int stackpos, const Position& pos) {
+    m_extendedthing = thing;
+    m_extendedstackpos = stackpos;
+    m_extendedpos = pos;
+    SDL_SetCursor(g_engine->m_cursorUse);
+}
+void GM_Gameworld::performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos) {
+    if (deststackpos != -1)
+        m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
+                                    destpos, destthing->getID(), deststackpos);
+    SDL_SetCursor(g_engine->m_cursorBasic);
+    m_extendedthing = NULL;
 }
 
 ////////////// CONNECTION EVENTS //////////////////////
