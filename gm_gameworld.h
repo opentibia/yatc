@@ -69,6 +69,9 @@ public:
     void closeShopWindow();
     void showTutorial(uint8_t id);
 
+    void beginExtendedUse(const Thing* thing, int stackpos, const Position& pos);
+    void performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos);
+    bool isExtendedUsing() const { return (m_extendedthing != NULL); }
 
 	bool isDragging() const {return m_dragging;}
 	void dismissDrag() { if (m_dragging) SDL_SetCursor(g_engine->m_cursorBasic); m_dragging = false; m_draggingPrep = false; }
