@@ -364,13 +364,9 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 			// The server sends a message to open a container when it is moved client-side
 			// In the event of it already being opened, don't remake it
 			// but allow updates.
-			Container* container = Containers::getInstance().getContainer(cid);
-			bool wasOpened = (container != NULL);
-			if(container == NULL) {
-				container = Containers::getInstance().createContainer(cid);
-				if(!container){
-					RAISE_PROTOCOL_ERROR("Open container - !container");
-				}
+			Container* container = Containers::getInstance().createContainer(cid);
+			if(!container){
+				RAISE_PROTOCOL_ERROR("Open container - !container");
 			}
 			container->setName(name);
 			container->setItemId(itemid);
@@ -393,11 +389,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 				}
 			}
 
-			// TODO (nfries88): instead of having this here, move a check for
-			//	previously-opened containers in GM_Gameworld::openContainer
-			if(!wasOpened) {
-				Notifications::openContainer(cid);
-			}
+			Notifications::openContainer(cid);
 			break;
 		}
 		case 0x6F: //close container
@@ -511,10 +503,18 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 		case 0x7D: //safe-trade request - ack
 		case 0x7E: //safe-trade request - no-ack
 		{
+			bool ack = (cmd == 0x7D);
 			MSG_READ_STRING(name);
 			MSG_READ_U8(count);
 
-			Container* container = Containers::getInstance().newTradeContainer();
+			Container* container = NULL;
+			if(ack){
+				Containers::getInstance().newTradeContainerAck();
+			}
+			else{
+				Containers::getInstance().newTradeContainer();
+			}
+
 			if(!container){
 				RAISE_PROTOCOL_ERROR("Trade open - !container");
 			}
@@ -533,7 +533,7 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 				}
 			}
 
-			Notifications::openTradeWindow(cmd == 0x7D);
+			Notifications::openTradeWindow(ack);
 			break;
 		}
 		case 0x7F: //close trade
