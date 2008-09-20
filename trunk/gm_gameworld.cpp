@@ -559,6 +559,7 @@ void GM_Gameworld::beginExtendedUse(const Thing* thing, int stackpos, const Posi
     m_extendedpos = pos;
     SDL_SetCursor(g_engine->m_cursorUse);
 }
+
 void GM_Gameworld::performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos) {
     if (deststackpos != -1)
         m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
