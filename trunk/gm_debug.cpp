@@ -43,6 +43,8 @@ extern Connection* g_connection;
 
 #include "gamecontent/item.h"
 
+#include "product.h"
+
 
 extern bool g_running;
 
