@@ -95,10 +95,14 @@ public:
 	Container* newTradeContainer();
 	void closeTradeContainer();
 	Container* getTradeContainer() { return m_tradeContainer;}
+	// trade requires two containers: one for the trade initator, the other for the trader
+	Container* newTradeContainerAck();
+	Container* getTradeContainerAck() { return m_tradeContainerAck;}
 
 private:
 
 	Container* m_tradeContainer;
+	Container* m_tradeContainerAck;
 	Container* m_containers[MAX_ALLOWED_CONTAINERS];
 
 	Containers();

@@ -32,14 +32,7 @@ class winContainer_t {
 public:
 	winContainer_t(Container* _container, uint32_t cid);
 
-	~winContainer_t() {
-		for(PanelList::iterator it = pnlItems.begin(); it != pnlItems.end(); ++it)
-		{
-			delete (*it);
-		}
-
-		pnlItems.clear();
-	}
+	~winContainer_t();
 
 	inline uint32_t getSlotId(glictContainer* pnl)
 	{
@@ -72,6 +65,12 @@ public:
 
 #if (GLICT_APIREV >= 76)
     glictButton closebtn;
+    glictButton btnCollapse;
+    glictPanel pnlIcon;
+
+    Item* itemIcon;
+
+    static void containerIconOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
 #endif
 
 };

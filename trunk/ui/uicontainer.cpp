@@ -35,13 +35,31 @@ winContainer_t::winContainer_t(Container* _container, uint32_t cid) {
     // support added to glict svn 76+
     // this button needs to be relocated manually
     #if (GLICT_APIREV >= 76)
-    window.AddTitlebarObject(&closebtn);
-    closebtn.SetCaption("X");
-    closebtn.SetWidth(12);
-    closebtn.SetHeight(12);
-    closebtn.SetPos(150 + 10 - 12, 0);
-    closebtn.SetCustomData(this);
-    closebtn.SetOnClick(OnClose);
+	window.AddTitlebarObject(&closebtn);
+	closebtn.SetCaption("x");
+	closebtn.SetWidth(12);
+	closebtn.SetHeight(12);
+	closebtn.SetPos(150 + 10 - 12, 2);
+	closebtn.SetCustomData(this);
+	closebtn.SetOnClick(OnClose);
+
+	window.AddTitlebarObject(&btnCollapse);
+	btnCollapse.SetCaption("-");
+	btnCollapse.SetWidth(12);
+	btnCollapse.SetHeight(12);
+	btnCollapse.SetPos(150 + 10 - 24, 2);
+	btnCollapse.SetCustomData(this);
+	//btnCollapse.SetOnClick(OnCollapse);
+
+	itemIcon = Item::CreateItem(container->getItemId(), 1);
+
+	window.AddTitlebarObject(&pnlIcon);
+	pnlIcon.SetWidth(12);
+	pnlIcon.SetHeight(12);
+	pnlIcon.SetPos(2, 2);
+	pnlIcon.SetCustomData(itemIcon);
+	pnlIcon.SetOnPaint(containerIconOnPaint);
+	pnlIcon.SetBGActiveness(false);
     #else
     #warning For titlebar objects (such as close buttons) to work properly, you need GLICT APIREV 76+
     #endif
@@ -78,6 +96,19 @@ winContainer_t::winContainer_t(Container* _container, uint32_t cid) {
         winpanel.AddObject(panel);
         pnlItems.push_back(panel);
     }
+}
+
+winContainer_t::~winContainer_t()
+{
+	for(PanelList::iterator it = pnlItems.begin(); it != pnlItems.end(); ++it)
+	{
+		delete (*it);
+	}
+
+	pnlItems.clear();
+	#if (GLICT_APIREV >= 76)
+	delete itemIcon;
+	#endif
 }
 
 void winContainer_t::OnClose(glictPos* pos, glictContainer *caller) {
@@ -157,3 +188,8 @@ void winContainer_t::containerItemOnMouseDown(glictPos *relmousepos,
 
 }
 
+void winContainer_t::containerIconOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
+	Item* item = (Item*)caller->GetCustomData();
+	item->Blit((int)real->left, (int)real->top, .33f);
+}

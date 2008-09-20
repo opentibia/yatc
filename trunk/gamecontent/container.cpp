@@ -21,6 +21,8 @@
 #include "container.h"
 #include "item.h"
 
+#include "../notifications.h"
+
 //**********Container**************
 Container::Container()
 {
@@ -143,6 +145,7 @@ Containers::Containers()
 		m_containers[i] = NULL;
 	}
 	m_tradeContainer = NULL;
+	m_tradeContainerAck = NULL;
 }
 
 Containers::~Containers()
@@ -180,6 +183,8 @@ Container* Containers::createContainer(uint32_t id)
 	if(m_containers[id] != NULL){
 		// TODO (mips_act#3#): Handle error...?
 		delete m_containers[id];
+		// NOTE (nfries88): should handle issues with open container in gameworld
+		Notifications::closeContainer(id);
 	}
 	Container* container = new Container(id);
 	m_containers[id] = container;
@@ -202,15 +207,32 @@ Container* Containers::newTradeContainer()
 	if(m_tradeContainer){
 		// TODO (mips_act#3#): Handle error...
 		delete m_tradeContainer;
+		// NOTE (nfries88): should handle issues with open trade in gameworld
+		Notifications::closeTradeWindow();
 	}
 	m_tradeContainer = new Container();
 	return m_tradeContainer;
+}
+
+Container* Containers::newTradeContainerAck()
+{
+	if(m_tradeContainerAck){
+		// TODO (mips_act#3#): Handle error...
+		delete m_tradeContainerAck;
+		// NOTE (nfries88): should handle issues with open trade in gameworld
+		Notifications::closeTradeWindow();
+	}
+	m_tradeContainerAck = new Container();
+	return m_tradeContainerAck;
 }
 
 void Containers::closeTradeContainer()
 {
 	delete m_tradeContainer;
 	m_tradeContainer = NULL;
+
+	delete m_tradeContainerAck;
+	m_tradeContainerAck = NULL;
 }
 
 void Containers::clear()
