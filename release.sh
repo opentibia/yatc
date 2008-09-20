@@ -123,6 +123,7 @@ if [ $win32release != "n" ]; then
 	cp SDL_gfx.dll "yatc-$version"
 	cp sdl.dll "yatc-$version"
 	cp yatc.exe "yatc-$version"
+	cp exchndl.dll "yatc-$version"
 	zip -r "yatc-$version.zip" "yatc-$version/"
 	echo "Windows release built!"
 	read

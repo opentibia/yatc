@@ -347,6 +347,8 @@
 		<Unit filename="ui/uicontainer.h" />
 		<Unit filename="ui/uiinventory.cpp" />
 		<Unit filename="ui/uiinventory.h" />
+		<Unit filename="ui/uioutfit.cpp" />
+		<Unit filename="ui/uioutfit.h" />
 		<Unit filename="ui/uishop.cpp" />
 		<Unit filename="ui/uishop.h" />
 		<Unit filename="util.cpp" />
