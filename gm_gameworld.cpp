@@ -81,7 +81,9 @@ GM_Gameworld::GM_Gameworld()
 	desktop.AddObject(&winShop.window);
 	winShop.window.SetPos(600,450);
 	winShop.window.SetVisible(false);
-
+	desktop.AddObject(&winTrade.window);
+	winTrade.window.SetPos(600, 450);
+	winTrade.window.SetVisible(false);
 	#endif
 	desktop.AddObject(&pnlTraffic);
 	pnlTraffic.SetPos(10,10);
@@ -788,6 +790,24 @@ void GM_Gameworld::closeContainer(uint32_t cid)
 		containers.erase(it);
 		delete window;
 	}
+}
+
+void GM_Gameworld::openTradeWindow(bool ack)
+{
+	// TODO (nfries88): write function
+	winTrade.window.SetVisible(true);
+	if(ack){
+		winTrade.onTradeAccepted(Containers::getInstance().getTradeContainerAck());
+	}
+	else{
+		winTrade.onTradeStarted(Containers::getInstance().getTradeContainer());
+	}
+}
+
+void GM_Gameworld::closeTradeWindow()
+{
+	winTrade.window.SetVisible(false);
+	winTrade.onTradeCompleted();
 }
 
 void GM_Gameworld::openShopWindow(const std::list<ShopItem>& itemlist) {

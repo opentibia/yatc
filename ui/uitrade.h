@@ -18,8 +18,8 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifndef __UI_CONTAINER_H
-#define __UI_CONTAINER_H
+#ifndef __UI_TRADE_H
+#define __UI_TRADE_H
 
 #include <GLICT/container.h>
 #include <GLICT/button.h>
@@ -37,14 +37,14 @@ public:
 	glictButton btnCollapse; // Width: 12 Height: 12 Caption: "-"
 	#endif
 
-	glictPanel pnlContainer; // Pos: 0, 12 Width: 168 Height: 75 Virtual Height: as necessary
+	glictPanel pnlContainer; // Pos: 0, 12 Width: 150 Height: 75 Virtual Height: as necessary
 
 	glictPanel lblNameLeft; // Pos: 3, 2 Width: 70 Height: 8 Caption: Name of initator
 	glictPanel lblNameRight; // Pos: 82, 2 Width: 70 Height: 8 Caption: Name of other trader
 
-	glictPanel pnlSepTop; // Pos: 0, 10 Width: 168 Height: 2
+	glictPanel pnlSepTop; // Pos: 0, 10 Width: 160 Height: 2
 	glictPanel pnlSepMiddle; // Pos: 78, 13 Width: 2 Height: Virtual Height of pnlContainer
-	glictPanel pnlSepBottom; // Pos: 0, 88 Width: 168 Height: 2
+	glictPanel pnlSepBottom; // Pos: 0, 88 Width: 160 Height: 2
 
 	glictPanel lblWait; // Pos: 12, 92 Width: 60 Height: 20 Caption: "Wait for a counter offer."
 	glictButton btnAccept; // Pos: 75, 92 Width: 43 Height: 20 Caption: "Accept"
@@ -54,14 +54,15 @@ public:
 	PanelList pnlItemsLeft;
 	PanelList pnlItemsRight;
 
-	Container* initator;
+	Container* initiator;
 	Container* acceptor;
 
-	winTrade_t(Container* _initatior);
-
+	winTrade_t();
 	~winTrade_t();
 
+	void onTradeStarted(Container* _initatior);
 	void onTradeAccepted(Container* _acceptor);
+	void onTradeCompleted();
 
 	static void tradeItemOnPaint(glictRect* real, glictRect* clipped, glictContainer* caller);
 	static void tradeItemOnClick(glictPos* relmousepos, glictContainer* caller);
