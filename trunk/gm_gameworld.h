@@ -30,6 +30,7 @@
 #include "ui/uicontainer.h"
 #include "ui/itemmove.h"
 #include "ui/uishop.h"
+#include "ui/uitrade.h"
 
 class Console;
 class Tile;
@@ -68,6 +69,9 @@ public:
     void openShopWindow(const std::list<ShopItem>& itemlist);
     void closeShopWindow();
     void showTutorial(uint8_t id);
+
+	void openTradeWindow(bool ack);
+	void closeTradeWindow();
 
     void beginExtendedUse(const Thing* thing, int stackpos, const Position& pos);
     void performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos);
@@ -113,6 +117,7 @@ private:
 	pnlHealth_t pnlHealth;
 	winSkills_t winSkills;
 	winShop_t winShop;
+	winTrade_t winTrade;
 	glictPanel pnlTraffic;
 	glictTextbox txtConsoleEntry;
 	std::vector<glictPanel*> pnlConsoleButtons;
@@ -151,6 +156,7 @@ private:
 	friend class winContainer_t;
 	friend class winItemMove_t;
 	friend class winShop_t;
+	friend class winTrade_t;
 
 	MapUI m_mapui;
 
