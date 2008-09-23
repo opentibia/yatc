@@ -422,7 +422,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 m_dragging = true; // TODO (ivucica#5#) kick out m_dragging; m_dragThing can be NULL when we're not draggging
                 SDL_SetCursor(g_engine->m_cursorUse);
 
-                if (m_draggingInv == SLOT_NONE && m_draggingCtrId == -1){ // not throwing from inventory nor from a container?
+                if (m_draggingInv == SLOT_NONE && (int)m_draggingCtrId == -1){ // not throwing from inventory nor from a container?
                     m_mapui.dragThing((int)m_dragBegin.x, (int)m_dragBegin.y, m_dragThing, x,y,z, m_dragStackPos);
                     m_dragPos = Position(x,y,z);
                 }
@@ -443,24 +443,9 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             printf("Handling left mousedn on popup\n");
             if (m_popup->cursorInside(pos.x,pos.y)) {
                 if (event.button.state == SDL_PRESSED){
-                    if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0, NULL)){ // if event got handled by glict
-                        // ignore
-
-                    } else {
-                        // it has to die anyways
-
-                        //m_popup->prepareToDie();
-                    }
+                    desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0, NULL);
                 } else  {// released
-                    if (desktop.CastEvent(GLICT_MOUSEUP, &pos, 0, NULL)){ // if event got handled by glict
-                        // ignore
-
-                    } else {
-                        // it has to die anyways
-
-                        //m_popup->prepareToDie();
-                    }
-
+                    desktop.CastEvent(GLICT_MOUSEUP, &pos, 0, NULL);
                 }
             }
             else {
@@ -951,7 +936,7 @@ void GM_Gameworld::msgBox (const char* mbox, const char* title, glictContainer* 
 
 void GM_Gameworld::MBOnDismiss(glictPos* pos, glictContainer* caller)
 {
-	GM_Gameworld* m = (GM_Gameworld*)g_game;
+	//GM_Gameworld* m = (GM_Gameworld*)g_game;
 	if (caller->GetCustomData()) {
 		glictContainer* focusOnDismiss = (glictContainer*)caller->GetCustomData();
 		focusOnDismiss->SetVisible(true);
