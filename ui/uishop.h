@@ -67,15 +67,20 @@ public:
 
 	void generateList(const std::list<ShopItem>& list);
     void destroyList();
-	void addItem (const ShopItem& itm);
+	void addItemBuy (const ShopItem& itm);
+	void addItemSell (const ShopItem& itm);
 
     void rebuildImage();
 
 	static void OnListbox(glictPos* pos, glictContainer *caller);
     static void OnChangeCount(glictPos* pos, glictContainer *caller);
+    static void OnBuyClick(glictPos* pos, glictContainer *caller);
+    static void OnSellClick(glictPos* pos, glictContainer *caller);
+
 
     static void drawObject(glictRect *real, glictRect *clipped, glictContainer *caller);
 
+    bool selling;
 
     Item* dispItem;
 };

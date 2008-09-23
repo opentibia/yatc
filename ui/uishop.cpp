@@ -32,6 +32,8 @@ winShop_t::winShop_t() {
     btnBuy.SetFont("minifont");
     btnBuy.SetCaption("Buy");
     btnBuy.SetHold(true);
+    btnBuy.SetOnClick(OnBuyClick);
+    btnBuy.SetCustomData(this);
 
     window.AddObject(&btnSell);
     btnSell.SetPos(121, 4);
@@ -40,6 +42,8 @@ winShop_t::winShop_t() {
     btnSell.SetFont("minifont");
     btnSell.SetCaption("Sell");
     btnSell.SetHold(false);
+    btnSell.SetOnClick(OnSellClick);
+    btnSell.SetCustomData(this);
 
     window.AddObject(&lstBuy);
     lstBuy.SetPos(0,28);
@@ -59,6 +63,9 @@ winShop_t::winShop_t() {
     sbCt.SetPos(4,80);
     sbCt.SetWidth(113);
     sbCt.SetHeight(12);
+    sbCt.SetValue(1);
+    sbCt.SetMin(1);
+    sbCt.SetMax(50);
     sbCt.SetOnClick(winShop_t::OnChangeCount);
     sbCt.SetCustomData(this);
 
@@ -114,13 +121,15 @@ winShop_t::winShop_t() {
     btnOk.SetFont("minifont");
     btnOk.SetCaption("Ok");
 
+    selling = false;
+
     dispItem = NULL;
 
 
 }
 
 winShop_t::~winShop_t() {
-    if (lsiBuy.size())
+    if (lsiBuy.size() || lsiSell.size())
         destroyList();
 }
 
@@ -138,10 +147,30 @@ void winShop_t::destroyList() {
         #warning Stuff wont work ok till you upgrade to GLICT APIREV < 71
         #endif
 
+        bool unique=true;
+        for (std::list<glictPanel*>::iterator its = lsiSell.begin(); its != lsiSell.end(); its++) {
+            if (((ShopItem*)(*its)->GetCustomData()) == ((ShopItem*)(*it)->GetCustomData())) {unique=false; break;}
+        }
+        if (unique)
+            delete (ShopItem*)((*it)->GetCustomData());
+        delete (*it);
+    }
+    lsiBuy.clear();
+
+    for (std::list<glictPanel*>::iterator it = lsiSell.begin(); it != lsiSell.end(); it++) {
+        #if (GLICT_APIREV >= 71)
+        lstSell.RemoveObject(*it);
+        lstSell.DelayedRemove();
+        #else
+        #warning Stuff wont work ok till you upgrade to GLICT APIREV < 71
+        #endif
+
         delete (ShopItem*)((*it)->GetCustomData());
         delete (*it);
     }
     lsiBuy.clear();
+
+
     if (dispItem)
         delete dispItem;
     dispItem = NULL;
@@ -152,41 +181,83 @@ void winShop_t::destroyList() {
 void winShop_t::generateList(const std::list<ShopItem>& list) {
     destroyList();
     for (std::list<ShopItem>::const_iterator it = list.begin(); it != list.end(); it++) {
-        addItem(*it);
+        addItemBuy(*it);
+        addItemSell(*it);
     }
     lstBuy.Focus(NULL);
+
+
+
 }
 
-void winShop_t::addItem (const ShopItem& itm) {
+void winShop_t::addItemBuy (const ShopItem& itm) {
+    if (!itm.getBuyPrice()) return;
     std::stringstream s;
 
     s << itm.getName() << ": " << itm.getBuyPrice() << " gold";
-    // FIXME (ivucica#5#) change "res" into "pnl"
-    glictPanel *res = new glictPanel;
+
+    glictPanel *pnl = new glictPanel;
     ShopItem *data = new ShopItem(itm);
 
     data->setExtraData(this);
 
-    res->SetBGActiveness(false);
-    res->SetBGColor(.4,.4,.4,1.);
-    res->SetOnClick(winShop_t::OnListbox);
-    res->SetCustomData(data);
-    res->SetCaption(s.str());
-    res->SetFont("aafont");
-    res->SetFocusable(false);
+    pnl->SetBGActiveness(false);
+    pnl->SetBGColor(.4,.4,.4,1.);
+    pnl->SetOnClick(winShop_t::OnListbox);
+    pnl->SetCustomData(data);
+    pnl->SetCaption(s.str());
+    pnl->SetFont("aafont");
+    pnl->SetFocusable(false);
     #if GLICT_APIREV < 68
     #warning Aesthetic corrections on listboxes wont work without GLICT of apirev 68+
     #else
-    res->SetTextOffset(4,2);
+    pnl->SetTextOffset(4,2);
     #endif
 
-    lsiBuy.push_back(res);
-    lstBuy.AddObject(res);
+    lsiBuy.push_back(pnl);
+    lstBuy.AddObject(pnl);
 
     if (lsiBuy.size() == 1) {
-        OnListbox(NULL, res);
+        OnListbox(NULL, pnl);
     }
 }
+
+
+
+
+void winShop_t::addItemSell (const ShopItem& itm) {
+    if (!itm.getSellPrice()) return;
+    std::stringstream s;
+
+    s << itm.getName() << ": " << itm.getSellPrice() << " gold";
+
+    glictPanel *pnl = new glictPanel;
+    ShopItem *data = new ShopItem(itm);
+
+    data->setExtraData(this);
+
+    pnl->SetBGActiveness(false);
+    pnl->SetBGColor(.4,.4,.4,1.);
+    pnl->SetOnClick(winShop_t::OnListbox);
+    pnl->SetCustomData(data);
+    pnl->SetCaption(s.str());
+    pnl->SetFont("aafont");
+    pnl->SetFocusable(false);
+    #if GLICT_APIREV < 68
+    #warning Aesthetic corrections on listboxes wont work without GLICT of apirev 68+
+    #else
+    pnl->SetTextOffset(4,2);
+    #endif
+
+    lsiSell.push_back(pnl);
+    lstSell.AddObject(pnl);
+
+    if (lsiSell.size() == 1) {
+        OnListbox(NULL, pnl);
+    }
+}
+
+
 
 
 void winShop_t::OnListbox(glictPos* pos, glictContainer *caller) {
@@ -194,8 +265,12 @@ void winShop_t::OnListbox(glictPos* pos, glictContainer *caller) {
     for (std::list<glictPanel*>::iterator it = wc->lsiBuy.begin(); it != wc->lsiBuy.end(); it++) {
         (*it)->SetBGActiveness(false);
     }
+    for (std::list<glictPanel*>::iterator it = wc->lsiSell.begin(); it != wc->lsiSell.end(); it++) {
+        (*it)->SetBGActiveness(false);
+    }
     ((glictPanel*)caller)->SetBGActiveness(true);
     wc->currentBuyItem = *((ShopItem*)(caller->GetCustomData()));
+    wc->currentSellItem = *((ShopItem*)(caller->GetCustomData()));
 
     wc->rebuildImage();
 }
@@ -209,5 +284,31 @@ void winShop_t::rebuildImage() {
     if (dispItem)
         delete dispItem;
 
-    dispItem = Item::CreateItem(currentBuyItem.getItemId(), (uint8_t)sbCt.GetValue());
+    uint32_t id;
+    if (!selling)
+        id = currentBuyItem.getItemId();
+    else
+        id = currentSellItem.getItemId();
+    if (id)
+        dispItem = Item::CreateItem(id, (uint8_t)sbCt.GetValue());
+
+}
+
+void winShop_t::OnBuyClick(glictPos* pos, glictContainer *caller) {
+    winShop_t *wst = (winShop_t*)caller->GetCustomData();
+    wst->selling=false;
+    wst->lstSell.SetVisible(false);
+    wst->lstBuy.SetVisible(true);
+    wst->btnSell.SetHold(false);
+    wst->btnBuy.SetHold(true);
+    wst->sbCt.SetValue(1);
+}
+void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller){
+    winShop_t *wst = (winShop_t*)caller->GetCustomData();
+    wst->selling=true;
+    wst->lstSell.SetVisible(true);
+    wst->lstBuy.SetVisible(false);
+    wst->btnSell.SetHold(true);
+    wst->btnBuy.SetHold(false);
+    wst->sbCt.SetValue(1);
 }
