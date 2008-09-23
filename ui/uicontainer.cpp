@@ -199,5 +199,6 @@ void winContainer_t::containerItemOnMouseDown(glictPos *relmousepos,
 void winContainer_t::containerIconOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
 	Item* item = (Item*)caller->GetCustomData();
-	item->Blit((int)real->left, (int)real->top, .33f);
+	g_engine->resetClipping();
+	item->Blit((int)real->left, (int)real->top, 12./32.f);
 }
