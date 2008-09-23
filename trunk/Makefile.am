@@ -27,7 +27,8 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		net/protocolgame821.cpp net/protocolgame822.cpp \
 		net/rsa.cpp net/encryption.cpp net/protocolgame.cpp net/protocollogin.cpp \
 		\
-		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp ui/uiinventory.cpp ui/uishop.cpp \
+		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp \
+		ui/uiinventory.cpp ui/uishop.cpp ui/uitrade.cpp \
 		\
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
 		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
@@ -53,6 +54,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/optionsgraphics.h ui/optionsconsole.h ui/optionsnetwork.h \
 		ui/charlist.h ui/tutorialhints.h ui/itemmove.h \
 		ui/uiinventory.h ui/skills.h ui/uicontainer.h ui/uishop.h \
+		ui/uitrade.h ui/checkbox.h \
 		\
 		product.h \
 		\

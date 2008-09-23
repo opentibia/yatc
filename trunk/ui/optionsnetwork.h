@@ -25,6 +25,7 @@
 #include "../util.h"
 #include <map>
 #include "../net/connection.h"
+#include "checkbox.h"
 class winOptionsNetwork_t {
 public:
 
@@ -37,9 +38,7 @@ public:
 	glictPanel lblPort;// 16 49, 198 11
 	glictTextbox txtPort;// 16 60, 198 11
 
-	glictPanel pnlOTKey;
-	glictPanel btnOTKey;
-	glictPanel lblOTKey;
+    uiCheckbox chkOTKey;
 
 	std::map<ClientVersion_t, glictButton> btnProtocol;
 
@@ -58,7 +57,7 @@ public:
 	winOptionsNetwork_t () {
 
 		window.SetVisible(false);
-		window.SetHeight(238);
+		window.SetHeight(248);
 		window.SetWidth(225);
 		window.SetCaption("Network Options");
 		window.SetBGColor(.4, .4, .4, 1.);
@@ -94,24 +93,12 @@ public:
 		txtPort.SetFont("aafont");
 
 
+        window.AddObject(&chkOTKey.pnlPanel);
+		chkOTKey.SetPos(16,80);
+		chkOTKey.SetWidth(198);
+		chkOTKey.SetHeight(20);
+		chkOTKey.SetCaption("OT Encryption Key");
 
-        window.AddObject(&pnlOTKey);
-		pnlOTKey.SetPos(16, 80);
-		pnlOTKey.SetWidth(198);
-		pnlOTKey.SetHeight(20);
-		pnlOTKey.AddObject(&btnOTKey);
-		pnlOTKey.AddObject(&lblOTKey);
-		pnlOTKey.SetBGActiveness(false);
-		btnOTKey.SetWidth(12);
-		btnOTKey.SetHeight(12);
-		btnOTKey.SetPos(5, 5);
-		btnOTKey.SetOnClick(winOptionsNetwork_t::OnCheckbox);
-		lblOTKey.SetWidth(170);
-		lblOTKey.SetHeight(11);
-		lblOTKey.SetPos(22,7);
-		lblOTKey.SetCaption("OT Encryption Key");
-		lblOTKey.SetFont("aafont");
-		lblOTKey.SetBGActiveness(false);
 
 		window.AddObject(&btnProtocol[CLIENT_VERSION_800]);
 		btnProtocol[CLIENT_VERSION_800].SetCaption("Protocol 8.0");
@@ -139,27 +126,27 @@ public:
 		}
 
 		window.AddObject(&pnlSeparator);
-		pnlSeparator.SetPos(10, 189);
+		pnlSeparator.SetPos(10, 199);
 		pnlSeparator.SetWidth(210);
 		pnlSeparator.SetHeight(2);
 		pnlSeparator.SetBGColor(.2,.2,.2,1.);
 
 		window.AddObject(&btnHelp);
-		btnHelp.SetPos(72, 200);
+		btnHelp.SetPos(72, 210);
 		btnHelp.SetWidth(43);
 		btnHelp.SetHeight(19);
 		btnHelp.SetCaption("Help");
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
-		btnOk.SetPos(125, 200);
+		btnOk.SetPos(125, 210);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(19);
 		btnOk.SetCaption("Ok");
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
-		btnCancel.SetPos(178, 200);
+		btnCancel.SetPos(178, 210);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(19);
 		btnCancel.SetCaption("Cancel");
@@ -172,8 +159,7 @@ public:
 		txtServer.SetCaption(options.server);
 		txtPort.SetCaption(port/*.str()*/);
 
-		btnOTKey.SetCustomData(options.otkey ? (void*)1 : NULL);
-		btnOTKey.SetSkin(options.otkey ? &g_skin.chk : &g_skin.txt);
+        chkOTKey.SetValue(options.otkey);
 
 		currentversion = options.protocol;
 		for (std::map<ClientVersion_t, glictButton>::iterator it = btnProtocol.begin(); it != btnProtocol.end(); it++) {
@@ -187,20 +173,11 @@ public:
 	void Store() {
 		options.server = txtServer.GetCaption();
 		options.port = atoi(txtPort.GetCaption().c_str());
-		options.otkey = (btnOTKey.GetCustomData() != NULL);
+		options.otkey = chkOTKey.GetValue();
 		options.protocol = currentversion;
 		options.Save();
 	}
 
-	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
-		if ((long)caller->GetCustomData() == 1) {
-			caller->SetCustomData(NULL);
-			((glictPanel*)caller)->SetSkin(&g_skin.txt);
-		} else {
-			caller->SetCustomData((void*)1);
-			((glictPanel*)caller)->SetSkin(&g_skin.chk);
-		}
-	}
 	static void OnProtocol(glictPos* pos, glictContainer *caller) {
 		glictButton* b = (glictButton*)caller;
 		winOptionsNetwork_t* won = (winOptionsNetwork_t*)b->GetCustomData();

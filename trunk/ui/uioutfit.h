@@ -18,3 +18,25 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#ifndef _YATC_UIOUTFIT_H
+#define _YATC_UIOUTFIT_H
+
+#include <GLICT/panel.h>
+#include <GLICT/window.h>
+#include <GLICT/button.h>
+#include "checkbox.h"
+class winOutfit_t
+{
+private:
+    glictWindow window;
+    glictPanel pnlOutfit;
+    glictButton btnHead, btnPrimary, btnSecondary, btnDetail;
+    glictPanel lblInstructions;
+    glictButton btnLeft, btnRight;
+    glictPanel lblName;
+
+public:
+
+}
+
+#endif
