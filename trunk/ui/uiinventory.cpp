@@ -25,6 +25,10 @@
 #include "../gamecontent/item.h"
 #include "../gamecontent/inventory.h"
 #include "../net/protocolgame.h"
+#include "../popup.h"
+
+extern int g_lastmousebutton;
+
 void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
 
@@ -94,6 +98,12 @@ void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
     GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
     slots_t slotid = (slots_t)((glictPanel*)callerclass -
         (glictPanel*)callerclass->GetCustomData() + 1);
+
+    if (g_lastmousebutton == SDL_BUTTON_RIGHT) {
+        gameclass->performPopup(pnlInventory_t::inventoryItemMakePopup,&gameclass->pnlInventory,(void*)slotid);
+        return;
+    }
+
     Position p(0xFFFF, slotid, 0);
     if(slotid >= 0 && slotid <= 10)
     {
@@ -117,6 +127,8 @@ void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
 void pnlInventory_t::inventoryItemOnMouseUp(glictPos *relmousepos,
 	glictContainer* callerclass)
 {
+    if (g_lastmousebutton != SDL_BUTTON_LEFT)
+        return;
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
 	if (gw->isDragging())
 	{
@@ -133,6 +145,8 @@ void pnlInventory_t::inventoryItemOnMouseUp(glictPos *relmousepos,
 void pnlInventory_t::inventoryItemOnMouseDown(glictPos *relmousepos,
 	glictContainer* callerclass)
 {
+    if (g_lastmousebutton != SDL_BUTTON_LEFT)
+        return;
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
 
     slots_t slotid = (slots_t)((glictPanel*)callerclass -
@@ -144,3 +158,15 @@ void pnlInventory_t::inventoryItemOnMouseDown(glictPos *relmousepos,
     }
 }
 
+
+
+
+void pnlInventory_t::inventoryItemMakePopup(Popup*popup,void*owner,void*arg){
+    pnlInventory_t* p = (pnlInventory_t*)owner;
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    slots_t slotid = ((slots_t)((int)arg));
+
+    popup->addItem("Look at (Shift)",NULL);
+    popup->addItem("Use (Ctrl)",NULL);
+    popup->addItem("Trade with ...",NULL);
+}

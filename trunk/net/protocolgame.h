@@ -89,7 +89,7 @@ class ProtocolGame : public Protocol
 		virtual void sendInviteParty(uint32_t playerid) = 0;
 		virtual void sendJoinParty(uint32_t playerid) = 0;
 		virtual void sendCancelInviteParty(uint32_t playerid) = 0;
-		virtual void sendPassParyLeader(uint32_t playerid) = 0;
+		virtual void sendPassPartyLeader(uint32_t playerid) = 0;
 		virtual void sendLeaveParty() = 0;
 		virtual void sendCancelMove() = 0;
 		virtual void sendRequestOutfit() = 0;

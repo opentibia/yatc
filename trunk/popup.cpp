@@ -35,7 +35,7 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb) {
     pi->cb = cb;
     pi->pnl.SetCaption(txt);
     pi->pnl.SetBGActiveness(false);
-    pi->pnl.SetHeight(12);
+    pi->pnl.SetHeight(14);
     pi->pnl.SetWidth(150);
     pi->pnl.SetOnClick(onClick);
     pi->pnl.SetFont("aafont");
@@ -45,7 +45,7 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb) {
     items.push_back(pi);
     list.AddObject(&pi->pnl);
 
-    list.SetHeight(12*items.size()+4);
+    list.SetHeight(14*items.size());
     list.SetWidth(150);
     list.SetBGColor(.1, .1, .1,1);
 

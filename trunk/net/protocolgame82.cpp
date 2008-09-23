@@ -1686,7 +1686,7 @@ void ProtocolGame82::sendCancelInviteParty(uint32_t playerid)
 	m_outputMessage.addU32(playerid);
 }
 
-void ProtocolGame82::sendPassParyLeader(uint32_t playerid)
+void ProtocolGame82::sendPassPartyLeader(uint32_t playerid)
 {
 	PROTOCOLGAME_SEND_FUNCTION;
 	m_outputMessage.addMessageType(0xA6);

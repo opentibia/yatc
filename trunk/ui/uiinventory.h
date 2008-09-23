@@ -30,6 +30,8 @@
 
 #include "../skin.h"
 
+class Popup;
+
 class pnlInventory_t {
 public:
 	pnlInventory_t() {
@@ -69,7 +71,7 @@ public:
 	static void inventoryItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
 	static void inventoryItemOnMouseUp(glictPos *relmousepos, glictContainer* callerclass);
 	static void inventoryItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
-
+    static void inventoryItemMakePopup(Popup*popup,void*owner,void*arg);
 
 	/*glictContainer*/glictWindow panel; // it's a container, so it's transparent
 	glictPanel pnlItem[10];

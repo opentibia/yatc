@@ -22,6 +22,8 @@
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
 
+extern int g_lastmousebutton;
+
 winContainer_t::winContainer_t(Container* _container, uint32_t cid) {
     container = _container;
     containerId = cid;
@@ -132,6 +134,8 @@ void winContainer_t::containerItemOnPaint(glictRect *real, glictRect *clipped, g
 
 void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer* callerclass)
 {
+    if (g_lastmousebutton != SDL_BUTTON_LEFT)
+        return;
 	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
 	uint32_t slot_id = window->getSlotId(callerclass);
 	Item* item = window->container->getItem(slot_id);
@@ -159,6 +163,8 @@ void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer*
 void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 	glictContainer* callerclass)
 {
+    if (g_lastmousebutton != SDL_BUTTON_LEFT)
+        return;
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
 
 	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
@@ -178,6 +184,8 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 void winContainer_t::containerItemOnMouseDown(glictPos *relmousepos,
 	glictContainer* callerclass)
 {
+    if (g_lastmousebutton != SDL_BUTTON_LEFT)
+        return;
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
 
     winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
