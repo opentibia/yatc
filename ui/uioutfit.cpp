@@ -22,6 +22,12 @@
 #include "../gamecontent/creature.h"
 #include "uioutfit.h"
 
+
+static void __uioutfit__closeme(glictPos* pos, glictContainer *caller) { // REMOVE ME
+    ((glictWindow*)caller->GetCustomData())->SetVisible(false);
+}
+
+
 winOutfit_t::winOutfit_t() {
     window.SetCaption("Set Outfit");
     window.SetWidth(490);
@@ -36,21 +42,29 @@ winOutfit_t::winOutfit_t() {
     btnHead.SetPos(167,15);
     btnHead.SetWidth(58);
     btnHead.SetHeight(20);
+    btnHead.SetCaption("Head");
+    btnHead.SetFont("minifont");
 
     window.AddObject(&btnPrimary);
     btnPrimary.SetPos(167,39);
     btnPrimary.SetWidth(58);
     btnPrimary.SetHeight(20);
+    btnPrimary.SetCaption("Primary");
+    btnPrimary.SetFont("minifont");
 
     window.AddObject(&btnSecondary);
     btnSecondary.SetPos(167,63);
     btnSecondary.SetWidth(58);
     btnSecondary.SetHeight(20);
+    btnSecondary.SetCaption("Secondary");
+    btnSecondary.SetFont("minifont");
 
     window.AddObject(&btnDetail);
     btnDetail.SetPos(167,87);
     btnDetail.SetWidth(58);
     btnDetail.SetHeight(20);
+    btnDetail.SetCaption("Detail");
+    btnDetail.SetFont("minifont");
 
     window.AddObject(&lblInstructions);
     lblInstructions.SetPos(167,120);
@@ -65,16 +79,19 @@ winOutfit_t::winOutfit_t() {
         "solve various quests.");
     lblInstructions.SetWidth(310);
     lblInstructions.SetHeight(90);
+    lblInstructions.SetBGActiveness(false);
 
     window.AddObject(&btnLeft);
     btnLeft.SetPos(14,159);
     btnLeft.SetWidth(20);
     btnLeft.SetHeight(20);
+    btnLeft.SetCaption("<"); // FIXME (ivucica#4#): graphic should be extracted from .pic and displayed here
 
     window.AddObject(&btnRight);
     btnRight.SetPos(134,159);
     btnRight.SetWidth(20);
     btnRight.SetHeight(20);
+    btnRight.SetCaption(">"); // FIXME (ivucica#4#): graphic should be extracted from .pic and displayed here
 
     window.AddObject(&lblName);
     lblName.SetPos(38,159);
@@ -102,13 +119,20 @@ winOutfit_t::winOutfit_t() {
     btnOk.SetPos(384,296);
     btnOk.SetWidth(43);
     btnOk.SetHeight(20);
+    btnOk.SetCaption("Ok");
     btnOk.SetFont("minifont");
+    btnOk.SetEnabled(false);
 
     window.AddObject(&btnCancel);
     btnCancel.SetPos(437,296);
     btnCancel.SetWidth(43);
     btnCancel.SetHeight(20);
+    btnCancel.SetCaption("Cancel");
     btnCancel.SetFont("minifont");
+    // temporary:
+    btnCancel.SetCustomData(&window);
+    btnCancel.SetOnClick(__uioutfit__closeme);
+    // end temporary
 
     for (int j = 0; j < 7; j++) {
         for (int i = 0; i < 19; i++) {
@@ -139,3 +163,5 @@ void winOutfit_t::onBtnPaint(glictRect *real, glictRect *clipped, glictContainer
 
     g_engine->drawRectangle(real->left + 2, real->top + 2, 8, 8, c);
 }
+
+

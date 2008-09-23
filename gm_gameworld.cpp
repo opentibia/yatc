@@ -440,21 +440,32 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
     } else if (event.button.button == SDL_BUTTON_LEFT) {
         g_lastmousebutton = event.button.button;
         if (m_popup) { // handle popup menu before attempting anything else
-            if (event.button.state == SDL_PRESSED){
-                if (m_popup->getGlictList()->CastEvent(GLICT_MOUSEDOWN, &pos, 0, NULL)){ // if event got handled by glict
-                    // ignore
-                } else {
-                    // it has to die anyways
-                    m_popup->prepareToDie();
-                }
-            } else  {// released
-                if (m_popup->getGlictList()->CastEvent(GLICT_MOUSEUP, &pos, 0, NULL)){ // if event got handled by glict
-                    // ignore
-                } else {
-                    // it has to die anyways
-                    m_popup->prepareToDie();
-                }
+            printf("Handling left mousedn on popup\n");
+            if (m_popup->cursorInside(pos.x,pos.y)) {
+                if (event.button.state == SDL_PRESSED){
+                    if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0, NULL)){ // if event got handled by glict
+                        // ignore
 
+                    } else {
+                        // it has to die anyways
+
+                        //m_popup->prepareToDie();
+                    }
+                } else  {// released
+                    if (desktop.CastEvent(GLICT_MOUSEUP, &pos, 0, NULL)){ // if event got handled by glict
+                        // ignore
+
+                    } else {
+                        // it has to die anyways
+
+                        //m_popup->prepareToDie();
+                    }
+
+                }
+            }
+            else {
+                printf("outside\n");
+                m_popup->prepareToDie();
             }
         } else
         if (event.button.state == SDL_PRESSED){
