@@ -24,6 +24,7 @@
 #include <GLICT/list.h>
 #include <sstream>
 #include "../engine.h"
+#include "checkbox.h"
 class winOptionsGraphics_t {
 public:
 
@@ -43,9 +44,7 @@ public:
 	glictWindow window;
 
 	// 15 16, 198 20
-	glictPanel pnlFullscreen;
-	glictPanel btnFullscreen;
-	glictPanel lblFullscreen;
+	uiCheckbox chkFullscreen;
 
 	glictPanel lblResolutions; // 14 52, 194 12
 	glictList lstResolutions; // 14 65, 200 104
@@ -69,23 +68,11 @@ public:
 		window.SetCaption("Graphics Options");
 		window.SetBGColor(.4, .4, .4, 1.);
 
-		window.AddObject(&pnlFullscreen);
-		pnlFullscreen.SetPos(15,16);
-		pnlFullscreen.SetWidth(200);
-		pnlFullscreen.SetHeight(22);
-		pnlFullscreen.AddObject(&btnFullscreen);
-		pnlFullscreen.AddObject(&lblFullscreen);
-		pnlFullscreen.SetBGActiveness(false);
-		btnFullscreen.SetWidth(12);
-		btnFullscreen.SetHeight(12);
-		btnFullscreen.SetPos(5, 5);
-		btnFullscreen.SetOnClick(winOptionsGraphics_t::OnCheckbox);
-		lblFullscreen.SetWidth(170);
-		lblFullscreen.SetHeight(11);
-		lblFullscreen.SetPos(22,7);
-		lblFullscreen.SetCaption("Fullscreen");
-		lblFullscreen.SetFont("aafont");
-		lblFullscreen.SetBGActiveness(false);
+        window.AddObject(&chkFullscreen.pnlPanel);
+		chkFullscreen.SetPos(16,16);
+		chkFullscreen.SetWidth(200);
+		chkFullscreen.SetHeight(22);
+		chkFullscreen.SetCaption("Fullscreen");
 
 		window.AddObject(&lblResolutions);
 		lblResolutions.SetPos(14, 52);
@@ -152,9 +139,7 @@ public:
 	}
 
 	void Init() {
-
-		btnFullscreen.SetCustomData(options.fullscreen ? (void*)1 : NULL);
-        btnFullscreen.SetSkin(options.fullscreen ? &g_skin.chk : &g_skin.txt);
+        chkFullscreen.SetValue(options.fullscreen);
 
 		currentres.w = 0; currentres.h = 0; currentres.bpp = 0;
 		for (std::vector<glictPanel*>::iterator it = lsiResolutions.begin(); it != lsiResolutions.end(); it++) {
@@ -169,7 +154,7 @@ public:
 	}
 
 	void Store() {
-	    options.fullscreen = (btnFullscreen.GetCustomData() != NULL);
+	    options.fullscreen = chkFullscreen.GetValue();
 		if (currentres.w) {
 			options.w = currentres.w; options.h = currentres.h; options.bpp = currentres.bpp;
 			g_engine->doResize(currentres.w, currentres.h);
@@ -179,15 +164,6 @@ public:
 	}
 
 
-	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
-		if ((long)caller->GetCustomData() == 1) {
-			caller->SetCustomData(NULL);
-			((glictPanel*)caller)->SetSkin(&g_skin.txt);
-		} else {
-			caller->SetCustomData((void*)1);
-			((glictPanel*)caller)->SetSkin(&g_skin.chk);
-		}
-	}
 	static void OnListbox(glictPos* pos, glictContainer *caller) {
 		// worthy oriental gentlemen ;)
 		winOptionsGraphics_t *wog = ((resdata_t*)(caller->GetCustomData()))->wog;

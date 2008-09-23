@@ -22,6 +22,7 @@
 #define __UI_OPTIONSGENERAL_H
 
 #include "../skin.h"
+#include "checkbox.h"
 
 class winOptionsGeneral_t {
 public:
@@ -30,29 +31,19 @@ public:
 	glictWindow window;
 
 	// 16 16, 198 20
-	glictPanel pnlClassicControl;
-	glictPanel btnClassicControl;
-	glictPanel lblClassicControl;
+	uiCheckbox chkClassicControl;
 
 	// 16 49, 198 20
-	glictPanel pnlAutoChase;
-	glictPanel btnAutoChase;
-	glictPanel lblAutoChase;
+	uiCheckbox chkAutoChase;
 
 	// 16 82
-	glictPanel pnlShowHints;
-	glictPanel btnShowHints;
-	glictPanel lblShowHints;
+	uiCheckbox chkShowHints;
 
 	// 16 115
-	glictPanel pnlShowNames;
-	glictPanel btnShowNames;
-	glictPanel lblShowNames;
+	uiCheckbox chkShowNames;
 
 	// 16 148
-	glictPanel pnlShowTextEffects;
-	glictPanel btnShowTextEffects;
-	glictPanel lblShowTextEffects;
+	uiCheckbox chkShowTextEffects;
 
 	// 10 189, 210 2
 	glictPanel pnlSeparator;
@@ -64,100 +55,41 @@ public:
 	winOptionsGeneral_t () {
 
 		window.SetVisible(false);
-		window.SetHeight(256);
+		window.SetHeight(236);
 		window.SetWidth(228);
 		window.SetCaption("General Options");
 		window.SetBGColor(.4, .4, .4, 1.);
 
-		window.AddObject(&pnlClassicControl);
-		pnlClassicControl.SetPos(16,16);
-		pnlClassicControl.SetWidth(198);
-		pnlClassicControl.SetHeight(20);
-		pnlClassicControl.AddObject(&btnClassicControl);
-		pnlClassicControl.AddObject(&lblClassicControl);
-		pnlClassicControl.SetBGActiveness(false);
-		btnClassicControl.SetWidth(12);
-		btnClassicControl.SetHeight(12);
-		btnClassicControl.SetPos(5, 5);
-		btnClassicControl.SetOnClick(winOptionsGeneral_t::OnCheckbox);
-		lblClassicControl.SetWidth(170);
-		lblClassicControl.SetHeight(11);
-		lblClassicControl.SetPos(22,7);
-		lblClassicControl.SetCaption("Classic Control");
-		lblClassicControl.SetFont("aafont");
-		lblClassicControl.SetBGActiveness(false);
+		window.AddObject(&chkClassicControl.pnlPanel);
+		chkClassicControl.SetPos(16,16);
+		chkClassicControl.SetWidth(198);
+		chkClassicControl.SetHeight(20);
+		chkClassicControl.SetCaption("Classic Control");
 
-		window.AddObject(&pnlAutoChase);
-		pnlAutoChase.SetPos(16, 49);
-		pnlAutoChase.SetWidth(198);
-		pnlAutoChase.SetHeight(20);
-		pnlAutoChase.AddObject(&btnAutoChase);
-		pnlAutoChase.AddObject(&lblAutoChase);
-		pnlAutoChase.SetBGActiveness(false);
-		btnAutoChase.SetWidth(12);
-		btnAutoChase.SetHeight(12);
-		btnAutoChase.SetPos(5, 5);
-		btnAutoChase.SetOnClick(winOptionsGeneral_t::OnCheckbox);
-		lblAutoChase.SetWidth(170);
-		lblAutoChase.SetHeight(11);
-		lblAutoChase.SetPos(22,7);
-		lblAutoChase.SetCaption("Auto Chase Off");
-		lblAutoChase.SetFont("aafont");
-		lblAutoChase.SetBGActiveness(false);
 
-		window.AddObject(&pnlShowHints);
-		pnlShowHints.SetPos(16, 82);
-		pnlShowHints.SetWidth(198);
-		pnlShowHints.SetHeight(20);
-		pnlShowHints.AddObject(&btnShowHints);
-		pnlShowHints.AddObject(&lblShowHints);
-		pnlShowHints.SetBGActiveness(false);
-		btnShowHints.SetWidth(12);
-		btnShowHints.SetHeight(12);
-		btnShowHints.SetPos(5, 5);
-		btnShowHints.SetOnClick(winOptionsGeneral_t::OnCheckbox);
-		lblShowHints.SetWidth(170);
-		lblShowHints.SetHeight(11);
-		lblShowHints.SetPos(22,7);
-		lblShowHints.SetCaption("Show Hints");
-		lblShowHints.SetFont("aafont");
-		lblShowHints.SetBGActiveness(false);
+		window.AddObject(&chkAutoChase.pnlPanel);
+		chkAutoChase.SetPos(16,49);
+		chkAutoChase.SetWidth(198);
+		chkAutoChase.SetHeight(20);
+		chkAutoChase.SetCaption("Auto Chase Off");
 
-		window.AddObject(&pnlShowNames);
-		pnlShowNames.SetPos(16, 115);
-		pnlShowNames.SetWidth(198);
-		pnlShowNames.SetHeight(20);
-		pnlShowNames.AddObject(&btnShowNames);
-		pnlShowNames.AddObject(&lblShowNames);
-		pnlShowNames.SetBGActiveness(false);
-		btnShowNames.SetWidth(12);
-		btnShowNames.SetHeight(12);
-		btnShowNames.SetPos(5, 5);
-		btnShowNames.SetOnClick(winOptionsGeneral_t::OnCheckbox);
-		lblShowNames.SetWidth(170);
-		lblShowNames.SetHeight(11);
-		lblShowNames.SetPos(22,7);
-		lblShowNames.SetCaption("Show Names of Creatures");
-		lblShowNames.SetFont("aafont");
-		lblShowNames.SetBGActiveness(false);
+		window.AddObject(&chkShowHints.pnlPanel);
+		chkShowHints.SetPos(16,82);
+		chkShowHints.SetWidth(198);
+		chkShowHints.SetHeight(20);
+		chkShowHints.SetCaption("Show Hints");
 
-		window.AddObject(&pnlShowTextEffects);
-		pnlShowTextEffects.SetPos(16, 148);
-		pnlShowTextEffects.SetWidth(198);
-		pnlShowTextEffects.SetHeight(20);
-		pnlShowTextEffects.AddObject(&btnShowTextEffects);
-		pnlShowTextEffects.AddObject(&lblShowTextEffects);
-		pnlShowTextEffects.SetBGActiveness(false);
-		btnShowTextEffects.SetWidth(12);
-		btnShowTextEffects.SetHeight(12);
-		btnShowTextEffects.SetPos(5, 5);
-		btnShowTextEffects.SetOnClick(winOptionsGeneral_t::OnCheckbox);
-		lblShowTextEffects.SetWidth(170);
-		lblShowTextEffects.SetHeight(11);
-		lblShowTextEffects.SetPos(22,7);
-		lblShowTextEffects.SetCaption("Show Textual Effects");
-		lblShowTextEffects.SetFont("aafont");
-		lblShowTextEffects.SetBGActiveness(false);
+		window.AddObject(&chkShowNames.pnlPanel);
+		chkShowNames.SetPos(16,115);
+		chkShowNames.SetWidth(198);
+		chkShowNames.SetHeight(20);
+		chkShowNames.SetCaption("Show Names of Creatures");
+
+		window.AddObject(&chkShowTextEffects.pnlPanel);
+		chkShowTextEffects.SetPos(16, 148);
+		chkShowTextEffects.SetWidth(198);
+		chkShowTextEffects.SetHeight(20);
+		chkShowTextEffects.SetCaption("Show Textual Effects");
 
 		window.AddObject(&pnlSeparator);
 		pnlSeparator.SetPos(10, 189);
@@ -189,36 +121,22 @@ public:
 
 
 	void Init() {
-		btnAutoChase.SetCustomData(options.autochase ? (void*)1 : NULL);
-		btnAutoChase.SetSkin(options.autochase ? &g_skin.chk : &g_skin.txt);
-		btnShowHints.SetCustomData(options.showhints ? (void*)1 : NULL);
-		btnShowHints.SetSkin(options.showhints ? &g_skin.chk : &g_skin.txt);
-		btnShowTextEffects.SetCustomData(options.showtexteffects ? (void*)1 : NULL);
-		btnShowTextEffects.SetSkin(options.showtexteffects ? &g_skin.chk : &g_skin.txt);
-		btnClassicControl.SetCustomData(options.classiccontrol ? (void*)1 : NULL);
-		btnClassicControl.SetSkin(options.classiccontrol ? &g_skin.chk : &g_skin.txt);
-		btnShowNames.SetCustomData(options.shownames ? (void*)1 : NULL);
-		btnShowNames.SetSkin(options.shownames ? &g_skin.chk : &g_skin.txt);
+		chkAutoChase.SetValue(options.autochase);
+		chkShowHints.SetValue(options.showhints);
+		chkShowTextEffects.SetValue(options.showtexteffects);
+		chkClassicControl.SetValue(options.classiccontrol);
+		chkShowNames.SetValue(options.shownames);
 	}
 
 	void Store() {
-		options.autochase = (btnAutoChase.GetCustomData() != NULL);
-		options.showhints = (btnShowHints.GetCustomData() != NULL);
-		options.showtexteffects = (btnShowTextEffects.GetCustomData() != NULL);
-		options.classiccontrol = (btnClassicControl.GetCustomData() != NULL);
-		options.shownames = (btnShowNames.GetCustomData() != NULL);
+		options.autochase = chkAutoChase.GetValue();
+		options.showhints = chkShowHints.GetValue();
+        options.showtexteffects = chkShowTextEffects.GetValue();
+		options.classiccontrol = chkClassicControl.GetValue();
+		options.shownames = chkShowNames.GetValue();
 		options.Save();
 	}
 
-	static void OnCheckbox(glictPos* pos, glictContainer *caller) {
-		if ((long)caller->GetCustomData() == 1) {
-			caller->SetCustomData(NULL);
-			((glictPanel*)caller)->SetSkin(&g_skin.txt);
-		} else {
-			caller->SetCustomData((void*)1);
-			((glictPanel*)caller)->SetSkin(&g_skin.chk);
-		}
-	}
 
 };
 

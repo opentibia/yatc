@@ -166,6 +166,9 @@ void Options::Save()
 	ss << infomsgs;
 	section->addKey("infomsgs", ss.str());
 	ss.str("");
+	ss << eventmsgs;
+	section->addKey("eventmsgs", ss.str());
+	ss.str("");
 	ss << statusmsgs;
 	section->addKey("statusmsgs", ss.str());
 	ss.str("");
@@ -252,7 +255,7 @@ void Options::Load()
 	// [console]
     infomsgs = (atoi(configHandler->getKeyValue("console", "infomsgs").c_str()) == 1);
     eventmsgs = (atoi(configHandler->getKeyValue("console", "eventmsgs").c_str()) == 1);
-    statusmsgs = (atoi(configHandler->getKeyValue("console", "statusmgs").c_str()) == 1);
+    statusmsgs = (atoi(configHandler->getKeyValue("console", "statusmsgs").c_str()) == 1);
     timestamps = (atoi(configHandler->getKeyValue("console", "timestamps").c_str()) == 1);
     levels = (atoi(configHandler->getKeyValue("console", "levels").c_str()) == 1);
     privatemsgs = (atoi(configHandler->getKeyValue("console", "privatemsgs").c_str()) == 1);

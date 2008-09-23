@@ -22,6 +22,7 @@
 #define __UI_OPTIONSHOTKEYS_H
 
 #include "util.h"
+#include "checkbox.h"
 class winOptionsHotkeys_t {
 public:
 
@@ -35,10 +36,7 @@ public:
   glictTextbox txtText; // 18 180 268 195
 
   // 18 209 268 230
-
-  glictPanel pnlSendAuto;
-  glictPanel btnSendAuto;
-  glictPanel lblSendAuto;
+  uiCheckbox chkSendAuto;
 
   // Item Hotkeys
   glictPanel lblObjText;
@@ -99,23 +97,11 @@ public:
     txtText.SetFont("aafont");
 
     // 18 209 268 230
-    window.AddObject(&pnlSendAuto);
-    pnlSendAuto.SetPos(18,209);
-    pnlSendAuto.SetWidth(268-18);
-    pnlSendAuto.SetHeight(230-209);
-    pnlSendAuto.AddObject(&btnSendAuto);
-    pnlSendAuto.AddObject(&lblSendAuto);
-    pnlSendAuto.SetBGActiveness(false);
-    btnSendAuto.SetPos(5, 5);
-    btnSendAuto.SetWidth(12);
-    btnSendAuto.SetHeight(12);
-    btnSendAuto.SetOnClick(winOptionsHotkeys_t::OnCheckbox);
-    lblSendAuto.SetPos(40-18,214-209);
-    lblSendAuto.SetWidth(230);
-    lblSendAuto.SetHeight(11);
-    lblSendAuto.SetCaption("Send automatically");
-    lblSendAuto.SetFont("aafont");
-    lblSendAuto.SetBGActiveness(false);
+    window.AddObject(&chkSendAuto.pnlPanel);
+    chkSendAuto.SetPos(18,209);
+    chkSendAuto.SetWidth(268-18);
+    chkSendAuto.SetHeight(230-209);
+    chkSendAuto.SetCaption("Send automatically");
 
 	// Item Hotkeys
 	window.AddObject(&lblObjText);
@@ -195,22 +181,12 @@ public:
   }
 
   void Init() {
-		btnSendAuto.SetCustomData(/*TODO*/ 0 ? (void*)1 : NULL);
-		btnSendAuto.SetSkin(/*TODO*/ true ? &g_skin.chk : &g_skin.txt);
+    chkSendAuto.SetValue(0);
   }
 
   void Store() {
   }
 
-  static void OnCheckbox(glictPos* pos, glictContainer *caller) {
-    if ((long)caller->GetCustomData() == 1) {
-      caller->SetCustomData(NULL);
-      ((glictPanel*)caller)->SetSkin(&g_skin.txt);
-    } else {
-      caller->SetCustomData((void*)1);
-      ((glictPanel*)caller)->SetSkin(&g_skin.chk);
-    }
-  }
 
   static void drawObject(glictRect *real, glictRect *clipped, glictContainer *caller);
   static void onSelectObj(glictPos* pos, glictContainer *caller);
