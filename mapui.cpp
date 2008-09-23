@@ -21,6 +21,8 @@
 #ifndef _MSC_VER
 #include <stdint.h>
 #endif
+#include "gm_gameworld.h"
+#include "popup.h"
 #include "gamecontent/globalvars.h"
 #include "gamecontent/creature.h"
 #include "gamecontent/item.h"
@@ -503,4 +505,19 @@ Tile* MapUI::translateClickToTile(int x, int y, int &retx, int &rety, int &retz)
 	rety = pos.y + y - m_vph/2;
 	retz = pos.z;
 	return tile;
+}
+
+bool MapUI::handlePopup(int x, int y) {
+    if (x > 64 && y > 64 && x < 64+15*32 && y < 64+11*32) { // click within visible area of map?
+        glictPos p;
+        p.x = x; p.y = y;
+        ((GM_Gameworld*)g_game)->performPopup(MapUI::makePopup,this,&p);
+    }
+}
+
+void MapUI::makePopup(Popup*popup,void*owner,void*arg) {
+    MapUI *m = (MapUI*)(owner);
+    glictPos *pos = (glictPos*)(arg);
+
+    popup->addItem("Set Outfit...", GM_Gameworld::onSetOutfit);
 }

@@ -20,6 +20,8 @@
 
 #ifndef __UI_CHECKBOX_H
 #define __UI_CHECKBOX_H
+
+#include "../skin.h"
 class uiCheckbox {
 public:
     uiCheckbox() {

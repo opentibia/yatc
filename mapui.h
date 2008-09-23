@@ -23,6 +23,8 @@
 
 #include "gamecontent/map.h"
 
+class Popup;
+
 class MapUI {
 	public:
 		MapUI();
@@ -38,8 +40,13 @@ class MapUI {
 		void lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos);
 		void dragThing(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos);
 
+		bool handlePopup(int x, int y);
+
         Tile* translateClickToTile(int x, int y, int &absx, int &absy, int &absz);
         Tile* translateClickToTile(int x, int y) {int ax,ay,az; return translateClickToTile(x,y,ax,ay,az);}
+
+        static void makePopup(Popup*popup,void*owner,void*arg);
+
 
 	private:
 		int m_x, m_y;

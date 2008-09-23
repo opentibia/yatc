@@ -90,7 +90,7 @@ class ProtocolGame80 : public ProtocolGame
 		virtual void sendInviteParty(uint32_t playerid);
 		virtual void sendJoinParty(uint32_t playerid);
 		virtual void sendCancelInviteParty(uint32_t playerid);
-		virtual void sendPassParyLeader(uint32_t playerid);
+		virtual void sendPassPartyLeader(uint32_t playerid);
 		virtual void sendLeaveParty();
 		virtual void sendCancelMove();
 		virtual void sendRequestOutfit();

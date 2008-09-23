@@ -27,16 +27,23 @@
 #include "checkbox.h"
 class winOutfit_t
 {
-private:
+public:
     glictWindow window;
     glictPanel pnlOutfit;
     glictButton btnHead, btnPrimary, btnSecondary, btnDetail;
     glictPanel lblInstructions;
     glictButton btnLeft, btnRight;
-    glictPanel lblName;
+    glictButton lblName; // only to use "buttondown" skin, and to center the text
+    uiCheckbox chkAddon[3];
 
-public:
+    glictPanel pnlSeparator;
 
-}
+    glictButton btnOk, btnCancel;
 
+    glictButton btnColor[19*7];
+
+    winOutfit_t();
+
+    static void onBtnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
+};
 #endif

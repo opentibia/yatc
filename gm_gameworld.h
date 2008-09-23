@@ -31,11 +31,14 @@
 #include "ui/itemmove.h"
 #include "ui/uishop.h"
 #include "ui/uitrade.h"
+#include "ui/uioutfit.h"
 
 class Console;
 class Tile;
 class ProtocolGame;
 class Popup;
+
+typedef void(*PopupProducerCallback)(Popup*popup,void*owner,void*arg);
 
 class GM_Gameworld : public GameMode {
 public:
@@ -51,7 +54,10 @@ public:
     void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);
     static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 
+    // user interface reactions
+    static void onSetOutfit();
 
+    // net/gamecontent reactions
 	virtual void onConnectionClosed();
 
 	void onWalk();
@@ -88,6 +94,7 @@ public:
 	void setDragCtr(uint32_t containerid, uint32_t slotid);
 	void dragComplete(Position& toPos);
 
+    void performPopup(PopupProducerCallback cb,void*owner,void*arg);
 protected:
 
 private:
@@ -118,6 +125,7 @@ private:
 	winSkills_t winSkills;
 	winShop_t winShop;
 	winTrade_t winTrade;
+	winOutfit_t winOutfit;
 	glictPanel pnlTraffic;
 	glictTextbox txtConsoleEntry;
 	std::vector<glictPanel*> pnlConsoleButtons;
@@ -157,6 +165,8 @@ private:
 	friend class winItemMove_t;
 	friend class winShop_t;
 	friend class winTrade_t;
+	friend class winOutfit_t;
+	friend class MapUI;
 
 	MapUI m_mapui;
 

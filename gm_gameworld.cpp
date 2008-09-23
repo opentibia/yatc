@@ -46,10 +46,11 @@
 
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
+int g_lastmousebutton=SDL_BUTTON_LEFT;
 
 void resetDefaultCursor();
 
-void tmp(){((GM_Gameworld*)g_game)->msgBox("You made a choice", "Wat?");}
+//void tmp(){((GM_Gameworld*)g_game)->msgBox("You made a choice", "Wat?");}
 
 
 void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
@@ -78,13 +79,18 @@ GM_Gameworld::GM_Gameworld()
 	winSkills.window.SetPos(600, 180);
 	desktop.AddObject(&pnlHealth.panel);
 	pnlHealth.panel.SetPos(600, 350);
+	#endif
 	desktop.AddObject(&winShop.window);
 	winShop.window.SetPos(600,450);
 	winShop.window.SetVisible(false);
 	desktop.AddObject(&winTrade.window);
 	winTrade.window.SetPos(600, 450);
 	winTrade.window.SetVisible(false);
-	#endif
+
+	desktop.AddObject(&winOutfit.window);
+	winOutfit.window.SetPos(200,200);
+	winOutfit.window.SetVisible(false);
+
 	desktop.AddObject(&pnlTraffic);
 	pnlTraffic.SetPos(10,10);
 	pnlTraffic.SetWidth(200);
@@ -402,6 +408,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 	desktop.TransformScreenCoords(&pos);
 
 
+
     if (event.type == SDL_MOUSEMOTION) {
         #if (GLICT_APIREV >= 67)
         desktop.CastEvent(GLICT_MOUSEMOVE, &pos, 0);
@@ -431,20 +438,21 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             m_popup->mouseOver(pos.x,pos.y);
         }
     } else if (event.button.button == SDL_BUTTON_LEFT) {
+        g_lastmousebutton = event.button.button;
         if (m_popup) { // handle popup menu before attempting anything else
             if (event.button.state == SDL_PRESSED){
                 if (m_popup->getGlictList()->CastEvent(GLICT_MOUSEDOWN, &pos, 0, NULL)){ // if event got handled by glict
                     // ignore
                 } else {
                     // it has to die anyways
-                    m_popup->wantsDeath();
+                    m_popup->prepareToDie();
                 }
             } else  {// released
                 if (m_popup->getGlictList()->CastEvent(GLICT_MOUSEUP, &pos, 0, NULL)){ // if event got handled by glict
                     // ignore
                 } else {
                     // it has to die anyways
-                    m_popup->wantsDeath();
+                    m_popup->prepareToDie();
                 }
 
             }
@@ -533,26 +541,42 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         }
 
     } else if (event.button.button == SDL_BUTTON_RIGHT) {
+        g_lastmousebutton = event.button.button;
         if (event.button.state == SDL_PRESSED){
 
             // just ignore
 
         } else
         if (event.button.state == SDL_RELEASED) {
-            if (!m_popup) {
-                m_popup = new Popup();
-                desktop.AddObject(m_popup->getGlictList());
-                m_popup->addItem("Test", tmp);
-                m_popup->addItem("Test 123", tmp);
-                m_popup->getGlictList()->SetPos(pos);
-            } else {
-                m_popup->prepareToDie();
+            bool hadpopup = m_popup;
+            if (!desktop.CastEvent(GLICT_MOUSECLICK, &pos, 0)) {
+                m_mapui.handlePopup(pos.x, pos.y);
             }
+
+            if (m_popup && hadpopup ) { // if we have a popup AND it existed even before casting of click
+                performPopup(NULL,NULL,NULL); // destroy it please
+            }
+
         }
     }
 
 	// Scene();
 
+}
+void GM_Gameworld::performPopup(PopupProducerCallback cb,void*owner,void*arg) {
+    if (!m_popup) {
+        if (!cb)
+            return;
+        m_popup = new Popup();
+        desktop.AddObject(m_popup->getGlictList());
+        if (cb)
+            cb(m_popup,owner,arg);
+        /*m_popup->addItem("Test", tmp);
+        m_popup->addItem("Test 123", tmp);*/
+        m_popup->getGlictList()->SetPos(ptrx,ptry);
+    } else {
+        m_popup->prepareToDie();
+    }
 }
 
 void GM_Gameworld::beginExtendedUse(const Thing* thing, int stackpos, const Position& pos) {
@@ -719,6 +743,8 @@ std::vector<Console*>::iterator GM_Gameworld::findConsole_it(const Console* c)
 }
 void GM_Gameworld::pnlConsoleButton_OnClick(glictPos* relmousepos, glictContainer* caller)
 {
+    if (g_lastmousebutton != SDL_BUTTON_LEFT)
+        return;
     Console* c = (Console*)caller->GetCustomData();
     GM_Gameworld* gw = (GM_Gameworld*)g_game;
     //std::vector<Console*>::iterator cit = gw->findConsole_it(c);
@@ -922,4 +948,15 @@ void GM_Gameworld::MBOnDismiss(glictPos* pos, glictContainer* caller)
 	}
 
 	//delete caller;
+}
+
+void GM_Gameworld::onSetOutfit() {
+    // happens when user clicks on "Set Outfit" in right click popup menu
+    GM_Gameworld *g = (GM_Gameworld*)g_game;
+    g->m_protocol->sendRequestOutfit();
+
+    // TEMPORARY (we should wait for outfit window data before displaying outfit window)
+    g->winOutfit.window.SetVisible(true);
+
+
 }
