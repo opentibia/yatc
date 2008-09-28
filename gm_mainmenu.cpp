@@ -20,6 +20,7 @@
 
 #include <GLICT/globals.h>
 #include <GLICT/messagebox.h>
+
 #include "gm_mainmenu.h"
 #include "gm_gameworld.h"
 #include "defines.h"

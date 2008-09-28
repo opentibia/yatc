@@ -332,6 +332,7 @@
 		<Unit filename="ui/health.h" />
 		<Unit filename="ui/itemmove.h" />
 		<Unit filename="ui/login.h" />
+		<Unit filename="ui/mainmenu.cpp" />
 		<Unit filename="ui/mainmenu.h" />
 		<Unit filename="ui/options.h" />
 		<Unit filename="ui/optionsconsole.h" />
