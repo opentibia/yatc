@@ -174,7 +174,7 @@ void yatc_fopen_init(char *cmdline) {
 		}
 	}
 #else
-	printf("Getenv() not supported; leaving searchpath empty.\n");
+	printf("Getenv() not supported; leaving searchpath empty. (Perhaps HAVE_GETENV isn't defined)\n");
 #endif
 	if (cmdline) {
 		for (int i = strlen(cmdline)-1; i >= 0; i--) {

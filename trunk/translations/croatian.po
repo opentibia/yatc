@@ -1,0 +1,36 @@
+# YATC Translation to Croatian
+# Copyright (C) 2008 OpenTibia Team
+# This file is distributed under the same license as the YATC package.
+# Ivan Vucica <ivucica@gmail.com>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: YATC 0.2.2SVN\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-09-28 23:46+0200\n"
+"PO-Revision-Date: 2008-09-28 23:15+0200\n"
+"Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
+"Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=cp1250\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../ui/mainmenu.cpp:41
+msgid "Enter Game"
+msgstr "Ulaz u igru"
+
+#: ../ui/mainmenu.cpp:86
+msgid "Exit Game"
+msgstr "Izlaz"
+
+#: ../ui/mainmenu.cpp:75
+msgid "Info"
+msgstr "Info"
+
+#: ../ui/mainmenu.cpp:52
+msgid "Network Options"
+msgstr "Mrezne opcije"
+
+#: ../ui/mainmenu.cpp:63
+msgid "Options"
+msgstr "Opcije"

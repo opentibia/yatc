@@ -38,6 +38,8 @@ unsigned int MAXFPS=50;
 #include <GLICT/globals.h>
 #include <sstream>
 #include <stdlib.h>
+#include <libintl.h>
+#include <locale.h>
 #include "debugprint.h"
 #include "options.h"
 #include "engine.h"
@@ -273,6 +275,10 @@ int main(int argc, char *argv[])
 #endif
 
 
+    // set up i18n stuff
+    setlocale( LC_ALL, "" );
+    bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );
+    textdomain( "yatc" );
 
 	//setenv("SDL_VIDEODRIVER", "aalib", 0);
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, PRODUCTLONG "\n");
@@ -285,8 +291,10 @@ int main(int argc, char *argv[])
 		" There is NO WARRANTY, to the extent permitted by law. \n"
 		" Review LICENSE in " PRODUCTSHORT " distribution for details.\n");
 
+    yatc_fopen_init(argv[0]);
+    printf("Testing translation to %s:\n", getenv("LANG"));
+    printf(" %s == Enter Game\n", gettext("Enter Game"));
 
-	yatc_fopen_init(argv[0]);
 
 
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Checking graphics files existence...");

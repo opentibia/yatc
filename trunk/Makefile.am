@@ -29,6 +29,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		\
 		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp \
 		ui/uiinventory.cpp ui/uishop.cpp ui/uitrade.cpp \
+		ui/mainmenu.cpp \
 		\
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
 		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
@@ -57,6 +58,12 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/uitrade.h ui/checkbox.h \
 		\
 		product.h \
+		\
+		translations/yatc.pot translations/prepare.sh \
+		translations/merge.sh translations/polish.po
+		translations/build.sh translations/croatian.po \
+		translations/brazilian.po translations/swedish.po \
+		translations/README  /
 		\
 		yatc.cbp yatc.dev \
 		yatc.bmp yatc.ico resources.rc \
