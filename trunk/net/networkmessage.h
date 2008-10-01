@@ -64,6 +64,9 @@ class NetworkMessage
 		void addPosition(const Position& pos);
 		void addPaddingBytes(uint32_t n);
 		void addHeader();
+		void addChecksum();
+
+		uint32_t getChecksum();
 
 		void skipBytes(int size){
 			m_readPos += size;

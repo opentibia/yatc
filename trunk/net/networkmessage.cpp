@@ -255,3 +255,47 @@ void NetworkMessage::addHeader()
 		m_size += 2;
 	}
 }
+
+
+uint32_t NetworkMessage::getChecksum()
+{
+    // for 8.3+
+    // implementation of adler algorithm as per wikipedia
+    // this will just calculate checksum, it still needs to be added
+    // preparation
+    const uint16_t MOD_ADLER=65521;
+    uint8_t* data = ((uint8_t*)m_buffer) + 2;
+    size_t len = m_size-2;
+
+    // algo
+    uint32_t a = 1, b = 0;
+
+    while (len > 0)
+    {
+        size_t tlen = len > 5552 ? 5552 : len;
+        len -= tlen;
+        do
+        {
+            a += *data++;
+            b += a;
+        } while (--tlen);
+
+        a %= MOD_ADLER;
+        b %= MOD_ADLER;
+    }
+
+    return (b << 16) | a;
+
+}
+
+void NetworkMessage::addChecksum()
+{
+    // for 8.3+
+    // adds 32-bit adler checksum to bytes 2-6 and shifts remaining onwards
+    // only call after size header has been added!
+
+    uint32_t sum = getChecksum();
+    memmove(m_buffer + 6, m_buffer + 2, m_size-2);
+    *((uint32_t*)(m_buffer+2)) = sum;
+
+}
