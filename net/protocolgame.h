@@ -27,6 +27,8 @@
 #include "../gamecontent/enums.h"
 
 class NetworkMessage;
+class Thing;
+class Item;
 
 class ProtocolGame : public Protocol
 {
@@ -35,6 +37,49 @@ class ProtocolGame : public Protocol
 
 		virtual void onConnect();
 		virtual bool onRecv(NetworkMessage& msg) = 0;
+
+        //receive functions
+        virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
+        virtual bool parseSelfAppear(NetworkMessage& msg); // 0x0a
+        virtual bool parseGMActions(NetworkMessage& msg); // 0x0b
+        virtual bool parseErrorMessage(NetworkMessage& msg); // 0x14
+        virtual bool parseFYIMessage(NetworkMessage& msg); // 0x15
+        virtual bool parseWaitingList(NetworkMessage& msg); // 0x16
+        virtual bool parsePing(NetworkMessage& msg); // 0x1e
+        virtual bool parseDeath(NetworkMessage& msg); // 0x28
+        virtual bool parseCanReportBugs(NetworkMessage& msg); // 0x32
+        virtual bool parseMapDescription(NetworkMessage& msg); // 0x64
+        virtual bool parseMoveNorth(NetworkMessage& msg); // 0x65
+        virtual bool parseMoveEast(NetworkMessage& msg); // 0x66
+        virtual bool parseMoveSouth(NetworkMessage& msg); // 0x67
+        virtual bool parseMoveWest(NetworkMessage& msg); // 0x68
+        virtual bool parseUpdateTile(NetworkMessage& msg); // 0x69
+        virtual bool parseTileAddThing(NetworkMessage& msg); // 0x6A
+        virtual bool parseTileTransformThing(NetworkMessage& msg); // 0x6B
+        virtual bool parseTileRemoveThing(NetworkMessage& msg); // 0x6C
+        virtual bool parseCreatureMove(NetworkMessage& msg); // 0x6D
+        virtual bool parseOpenContainer(NetworkMessage& msg); // 0x6E
+        virtual bool parseCloseContainer(NetworkMessage& msg); // 0x6F
+        virtual bool parseContainerAddItem(NetworkMessage& msg); // 0x70
+        virtual bool parseContainerUpdateItem(NetworkMessage& msg); // 0x71
+        virtual bool parseContainerRemoveItem(NetworkMessage& msg); // 0x72
+        virtual bool parseInventorySetSlot(NetworkMessage& msg); // 0x78
+        virtual bool parseInventoryResetSlot(NetworkMessage& msg); // 0x79
+        virtual bool parseSafeTradeRequestAck(NetworkMessage& msg); // 0x7D
+        virtual bool parseSafeTradeRequestNoAck(NetworkMessage& msg); // 0x7E
+        virtual bool parseSafeTradeRequest(NetworkMessage& msg, bool ack); // 0x7D + 0x7E
+        virtual bool parseSafeTradeClose(NetworkMessage& msg); // 0x7F
+        virtual bool parseWorldLight(NetworkMessage& msg); // 0x82
+        virtual bool parseMagicEffect(NetworkMessage& msg); // 0x83
+        virtual bool parseAnimatedText(NetworkMessage& msg); // 0x84
+        virtual bool parseDistanceShot(NetworkMessage& msg); // 0x85
+        virtual bool parseCreatureSquare(NetworkMessage& msg); // 0x86
+        virtual bool parseCreatureHealth(NetworkMessage& msg); // 0x8C
+        virtual bool parseCreatureLight(NetworkMessage& msg); // 0x8D
+        virtual bool parseCreatureOutfit(NetworkMessage& msg); // 0x8E
+        virtual bool parseCreatureSpeed(NetworkMessage& msg); // 0x8F
+        virtual bool parseCreatureSkulls(NetworkMessage& msg); // 0x90
+        virtual bool parseCreatureShields(NetworkMessage& msg); // 0x91
 
 		//send functions - pure virtual
 		virtual void sendLogout() = 0;
@@ -115,6 +160,10 @@ class ProtocolGame : public Protocol
         virtual char translateSpeakClassFromInternal(SpeakClasses_t s){return s;}
 
 
+
+
+
+
 	protected:
 
 		ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM);
@@ -122,6 +171,17 @@ class ProtocolGame : public Protocol
 		virtual void sendPing() = 0;
 		virtual void sendRequestUpdateTile(const Position& pos) = 0;
 		virtual void sendRequestUpdateContainer(uint8_t containerid) = 0;
+
+
+		virtual bool setMapDescription(NetworkMessage& msg, int x, int y, int z, int width, int height);
+		virtual bool setFloorDescription(NetworkMessage& msg, int x, int y, int z, int width, int height, int offset);
+		virtual bool setTileDescription(NetworkMessage& msg, const Position& pos);
+
+        virtual Thing* internalGetThing(NetworkMessage& msg) = 0;
+        virtual Item* internalGetItem(NetworkMessage& msg, uint32_t itemid) = 0;
+		virtual bool internalSetOutfit(NetworkMessage& msg, Outfit_t& outfit) = 0;
+
+		int16_t m_skipTiles;
 
 		std::string m_password;
 		std::string m_name;
