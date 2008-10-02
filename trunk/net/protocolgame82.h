@@ -37,6 +37,9 @@ class ProtocolGame82 : public ProtocolGame
 
 		const char* getProtocolName() { return "Protocol82";}
 
+        //receive f. impl
+        bool parsePacket(uint8_t cmd, NetworkMessage& msg);
+
 		//send functions impl
 		virtual void sendLogout();
 		virtual void sendAutoWalk(const std::list<Direction>& steps);
@@ -117,14 +120,9 @@ class ProtocolGame82 : public ProtocolGame
 		virtual void sendRequestUpdateTile(const Position& pos);
 		virtual void sendRequestUpdateContainer(uint8_t containerid);
 
-		bool setMapDescription(NetworkMessage& msg, int x, int y, int z, int width, int height);
-		bool setFloorDescription(NetworkMessage& msg, int x, int y, int z, int width, int height, int offset);
-		bool setTileDescription(NetworkMessage& msg, const Position& pos);
 		Thing* internalGetThing(NetworkMessage& msg);
 		Item* internalGetItem(NetworkMessage& msg, uint32_t itemid);
 		bool internalSetOutfit(NetworkMessage& msg, Outfit_t& outfit);
-
-		int16_t m_skipTiles;
 
 		// protocol version assertion
 		virtual void checkVersion();
