@@ -31,7 +31,7 @@
 	#include "../bigint.h"
 #endif
 
-#incßlude "../stdinttypes.h"
+#include "../stdinttypes.h"
 
 class RSA{
 public:
