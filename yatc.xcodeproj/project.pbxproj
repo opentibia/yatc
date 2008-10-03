@@ -12,6 +12,7 @@
 		7F4EC8700E941C5A00A1218E /* glict.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC86F0E941C5A00A1218E /* glict.framework */; };
 		7F4EC8730E941C7300A1218E /* SDL_gfx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8720E941C7300A1218E /* SDL_gfx.framework */; };
 		7F4EC8770E941D1000A1218E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8760E941D1000A1218E /* OpenGL.framework */; };
+		7FA49D430E9695BA0016102F /* yatc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7FA49D420E9695BA0016102F /* yatc.icns */; };
 		7FA4FAB40E93D5260089D560 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FAB30E93D5260089D560 /* SDLMain.m */; };
 		7FA4FAD60E93D57E0089D560 /* confighandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FAB90E93D57E0089D560 /* confighandler.cpp */; };
 		7FA4FAD70E93D57E0089D560 /* bigint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FABA0E93D57E0089D560 /* bigint.cpp */; };
@@ -106,6 +107,7 @@
 		7F4EC86F0E941C5A00A1218E /* glict.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = glict.framework; path = /Library/Frameworks/glict.framework; sourceTree = "<absolute>"; };
 		7F4EC8720E941C7300A1218E /* SDL_gfx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_gfx.framework; path = /Library/Frameworks/SDL_gfx.framework; sourceTree = "<absolute>"; };
 		7F4EC8760E941D1000A1218E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		7FA49D420E9695BA0016102F /* yatc.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = yatc.icns; sourceTree = "<group>"; };
 		7FA4FAB20E93D5260089D560 /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
 		7FA4FAB30E93D5260089D560 /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
 		7FA4FAB90E93D57E0089D560 /* confighandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = confighandler.cpp; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7FA49D420E9695BA0016102F /* yatc.icns */,
 				7FAB542B0E963932003F2C61 /* Tibia.dat */,
 				7FAB542C0E963932003F2C61 /* Tibia.pic */,
 				7FAB542D0E963932003F2C61 /* Tibia.spr */,
@@ -516,7 +519,7 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				002F39FD09D0883400EBEB88 /* Copy Frameworks into .app bundle */,
-				7F1EE6790E9668F800DB3EDF /* ShellScript */,
+				7F1EE6790E9668F800DB3EDF /* Fix Frameworks */,
 			);
 			buildRules = (
 			);
@@ -554,19 +557,21 @@
 				7FAB542E0E963932003F2C61 /* Tibia.dat in Resources */,
 				7FAB542F0E963932003F2C61 /* Tibia.pic in Resources */,
 				7FAB54300E963932003F2C61 /* Tibia.spr in Resources */,
+				7FA49D430E9695BA0016102F /* yatc.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7F1EE6790E9668F800DB3EDF /* ShellScript */ = {
+		7F1EE6790E9668F800DB3EDF /* Fix Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Fix Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
