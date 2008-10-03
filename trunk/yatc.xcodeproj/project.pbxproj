@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		002F39FA09D0881F00EBEB88 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
 		002F3A0009D0884600EBEB88 /* SDL.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
+		7F4EC8700E941C5A00A1218E /* glict.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC86F0E941C5A00A1218E /* glict.framework */; };
+		7F4EC8730E941C7300A1218E /* SDL_gfx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8720E941C7300A1218E /* SDL_gfx.framework */; };
+		7F4EC8770E941D1000A1218E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8760E941D1000A1218E /* OpenGL.framework */; };
 		7FA4FAB40E93D5260089D560 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FAB30E93D5260089D560 /* SDLMain.m */; };
 		7FA4FAD60E93D57E0089D560 /* confighandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FAB90E93D57E0089D560 /* confighandler.cpp */; };
 		7FA4FAD70E93D57E0089D560 /* bigint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FABA0E93D57E0089D560 /* bigint.cpp */; };
 		7FA4FAD80E93D57E0089D560 /* enginesdl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FABB0E93D57E0089D560 /* enginesdl.cpp */; };
-		7FA4FAD90E93D57E0089D560 /* exchndl2.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FABC0E93D57E0089D560 /* exchndl2.cxx */; };
 		7FA4FADA0E93D57E0089D560 /* debugprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FABD0E93D57E0089D560 /* debugprint.cpp */; };
 		7FA4FADB0E93D57E0089D560 /* console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FABE0E93D57E0089D560 /* console.cpp */; };
 		7FA4FADC0E93D57E0089D560 /* creatureui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FABF0E93D57E0089D560 /* creatureui.cpp */; };
@@ -42,7 +44,6 @@
 		7FA4FB150E93D5990089D560 /* sprdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB140E93D5990089D560 /* sprdata.c */; };
 		7FA4FB300E93D5A10089D560 /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB170E93D5A10089D560 /* connection.cpp */; };
 		7FA4FB310E93D5A10089D560 /* encryption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB190E93D5A10089D560 /* encryption.cpp */; };
-		7FA4FB320E93D5A10089D560 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB1B0E93D5A10089D560 /* Makefile */; };
 		7FA4FB330E93D5A10089D560 /* networkmessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB1C0E93D5A10089D560 /* networkmessage.cpp */; };
 		7FA4FB340E93D5A10089D560 /* protocolgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB1E0E93D5A10089D560 /* protocolgame.cpp */; };
 		7FA4FB350E93D5A10089D560 /* protocolgame80.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB200E93D5A10089D560 /* protocolgame80.cpp */; };
@@ -54,7 +55,6 @@
 		7FA4FB3B0E93D5A10089D560 /* protocollogin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB2C0E93D5A10089D560 /* protocollogin.cpp */; };
 		7FA4FB3C0E93D5A10089D560 /* rsa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB2E0E93D5A10089D560 /* rsa.cpp */; };
 		7FA4FB5B0E93D5AA0089D560 /* mainmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB430E93D5AA0089D560 /* mainmenu.cpp */; };
-		7FA4FB5C0E93D5AA0089D560 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB450E93D5AA0089D560 /* Makefile */; };
 		7FA4FB5D0E93D5AA0089D560 /* optionsui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB4D0E93D5AA0089D560 /* optionsui.cpp */; };
 		7FA4FB5E0E93D5AA0089D560 /* tutorialhints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB4F0E93D5AA0089D560 /* tutorialhints.cpp */; };
 		7FA4FB5F0E93D5AA0089D560 /* uicontainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB510E93D5AA0089D560 /* uicontainer.cpp */; };
@@ -67,8 +67,14 @@
 		7FA4FB780E93D5B30089D560 /* globalvars.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB6A0E93D5B30089D560 /* globalvars.cpp */; };
 		7FA4FB790E93D5B30089D560 /* inventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB6C0E93D5B30089D560 /* inventory.cpp */; };
 		7FA4FB7A0E93D5B30089D560 /* item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB6E0E93D5B30089D560 /* item.cpp */; };
-		7FA4FB7B0E93D5B30089D560 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB700E93D5B30089D560 /* Makefile */; };
 		7FA4FB7C0E93D5B30089D560 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB710E93D5B30089D560 /* map.cpp */; };
+		7FAB542E0E963932003F2C61 /* Tibia.dat in Resources */ = {isa = PBXBuildFile; fileRef = 7FAB542B0E963932003F2C61 /* Tibia.dat */; };
+		7FAB542F0E963932003F2C61 /* Tibia.pic in Resources */ = {isa = PBXBuildFile; fileRef = 7FAB542C0E963932003F2C61 /* Tibia.pic */; };
+		7FAB54300E963932003F2C61 /* Tibia.spr in Resources */ = {isa = PBXBuildFile; fileRef = 7FAB542D0E963932003F2C61 /* Tibia.spr */; };
+		7FEE6E3E0E9651490011CCC8 /* glict.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F4EC86F0E941C5A00A1218E /* glict.framework */; };
+		7FEE6E3F0E96514F0011CCC8 /* SDL_gfx.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F4EC8720E941C7300A1218E /* SDL_gfx.framework */; };
+		7FEE6E470E9651720011CCC8 /* GMP.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7FEE6E460E9651720011CCC8 /* GMP.framework */; };
+		7FEE6E5D0E9651870011CCC8 /* GMP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FEE6E460E9651720011CCC8 /* GMP.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -80,6 +86,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7FEE6E470E9651720011CCC8 /* GMP.framework in Copy Frameworks into .app bundle */,
+				7FEE6E3F0E96514F0011CCC8 /* SDL_gfx.framework in Copy Frameworks into .app bundle */,
+				7FEE6E3E0E9651490011CCC8 /* glict.framework in Copy Frameworks into .app bundle */,
 				002F3A0009D0884600EBEB88 /* SDL.framework in Copy Frameworks into .app bundle */,
 			);
 			name = "Copy Frameworks into .app bundle";
@@ -94,12 +103,14 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* yatc_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yatc_Prefix.pch; sourceTree = "<group>"; };
+		7F4EC86F0E941C5A00A1218E /* glict.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = glict.framework; path = /Library/Frameworks/glict.framework; sourceTree = "<absolute>"; };
+		7F4EC8720E941C7300A1218E /* SDL_gfx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_gfx.framework; path = /Library/Frameworks/SDL_gfx.framework; sourceTree = "<absolute>"; };
+		7F4EC8760E941D1000A1218E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		7FA4FAB20E93D5260089D560 /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
 		7FA4FAB30E93D5260089D560 /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
 		7FA4FAB90E93D57E0089D560 /* confighandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = confighandler.cpp; sourceTree = "<group>"; };
 		7FA4FABA0E93D57E0089D560 /* bigint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bigint.cpp; sourceTree = "<group>"; };
 		7FA4FABB0E93D57E0089D560 /* enginesdl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = enginesdl.cpp; sourceTree = "<group>"; };
-		7FA4FABC0E93D57E0089D560 /* exchndl2.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exchndl2.cxx; sourceTree = "<group>"; };
 		7FA4FABD0E93D57E0089D560 /* debugprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = debugprint.cpp; sourceTree = "<group>"; };
 		7FA4FABE0E93D57E0089D560 /* console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = console.cpp; sourceTree = "<group>"; };
 		7FA4FABF0E93D57E0089D560 /* creatureui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = creatureui.cpp; sourceTree = "<group>"; };
@@ -163,7 +174,6 @@
 		7FA4FB180E93D5A10089D560 /* connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connection.h; sourceTree = "<group>"; };
 		7FA4FB190E93D5A10089D560 /* encryption.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = encryption.cpp; sourceTree = "<group>"; };
 		7FA4FB1A0E93D5A10089D560 /* encryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encryption.h; sourceTree = "<group>"; };
-		7FA4FB1B0E93D5A10089D560 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		7FA4FB1C0E93D5A10089D560 /* networkmessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = networkmessage.cpp; sourceTree = "<group>"; };
 		7FA4FB1D0E93D5A10089D560 /* networkmessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = networkmessage.h; sourceTree = "<group>"; };
 		7FA4FB1E0E93D5A10089D560 /* protocolgame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame.cpp; sourceTree = "<group>"; };
@@ -191,7 +201,6 @@
 		7FA4FB420E93D5AA0089D560 /* login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = login.h; sourceTree = "<group>"; };
 		7FA4FB430E93D5AA0089D560 /* mainmenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mainmenu.cpp; sourceTree = "<group>"; };
 		7FA4FB440E93D5AA0089D560 /* mainmenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mainmenu.h; sourceTree = "<group>"; };
-		7FA4FB450E93D5AA0089D560 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		7FA4FB460E93D5AA0089D560 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
 		7FA4FB470E93D5AA0089D560 /* optionsconsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = optionsconsole.h; sourceTree = "<group>"; };
 		7FA4FB480E93D5AA0089D560 /* optionsgeneral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = optionsgeneral.h; sourceTree = "<group>"; };
@@ -224,14 +233,17 @@
 		7FA4FB6D0E93D5B30089D560 /* inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inventory.h; sourceTree = "<group>"; };
 		7FA4FB6E0E93D5B30089D560 /* item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = item.cpp; sourceTree = "<group>"; };
 		7FA4FB6F0E93D5B30089D560 /* item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = item.h; sourceTree = "<group>"; };
-		7FA4FB700E93D5B30089D560 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		7FA4FB710E93D5B30089D560 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
 		7FA4FB720E93D5B30089D560 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
 		7FA4FB730E93D5B30089D560 /* position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = position.h; sourceTree = "<group>"; };
 		7FA4FB740E93D5B30089D560 /* shop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shop.h; sourceTree = "<group>"; };
 		7FA4FB750E93D5B30089D560 /* thing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thing.h; sourceTree = "<group>"; };
+		7FAB542B0E963932003F2C61 /* Tibia.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.dat; sourceTree = "<group>"; };
+		7FAB542C0E963932003F2C61 /* Tibia.pic */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.pic; sourceTree = "<group>"; };
+		7FAB542D0E963932003F2C61 /* Tibia.spr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.spr; sourceTree = "<group>"; };
+		7FEE6E460E9651720011CCC8 /* GMP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GMP.framework; path = Library/Frameworks/GMP.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* yatc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yatc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* YATC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = YATC.app; path = build/Debug/YATC.app; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,8 +251,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FEE6E5D0E9651870011CCC8 /* GMP.framework in Frameworks */,
+				7F4EC8700E941C5A00A1218E /* glict.framework in Frameworks */,
 				002F39FA09D0881F00EBEB88 /* SDL.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				7F4EC8730E941C7300A1218E /* SDL_gfx.framework in Frameworks */,
+				7F4EC8770E941D1000A1218E /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +266,10 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FEE6E460E9651720011CCC8 /* GMP.framework */,
+				7F4EC8760E941D1000A1218E /* OpenGL.framework */,
+				7F4EC8720E941C7300A1218E /* SDL_gfx.framework */,
+				7F4EC86F0E941C5A00A1218E /* glict.framework */,
 				002F39F909D0881F00EBEB88 /* SDL.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
@@ -268,7 +288,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* yatc.app */,
+				8D1107320486CEB800E47090 /* YATC.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -297,6 +317,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7FAB542B0E963932003F2C61 /* Tibia.dat */,
+				7FAB542C0E963932003F2C61 /* Tibia.pic */,
+				7FAB542D0E963932003F2C61 /* Tibia.spr */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 			);
@@ -364,7 +387,6 @@
 				7FA4FAB90E93D57E0089D560 /* confighandler.cpp */,
 				7FA4FABA0E93D57E0089D560 /* bigint.cpp */,
 				7FA4FABB0E93D57E0089D560 /* enginesdl.cpp */,
-				7FA4FABC0E93D57E0089D560 /* exchndl2.cxx */,
 				7FA4FABD0E93D57E0089D560 /* debugprint.cpp */,
 				7FA4FABE0E93D57E0089D560 /* console.cpp */,
 				7FA4FABF0E93D57E0089D560 /* creatureui.cpp */,
@@ -401,7 +423,6 @@
 				7FA4FB180E93D5A10089D560 /* connection.h */,
 				7FA4FB190E93D5A10089D560 /* encryption.cpp */,
 				7FA4FB1A0E93D5A10089D560 /* encryption.h */,
-				7FA4FB1B0E93D5A10089D560 /* Makefile */,
 				7FA4FB1C0E93D5A10089D560 /* networkmessage.cpp */,
 				7FA4FB1D0E93D5A10089D560 /* networkmessage.h */,
 				7FA4FB1E0E93D5A10089D560 /* protocolgame.cpp */,
@@ -436,7 +457,6 @@
 				7FA4FB420E93D5AA0089D560 /* login.h */,
 				7FA4FB430E93D5AA0089D560 /* mainmenu.cpp */,
 				7FA4FB440E93D5AA0089D560 /* mainmenu.h */,
-				7FA4FB450E93D5AA0089D560 /* Makefile */,
 				7FA4FB460E93D5AA0089D560 /* options.h */,
 				7FA4FB470E93D5AA0089D560 /* optionsconsole.h */,
 				7FA4FB480E93D5AA0089D560 /* optionsgeneral.h */,
@@ -476,7 +496,6 @@
 				7FA4FB6D0E93D5B30089D560 /* inventory.h */,
 				7FA4FB6E0E93D5B30089D560 /* item.cpp */,
 				7FA4FB6F0E93D5B30089D560 /* item.h */,
-				7FA4FB700E93D5B30089D560 /* Makefile */,
 				7FA4FB710E93D5B30089D560 /* map.cpp */,
 				7FA4FB720E93D5B30089D560 /* map.h */,
 				7FA4FB730E93D5B30089D560 /* position.h */,
@@ -489,9 +508,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* yatc */ = {
+		8D1107260486CEB800E47090 /* YATC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "yatc" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "YATC" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -502,10 +521,10 @@
 			);
 			dependencies = (
 			);
-			name = yatc;
+			name = YATC;
 			productInstallPath = "$(HOME)/Applications";
 			productName = yatc;
-			productReference = 8D1107320486CEB800E47090 /* yatc.app */;
+			productReference = 8D1107320486CEB800E47090 /* YATC.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -520,7 +539,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* yatc */,
+				8D1107260486CEB800E47090 /* YATC */,
 			);
 		};
 /* End PBXProject section */
@@ -531,6 +550,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				7FAB542E0E963932003F2C61 /* Tibia.dat in Resources */,
+				7FAB542F0E963932003F2C61 /* Tibia.pic in Resources */,
+				7FAB54300E963932003F2C61 /* Tibia.spr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +567,6 @@
 				7FA4FAD60E93D57E0089D560 /* confighandler.cpp in Sources */,
 				7FA4FAD70E93D57E0089D560 /* bigint.cpp in Sources */,
 				7FA4FAD80E93D57E0089D560 /* enginesdl.cpp in Sources */,
-				7FA4FAD90E93D57E0089D560 /* exchndl2.cxx in Sources */,
 				7FA4FADA0E93D57E0089D560 /* debugprint.cpp in Sources */,
 				7FA4FADB0E93D57E0089D560 /* console.cpp in Sources */,
 				7FA4FADC0E93D57E0089D560 /* creatureui.cpp in Sources */,
@@ -574,7 +595,6 @@
 				7FA4FB150E93D5990089D560 /* sprdata.c in Sources */,
 				7FA4FB300E93D5A10089D560 /* connection.cpp in Sources */,
 				7FA4FB310E93D5A10089D560 /* encryption.cpp in Sources */,
-				7FA4FB320E93D5A10089D560 /* Makefile in Sources */,
 				7FA4FB330E93D5A10089D560 /* networkmessage.cpp in Sources */,
 				7FA4FB340E93D5A10089D560 /* protocolgame.cpp in Sources */,
 				7FA4FB350E93D5A10089D560 /* protocolgame80.cpp in Sources */,
@@ -586,7 +606,6 @@
 				7FA4FB3B0E93D5A10089D560 /* protocollogin.cpp in Sources */,
 				7FA4FB3C0E93D5A10089D560 /* rsa.cpp in Sources */,
 				7FA4FB5B0E93D5AA0089D560 /* mainmenu.cpp in Sources */,
-				7FA4FB5C0E93D5AA0089D560 /* Makefile in Sources */,
 				7FA4FB5D0E93D5AA0089D560 /* optionsui.cpp in Sources */,
 				7FA4FB5E0E93D5AA0089D560 /* tutorialhints.cpp in Sources */,
 				7FA4FB5F0E93D5AA0089D560 /* uicontainer.cpp in Sources */,
@@ -599,7 +618,6 @@
 				7FA4FB780E93D5B30089D560 /* globalvars.cpp in Sources */,
 				7FA4FB790E93D5B30089D560 /* inventory.cpp in Sources */,
 				7FA4FB7A0E93D5B30089D560 /* item.cpp in Sources */,
-				7FA4FB7B0E93D5B30089D560 /* Makefile in Sources */,
 				7FA4FB7C0E93D5B30089D560 /* map.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,6 +644,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = USE_OPENGL;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = yatc;
@@ -643,6 +662,7 @@
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = USE_OPENGL;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = yatc;
@@ -666,6 +686,7 @@
 					"$(HEADER_SEARCH_PATHS)",
 				);
 				PREBINDING = NO;
+				PRODUCT_NAME = "YATC - Yet Another Tibia Client";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Debug;
@@ -686,6 +707,7 @@
 					"$(HEADER_SEARCH_PATHS)",
 				);
 				PREBINDING = NO;
+				PRODUCT_NAME = "YATC - Yet Another Tibia Client";
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
@@ -693,7 +715,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "yatc" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "YATC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,

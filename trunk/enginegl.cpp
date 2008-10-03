@@ -25,8 +25,11 @@
 /// \sa EngineGL
 
 #ifdef USE_OPENGL
-
+#ifndef __APPLE__
 #include <GL/gl.h>
+#else
+#include <OpenGL/gl.h>
+#endif
 #include <GLICT/globals.h>
 #include "options.h"
 #include "enginegl.h"

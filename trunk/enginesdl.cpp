@@ -38,6 +38,11 @@ EngineSDL::EngineSDL()
 	doResize(m_width, m_height);
 
 	//glictGlobals.drawPartialOut = false;
+#if (GLICT_APIREV >= 79)
+	glictGlobals.mayUseGL = false;
+#else
+#warning To disable any hanging GL usage in GLICT when using SDL, you need GLICT APIREV 79+. Required for Mac.
+#endif
 
     Sprite*a,*b;
 
