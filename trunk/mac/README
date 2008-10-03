@@ -1,0 +1,19 @@
+Hi,
+
+I'll just give credit to Third Cog Software for producing the fine frameworks for SDL libraries
+we use. Also, thanks to whoever produced GMP framework for use with Glasgow Haskell Compiler.
+
+Additional thanks to Third Cog Software (Joachim Bengtsson, you rock!) for help from their 
+site with regards how to properly produce frameworks, namely GLICT framework, and for help on 
+how to properly embed frameworks.
+
+Also I found a blog entry that told me that I need to select header files to be PUBLIC in
+order for them to be included in framework. Thanks to PantherModem!
+
+http://thirdcog.eu/apps/frameworks
+http://panthermodem.com/blog/?page_id=174
+
+I'll probably add the frameworks to .../svnroot/yatc/lib/mac later on. I just wanted to
+give credit where credit is due.
+
+-- ivucica

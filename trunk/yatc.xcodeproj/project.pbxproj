@@ -243,7 +243,7 @@
 		7FAB542D0E963932003F2C61 /* Tibia.spr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.spr; sourceTree = "<group>"; };
 		7FEE6E460E9651720011CCC8 /* GMP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GMP.framework; path = Library/Frameworks/GMP.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* YATC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = YATC.app; path = build/Debug/YATC.app; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* yatc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yatc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,7 +288,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* YATC.app */,
+				8D1107320486CEB800E47090 /* yatc.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -516,6 +516,7 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				002F39FD09D0883400EBEB88 /* Copy Frameworks into .app bundle */,
+				7F1EE6790E9668F800DB3EDF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -524,7 +525,7 @@
 			name = YATC;
 			productInstallPath = "$(HOME)/Applications";
 			productName = yatc;
-			productReference = 8D1107320486CEB800E47090 /* YATC.app */;
+			productReference = 8D1107320486CEB800E47090 /* yatc.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -557,6 +558,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7F1EE6790E9668F800DB3EDF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = " \n# http://thirdcog.eu/apps/frameworks\nfunction relocateLibraryInCurrentApp() {\n  install_name_tool -change $1$2 @executable_path/../Frameworks/$2 $CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\n}\nrelocateLibraryInCurrentApp '' GMP.framework/Versions/A/GMP #note the space";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
@@ -678,6 +695,8 @@
 					/Library/Frameworks,
 					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = "HAVE_GMP_H=1";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "HAVE_GMP_H=1";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -699,6 +718,8 @@
 					/Library/Frameworks,
 					"$(FRAMEWORK_SEARCH_PATHS)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = "HAVE_GMP_H=1";
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "HAVE_GMP_H=1";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (

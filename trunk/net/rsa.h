@@ -22,12 +22,16 @@
 
 #include "../config.h"
 #if HAVE_GMP_H
-#include <gmp.h>
+	#ifndef __APPLE__
+		#include <gmp.h>
+	#else
+		#include <GMP/gmp.h>
+	#endif
 #else
-#include "../bigint.h"
+	#include "../bigint.h"
 #endif
 
-#include "../stdinttypes.h"
+#incßlude "../stdinttypes.h"
 
 class RSA{
 public:

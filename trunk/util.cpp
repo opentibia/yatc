@@ -42,6 +42,7 @@ void str_replace(std::string &s, const std::string& what, const std::string& wit
 
 
 void NativeGUIError(const char* text, const char *title) {
+	printf("NativeGUIError('%s','%s');\n", text, title);
 	#ifdef WIN32
 		#ifndef WINCE
 			MessageBox(HWND_DESKTOP, text, title, MB_ICONSTOP);
