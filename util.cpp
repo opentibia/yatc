@@ -147,15 +147,24 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 }
 
 #ifndef DESTDIRS
-#define DESTDIRS ""
+	#ifndef __APPLE__
+		#define DESTDIRS ""
+	#else
+		#define DESTDIRS "Resources/"
+	#endif
 #endif
 
 void yatc_fopen_init(char *cmdline) {
 #if (HAVE_GETENV==1)
 	const char *searchpath = getenv("YATC_PATH");
+#else
+	printf("Getenv() not supported; leaving searchpath empty. (Perhaps HAVE_GETENV isn't defined)\n");
+	const char *searchpath = NULL;
+#endif
+	char temp[250];
 	const char *lp;
 	if (!searchpath)
-		searchpath = "~/.yatc/:/usr/games/share/yatc-data/:/usr/games/share/tibia-data/" DESTDIRS;
+		searchpath = "~/.yatc/:/usr/games/share/yatc-data/:/usr/games/share/tibia-data/:" DESTDIRS;
 
 	lp = searchpath;
 	for (const char* p=searchpath; ; p++) {
@@ -173,9 +182,6 @@ void yatc_fopen_init(char *cmdline) {
 				break;
 		}
 	}
-#else
-	printf("Getenv() not supported; leaving searchpath empty. (Perhaps HAVE_GETENV isn't defined)\n");
-#endif
 	if (cmdline) {
 		for (int i = strlen(cmdline)-1; i >= 0; i--) {
 			if (cmdline[i] == '/') {
@@ -184,6 +190,11 @@ void yatc_fopen_init(char *cmdline) {
 				tmp[i+1]=0;
 				searchpaths.insert(searchpaths.end(), std::string(tmp));
 				printf("Adding extra path %s\n", tmp);
+#ifdef __APPLE__
+				std::string tmp2 = std::string(tmp) + "../Resources/";
+				printf("Also adding Mac bundle resource path %s\n", tmp2.c_str());
+				searchpaths.insert(searchpaths.end(), tmp2);
+#endif
 				delete[] tmp;
 				break;
 			}

@@ -18,7 +18,11 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#ifndef __APPLE__
 #include <libintl.h>
+#else
+#define gettext(x) (x)
+#endif
 #include "mainmenu.h"
 #include "../skin.h"
 #include "../options.h"

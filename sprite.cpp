@@ -18,7 +18,11 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#ifndef __APPLE__
 #include <SDL/SDL_rotozoom.h> // library you need is called SDL_gfx
+#else
+#include <SDL_gfx/SDL_rotozoom.h>
+#endif
 
 #ifdef USE_OPENGL
 #ifdef __APPLE__

@@ -513,6 +513,7 @@ bool MapUI::handlePopup(int x, int y) {
         p.x = x; p.y = y;
         ((GM_Gameworld*)g_game)->performPopup(MapUI::makePopup,this,&p);
     }
+	return true;
 }
 
 void MapUI::makePopup(Popup*popup,void*owner,void*arg) {

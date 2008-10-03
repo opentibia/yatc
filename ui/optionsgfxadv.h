@@ -82,6 +82,9 @@ public:
 		btnEngineOGL.SetFont("minifont",8);
 		btnEngineOGL.SetCustomData(this);
 		btnEngineOGL.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeEngine);
+#ifndef USE_OPENGL
+		btnEngineOGL.SetEnabled(false);
+#endif
 
 		//window.AddObject(&btnEngineDX);
 		//btnEngineDX.SetPos(154, 30);
