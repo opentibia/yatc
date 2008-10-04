@@ -220,6 +220,14 @@ bool ProtocolGame::parsePacket(uint8_t cmd, NetworkMessage& msg)
 			return parseOutfitWindow(msg);
 		case 0xD2:
 			return parseVipState(msg);
+		case 0xD3:
+			return parseVipLogin(msg);
+		case 0xD4:
+			return parseVipLogout(msg);
+		case 0xF0:
+			return parseQuestList(msg);
+		case 0xF1:
+			return parseQuestPartList(msg);
     }
     return false;
 }
@@ -1148,7 +1156,40 @@ bool ProtocolGame::parseVipState(NetworkMessage& msg)
 	Notifications::onVipState(creatureID, name, online);
 	return true;
 }
-
+bool ProtocolGame::parseVipLogin(NetworkMessage& msg)
+{
+	MSG_READ_U32(creatureID);
+	Notifications::onVipLogin(creatureID);
+	return true;
+}
+bool ProtocolGame::parseVipLogout(NetworkMessage& msg)
+{
+	MSG_READ_U32(creatureID);
+	Notifications::onVipLogout(creatureID);
+	return true;
+}
+bool ProtocolGame::parseQuestList(NetworkMessage& msg)
+{
+	//TODO.GUI
+	MSG_READ_U16(nQuests);
+	for(uint32_t i = 0; i < nQuests; ++i){
+		MSG_READ_U16(questsID);
+		MSG_READ_STRING(questsName);
+		MSG_READ_U8(questsState);
+	}
+	return true;
+}
+bool ProtocolGame::parseQuestPartList(NetworkMessage& msg)
+{
+	//TODO.GUI
+	MSG_READ_U16(questsID);
+	MSG_READ_U8(nMission);
+	for(uint32_t i = 0; i < nMission; ++i){
+		MSG_READ_STRING(questsName);
+		MSG_READ_STRING(questsDesc);
+	}
+	return true;
+}
 
 // generic structure parsing functions
 bool ProtocolGame::setMapDescription(NetworkMessage& msg, int x, int y, int z, int width, int height)

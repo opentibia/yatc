@@ -102,6 +102,11 @@ class ProtocolGame : public Protocol
 		virtual bool parseFloorChangeDown(NetworkMessage& msg); // 0xBF
 		virtual bool parseOutfitWindow(NetworkMessage& msg); // 0xC8
 		virtual bool parseVipState(NetworkMessage& msg); // 0xD2
+		virtual bool parseVipLogin(NetworkMessage& msg); // 0xD3
+		virtual bool parseVipLogout(NetworkMessage& msg); // 0xD4
+		virtual bool parseQuestList(NetworkMessage& msg); // 0xF0
+		virtual bool parseQuestPartList(NetworkMessage& msg); // 0xF1
+
 
 
 
