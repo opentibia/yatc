@@ -80,7 +80,32 @@ class ProtocolGame : public Protocol
         virtual bool parseCreatureSpeed(NetworkMessage& msg); // 0x8F
         virtual bool parseCreatureSkulls(NetworkMessage& msg); // 0x90
         virtual bool parseCreatureShields(NetworkMessage& msg); // 0x91
+		virtual bool parseItemTextWindow(NetworkMessage& msg); // 0x96
+		virtual bool parseHouseTextWindow(NetworkMessage& msg); // 0x97
+		virtual bool parsePlayerStats(NetworkMessage& msg); // 0xA0
+		virtual bool parsePlayerSkills(NetworkMessage& msg); // 0xA1
+		virtual bool parsePlayerIcons(NetworkMessage& msg); // 0xA2
+		virtual bool parsePlayerCancelAttack(NetworkMessage& msg); // 0xA3
+		virtual bool parseCreatureSpeak(NetworkMessage& msg); // 0xAA
+		virtual bool parseChannelList(NetworkMessage& msg); // 0xAB
+		virtual bool parseOpenChannel(NetworkMessage& msg); // 0xAC
+		virtual bool parseOpenPrivatePlayerChat(NetworkMessage& msg); // 0xAD
+		virtual bool parseOpenRuleViolation(NetworkMessage& msg); // 0xAE
+		virtual bool parseRuleViolationAF(NetworkMessage& msg); // 0xAF
+		virtual bool parseRuleViolationB0(NetworkMessage& msg); // 0xB0
+		virtual bool parseRuleViolationB1(NetworkMessage& msg); // 0xB1
+		virtual bool parseCreatePrivateChannel(NetworkMessage& msg); // 0xB2
+		virtual bool parseClosePrivateChannel(NetworkMessage& msg); // 0xB3
+		virtual bool parseTextMessage(NetworkMessage& msg); // 0xB4
+		virtual bool parsePlayerCancelWalk(NetworkMessage& msg); // 0xB5
+		virtual bool parseFloorChangeUp(NetworkMessage& msg); // 0xBE
+		virtual bool parseFloorChangeDown(NetworkMessage& msg); // 0xBF
+		virtual bool parseOutfitWindow(NetworkMessage& msg); // 0xC8
+		virtual bool parseVipState(NetworkMessage& msg); // 0xD2
 
+
+
+	
 		//send functions - pure virtual
 		virtual void sendLogout() = 0;
 		virtual void sendAutoWalk(const std::list<Direction>& steps) = 0;
@@ -158,9 +183,7 @@ class ProtocolGame : public Protocol
         // translators
         virtual SpeakClasses_t translateSpeakClassToInternal(char s){return (SpeakClasses_t)s;}
         virtual char translateSpeakClassFromInternal(SpeakClasses_t s){return s;}
-
-
-
+		virtual MessageType_t translateTextMessageToInternal(uint8_t messageType) {return (MessageType_t)messageType;}
 
 
 
