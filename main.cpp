@@ -183,8 +183,9 @@ void setIcon()
     printf("Setting icon\n");
 	g_engine = NULL;
 	SDL_WM_SetCaption(PRODUCTNAME, PRODUCTNAME);
-	SpriteSDL *s = new SpriteSDL("Tibia.spr", 13855);
-	SpriteSDL *st = new SpriteSDL("Tibia.spr", 13575);
+	ObjectType* o = Objects::getInstance()->getOutfitType(130);
+	SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)*4]);
+	SpriteSDL *st = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)*5]);
 	s->templatedColorize(st, 79, 94, 88, 82);
 	s->setAsIcon();
 	delete s;
@@ -340,7 +341,6 @@ int main(int argc, char *argv[])
 		NativeGUIError("Loading the data file 'Tibia.dat' has failed.\nPlease place 'Tibia.dat' in the same folder as " PRODUCTSHORT ".", PRODUCTSHORT " Fatal Error");
 		exit(1);
 	}
-
 
 	setIcon(); // must be called prior to first call to SDL_SetVideoMode() (currently done in engine)
 

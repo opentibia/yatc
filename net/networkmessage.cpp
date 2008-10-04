@@ -292,10 +292,13 @@ void NetworkMessage::addChecksum()
 {
     // for 8.3+
     // adds 32-bit adler checksum to bytes 2-6 and shifts remaining onwards
-    // only call after size header has been added!
+    // only call after msg is encrypted!
 
-    uint32_t sum = getChecksum();
-    memmove(m_buffer + 6, m_buffer + 2, m_size-2);
-    *((uint32_t*)(m_buffer+2)) = sum;
+	if(canWrite(4)){
+		uint32_t sum = getChecksum();
+		memmove(m_buffer + 4, m_buffer, m_size);
+		*((uint32_t*)(m_buffer)) = sum;
+		m_size += 4;
+	}
 
 }

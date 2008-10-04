@@ -18,31 +18,50 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifndef __PROTOCOLLOGIN_H
-#define __PROTOCOLLOGIN_H
 
-#include <string>
-#include "connection.h"
+#ifndef __PROTOCOLGAME83_H
+#define __PROTOCOLGAME83_H
 
-class ProtocolLogin : public Protocol
+#include "protocolgame.h"
+#include "../notifications.h"
+
+class Thing;
+class Item;
+
+class ProtocolGame83 : public ProtocolGame
 {
 	public:
-		virtual ~ProtocolLogin() {};
+		virtual ~ProtocolGame83();
 
-		void setCallback(void*);
-
-		virtual void onConnect();
 		virtual bool onRecv(NetworkMessage& msg);
 
+		const char* getProtocolName() { return "Protocol83";}
+
+        //receive f. impl
+        bool parsePacket(uint8_t cmd, NetworkMessage& msg);
+
+
+        // translators
+        virtual char translateSpeakClassFromInternal(SpeakClasses_t s);
+        virtual SpeakClasses_t translateSpeakClassToInternal(char s);
+		virtual MessageType_t translateTextMessageToInternal(uint8_t messageType);
+
+		// readonly protocol props
+		virtual bool hasChecksum() const { return true; }
+
 	protected:
-		ProtocolLogin(const std::string& account, const std::string& password);
+		ProtocolGame83(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
-		const char* getProtocolName() { return "Protocol Login"; }
+		Thing* internalGetThing(NetworkMessage& msg);
+		Item* internalGetItem(NetworkMessage& msg, uint32_t itemid);
+		bool internalSetOutfit(NetworkMessage& msg, Outfit_t& outfit);
 
-		std::string m_accountname, m_password;
-		uint32_t m_account;
+		// protocol version assertion
+		virtual void checkVersion();
 
 		friend class ProtocolConfig;
 };
 
 #endif
+
+

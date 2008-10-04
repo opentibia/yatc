@@ -197,11 +197,12 @@ class ProtocolGame : public Protocol
         virtual char translateSpeakClassFromInternal(SpeakClasses_t s){return s;}
 		virtual MessageType_t translateTextMessageToInternal(uint8_t messageType) {return (MessageType_t)messageType;}
 
-
+		// readonly properties of protocol
+		virtual bool hasChecksum() const { return false; }
 
 	protected:
 
-		ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM);
+		ProtocolGame(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
 		virtual void sendPing();
 		virtual void sendRequestUpdateTile(const Position& pos);
@@ -218,9 +219,11 @@ class ProtocolGame : public Protocol
 
 		int16_t m_skipTiles;
 
+		std::string m_accountname;
 		std::string m_password;
 		std::string m_name;
-		int m_account;
+		uint32_t m_account;
+	
 		bool m_isGM;
 		NetworkMessage m_outputMessage;
 

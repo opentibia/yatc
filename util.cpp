@@ -187,7 +187,7 @@ void yatc_fopen_init(char *cmdline) {
 		for (int i = strlen(cmdline)-1; i >= 0; i--) {
 			if (cmdline[i] == '/') {
 				char *tmp = new char[i+2];
-				memcpy(tmp, cmdline, strlen(cmdline));
+				memcpy(tmp, cmdline, i+1);
 				tmp[i+1]=0;
 				searchpaths.insert(searchpaths.end(), std::string(tmp));
 				printf("Adding extra path %s\n", tmp);

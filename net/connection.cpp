@@ -37,6 +37,7 @@
 #include "protocolgame82.h"
 #include "protocolgame821.h"
 #include "protocolgame822.h"
+#include "protocolgame83.h"
 #include "../debugprint.h"
 #include "../util.h" // yatc_fopen
 
@@ -49,7 +50,7 @@ ProtocolConfig::ProtocolConfig()
 {
 	m_host = "localhost";
 	m_port = 7171;
-	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_822);
+	setVersion(CLIENT_OS_WIN, CLIENT_VERSION_830);
 	setServerType(SERVER_OTSERV);
 	setVersionOverride(0); // no override
 }
@@ -85,6 +86,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 		break;
 	case CLIENT_VERSION_822:
 		m_clientVersion = CLIENT_VERSION_822;
+		break;
+	case CLIENT_VERSION_830:
+		m_clientVersion = CLIENT_VERSION_830;
 		break;
 	default:
 		ASSERT(0);
@@ -130,7 +134,14 @@ ClientVersion_t ProtocolConfig::detectVersion()
         sprSignature == 0x489980a5 &&
         picSignature == 0x48562106)
         return CLIENT_VERSION_822;
-
+	
+	// 8.30 == 8.31; prefer 8.31
+#warning FIXME FIXME need to be 8.31 here
+    if (datSignature == 0x489980a1 &&
+        sprSignature == 0x48c8e712 &&
+        picSignature == 0x48562106)
+        return CLIENT_VERSION_830;
+	
 	return CLIENT_VERSION_AUTO; // failure
 }
 void ProtocolConfig::setVersionOverride(uint16_t version) {
@@ -153,38 +164,51 @@ void ProtocolConfig::setServerType(ServerType_t type)
 	}
 }
 
-void ProtocolConfig::createLoginConnection(int account, const std::string& password)
+void ProtocolConfig::createLoginConnection(const std::string& accountname, const std::string& password)
 {
 	ASSERT(g_connection == NULL);
 
 	EncXTEA* crypto = new EncXTEA;
-	Protocol* protocol = new ProtocolLogin(account, password);
+	Protocol* protocol = new ProtocolLogin(accountname, password);
 	g_connection = new Connection(getInstance().m_host, getInstance().m_port, crypto, protocol);
+	switch(getInstance().m_clientVersion){
+		default:
+			g_connection->setChecksumState(false);
+			protocol->usesAccountName(false);
+			break;
+		case CLIENT_VERSION_830:
+			g_connection->setChecksumState(true);
+			protocol->usesAccountName(true);
+			break;
+	}
 }
 
-ProtocolGame* ProtocolConfig::createGameConnection(int account, const std::string& password, const std::string& name, bool isGM)
+ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountname, const std::string& password, const std::string& name, bool isGM)
 {
 	ASSERT(g_connection == NULL);
 
 	ProtocolGame* protocol;
 	switch(getInstance().m_clientVersion){
 	case CLIENT_VERSION_800:
-		protocol = new ProtocolGame80(account, password, name, isGM);
+		protocol = new ProtocolGame80(accountname, password, name, isGM);
 		break;
 	case CLIENT_VERSION_810:
-		protocol = new ProtocolGame81(account, password, name, isGM);
+		protocol = new ProtocolGame81(accountname, password, name, isGM);
 		break;
 	case CLIENT_VERSION_811:
-		protocol = new ProtocolGame811(account, password, name, isGM);
+		protocol = new ProtocolGame811(accountname, password, name, isGM);
 		break;
 	case CLIENT_VERSION_820:
-		protocol = new ProtocolGame82(account, password, name, isGM);
+		protocol = new ProtocolGame82(accountname, password, name, isGM);
 		break;
 	case CLIENT_VERSION_821:
-		protocol = new ProtocolGame821(account, password, name, isGM);
+		protocol = new ProtocolGame821(accountname, password, name, isGM);
 		break;
 	case CLIENT_VERSION_822:
- 		protocol = new ProtocolGame822(account, password, name, isGM);
+ 		protocol = new ProtocolGame822(accountname, password, name, isGM);
+		break;
+	case CLIENT_VERSION_830:
+		protocol = new ProtocolGame83(accountname, password, name, isGM);
 		break;
 	default:
 		return NULL;
@@ -273,7 +297,8 @@ m_inputMessage(NetworkMessage::CAN_READ)
 	m_readState = READING_SIZE;
 	m_msgSize = 0;
 	m_cryptoEnable = false;
-
+	m_checksumEnable = false;
+	
 	m_socket = INVALID_SOCKET;
 	m_ticks = 0;
 
@@ -466,6 +491,13 @@ void Connection::executeNetwork()
 						closeConnectionError(ERROR_TOO_BIG_MESSAGE);
 						return;
 					}
+					if(m_checksumEnable){
+						uint32_t checksum;
+						if(!m_inputMessage.getU32(checksum)){
+							closeConnectionError(ERROR_UNEXPECTED_RECV_ERROR);
+							return;
+						}
+					}
 					m_readState = READING_MESSAGE;
 				}
 				case READING_MESSAGE:
@@ -480,7 +512,7 @@ void Connection::executeNetwork()
 						checkSocketReadState();
 						return;
 					}
-
+					
 					//decrypt incoming message if needed
 					if(m_cryptoEnable && m_crypto){
 						if(!m_crypto->decrypt(m_inputMessage)){
@@ -608,7 +640,11 @@ void Connection::sendMessage(NetworkMessage& msg)
 	if(m_cryptoEnable && m_crypto){
 		m_crypto->encrypt(msg);
 	}
-
+	//and add checksum if needed
+	if(m_checksumEnable){
+		msg.addChecksum();
+	}
+	
 	//wait until all bytes are sent
 	int sendBytes = 0;
 	do{

@@ -295,7 +295,6 @@ void GM_Debug::msgBox (const char* mbox, const char* title, glictContainer* focu
 	mb->SetOnDismiss(GM_Debug::MBOnDismiss);
 
 	mb->SetCustomData(focusondismiss);
-
 }
 
 void GM_Debug::MBOnDismiss(glictPos* pos, glictContainer* caller)

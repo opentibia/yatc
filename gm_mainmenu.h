@@ -65,7 +65,8 @@ public:
 	void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
 
 	void onEnterGame();
-
+	
+	ClientVersion_t getActiveProtocol();
 private:
 	glictContainer desktop;
 	pnlMainMenu_t pnlMainMenu;

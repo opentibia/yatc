@@ -25,9 +25,10 @@
 #include "rsa.h"
 #include "../notifications.h"
 #include "../debugprint.h"
-ProtocolLogin::ProtocolLogin(uint32_t account, const std::string& password)
+ProtocolLogin::ProtocolLogin(const std::string& accountname, const std::string& password)
 {
-	m_account = account;
+	m_accountname = accountname;
+	m_account = atoi(accountname.c_str());
 	m_password = password;
 }
 
