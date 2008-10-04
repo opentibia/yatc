@@ -107,78 +107,85 @@ class ProtocolGame : public Protocol
 		virtual bool parseQuestList(NetworkMessage& msg); // 0xF0
 		virtual bool parseQuestPartList(NetworkMessage& msg); // 0xF1
 
-
-
+		// 8.2+
+		virtual bool parseOpenShopWindow(NetworkMessage& msg); // 0x7A
+		virtual bool parsePlayerCash(NetworkMessage& msg); // 0x7B
+		virtual bool parseCloseShopWindow(NetworkMessage& msg); // 0x7C
+		virtual bool parseShowTutorial(NetworkMessage& msg); // 0xDC
+		virtual bool parseAddMapMarker(NetworkMessage& msg); // 0xDD
+	
+	
 
 	
-		//send functions - pure virtual
-		virtual void sendLogout() = 0;
-		virtual void sendAutoWalk(const std::list<Direction>& steps) = 0;
-		virtual void sendStopAutoWalk() = 0;
-		virtual void sendMove(Direction dir) = 0;
-		virtual void sendTurn(Direction dir) = 0;
+		//send functions
+		virtual void sendLogout();
+		virtual void sendAutoWalk(const std::list<Direction>& steps);
+		virtual void sendStopAutoWalk();
+		virtual void sendMove(Direction dir);
+		virtual void sendTurn(Direction dir);
 		virtual void sendThrow(const Position& fromPos, uint16_t itemid,
-			uint8_t fromStackpos, const Position& toPos, uint8_t count) = 0;
+			uint8_t fromStackpos, const Position& toPos, uint8_t count);
 		virtual void sendRequestTrade(const Position& pos, uint16_t itemid,
-			uint8_t stackpos, uint32_t playerid) = 0;
-		virtual void sendLookInTrade(bool inMyOffer, uint8_t index) = 0;
-		virtual void sendAcceptTrade() = 0;
-		virtual void sendRejectTrade() = 0;
+			uint8_t stackpos, uint32_t playerid);
+		virtual void sendLookInTrade(bool inMyOffer, uint8_t index);
+		virtual void sendAcceptTrade();
+		virtual void sendRejectTrade();
 		virtual void sendUseItem(const Position& pos, uint16_t itemid,
-			uint8_t stackpos) = 0;
+			uint8_t stackpos);
 		virtual void sendUseItemWith(const Position& fromPos, uint16_t fromItemid,
 			uint8_t fromStackpos, const Position& toPos, uint16_t toItemid,
-			uint8_t toStackpos) = 0;
+			uint8_t toStackpos);
 		virtual void sendUseBattleWindow(const Position& pos, uint16_t itemid,
-			uint8_t stackpos, uint32_t creatureid) = 0;
+			uint8_t stackpos, uint32_t creatureid);
 		virtual void sendRotateItem(const Position& pos, uint16_t itemid,
-			uint8_t stackpos) = 0;
-		virtual void sendCloseContainer(uint8_t containerIndex) = 0;
-		virtual void sendUpContainer(uint8_t containerIndex) = 0;
-		virtual void sendTextWindow(uint32_t windowId, const std::string& text) = 0;
-		virtual void sendHouseWindow(uint32_t windowId, int unk, const std::string& text) = 0;
+			uint8_t stackpos);
+		virtual void sendCloseContainer(uint8_t containerIndex);
+		virtual void sendUpContainer(uint8_t containerIndex);
+		virtual void sendTextWindow(uint32_t windowId, const std::string& text);
+		virtual void sendHouseWindow(uint32_t windowId, int unk, const std::string& text);
 		virtual void sendLookItem(const Position& pos, uint16_t itemid,
-			uint8_t stackpos) = 0;
+			uint8_t stackpos);
 		//
-		virtual void sendSay(SpeakClasses_t type, const std::string text) = 0;
+		virtual void sendSay(SpeakClasses_t type, const std::string text);
 		//
 		virtual void sendSay(SpeakClasses_t type, uint16_t channel,
-			const std::string text) = 0;
+			const std::string text);
 		//
 		virtual void sendSay(SpeakClasses_t type, const std::string& sendToplayer,
-			const std::string text) = 0;
+			const std::string text);
 
-		virtual void sendRequestChannels() = 0;
-		virtual void sendOpenChannel(uint16_t channelid) = 0;
-		virtual void sendCloseChannel(uint16_t channelid) = 0;
-		virtual void sendOpenPrivatePlayerChat(const std::string& playerName) = 0;
-		virtual void sendOpenRuleViolation(const std::string& text) = 0;
-		virtual void sendCloseRuleViolation(const std::string& text) = 0;
-		virtual void sendCancelRuleViolation() = 0;
-		virtual void sendFightModes(uint8_t attack, uint8_t chase, uint8_t secure) = 0;
-		virtual void sendAttackCreature(uint32_t creatureid) = 0;
-		virtual void sendFollowCreature(uint32_t creatureid) = 0;
-		virtual void sendCreatePrivateChatChannel() = 0;
-		virtual void sendInvitePrivateChatChannel(const std::string& name) = 0;
-		virtual void sendExcludePrivateChatChannel(const std::string& name) = 0;
-		virtual void sendInviteParty(uint32_t playerid) = 0;
-		virtual void sendJoinParty(uint32_t playerid) = 0;
-		virtual void sendCancelInviteParty(uint32_t playerid) = 0;
-		virtual void sendPassPartyLeader(uint32_t playerid) = 0;
-		virtual void sendLeaveParty() = 0;
-		virtual void sendCancelMove() = 0;
-		virtual void sendRequestOutfit() = 0;
+		virtual void sendRequestChannels();
+		virtual void sendOpenChannel(uint16_t channelid);
+		virtual void sendCloseChannel(uint16_t channelid);
+		virtual void sendOpenPrivatePlayerChat(const std::string& playerName);
+		virtual void sendOpenRuleViolation(const std::string& text);
+		virtual void sendCloseRuleViolation(const std::string& text);
+		virtual void sendCancelRuleViolation();
+		virtual void sendFightModes(uint8_t attack, uint8_t chase, uint8_t secure);
+		virtual void sendAttackCreature(uint32_t creatureid);
+		virtual void sendFollowCreature(uint32_t creatureid);
+		virtual void sendCreatePrivateChatChannel();
+		virtual void sendInvitePrivateChatChannel(const std::string& name);
+		virtual void sendExcludePrivateChatChannel(const std::string& name);
+		virtual void sendInviteParty(uint32_t playerid);
+		virtual void sendJoinParty(uint32_t playerid);
+		virtual void sendCancelInviteParty(uint32_t playerid);
+		virtual void sendPassPartyLeader(uint32_t playerid);
+		virtual void sendLeaveParty();
+		virtual void sendCancelMove();
+		virtual void sendRequestOutfit();
 		virtual void sendSetOutfit(uint16_t looktype, uint8_t head, uint8_t body,
-			uint8_t legs, uint8_t feet) = 0;
-		virtual void sendAddVip(const std::string& name) = 0;
-		virtual void sendRemVip(uint32_t playerid) = 0;
-		virtual void sendBugReport(const std::string& text) = 0;
-		//virtual void sendGMReport() = 0; //Message: 0xE7
-		virtual void sendRequestQuestLog() = 0;
-		virtual void sendRequestQuest(uint16_t questid) = 0;
+			uint8_t legs, uint8_t feet);
+		virtual void sendAddVip(const std::string& name);
+		virtual void sendRemVip(uint32_t playerid);
+		virtual void sendBugReport(const std::string& text);
+		//virtual void sendGMReport(); //Message: 0xE7
+		virtual void sendRequestQuestLog();
+		virtual void sendRequestQuest(uint16_t questid);
 
-        virtual void sendCloseShop() = 0;
-        virtual void sendCloseNPCChannel() = 0;
+		// 8.2+
+        virtual void sendCloseShop();
+        virtual void sendCloseNPCChannel();
 
 		// protocol version assertion
 		virtual void checkVersion() = 0;
@@ -196,9 +203,9 @@ class ProtocolGame : public Protocol
 
 		ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM);
 
-		virtual void sendPing() = 0;
-		virtual void sendRequestUpdateTile(const Position& pos) = 0;
-		virtual void sendRequestUpdateContainer(uint8_t containerid) = 0;
+		virtual void sendPing();
+		virtual void sendRequestUpdateTile(const Position& pos);
+		virtual void sendRequestUpdateContainer(uint8_t containerid);
 
 
 		virtual bool setMapDescription(NetworkMessage& msg, int x, int y, int z, int width, int height);
