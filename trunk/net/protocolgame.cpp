@@ -31,6 +31,7 @@
 #include "../gamecontent/creature.h"
 #include "../gamecontent/container.h"
 #include "../gamecontent/inventory.h"
+#include "../gamecontent/shop.h" // 8.2+
 
 ProtocolGame::ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM) :
 m_outputMessage(NetworkMessage::CAN_WRITE)
@@ -180,54 +181,67 @@ bool ProtocolGame::parsePacket(uint8_t cmd, NetworkMessage& msg)
 		return parseItemTextWindow(msg);	
 	case 0x97:
 		return parseHouseTextWindow(msg);
-		case 0xA0:
-			return parsePlayerStats(msg);
-		case 0xA1:
-			return parsePlayerSkills(msg);
-		case 0xA2:
-			return parsePlayerIcons(msg);
-		case 0xA3:
-			return parsePlayerCancelAttack(msg);
-		case 0xAA:
-			return parseCreatureSpeak(msg);
-		case 0xAB:
-			return parseChannelList(msg);
-		case 0xAC:
-			return parseOpenChannel(msg);
-		case 0xAD:
-			return parseOpenPrivatePlayerChat(msg);
-		case 0xAE:
-			return parseOpenRuleViolation(msg);
-		case 0xAF:
-			return parseRuleViolationAF(msg);
-		case 0xB0:
-			return parseRuleViolationB0(msg);
-		case 0xB1:
-			return parseRuleViolationB1(msg);
-		case 0xB2:
-			return parseCreatePrivateChannel(msg);
-		case 0xB3:
-			return parseClosePrivateChannel(msg);
-		case 0xB4:
-			return parseTextMessage(msg);
-		case 0xB5:
-			return parsePlayerCancelWalk(msg);
-		case 0xBE:
-			return parseFloorChangeUp(msg);
-		case 0xBF:
-			return parseFloorChangeDown(msg);
-		case 0xC8:
-			return parseOutfitWindow(msg);
-		case 0xD2:
-			return parseVipState(msg);
-		case 0xD3:
-			return parseVipLogin(msg);
-		case 0xD4:
-			return parseVipLogout(msg);
-		case 0xF0:
-			return parseQuestList(msg);
-		case 0xF1:
-			return parseQuestPartList(msg);
+	case 0xA0:
+		return parsePlayerStats(msg);
+	case 0xA1:
+		return parsePlayerSkills(msg);
+	case 0xA2:
+		return parsePlayerIcons(msg);
+	case 0xA3:
+		return parsePlayerCancelAttack(msg);
+	case 0xAA:
+		return parseCreatureSpeak(msg);
+	case 0xAB:
+		return parseChannelList(msg);
+	case 0xAC:
+		return parseOpenChannel(msg);
+	case 0xAD:
+		return parseOpenPrivatePlayerChat(msg);
+	case 0xAE:
+		return parseOpenRuleViolation(msg);
+	case 0xAF:
+		return parseRuleViolationAF(msg);
+	case 0xB0:
+		return parseRuleViolationB0(msg);
+	case 0xB1:
+		return parseRuleViolationB1(msg);
+	case 0xB2:
+		return parseCreatePrivateChannel(msg);
+	case 0xB3:
+		return parseClosePrivateChannel(msg);
+	case 0xB4:
+		return parseTextMessage(msg);
+	case 0xB5:
+		return parsePlayerCancelWalk(msg);
+	case 0xBE:
+		return parseFloorChangeUp(msg);
+	case 0xBF:
+		return parseFloorChangeDown(msg);
+	case 0xC8:
+		return parseOutfitWindow(msg);
+	case 0xD2:
+		return parseVipState(msg);
+	case 0xD3:
+		return parseVipLogin(msg);
+	case 0xD4:
+		return parseVipLogout(msg);
+	case 0xF0:
+		return parseQuestList(msg);
+	case 0xF1:
+		return parseQuestPartList(msg);
+			
+			
+	// 8.2+
+	case 0x7A:
+		return parseOpenShopWindow(msg);
+	case 0x7B:
+		return parsePlayerCash(msg);
+	case 0x7C:
+		return parseCloseShopWindow(msg);
+	case 0xDC:
+		return parseShowTutorial(msg);
+	case 0xDD:
+		return parseAddMapMarker(msg);
     }
     return false;
 }
@@ -1190,6 +1204,511 @@ bool ProtocolGame::parseQuestPartList(NetworkMessage& msg)
 	}
 	return true;
 }
+
+// 8.2+
+bool ProtocolGame::parseOpenShopWindow(NetworkMessage& msg)
+{
+	std::list<ShopItem> shopList;
+	MSG_READ_U8(size);
+	for(uint32_t i = 0; i < size; ++i){
+		MSG_READ_U16(itemid);
+		MSG_READ_U8(runecharges); // always present
+		MSG_READ_STRING(itemname);
+		MSG_READ_U32(buyprice);
+		MSG_READ_U32(sellprice);
+		shopList.push_back(ShopItem(itemname, itemid, runecharges, buyprice, sellprice));
+	}
+	Notifications::openShopWindow(shopList);
+	return true;
+}
+bool ProtocolGame::parsePlayerCash(NetworkMessage& msg)
+{
+	MSG_READ_U32(cash);
+	GlobalVariables::setPlayerCash(cash);
+	Notifications::onUpdatePlayerCash(cash);
+	return true;
+}
+bool ProtocolGame::parseCloseShopWindow(NetworkMessage& msg)
+{
+	Notifications::closeShopWindow();
+	return true;
+}
+bool ProtocolGame::parseShowTutorial(NetworkMessage& msg)
+{
+	MSG_READ_U8(tutorialID);
+	Notifications::showTutorial(tutorialID);
+	return true;
+}
+bool ProtocolGame::parseAddMapMarker(NetworkMessage& msg)
+{
+	MSG_READ_POSITION(myPos);
+	MSG_READ_U8(icon);
+	MSG_READ_STRING(desc);
+	Notifications::addMapMark(icon, myPos, desc);
+	return true;
+}
+
+//******send functions***********
+//public
+void ProtocolGame::sendLogout()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x14);
+}
+
+void ProtocolGame::sendAutoWalk(const std::list<Direction>& steps)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	ASSERT(steps.size() <= 255);
+	
+	m_outputMessage.addMessageType(0x64);
+	m_outputMessage.addU8(steps.size());
+	std::list<Direction>::const_iterator it;
+	for(it = steps.begin(); it != steps.end(); ++it){
+		m_outputMessage.addU8(*it);
+	}
+}
+
+void ProtocolGame::sendStopAutoWalk()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x69);
+}
+
+void ProtocolGame::sendMove(Direction dir)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	switch(dir){
+		case DIRECTION_NORTH:
+			m_outputMessage.addMessageType(0x65);
+			break;
+		case DIRECTION_EAST:
+			m_outputMessage.addMessageType(0x66);
+			break;
+		case DIRECTION_SOUTH:
+			m_outputMessage.addMessageType(0x67);
+			break;
+		case DIRECTION_WEST:
+			m_outputMessage.addMessageType(0x68);
+			break;
+		case DIRECTION_NE:
+			m_outputMessage.addMessageType(0x6A);
+			break;
+		case DIRECTION_SE:
+			m_outputMessage.addMessageType(0x6B);
+			break;
+		case DIRECTION_SW:
+			m_outputMessage.addMessageType(0x6C);
+			break;
+		case DIRECTION_NW:
+			m_outputMessage.addMessageType(0x6D);
+			break;
+		default:
+			ASSERT(0);
+			break;
+	}
+}
+
+void ProtocolGame::sendTurn(Direction dir)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	switch(dir){
+		case DIRECTION_NORTH:
+			m_outputMessage.addMessageType(0x6F);
+			break;
+		case DIRECTION_EAST:
+			m_outputMessage.addMessageType(0x70);
+			break;
+		case DIRECTION_SOUTH:
+			m_outputMessage.addMessageType(0x71);
+			break;
+		case DIRECTION_WEST:
+			m_outputMessage.addMessageType(0x72);
+			break;
+		default:
+			ASSERT(0);
+			break;
+	}
+}
+
+void ProtocolGame::sendThrow(const Position& fromPos, uint16_t itemid,
+							 uint8_t fromStackpos, const Position& toPos, uint8_t count)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x78);
+	m_outputMessage.addPosition(fromPos);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(fromStackpos);
+	m_outputMessage.addPosition(toPos);
+	m_outputMessage.addU8(count);
+}
+
+void ProtocolGame::sendRequestTrade(const Position& pos, uint16_t itemid,
+									uint8_t stackpos, uint32_t playerid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x7D);
+	m_outputMessage.addPosition(pos);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(stackpos);
+	m_outputMessage.addU32(playerid);
+}
+
+void ProtocolGame::sendLookInTrade(bool inMyOffer, uint8_t index)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x7E);
+	m_outputMessage.addU8(inMyOffer ? 0 : 1);
+	m_outputMessage.addU8(index);
+}
+
+void ProtocolGame::sendAcceptTrade()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x7F);
+}
+
+void ProtocolGame::sendRejectTrade()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x80);
+}
+
+void ProtocolGame::sendUseItem(const Position& pos, uint16_t itemid,
+							   uint8_t stackpos)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	int8_t index = Containers::getInstance().getFreeContainerSlot();
+	m_outputMessage.addMessageType(0x82);
+	m_outputMessage.addPosition(pos);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(stackpos);
+	m_outputMessage.addU8(index);
+}
+
+void ProtocolGame::sendUseItemWith(const Position& fromPos, uint16_t fromItemid,
+								   uint8_t fromStackpos, const Position& toPos, uint16_t toItemid,
+								   uint8_t toStackpos)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x83);
+	m_outputMessage.addPosition(fromPos);
+	m_outputMessage.addU16(fromItemid);
+	m_outputMessage.addU8(fromStackpos);
+	m_outputMessage.addPosition(toPos);
+	m_outputMessage.addU16(toItemid);
+	m_outputMessage.addU8(toStackpos);
+}
+
+void ProtocolGame::sendUseBattleWindow(const Position& pos, uint16_t itemid,
+									   uint8_t stackpos, uint32_t creatureid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x84);
+	m_outputMessage.addPosition(pos);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(stackpos);
+	m_outputMessage.addU32(creatureid);
+}
+
+void ProtocolGame::sendRotateItem(const Position& pos, uint16_t itemid,
+								  uint8_t stackpos)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x85);
+	m_outputMessage.addPosition(pos);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(stackpos);
+}
+
+void ProtocolGame::sendCloseContainer(uint8_t containerIndex)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x87);
+	m_outputMessage.addU8(containerIndex);
+}
+
+void ProtocolGame::sendUpContainer(uint8_t containerIndex)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x88);
+	m_outputMessage.addU8(containerIndex);
+}
+
+void ProtocolGame::sendTextWindow(uint32_t windowId, const std::string& text)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x89);
+	m_outputMessage.addU32(windowId);
+	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendHouseWindow(uint32_t windowId, int unk,
+								   const std::string& text)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x8A);
+	m_outputMessage.addU8(unk);
+	m_outputMessage.addU32(windowId);
+	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendLookItem(const Position& pos, uint16_t itemid,
+								uint8_t stackpos)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x8C);
+	m_outputMessage.addPosition(pos);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(stackpos);
+}
+
+void ProtocolGame::sendSay(SpeakClasses_t type, const std::string text)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x96);
+	m_outputMessage.addU8(type);
+	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendSay(SpeakClasses_t type, uint16_t channel,
+							 const std::string text)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x96);
+	m_outputMessage.addU8(type);
+	m_outputMessage.addU16(channel);
+	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendSay(SpeakClasses_t type, const std::string& sendToplayer,
+							 const std::string text)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x96);
+	m_outputMessage.addU8(type);
+	m_outputMessage.addString(sendToplayer);
+	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendRequestChannels()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x97);
+}
+
+void ProtocolGame::sendOpenChannel(uint16_t channelid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x98);
+	m_outputMessage.addU16(channelid);
+}
+
+void ProtocolGame::sendCloseChannel(uint16_t channelid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x99);
+	m_outputMessage.addU16(channelid);
+}
+
+void ProtocolGame::sendOpenPrivatePlayerChat(const std::string& playerName)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x9A);
+	m_outputMessage.addString(playerName);
+}
+
+void ProtocolGame::sendOpenRuleViolation(const std::string& text)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x9B);
+	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendCloseRuleViolation(const std::string& text)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x9C);
+	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendCancelRuleViolation()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x9D);
+}
+
+void ProtocolGame::sendFightModes(uint8_t attack, uint8_t chase, uint8_t secure)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA0);
+	m_outputMessage.addU8(attack);
+	m_outputMessage.addU8(chase);
+	m_outputMessage.addU8(secure);
+}
+
+void ProtocolGame::sendAttackCreature(uint32_t creatureid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA1);
+	m_outputMessage.addU32(creatureid);
+	GlobalVariables::setAttackID(creatureid);
+}
+
+void ProtocolGame::sendFollowCreature(uint32_t creatureid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA2);
+	m_outputMessage.addU32(creatureid);
+	GlobalVariables::setFollowID(creatureid);
+}
+
+void ProtocolGame::sendCreatePrivateChatChannel()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xAA);
+}
+
+void ProtocolGame::sendInvitePrivateChatChannel(const std::string& name)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xAB);
+	m_outputMessage.addString(name);
+}
+
+void ProtocolGame::sendExcludePrivateChatChannel(const std::string& name)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xAC);
+	m_outputMessage.addString(name);
+}
+
+void ProtocolGame::sendInviteParty(uint32_t playerid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA3);
+	m_outputMessage.addU32(playerid);
+}
+
+void ProtocolGame::sendJoinParty(uint32_t playerid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA4);
+	m_outputMessage.addU32(playerid);
+}
+
+void ProtocolGame::sendCancelInviteParty(uint32_t playerid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA5);
+	m_outputMessage.addU32(playerid);
+}
+
+void ProtocolGame::sendPassPartyLeader(uint32_t playerid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA6);
+	m_outputMessage.addU32(playerid);
+}
+
+void ProtocolGame::sendLeaveParty()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA7);
+}
+
+void ProtocolGame::sendCancelMove()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xBE);
+	GlobalVariables::setAttackID(0);
+	GlobalVariables::setFollowID(0);
+}
+
+void ProtocolGame::sendRequestOutfit()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xD2);
+}
+
+void ProtocolGame::sendSetOutfit(uint16_t looktype, uint8_t head, uint8_t body,
+								   uint8_t legs, uint8_t feet)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xD3);
+	m_outputMessage.addU16(looktype);
+	m_outputMessage.addU8(head);
+	m_outputMessage.addU8(body);
+	m_outputMessage.addU8(legs);
+	m_outputMessage.addU8(feet);
+}
+
+void ProtocolGame::sendAddVip(const std::string& name)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xDC);
+	m_outputMessage.addString(name);
+}
+
+void ProtocolGame::sendRemVip(uint32_t playerid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xDD);
+	m_outputMessage.addU32(playerid);
+}
+
+void ProtocolGame::sendBugReport(const std::string& text)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xE6);
+	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendRequestQuestLog()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xF0);
+}
+
+void ProtocolGame::sendRequestQuest(uint16_t questid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xF1);
+	m_outputMessage.addU16(questid);
+}
+void ProtocolGame::sendCloseShop()
+{
+    PROTOCOLGAME_SEND_FUNCTION;
+    m_outputMessage.addMessageType(0x7C);
+}
+void ProtocolGame::sendCloseNPCChannel()
+{
+    PROTOCOLGAME_SEND_FUNCTION;
+    m_outputMessage.addMessageType(0x9E);
+}
+
+//protected
+void ProtocolGame::sendPing()
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x1E);
+}
+
+void ProtocolGame::sendRequestUpdateTile(const Position& pos)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xC9);
+	m_outputMessage.addPosition(pos);
+}
+
+void ProtocolGame::sendRequestUpdateContainer(uint8_t containerid)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xCA);
+	m_outputMessage.addU8(containerid);
+}
+
+
 
 // generic structure parsing functions
 bool ProtocolGame::setMapDescription(NetworkMessage& msg, int x, int y, int z, int width, int height)
