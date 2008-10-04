@@ -176,7 +176,50 @@ bool ProtocolGame::parsePacket(uint8_t cmd, NetworkMessage& msg)
         return parseCreatureSkulls(msg);
     case 0x91:
         return parseCreatureShields(msg);
-
+	case 0x96:
+		return parseItemTextWindow(msg);	
+	case 0x97:
+		return parseHouseTextWindow(msg);
+		case 0xA0:
+			return parsePlayerStats(msg);
+		case 0xA1:
+			return parsePlayerSkills(msg);
+		case 0xA2:
+			return parsePlayerIcons(msg);
+		case 0xA3:
+			return parsePlayerCancelAttack(msg);
+		case 0xAA:
+			return parseCreatureSpeak(msg);
+		case 0xAB:
+			return parseChannelList(msg);
+		case 0xAC:
+			return parseOpenChannel(msg);
+		case 0xAD:
+			return parseOpenPrivatePlayerChat(msg);
+		case 0xAE:
+			return parseOpenRuleViolation(msg);
+		case 0xAF:
+			return parseRuleViolationAF(msg);
+		case 0xB0:
+			return parseRuleViolationB0(msg);
+		case 0xB1:
+			return parseRuleViolationB1(msg);
+		case 0xB2:
+			return parseCreatePrivateChannel(msg);
+		case 0xB3:
+			return parseClosePrivateChannel(msg);
+		case 0xB4:
+			return parseTextMessage(msg);
+		case 0xB5:
+			return parsePlayerCancelWalk(msg);
+		case 0xBE:
+			return parseFloorChangeUp(msg);
+		case 0xBF:
+			return parseFloorChangeDown(msg);
+		case 0xC8:
+			return parseOutfitWindow(msg);
+		case 0xD2:
+			return parseVipState(msg);
     }
     return false;
 }
@@ -767,6 +810,344 @@ bool ProtocolGame::parseCreatureShields(NetworkMessage& msg)
     }
     return true;
 }
+bool ProtocolGame::parseItemTextWindow(NetworkMessage& msg)
+{
+	MSG_READ_U32(windowID);
+	MSG_READ_U16(itemID);
+	MSG_READ_U16(maxlen);
+	MSG_READ_STRING(text);
+	MSG_READ_STRING(writter);
+	MSG_READ_STRING(date);
+	Notifications::openItemText(windowID, itemID, maxlen, text, writter, date);
+    return true;
+}
+bool ProtocolGame::parseHouseTextWindow(NetworkMessage& msg)
+{
+	MSG_READ_U8(unk);
+	MSG_READ_U32(windowID);
+	MSG_READ_STRING(text);
+	Notifications::openHouseText(windowID, unk, text);
+	return true;
+}
+bool ProtocolGame::parsePlayerStats(NetworkMessage& msg)
+{
+	MSG_READ_U16(health);
+	MSG_READ_U16(healthMax);
+	MSG_READ_U16(capacity);
+	MSG_READ_U32(experience);
+	MSG_READ_U16(level);
+	MSG_READ_U8(levelPercent);
+	MSG_READ_U16(mana);
+	MSG_READ_U16(manaMax);
+	MSG_READ_U8(magicLevel);
+	MSG_READ_U8(magicLevelPercent);
+	MSG_READ_U8(soul);
+	MSG_READ_U16(stamina);
+	//some validations
+	if(health > healthMax || levelPercent > 100 || mana > manaMax ||
+	   magicLevelPercent > 100){
+		RAISE_PROTOCOL_ERROR("Player stats - values");
+	}
+	
+	GlobalVariables::setPlayerStat(STAT_HEALTH, health);
+	GlobalVariables::setPlayerStat(STAT_HEALTH_MAX, healthMax);
+	GlobalVariables::setPlayerStat(STAT_CAPACITY, capacity);
+	GlobalVariables::setPlayerStat(STAT_EXPERIENCE, experience);
+	GlobalVariables::setPlayerSkill(SKILL_LEVEL, SKILL_ATTR_LEVEL, level);
+	GlobalVariables::setPlayerSkill(SKILL_LEVEL, SKILL_ATTR_PERCENT, levelPercent);
+	GlobalVariables::setPlayerStat(STAT_MANA, mana);
+	GlobalVariables::setPlayerStat(STAT_MANA_MAX, manaMax);
+	GlobalVariables::setPlayerSkill(SKILL_MAGIC, SKILL_ATTR_LEVEL, magicLevel);
+	GlobalVariables::setPlayerSkill(SKILL_MAGIC, SKILL_ATTR_PERCENT, magicLevelPercent);
+	GlobalVariables::setPlayerStat(STAT_SOUL, soul);
+	GlobalVariables::setPlayerStat(STAT_STAMINA, stamina);
+	
+	Notifications::onChangeStats();
+	
+	return true;
+}
+bool ProtocolGame::parsePlayerSkills(NetworkMessage& msg)
+{
+	MSG_READ_U8(fist);
+	MSG_READ_U8(fistPercent);
+	MSG_READ_U8(club);
+	MSG_READ_U8(clubPercent);
+	MSG_READ_U8(sword);
+	MSG_READ_U8(swordPercent);
+	MSG_READ_U8(axe);
+	MSG_READ_U8(axePercent);
+	MSG_READ_U8(distance);
+	MSG_READ_U8(distancePercent);
+	MSG_READ_U8(shield);
+	MSG_READ_U8(shieldPercent);
+	MSG_READ_U8(fish);
+	MSG_READ_U8(fishPercent);
+	//some validations
+	if(fistPercent > 100 || clubPercent > 100 || swordPercent > 100 ||
+	   axePercent > 100 || distancePercent > 100 || shieldPercent > 100 ||
+	   fishPercent > 100){
+		RAISE_PROTOCOL_ERROR("Player skills - values");
+	}
+	
+	GlobalVariables::setPlayerSkill(SKILL_FIST, SKILL_ATTR_LEVEL, fist);
+	GlobalVariables::setPlayerSkill(SKILL_FIST, SKILL_ATTR_PERCENT, fistPercent);
+	GlobalVariables::setPlayerSkill(SKILL_CLUB, SKILL_ATTR_LEVEL, club);
+	GlobalVariables::setPlayerSkill(SKILL_CLUB, SKILL_ATTR_PERCENT, clubPercent);
+	GlobalVariables::setPlayerSkill(SKILL_SWORD, SKILL_ATTR_LEVEL, sword);
+	GlobalVariables::setPlayerSkill(SKILL_SWORD, SKILL_ATTR_PERCENT, swordPercent);
+	GlobalVariables::setPlayerSkill(SKILL_AXE, SKILL_ATTR_LEVEL, axe);
+	GlobalVariables::setPlayerSkill(SKILL_AXE, SKILL_ATTR_PERCENT, axePercent);
+	GlobalVariables::setPlayerSkill(SKILL_DISTANCE, SKILL_ATTR_LEVEL, distance);
+	GlobalVariables::setPlayerSkill(SKILL_DISTANCE, SKILL_ATTR_PERCENT, distancePercent);
+	GlobalVariables::setPlayerSkill(SKILL_FISH, SKILL_ATTR_LEVEL, fish);
+	GlobalVariables::setPlayerSkill(SKILL_FISH, SKILL_ATTR_PERCENT, fishPercent);
+	
+	Notifications::onChangeSkills();
+	
+	return true;
+}
+bool ProtocolGame::parsePlayerIcons(NetworkMessage& msg)
+{
+	MSG_READ_U16(icons);
+	GlobalVariables::setPlayerIcons(icons);
+	Notifications::onChangeIcons();
+	return true;
+}
+bool ProtocolGame::parsePlayerCancelAttack(NetworkMessage& msg)
+{
+	//no data
+	Notifications::onCancelAttack();
+	return true;
+}
+bool ProtocolGame::parseCreatureSpeak(NetworkMessage& msg)
+{
+	MSG_READ_U32(unkSpeak);
+	MSG_READ_STRING(name);
+	MSG_READ_U16(level);
+	MSG_READ_U8(type);
+	SpeakClasses_t newtype = (SpeakClasses_t)translateSpeakClassToInternal((char)type);
+	printf("Translated incoming %02x into %02x\n", type, newtype);
+	switch(newtype){
+		case SPEAK_SAY:
+		case SPEAK_WHISPER:
+		case SPEAK_YELL:
+		case SPEAK_MONSTER_SAY:
+		case SPEAK_MONSTER_YELL:
+		case SPEAK_PRIVATE_NP:
+		case SPEAK_PRIVATE_PN:
+		{
+			MSG_READ_POSITION(creaturePos);
+			MSG_READ_STRING(text);
+			Notifications::onCreatureSpeak((SpeakClasses_t)newtype, unkSpeak, name, level, creaturePos, text);
+			break;
+		}
+		case SPEAK_CHANNEL_R1:
+		case SPEAK_CHANNEL_R2:
+		case SPEAK_CHANNEL_O:
+		case SPEAK_CHANNEL_Y:
+		{
+			MSG_READ_U16(channelID);
+			MSG_READ_STRING(text);
+			Notifications::onCreatureSpeak((SpeakClasses_t)newtype, unkSpeak, name, level, channelID, text);
+			break;
+		}
+		case SPEAK_PRIVATE:
+		case SPEAK_BROADCAST:
+		case SPEAK_PRIVATE_RED:
+		{
+			MSG_READ_STRING(text);
+			Notifications::onCreatureSpeak((SpeakClasses_t)newtype, unkSpeak, name, level, text);
+			break;
+		}
+		case SPEAK_CHANNEL_UNK6:
+		{
+			//TODO. Rule violations
+			MSG_READ_U32(number);
+			MSG_READ_STRING(text);
+			break;
+		}
+		case SPEAK_CHANNEL_UNK7:
+		case SPEAK_CHANNEL_UNK8:
+		{
+			//TODO. Rule violations
+			MSG_READ_STRING(text);
+			break;
+		}
+		default:
+			RAISE_PROTOCOL_ERROR("Creature speak - type");
+			break;
+	}
+	return true;
+}
+bool ProtocolGame::parseChannelList(NetworkMessage& msg)
+{
+	MSG_READ_U8(count);
+	std::list<ChannelList_t> list;
+	for(uint32_t i = 0; i < count; ++i){
+		ChannelList_t channel;
+		MSG_READ_U16(channelID);
+		MSG_READ_STRING(name);
+		channel.id = channelID;
+		channel.name = name;
+		list.push_back(channel);
+	}
+	Notifications::openChannelList(list);
+	return true;
+}
+bool ProtocolGame::parseOpenChannel(NetworkMessage& msg)
+{
+	MSG_READ_U16(channelID);
+	MSG_READ_STRING(name);
+	Notifications::openChannel(channelID, name);
+	return true;
+}
+bool ProtocolGame::parseOpenPrivatePlayerChat(NetworkMessage& msg)
+{
+	MSG_READ_STRING(name);
+	Notifications::openPrivatePlayerChat(name);
+	return true;
+}
+bool ProtocolGame::parseOpenRuleViolation(NetworkMessage& msg)
+{
+	//TODO
+	MSG_READ_U16(a);
+	return true;
+}
+bool ProtocolGame::parseRuleViolationAF(NetworkMessage& msg)
+{
+	//TODO
+	MSG_READ_U16(a);
+	return true;
+}
+bool ProtocolGame::parseRuleViolationB0(NetworkMessage& msg)
+{
+	//TODO
+	MSG_READ_U16(a);
+	return true;
+}
+bool ProtocolGame::parseRuleViolationB1(NetworkMessage& msg)
+{
+	//TODO
+	MSG_READ_U16(a);
+	return true;
+}
+bool ProtocolGame::parseCreatePrivateChannel(NetworkMessage& msg)
+{
+	MSG_READ_U16(channelID);
+	MSG_READ_STRING(name);
+	Notifications::openPrivateChannel(channelID, name);
+	return true;
+}
+bool ProtocolGame::parseClosePrivateChannel(NetworkMessage& msg)
+{
+	MSG_READ_U16(channelID);
+	Notifications::closePrivateChannel(channelID);
+	return true;
+}
+bool ProtocolGame::parseTextMessage(NetworkMessage& msg)
+{	
+	MSG_READ_U8(messageType);
+	MSG_READ_STRING(text);
+	if(messageType < 0x11 || messageType > 0x26){
+		printf("text msg type 0x%02x\n", messageType);
+		RAISE_PROTOCOL_ERROR("text message - type");
+	}
+	messageType = translateTextMessageToInternal(messageType);
+	
+	Notifications::onTextMessage((MessageType_t)messageType, text);
+	return true;
+}
+bool ProtocolGame::parsePlayerCancelWalk(NetworkMessage& msg)
+{
+	MSG_READ_U8(direction);
+	if(direction > 3){
+		RAISE_PROTOCOL_ERROR("cancel walk - direction > 3");
+	}
+	Notifications::onCancelWalk((Direction)direction);
+	return true;
+}
+bool ProtocolGame::parseFloorChangeUp(NetworkMessage& msg)
+{
+	Position& myPos = GlobalVariables::getPlayerPosition();
+	myPos.z--;
+	//going to surface
+	if(myPos.z == 7){
+		//floor 7 and 6 already set
+		for(int32_t i = 5; i >= 0; i--){
+			if(!setFloorDescription(msg, myPos.x - 8, myPos.y - 6, i, 18, 14, 8 - i)){
+				RAISE_PROTOCOL_ERROR("Set Floor Desc z = 7 0xBE");
+			}
+		}
+	}
+	//underground, going one floor up (still underground)
+	else if(myPos.z > 7){
+		if(!setFloorDescription(msg, myPos.x - 8, myPos.y - 6, myPos.z - 2, 18, 14, 3)){
+			RAISE_PROTOCOL_ERROR("Set Floor Desc  z > 7 0xBE");
+		}
+	}
+	myPos.x++;
+	myPos.y++;
+	return true;
+}
+bool ProtocolGame::parseFloorChangeDown(NetworkMessage& msg)
+{
+	Position& myPos = GlobalVariables::getPlayerPosition();
+	myPos.z++;
+	//going from surface to underground
+	if(myPos.z == 8){
+		int32_t j, i;
+		for(i = myPos.z, j = -1; i < (int32_t)myPos.z + 3; ++i, --j){
+			if(!setFloorDescription(msg, myPos.x - 8, myPos.y - 6, i, 18, 14, j)){
+				RAISE_PROTOCOL_ERROR("Set Floor Desc  z = 8 0xBF");
+			}
+		}
+	}
+	//going further down
+	else if(myPos.z > 8 && myPos.z < 14) {
+		if(!setFloorDescription(msg, myPos.x - 8, myPos.y - 6, myPos.z + 2, 18, 14, -3)){
+			RAISE_PROTOCOL_ERROR("Set Floor Desc  z > 8 && z < 14 0xBF");
+		}
+	}
+	myPos.x--;
+	myPos.y--;
+	
+	return true;
+}
+bool ProtocolGame::parseOutfitWindow(NetworkMessage& msg)
+{
+	Outfit_t outfit;
+	if(!internalSetOutfit(msg, outfit)){
+		RAISE_PROTOCOL_ERROR("Outfit window - outfit error");
+	}
+	MSG_READ_U8(nOutfits);
+	if(nOutfits == 0 || nOutfits > 25){
+		RAISE_PROTOCOL_ERROR("Outfit window - n = 0 || n > 25");
+	}
+	std::list<AvailOutfit_t> list;
+	for(uint32_t i = 0; i < nOutfits; ++i){
+		AvailOutfit_t avail;
+		MSG_READ_U16(outfitID);
+		if(!Objects::getInstance()->getOutfitType(outfitID)){
+			RAISE_PROTOCOL_ERROR("Outfit window  - outfit list error");
+		}
+		MSG_READ_STRING(name);
+		MSG_READ_U8(addons);
+		avail.id = outfitID;
+		avail.name = name;
+		avail.addons = addons;
+		list.push_back(avail);
+	}
+	Notifications::openOutfit(outfit, list);
+	return true;
+}
+bool ProtocolGame::parseVipState(NetworkMessage& msg)
+{
+	MSG_READ_U32(creatureID);
+	MSG_READ_STRING(name);
+	MSG_READ_U8(online);
+	Notifications::onVipState(creatureID, name, online);
+	return true;
+}
 
 
 // generic structure parsing functions
@@ -869,3 +1250,4 @@ bool ProtocolGame::setTileDescription(NetworkMessage& msg, const Position& pos)
 		}
 	}
 }
+

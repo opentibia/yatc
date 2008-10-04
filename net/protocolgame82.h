@@ -112,6 +112,7 @@ class ProtocolGame82 : public ProtocolGame
         // translators
         virtual char translateSpeakClassFromInternal(SpeakClasses_t s);
         virtual SpeakClasses_t translateSpeakClassToInternal(char s);
+		virtual MessageType_t translateTextMessageToInternal(uint8_t messageType);
 
 	protected:
 		ProtocolGame82(int account, const std::string& password, const std::string& name, bool isGM);
