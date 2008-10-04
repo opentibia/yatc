@@ -221,6 +221,47 @@ bool ProtocolGame83::internalSetOutfit(NetworkMessage& msg, Outfit_t& outfit)
 	return true;
 }
 
+bool ProtocolGame83::parsePlayerStats(NetworkMessage& msg)
+{
+	MSG_READ_U16(health);
+	MSG_READ_U16(healthMax);
+	MSG_READ_U32(capacity);
+	MSG_READ_U32(experience);
+	MSG_READ_U16(level);
+	MSG_READ_U8(levelPercent);
+	MSG_READ_U16(mana);
+	MSG_READ_U16(manaMax);
+	MSG_READ_U8(magicLevel);
+	MSG_READ_U8(magicLevelPercent);
+	MSG_READ_U8(soul);
+	MSG_READ_U16(stamina);
+	//some validations
+	if(health > healthMax || levelPercent > 100 || mana > manaMax ||
+	   magicLevelPercent > 100){
+		RAISE_PROTOCOL_ERROR("Player stats - values");
+	}
+	
+	GlobalVariables::setPlayerStat(STAT_HEALTH, health);
+	GlobalVariables::setPlayerStat(STAT_HEALTH_MAX, healthMax);
+	GlobalVariables::setPlayerStat(STAT_CAPACITY, capacity/100); // FIXME (ivucica#1#) obviously cap needs to be float now!
+	GlobalVariables::setPlayerStat(STAT_EXPERIENCE, experience);
+	GlobalVariables::setPlayerSkill(SKILL_LEVEL, SKILL_ATTR_LEVEL, level);
+	GlobalVariables::setPlayerSkill(SKILL_LEVEL, SKILL_ATTR_PERCENT, levelPercent);
+	GlobalVariables::setPlayerStat(STAT_MANA, mana);
+	GlobalVariables::setPlayerStat(STAT_MANA_MAX, manaMax);
+	GlobalVariables::setPlayerSkill(SKILL_MAGIC, SKILL_ATTR_LEVEL, magicLevel);
+	GlobalVariables::setPlayerSkill(SKILL_MAGIC, SKILL_ATTR_PERCENT, magicLevelPercent);
+	GlobalVariables::setPlayerStat(STAT_SOUL, soul);
+	GlobalVariables::setPlayerStat(STAT_STAMINA, stamina);
+	
+	Notifications::onChangeStats();
+	
+	return true;
+}
+
+
+
+
 ///////////////////////////
 char ProtocolGame83::translateSpeakClassFromInternal(SpeakClasses_t s){
     switch(s){

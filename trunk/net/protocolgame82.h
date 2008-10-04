@@ -38,7 +38,7 @@ class ProtocolGame82 : public ProtocolGame
 		const char* getProtocolName() { return "Protocol82";}
 
         //receive f. impl
-        bool parsePacket(uint8_t cmd, NetworkMessage& msg);
+        virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
 
 
         // translators

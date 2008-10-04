@@ -66,7 +66,7 @@ class NetworkMessage
 		void addHeader();
 		void addChecksum();
 
-		uint32_t getChecksum();
+		uint32_t getChecksum(uint16_t offset = 0);
 
 		void skipBytes(int size){
 			m_readPos += size;
