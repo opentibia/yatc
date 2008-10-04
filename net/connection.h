@@ -271,6 +271,7 @@ class Connection
 
 		void sendMessage(NetworkMessage& msg);
 
+		bool getChecksumState() const { return m_checksumEnable; }
 		void setCryptoState(bool state){ m_cryptoEnable = state;}
 	    void setChecksumState(bool state){ m_checksumEnable = state;}
 
@@ -319,6 +320,7 @@ class Connection
 
 		enum READSTATE{
 			READING_SIZE,
+			READING_CHECKSUM,
 			READING_MESSAGE
 		};
 

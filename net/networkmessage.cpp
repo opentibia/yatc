@@ -68,6 +68,7 @@ uint32_t NetworkMessage::getU32()
 		return v;
 	}
 	else{
+		printf("cant read four bytes\n");
 		return 0;
 	}
 }
@@ -257,15 +258,15 @@ void NetworkMessage::addHeader()
 }
 
 
-uint32_t NetworkMessage::getChecksum()
+uint32_t NetworkMessage::getChecksum(uint16_t offset)
 {
     // for 8.3+
     // implementation of adler algorithm as per wikipedia
     // this will just calculate checksum, it still needs to be added
     // preparation
     const uint16_t MOD_ADLER=65521;
-    uint8_t* data = ((uint8_t*)m_buffer) + 2;
-    size_t len = m_size-2;
+    uint8_t* data = ((uint8_t*)m_buffer)+offset;
+    size_t len = m_size - offset;
 
     // algo
     uint32_t a = 1, b = 0;

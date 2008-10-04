@@ -110,7 +110,7 @@ bool EncXTEA::encrypt(NetworkMessage& msg)
 bool EncXTEA::decrypt(NetworkMessage& msg)
 {
 	if(msg.getReadSize() % 8 != 0){
-		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[EncXTEA::decrypt]. Not valid encrypted message size\n");
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[EncXTEA::decrypt]. Not valid encrypted message size %d\n",msg.getReadSize());
 		return false;
 	}
 	//
@@ -159,7 +159,7 @@ bool EncXTEA::decrypt(NetworkMessage& msg)
 		return false;
 	}
 	if(newSize > msg.getReadSize()){
-		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[EncXTEA::decrypt]. Not valid unencrypted message size\n");
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[EncXTEA::decrypt]. Not valid unencrypted message size (new size: %d, old size: %d)\n", newSize, msg.getReadSize());
 		return false;
 	}
 

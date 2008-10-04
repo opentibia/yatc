@@ -34,6 +34,7 @@ ProtocolLogin::ProtocolLogin(const std::string& accountname, const std::string& 
 
 void ProtocolLogin::onConnect()
 {
+	printf("Connected!\n");
 	ProtocolConfig& config = ProtocolConfig::getInstance();
 	NetworkMessage output(NetworkMessage::CAN_WRITE);
 	output.addU8(0x01); //Login Protocol
@@ -52,7 +53,7 @@ void ProtocolLogin::onConnect()
 	//From here bytes are encrypted using RSA
 	//generate XTEA key
 	uint32_t k[4];
-	srand(1); //TODO use a real seed
+	srand(time(NULL)); //TODO use a real seed
 	k[0] = (rand() << 16) | rand(); k[1] = (rand() << 16) | rand();
 	k[2] = (rand() << 16) | rand(); k[3] = (rand() << 16) | rand();
 
@@ -75,9 +76,13 @@ void ProtocolLogin::onConnect()
 	char* rsaBuffer = output.getBuffer() + sizeBefore;
 	RSA::getInstance()->encrypt(rsaBuffer, 128);
 
+	bool oldChecksumState = m_connection->getChecksumState();
+	m_connection->setChecksumState(false);
+	
 	m_connection->sendMessage(output);
 	m_connection->setKey((char*)k, 4*sizeof(uint32_t));
 	m_connection->setCryptoState(true);
+	m_connection->setChecksumState(oldChecksumState);
 
 	m_account = 0;
 	m_password = "";

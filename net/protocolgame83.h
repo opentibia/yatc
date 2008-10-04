@@ -38,8 +38,8 @@ class ProtocolGame83 : public ProtocolGame
 		const char* getProtocolName() { return "Protocol83";}
 
         //receive f. impl
-        bool parsePacket(uint8_t cmd, NetworkMessage& msg);
-
+        virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
+		virtual bool parsePlayerStats(NetworkMessage& msg);
 
         // translators
         virtual char translateSpeakClassFromInternal(SpeakClasses_t s);
