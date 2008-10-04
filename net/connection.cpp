@@ -38,6 +38,7 @@
 #include "protocolgame821.h"
 #include "protocolgame822.h"
 #include "protocolgame83.h"
+#include "protocolgame831.h"
 #include "../debugprint.h"
 #include "../util.h" // yatc_fopen
 
@@ -90,6 +91,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	case CLIENT_VERSION_830:
 		m_clientVersion = CLIENT_VERSION_830;
 		break;
+	case CLIENT_VERSION_831:
+		m_clientVersion = CLIENT_VERSION_831;
+		break;
 	default:
 		ASSERT(0);
 		break;
@@ -136,11 +140,10 @@ ClientVersion_t ProtocolConfig::detectVersion()
         return CLIENT_VERSION_822;
 	
 	// 8.30 == 8.31; prefer 8.31
-#warning FIXME FIXME need to be 8.31 here
-    if (datSignature == 0x489980a1 &&
+    if (datSignature == 0x48da1fb6 &&
         sprSignature == 0x48c8e712 &&
         picSignature == 0x48562106)
-        return CLIENT_VERSION_830;
+        return CLIENT_VERSION_831;
 	
 	return CLIENT_VERSION_AUTO; // failure
 }
@@ -210,6 +213,9 @@ ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountnam
 	case CLIENT_VERSION_830:
 		protocol = new ProtocolGame83(accountname, password, name, isGM);
 		break;
+	case CLIENT_VERSION_831:
+		protocol = new ProtocolGame831(accountname, password, name, isGM);
+		break;
 	default:
 		return NULL;
 		break;
@@ -266,7 +272,7 @@ const char* Connection::getErrorDesc(int message)
 	case ERROR_UNEXPECTED_RECV_ERROR:
 		return "Unexpected recv() error.";
 	case ERROR_DECRYPT_FAIL:
-		return "Decrypting of message failed. In Network options, try changing option \"OT Key\".";
+		return "Decrypting of message failed.\nIn Network options, try changing option \"OT Key\".";
 	case ERROR_WRONG_MSG_SIZE:
 		return "Message size is wrong.";
 	case ERROR_SEND_FAIL:

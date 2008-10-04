@@ -124,11 +124,11 @@ public:
 	
 	void permitAccountName(bool yes) {
 		if(yes){
-			txtUsername.SetAllowedChars("0123456789");
-			pnlUsername.SetCaption("Account number:");
-		} else {
 			txtUsername.SetAllowedChars("");
 			pnlUsername.SetCaption("Account name:");
+		} else {
+			txtUsername.SetAllowedChars("0123456789");
+			pnlUsername.SetCaption("Account number:");
 		}
 	}
 };

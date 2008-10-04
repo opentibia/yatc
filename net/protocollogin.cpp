@@ -62,7 +62,10 @@ void ProtocolLogin::onConnect()
 	output.addU32(k[2]);
 	output.addU32(k[3]);
 
-	output.addU32(m_account);
+	if(!m_usesaccountname)
+		output.addU32(m_account);
+	else
+		output.addString(m_accountname);
 	output.addString(m_password);
 
 	//Rsa size has to be 128
