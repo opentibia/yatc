@@ -56,7 +56,7 @@ bool ProtocolGame82::parsePacket(uint8_t cmd, NetworkMessage& msg)
     // this should be used in case some function is not virtual
     switch(cmd){
     case 0x0A:
-        return parseSelfAppear(msg);
+		return parseSelfAppear(msg);
     }
     return ProtocolGame::parsePacket(cmd,msg);
 }
@@ -74,8 +74,9 @@ bool ProtocolGame82::onRecv(NetworkMessage& msg)
 		if (!parsed) { // i wanted to avoid putting brackets around everything.
 		    DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Did not handle 0x%02x in first step, retrying\n", cmd);
 		}
-		if (!parsed)
+		if (!parsed) {
 			RAISE_PROTOCOL_ERROR("Unknown opcode");
+		}
 	}
 	return true;
 }

@@ -273,6 +273,7 @@ bool ProtocolGame::parseSelfAppear(NetworkMessage& msg)
     GlobalVariables::setPlayerID(ourID);
     GlobalVariables::setCanReportBugs(canReportBugs);
     Notifications::onEnterGame();
+	printf("Entered game\n");
     return true;
 }
 bool ProtocolGame::parseGMActions(NetworkMessage& msg)
