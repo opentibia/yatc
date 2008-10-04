@@ -114,6 +114,8 @@ public:
 		btnProtocol[CLIENT_VERSION_822].SetCaption("Protocol 8.22");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_830]);
 		btnProtocol[CLIENT_VERSION_830].SetCaption("Protocol 8.3");
+		window.AddObject(&btnProtocol[CLIENT_VERSION_831]);
+		btnProtocol[CLIENT_VERSION_831].SetCaption("Protocol 8.31");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_AUTO]);
 		btnProtocol[CLIENT_VERSION_AUTO].SetCaption("Autodetect");
 
@@ -128,27 +130,27 @@ public:
 		}
 
 		window.AddObject(&pnlSeparator);
-		pnlSeparator.SetPos(10, 199);
+		pnlSeparator.SetPos(10, 100+((pc-1)/2+1)*24 + 3);
 		pnlSeparator.SetWidth(210);
 		pnlSeparator.SetHeight(2);
 		pnlSeparator.SetBGColor(.2,.2,.2,1.);
 
 		window.AddObject(&btnHelp);
-		btnHelp.SetPos(72, 210);
+		btnHelp.SetPos(72, 210-102 + ((pc-1)/2+1)*24);
 		btnHelp.SetWidth(43);
 		btnHelp.SetHeight(19);
 		btnHelp.SetCaption("Help");
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
-		btnOk.SetPos(125, 210);
+		btnOk.SetPos(125, 210-102 + ((pc-1)/2+1)*24);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(19);
 		btnOk.SetCaption("Ok");
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
-		btnCancel.SetPos(178, 210);
+		btnCancel.SetPos(178, 210-102 + ((pc-1)/2+1)*24);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(19);
 		btnCancel.SetCaption("Cancel");

@@ -73,6 +73,7 @@
 		7FAA74E20E97C98C0033E348 /* Tibia.spr in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74DF0E97C98C0033E348 /* Tibia.spr */; };
 		7FAA74E30E97C98C0033E348 /* Tibia.pic in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74E00E97C98C0033E348 /* Tibia.pic */; };
 		7FAA74E40E97C98C0033E348 /* Tibia.dat in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74E10E97C98C0033E348 /* Tibia.dat */; };
+		7FAA754D0E97CD8D0033E348 /* protocolgame831.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FAA754B0E97CD8D0033E348 /* protocolgame831.cpp */; };
 		7FEE6E3E0E9651490011CCC8 /* glict.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F4EC86F0E941C5A00A1218E /* glict.framework */; };
 		7FEE6E3F0E96514F0011CCC8 /* SDL_gfx.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F4EC8720E941C7300A1218E /* SDL_gfx.framework */; };
 		7FEE6E470E9651720011CCC8 /* GMP.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7FEE6E460E9651720011CCC8 /* GMP.framework */; };
@@ -246,6 +247,8 @@
 		7FAA74DF0E97C98C0033E348 /* Tibia.spr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.spr; sourceTree = "<group>"; };
 		7FAA74E00E97C98C0033E348 /* Tibia.pic */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.pic; sourceTree = "<group>"; };
 		7FAA74E10E97C98C0033E348 /* Tibia.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.dat; sourceTree = "<group>"; };
+		7FAA754B0E97CD8D0033E348 /* protocolgame831.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame831.cpp; sourceTree = "<group>"; };
+		7FAA754C0E97CD8D0033E348 /* protocolgame831.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame831.h; sourceTree = "<group>"; };
 		7FEE6E460E9651720011CCC8 /* GMP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GMP.framework; path = Library/Frameworks/GMP.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* YATC - Yet Another Tibia Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "YATC - Yet Another Tibia Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,6 +430,8 @@
 			children = (
 				7F23B2FD0E97A5770006C1FC /* protocolgame83.cpp */,
 				7F23B2FE0E97A5780006C1FC /* protocolgame83.h */,
+				7FAA754B0E97CD8D0033E348 /* protocolgame831.cpp */,
+				7FAA754C0E97CD8D0033E348 /* protocolgame831.h */,
 				7FA4FB170E93D5A10089D560 /* connection.cpp */,
 				7FA4FB180E93D5A10089D560 /* connection.h */,
 				7FA4FB190E93D5A10089D560 /* encryption.cpp */,
@@ -647,6 +652,7 @@
 				7FA4FB7A0E93D5B30089D560 /* item.cpp in Sources */,
 				7FA4FB7C0E93D5B30089D560 /* map.cpp in Sources */,
 				7F23B2FF0E97A5780006C1FC /* protocolgame83.cpp in Sources */,
+				7FAA754D0E97CD8D0033E348 /* protocolgame831.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

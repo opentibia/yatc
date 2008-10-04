@@ -35,12 +35,12 @@ ProtocolGame83::ProtocolGame83(const std::string& accountname, const std::string
 ProtocolGame(accountname, password, name, isGM)
 {
 	m_skipTiles = 0;
-
+	this->usesAccountName(true);
 }
 
 void ProtocolGame83::checkVersion()
 {
-    ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_820);
+    ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_830);
 }
 
 ProtocolGame83::~ProtocolGame83()

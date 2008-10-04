@@ -73,7 +73,10 @@ void ProtocolGame::onConnect()
 	output.addU32(k[3]);
 
 	output.addU8(m_isGM);
-	output.addU32(m_account);
+	if(!m_usesaccountname)
+		output.addU32(m_account);
+	else
+		output.addString(m_accountname);
 	output.addString(m_name);
 	output.addString(m_password);
 
