@@ -33,13 +33,15 @@
 #include "../gamecontent/inventory.h"
 #include "../gamecontent/shop.h" // 8.2+
 
-ProtocolGame::ProtocolGame(int account, const std::string& password, const std::string& name, bool isGM) :
+ProtocolGame::ProtocolGame(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 m_outputMessage(NetworkMessage::CAN_WRITE)
 {
 	m_password = password;
 	m_name = name;
-	m_account = account;
+	m_accountname = accountname;
 	m_isGM = isGM;
+	m_usesaccountname = false;
+	m_account = atoi(m_accountname.c_str());
 }
 
 ProtocolGame::~ProtocolGame()

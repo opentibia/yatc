@@ -77,7 +77,8 @@ enum ClientVersion_t{
 	CLIENT_VERSION_811 = 811,
 	CLIENT_VERSION_820 = 820,
 	CLIENT_VERSION_821 = 821,
-	CLIENT_VERSION_822 = 822
+	CLIENT_VERSION_822 = 822,
+	CLIENT_VERSION_830 = 830
 };
 
 enum ClientOS_t{
@@ -121,8 +122,8 @@ class ProtocolConfig
 		const std::string& getServerHost() {return m_host; }
 		uint16_t getServerPort() { return m_port; }
 
-		static void createLoginConnection(int account, const std::string& password);
-		static ProtocolGame* createGameConnection(int account, const std::string& password, const std::string& name, bool isGM);
+		static void createLoginConnection(const std::string& accountname, const std::string& password);
+		static ProtocolGame* createGameConnection(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
 	protected:
 
@@ -202,6 +203,9 @@ class Protocol
 		const NetworkMessage* getCurrentMsg(){ return m_currentMsg;}
 		uint32_t getCurrentMsgN(){ return m_currentMsgN;}
 
+		void usesAccountName(bool doUseAccName) { m_usesaccountname = doUseAccName; }
+		bool doesUseAccountName() const { return m_usesaccountname; }
+	
 	protected:
 		void setErrorDesc(const std::string& message){ setErrorDesc(message.c_str());}
 		void setErrorDesc(const char* message){ m_errorMessage = message;}
@@ -212,6 +216,8 @@ class Protocol
 		Connection* m_connection;
 		NetworkMessage* m_currentMsg;
 		uint32_t m_currentMsgN;
+
+		bool m_usesaccountname;
 
 	private:
 		std::string m_errorMessage;
@@ -265,6 +271,7 @@ class Connection
 		void sendMessage(NetworkMessage& msg);
 
 		void setCryptoState(bool state){ m_cryptoEnable = state;}
+	    void setChecksumState(bool state){ m_checksumEnable = state;}
 
 		void setKey(char* key, int size){
 			if(m_crypto){
@@ -307,6 +314,7 @@ class Connection
 
 		//internal connection state
 		bool m_cryptoEnable;
+	    bool m_checksumEnable;
 
 		enum READSTATE{
 			READING_SIZE,

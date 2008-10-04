@@ -111,7 +111,6 @@ public:
 		btnOk.SetPrevious(!options.ui_compat ? NULL : &btnCreateAc);
 		btnOk.SetNext(!options.ui_compat ? NULL : &btnCancel);
 
-
 		btnCancel.SetPos(180-4,148-17);
 		btnCancel.SetWidth(40);
 		btnCancel.SetHeight(166-149);
@@ -121,6 +120,16 @@ public:
 		btnCancel.SetPrevious(!options.ui_compat ? NULL : &btnOk);
 		btnCancel.SetNext(!options.ui_compat ? NULL : &txtUsername);
 
+	}
+	
+	void permitAccountName(bool yes) {
+		if(yes){
+			txtUsername.SetAllowedChars("0123456789");
+			pnlUsername.SetCaption("Account number:");
+		} else {
+			txtUsername.SetAllowedChars("");
+			pnlUsername.SetCaption("Account name:");
+		}
 	}
 };
 

@@ -19,12 +19,6 @@
 //////////////////////////////////////////////////////////////////////
 
 
-// WARNING!
-// Current implementation is not completely verified.
-// It's based on this thread: http://otfans.net/showthread.php?t=119929
-// This has not been thouroughly tested because, simply, there is no server
-// yet that can truly handle 8.2.
-
 #include "../fassert.h"
 #include "protocolgame82.h"
 
@@ -38,8 +32,8 @@
 #include "../gamecontent/container.h"
 #include "../gamecontent/inventory.h"
 
-ProtocolGame82::ProtocolGame82(int account, const std::string& password, const std::string& name, bool isGM) :
-ProtocolGame(account, password, name, isGM)
+ProtocolGame82::ProtocolGame82(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
+ProtocolGame(accountname, password, name, isGM)
 {
 	m_skipTiles = 0;
 

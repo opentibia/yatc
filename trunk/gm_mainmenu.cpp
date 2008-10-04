@@ -258,10 +258,24 @@ void GM_MainMenu::pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictConta
         //m->msgBox("Sorry, you can't log in twice due to a bug in the client.", "Bug in " PRODUCTSHORT " :(");
         //return;
     //}
+	
+	
+	
+	ClientVersion_t proto = m->getActiveProtocol();
+	if(!proto)
+		return;
+	
+	if (proto > 830)
+		m->winLogin.permitAccountName(true);
+	else
+		m->winLogin.permitAccountName(false);
+	
+	
 	m->winLogin.window.SetVisible(true);
 	m->winLogin.txtUsername.SetCaption(options.account);
 	m->winLogin.txtPassword.SetCaption(options.password);
 	m->winLogin.txtUsername.Focus(NULL);
+	
 }
 
 void GM_MainMenu::pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -298,10 +312,11 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		#endif
 		<< "\n"
 		<< "Programmed by (in no particular order):\n"
-		<< b << " mips\n"
 		<< b << " Ivan Vucica - Khaos\n"
-		<< b << " Magnus KL - Smygflik\n"
 		<< b << " Nate Fries - nfries88\n"
+		<< "with inactive developers:\n"
+		<< b << " mips\n"
+		<< b << " Magnus KL - Smygflik\n"
 		<< "\n"
 		<< "Contributors:\n"
 		<< b << " mrauter\n"
@@ -339,45 +354,47 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 		g_connection = NULL;
 	}
 
-	ClientVersion_t proto = options.protocol;
-	if (!proto)
-		proto = ProtocolConfig::detectVersion();
-
-	if (!proto) {
-		std::stringstream t;
-		unsigned char c = 149; // bullet
-		t << "Data files in the directory either:\n" <<
-			 c << "do not belong to same protocol version, or\n" <<
-			 c << "are modified and with unknown signatures.\n" <<
-			 "\n" <<
-			 "Either get correct files from a single known\n" <<
-			 "client version, or make sure that you have\n" <<
-			 "correct signatures in the files, or go to\n" <<
-			 "Options->Network and choose the correct\n" <<
-			 "protocol.";
-
-
-		m->msgBox(t.str().c_str(),"Protocol detection failed");
+	ClientVersion_t proto = m->getActiveProtocol();
+	if(!proto)
 		return;
-	} /*else {
-		std::stringstream t;
-		t << "Autodetected " << std::dec << proto << " dat: 0x" << std::hex << ProtocolConfig::getInstance().getDatSignature() << " pic: 0x" << std::hex << ProtocolConfig::getInstance().getPicSignature() << " spr: 0x" << std::hex << ProtocolConfig::getInstance().getSprSignature();
-		m->msgBox(t.str().c_str(),"Protocol detection");
-	}*/
-
+	
 	ProtocolConfig::getInstance().setServerType(options.otkey ? SERVER_OTSERV : SERVER_CIP ); // perhaps this should go to options, too?
 	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, proto); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 
-	ProtocolConfig::createLoginConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption());
-	m->desktop.AddObject(&m->winStatus);
-	m->centerWindow(&m->winStatus);
+	ProtocolConfig::createLoginConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption());
 	m->winStatus.SetCaption("Logging in");
 	m->winStatus.SetMessage("Connecting to the server...\n");
 	m->winStatus.SetWidth(320);
 	m->winStatus.SetEnabled(false);
-	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "SetVisible...\n");
+	m->centerWindow(&m->winStatus);
+	m->desktop.AddObject(&m->winStatus);
+
+	//DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "SetVisible...\n");
+}
+ClientVersion_t GM_MainMenu::getActiveProtocol(){
+	ClientVersion_t proto = options.protocol;
+	if (!proto)
+		proto = ProtocolConfig::detectVersion();
+	
+	if (!proto) {
+		
+		std::stringstream t;
+		unsigned char c = 149; // bullet
+		t << "Data files in the directory either:\n" <<
+		c << "do not belong to same protocol version, or\n" <<
+		c << "are modified and with unknown signatures.\n" <<
+		"\n" <<
+		"Either get correct files from a single known\n" <<
+		"client version, or make sure that you have\n" <<
+		"correct signatures in the files, or go to\n" <<
+		"Options->Network and choose the correct\n" <<
+		"protocol.";
+		msgBox(t.str().c_str(),"Protocol detection failed");
+		
+	}
+	return proto;
 }
 
 void GM_MainMenu::winLogin_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -419,7 +436,7 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, proto); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
 	ProtocolConfig::getInstance().setServer(ip, m->winCharlist.currentChar.port);
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
-	ProtocolConfig::createGameConnection(atoi(m->winLogin.txtUsername.GetCaption().c_str()), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);
+	ProtocolConfig::createGameConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);
 
 	m->desktop.AddObject(&m->winStatus);
 	m->centerWindow(&m->winStatus);

@@ -35,7 +35,7 @@ class ProtocolGame822 : public ProtocolGame82
 		const char* getProtocolName() { return "Protocol822";}
 
 	protected:
-		ProtocolGame822(int account, const std::string& password, const std::string& name, bool isGM);
+		ProtocolGame822(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
 		virtual void checkVersion();
 

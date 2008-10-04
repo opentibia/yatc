@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		002F39FA09D0881F00EBEB88 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
 		002F3A0009D0884600EBEB88 /* SDL.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
+		7F23B2FF0E97A5780006C1FC /* protocolgame83.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F23B2FD0E97A5770006C1FC /* protocolgame83.cpp */; };
 		7F4EC8700E941C5A00A1218E /* glict.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC86F0E941C5A00A1218E /* glict.framework */; };
 		7F4EC8730E941C7300A1218E /* SDL_gfx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8720E941C7300A1218E /* SDL_gfx.framework */; };
 		7F4EC8770E941D1000A1218E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8760E941D1000A1218E /* OpenGL.framework */; };
@@ -69,9 +70,9 @@
 		7FA4FB790E93D5B30089D560 /* inventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB6C0E93D5B30089D560 /* inventory.cpp */; };
 		7FA4FB7A0E93D5B30089D560 /* item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB6E0E93D5B30089D560 /* item.cpp */; };
 		7FA4FB7C0E93D5B30089D560 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FB710E93D5B30089D560 /* map.cpp */; };
-		7FAB542E0E963932003F2C61 /* Tibia.dat in Resources */ = {isa = PBXBuildFile; fileRef = 7FAB542B0E963932003F2C61 /* Tibia.dat */; };
-		7FAB542F0E963932003F2C61 /* Tibia.pic in Resources */ = {isa = PBXBuildFile; fileRef = 7FAB542C0E963932003F2C61 /* Tibia.pic */; };
-		7FAB54300E963932003F2C61 /* Tibia.spr in Resources */ = {isa = PBXBuildFile; fileRef = 7FAB542D0E963932003F2C61 /* Tibia.spr */; };
+		7FAA74E20E97C98C0033E348 /* Tibia.spr in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74DF0E97C98C0033E348 /* Tibia.spr */; };
+		7FAA74E30E97C98C0033E348 /* Tibia.pic in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74E00E97C98C0033E348 /* Tibia.pic */; };
+		7FAA74E40E97C98C0033E348 /* Tibia.dat in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74E10E97C98C0033E348 /* Tibia.dat */; };
 		7FEE6E3E0E9651490011CCC8 /* glict.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F4EC86F0E941C5A00A1218E /* glict.framework */; };
 		7FEE6E3F0E96514F0011CCC8 /* SDL_gfx.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F4EC8720E941C7300A1218E /* SDL_gfx.framework */; };
 		7FEE6E470E9651720011CCC8 /* GMP.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7FEE6E460E9651720011CCC8 /* GMP.framework */; };
@@ -104,6 +105,8 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* yatc_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yatc_Prefix.pch; sourceTree = "<group>"; };
+		7F23B2FD0E97A5770006C1FC /* protocolgame83.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame83.cpp; sourceTree = "<group>"; };
+		7F23B2FE0E97A5780006C1FC /* protocolgame83.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame83.h; sourceTree = "<group>"; };
 		7F4EC86F0E941C5A00A1218E /* glict.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = glict.framework; path = /Library/Frameworks/glict.framework; sourceTree = "<absolute>"; };
 		7F4EC8720E941C7300A1218E /* SDL_gfx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_gfx.framework; path = /Library/Frameworks/SDL_gfx.framework; sourceTree = "<absolute>"; };
 		7F4EC8760E941D1000A1218E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -240,12 +243,12 @@
 		7FA4FB730E93D5B30089D560 /* position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = position.h; sourceTree = "<group>"; };
 		7FA4FB740E93D5B30089D560 /* shop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shop.h; sourceTree = "<group>"; };
 		7FA4FB750E93D5B30089D560 /* thing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thing.h; sourceTree = "<group>"; };
-		7FAB542B0E963932003F2C61 /* Tibia.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.dat; sourceTree = "<group>"; };
-		7FAB542C0E963932003F2C61 /* Tibia.pic */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.pic; sourceTree = "<group>"; };
-		7FAB542D0E963932003F2C61 /* Tibia.spr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.spr; sourceTree = "<group>"; };
+		7FAA74DF0E97C98C0033E348 /* Tibia.spr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.spr; sourceTree = "<group>"; };
+		7FAA74E00E97C98C0033E348 /* Tibia.pic */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.pic; sourceTree = "<group>"; };
+		7FAA74E10E97C98C0033E348 /* Tibia.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.dat; sourceTree = "<group>"; };
 		7FEE6E460E9651720011CCC8 /* GMP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GMP.framework; path = Library/Frameworks/GMP.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* yatc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yatc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* YATC - Yet Another Tibia Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "YATC - Yet Another Tibia Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,7 +293,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* yatc.app */,
+				8D1107320486CEB800E47090 /* YATC - Yet Another Tibia Client.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -319,10 +322,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7FAA74DF0E97C98C0033E348 /* Tibia.spr */,
+				7FAA74E00E97C98C0033E348 /* Tibia.pic */,
+				7FAA74E10E97C98C0033E348 /* Tibia.dat */,
 				7FA49D420E9695BA0016102F /* yatc.icns */,
-				7FAB542B0E963932003F2C61 /* Tibia.dat */,
-				7FAB542C0E963932003F2C61 /* Tibia.pic */,
-				7FAB542D0E963932003F2C61 /* Tibia.spr */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 			);
@@ -369,6 +372,7 @@
 				7FA4FAFF0E93D5900089D560 /* fassert.h */,
 				7FA4FB000E93D5900089D560 /* gm_debug.h */,
 				7FA4FB010E93D5900089D560 /* gm_gameworld.h */,
+				7FA4FB0F0E93D5900089D560 /* gm_mainmenu.h */,
 				7FA4FB020E93D5900089D560 /* thingui.h */,
 				7FA4FB030E93D5900089D560 /* spritesdl.h */,
 				7FA4FB040E93D5900089D560 /* stdinttypes.h */,
@@ -382,7 +386,6 @@
 				7FA4FB0C0E93D5900089D560 /* objects.h */,
 				7FA4FB0D0E93D5900089D560 /* notifications.h */,
 				7FA4FB0E0E93D5900089D560 /* itemui.h */,
-				7FA4FB0F0E93D5900089D560 /* gm_mainmenu.h */,
 				7FA4FB100E93D5900089D560 /* font.h */,
 				7FA4FB110E93D5900089D560 /* gamemode.h */,
 				7FA4FB120E93D5900089D560 /* util.h */,
@@ -398,6 +401,7 @@
 				7FA4FAC20E93D57E0089D560 /* engine.cpp */,
 				7FA4FAC30E93D57E0089D560 /* popup.cpp */,
 				7FA4FAC40E93D57E0089D560 /* gm_gameworld.cpp */,
+				7FA4FAD20E93D57E0089D560 /* gm_mainmenu.cpp */,
 				7FA4FAC50E93D57E0089D560 /* thingui.cpp */,
 				7FA4FAC60E93D57E0089D560 /* spritegl.cpp */,
 				7FA4FAC70E93D57E0089D560 /* spritesdl.cpp */,
@@ -411,7 +415,6 @@
 				7FA4FACF0E93D57E0089D560 /* itemui.cpp */,
 				7FA4FAD00E93D57E0089D560 /* gamemode.cpp */,
 				7FA4FAD10E93D57E0089D560 /* main.cpp */,
-				7FA4FAD20E93D57E0089D560 /* gm_mainmenu.cpp */,
 				7FA4FAD30E93D57E0089D560 /* font.cpp */,
 				7FA4FAD40E93D57E0089D560 /* util.cpp */,
 				7FA4FAD50E93D57E0089D560 /* enginegl.cpp */,
@@ -422,6 +425,8 @@
 		7FA4FB160E93D5A10089D560 /* net */ = {
 			isa = PBXGroup;
 			children = (
+				7F23B2FD0E97A5770006C1FC /* protocolgame83.cpp */,
+				7F23B2FE0E97A5780006C1FC /* protocolgame83.h */,
 				7FA4FB170E93D5A10089D560 /* connection.cpp */,
 				7FA4FB180E93D5A10089D560 /* connection.h */,
 				7FA4FB190E93D5A10089D560 /* encryption.cpp */,
@@ -528,7 +533,7 @@
 			name = YATC;
 			productInstallPath = "$(HOME)/Applications";
 			productName = yatc;
-			productReference = 8D1107320486CEB800E47090 /* yatc.app */;
+			productReference = 8D1107320486CEB800E47090 /* YATC - Yet Another Tibia Client.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -554,10 +559,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
-				7FAB542E0E963932003F2C61 /* Tibia.dat in Resources */,
-				7FAB542F0E963932003F2C61 /* Tibia.pic in Resources */,
-				7FAB54300E963932003F2C61 /* Tibia.spr in Resources */,
 				7FA49D430E9695BA0016102F /* yatc.icns in Resources */,
+				7FAA74E20E97C98C0033E348 /* Tibia.spr in Resources */,
+				7FAA74E30E97C98C0033E348 /* Tibia.pic in Resources */,
+				7FAA74E40E97C98C0033E348 /* Tibia.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,7 +581,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " \n# http://thirdcog.eu/apps/frameworks\nfunction relocateLibraryInCurrentApp() {\n  install_name_tool -change $1$2 @executable_path/../Frameworks/$2 $CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\n}\nrelocateLibraryInCurrentApp '' GMP.framework/Versions/A/GMP #note the space";
+			shellScript = " \n# http://thirdcog.eu/apps/frameworks\nfunction relocateLibraryInCurrentApp() {\n  install_name_tool -change \"$1$2\" \"@executable_path/../Frameworks/$2\" \"$CONFIGURATION_BUILD_DIR/$EXECUTABLE_PATH\"\n}\nrelocateLibraryInCurrentApp '' GMP.framework/Versions/A/GMP #note the space\nrelocateLibraryInCurrentApp /Users/ivucica/Library/Frameworks/ GLICT.framework/Versions/A/GLICT #note the space";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -641,6 +646,7 @@
 				7FA4FB790E93D5B30089D560 /* inventory.cpp in Sources */,
 				7FA4FB7A0E93D5B30089D560 /* item.cpp in Sources */,
 				7FA4FB7C0E93D5B30089D560 /* map.cpp in Sources */,
+				7F23B2FF0E97A5780006C1FC /* protocolgame83.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,7 +675,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = USE_OPENGL;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = yatc;
+				PRODUCT_NAME = "YATC - Yet Another Tibia Client";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -687,7 +693,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = USE_OPENGL;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = yatc;
+				PRODUCT_NAME = "YATC - Yet Another Tibia Client";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

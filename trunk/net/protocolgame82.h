@@ -47,7 +47,7 @@ class ProtocolGame82 : public ProtocolGame
 		virtual MessageType_t translateTextMessageToInternal(uint8_t messageType);
 
 	protected:
-		ProtocolGame82(int account, const std::string& password, const std::string& name, bool isGM);
+		ProtocolGame82(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
 		Thing* internalGetThing(NetworkMessage& msg);
 		Item* internalGetItem(NetworkMessage& msg, uint32_t itemid);

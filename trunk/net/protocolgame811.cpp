@@ -21,8 +21,8 @@
 #include "../fassert.h"
 #include "protocolgame811.h"
 
-ProtocolGame811::ProtocolGame811(int account, const std::string& password, const std::string& name, bool isGM) :
-ProtocolGame80(account, password, name, isGM)
+ProtocolGame811::ProtocolGame811(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
+ProtocolGame80(accountname, password, name, isGM)
 {
 	//
 }

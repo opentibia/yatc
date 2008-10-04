@@ -41,7 +41,7 @@ class ProtocolGame80 : public ProtocolGame
         virtual void sendCloseNPCChannel() {} // does not exist in 8.0-8.11 family of protocols
 
 	protected:
-		ProtocolGame80(int account, const std::string& password, const std::string& name, bool isGM);
+		ProtocolGame80(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
 		Thing* internalGetThing(NetworkMessage& msg);
 		Item* internalGetItem(NetworkMessage& msg, uint32_t itemid);
