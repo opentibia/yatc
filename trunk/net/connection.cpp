@@ -174,15 +174,12 @@ void ProtocolConfig::createLoginConnection(const std::string& accountname, const
 	EncXTEA* crypto = new EncXTEA;
 	Protocol* protocol = new ProtocolLogin(accountname, password);
 	g_connection = new Connection(getInstance().m_host, getInstance().m_port, crypto, protocol);
-	switch(getInstance().m_clientVersion){
-		default:
-			g_connection->setChecksumState(false);
-			protocol->usesAccountName(false);
-			break;
-		case CLIENT_VERSION_830:
-			g_connection->setChecksumState(true);
-			protocol->usesAccountName(true);
-			break;
+	if(getInstance().m_clientVersion<CLIENT_VERSION_830){
+		g_connection->setChecksumState(false);
+		protocol->usesAccountName(false);
+	} else {
+		g_connection->setChecksumState(true);
+		protocol->usesAccountName(true);
 	}
 }
 
@@ -433,7 +430,7 @@ void Connection::executeNetwork()
 		if(ret == 0){
 			//time expired, socket not connected yet
 			if(SDL_GetTicks() - m_ticks > 20*1000){
-				//waitnig 20 seconds? -> timeout
+				//waiting 20 seconds? -> timeout
 				closeConnectionError(ERROR_CONNECT_TIMEOUT);
 			}
 		}
@@ -490,6 +487,7 @@ void Connection::executeNetwork()
 						return;
 					}
 					if(!m_inputMessage.getU16(m_msgSize)){
+						printf("Failed reading msg size\n");
 						closeConnectionError(ERROR_UNEXPECTED_RECV_ERROR);
 						return;
 					}
@@ -497,30 +495,47 @@ void Connection::executeNetwork()
 						closeConnectionError(ERROR_TOO_BIG_MESSAGE);
 						return;
 					}
+				}
+				case READING_CHECKSUM: {
 					if(m_checksumEnable){
-						uint32_t checksum;
-						if(!m_inputMessage.getU32(checksum)){
-							closeConnectionError(ERROR_UNEXPECTED_RECV_ERROR);
+						m_readState = READING_CHECKSUM;
+						int ret = internalRead(4, true);
+						if(ret != 4){
+							checkSocketReadState();
 							return;
 						}
-					}
-					m_readState = READING_MESSAGE;
+						uint32_t checksum;
+						if(!m_inputMessage.getU32(checksum)){
+							printf("Failed reading checksum\n");
+							closeConnectionError(ERROR_UNEXPECTED_RECV_ERROR);
+							return;
+						} else {
+							printf("Read checksum ok\n");
+							m_msgSize-=4;
+							m_readState = READING_MESSAGE;
+						}
+					} else
+						m_readState = READING_MESSAGE;
 				}
 				case READING_MESSAGE:
 				{
 					int ret = internalRead(m_msgSize, false);
 					if(ret <= 0){
 						checkSocketReadState();
+						printf("Checking read state 1\n");
 						return;
 					}
 					else if(ret != m_msgSize){
 						m_msgSize -= ret;
 						checkSocketReadState();
+						
+						printf("Checking read state 2 -- msgsize: %d was %d, ret: %d\n", m_msgSize, m_msgSize+ret, ret);
 						return;
 					}
 					
 					//decrypt incoming message if needed
 					if(m_cryptoEnable && m_crypto){
+						printf("Decrypting\n");
 						if(!m_crypto->decrypt(m_inputMessage)){
 							closeConnectionError(ERROR_DECRYPT_FAIL);
 							return;
