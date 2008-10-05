@@ -660,17 +660,44 @@ void Connection::sendMessage(NetworkMessage& msg)
 		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "Sending size = 0 message\n");
 		return;
 	}
-
+	
 	//add message size
 	msg.addHeader();
+	
+	for(int i=0;i<msg.getSize();i++){
+		printf("%02x ", *((unsigned char*)msg.getBuffer()+i));
+		if (i % 8 == 7) 
+			printf("\n");
+	}
+	printf("\n");
+	printf("Encrypting: \n");
 	//and encrypt if needed
 	if(m_cryptoEnable && m_crypto){
 		m_crypto->encrypt(msg);
 	}
+	
+	
+	for(int i=0;i<msg.getSize();i++){
+		printf("%02x ", *((unsigned char*)msg.getBuffer()+i));
+		if (i % 8 == 7) 
+			printf("\n");
+	}
+	printf("\n");
+	printf("Adding checksum:\n");
+	
 	//and add checksum if needed
 	if(m_checksumEnable){
 		msg.addChecksum();
 	}
+	
+	
+	for(int i=0;i<msg.getSize();i++){
+		printf("%02x ", *((unsigned char*)msg.getBuffer()+i));
+		if (i % 8 == 7) 
+			printf("\n");
+	}
+	printf("\n");
+	
 	
 	//wait until all bytes are sent
 	int sendBytes = 0;
