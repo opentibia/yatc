@@ -296,10 +296,15 @@ void NetworkMessage::addChecksum()
     // only call after msg is encrypted!
 
 	if(canWrite(4)){
-		uint32_t sum = getChecksum();
-		memmove(m_buffer + 4, m_buffer, m_size);
-		*((uint32_t*)(m_buffer)) = sum;
+		printf("first 2 bytes: %02x %02x\n", m_buffer[m_start], m_buffer[m_start+1]);
+		uint32_t sum = getChecksum(2);
+		memmove(m_buffer + m_start + 6, m_buffer + m_start + 2, m_size - 2); // move everything but first two bytes
+		*((uint32_t*)(m_buffer+m_start+2)) = sum;
 		m_size += 4;
+		
+		m_buffer[m_start] = (uint8_t)(m_size-2);
+		m_buffer[m_start + 1] = (uint8_t)((m_size-2) >> 8); // dunno why -2, but apparently it works.
+
 	}
 
 }
