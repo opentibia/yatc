@@ -30,7 +30,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		\
 		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp \
 		ui/uiinventory.cpp ui/uishop.cpp ui/uitrade.cpp \
-		ui/mainmenu.cpp \
+		ui/mainmenu.cpp ui/uioutfit.cpp \
 		\
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
 		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
@@ -41,7 +41,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
 		skin.h thingui.h itemui.h creatureui.h console.h effectui.h \
 		distanceui.h mapui.h \
-		bigint.h fassert.h stdinttypes.h \
+		bigint.h fassert.h stdinttypes.h popup.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h net/protocolgame811.h net/protocolgame82.h \
 		net/protocolgame821.h net/protocolgame822.h \
@@ -57,7 +57,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/optionsgraphics.h ui/optionsconsole.h ui/optionsnetwork.h \
 		ui/charlist.h ui/tutorialhints.h ui/itemmove.h \
 		ui/uiinventory.h ui/skills.h ui/uicontainer.h ui/uishop.h \
-		ui/uitrade.h ui/checkbox.h \
+		ui/uitrade.h ui/checkbox.h ui/uioutfit.h \
 		\
 		product.h \
 		\
