@@ -60,7 +60,6 @@ bool ProtocolGame82::parsePacket(uint8_t cmd, NetworkMessage& msg)
     }
     return ProtocolGame::parsePacket(cmd,msg);
 }
-
 bool ProtocolGame82::onRecv(NetworkMessage& msg)
 {
 	m_currentMsg = &msg;

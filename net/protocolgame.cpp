@@ -23,7 +23,7 @@
 #include "protocolgame.h"
 #include "rsa.h"
 
-#include "notifications.h"
+#include "../notifications.h"
 
 #include "../gamecontent/globalvars.h"
 #include "../gamecontent/map.h"
@@ -76,8 +76,10 @@ void ProtocolGame::onConnect()
 	output.addU8(m_isGM);
 	if(!m_usesaccountname)
 		output.addU32(m_account);
-	else
+	else {
 		output.addString(m_accountname);
+		printf("Sent acc name\n");
+	}
 	output.addString(m_name);
 	output.addString(m_password);
 

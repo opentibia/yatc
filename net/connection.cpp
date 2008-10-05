@@ -222,6 +222,11 @@ ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountnam
 
 	g_connection = new Connection(getInstance().m_host, getInstance().m_port, crypto, protocol);
 
+	if(getInstance().m_clientVersion >= CLIENT_VERSION_830){
+		g_connection->setChecksumState(true);
+		protocol->usesAccountName(true);
+	}
+	
 	return protocol;
 }
 
@@ -307,7 +312,7 @@ m_inputMessage(NetworkMessage::CAN_READ)
 
 	m_sentBytes = 0;
 	m_recvBytes = 0;
-
+	
 }
 
 Connection::~Connection()
@@ -495,6 +500,7 @@ void Connection::executeNetwork()
 						closeConnectionError(ERROR_TOO_BIG_MESSAGE);
 						return;
 					}
+					printf("Message size: %02x\n", m_msgSize);
 				}
 				case READING_CHECKSUM: {
 					if(m_checksumEnable){

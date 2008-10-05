@@ -265,7 +265,6 @@ void GM_MainMenu::pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictConta
 	if(!proto)
 		return;
 	
-	printf("protocol: %d\n", proto);
 	if (proto >= 830)
 		m->winLogin.permitAccountName(true);
 	else
