@@ -265,7 +265,7 @@ uint32_t NetworkMessage::getChecksum(uint16_t offset)
     // this will just calculate checksum, it still needs to be added
     // preparation
     const uint16_t MOD_ADLER=65521;
-    uint8_t* data = ((uint8_t*)m_buffer)+offset;
+    uint8_t* data = ((uint8_t*)m_buffer+m_start)+offset;
     size_t len = m_size - offset;
 
     // algo
