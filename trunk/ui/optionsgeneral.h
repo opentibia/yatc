@@ -23,7 +23,11 @@
 
 #include "../skin.h"
 #include "checkbox.h"
-
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 class winOptionsGeneral_t {
 public:
 
@@ -57,39 +61,39 @@ public:
 		window.SetVisible(false);
 		window.SetHeight(236);
 		window.SetWidth(228);
-		window.SetCaption("General Options");
+		window.SetCaption(gettext("General Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
 
 		window.AddObject(&chkClassicControl.pnlPanel);
 		chkClassicControl.SetPos(16,16);
 		chkClassicControl.SetWidth(198);
 		chkClassicControl.SetHeight(20);
-		chkClassicControl.SetCaption("Classic Control");
+		chkClassicControl.SetCaption(gettext("Classic Control"));
 
 
 		window.AddObject(&chkAutoChase.pnlPanel);
 		chkAutoChase.SetPos(16,49);
 		chkAutoChase.SetWidth(198);
 		chkAutoChase.SetHeight(20);
-		chkAutoChase.SetCaption("Auto Chase Off");
+		chkAutoChase.SetCaption(gettext("Auto Chase Off"));
 
 		window.AddObject(&chkShowHints.pnlPanel);
 		chkShowHints.SetPos(16,82);
 		chkShowHints.SetWidth(198);
 		chkShowHints.SetHeight(20);
-		chkShowHints.SetCaption("Show Hints");
+		chkShowHints.SetCaption(gettext("Show Hints"));
 
 		window.AddObject(&chkShowNames.pnlPanel);
 		chkShowNames.SetPos(16,115);
 		chkShowNames.SetWidth(198);
 		chkShowNames.SetHeight(20);
-		chkShowNames.SetCaption("Show Names of Creatures");
+		chkShowNames.SetCaption(gettext("Show Names of Creatures"));
 
 		window.AddObject(&chkShowTextEffects.pnlPanel);
 		chkShowTextEffects.SetPos(16, 148);
 		chkShowTextEffects.SetWidth(198);
 		chkShowTextEffects.SetHeight(20);
-		chkShowTextEffects.SetCaption("Show Textual Effects");
+		chkShowTextEffects.SetCaption(gettext("Show Textual Effects"));
 
 		window.AddObject(&pnlSeparator);
 		pnlSeparator.SetPos(10, 189);
@@ -101,21 +105,21 @@ public:
 		btnHelp.SetPos(72, 200);
 		btnHelp.SetWidth(41);
 		btnHelp.SetHeight(17);
-		btnHelp.SetCaption("Help");
+		btnHelp.SetCaption(gettext("Help"));
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(125, 200);
 		btnOk.SetWidth(41);
 		btnOk.SetHeight(17);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(178, 200);
 		btnCancel.SetWidth(41);
 		btnCancel.SetHeight(17);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont",8);
 	}
 

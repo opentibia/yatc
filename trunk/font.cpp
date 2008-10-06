@@ -174,6 +174,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 			charw[(unsigned char)'a'] = 5; charh[(unsigned char)'a'] = 6;
 			charw[(unsigned char)'c'] = 4; charh[(unsigned char)'c'] = 6;
+            charw[(unsigned char)'d'] = 5; charh[(unsigned char)'d'] = 6;
 			charw[(unsigned char)'e'] = 5; charh[(unsigned char)'e'] = 7;
 			charw[(unsigned char)'f'] = 3; charh[(unsigned char)'f'] = 6;
 			charw[(unsigned char)'g'] = 4; charh[(unsigned char)'g'] = 8;

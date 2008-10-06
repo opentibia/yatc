@@ -21,6 +21,11 @@
 #include <GLICT/globals.h>
 #include <GLICT/messagebox.h>
 
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 #include "gm_mainmenu.h"
 #include "gm_gameworld.h"
 #include "defines.h"
@@ -258,24 +263,24 @@ void GM_MainMenu::pnlMainMenu_btnLogIn_OnClick(glictPos* relmousepos, glictConta
         //m->msgBox("Sorry, you can't log in twice due to a bug in the client.", "Bug in " PRODUCTSHORT " :(");
         //return;
     //}
-	
-	
-	
+
+
+
 	ClientVersion_t proto = m->getActiveProtocol();
 	if(!proto)
 		return;
-	
+
 	if (proto >= 830)
 		m->winLogin.permitAccountName(true);
 	else
 		m->winLogin.permitAccountName(false);
-	
-	
+
+
 	m->winLogin.window.SetVisible(true);
 	m->winLogin.txtUsername.SetCaption(options.account);
 	m->winLogin.txtPassword.SetCaption(options.password);
 	m->winLogin.txtUsername.Focus(NULL);
-	
+
 }
 
 void GM_MainMenu::pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -339,7 +344,7 @@ void GM_MainMenu::pnlMainMenu_btnExit_OnClick(glictPos* relmousepos, glictContai
 void GM_MainMenu::btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	std::string *helptext = (std::string*)callerclass->GetCustomData();
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
-	m->msgBox(helptext->c_str(), "Help", callerclass);
+	m->msgBox(helptext->c_str(), gettext("Help"), callerclass);
 }
 
 /* **********LOGIN******* */
@@ -357,7 +362,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ClientVersion_t proto = m->getActiveProtocol();
 	if(!proto)
 		return;
-	
+
 	ProtocolConfig::getInstance().setServerType(options.otkey ? SERVER_OTSERV : SERVER_CIP ); // perhaps this should go to options, too?
 	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, proto); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
@@ -377,9 +382,9 @@ ClientVersion_t GM_MainMenu::getActiveProtocol(){
 	ClientVersion_t proto = options.protocol;
 	if (!proto)
 		proto = ProtocolConfig::detectVersion();
-	
+
 	if (!proto) {
-		
+
 		std::stringstream t;
 		unsigned char c = 149; // bullet
 		t << "Data files in the directory either:\n" <<
@@ -392,7 +397,7 @@ ClientVersion_t GM_MainMenu::getActiveProtocol(){
 		"Options->Network and choose the correct\n" <<
 		"protocol.";
 		msgBox(t.str().c_str(),"Protocol detection failed");
-		
+
 	}
 	return proto;
 }
@@ -519,7 +524,7 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 	options.motdtext = text;
 	options.Save();
 
-	winStatus.SetCaption("Message of the Day");
+	winStatus.SetCaption(gettext("Message of the Day"));
 	winStatus.SetMessage(text);
 	winStatus.SetEnabled(true);
 	winStatus.Focus(NULL);
@@ -531,9 +536,9 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& text)
 {
 	if (type == MESSAGE_ERROR)
-		winStatus.SetCaption("Error");
+		winStatus.SetCaption(gettext("Error"));
 	else
-		winStatus.SetCaption("Information");
+		winStatus.SetCaption(gettext("Information"));
 
 	winStatus.SetMessage(text);
 	winStatus.SetEnabled(true);

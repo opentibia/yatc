@@ -27,6 +27,7 @@
 #include "optionsgraphics.h"
 #include "optionshotkeys.h"
 #include "optionsnetwork.h"
+#include <libintl.h>
 
 class winOptions_t {
 public:
@@ -69,49 +70,49 @@ public:
 		window.SetVisible(false);
 		window.SetHeight(271);
 		window.SetWidth(278);
-		window.SetCaption("Options");
+		window.SetCaption(gettext("Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
 
 		window.AddObject(&btnGeneral);
 		btnGeneral.SetPos(15, 16);
 		btnGeneral.SetWidth(84);
 		btnGeneral.SetHeight(18);
-		btnGeneral.SetCaption("General");
+		btnGeneral.SetCaption(gettext("General"));
 		btnGeneral.SetFont("minifont",8);
 
 		window.AddObject(&btnGraphics);
 		btnGraphics.SetPos(15, 49);
 		btnGraphics.SetWidth(84);
 		btnGraphics.SetHeight(18);
-		btnGraphics.SetCaption("Graphics");
+		btnGraphics.SetCaption(gettext("Graphics"));
 		btnGraphics.SetFont("minifont",8);
 
 		window.AddObject(&btnConsole);
 		btnConsole.SetPos(15, 82);
 		btnConsole.SetWidth(84);
 		btnConsole.SetHeight(18);
-		btnConsole.SetCaption("Console");
+		btnConsole.SetCaption(gettext("Console"));
 		btnConsole.SetFont("minifont",8);
 
 		window.AddObject(&btnHotkeys);
 		btnHotkeys.SetPos(15, 115);
 		btnHotkeys.SetWidth(84);
 		btnHotkeys.SetHeight(18);
-		btnHotkeys.SetCaption("Hotkeys");
+		btnHotkeys.SetCaption(gettext("Hotkeys"));
 		btnHotkeys.SetFont("minifont",8);
 
 		window.AddObject(&btnNetwork);
 		btnNetwork.SetPos(15, 148);
 		btnNetwork.SetWidth(84);
 		btnNetwork.SetHeight(18);
-		btnNetwork.SetCaption("Network");
+		btnNetwork.SetCaption(gettext("Network"));
 		btnNetwork.SetFont("minifont",8);
 
 		window.AddObject(&pnlGeneral);
 		pnlGeneral.SetPos(112, 14);
 		pnlGeneral.SetWidth(142);
 		pnlGeneral.SetHeight(27);
-		pnlGeneral.SetCaption("Change general\ngame options");
+		pnlGeneral.SetCaption(gettext("Change general\ngame options"));
 		pnlGeneral.SetBGActiveness(false);
 		pnlGeneral.SetFont("aafont",10);
 
@@ -119,7 +120,7 @@ public:
 		pnlGraphics.SetPos(112, 47);
 		pnlGraphics.SetWidth(142);
 		pnlGraphics.SetHeight(27);
-		pnlGraphics.SetCaption("Change graphics and\nperformance settings");
+		pnlGraphics.SetCaption(gettext("Change graphics and\nperformance settings"));
 		pnlGraphics.SetBGActiveness(false);
 		pnlGraphics.SetFont("aafont");
 
@@ -127,7 +128,7 @@ public:
 		pnlConsole.SetPos(112, 80);
 		pnlConsole.SetWidth(142);
 		pnlConsole.SetHeight(27);
-		pnlConsole.SetCaption("Customise the console");
+		pnlConsole.SetCaption(gettext("Customise the console"));
 		pnlConsole.SetBGActiveness(false);
 		pnlConsole.SetFont("aafont");
 
@@ -135,7 +136,7 @@ public:
 		pnlHotkeys.SetPos(112, 113);
 		pnlHotkeys.SetWidth(142);
 		pnlHotkeys.SetHeight(27);
-		pnlHotkeys.SetCaption("Edit your hotkey texts");
+		pnlHotkeys.SetCaption(gettext("Edit your hotkey texts"));
 		pnlHotkeys.SetBGActiveness(false);
 		pnlHotkeys.SetFont("aafont");
 
@@ -143,7 +144,7 @@ public:
 		pnlNetwork.SetPos(112, 146);
 		pnlNetwork.SetWidth(142);
 		pnlNetwork.SetHeight(27);
-		pnlNetwork.SetCaption("Configure network options,\nsuch as server address.");
+		pnlNetwork.SetCaption(gettext("Configure network options,\nsuch as server address."));
 		pnlNetwork.SetBGActiveness(false);
 		pnlNetwork.SetFont("aafont");
 
@@ -157,14 +158,14 @@ public:
 		btnMotd.SetPos(15, 198);
 		btnMotd.SetWidth(84);
 		btnMotd.SetHeight(18);
-		btnMotd.SetCaption("Motd");
+		btnMotd.SetCaption(gettext("Motd"));
 		btnMotd.SetFont("minifont",8);
 
 		window.AddObject(&pnlMotd);
 		pnlMotd.SetPos(112, 196);
 		pnlMotd.SetWidth(142);
 		pnlMotd.SetHeight(27);
-		pnlMotd.SetCaption("Show the most recent\nMessage of the Day");
+		pnlMotd.SetCaption(gettext("Show the most recent\nMessage of the Day"));
 		pnlMotd.SetBGActiveness(false);
 		pnlMotd.SetFont("aafont");
 
@@ -179,7 +180,7 @@ public:
 		btnOk.SetPos(227, 248);
 		btnOk.SetWidth(41);
 		btnOk.SetHeight(17);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 	}
 

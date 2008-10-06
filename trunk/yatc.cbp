@@ -294,6 +294,10 @@
 		<Unit filename="net/protocolgame821.cpp" />
 		<Unit filename="net/protocolgame821.h" />
 		<Unit filename="net/protocolgame822.cpp" />
+		<Unit filename="net/protocolgame83.cpp" />
+		<Unit filename="net/protocolgame83.h" />
+		<Unit filename="net/protocolgame831.cpp" />
+		<Unit filename="net/protocolgame831.h" />
 		<Unit filename="net/protocollogin.cpp" />
 		<Unit filename="net/protocollogin.h" />
 		<Unit filename="net/rsa.cpp" />

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.2SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-28 23:46+0200\n"
+"POT-Creation-Date: 2008-10-06 10:48+0200\n"
 "PO-Revision-Date: 2008-09-28 23:15+0200\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
@@ -15,22 +15,235 @@ msgstr ""
 "Content-Type: text/plain; charset=cp1250\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/mainmenu.cpp:41
+#: ../ui/login.h:133
+msgid "Account name:"
+msgstr "Ime racuna:"
+
+#: ../ui/login.h:61 ../ui/login.h:136
+msgid "Account number:"
+msgstr "Broj racuna:"
+
+#: ../ui/optionsgraphics.h:110
+msgid "Advanced"
+msgstr "Napredno"
+
+#: ../ui/optionsgraphics.h:102
+msgid "Advanced settings:"
+msgstr "Napredne postavke"
+
+#: ../ui/optionsgeneral.h:78
+msgid "Auto Chase Off"
+msgstr "Iskljuci auto-proganjanje"
+
+#: ../ui/optionsnetwork.h:125
+msgid "Autodetect"
+msgstr "Otkrij"
+
+#: ../ui/optionsgraphics.h:86
+msgid "Available resolutions:"
+msgstr "Dostupne rezolucije:"
+
+#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:161
+#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
+msgid "Cancel"
+msgstr "Ponisti"
+
+#: ../ui/options.h:115
+msgid ""
+"Change general\n"
+"game options"
+msgstr ""
+"Uredi opce\n"
+"opcije igre"
+
+#: ../ui/options.h:123
+msgid ""
+"Change graphics and\n"
+"performance settings"
+msgstr ""
+"Promijeni postavke\n"
+"grafike i performansi"
+
+#: ../ui/optionsgeneral.h:71
+msgid "Classic Control"
+msgstr "Klasicno upravljanje"
+
+#: ../ui/options.h:147
+msgid ""
+"Configure network options,\n"
+"such as server address."
+msgstr ""
+"Promijeni mrezne opcije\n"
+"poput adrese servera"
+
+#: ../ui/options.h:94
+msgid "Console"
+msgstr "Konzola"
+
+#: ../ui/optionsconsole.h:70
+msgid "Console Options"
+msgstr "Opcije konzole"
+
+#: ../ui/login.h:99
+msgid "Create Account"
+msgstr "Stvori racun"
+
+#: ../ui/options.h:131
+msgid "Customise the console"
+msgstr "Podesi konzolu"
+
+#: ../ui/options.h:139
+msgid "Edit your hotkey texts"
+msgstr "Uredi tekstove kratica"
+
+#: ../ui/mainmenu.cpp:44 ../ui/login.h:45
 msgid "Enter Game"
 msgstr "Ulaz u igru"
 
-#: ../ui/mainmenu.cpp:86
+#: ../gm_mainmenu.cpp:539
+msgid "Error"
+msgstr "Greska"
+
+#: ../ui/mainmenu.cpp:89
 msgid "Exit Game"
 msgstr "Izlaz"
 
-#: ../ui/mainmenu.cpp:75
+#: ../ui/optionsgraphics.h:80
+msgid "Fullscreen"
+msgstr "Puni ekran"
+
+#: ../ui/options.h:80
+msgid "General"
+msgstr "Opce"
+
+#: ../ui/optionsgeneral.h:64
+msgid "General Options"
+msgstr "Opce opcije"
+
+#: ../ui/options.h:87
+msgid "Graphics"
+msgstr "Grafika"
+
+#: ../ui/optionsgraphics.h:73
+msgid "Graphics Options"
+msgstr "Graficke opcije"
+
+#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:160 ../gm_mainmenu.cpp:347
+#: ../ui/optionsconsole.h:121
+msgid "Help"
+msgstr "Pomoc"
+
+#: ../ui/optionsui.cpp:82
+msgid "Help not done."
+msgstr "Pomoc nije napravljena."
+
+#: ../ui/options.h:101
+msgid "Hotkeys"
+msgstr "Kratice"
+
+#: ../ui/login.h:91
+msgid ""
+"If you don't have\n"
+"an account yet:"
+msgstr "Ako jos nemate\nsvoj racun:"
+
+#: ../ui/mainmenu.cpp:78
 msgid "Info"
 msgstr "Info"
 
-#: ../ui/mainmenu.cpp:52
+#: ../gm_mainmenu.cpp:541
+msgid "Information"
+msgstr "Obavijest"
+
+#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:527
+msgid "Message of the Day"
+msgstr "Poruka dana"
+
+#: ../ui/options.h:161
+msgid "Motd"
+msgstr "Motd"
+
+#: ../ui/options.h:108
+msgid "Network"
+msgstr "Mreza"
+
+#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:67
 msgid "Network Options"
 msgstr "Mrezne opcije"
 
-#: ../ui/mainmenu.cpp:63
+#: ../ui/optionsnetwork.h:105
+msgid "OT Encryption Key"
+msgstr "OT enkripcijski kljuc"
+
+#: ../ui/options.h:183 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
+#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
+msgid "Ok"
+msgstr "U redu"
+
+#: ../ui/mainmenu.cpp:66 ../ui/options.h:73
 msgid "Options"
 msgstr "Opcije"
+
+#: ../ui/login.h:76
+msgid "Password:"
+msgstr "Zaporka:"
+
+#: ../ui/optionsnetwork.h:109 ../ui/optionsnetwork.h:111
+#: ../ui/optionsnetwork.h:113 ../ui/optionsnetwork.h:115
+#: ../ui/optionsnetwork.h:117 ../ui/optionsnetwork.h:119
+#: ../ui/optionsnetwork.h:121 ../ui/optionsnetwork.h:123
+msgid "Protocol"
+msgstr "Protokol"
+
+#: ../ui/optionsnetwork.h:71
+msgid "Server address:"
+msgstr "Adresa servera:"
+
+#: ../ui/optionsnetwork.h:86
+msgid "Server port:"
+msgstr "Port servera:"
+
+#: ../ui/optionsconsole.h:85
+msgid "Show Event Messages in Console"
+msgstr "Prikazi dogadjaje u konzoli"
+
+#: ../ui/optionsgeneral.h:84
+msgid "Show Hints"
+msgstr "Prikazi savjete"
+
+#: ../ui/optionsconsole.h:79
+msgid "Show Info Messages in Console"
+msgstr "Prikazi info poruke u konzoli"
+
+#: ../ui/optionsconsole.h:103
+msgid "Show Levels in Console"
+msgstr "Prikazi levele u konzoli"
+
+#: ../ui/optionsgeneral.h:90
+msgid "Show Names of Creatures"
+msgstr "Prikazi nazive stvorova"
+
+#: ../ui/optionsconsole.h:109
+msgid "Show Private Messages in Game Window"
+msgstr "Prikazi privatne poruke u prozoru igre"
+
+#: ../ui/optionsconsole.h:91
+msgid "Show Status Messages in Console"
+msgstr "Prikazi statusne poruke u konzoli"
+
+#: ../ui/optionsgeneral.h:96
+msgid "Show Textual Effects"
+msgstr "Prikazi tekstualne efekte"
+
+#: ../ui/optionsconsole.h:97
+msgid "Show Timestamps in Console"
+msgstr "Prikazi vrijeme u konzoli"
+
+#: ../ui/options.h:168
+msgid ""
+"Show the most recent\n"
+"Message of the Day"
+msgstr ""
+"Prikazi najnoviju\n"
+"poruku dana"

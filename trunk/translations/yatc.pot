@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-29 00:08+0200\n"
+"POT-Creation-Date: 2008-10-06 10:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,22 +16,227 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/mainmenu.cpp:41
+#: ../ui/login.h:133
+msgid "Account name:"
+msgstr ""
+
+#: ../ui/login.h:61 ../ui/login.h:136
+msgid "Account number:"
+msgstr ""
+
+#: ../ui/optionsgraphics.h:110
+msgid "Advanced"
+msgstr ""
+
+#: ../ui/optionsgraphics.h:102
+msgid "Advanced settings:"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:78
+msgid "Auto Chase Off"
+msgstr ""
+
+#: ../ui/optionsnetwork.h:125
+msgid "Autodetect"
+msgstr ""
+
+#: ../ui/optionsgraphics.h:86
+msgid "Available resolutions:"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:161
+#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
+msgid "Cancel"
+msgstr ""
+
+#: ../ui/options.h:115
+msgid ""
+"Change general\n"
+"game options"
+msgstr ""
+
+#: ../ui/options.h:123
+msgid ""
+"Change graphics and\n"
+"performance settings"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:71
+msgid "Classic Control"
+msgstr ""
+
+#: ../ui/options.h:147
+msgid ""
+"Configure network options,\n"
+"such as server address."
+msgstr ""
+
+#: ../ui/options.h:94
+msgid "Console"
+msgstr ""
+
+#: ../ui/optionsconsole.h:70
+msgid "Console Options"
+msgstr ""
+
+#: ../ui/login.h:99
+msgid "Create Account"
+msgstr ""
+
+#: ../ui/options.h:131
+msgid "Customise the console"
+msgstr ""
+
+#: ../ui/options.h:139
+msgid "Edit your hotkey texts"
+msgstr ""
+
+#: ../ui/mainmenu.cpp:44 ../ui/login.h:45
 msgid "Enter Game"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:86
+#: ../gm_mainmenu.cpp:539
+msgid "Error"
+msgstr ""
+
+#: ../ui/mainmenu.cpp:89
 msgid "Exit Game"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:75
+#: ../ui/optionsgraphics.h:80
+msgid "Fullscreen"
+msgstr ""
+
+#: ../ui/options.h:80
+msgid "General"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:64
+msgid "General Options"
+msgstr ""
+
+#: ../ui/options.h:87
+msgid "Graphics"
+msgstr ""
+
+#: ../ui/optionsgraphics.h:73
+msgid "Graphics Options"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:160 ../gm_mainmenu.cpp:347
+#: ../ui/optionsconsole.h:121
+msgid "Help"
+msgstr ""
+
+#: ../ui/optionsui.cpp:82
+msgid "Help not done."
+msgstr ""
+
+#: ../ui/options.h:101
+msgid "Hotkeys"
+msgstr ""
+
+#: ../ui/login.h:91
+msgid ""
+"If you don't have\n"
+"an account yet:"
+msgstr ""
+
+#: ../ui/mainmenu.cpp:78
 msgid "Info"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:52
+#: ../gm_mainmenu.cpp:541
+msgid "Information"
+msgstr ""
+
+#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:527
+msgid "Message of the Day"
+msgstr ""
+
+#: ../ui/options.h:161
+msgid "Motd"
+msgstr ""
+
+#: ../ui/options.h:108
+msgid "Network"
+msgstr ""
+
+#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:67
 msgid "Network Options"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:63
+#: ../ui/optionsnetwork.h:105
+msgid "OT Encryption Key"
+msgstr ""
+
+#: ../ui/options.h:183 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
+#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
+msgid "Ok"
+msgstr ""
+
+#: ../ui/mainmenu.cpp:66 ../ui/options.h:73
 msgid "Options"
+msgstr ""
+
+#: ../ui/login.h:76
+msgid "Password:"
+msgstr ""
+
+#: ../ui/optionsnetwork.h:109 ../ui/optionsnetwork.h:111
+#: ../ui/optionsnetwork.h:113 ../ui/optionsnetwork.h:115
+#: ../ui/optionsnetwork.h:117 ../ui/optionsnetwork.h:119
+#: ../ui/optionsnetwork.h:121 ../ui/optionsnetwork.h:123
+msgid "Protocol"
+msgstr ""
+
+#: ../ui/optionsnetwork.h:71
+msgid "Server address:"
+msgstr ""
+
+#: ../ui/optionsnetwork.h:86
+msgid "Server port:"
+msgstr ""
+
+#: ../ui/optionsconsole.h:85
+msgid "Show Event Messages in Console"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:84
+msgid "Show Hints"
+msgstr ""
+
+#: ../ui/optionsconsole.h:79
+msgid "Show Info Messages in Console"
+msgstr ""
+
+#: ../ui/optionsconsole.h:103
+msgid "Show Levels in Console"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:90
+msgid "Show Names of Creatures"
+msgstr ""
+
+#: ../ui/optionsconsole.h:109
+msgid "Show Private Messages in Game Window"
+msgstr ""
+
+#: ../ui/optionsconsole.h:91
+msgid "Show Status Messages in Console"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:96
+msgid "Show Textual Effects"
+msgstr ""
+
+#: ../ui/optionsconsole.h:97
+msgid "Show Timestamps in Console"
+msgstr ""
+
+#: ../ui/options.h:168
+msgid ""
+"Show the most recent\n"
+"Message of the Day"
 msgstr ""

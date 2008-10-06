@@ -21,6 +21,11 @@
 #ifndef __UI_LOGIN_H
 #define __UI_LOGIN_H
 
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 class winLogin_t {
 public:
 
@@ -37,7 +42,7 @@ public:
 
 		window.SetWidth(231-4);
 		window.SetHeight(173-17);
-		window.SetCaption("Enter Game");
+		window.SetCaption(gettext("Enter Game"));
 		window.SetVisible(false);
 		window.SetBGColor(.4, .4, .4, 1.);
 
@@ -53,7 +58,7 @@ public:
 
 		pnlUsername.SetWidth(131-17);
 		pnlUsername.SetHeight(12);
-		pnlUsername.SetCaption("Account number:");
+		pnlUsername.SetCaption(gettext("Account number:"));
 		pnlUsername.SetPos(13,17);
 		pnlUsername.SetBGActiveness(false);
 		pnlUsername.SetFont("aafont");
@@ -68,7 +73,7 @@ public:
 
 		pnlPassword.SetWidth(131-17);
 		pnlPassword.SetHeight(12);
-		pnlPassword.SetCaption("Password:");
+		pnlPassword.SetCaption(gettext("Password:"));
 		pnlPassword.SetPos(13,47);
 		pnlPassword.SetBGActiveness(false);
 		pnlPassword.SetFont("aafont");
@@ -83,7 +88,7 @@ public:
 
 		pnlCreateAc.SetWidth(131-17);
 		pnlCreateAc.SetHeight(24);
-		pnlCreateAc.SetCaption("If you don't have\nan account yet:");
+		pnlCreateAc.SetCaption(gettext("If you don't have\nan account yet:"));
 		pnlCreateAc.SetPos(13,85);
 		pnlCreateAc.SetBGActiveness(false);
 		pnlCreateAc.SetFont("aafont");
@@ -91,7 +96,7 @@ public:
 		btnCreateAc.SetPos(128,94);
 		btnCreateAc.SetWidth(216-133);
 		btnCreateAc.SetHeight(112-95);
-		btnCreateAc.SetCaption("Create Account");
+		btnCreateAc.SetCaption(gettext("Create Account"));
 		btnCreateAc.SetBGColor(.8,.8,.8,1.);
 		btnCreateAc.SetFont("minifont",8);
 		btnCreateAc.SetPrevious(!options.ui_compat ? NULL : &txtPassword);
@@ -105,7 +110,7 @@ public:
 		btnOk.SetPos(127-4,148-17);
 		btnOk.SetWidth(40);
 		btnOk.SetHeight(166-149);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetBGColor(.8,.8,.8,1.);
 		btnOk.SetFont("minifont",8);
 		btnOk.SetPrevious(!options.ui_compat ? NULL : &btnCreateAc);
@@ -114,21 +119,21 @@ public:
 		btnCancel.SetPos(180-4,148-17);
 		btnCancel.SetWidth(40);
 		btnCancel.SetHeight(166-149);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetBGColor(.8,.8,.8,1.);
 		btnCancel.SetFont("minifont",8);
 		btnCancel.SetPrevious(!options.ui_compat ? NULL : &btnOk);
 		btnCancel.SetNext(!options.ui_compat ? NULL : &txtUsername);
 
 	}
-	
+
 	void permitAccountName(bool yes) {
 		if(yes){
 			txtUsername.SetAllowedChars("");
-			pnlUsername.SetCaption("Account name:");
+			pnlUsername.SetCaption(gettext("Account name:"));
 		} else {
 			txtUsername.SetAllowedChars("0123456789");
-			pnlUsername.SetCaption("Account number:");
+			pnlUsername.SetCaption(gettext("Account number:"));
 		}
 	}
 };

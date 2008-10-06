@@ -23,6 +23,11 @@
 
 #include <GLICT/list.h>
 #include <sstream>
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 #include "../engine.h"
 #include "checkbox.h"
 class winOptionsGraphics_t {
@@ -65,20 +70,20 @@ public:
 		window.SetVisible(false);
 		window.SetHeight(256);
 		window.SetWidth(228);
-		window.SetCaption("Graphics Options");
+		window.SetCaption(gettext("Graphics Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
 
         window.AddObject(&chkFullscreen.pnlPanel);
 		chkFullscreen.SetPos(16,16);
 		chkFullscreen.SetWidth(200);
 		chkFullscreen.SetHeight(22);
-		chkFullscreen.SetCaption("Fullscreen");
+		chkFullscreen.SetCaption(gettext("Fullscreen"));
 
 		window.AddObject(&lblResolutions);
 		lblResolutions.SetPos(14, 52);
 		lblResolutions.SetWidth(200);
 		lblResolutions.SetHeight(12);
-		lblResolutions.SetCaption("Available resolutions:");
+		lblResolutions.SetCaption(gettext("Available resolutions:"));
 		lblResolutions.SetFont("aafont");
 		lblResolutions.SetBGActiveness(false);
 
@@ -94,7 +99,7 @@ public:
 		lblAdvancedSettings.SetPos(14, 186);
 		lblAdvancedSettings.SetWidth(200);
 		lblAdvancedSettings.SetHeight(12);
-		lblAdvancedSettings.SetCaption("Advanced settings:");
+		lblAdvancedSettings.SetCaption(gettext("Advanced settings:"));
 		lblAdvancedSettings.SetFont("aafont");
 		lblAdvancedSettings.SetBGActiveness(false);
 
@@ -102,7 +107,7 @@ public:
 		btnAdvancedSettings.SetPos(131, 184);
 		btnAdvancedSettings.SetWidth(81);
 		btnAdvancedSettings.SetHeight(16);
-		btnAdvancedSettings.SetCaption("Advanced");
+		btnAdvancedSettings.SetCaption(gettext("Advanced"));
 		btnAdvancedSettings.SetFont("minifont",8);
 
 
@@ -118,21 +123,21 @@ public:
 		btnHelp.SetPos(72, 232);
 		btnHelp.SetWidth(43);
 		btnHelp.SetHeight(19);
-		btnHelp.SetCaption("Help");
+		btnHelp.SetCaption(gettext("Help"));
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(125, 232);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(19);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(178, 232);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(19);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont",8);
 
 		FillResolutions();

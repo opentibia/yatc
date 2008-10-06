@@ -15,11 +15,11 @@ echo "pt_BR"
 mkdir -p pt_BR/LC_MESSAGES
 msgfmt -c -v -o pt_BR/LC_MESSAGES/yatc.mo brazilian.po
 
-echo "po_PO"
-mkdir -p po_PO/LC_MESSAGES
-msgfmt -c -v -o po_PO/LC_MESSAGES/yatc.mo polish.po
+echo "pl_PL"
+mkdir -p pl_PL/LC_MESSAGES
+msgfmt -c -v -o pl_PL/LC_MESSAGES/yatc.mo polish.po
 
-echo "se_SE"
-mkdir -p se_SE/LC_MESSAGES
-msgfmt -c -v -o se_SE/LC_MESSAGES/yatc.mo swedish.po
+echo "sv_SE"
+mkdir -p sv_SE/LC_MESSAGES
+msgfmt -c -v -o sv_SE/LC_MESSAGES/yatc.mo swedish.po
 
