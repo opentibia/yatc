@@ -35,11 +35,11 @@ class ProtocolGame82 : public ProtocolGame
 
 		virtual bool onRecv(NetworkMessage& msg);
 
-		const char* getProtocolName() { return "Protocol82";}
+		virtual const char* getProtocolName() { return "Protocol82";}
 
         //receive f. impl
         virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
-
+        virtual bool parseGMActions(NetworkMessage& msg);
 
         // translators
         virtual char translateSpeakClassFromInternal(SpeakClasses_t s);

@@ -40,6 +40,7 @@ class ProtocolGame83 : public ProtocolGame
         //receive f. impl
         virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
 		virtual bool parsePlayerStats(NetworkMessage& msg);
+        virtual bool parseGMActions(NetworkMessage& msg);
 
         // translators
         virtual char translateSpeakClassFromInternal(SpeakClasses_t s);
