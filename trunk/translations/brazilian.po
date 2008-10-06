@@ -1,37 +1,270 @@
-# YATC Translation to Brazilian <<< !!! WITH GOOGLE TRANSLATE !!! >>>
+# YATC Translation to Brazilian
 # Copyright (C) 2008 OpenTibia Team
 # This file is distributed under the same license as the YATC package.
-# Ivan Vucica <ivucica@gmail.com>, 2008.
+# Heliton <helitonnordt@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.2SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-28 23:46+0200\n"
-"PO-Revision-Date: 2008-10-06 19:41-0300\n"
+"POT-Creation-Date: 2008-10-06 10:48+0200\n"
+"PO-Revision-Date: 2008-10-06 20:11-0300\n"
 "Last-Translator: Heliton <helitonnordt@gmail.com>\n"
-"Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
+"Language-Team: Heliton <helitonnordt@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/mainmenu.cpp:41
+#: ../ui/login.h:133
+msgid "Account name:"
+msgstr "Nome da conta:"
+
+#: ../ui/login.h:61
+#: ../ui/login.h:136
+msgid "Account number:"
+msgstr "Número da conta:"
+
+#: ../ui/optionsgraphics.h:110
+msgid "Advanced"
+msgstr "Avançado"
+
+#: ../ui/optionsgraphics.h:102
+msgid "Advanced settings:"
+msgstr "Configurações avançadas:"
+
+#: ../ui/optionsgeneral.h:78
+msgid "Auto Chase Off"
+msgstr "Perseguição Automática Desligada"
+
+#: ../ui/optionsnetwork.h:125
+msgid "Autodetect"
+msgstr "Auto-detectar"
+
+#: ../ui/optionsgraphics.h:86
+msgid "Available resolutions:"
+msgstr "Resoluções disponíveis:"
+
+#: ../ui/optionsgeneral.h:122
+#: ../ui/optionsnetwork.h:161
+#: ../ui/optionsgraphics.h:140
+#: ../ui/optionsconsole.h:135
+#: ../ui/login.h:122
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ../ui/options.h:115
+msgid ""
+"Change general\n"
+"game options"
+msgstr ""
+"Modificar opções gerais\n"
+"do jogo"
+
+#: ../ui/options.h:123
+msgid ""
+"Change graphics and\n"
+"performance settings"
+msgstr ""
+"Modificar opções gráficas e\n"
+"de desempenho"
+
+#: ../ui/optionsgeneral.h:71
+msgid "Classic Control"
+msgstr "Controle Clássico"
+
+#: ../ui/options.h:147
+msgid ""
+"Configure network options,\n"
+"such as server address."
+msgstr ""
+"Configurar opções de rede,\n"
+"como o endereço do servidor."
+
+#: ../ui/options.h:94
+msgid "Console"
+msgstr "Console"
+
+#: ../ui/optionsconsole.h:70
+msgid "Console Options"
+msgstr "Opções de Console"
+
+#: ../ui/login.h:99
+msgid "Create Account"
+msgstr "Criar Conta"
+
+#: ../ui/options.h:131
+msgid "Customise the console"
+msgstr "Customizar o console"
+
+#: ../ui/options.h:139
+msgid "Edit your hotkey texts"
+msgstr "Editar os textos das suas hotkeys"
+
+#: ../ui/mainmenu.cpp:44
+#: ../ui/login.h:45
 msgid "Enter Game"
 msgstr "Entrar no Jogo"
 
-#: ../ui/mainmenu.cpp:86
+#: ../gm_mainmenu.cpp:539
+msgid "Error"
+msgstr "Erro"
+
+#: ../ui/mainmenu.cpp:89
 msgid "Exit Game"
 msgstr "Sair do Jogo"
 
-#: ../ui/mainmenu.cpp:75
+#: ../ui/optionsgraphics.h:80
+msgid "Fullscreen"
+msgstr "Tela Inteira"
+
+#: ../ui/options.h:80
+msgid "General"
+msgstr "Geral"
+
+#: ../ui/optionsgeneral.h:64
+msgid "General Options"
+msgstr "Opções Gerais"
+
+#: ../ui/options.h:87
+msgid "Graphics"
+msgstr "Gráficos"
+
+#: ../ui/optionsgraphics.h:73
+msgid "Graphics Options"
+msgstr "Opções Gráficas"
+
+#: ../ui/optionsgeneral.h:108
+#: ../ui/optionsnetwork.h:147
+#: ../ui/optionsgraphics.h:126
+#: ../ui/optionsui.cpp:160
+#: ../gm_mainmenu.cpp:347
+#: ../ui/optionsconsole.h:121
+msgid "Help"
+msgstr "Ajuda"
+
+#: ../ui/optionsui.cpp:82
+msgid "Help not done."
+msgstr "Ajuda não finalizada."
+
+#: ../ui/options.h:101
+msgid "Hotkeys"
+msgstr "Hotkeys"
+
+#: ../ui/login.h:91
+msgid ""
+"If you don't have\n"
+"an account yet:"
+msgstr ""
+"Se você ainda não possui\n"
+"uma conta:"
+
+#: ../ui/mainmenu.cpp:78
 msgid "Info"
 msgstr "Info"
 
-#: ../ui/mainmenu.cpp:52
+#: ../gm_mainmenu.cpp:541
+msgid "Information"
+msgstr "Informação"
+
+#: ../ui/optionsui.cpp:212
+#: ../gm_mainmenu.cpp:527
+msgid "Message of the Day"
+msgstr "Mensagem do Dia"
+
+#: ../ui/options.h:161
+msgid "Motd"
+msgstr "Motd"
+
+#: ../ui/options.h:108
+msgid "Network"
+msgstr "Rede"
+
+#: ../ui/mainmenu.cpp:55
+#: ../ui/optionsnetwork.h:67
 msgid "Network Options"
-msgstr "Op��es de Rede"
+msgstr "Opções de Rede"
 
-#: ../ui/mainmenu.cpp:63
+#: ../ui/optionsnetwork.h:105
+msgid "OT Encryption Key"
+msgstr "Chave de Encriptação do OT"
+
+#: ../ui/options.h:183
+#: ../ui/optionsgeneral.h:115
+#: ../ui/optionsnetwork.h:154
+#: ../ui/optionsgraphics.h:133
+#: ../ui/optionsconsole.h:128
+#: ../ui/login.h:113
+msgid "Ok"
+msgstr "Ok"
+
+#: ../ui/mainmenu.cpp:66
+#: ../ui/options.h:73
 msgid "Options"
-msgstr "Op��es"
+msgstr "Opções"
 
+#: ../ui/login.h:76
+msgid "Password:"
+msgstr "Senha:"
+
+#: ../ui/optionsnetwork.h:109
+#: ../ui/optionsnetwork.h:111
+#: ../ui/optionsnetwork.h:113
+#: ../ui/optionsnetwork.h:115
+#: ../ui/optionsnetwork.h:117
+#: ../ui/optionsnetwork.h:119
+#: ../ui/optionsnetwork.h:121
+#: ../ui/optionsnetwork.h:123
+msgid "Protocol"
+msgstr "Protocolo"
+
+#: ../ui/optionsnetwork.h:71
+msgid "Server address:"
+msgstr "Endereço do servidor:"
+
+#: ../ui/optionsnetwork.h:86
+msgid "Server port:"
+msgstr "Porta do servidor:"
+
+#: ../ui/optionsconsole.h:85
+msgid "Show Event Messages in Console"
+msgstr "Exibir Mensagens de Evento no Console"
+
+#: ../ui/optionsgeneral.h:84
+msgid "Show Hints"
+msgstr "Exibir Dicas"
+
+#: ../ui/optionsconsole.h:79
+msgid "Show Info Messages in Console"
+msgstr "Exibir Mensagens de Informação no Console"
+
+#: ../ui/optionsconsole.h:103
+msgid "Show Levels in Console"
+msgstr "Exibir Levels no Console"
+
+#: ../ui/optionsgeneral.h:90
+msgid "Show Names of Creatures"
+msgstr "Exibir Nomes das Criaturas"
+
+#: ../ui/optionsconsole.h:109
+msgid "Show Private Messages in Game Window"
+msgstr "Exibir Mensagens Privadas na Janela do Jodo"
+
+#: ../ui/optionsconsole.h:91
+msgid "Show Status Messages in Console"
+msgstr "Exibir Mensagens de Status no Console"
+
+#: ../ui/optionsgeneral.h:96
+msgid "Show Textual Effects"
+msgstr "Exibir Efeitos Textuais"
+
+#: ../ui/optionsconsole.h:97
+msgid "Show Timestamps in Console"
+msgstr "Exibir Timestamps no Console"
+
+#: ../ui/options.h:168
+msgid ""
+"Show the most recent\n"
+"Message of the Day"
+msgstr ""
+"Exibir a Mensagem do Dia\n"
+"mais recente"
