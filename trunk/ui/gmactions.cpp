@@ -63,6 +63,40 @@ UIGMActions::UIGMActions(){
     action[CLIENT_VERSION_770][5]="Namelock/AccountBan+FinalWarning";
     action[CLIENT_VERSION_770][-1]="UnknownAction";
 */
+
+
+    reason[CLIENT_VERSION_810][0]="Offensive Name";
+    reason[CLIENT_VERSION_810][1]="Invalid Name Format";
+	reason[CLIENT_VERSION_810][2]="Unsuitable Name";
+	reason[CLIENT_VERSION_810][3]="Name Inciting Rule Violation";
+	reason[CLIENT_VERSION_810][4]="Offensive Statement";
+	reason[CLIENT_VERSION_810][5]="Spamming";
+	reason[CLIENT_VERSION_810][6]="Illegal Advertising";
+	reason[CLIENT_VERSION_810][7]="Off-Topic Public Statement";
+	reason[CLIENT_VERSION_810][8]="Non-English Public Statement";
+	reason[CLIENT_VERSION_810][9]="Inciting Rule Violation";
+	reason[CLIENT_VERSION_810][10]="Bug Abuse";
+	reason[CLIENT_VERSION_810][11]="Game Weakness Abuse";
+	reason[CLIENT_VERSION_810][12]="Using Unofficial Software to Play";
+	reason[CLIENT_VERSION_810][13]="Hacking";
+	reason[CLIENT_VERSION_810][14]="Multi-Clienting";
+	reason[CLIENT_VERSION_810][15]="Account Trading or Sharing";
+	reason[CLIENT_VERSION_810][16]="Threatening Gamemaster";
+	reason[CLIENT_VERSION_810][17]="Pretending to Have Influence on Rule Enforcement";
+	reason[CLIENT_VERSION_810][18]="False Report to Gamemaster";
+	reason[CLIENT_VERSION_810][19]="Destructive Behaviour";
+	reason[CLIENT_VERSION_810][20]="Excessive Unjustified Player Killing";
+	reason[CLIENT_VERSION_810][21]="Invalid Payment";
+	reason[CLIENT_VERSION_810][22]="Spoiling Auction";
+	reason[CLIENT_VERSION_810][-1]="Unknown Reason";
+    action[CLIENT_VERSION_810][0]="Notation";
+	action[CLIENT_VERSION_810][1]="Name Report";
+	action[CLIENT_VERSION_810][2]="Banishment";
+	action[CLIENT_VERSION_810][3]="Name Report + Banishment";
+	action[CLIENT_VERSION_810][4]="Banishment + Final Warning";
+	action[CLIENT_VERSION_810][5]="Name Report + Banishment + Final Warning";
+	action[CLIENT_VERSION_810][6]="Statement Report";
+	action[CLIENT_VERSION_810][7]="Deletion";
 }
 
 const std::string& UIGMActions::getAction(ClientVersion_t version, uint8_t id) {

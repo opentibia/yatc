@@ -45,7 +45,6 @@ CreatureUI::~CreatureUI()
 void CreatureUI::resetSelf()
 {
 	unloadGfx();
-	m_obj = NULL;
 
 	m_preWalk = false;
 	m_walkState = 1.f;
@@ -56,6 +55,7 @@ void CreatureUI::unloadGfx()
 		delete *it;
 	}
 	m_gfx.clear();
+	m_obj = NULL;
 }
 
 void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
@@ -247,9 +247,6 @@ void CreatureUI::loadOutfit()
         return;
 
 	Outfit_t outfit = n->getOutfit();
-
-
-
 
 
 

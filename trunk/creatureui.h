@@ -41,8 +41,9 @@ public:
 	float getWalkState() const {return m_walkState;}
 	bool isLoaded() const;
 	void resetSelf();
-protected:
+
 	void unloadGfx();
+protected:
 	void setupObject();
 
 private:
