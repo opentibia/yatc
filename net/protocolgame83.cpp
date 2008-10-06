@@ -30,6 +30,7 @@
 #include "../gamecontent/creature.h"
 #include "../gamecontent/container.h"
 #include "../gamecontent/inventory.h"
+#include "../gamecontent/shop.h"
 
 ProtocolGame83::ProtocolGame83(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame(accountname, password, name, isGM)
@@ -394,16 +395,47 @@ MessageType_t ProtocolGame83::translateTextMessageToInternal(uint8_t messageType
 
 		default:
 			/*RAISE_PROTOCOL_ERROR(*/
-			printf("text message - 8.2 translation problem\n");
+			printf("text message - 8.3 translation problem\n");
 			nmessageType = MSG_INFO_DESCR;
 	}
 	return nmessageType;
 }
 bool ProtocolGame83::parseGMActions(NetworkMessage& msg)
 {
-    for(uint32_t i = 0; i < 28; ++i){
+    for(uint32_t i = 0; i < 23; ++i){
         MSG_READ_U8(GMByte);
         GlobalVariables::setGMAction(i, GMByte);
     }
+    return true;
+}
+
+bool ProtocolGame83::parseOpenShopWindow(NetworkMessage& msg)
+{
+
+	std::list<ShopItem> shopList;
+	MSG_READ_U8(size);
+	for(uint32_t i = 0; i < size; ++i){
+		MSG_READ_U16(itemid);
+		MSG_READ_U8(runecharges); // always present
+		MSG_READ_STRING(itemname);
+		MSG_READ_U32(weight); // added in 8.3
+		MSG_READ_U32(buyprice);
+		MSG_READ_U32(sellprice);
+		shopList.push_back(ShopItem(itemname, itemid, runecharges, buyprice, sellprice));
+	}
+	Notifications::openShopWindow(shopList);
+	return true;
+}
+
+bool ProtocolGame83::parsePlayerCash(NetworkMessage& msg)
+{
+    MSG_READ_U32(cash);
+    MSG_READ_U8(size);
+    for(uint32_t i = 0; i < size; ++i){
+        MSG_READ_U16(itemid);
+        MSG_READ_U8(runecharges);
+    }
+    GlobalVariables::setPlayerCash(cash);
+    Notifications::onUpdatePlayerCash(cash);
     return true;
 }

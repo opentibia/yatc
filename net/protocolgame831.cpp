@@ -36,3 +36,4 @@ void ProtocolGame831::checkVersion()
 {
 	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_831);
 }
+
