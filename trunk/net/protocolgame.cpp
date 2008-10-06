@@ -807,7 +807,7 @@ bool ProtocolGame::parseCreatureOutfit(NetworkMessage& msg)
             RAISE_PROTOCOL_ERROR("Creature outfit - outfit error");
         } else {
             printf("===> Updating creature outfit\n");
-            creature->unloadGfx();
+            creature->unloadGfx(); // FIXME (ivucica#2#): move this to notifications
             creature->loadOutfit();
             printf("===> Updated creature outfit\n");
 

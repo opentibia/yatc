@@ -333,6 +333,8 @@
 		<Unit filename="thingui.h" />
 		<Unit filename="ui/charlist.h" />
 		<Unit filename="ui/checkbox.h" />
+		<Unit filename="ui/gmactions.cpp" />
+		<Unit filename="ui/gmactions.h" />
 		<Unit filename="ui/health.h" />
 		<Unit filename="ui/itemmove.h" />
 		<Unit filename="ui/login.h" />
