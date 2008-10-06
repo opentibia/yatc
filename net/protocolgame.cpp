@@ -805,6 +805,12 @@ bool ProtocolGame::parseCreatureOutfit(NetworkMessage& msg)
     if(creature){
         if(!internalSetOutfit(msg, creature->getOutfit())){
             RAISE_PROTOCOL_ERROR("Creature outfit - outfit error");
+        } else {
+            printf("===> Updating creature outfit\n");
+            creature->unloadGfx();
+            creature->loadOutfit();
+            printf("===> Updated creature outfit\n");
+
         }
     }
     else{
@@ -812,6 +818,7 @@ bool ProtocolGame::parseCreatureOutfit(NetworkMessage& msg)
         if(!internalSetOutfit(msg, dummy)){
             RAISE_PROTOCOL_ERROR("Creature outfit - outfit error2");
         }
+
     }
     return true;
 }
