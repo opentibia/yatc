@@ -21,6 +21,12 @@
 #ifndef __UI_OPTIONSCONSOLE_H
 #define __UI_OPTIONSCONSOLE_H
 
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
+
 #include "../skin.h"
 #include "checkbox.h"
 
@@ -61,7 +67,7 @@ public:
 		window.SetVisible(false);
 		window.SetHeight(276);
 		window.SetWidth(296);
-		window.SetCaption("Console Options");
+		window.SetCaption(gettext("Console Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
 
 
@@ -70,37 +76,37 @@ public:
 		chkInfoMsgs.SetPos(14,16);
 		chkInfoMsgs.SetWidth(261);
 		chkInfoMsgs.SetHeight(22);
-		chkInfoMsgs.SetCaption("Show Info Messages in Console");
+		chkInfoMsgs.SetCaption(gettext("Show Info Messages in Console"));
 
         window.AddObject(&chkEventMsgs.pnlPanel);
 		chkEventMsgs.SetPos(14,50);
 		chkEventMsgs.SetWidth(261);
 		chkEventMsgs.SetHeight(22);
-		chkEventMsgs.SetCaption("Show Event Messages in Console");
+		chkEventMsgs.SetCaption(gettext("Show Event Messages in Console"));
 
         window.AddObject(&chkStatusMsgs.pnlPanel);
 		chkStatusMsgs.SetPos(14,85);
 		chkStatusMsgs.SetWidth(261);
 		chkStatusMsgs.SetHeight(22);
-		chkStatusMsgs.SetCaption("Show Status Messages in Console");
+		chkStatusMsgs.SetCaption(gettext("Show Status Messages in Console"));
 
         window.AddObject(&chkTimestamps.pnlPanel);
 		chkTimestamps.SetPos(14,120);
 		chkTimestamps.SetWidth(261);
 		chkTimestamps.SetHeight(22);
-		chkTimestamps.SetCaption("Show Timestamps in Console");
+		chkTimestamps.SetCaption(gettext("Show Timestamps in Console"));
 
         window.AddObject(&chkLevels.pnlPanel);
 		chkLevels.SetPos(14,155);
 		chkLevels.SetWidth(261);
 		chkLevels.SetHeight(22);
-		chkLevels.SetCaption("Show Levels in Console");
+		chkLevels.SetCaption(gettext("Show Levels in Console"));
 
         window.AddObject(&chkPrivateMsgs.pnlPanel);
 		chkPrivateMsgs.SetPos(14,190);
 		chkPrivateMsgs.SetWidth(261);
 		chkPrivateMsgs.SetHeight(22);
-		chkPrivateMsgs.SetCaption("Show Private Messages in Game Window");
+		chkPrivateMsgs.SetCaption(gettext("Show Private Messages in Game Window"));
 
 		window.AddObject(&pnlSeparator);
 		pnlSeparator.SetPos(9, 232);
@@ -112,21 +118,21 @@ public:
 		btnHelp.SetPos(131, 244);
 		btnHelp.SetWidth(41);
 		btnHelp.SetHeight(17);
-		btnHelp.SetCaption("Help");
+		btnHelp.SetCaption(gettext("Help"));
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(185, 244);
 		btnOk.SetWidth(41);
 		btnOk.SetHeight(17);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(237, 244);
 		btnCancel.SetWidth(41);
 		btnCancel.SetHeight(17);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont",8);
 	}
 

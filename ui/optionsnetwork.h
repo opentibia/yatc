@@ -24,6 +24,11 @@
 //#include <sstream> // FIXME (ivucica#1#): remove me after cleaning up the int=>str conversion
 #include "../util.h"
 #include <map>
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 #include "../net/connection.h"
 #include "checkbox.h"
 class winOptionsNetwork_t {
@@ -59,11 +64,11 @@ public:
 		window.SetVisible(false);
 		window.SetHeight(248);
 		window.SetWidth(225);
-		window.SetCaption("Network Options");
+		window.SetCaption(gettext("Network Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
 
 		window.AddObject(&lblServer);
-		lblServer.SetCaption("Server address:");
+		lblServer.SetCaption(gettext("Server address:"));
 		lblServer.SetPos(16, 16);
 		lblServer.SetWidth(198);
 		lblServer.SetHeight(11);
@@ -78,7 +83,7 @@ public:
 		txtServer.SetFont("aafont");
 
 		window.AddObject(&lblPort);
-		lblPort.SetCaption("Server port:");
+		lblPort.SetCaption(gettext("Server port:"));
 		lblPort.SetPos(16, 49);
 		lblPort.SetWidth(200);
 		lblPort.SetHeight(13);
@@ -97,27 +102,27 @@ public:
 		chkOTKey.SetPos(16,80);
 		chkOTKey.SetWidth(198);
 		chkOTKey.SetHeight(20);
-		chkOTKey.SetCaption("OT Encryption Key");
+		chkOTKey.SetCaption(gettext("OT Encryption Key"));
 
 
 		window.AddObject(&btnProtocol[CLIENT_VERSION_800]);
-		btnProtocol[CLIENT_VERSION_800].SetCaption("Protocol 8.0");
+		btnProtocol[CLIENT_VERSION_800].SetCaption(std::string(gettext("Protocol")) + " 8.0");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_810]);
-		btnProtocol[CLIENT_VERSION_810].SetCaption("Protocol 8.1");
+		btnProtocol[CLIENT_VERSION_810].SetCaption(std::string(gettext("Protocol")) + " 8.1");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_811]);
-		btnProtocol[CLIENT_VERSION_811].SetCaption("Protocol 8.11");
+		btnProtocol[CLIENT_VERSION_811].SetCaption(std::string(gettext("Protocol")) + " 8.11");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_820]);
-		btnProtocol[CLIENT_VERSION_820].SetCaption("Protocol 8.2");
+		btnProtocol[CLIENT_VERSION_820].SetCaption(std::string(gettext("Protocol")) + " 8.2");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_821]);
-		btnProtocol[CLIENT_VERSION_821].SetCaption("Protocol 8.21");
+		btnProtocol[CLIENT_VERSION_821].SetCaption(std::string(gettext("Protocol")) + " 8.21");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_822]);
-		btnProtocol[CLIENT_VERSION_822].SetCaption("Protocol 8.22");
+		btnProtocol[CLIENT_VERSION_822].SetCaption(std::string(gettext("Protocol")) + " 8.22");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_830]);
-		btnProtocol[CLIENT_VERSION_830].SetCaption("Protocol 8.3");
+		btnProtocol[CLIENT_VERSION_830].SetCaption(std::string(gettext("Protocol")) + " 8.3");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_831]);
-		btnProtocol[CLIENT_VERSION_831].SetCaption("Protocol 8.31");
+		btnProtocol[CLIENT_VERSION_831].SetCaption(std::string(gettext("Protocol")) + " 8.31");
 		window.AddObject(&btnProtocol[CLIENT_VERSION_AUTO]);
-		btnProtocol[CLIENT_VERSION_AUTO].SetCaption("Autodetect");
+		btnProtocol[CLIENT_VERSION_AUTO].SetCaption(gettext("Autodetect"));
 
 		int pc=0;
 		for (std::map<ClientVersion_t, glictButton>::iterator it = btnProtocol.begin(); it != btnProtocol.end(); it++) {
@@ -139,21 +144,21 @@ public:
 		btnHelp.SetPos(72, 210-102 + ((pc-1)/2+1)*24);
 		btnHelp.SetWidth(43);
 		btnHelp.SetHeight(19);
-		btnHelp.SetCaption("Help");
+		btnHelp.SetCaption(gettext("Help"));
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(125, 210-102 + ((pc-1)/2+1)*24);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(19);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(178, 210-102 + ((pc-1)/2+1)*24);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(19);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont",8);
 	}
 

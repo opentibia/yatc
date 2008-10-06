@@ -26,6 +26,12 @@
 #include <GLICT/textbox.h>
 #include <sstream>
 
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
+
 #include "../options.h"
 #include "options.h"
 #include "../gamemode.h"
@@ -73,7 +79,7 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 	winOptionsConsole.btnCancel.SetOnClick(winOptions_t::winOptionsConsole_btnCancel_OnClick);
 	winOptionsConsole.btnHelp.SetOnClick(winOptions_t::btnHelp_OnClick);
 	winOptionsConsole.btnHelp.SetCustomData(new std::string(
-		"Help not done."
+		gettext("Help not done.")
 		));
 
 	/* ***************** OPTIONS/GRAPHICS ******************** */
@@ -151,7 +157,7 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 
 void winOptions_t::btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerclass) {
 	std::string *helptext = (std::string*)callerclass->GetCustomData();
-	g_game->msgBox(helptext->c_str(), "Help", callerclass);
+	g_game->msgBox(helptext->c_str(), gettext("Help"), callerclass);
 }
 
 void winOptions_t::winOptions_btnGeneral_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -203,7 +209,7 @@ void winOptions_t::winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContai
 {
 	winOptions_t* winOptions = g_game->getOptionsWindow();
 	winOptions->window.SetVisible(false);
-	g_game->msgBox(options.motdtext.c_str(), "Message of the Day", &winOptions->window);
+	g_game->msgBox(options.motdtext.c_str(), gettext("Message of the Day"), &winOptions->window);
 }
 
 void winOptions_t::winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)

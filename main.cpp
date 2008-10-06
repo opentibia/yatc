@@ -112,7 +112,7 @@ void onKeyDown(const SDL_Event& event)
 			}
 		}
 
-			
+
 		if((event.key.keysym.mod & KMOD_NUM) && key >= 256 && key <= 271){ //Numeric keypad
 			switch(key){
 			case SDLK_KP_PERIOD:
@@ -138,7 +138,7 @@ void onKeyDown(const SDL_Event& event)
 				break;
 			}
 		} else {
-			
+
 #ifdef __APPLE__
 			// for some retarded reason, apparently SDL on MacOSX gives SDLK_DELETE on backspace.
 			// whatever. this should be the fix.
@@ -152,7 +152,7 @@ void onKeyDown(const SDL_Event& event)
 			return;
 
 		printf("Key: %d %s\n", key, SDL_GetKeyName((SDLKey)key));
-		
+
 		g_game->keyPress(key);
 	}
 }
@@ -297,8 +297,10 @@ int main(int argc, char *argv[])
     setlocale( LC_ALL, "" );
     bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );
     textdomain( "yatc" );
+    bind_textdomain_codeset("yatc","ascii");
+
 #endif
-	
+
 	//setenv("SDL_VIDEODRIVER", "aalib", 0);
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, PRODUCTLONG "\n");
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "================================\n");
