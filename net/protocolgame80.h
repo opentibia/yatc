@@ -35,7 +35,7 @@ class ProtocolGame80 : public ProtocolGame
 
 		virtual bool onRecv(NetworkMessage& msg);
 
-		const char* getProtocolName() { return "Protocol80";}
+		virtual const char* getProtocolName() { return "Protocol80";}
 
         virtual void sendCloseShop() {} // does not exist in 8.0-8.11 family of protocols
         virtual void sendCloseNPCChannel() {} // does not exist in 8.0-8.11 family of protocols

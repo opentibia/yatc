@@ -350,11 +350,20 @@ MessageType_t ProtocolGame82::translateTextMessageToInternal(uint8_t messageType
 		case 0x1A:
 			nmessageType = MSG_STATUS_CONSOLE_BLUE;
 			break;
-			
+
 		default:
 			/*RAISE_PROTOCOL_ERROR(*/
 			printf("text message - 8.2 translation problem\n");
 			nmessageType = MSG_INFO_DESCR;
 	}
 	return nmessageType;
+}
+
+bool ProtocolGame82::parseGMActions(NetworkMessage& msg)
+{
+    for(uint32_t i = 0; i < 22; ++i){
+        MSG_READ_U8(GMByte);
+        GlobalVariables::setGMAction(i, GMByte);
+    }
+    return true;
 }

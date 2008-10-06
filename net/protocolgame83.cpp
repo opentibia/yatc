@@ -241,7 +241,7 @@ bool ProtocolGame83::parsePlayerStats(NetworkMessage& msg)
 	   magicLevelPercent > 100){
 		RAISE_PROTOCOL_ERROR("Player stats - values");
 	}
-	
+
 	GlobalVariables::setPlayerStat(STAT_HEALTH, health);
 	GlobalVariables::setPlayerStat(STAT_HEALTH_MAX, healthMax);
 	GlobalVariables::setPlayerStat(STAT_CAPACITY, capacity/100); // FIXME (ivucica#1#) obviously cap needs to be float now!
@@ -254,9 +254,9 @@ bool ProtocolGame83::parsePlayerStats(NetworkMessage& msg)
 	GlobalVariables::setPlayerSkill(SKILL_MAGIC, SKILL_ATTR_PERCENT, magicLevelPercent);
 	GlobalVariables::setPlayerStat(STAT_SOUL, soul);
 	GlobalVariables::setPlayerStat(STAT_STAMINA, stamina);
-	
+
 	Notifications::onChangeStats();
-	
+
 	return true;
 }
 
@@ -391,11 +391,19 @@ MessageType_t ProtocolGame83::translateTextMessageToInternal(uint8_t messageType
 		case 0x1A:
 			nmessageType = MSG_STATUS_CONSOLE_BLUE;
 			break;
-			
+
 		default:
 			/*RAISE_PROTOCOL_ERROR(*/
 			printf("text message - 8.2 translation problem\n");
 			nmessageType = MSG_INFO_DESCR;
 	}
 	return nmessageType;
+}
+bool ProtocolGame83::parseGMActions(NetworkMessage& msg)
+{
+    for(uint32_t i = 0; i < 28; ++i){
+        MSG_READ_U8(GMByte);
+        GlobalVariables::setGMAction(i, GMByte);
+    }
+    return true;
 }

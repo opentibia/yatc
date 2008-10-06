@@ -32,11 +32,13 @@ class ProtocolGame81 : public ProtocolGame80
 	public:
 		virtual ~ProtocolGame81();
 
-		const char* getProtocolName() { return "Protocol81";}
+		virtual const char* getProtocolName() { return "Protocol81";}
+
+        virtual bool parseGMActions(NetworkMessage& msg);
 
 	protected:
 		ProtocolGame81(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
-		
+
 		// protocol version assertion
 		virtual void checkVersion();
 

@@ -92,7 +92,7 @@ void ProtocolGame::onConnect()
 
 //	bool oldChecksumState = m_connection->getChecksumState();
 //	m_connection->setChecksumState(false);
-	
+
 	m_connection->sendMessage(output);
 	m_connection->setKey((char*)k, 4*sizeof(uint32_t));
 	m_connection->setCryptoState(true);
@@ -190,7 +190,7 @@ bool ProtocolGame::parsePacket(uint8_t cmd, NetworkMessage& msg)
     case 0x91:
         return parseCreatureShields(msg);
 	case 0x96:
-		return parseItemTextWindow(msg);	
+		return parseItemTextWindow(msg);
 	case 0x97:
 		return parseHouseTextWindow(msg);
 	case 0xA0:
@@ -241,8 +241,8 @@ bool ProtocolGame::parsePacket(uint8_t cmd, NetworkMessage& msg)
 		return parseQuestList(msg);
 	case 0xF1:
 		return parseQuestPartList(msg);
-			
-			
+
+
 	// 8.2+
 	case 0x7A:
 		return parseOpenShopWindow(msg);
@@ -280,7 +280,7 @@ bool ProtocolGame::parseSelfAppear(NetworkMessage& msg)
 }
 bool ProtocolGame::parseGMActions(NetworkMessage& msg)
 {
-    for(uint32_t i = 0; i < 32; ++i){
+    for(uint32_t i = 0; i < 28; ++i){
         MSG_READ_U8(GMByte);
         GlobalVariables::setGMAction(i, GMByte);
     }
@@ -883,7 +883,7 @@ bool ProtocolGame::parsePlayerStats(NetworkMessage& msg)
 	   magicLevelPercent > 100){
 		RAISE_PROTOCOL_ERROR("Player stats - values");
 	}
-	
+
 	GlobalVariables::setPlayerStat(STAT_HEALTH, health);
 	GlobalVariables::setPlayerStat(STAT_HEALTH_MAX, healthMax);
 	GlobalVariables::setPlayerStat(STAT_CAPACITY, capacity);
@@ -896,9 +896,9 @@ bool ProtocolGame::parsePlayerStats(NetworkMessage& msg)
 	GlobalVariables::setPlayerSkill(SKILL_MAGIC, SKILL_ATTR_PERCENT, magicLevelPercent);
 	GlobalVariables::setPlayerStat(STAT_SOUL, soul);
 	GlobalVariables::setPlayerStat(STAT_STAMINA, stamina);
-	
+
 	Notifications::onChangeStats();
-	
+
 	return true;
 }
 bool ProtocolGame::parsePlayerSkills(NetworkMessage& msg)
@@ -923,7 +923,7 @@ bool ProtocolGame::parsePlayerSkills(NetworkMessage& msg)
 	   fishPercent > 100){
 		RAISE_PROTOCOL_ERROR("Player skills - values");
 	}
-	
+
 	GlobalVariables::setPlayerSkill(SKILL_FIST, SKILL_ATTR_LEVEL, fist);
 	GlobalVariables::setPlayerSkill(SKILL_FIST, SKILL_ATTR_PERCENT, fistPercent);
 	GlobalVariables::setPlayerSkill(SKILL_CLUB, SKILL_ATTR_LEVEL, club);
@@ -936,9 +936,9 @@ bool ProtocolGame::parsePlayerSkills(NetworkMessage& msg)
 	GlobalVariables::setPlayerSkill(SKILL_DISTANCE, SKILL_ATTR_PERCENT, distancePercent);
 	GlobalVariables::setPlayerSkill(SKILL_FISH, SKILL_ATTR_LEVEL, fish);
 	GlobalVariables::setPlayerSkill(SKILL_FISH, SKILL_ATTR_PERCENT, fishPercent);
-	
+
 	Notifications::onChangeSkills();
-	
+
 	return true;
 }
 bool ProtocolGame::parsePlayerIcons(NetworkMessage& msg)
@@ -1080,7 +1080,7 @@ bool ProtocolGame::parseClosePrivateChannel(NetworkMessage& msg)
 	return true;
 }
 bool ProtocolGame::parseTextMessage(NetworkMessage& msg)
-{	
+{
 	MSG_READ_U8(messageType);
 	MSG_READ_STRING(text);
 	if(messageType < 0x11 || messageType > 0x26){
@@ -1088,7 +1088,7 @@ bool ProtocolGame::parseTextMessage(NetworkMessage& msg)
 		RAISE_PROTOCOL_ERROR("text message - type");
 	}
 	messageType = translateTextMessageToInternal(messageType);
-	
+
 	Notifications::onTextMessage((MessageType_t)messageType, text);
 	return true;
 }
@@ -1145,7 +1145,7 @@ bool ProtocolGame::parseFloorChangeDown(NetworkMessage& msg)
 	}
 	myPos.x--;
 	myPos.y--;
-	
+
 	return true;
 }
 bool ProtocolGame::parseOutfitWindow(NetworkMessage& msg)
@@ -1273,7 +1273,7 @@ void ProtocolGame::sendAutoWalk(const std::list<Direction>& steps)
 {
 	PROTOCOLGAME_SEND_FUNCTION;
 	ASSERT(steps.size() <= 255);
-	
+
 	m_outputMessage.addMessageType(0x64);
 	m_outputMessage.addU8(steps.size());
 	std::list<Direction>::const_iterator it;
@@ -1675,6 +1675,20 @@ void ProtocolGame::sendBugReport(const std::string& text)
 	PROTOCOLGAME_SEND_FUNCTION;
 	m_outputMessage.addMessageType(0xE6);
 	m_outputMessage.addString(text);
+}
+
+void ProtocolGame::sendGMReport(const std::string& targetplayer, uint8_t reason, const std::string& comment, const std::string& statement, uint8_t action, bool ipban)
+{
+    // 8.3 code; perhaps needs updating
+    PROTOCOLGAME_SEND_FUNCTION;
+    m_outputMessage.addMessageType(0xE7);
+    m_outputMessage.addString(targetplayer);
+    m_outputMessage.addU8(reason);
+    m_outputMessage.addU8(action);
+    m_outputMessage.addString(comment);
+    m_outputMessage.addString(statement);
+    m_outputMessage.addU16(0); // unknown!
+    m_outputMessage.addU8(ipban ? 1 : 0);
 }
 
 void ProtocolGame::sendRequestQuestLog()

@@ -22,6 +22,7 @@
 
 #include "../fassert.h"
 #include "protocolgame81.h"
+#include "../gamecontent/globalvars.h"
 
 ProtocolGame81::ProtocolGame81(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame80(accountname, password, name, isGM)
@@ -39,3 +40,11 @@ void ProtocolGame81::checkVersion()
 	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_810);
 }
 
+bool ProtocolGame81::parseGMActions(NetworkMessage& msg)
+{
+    for(uint32_t i = 0; i < 22; ++i){
+        MSG_READ_U8(GMByte);
+        GlobalVariables::setGMAction(i, GMByte);
+    }
+    return true;
+}

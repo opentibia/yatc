@@ -32,8 +32,9 @@ class ProtocolGame811 : public ProtocolGame80
 	public:
 		virtual ~ProtocolGame811();
 
-		const char* getProtocolName() { return "Protocol811";}
+		virtual const char* getProtocolName() { return "Protocol811";}
 
+        virtual bool parseGMActions(NetworkMessage& msg);
 	protected:
 		ProtocolGame811(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 

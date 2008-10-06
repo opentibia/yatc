@@ -113,10 +113,10 @@ class ProtocolGame : public Protocol
 		virtual bool parseCloseShopWindow(NetworkMessage& msg); // 0x7C
 		virtual bool parseShowTutorial(NetworkMessage& msg); // 0xDC
 		virtual bool parseAddMapMarker(NetworkMessage& msg); // 0xDD
-	
-	
 
-	
+
+
+
 		//send functions
 		virtual void sendLogout();
 		virtual void sendAutoWalk(const std::list<Direction>& steps);
@@ -179,7 +179,7 @@ class ProtocolGame : public Protocol
 		virtual void sendAddVip(const std::string& name);
 		virtual void sendRemVip(uint32_t playerid);
 		virtual void sendBugReport(const std::string& text);
-		//virtual void sendGMReport(); //Message: 0xE7
+		virtual void sendGMReport(const std::string& targetplayer, uint8_t reason, const std::string& comment, const std::string& statement, uint8_t action, bool ipban);
 		virtual void sendRequestQuestLog();
 		virtual void sendRequestQuest(uint16_t questid);
 
@@ -223,7 +223,7 @@ class ProtocolGame : public Protocol
 		std::string m_password;
 		std::string m_name;
 		uint32_t m_account;
-	
+
 		bool m_isGM;
 		NetworkMessage m_outputMessage;
 
