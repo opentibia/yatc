@@ -247,7 +247,7 @@ msgstr "Exibir Nomes das Criaturas"
 
 #: ../ui/optionsconsole.h:109
 msgid "Show Private Messages in Game Window"
-msgstr "Exibir Mensagens Privadas na Janela do Jodo"
+msgstr "Exibir Mensagens Privadas na Janela do Jogo"
 
 #: ../ui/optionsconsole.h:91
 msgid "Show Status Messages in Console"
