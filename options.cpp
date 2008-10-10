@@ -56,8 +56,8 @@ Options::Options()
 	fullscreen = 0;
 	w = 640;
 	h = 480;
-	bpp = 16;
-	maxfps = 30;
+	bpp = 32;
+	maxfps = 0;
 
 	// [console]
 	infomsgs = true;

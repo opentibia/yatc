@@ -184,7 +184,7 @@ public:
 
 
 		SDL_Rect **modes;
-		int i;
+		int i,j;
 
 		/* Get available fullscreen/hardware modes */
 		modes=SDL_ListModes(NULL, g_engine->m_videoflags | SDL_FULLSCREEN);
@@ -208,10 +208,21 @@ public:
 		}
 		else{
 		  /* Print valid modes */
-		  for(i=0;modes[i];++i)
-			AddResolution(modes[i]->w, modes[i]->h, 16);
-		  for(i=0;modes[i];++i)
-			AddResolution(modes[i]->w, modes[i]->h, 32);
+			for(i=0;modes[i+1];++i){
+				for(j=i+1;modes[j];++j){
+					if(modes[i]->w > modes[j]->w){
+						SDL_Rect *r;
+						r = modes[i];
+						modes[i] = modes[j];
+						modes[j] = r;
+					}
+				}
+			}
+			
+			for(i=0;modes[i];++i)
+				AddResolution(modes[i]->w, modes[i]->h, 16);
+			for(i=0;modes[i];++i)
+				AddResolution(modes[i]->w, modes[i]->h, 32);
 		}
 
 
