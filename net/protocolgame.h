@@ -184,12 +184,15 @@ class ProtocolGame : public Protocol
 		virtual void sendRequestQuest(uint16_t questid);
 
 		// 8.2+
-        virtual void sendCloseShop();
         virtual void sendCloseNPCChannel();
+		virtual void sendShopPurchase(uint16_t itemid, uint8_t count, uint8_t amount, bool ignoreCap=false, bool withBackpack=false); // last two args are 8.3+
+		virtual void sendShopSale(uint16_t itemid, uint8_t count, uint8_t amount);
+		virtual void sendShopClose();
+
 
 		// protocol version assertion
 		virtual void checkVersion() = 0;
-
+		virtual ClientVersion_t getVersion() const = 0;
 
 
         // translators

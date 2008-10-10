@@ -27,8 +27,11 @@
 #include "optionsgraphics.h"
 #include "optionshotkeys.h"
 #include "optionsnetwork.h"
-#include <libintl.h>
-
+#ifndef __APPLE__
+	#include <libintl.h>
+#else
+	#define gettext(x) (x)
+#endif
 class winOptions_t {
 public:
 

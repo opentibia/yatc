@@ -33,6 +33,7 @@ class ProtocolGame81 : public ProtocolGame80
 		virtual ~ProtocolGame81();
 
 		virtual const char* getProtocolName() { return "Protocol81";}
+		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_810; }
 
         virtual bool parseGMActions(NetworkMessage& msg);
 
