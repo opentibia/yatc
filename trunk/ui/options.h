@@ -145,9 +145,9 @@ public:
 
 		window.AddObject(&pnlNetwork);
 		pnlNetwork.SetPos(112, 146);
-		pnlNetwork.SetWidth(142);
+		pnlNetwork.SetWidth(152);
 		pnlNetwork.SetHeight(27);
-		pnlNetwork.SetCaption(gettext("Configure network options,\nsuch as server address."));
+		pnlNetwork.SetCaption(gettext("Set network options,\nsuch as server."));
 		pnlNetwork.SetBGActiveness(false);
 		pnlNetwork.SetFont("aafont");
 
