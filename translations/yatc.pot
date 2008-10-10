@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 10:48+0200\n"
+"POT-Creation-Date: 2008-10-10 21:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,13 +49,13 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../ui/options.h:115
+#: ../ui/options.h:118
 msgid ""
 "Change general\n"
 "game options"
 msgstr ""
 
-#: ../ui/options.h:123
+#: ../ui/options.h:126
 msgid ""
 "Change graphics and\n"
 "performance settings"
@@ -65,13 +65,7 @@ msgstr ""
 msgid "Classic Control"
 msgstr ""
 
-#: ../ui/options.h:147
-msgid ""
-"Configure network options,\n"
-"such as server address."
-msgstr ""
-
-#: ../ui/options.h:94
+#: ../ui/options.h:97
 msgid "Console"
 msgstr ""
 
@@ -83,11 +77,11 @@ msgstr ""
 msgid "Create Account"
 msgstr ""
 
-#: ../ui/options.h:131
+#: ../ui/options.h:134
 msgid "Customise the console"
 msgstr ""
 
-#: ../ui/options.h:139
+#: ../ui/options.h:142
 msgid "Edit your hotkey texts"
 msgstr ""
 
@@ -107,7 +101,7 @@ msgstr ""
 msgid "Fullscreen"
 msgstr ""
 
-#: ../ui/options.h:80
+#: ../ui/options.h:83
 msgid "General"
 msgstr ""
 
@@ -115,7 +109,7 @@ msgstr ""
 msgid "General Options"
 msgstr ""
 
-#: ../ui/options.h:87
+#: ../ui/options.h:90
 msgid "Graphics"
 msgstr ""
 
@@ -133,7 +127,7 @@ msgstr ""
 msgid "Help not done."
 msgstr ""
 
-#: ../ui/options.h:101
+#: ../ui/options.h:104
 msgid "Hotkeys"
 msgstr ""
 
@@ -155,11 +149,11 @@ msgstr ""
 msgid "Message of the Day"
 msgstr ""
 
-#: ../ui/options.h:161
+#: ../ui/options.h:164
 msgid "Motd"
 msgstr ""
 
-#: ../ui/options.h:108
+#: ../ui/options.h:111
 msgid "Network"
 msgstr ""
 
@@ -171,12 +165,12 @@ msgstr ""
 msgid "OT Encryption Key"
 msgstr ""
 
-#: ../ui/options.h:183 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
+#: ../ui/options.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
 #: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
 msgid "Ok"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:66 ../ui/options.h:73
+#: ../ui/mainmenu.cpp:66 ../ui/options.h:76
 msgid "Options"
 msgstr ""
 
@@ -197,6 +191,12 @@ msgstr ""
 
 #: ../ui/optionsnetwork.h:86
 msgid "Server port:"
+msgstr ""
+
+#: ../ui/options.h:150
+msgid ""
+"Set network options,\n"
+"such as server."
 msgstr ""
 
 #: ../ui/optionsconsole.h:85
@@ -235,7 +235,7 @@ msgstr ""
 msgid "Show Timestamps in Console"
 msgstr ""
 
-#: ../ui/options.h:168
+#: ../ui/options.h:171
 msgid ""
 "Show the most recent\n"
 "Message of the Day"

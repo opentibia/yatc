@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.2SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 10:48+0200\n"
+"POT-Creation-Date: 2008-10-10 21:59+0200\n"
 "PO-Revision-Date: 2008-09-28 23:15+0200\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
@@ -48,7 +48,7 @@ msgstr "Dostupne rezolucije:"
 msgid "Cancel"
 msgstr "Ponisti"
 
-#: ../ui/options.h:115
+#: ../ui/options.h:118
 msgid ""
 "Change general\n"
 "game options"
@@ -56,7 +56,7 @@ msgstr ""
 "Uredi opce\n"
 "opcije igre"
 
-#: ../ui/options.h:123
+#: ../ui/options.h:126
 msgid ""
 "Change graphics and\n"
 "performance settings"
@@ -68,15 +68,7 @@ msgstr ""
 msgid "Classic Control"
 msgstr "Klasicno upravljanje"
 
-#: ../ui/options.h:147
-msgid ""
-"Configure network options,\n"
-"such as server address."
-msgstr ""
-"Promijeni mrezne opcije\n"
-"poput adrese servera"
-
-#: ../ui/options.h:94
+#: ../ui/options.h:97
 msgid "Console"
 msgstr "Konzola"
 
@@ -88,11 +80,11 @@ msgstr "Opcije konzole"
 msgid "Create Account"
 msgstr "Stvori racun"
 
-#: ../ui/options.h:131
+#: ../ui/options.h:134
 msgid "Customise the console"
 msgstr "Podesi konzolu"
 
-#: ../ui/options.h:139
+#: ../ui/options.h:142
 msgid "Edit your hotkey texts"
 msgstr "Uredi tekstove kratica"
 
@@ -112,7 +104,7 @@ msgstr "Izlaz"
 msgid "Fullscreen"
 msgstr "Puni ekran"
 
-#: ../ui/options.h:80
+#: ../ui/options.h:83
 msgid "General"
 msgstr "Opce"
 
@@ -120,7 +112,7 @@ msgstr "Opce"
 msgid "General Options"
 msgstr "Opce opcije"
 
-#: ../ui/options.h:87
+#: ../ui/options.h:90
 msgid "Graphics"
 msgstr "Grafika"
 
@@ -138,7 +130,7 @@ msgstr "Pomoc"
 msgid "Help not done."
 msgstr "Pomoc nije napravljena."
 
-#: ../ui/options.h:101
+#: ../ui/options.h:104
 msgid "Hotkeys"
 msgstr "Kratice"
 
@@ -146,7 +138,9 @@ msgstr "Kratice"
 msgid ""
 "If you don't have\n"
 "an account yet:"
-msgstr "Ako jos nemate\nsvoj racun:"
+msgstr ""
+"Ako jos nemate\n"
+"svoj racun:"
 
 #: ../ui/mainmenu.cpp:78
 msgid "Info"
@@ -160,11 +154,11 @@ msgstr "Obavijest"
 msgid "Message of the Day"
 msgstr "Poruka dana"
 
-#: ../ui/options.h:161
+#: ../ui/options.h:164
 msgid "Motd"
 msgstr "Motd"
 
-#: ../ui/options.h:108
+#: ../ui/options.h:111
 msgid "Network"
 msgstr "Mreza"
 
@@ -176,12 +170,12 @@ msgstr "Mrezne opcije"
 msgid "OT Encryption Key"
 msgstr "OT enkripcijski kljuc"
 
-#: ../ui/options.h:183 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
+#: ../ui/options.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
 #: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
 msgid "Ok"
 msgstr "U redu"
 
-#: ../ui/mainmenu.cpp:66 ../ui/options.h:73
+#: ../ui/mainmenu.cpp:66 ../ui/options.h:76
 msgid "Options"
 msgstr "Opcije"
 
@@ -203,6 +197,14 @@ msgstr "Adresa servera:"
 #: ../ui/optionsnetwork.h:86
 msgid "Server port:"
 msgstr "Port servera:"
+
+#: ../ui/options.h:150
+msgid ""
+"Set network options,\n"
+"such as server."
+msgstr ""
+"Postavi mrezne opcije\n"
+"poput servera."
 
 #: ../ui/optionsconsole.h:85
 msgid "Show Event Messages in Console"
@@ -240,7 +242,7 @@ msgstr "Prikazi tekstualne efekte"
 msgid "Show Timestamps in Console"
 msgstr "Prikazi vrijeme u konzoli"
 
-#: ../ui/options.h:168
+#: ../ui/options.h:171
 msgid ""
 "Show the most recent\n"
 "Message of the Day"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.2SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 10:48+0200\n"
+"POT-Creation-Date: 2008-10-10 21:59+0200\n"
 "PO-Revision-Date: 2008-10-06 20:11-0300\n"
 "Last-Translator: Heliton <helitonnordt@gmail.com>\n"
 "Language-Team: Heliton <helitonnordt@gmail.com>\n"
@@ -19,8 +19,7 @@ msgstr ""
 msgid "Account name:"
 msgstr "Nome da conta:"
 
-#: ../ui/login.h:61
-#: ../ui/login.h:136
+#: ../ui/login.h:61 ../ui/login.h:136
 msgid "Account number:"
 msgstr "Número da conta:"
 
@@ -44,15 +43,12 @@ msgstr "Auto-detectar"
 msgid "Available resolutions:"
 msgstr "Resoluções disponíveis:"
 
-#: ../ui/optionsgeneral.h:122
-#: ../ui/optionsnetwork.h:161
-#: ../ui/optionsgraphics.h:140
-#: ../ui/optionsconsole.h:135
-#: ../ui/login.h:122
+#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:161
+#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../ui/options.h:115
+#: ../ui/options.h:118
 msgid ""
 "Change general\n"
 "game options"
@@ -60,7 +56,7 @@ msgstr ""
 "Modificar opções gerais\n"
 "do jogo"
 
-#: ../ui/options.h:123
+#: ../ui/options.h:126
 msgid ""
 "Change graphics and\n"
 "performance settings"
@@ -72,15 +68,7 @@ msgstr ""
 msgid "Classic Control"
 msgstr "Controle Clássico"
 
-#: ../ui/options.h:147
-msgid ""
-"Configure network options,\n"
-"such as server address."
-msgstr ""
-"Configurar opções de rede,\n"
-"como o endereço do servidor."
-
-#: ../ui/options.h:94
+#: ../ui/options.h:97
 msgid "Console"
 msgstr "Console"
 
@@ -92,16 +80,15 @@ msgstr "Opções de Console"
 msgid "Create Account"
 msgstr "Criar Conta"
 
-#: ../ui/options.h:131
+#: ../ui/options.h:134
 msgid "Customise the console"
 msgstr "Customizar o console"
 
-#: ../ui/options.h:139
+#: ../ui/options.h:142
 msgid "Edit your hotkey texts"
 msgstr "Editar os textos das suas hotkeys"
 
-#: ../ui/mainmenu.cpp:44
-#: ../ui/login.h:45
+#: ../ui/mainmenu.cpp:44 ../ui/login.h:45
 msgid "Enter Game"
 msgstr "Entrar no Jogo"
 
@@ -117,7 +104,7 @@ msgstr "Sair do Jogo"
 msgid "Fullscreen"
 msgstr "Tela Inteira"
 
-#: ../ui/options.h:80
+#: ../ui/options.h:83
 msgid "General"
 msgstr "Geral"
 
@@ -125,7 +112,7 @@ msgstr "Geral"
 msgid "General Options"
 msgstr "Opções Gerais"
 
-#: ../ui/options.h:87
+#: ../ui/options.h:90
 msgid "Graphics"
 msgstr "Gráficos"
 
@@ -133,11 +120,8 @@ msgstr "Gráficos"
 msgid "Graphics Options"
 msgstr "Opções Gráficas"
 
-#: ../ui/optionsgeneral.h:108
-#: ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:126
-#: ../ui/optionsui.cpp:160
-#: ../gm_mainmenu.cpp:347
+#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:160 ../gm_mainmenu.cpp:347
 #: ../ui/optionsconsole.h:121
 msgid "Help"
 msgstr "Ajuda"
@@ -146,7 +130,7 @@ msgstr "Ajuda"
 msgid "Help not done."
 msgstr "Ajuda não finalizada."
 
-#: ../ui/options.h:101
+#: ../ui/options.h:104
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
@@ -166,21 +150,19 @@ msgstr "Info"
 msgid "Information"
 msgstr "Informação"
 
-#: ../ui/optionsui.cpp:212
-#: ../gm_mainmenu.cpp:527
+#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:527
 msgid "Message of the Day"
 msgstr "Mensagem do Dia"
 
-#: ../ui/options.h:161
+#: ../ui/options.h:164
 msgid "Motd"
 msgstr "Motd"
 
-#: ../ui/options.h:108
+#: ../ui/options.h:111
 msgid "Network"
 msgstr "Rede"
 
-#: ../ui/mainmenu.cpp:55
-#: ../ui/optionsnetwork.h:67
+#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:67
 msgid "Network Options"
 msgstr "Opções de Rede"
 
@@ -188,17 +170,12 @@ msgstr "Opções de Rede"
 msgid "OT Encryption Key"
 msgstr "Chave de Encriptação do OT"
 
-#: ../ui/options.h:183
-#: ../ui/optionsgeneral.h:115
-#: ../ui/optionsnetwork.h:154
-#: ../ui/optionsgraphics.h:133
-#: ../ui/optionsconsole.h:128
-#: ../ui/login.h:113
+#: ../ui/options.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
+#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
 msgid "Ok"
 msgstr "Ok"
 
-#: ../ui/mainmenu.cpp:66
-#: ../ui/options.h:73
+#: ../ui/mainmenu.cpp:66 ../ui/options.h:76
 msgid "Options"
 msgstr "Opções"
 
@@ -206,14 +183,10 @@ msgstr "Opções"
 msgid "Password:"
 msgstr "Senha:"
 
-#: ../ui/optionsnetwork.h:109
-#: ../ui/optionsnetwork.h:111
-#: ../ui/optionsnetwork.h:113
-#: ../ui/optionsnetwork.h:115
-#: ../ui/optionsnetwork.h:117
-#: ../ui/optionsnetwork.h:119
-#: ../ui/optionsnetwork.h:121
-#: ../ui/optionsnetwork.h:123
+#: ../ui/optionsnetwork.h:109 ../ui/optionsnetwork.h:111
+#: ../ui/optionsnetwork.h:113 ../ui/optionsnetwork.h:115
+#: ../ui/optionsnetwork.h:117 ../ui/optionsnetwork.h:119
+#: ../ui/optionsnetwork.h:121 ../ui/optionsnetwork.h:123
 msgid "Protocol"
 msgstr "Protocolo"
 
@@ -224,6 +197,15 @@ msgstr "Endereço do servidor:"
 #: ../ui/optionsnetwork.h:86
 msgid "Server port:"
 msgstr "Porta do servidor:"
+
+#: ../ui/options.h:150
+#, fuzzy
+msgid ""
+"Set network options,\n"
+"such as server."
+msgstr ""
+"Configurar opções de rede,\n"
+"como o endereço do servidor."
 
 #: ../ui/optionsconsole.h:85
 msgid "Show Event Messages in Console"
@@ -261,7 +243,7 @@ msgstr "Exibir Efeitos Textuais"
 msgid "Show Timestamps in Console"
 msgstr "Exibir Timestamps no Console"
 
-#: ../ui/options.h:168
+#: ../ui/options.h:171
 msgid ""
 "Show the most recent\n"
 "Message of the Day"
