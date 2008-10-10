@@ -78,7 +78,6 @@ void ProtocolGame::onConnect()
 		output.addU32(m_account);
 	else {
 		output.addString(m_accountname);
-		printf("Sent acc name\n");
 	}
 	output.addString(m_name);
 	output.addString(m_password);
@@ -1710,15 +1709,36 @@ void ProtocolGame::sendRequestQuest(uint16_t questid)
 	m_outputMessage.addMessageType(0xF1);
 	m_outputMessage.addU16(questid);
 }
-void ProtocolGame::sendCloseShop()
-{
-    PROTOCOLGAME_SEND_FUNCTION;
-    m_outputMessage.addMessageType(0x7C);
-}
+//8.2+
 void ProtocolGame::sendCloseNPCChannel()
 {
     PROTOCOLGAME_SEND_FUNCTION;
     m_outputMessage.addMessageType(0x9E);
+}
+void ProtocolGame::sendShopPurchase(uint16_t itemid, uint8_t count, uint8_t amount, bool ignoreCap, bool withBackpack)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x7A);
+	m_outputMessage.addU8(itemid);
+	m_outputMessage.addU8(count);
+	m_outputMessage.addU8(amount);
+	if (getVersion() >= CLIENT_VERSION_830){ // FIXME (ivucica#5#): make a replacement ProtocolGame83:: function
+		m_outputMessage.addU8(ignoreCap ? 1 : 0);
+		m_outputMessage.addU8(withBackpack ? 1 : 0);
+	}
+}
+void ProtocolGame::sendShopSale(uint16_t itemid, uint8_t count, uint8_t amount)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x7B);
+	m_outputMessage.addU8(itemid);
+	m_outputMessage.addU8(count);
+	m_outputMessage.addU8(amount);
+}
+void ProtocolGame::sendShopClose()
+{
+    PROTOCOLGAME_SEND_FUNCTION;
+    m_outputMessage.addMessageType(0x7C);
 }
 
 //protected

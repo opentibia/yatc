@@ -32,7 +32,8 @@ class ProtocolGame821 : public ProtocolGame82
 	public:
 		virtual ~ProtocolGame821();
 
-		const char* getProtocolName() { return "Protocol821";}
+		virtual const char* getProtocolName() { return "Protocol821";}
+		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_821; }
 
 	protected:
 		ProtocolGame821(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);

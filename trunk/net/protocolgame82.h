@@ -36,6 +36,7 @@ class ProtocolGame82 : public ProtocolGame
 		virtual bool onRecv(NetworkMessage& msg);
 
 		virtual const char* getProtocolName() { return "Protocol82";}
+		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_820; }
 
         //receive f. impl
         virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
