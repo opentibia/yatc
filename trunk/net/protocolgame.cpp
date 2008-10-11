@@ -1715,25 +1715,27 @@ void ProtocolGame::sendCloseNPCChannel()
     PROTOCOLGAME_SEND_FUNCTION;
     m_outputMessage.addMessageType(0x9E);
 }
-void ProtocolGame::sendShopPurchase(uint16_t itemid, uint8_t count, uint8_t amount, bool ignoreCap, bool withBackpack)
+void ProtocolGame::sendShopPurchase(uint16_t itemid, uint8_t subtype, uint8_t amount, bool ignoreCap, bool withBackpack)
 {
 	PROTOCOLGAME_SEND_FUNCTION;
 	m_outputMessage.addMessageType(0x7A);
-	m_outputMessage.addU8(itemid);
-	m_outputMessage.addU8(count);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(subtype);
 	m_outputMessage.addU8(amount);
+	printf("Purchasing %d - %d items of subtype %d\n",itemid, amount,subtype);
 	if (getVersion() >= CLIENT_VERSION_830){ // FIXME (ivucica#5#): make a replacement ProtocolGame83:: function
 		m_outputMessage.addU8(ignoreCap ? 1 : 0);
 		m_outputMessage.addU8(withBackpack ? 1 : 0);
 	}
 }
-void ProtocolGame::sendShopSale(uint16_t itemid, uint8_t count, uint8_t amount)
+void ProtocolGame::sendShopSale(uint16_t itemid, uint8_t subtype, uint8_t amount)
 {
 	PROTOCOLGAME_SEND_FUNCTION;
 	m_outputMessage.addMessageType(0x7B);
-	m_outputMessage.addU8(itemid);
-	m_outputMessage.addU8(count);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(subtype);
 	m_outputMessage.addU8(amount);
+	printf("Selling %d items of subtype %d\n",amount,subtype);
 }
 void ProtocolGame::sendShopClose()
 {
