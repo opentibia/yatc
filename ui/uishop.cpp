@@ -122,7 +122,7 @@ winShop_t::winShop_t() {
     btnOk.SetFont("minifont");
     btnOk.SetCaption("Ok");
     btnOk.SetOnClick(&winShop_t::OnOkClick);
-    pnlItem.SetCustomData(this);
+    btnOk.SetCustomData(this);
 
     selling = false;
 
@@ -317,21 +317,28 @@ void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller){
 }
 
 void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller) {
+    printf("Ok clicked\n");
     winShop_t *wst = (winShop_t*)caller->GetCustomData();
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    printf("Got wst and gw\n");
     wst->window.SetVisible(false);
-
-    if (!wst->selling)
+    printf("Hiding\n");
+    if (!wst->selling) {
+        printf("Buying..."); fflush(stdout);
         gw->m_protocol->sendShopPurchase(
             /* itemid: */wst->currentBuyItem.getItemId(),
             /* subtype: */wst->currentBuyItem.getSubType(),
             /* amount: */wst->sbCt.GetValue() * wst->currentBuyItem.getSellPrice(),
             /* ignore cap*/false,
             /* with backpack*/false);
-    else
 
+    }
+    else {
+        printf("Selling..."); fflush(stdout);
         gw->m_protocol->sendShopSale(
             /* itemid: */wst->currentSellItem.getItemId(),
             /* subtype: */wst->currentSellItem.getSubType(),
             /* amount: */wst->sbCt.GetValue());
+    }
+    printf("Done\n");
 }
