@@ -508,8 +508,10 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
 
 	if (w == m_image->w && h == m_image->h)
         return;
+    if (m_stretchimage &&  w == m_stretchimage->w && h == m_stretchimage->h)
+        return;
 
-	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Stretching to %g %g\n", w, h);
+    DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Stretching to %g %g\n", w, h);
 #ifndef _MSC_VER
 	m_stretchimage = zoomSurface(img, w/img->w, h/img->h, smooth);
 #else

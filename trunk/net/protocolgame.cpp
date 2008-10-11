@@ -1722,7 +1722,6 @@ void ProtocolGame::sendShopPurchase(uint16_t itemid, uint8_t subtype, uint8_t am
 	m_outputMessage.addU16(itemid);
 	m_outputMessage.addU8(subtype);
 	m_outputMessage.addU8(amount);
-	printf("Purchasing %d - %d items of subtype %d\n",itemid, amount,subtype);
 	if (getVersion() >= CLIENT_VERSION_830){ // FIXME (ivucica#5#): make a replacement ProtocolGame83:: function
 		m_outputMessage.addU8(ignoreCap ? 1 : 0);
 		m_outputMessage.addU8(withBackpack ? 1 : 0);
@@ -1735,7 +1734,6 @@ void ProtocolGame::sendShopSale(uint16_t itemid, uint8_t subtype, uint8_t amount
 	m_outputMessage.addU16(itemid);
 	m_outputMessage.addU8(subtype);
 	m_outputMessage.addU8(amount);
-	printf("Selling %d items of subtype %d\n",amount,subtype);
 }
 void ProtocolGame::sendShopClose()
 {

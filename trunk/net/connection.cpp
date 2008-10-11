@@ -59,7 +59,6 @@ ProtocolConfig::ProtocolConfig()
 uint32_t ProtocolConfig::readSignature(const char* fn) {
 	uint32_t sig;
 	FILE*f=yatc_fopen(fn,"rb");
-	printf("Readsig %s\n",fn);
 	ASSERTFRIENDLY("Could not find a data file although we found it in the past.", f);
 	fread(&sig, 4, 1, f);
 	fclose(f);
@@ -138,13 +137,13 @@ ClientVersion_t ProtocolConfig::detectVersion()
         sprSignature == 0x489980a5 &&
         picSignature == 0x48562106)
         return CLIENT_VERSION_822;
-	
+
 	// 8.30 == 8.31; prefer 8.31
     if (datSignature == 0x48da1fb6 &&
         sprSignature == 0x48c8e712 &&
         picSignature == 0x48562106)
         return CLIENT_VERSION_831;
-	
+
 	return CLIENT_VERSION_AUTO; // failure
 }
 void ProtocolConfig::setVersionOverride(uint16_t version) {
@@ -226,7 +225,7 @@ ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountnam
 		g_connection->setChecksumState(true);
 		protocol->usesAccountName(true);
 	}
-	
+
 	return protocol;
 }
 
@@ -306,13 +305,13 @@ m_inputMessage(NetworkMessage::CAN_READ)
 	m_msgSize = 0;
 	m_cryptoEnable = false;
 	m_checksumEnable = false;
-	
+
 	m_socket = INVALID_SOCKET;
 	m_ticks = 0;
 
 	m_sentBytes = 0;
 	m_recvBytes = 0;
-	
+
 }
 
 Connection::~Connection()
@@ -500,7 +499,6 @@ void Connection::executeNetwork()
 						closeConnectionError(ERROR_TOO_BIG_MESSAGE);
 						return;
 					}
-					printf("Message size: %02x\n", m_msgSize);
 				}
 				case READING_CHECKSUM: {
 					if(m_checksumEnable){
@@ -516,7 +514,6 @@ void Connection::executeNetwork()
 							closeConnectionError(ERROR_UNEXPECTED_RECV_ERROR);
 							return;
 						} else {
-							printf("Read checksum ok\n");
 							m_msgSize-=4;
 							m_readState = READING_MESSAGE;
 						}
@@ -528,20 +525,17 @@ void Connection::executeNetwork()
 					int ret = internalRead(m_msgSize, false);
 					if(ret <= 0){
 						checkSocketReadState();
-						printf("Checking read state 1\n");
 						return;
 					}
 					else if(ret != m_msgSize){
 						m_msgSize -= ret;
 						checkSocketReadState();
-						
-						printf("Checking read state 2 -- msgsize: %d was %d, ret: %d\n", m_msgSize, m_msgSize+ret, ret);
+
 						return;
 					}
-					
+
 					//decrypt incoming message if needed
 					if(m_cryptoEnable && m_crypto){
-						printf("Decrypting\n");
 						if(!m_crypto->decrypt(m_inputMessage)){
 							closeConnectionError(ERROR_DECRYPT_FAIL);
 							return;
@@ -657,48 +651,26 @@ void Connection::sendMessage(NetworkMessage& msg)
 	}
 
 	if(msg.getSize() == 0){
-		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "Sending size = 0 message\n");
+		DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "Sending size = 0 in message\n");
 		return;
 	}
-	
+
 	//add message size
 	msg.addHeader();
-	
-	for(int i=0;i<msg.getSize();i++){
-		printf("%02x ", *((unsigned char*)msg.getBuffer()+i));
-		if (i % 8 == 7) 
-			printf("\n");
-	}
-	printf("\n");
-	printf("Encrypting: \n");
+
 	//and encrypt if needed
 	if(m_cryptoEnable && m_crypto){
 		m_crypto->encrypt(msg);
 	}
-	
-	
-	for(int i=0;i<msg.getSize();i++){
-		printf("%02x ", *((unsigned char*)msg.getBuffer()+i));
-		if (i % 8 == 7) 
-			printf("\n");
-	}
-	printf("\n");
-	printf("Adding checksum:\n");
-	
+
+
 	//and add checksum if needed
 	if(m_checksumEnable){
 		msg.addChecksum();
 	}
-	
-	
-	for(int i=0;i<msg.getSize();i++){
-		printf("%02x ", *((unsigned char*)msg.getBuffer()+i));
-		if (i % 8 == 7) 
-			printf("\n");
-	}
-	printf("\n");
-	
-	
+
+
+
 	//wait until all bytes are sent
 	int sendBytes = 0;
 	do{

@@ -27,7 +27,7 @@ class ShopItem {
 public:
     ShopItem() {}
 	ShopItem(const std::string& iname, uint16_t id, uint8_t type, uint32_t buy, uint32_t sell)
-		: name(iname), itemid(id), subtype(type), buyprice(buy), sellprice(sell) {}
+		: name(iname), itemid(id), subtype(type), buyprice(buy), sellprice(sell), extra(NULL) {}
 	~ShopItem(){}
 
 	std::string getName() const { return name; }

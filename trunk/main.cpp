@@ -151,7 +151,7 @@ void onKeyDown(const SDL_Event& event)
 		if(key > 255)
 			return;
 
-		printf("Key: %d %s\n", key, SDL_GetKeyName((SDLKey)key));
+		//printf("Key: %d %s\n", key, SDL_GetKeyName((SDLKey)key));
 
 		g_game->keyPress(key);
 	}

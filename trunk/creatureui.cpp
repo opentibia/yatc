@@ -237,7 +237,7 @@ void CreatureUI::advanceWalk(int groundspeed)
 void CreatureUI::loadOutfit()
 {
     Creature* n = (Creature*)this;
-    DEBUGPRINT(0,0,"Loading creature %d (itemlook %d)\n", n->getOutfit().m_looktype, n->getOutfit().m_lookitem);
+//    DEBUGPRINT(0,0,"Loading creature %d (itemlook %d)\n", n->getOutfit().m_looktype, n->getOutfit().m_lookitem);
 
     unloadGfx();
 
@@ -301,7 +301,6 @@ void CreatureUI::setupObject() {
     Creature* n = (Creature*)this;
 	Outfit_t outfit = n->getOutfit();
 	if (!m_obj) {
-	    printf("PERFORMING SETUPOBJECT!\n");
         if(!outfit.m_looktype && !outfit.m_lookitem){
             m_obj = NULL;
             unloadGfx();
@@ -321,15 +320,7 @@ void CreatureUI::setupObject() {
             return;
         }
         if (!m_obj->isGfxLoaded()) {
-            printf("(Need to load gfx first)\n");
             m_obj->loadGfx();
-            printf("(Proceeding)\n");
         }
-	} else {
-	    printf("SKIPPING SETUPOBJECT!\n");
 	}
-
-
-
-
 }
