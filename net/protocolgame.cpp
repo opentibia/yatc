@@ -1231,11 +1231,11 @@ bool ProtocolGame::parseOpenShopWindow(NetworkMessage& msg)
 	MSG_READ_U8(size);
 	for(uint32_t i = 0; i < size; ++i){
 		MSG_READ_U16(itemid);
-		MSG_READ_U8(runecharges); // always present
+		MSG_READ_U8(subtype);
 		MSG_READ_STRING(itemname);
 		MSG_READ_U32(buyprice);
 		MSG_READ_U32(sellprice);
-		shopList.push_back(ShopItem(itemname, itemid, runecharges, buyprice, sellprice));
+		shopList.push_back(ShopItem(itemname, itemid, subtype, buyprice, sellprice));
 	}
 	Notifications::openShopWindow(shopList);
 	return true;
@@ -1486,7 +1486,7 @@ void ProtocolGame::sendSay(SpeakClasses_t type, const std::string text)
 {
 	PROTOCOLGAME_SEND_FUNCTION;
 	m_outputMessage.addMessageType(0x96);
-	m_outputMessage.addU8(type);
+	m_outputMessage.addU8(translateSpeakClassFromInternal(type));
 	m_outputMessage.addString(text);
 }
 
@@ -1495,7 +1495,7 @@ void ProtocolGame::sendSay(SpeakClasses_t type, uint16_t channel,
 {
 	PROTOCOLGAME_SEND_FUNCTION;
 	m_outputMessage.addMessageType(0x96);
-	m_outputMessage.addU8(type);
+	m_outputMessage.addU8(translateSpeakClassFromInternal(type));
 	m_outputMessage.addU16(channel);
 	m_outputMessage.addString(text);
 }
@@ -1505,7 +1505,7 @@ void ProtocolGame::sendSay(SpeakClasses_t type, const std::string& sendToplayer,
 {
 	PROTOCOLGAME_SEND_FUNCTION;
 	m_outputMessage.addMessageType(0x96);
-	m_outputMessage.addU8(type);
+	m_outputMessage.addU8(translateSpeakClassFromInternal(type));
 	m_outputMessage.addString(sendToplayer);
 	m_outputMessage.addString(text);
 }

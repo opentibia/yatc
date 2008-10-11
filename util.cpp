@@ -25,6 +25,7 @@
 #include <string.h>
 #ifndef WIN32
 	#include <sys/stat.h> // mkdir
+	#include <errno.h>
 #endif
 #include "config.h"
 #include "util.h"
@@ -96,7 +97,6 @@ static bool __internal_fileexists(const char* filename){
         return false;
 }
 
-extern int errno;
 static std::vector<std::string > searchpaths;
 
 FILE *yatc_fopen(const char* filename, const char* mode) {
@@ -140,7 +140,7 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 	if (mode[0] == 'w' || mode[0] == 'a') {// if we're trying to access for writing
 		std::string outfn = (std::string(getenv("HOME")) + "/.yatc/" + filename);
 		FILE *f = fopen(outfn.c_str(), mode);
-		if (f) 
+		if (f)
 			return f;
 		printf("Trying to make cfg dir in home, fopen(...,w) was failing: %s\n", strerror(errno));
 		int i;
@@ -148,8 +148,8 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 			printf("Failed to make cfg dir: %s\n", strerror(errno));
 		else {
 			f = fopen(outfn.c_str(), mode);
-			if (f) 
-				return f;		
+			if (f)
+				return f;
 		}
 		printf("Still failed to write in home: %s\n", strerror(errno));
 	}

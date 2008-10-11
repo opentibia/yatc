@@ -19,7 +19,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "uishop.h"
-
+#include "../gm_gameworld.h"
+#include "../net/protocolgame.h"
 winShop_t::winShop_t() {
     window.SetCaption("NPC Trade");
     window.SetWidth(168);
@@ -120,6 +121,8 @@ winShop_t::winShop_t() {
     btnOk.SetHeight(20);
     btnOk.SetFont("minifont");
     btnOk.SetCaption("Ok");
+    btnOk.SetOnClick(&winShop_t::OnOkClick);
+    pnlItem.SetCustomData(this);
 
     selling = false;
 
@@ -311,4 +314,24 @@ void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller){
     wst->btnSell.SetHold(true);
     wst->btnBuy.SetHold(false);
     wst->sbCt.SetValue(1);
+}
+
+void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller) {
+    winShop_t *wst = (winShop_t*)caller->GetCustomData();
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    wst->window.SetVisible(false);
+
+    if (!wst->selling)
+        gw->m_protocol->sendShopPurchase(
+            /* itemid: */wst->currentBuyItem.getItemId(),
+            /* subtype: */wst->currentBuyItem.getSubType(),
+            /* amount: */wst->sbCt.GetValue() * wst->currentBuyItem.getSellPrice(),
+            /* ignore cap*/false,
+            /* with backpack*/false);
+    else
+
+        gw->m_protocol->sendShopSale(
+            /* itemid: */wst->currentSellItem.getItemId(),
+            /* subtype: */wst->currentSellItem.getSubType(),
+            /* amount: */wst->sbCt.GetValue());
 }

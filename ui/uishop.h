@@ -76,6 +76,7 @@ public:
     static void OnChangeCount(glictPos* pos, glictContainer *caller);
     static void OnBuyClick(glictPos* pos, glictContainer *caller);
     static void OnSellClick(glictPos* pos, glictContainer *caller);
+    static void OnOkClick(glictPos* pos, glictContainer *caller);
 
 
     static void drawObject(glictRect *real, glictRect *clipped, glictContainer *caller);
