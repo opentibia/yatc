@@ -197,7 +197,7 @@ void winShop_t::addItemBuy (const ShopItem& itm) {
     if (!itm.getBuyPrice()) return;
     std::stringstream s;
 
-    s << itm.getName() << ": " << itm.getBuyPrice() << " gold";
+    s << itm.getName() << "[" << int(itm.getSubType()) << "] : " << itm.getBuyPrice() << " gold";
 
     glictPanel *pnl = new glictPanel;
     ShopItem *data = new ShopItem(itm);
@@ -280,6 +280,11 @@ void winShop_t::OnListbox(glictPos* pos, glictContainer *caller) {
 
 void winShop_t::OnChangeCount(glictPos* pos, glictContainer *caller) {
     winShop_t *wc = (winShop_t*) (caller->GetCustomData());
+    std::stringstream ss;
+    // FIXME we should be setting pnlAmountRight not pnlAmountLeft...
+    ss << "Amount: " << wc->sbCt.GetValue();
+    wc->pnlAmountLeft.SetCaption(ss.str());
+//    wc->pnlAmountRight.SetPos(118-glictFontSize(ss.str().c_str(),"aafont"),96);
     wc->rebuildImage();
 }
 
@@ -322,13 +327,16 @@ void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller) {
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     printf("Got wst and gw\n");
     wst->window.SetVisible(false);
+    ASSERTFRIENDLY("Try to buy more than 0", wst->sbCt.GetValue());
     printf("Hiding\n");
     if (!wst->selling) {
         printf("Buying..."); fflush(stdout);
+        printf("itemid %d subtype %d count %d\n", wst->currentBuyItem.getItemId(),wst->currentBuyItem.getSubType(),
+            /* amount: */wst->sbCt.GetValue());
         gw->m_protocol->sendShopPurchase(
             /* itemid: */wst->currentBuyItem.getItemId(),
             /* subtype: */wst->currentBuyItem.getSubType(),
-            /* amount: */wst->sbCt.GetValue() * wst->currentBuyItem.getSellPrice(),
+            /* amount: */wst->sbCt.GetValue(),
             /* ignore cap*/false,
             /* with backpack*/false);
 
