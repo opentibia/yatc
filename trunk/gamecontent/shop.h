@@ -26,13 +26,13 @@
 class ShopItem {
 public:
     ShopItem() {}
-	ShopItem(const std::string& iname, uint16_t id, uint8_t charges, uint32_t buy, uint32_t sell)
-		: name(iname), itemid(id), runecharges(charges), buyprice(buy), sellprice(sell) {}
+	ShopItem(const std::string& iname, uint16_t id, uint8_t type, uint32_t buy, uint32_t sell)
+		: name(iname), itemid(id), subtype(type), buyprice(buy), sellprice(sell) {}
 	~ShopItem(){}
 
 	std::string getName() const { return name; }
 	uint16_t getItemId() const { return itemid; }
-	uint8_t getCharges() const { return runecharges; }
+	uint8_t getSubType() const { return subtype; }
 	uint32_t getBuyPrice() const { return buyprice; }
 	uint32_t getSellPrice() const { return sellprice; }
 
@@ -42,7 +42,7 @@ public:
 private:
 	std::string name;
 	uint16_t itemid;
-	uint8_t runecharges;
+	uint8_t subtype;
 	uint32_t buyprice;
 	uint32_t sellprice;
 	void* extra;

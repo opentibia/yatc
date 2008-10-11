@@ -302,6 +302,8 @@ int main(int argc, char *argv[])
 #endif
 
 	//setenv("SDL_VIDEODRIVER", "aalib", 0);
+	//setenv("AAOPTS","-width 200 -height 70 -dim -reverse -bold -normal -boldfont  -eight -extended ",0);
+	//setenv("AAFont","-*-fixed-bold-*-*-*-*-55-*-*-*-*-*-*",0);
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, PRODUCTLONG "\n");
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "================================\n");
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "version " PRODUCTVERSION "\n");
