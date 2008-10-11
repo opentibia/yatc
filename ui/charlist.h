@@ -23,6 +23,11 @@
 
 #include <GLICT/list.h>
 #include <sstream>
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 class winCharlist_t {
 public:
 
@@ -49,7 +54,7 @@ public:
 
 		window.SetWidth(228);
 		window.SetHeight(273);
-		window.SetCaption("Select Character");
+		window.SetCaption(gettext("Select Character"));
 		window.SetVisible(false);
 		window.SetBGColor(.4, .4, .4, 1.);
 
@@ -63,7 +68,7 @@ public:
 
 		lblSelectChar.SetWidth(200);
 		lblSelectChar.SetHeight(12);
-		lblSelectChar.SetCaption("Select character:");
+		lblSelectChar.SetCaption(gettext("Select character:"));
 		lblSelectChar.SetPos(14,17);
 		lblSelectChar.SetBGActiveness(false);
 		lblSelectChar.SetFont("aafont");
@@ -76,14 +81,14 @@ public:
 
 		lblAccStatus.SetWidth(200);
 		lblAccStatus.SetHeight(12);
-		lblAccStatus.SetCaption("Account Status:");
+		lblAccStatus.SetCaption(gettext("Account Status:"));
 		lblAccStatus.SetPos(14,191);
 		lblAccStatus.SetBGActiveness(false);
 		lblAccStatus.SetFont("aafont");
 
 		pnlAccStatus.SetWidth(200);
 		pnlAccStatus.SetHeight(12);
-		pnlAccStatus.SetCaption("Unknown");
+		pnlAccStatus.SetCaption(gettext("Unknown"));
 		pnlAccStatus.SetPos(14,205);
 		pnlAccStatus.SetBGActiveness(false);
 		pnlAccStatus.SetFont("aafont");
@@ -96,7 +101,7 @@ public:
 		btnOk.SetPos(123, 247);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(20);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetBGColor(.1,.1,.1,1.);
 		btnOk.SetFont("minifont",8);
 		if (options.ui_compat) btnOk.SetNext(&btnCancel);
@@ -104,7 +109,7 @@ public:
 		btnCancel.SetPos(176, 247);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(20);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetBGColor(.1,.1,.1,1.);
 		btnCancel.SetFont("minifont",8);
 		if (options.ui_compat) btnCancel.SetNext(&lstChars);
@@ -139,12 +144,12 @@ public:
 			addChar(*it);
 		}
 		if (pd == 0)
-			pnlAccStatus.SetCaption ("Free Account");
+			pnlAccStatus.SetCaption (gettext("Free Account"));
 		else if (pd > 32767)
-			pnlAccStatus.SetCaption ("Gratis Premium Account");
+			pnlAccStatus.SetCaption (gettext("Gratis Premium Account"));
 		else {
 			std::stringstream s;
-			s << "Premium Account (" << pd << " days left)";
+			s << gettext("Premium Account") << " (" << pd << " " << gettext("days left") << ")";
 			pnlAccStatus.SetCaption(s.str());
 		}
 		lstChars.Focus(NULL);

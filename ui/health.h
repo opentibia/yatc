@@ -31,6 +31,12 @@
 #include "engine.h"
 #include "skin.h"
 
+#ifndef __APPLE__
+#include <libintl.h>
+#else
+#define gettext(x) (x)
+#endif
+
 class pnlHealth_t {
 public:
     glictWindow panel; // 170x34
@@ -47,7 +53,7 @@ public:
 
 	pnlHealth_t() {
 
-        panel.SetCaption("Health");
+        panel.SetCaption(gettext("Health"));
 		panel.SetWidth(170);
 		panel.SetHeight(34);
 

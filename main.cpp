@@ -297,7 +297,7 @@ int main(int argc, char *argv[])
     setlocale( LC_ALL, "" );
     bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );
     textdomain( "yatc" );
-    bind_textdomain_codeset("yatc","ascii");
+    bind_textdomain_codeset("yatc","windows-1252");
 
 #endif
 

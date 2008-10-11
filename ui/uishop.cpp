@@ -21,9 +21,14 @@
 #include "uishop.h"
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 winShop_t::winShop_t()
 {
-    window.SetCaption("NPC Trade");
+    window.SetCaption(gettext("NPC Trade"));
     window.SetWidth(168);
     window.SetHeight(141);
 
@@ -48,7 +53,7 @@ winShop_t::winShop_t()
     btnBuy.SetWidth(43);
     btnBuy.SetHeight(20);
     btnBuy.SetFont("minifont");
-    btnBuy.SetCaption("Buy");
+    btnBuy.SetCaption(gettext("Buy"));
     btnBuy.SetHold(true);
     btnBuy.SetOnClick(OnBuyClick);
     btnBuy.SetCustomData(this);
@@ -58,7 +63,7 @@ winShop_t::winShop_t()
     btnSell.SetWidth(43);
     btnSell.SetHeight(20);
     btnSell.SetFont("minifont");
-    btnSell.SetCaption("Sell");
+    btnSell.SetCaption(gettext("Sell"));
     btnSell.SetHold(false);
     btnSell.SetOnClick(OnSellClick);
     btnSell.SetCustomData(this);
@@ -92,7 +97,7 @@ winShop_t::winShop_t()
     pnlAmountLeft.SetPos(4,96);
     pnlAmountLeft.SetWidth(55);
     pnlAmountLeft.SetHeight(12);
-    pnlAmountLeft.SetCaption("Amount:");
+    pnlAmountLeft.SetCaption(gettext("Amount:"));
     pnlAmountLeft.SetBGActiveness(false);
     pnlAmountRight.SetPos(118,96); // 118 minus whatever amount should be in there
     pnlAmountRight.SetWidth(0);
@@ -104,7 +109,7 @@ winShop_t::winShop_t()
     pnlPriceLeft.SetPos(4,112);
     pnlPriceLeft.SetWidth(55);
     pnlPriceLeft.SetHeight(12);
-    pnlPriceLeft.SetCaption("Price:");
+    pnlPriceLeft.SetCaption(gettext("Price:"));
     pnlPriceLeft.SetBGActiveness(false);
     pnlPriceRight.SetPos(118,112); // 118 minus whatever amount should be in there
     pnlPriceRight.SetWidth(0);
@@ -116,7 +121,7 @@ winShop_t::winShop_t()
     pnlMoneyLeft.SetPos(4,128);
     pnlMoneyLeft.SetWidth(55);
     pnlMoneyLeft.SetHeight(12);
-    pnlMoneyLeft.SetCaption("Money:");
+    pnlMoneyLeft.SetCaption(gettext("Money:"));
     pnlMoneyLeft.SetBGActiveness(false);
     pnlMoneyRight.SetPos(118,128); // 118 minus whatever amount should be in there
     pnlMoneyRight.SetWidth(0);
@@ -137,7 +142,7 @@ winShop_t::winShop_t()
     btnOk.SetWidth(43);
     btnOk.SetHeight(20);
     btnOk.SetFont("minifont");
-    btnOk.SetCaption("Ok");
+    btnOk.SetCaption(gettext("Ok"));
     btnOk.SetOnClick(&winShop_t::OnOkClick);
     btnOk.SetCustomData(this);
 
@@ -223,7 +228,7 @@ void winShop_t::addItemBuy (const ShopItem& itm)
         return;
     std::stringstream s;
 
-    s << itm.getName() << ": " << itm.getBuyPrice() << " gold";
+    s << itm.getName() << ": " << itm.getBuyPrice() << gettext(" gold");
 
     glictPanel *pnl = new glictPanel;
     ShopItem *data = new ShopItem(itm);
@@ -259,7 +264,7 @@ void winShop_t::addItemSell (const ShopItem& itm)
     if (!itm.getSellPrice()) return;
     std::stringstream s;
 
-    s << itm.getName() << ": " << itm.getSellPrice() << " gold";
+    s << itm.getName() << ": " << itm.getSellPrice() << gettext(" gold");
 
     glictPanel *pnl = new glictPanel;
     ShopItem *data = new ShopItem(itm);

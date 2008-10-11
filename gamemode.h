@@ -84,6 +84,9 @@ public:
     virtual void openShopWindow(const std::list<ShopItem>& itemlist) {}
     virtual void closeShopWindow() {}
 
+    virtual void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available) {}
+
+
     virtual void showTutorial(uint8_t id) {}
 
 

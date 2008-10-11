@@ -44,6 +44,23 @@ public:
 
     winOutfit_t();
 
+    void openSelf(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
+    void rebuildGfx();
+
+
+    static void onNext(glictPos* pos, glictContainer *caller);
+    static void onPrev(glictPos* pos, glictContainer *caller);
+
+
+    std::list<AvailOutfit_t> m_availableOutfits;
+    std::list<AvailOutfit_t>::iterator m_currentOutfit;
+
     static void onBtnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
+    static void onGfxPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
+
+
+
+
+    Creature *dispCreature;
 };
 #endif

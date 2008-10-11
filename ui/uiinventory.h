@@ -29,6 +29,11 @@
 #include <GLICT/window.h>
 
 #include "../skin.h"
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 
 class Popup;
 
@@ -47,7 +52,7 @@ public:
             8, 91,  // ring
             83, 91};// hand
 
-        panel.SetCaption("Inventory");
+        panel.SetCaption(gettext("Inventory"));
 		panel.SetHeight(150);
 		panel.SetWidth(150);
 		for (int i = 0; i < 10; i++) {
