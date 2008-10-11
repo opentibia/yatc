@@ -17,7 +17,14 @@ xgettext -d yatc -s -o yatc.pot \
 	../gm_gameworld.cpp \
 	../ui/optionshotkeys.h \
 	../ui/optionsconsole.h \
-	../ui/login.h
+	../ui/login.h \
+	../ui/uishop.cpp \
+	../ui/uioutfit.cpp \
+	../ui/charlist.h \
+	../ui/uiinventory.h \
+	../ui/skills.h \
+	../ui/itemmove.h \
+	../ui/health.h
 echo "Done."
 
 # above list all files with extractable gettext() strings

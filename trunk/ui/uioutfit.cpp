@@ -21,7 +21,12 @@
 #include <sstream>
 #include "../gamecontent/creature.h"
 #include "uioutfit.h"
-
+#include "../skin.h"
+#ifndef __APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 
 static void __uioutfit__closeme(glictPos* pos, glictContainer *caller) { // REMOVE ME
     ((glictWindow*)caller->GetCustomData())->SetVisible(false);
@@ -29,7 +34,7 @@ static void __uioutfit__closeme(glictPos* pos, glictContainer *caller) { // REMO
 
 
 winOutfit_t::winOutfit_t() {
-    window.SetCaption("Set Outfit");
+    window.SetCaption(gettext("Set Outfit"));
     window.SetWidth(490);
     window.SetHeight(323);
 
@@ -37,33 +42,37 @@ winOutfit_t::winOutfit_t() {
     pnlOutfit.SetPos(14,15);
     pnlOutfit.SetWidth(140);
     pnlOutfit.SetHeight(140);
+    pnlOutfit.SetOnPaint(onGfxPaint);
+    pnlOutfit.SetCustomData(this);
+    pnlOutfit.SetSkin(&g_skin.inv);
+    //pnlOutfit.SetBGActiveness(false);
 
     window.AddObject(&btnHead);
     btnHead.SetPos(167,15);
     btnHead.SetWidth(58);
     btnHead.SetHeight(20);
-    btnHead.SetCaption("Head");
+    btnHead.SetCaption(gettext("Head"));
     btnHead.SetFont("minifont");
 
     window.AddObject(&btnPrimary);
     btnPrimary.SetPos(167,39);
     btnPrimary.SetWidth(58);
     btnPrimary.SetHeight(20);
-    btnPrimary.SetCaption("Primary");
+    btnPrimary.SetCaption(gettext("Primary"));
     btnPrimary.SetFont("minifont");
 
     window.AddObject(&btnSecondary);
     btnSecondary.SetPos(167,63);
     btnSecondary.SetWidth(58);
     btnSecondary.SetHeight(20);
-    btnSecondary.SetCaption("Secondary");
+    btnSecondary.SetCaption(gettext("Secondary"));
     btnSecondary.SetFont("minifont");
 
     window.AddObject(&btnDetail);
     btnDetail.SetPos(167,87);
     btnDetail.SetWidth(58);
     btnDetail.SetHeight(20);
-    btnDetail.SetCaption("Detail");
+    btnDetail.SetCaption(gettext("Detail"));
     btnDetail.SetFont("minifont");
 
     window.AddObject(&lblInstructions);
@@ -72,11 +81,11 @@ winOutfit_t::winOutfit_t() {
         // the following text is not in-game original
         // it was INTENTIONALLY not reproduced verbatim
         // to prevent copyright infringement
-        "Pick an outfit and choose colors for parts of\n"
+        gettext("Pick an outfit and choose colors for parts of\n"
         "your character's avatar.\n"
         "Addons are activated by ticking the appropriate box.\n"
         "To activate particular addon, premium players can\n"
-        "solve various quests.");
+        "solve various quests."));
     lblInstructions.SetWidth(310);
     lblInstructions.SetHeight(90);
     lblInstructions.SetBGActiveness(false);
@@ -86,23 +95,27 @@ winOutfit_t::winOutfit_t() {
     btnLeft.SetWidth(20);
     btnLeft.SetHeight(20);
     btnLeft.SetCaption("<"); // FIXME (ivucica#4#): graphic should be extracted from .pic and displayed here
+    btnLeft.SetOnClick(onPrev);
+    btnLeft.SetCustomData(this);
 
     window.AddObject(&btnRight);
     btnRight.SetPos(134,159);
     btnRight.SetWidth(20);
     btnRight.SetHeight(20);
     btnRight.SetCaption(">"); // FIXME (ivucica#4#): graphic should be extracted from .pic and displayed here
+    btnRight.SetOnClick(onNext);
+    btnRight.SetCustomData(this);
 
     window.AddObject(&lblName);
     lblName.SetPos(38,159);
     lblName.SetWidth(92);
     lblName.SetHeight(20);
-    lblName.SetCaption("Mage");
+    lblName.SetCaption("?");
     lblName.SetHold(true);
 
     for (int i = 0; i < 3; i++) {
         std::stringstream s;
-        s << "Addon " << (i+1);
+        s << gettext("Addon ") << (i+1);
         window.AddObject(&chkAddon[i].pnlPanel);
         chkAddon[i].SetPos(14,192 + 26*i);
         chkAddon[i].SetWidth(140);
@@ -119,7 +132,7 @@ winOutfit_t::winOutfit_t() {
     btnOk.SetPos(384,296);
     btnOk.SetWidth(43);
     btnOk.SetHeight(20);
-    btnOk.SetCaption("Ok");
+    btnOk.SetCaption(gettext("Ok"));
     btnOk.SetFont("minifont");
     btnOk.SetEnabled(false);
 
@@ -127,7 +140,7 @@ winOutfit_t::winOutfit_t() {
     btnCancel.SetPos(437,296);
     btnCancel.SetWidth(43);
     btnCancel.SetHeight(20);
-    btnCancel.SetCaption("Cancel");
+    btnCancel.SetCaption(gettext("Cancel"));
     btnCancel.SetFont("minifont");
     // temporary:
     btnCancel.SetCustomData(&window);
@@ -154,6 +167,24 @@ winOutfit_t::winOutfit_t() {
         }
     }
 
+    // FIXME we don't delete this in destructor
+    // FIXME is ffffff00 really a satisfying id that won't be used by the game itself?
+    dispCreature = Creatures::getInstance().addCreature(0xFFFFFF00);
+
+    dispCreature->getOutfit().m_looktype = 128;
+    dispCreature->getOutfit().m_lookbody = 40;
+    dispCreature->getOutfit().m_looklegs = 40;
+    dispCreature->getOutfit().m_lookhead = 40;
+    dispCreature->getOutfit().m_lookfeet = 40;
+    dispCreature->getOutfit().m_lookitem = 0;
+    dispCreature->getOutfit().m_addons = 0;
+
+    dispCreature->setLookDir((Direction)2);
+    dispCreature->setTurnDir((Direction)2);
+
+    printf("Configured outfit. LOADING GFX.\n");
+
+    dispCreature->loadOutfit();
 }
 
 
@@ -163,5 +194,41 @@ void winOutfit_t::onBtnPaint(glictRect *real, glictRect *clipped, glictContainer
 
     g_engine->drawRectangle(real->left + 2, real->top + 2, 8, 8, c);
 }
+void winOutfit_t::onGfxPaint(glictRect *real, glictRect *clipped, glictContainer *caller) {
+    winOutfit_t* wo = (winOutfit_t*)(caller->GetCustomData());
+    if (wo->dispCreature) {
+        wo->dispCreature->Blit((int)real->left+64, (int)real->top+64,2);
+    }
+}
 
 
+void winOutfit_t::openSelf(const Outfit_t& current, const std::list<AvailOutfit_t>& available){
+    // FIXME doesnt take argument "current" into consideration
+    dispCreature->getOutfit() = current;
+    window.SetVisible(true);
+    m_availableOutfits = available;
+    m_currentOutfit = m_availableOutfits.begin();
+    rebuildGfx();
+}
+
+void winOutfit_t::rebuildGfx(){
+    lblName.SetCaption(m_currentOutfit->name);
+    dispCreature->getOutfit().m_looktype = m_currentOutfit->id;
+    dispCreature->unloadGfx();
+    dispCreature->loadOutfit();
+}
+
+void winOutfit_t::onNext(glictPos* pos, glictContainer *caller){
+    winOutfit_t *wo = (winOutfit_t*)caller->GetCustomData();
+    wo->m_currentOutfit++;
+    if(wo->m_currentOutfit==wo->m_availableOutfits.end())
+        wo->m_currentOutfit=wo->m_availableOutfits.begin();
+    wo->rebuildGfx();
+}
+void winOutfit_t::onPrev(glictPos* pos, glictContainer *caller){
+    winOutfit_t *wo = (winOutfit_t*)caller->GetCustomData();
+    if(wo->m_currentOutfit==wo->m_availableOutfits.begin())
+        wo->m_currentOutfit=wo->m_availableOutfits.end();
+    wo->m_currentOutfit--;
+    wo->rebuildGfx();
+}

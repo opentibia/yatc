@@ -74,6 +74,8 @@ public:
     void closeContainer(uint32_t cid);
     void openShopWindow(const std::list<ShopItem>& itemlist);
     void closeShopWindow();
+    void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
+
     void showTutorial(uint8_t id);
 
 	void openTradeWindow(bool ack);

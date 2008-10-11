@@ -30,6 +30,12 @@
 #include "../gamecontent/item.h"
 #include "../skin.h"
 
+#ifndef __APPLE__
+#include<libintl.h>
+#else
+#define gettext(x) (x)
+#endif
+
 //TODO (nfries88) actually implement this and make sure it works.
 
 class winItemMove_t {
@@ -52,7 +58,7 @@ public:
 
 	winItemMove_t()
 	{
-		window.SetCaption("Move Objects");
+		window.SetCaption(gettext("Move Objects"));
 		window.SetWidth(228);
 		window.SetHeight(115);
 
@@ -65,7 +71,7 @@ public:
 		sbCt.SetOnClick(winItemMove_t::onChangeCount);
 
 		window.AddObject(&lblTxt);
-		lblTxt.SetCaption("Set the number of \nitems you want to move:");
+		lblTxt.SetCaption(gettext("Set the number of \nitems you want to move:"));
 		lblTxt.SetPos(59, 17);
 		lblTxt.SetWidth(143);
 		lblTxt.SetHeight(24);
@@ -91,7 +97,7 @@ public:
 		btnOk.SetPos(123, 89);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(20);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetCustomData(this);
 		btnOk.SetOnClick(winItemMove_t::moveItem);
 
@@ -99,7 +105,7 @@ public:
 		btnCancel.SetPos(176, 89);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(20);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetCustomData(this);
 		btnCancel.SetOnClick(winItemMove_t::onCancel);
 

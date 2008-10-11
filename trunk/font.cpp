@@ -44,7 +44,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 		case 4: // outlined font
 		case 7: // antialiased outlineless font
 			for(int i = 0; i < 255; i++){
-				if(i >= 32 && i < 170){
+				if(i >= 32 && i < 255){
 					charx[i] = ((i-32) % 32) * 8;
 					chary[i] = ((i-32) / 32) * 16;
 					charw[i] = 8;
@@ -128,7 +128,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 			if (index == 4) { // outlined font
 				for(int i = 0;i < 255; i++){
-					if(i >= 32 && i < 170){
+					if(i >= 32 && i < 255){
 						charx[i] = ((i-32) % 32) * 16;
 						chary[i] = ((i-32) / 32) * 16;
 						charw[i] += 1;
@@ -145,7 +145,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 		case 5: // minifont
 			charh[(unsigned char)'\n'] = 8;
 			for(int i = 0;i < 255;i++){
-				if(i >= 32 && i < 170){
+				if(i >= 32 && i < 255){
 					charx[i] = ((i-32) % 32) * 8;
 					chary[i] = ((i-32) / 32) * 8;
 					charw[i] = 7;

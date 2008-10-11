@@ -28,6 +28,12 @@
 #include "../engine.h"
 #include "../gamecontent/globalvars.h"
 #include "../util.h"
+#ifndef ___APPLE__
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
+
 class winSkills_t {
 public:
 	// FIXME (ivucica#4#) This window is not a 1:1 match, and among other things, we need to modify GLICT's window to make it such (no icon support, no left alignment support, no minimize and close support ...)
@@ -55,7 +61,7 @@ public:
 	winSkills_t() {
 		window.SetWidth(150);
 		window.SetHeight(270);
-		window.SetCaption("Skills");
+		window.SetCaption(gettext("Skills"));
 		window.AddObject(&container);
 		container.SetWidth(150);
 		container.SetHeight(270);
@@ -69,7 +75,7 @@ public:
 		lblExperienceLeft.SetWidth(150);
 		lblExperienceLeft.SetHeight(12);
 		lblExperienceLeft.SetBGActiveness(false);
-		lblExperienceLeft.SetCaption("Experience");
+		lblExperienceLeft.SetCaption(gettext("Experience"));
 
 		lblExperienceRight.SetPos(150-20, 5);
 		lblExperienceRight.SetWidth(10);
@@ -84,7 +90,7 @@ public:
 		lblLevelLeft.SetWidth(150);
 		lblLevelLeft.SetHeight(12);
 		lblLevelLeft.SetBGActiveness(false);
-		lblLevelLeft.SetCaption("Level");
+		lblLevelLeft.SetCaption(gettext("Level"));
 
 		lblLevelRight.SetPos(150 - 20, 15);
 		lblLevelRight.SetWidth(10);
@@ -110,7 +116,7 @@ public:
 		lblHPLeft.SetWidth(150);
 		lblHPLeft.SetHeight(12);
 		lblHPLeft.SetBGActiveness(false);
-		lblHPLeft.SetCaption("Hit Points");
+		lblHPLeft.SetCaption(gettext("Hit Points"));
 
 		lblHPRight.SetPos(150 - 20, 35);
 		lblHPRight.SetWidth(10);
@@ -125,7 +131,7 @@ public:
 		lblMPLeft.SetWidth(150);
 		lblMPLeft.SetHeight(12);
 		lblMPLeft.SetBGActiveness(false);
-		lblMPLeft.SetCaption("Mana");
+		lblMPLeft.SetCaption(gettext("Mana"));
 
 		lblMPRight.SetPos(150 - 20, 45);
 		lblMPRight.SetWidth(10);
@@ -140,7 +146,7 @@ public:
 		lblSPLeft.SetWidth(150);
 		lblSPLeft.SetHeight(12);
 		lblSPLeft.SetBGActiveness(false);
-		lblSPLeft.SetCaption("Soul Points");
+		lblSPLeft.SetCaption(gettext("Soul Points"));
 
 		lblSPRight.SetPos(150 - 20, 55);
 		lblSPRight.SetWidth(10);
@@ -155,7 +161,7 @@ public:
 		lblCapLeft.SetWidth(150);
 		lblCapLeft.SetHeight(12);
 		lblCapLeft.SetBGActiveness(false);
-		lblCapLeft.SetCaption("Cap");
+		lblCapLeft.SetCaption(gettext("Cap"));
 
 		lblCapRight.SetPos(150 - 20, 65);
 		lblCapRight.SetWidth(10);
@@ -170,7 +176,7 @@ public:
 		lblStaLeft.SetWidth(150);
 		lblStaLeft.SetHeight(12);
 		lblStaLeft.SetBGActiveness(false);
-		lblStaLeft.SetCaption("Stamina");
+		lblStaLeft.SetCaption(gettext("Stamina"));
 
 		lblStaRight.SetPos(150 - 20, 75);
 		lblStaRight.SetWidth(10);
@@ -193,7 +199,7 @@ public:
 		lblMagicLevelLeft.SetWidth(150);
 		lblMagicLevelLeft.SetHeight(12);
 		lblMagicLevelLeft.SetBGActiveness(false);
-		lblMagicLevelLeft.SetCaption("Magic Level");
+		lblMagicLevelLeft.SetCaption(gettext("Magic Level"));
 
 		lblMagicLevelRight.SetPos(150 - 20, 95);
 		lblMagicLevelRight.SetWidth(10);
@@ -234,7 +240,7 @@ public:
 			lblSkillLeft[i].SetWidth(150);
 			lblSkillLeft[i].SetHeight(12);
 			lblSkillLeft[i].SetBGActiveness(false);
-			lblSkillLeft[i].SetCaption(std::string("Skill ") + yatc_itoa(i) );
+			lblSkillLeft[i].SetCaption(std::string(gettext("Skill ")) + yatc_itoa(i) );
 
 			lblSkillRight[i].SetPos(150 - 20, 125 + i*20);
 			lblSkillRight[i].SetWidth(10);
@@ -250,13 +256,13 @@ public:
 			pbSkill[i].SetHeight(5);
 			pbSkill[i].SetValue(40);
 		}
-		lblSkillLeft[0].SetCaption("Fist Fighting");
-		lblSkillLeft[1].SetCaption("Club Fighting");
-		lblSkillLeft[2].SetCaption("Sword Fighting");
-		lblSkillLeft[3].SetCaption("Axe Fighting");
-		lblSkillLeft[4].SetCaption("Distance Fighting");
-		lblSkillLeft[5].SetCaption("Shielding");
-		lblSkillLeft[6].SetCaption("Fishing");
+		lblSkillLeft[0].SetCaption(gettext("Fist Fighting"));
+		lblSkillLeft[1].SetCaption(gettext("Club Fighting"));
+		lblSkillLeft[2].SetCaption(gettext("Sword Fighting"));
+		lblSkillLeft[3].SetCaption(gettext("Axe Fighting"));
+		lblSkillLeft[4].SetCaption(gettext("Distance Fighting"));
+		lblSkillLeft[5].SetCaption(gettext("Shielding"));
+		lblSkillLeft[6].SetCaption(gettext("Fishing"));
 
 		updateSelf();
 	}

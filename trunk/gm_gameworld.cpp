@@ -952,9 +952,10 @@ void GM_Gameworld::onSetOutfit() {
     // happens when user clicks on "Set Outfit" in right click popup menu
     GM_Gameworld *g = (GM_Gameworld*)g_game;
     g->m_protocol->sendRequestOutfit();
+}
+void GM_Gameworld::openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available){
+    GM_Gameworld *g = (GM_Gameworld*)g_game;
+    printf("Got outfit notification\n");
 
-    // TEMPORARY (we should wait for outfit window data before displaying outfit window)
-    g->winOutfit.window.SetVisible(true);
-
-
+    g->winOutfit.openSelf(current, available);
 }

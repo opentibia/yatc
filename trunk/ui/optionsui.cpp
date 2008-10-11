@@ -87,14 +87,14 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 	winOptionsGraphics.btnOk.SetOnClick(winOptions_t::winOptionsGraphics_btnOk_OnClick);
 	winOptionsGraphics.btnCancel.SetOnClick(winOptions_t::winOptionsGraphics_btnCancel_OnClick);
 	winOptionsGraphics.btnHelp.SetOnClick(winOptions_t::btnHelp_OnClick);
-	winOptionsGraphics.btnHelp.SetCustomData(new std::string(
+	winOptionsGraphics.btnHelp.SetCustomData(new std::string(gettext(
 
 		"Fullscreen decides whether or not the client will\n"
 		"be taking the entire screen.\n"
 		"\n"
 		"Available resolutions shows detected resolutions on\n"
 		"your computer that the client can use while in fullscreen."
-		));
+		)));
 	winOptionsGraphics.btnAdvancedSettings.SetOnClick(winOptions_t::winOptionsGraphics_btnAdvanced_OnClick);
 
 	/* ************ OPTIONS/ADVANCED GRAPHICS *************** */
@@ -104,26 +104,26 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 	winOptionsGraphicsAdvanced.btnHelp.SetOnClick(winOptions_t::btnHelp_OnClick);
 	std::stringstream s;
 	unsigned char b = 149; // bullet
-	s <<"We offer two graphical engines:\n" <<
-        b << "SDL 1.2 is a 2D software rendering library. It should be\n"
+	s << gettext("We offer two graphical engines:\n") <<
+        b << gettext("SDL 1.2 is a 2D software rendering library. It should be\n"
         "  slowest, but since it is the most maintained engine, it runs\n"
         "  at reasonable speed and even faster than OpenGL engine, with\n"
-        "  fewer glitches. That can, of course, change anytime.\n" <<
-        b << "OpenGL is a 3D hardware-accelerated graphical library.\n"
+        "  fewer glitches. That can, of course, change anytime.\n") <<
+        b << gettext("OpenGL is a 3D hardware-accelerated graphical library.\n"
         "  To make use of it, make sure you have latest graphic card\n"
         "  drivers. Those provided by Microsoft will be insufficient.\n"
         "  Due to SDL-centric design, OpenGL was not given much thought\n"
         "  and is currently not recommended since it will be much slower\n"
-        "  on most laptops and perhaps on many desktops.\n"
-        "RECOMMENDED: Choose SDL. But, try what works better for you.\n"
+        "  on most laptops and perhaps on many desktops.\n") <<
+        gettext("RECOMMENDED: Choose SDL. But, try what works better for you.\n"
         "\n"
         "To apply graphical engine change, you need to restart\n"
-        << PRODUCTSHORT << ".\n"
-        "\n"
-        "To choose maximum FPS (reducing the CPU and graphics card usage\n"
+        PRODUCTSHORT ".") << "\n"
+        "\n" <<
+        gettext("To choose maximum FPS (reducing the CPU and graphics card usage\n"
         "resulting in less power usage, quieter operation and reduced\n"
         "CPU temperature) use the scrollbar below. Note, though, FPS \n"
-        "limiting is only approximate.";
+        "limiting is only approximate.");
 	winOptionsGraphicsAdvanced.btnHelp.SetCustomData(new std::string(
 		s.str()
 		));
@@ -143,7 +143,7 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 	winOptionsNetwork.btnOk.SetOnClick(winOptions_t::winOptionsNetwork_btnOk_OnClick);
 	winOptionsNetwork.btnCancel.SetOnClick(winOptions_t::winOptionsNetwork_btnCancel_OnClick);
 	winOptionsNetwork.btnHelp.SetOnClick(winOptions_t::btnHelp_OnClick);
-	winOptionsNetwork.btnHelp.SetCustomData(new std::string(
+	winOptionsNetwork.btnHelp.SetCustomData(new std::string(gettext(
 		"Server name is the IP address or hostname of the\n"
 		"login server.\n"
 		"\n"
@@ -151,7 +151,7 @@ void winOptions_t::initiateAll(glictContainer* desktop)
 		"\n"
 		"You can also choose if you'd like to access OpenTibia\n"
 		"servers, or a proprietary server. To access OpenTibia\n"
-		"servers, turn on the OT Encryption Key option."
+		"servers, turn on the OT Encryption Key option.")
 		));
 }
 
@@ -316,7 +316,7 @@ void winOptions_t::winOptionsGraphicsAdvanced_btnOk_OnClick(glictPos* relmousepo
 	}
 	#else
     if (winOptions->winOptionsGraphicsAdvanced.activeEngine != winOptions->winOptionsGraphicsAdvanced.activeEngineOriginal)
-        g_game->msgBox("Restart is required to apply engine change.", "Engine change");
+        g_game->msgBox(gettext("Restart is required to apply engine change."), gettext("Engine change"));
 	#endif
 	MAXFPS=options.maxfps;
 	options.Save();

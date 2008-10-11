@@ -91,7 +91,7 @@ class Notifications{
 		static void openHouseText(int windowId, int unk, const std::string& text){}
 
 		//open outfit window
-		static void openOutfit(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
+		static void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
 
 		//open relogin window
 		static void openRelogin(){}

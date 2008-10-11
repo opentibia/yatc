@@ -1178,7 +1178,8 @@ bool ProtocolGame::parseOutfitWindow(NetworkMessage& msg)
 		avail.addons = addons;
 		list.push_back(avail);
 	}
-	Notifications::openOutfit(outfit, list);
+	printf("Current outfit: %d - %d %d %d %d - %d\n",  outfit.m_looktype, outfit.m_lookhead, outfit.m_lookbody, outfit.m_looklegs, outfit.m_lookfeet, outfit.m_lookitem);
+	Notifications::openOutfitWindow(outfit, list);
 	return true;
 }
 bool ProtocolGame::parseVipState(NetworkMessage& msg)

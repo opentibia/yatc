@@ -60,7 +60,8 @@ void CreatureUI::unloadGfx()
 
 void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 {
-	if (!m_obj)
+
+    if (!m_obj)
 		return;
 
 	x = x - m_obj->xOffset;
@@ -84,6 +85,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
     if(n->getOutfit().m_looktype != 0){
         activeframe = (m_walkState == 1. ? n->getTurnDir() :  n->getLookDir()) * spriteSize; // creature must have different turning direction and looking (moving) direction... if moving, moving direction takes precendence, if standing, turning direction takes precendence
     }
+
 
 	float walkoffx = 0.f, walkoffy = 0.f;
 	getWalkOffset(walkoffx, walkoffy, scale);
@@ -306,7 +308,7 @@ void CreatureUI::setupObject() {
             unloadGfx();
             return;
         }
-        else if(outfit.m_lookitem != 0){
+        else if(outfit.m_looktype == 0 && outfit.m_lookitem != 0){
             //TODO
             m_obj = NULL;
             //m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
@@ -323,4 +325,5 @@ void CreatureUI::setupObject() {
             m_obj->loadGfx();
         }
 	}
+	if(!m_obj)printf("FAILED to create outfit.\n");
 }

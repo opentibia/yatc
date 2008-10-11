@@ -369,8 +369,8 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 
 	ProtocolConfig::createLoginConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption());
-	m->winStatus.SetCaption("Logging in");
-	m->winStatus.SetMessage("Connecting to the server...\n");
+	m->winStatus.SetCaption(gettext("Logging in"));
+	m->winStatus.SetMessage(gettext("Connecting to the server..."));
 	m->winStatus.SetWidth(320);
 	m->winStatus.SetEnabled(false);
 	m->centerWindow(&m->winStatus);
@@ -396,7 +396,7 @@ ClientVersion_t GM_MainMenu::getActiveProtocol(){
 		"correct signatures in the files, or go to\n" <<
 		"Options->Network and choose the correct\n" <<
 		"protocol.";
-		msgBox(t.str().c_str(),"Protocol detection failed");
+		msgBox(t.str().c_str(),gettext("Protocol detection failed"));
 
 	}
 	return proto;
@@ -445,8 +445,8 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 
 	m->desktop.AddObject(&m->winStatus);
 	m->centerWindow(&m->winStatus);
-	m->winStatus.SetCaption("Entering game");
-	m->winStatus.SetMessage("Connecting to the server...");
+	m->winStatus.SetCaption(gettext("Entering game"));
+	m->winStatus.SetMessage(gettext("Connecting to the server..."));
 
 }
 
@@ -503,7 +503,7 @@ void GM_MainMenu::onConnectionError(int message, const char* errortext)
 	     //"The following may help you identify error:" << std::endl <<
 	     errortext;
 
-	winStatus.SetCaption("Error");
+	winStatus.SetCaption(gettext("Error"));
 	winStatus.SetMessage(s.str());
 	winStatus.SetEnabled(true);
 	renderScene();
