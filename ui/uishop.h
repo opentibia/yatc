@@ -59,6 +59,8 @@ public:
 	ShopItem currentBuyItem;
 	ShopItem currentSellItem;
 
+    glictButton closebtn;
+
 	winShop_t();
 
 	~winShop_t();
@@ -77,6 +79,7 @@ public:
     static void OnBuyClick(glictPos* pos, glictContainer *caller);
     static void OnSellClick(glictPos* pos, glictContainer *caller);
     static void OnOkClick(glictPos* pos, glictContainer *caller);
+    static void OnClose(glictPos* pos, glictContainer *caller);
 
 
     static void drawObject(glictRect *real, glictRect *clipped, glictContainer *caller);

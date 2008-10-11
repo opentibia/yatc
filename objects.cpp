@@ -93,8 +93,6 @@ void ObjectType::loadGfx()
 
     if (m_gfx.size() != numsprites) { // graphics not loaded yet?
         for(uint32_t i = 0; i < numsprites; i++){
-            printf("ObjectType::loadGfx Numsprites: %d\n", numsprites);
-
             m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", imageData[i]));
         }
     }

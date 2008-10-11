@@ -26,6 +26,22 @@ winShop_t::winShop_t() {
     window.SetWidth(168);
     window.SetHeight(141);
 
+    #if (GLICT_APIREV >= 76)
+	window.AddTitlebarObject(&closebtn);
+	closebtn.SetCaption("x");
+	closebtn.SetWidth(12);
+	closebtn.SetHeight(12);
+	closebtn.SetPos(150 + 10 - 12, 2);
+	closebtn.SetCustomData(this);
+	closebtn.SetOnClick(OnClose);
+
+    #else
+    #warning For titlebar objects (such as close buttons) to work properly, you need GLICT APIREV 76+
+    #endif
+
+
+
+
     window.AddObject(&btnBuy);
     btnBuy.SetPos(74, 4);
     btnBuy.SetWidth(43);
@@ -138,7 +154,8 @@ winShop_t::~winShop_t() {
 
 void winShop_t::drawObject(glictRect *real, glictRect *clipped, glictContainer *caller) {
     winShop_t* ws = (winShop_t*)(caller->GetCustomData());
-    ws->dispItem->Blit((int)real->left, (int)real->top);
+    if (ws->dispItem)
+        ws->dispItem->Blit((int)real->left, (int)real->top);
 }
 
 void winShop_t::destroyList() {
@@ -171,7 +188,7 @@ void winShop_t::destroyList() {
         delete (ShopItem*)((*it)->GetCustomData());
         delete (*it);
     }
-    lsiBuy.clear();
+    lsiSell.clear();
 
 
     if (dispItem)
@@ -189,15 +206,15 @@ void winShop_t::generateList(const std::list<ShopItem>& list) {
     }
     lstBuy.Focus(NULL);
 
-
-
+    rebuildImage();
 }
 
 void winShop_t::addItemBuy (const ShopItem& itm) {
-    if (!itm.getBuyPrice()) return;
+    if (!itm.getBuyPrice())
+        return;
     std::stringstream s;
 
-    s << itm.getName() << "[" << int(itm.getSubType()) << "] : " << itm.getBuyPrice() << " gold";
+    s << itm.getName() << ": " << itm.getBuyPrice() << " gold";
 
     glictPanel *pnl = new glictPanel;
     ShopItem *data = new ShopItem(itm);
@@ -280,11 +297,7 @@ void winShop_t::OnListbox(glictPos* pos, glictContainer *caller) {
 
 void winShop_t::OnChangeCount(glictPos* pos, glictContainer *caller) {
     winShop_t *wc = (winShop_t*) (caller->GetCustomData());
-    std::stringstream ss;
-    // FIXME we should be setting pnlAmountRight not pnlAmountLeft...
-    ss << "Amount: " << wc->sbCt.GetValue();
-    wc->pnlAmountLeft.SetCaption(ss.str());
-//    wc->pnlAmountRight.SetPos(118-glictFontSize(ss.str().c_str(),"aafont"),96);
+
     wc->rebuildImage();
 }
 
@@ -292,14 +305,34 @@ void winShop_t::rebuildImage() {
     if (dispItem)
         delete dispItem;
 
-    uint32_t id;
+    uint32_t id=0;
     if (!selling)
         id = currentBuyItem.getItemId();
     else
         id = currentSellItem.getItemId();
     if (id)
         dispItem = Item::CreateItem(id, (uint8_t)sbCt.GetValue());
+    else
+        dispItem = NULL;
 
+    std::stringstream ss;
+    int newwidth;
+
+    ss << sbCt.GetValue();
+    newwidth = glictFontSize(ss.str().c_str(),"aafont");
+    pnlAmountRight.SetCaption(ss.str());
+    pnlAmountRight.SetPos(118-newwidth,96);
+    pnlAmountRight.SetWidth(newwidth);
+
+    ss.str("");
+    if (!selling)
+        ss << sbCt.GetValue() * currentBuyItem.getBuyPrice();
+    else
+        ss << sbCt.GetValue() * currentSellItem.getSellPrice();
+    newwidth = glictFontSize(ss.str().c_str(),"aafont");
+    pnlPriceRight.SetCaption(ss.str());
+    pnlPriceRight.SetPos(118-newwidth,112);
+    pnlPriceRight.SetWidth(newwidth);
 }
 
 void winShop_t::OnBuyClick(glictPos* pos, glictContainer *caller) {
@@ -309,7 +342,13 @@ void winShop_t::OnBuyClick(glictPos* pos, glictContainer *caller) {
     wst->lstBuy.SetVisible(true);
     wst->btnSell.SetHold(false);
     wst->btnBuy.SetHold(true);
+    wst->currentBuyItem = ShopItem("",0,0,0,0);
+    wst->currentSellItem = ShopItem("",0,0,0,0);
     wst->sbCt.SetValue(1);
+    wst->rebuildImage();
+
+    if (wst->lsiBuy.size())
+        OnListbox(NULL, *wst->lsiBuy.begin());
 }
 void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller){
     winShop_t *wst = (winShop_t*)caller->GetCustomData();
@@ -318,17 +357,18 @@ void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller){
     wst->lstBuy.SetVisible(false);
     wst->btnSell.SetHold(true);
     wst->btnBuy.SetHold(false);
+    wst->currentBuyItem = ShopItem("",0,0,0,0);
+    wst->currentSellItem = ShopItem("",0,0,0,0);
     wst->sbCt.SetValue(1);
+    wst->rebuildImage();
+
+    if (wst->lsiSell.size())
+        OnListbox(NULL, *wst->lsiSell.begin());
 }
 
 void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller) {
-    printf("Ok clicked\n");
     winShop_t *wst = (winShop_t*)caller->GetCustomData();
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-    printf("Got wst and gw\n");
-    wst->window.SetVisible(false);
-    ASSERTFRIENDLY("Try to buy more than 0", wst->sbCt.GetValue());
-    printf("Hiding\n");
     if (!wst->selling) {
         printf("Buying..."); fflush(stdout);
         printf("itemid %d subtype %d count %d\n", wst->currentBuyItem.getItemId(),wst->currentBuyItem.getSubType(),
@@ -343,10 +383,22 @@ void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller) {
     }
     else {
         printf("Selling..."); fflush(stdout);
+        printf("itemid %d subtype %d count %d\n", wst->currentSellItem.getItemId(),wst->currentSellItem.getSubType(),
+                /* amount: */wst->sbCt.GetValue());
+
+
         gw->m_protocol->sendShopSale(
             /* itemid: */wst->currentSellItem.getItemId(),
             /* subtype: */wst->currentSellItem.getSubType(),
             /* amount: */wst->sbCt.GetValue());
     }
     printf("Done\n");
+}
+
+
+void winShop_t::OnClose(glictPos* pos, glictContainer *caller) {
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+	winContainer_t* window = (winContainer_t*)caller->GetCustomData();
+
+    gw->m_protocol->sendShopClose();
 }

@@ -837,6 +837,8 @@ void GM_Gameworld::openShopWindow(const std::list<ShopItem>& itemlist) {
     winShop.generateList(itemlist);
 }
 void GM_Gameworld::closeShopWindow() {
+    winShop.window.SetVisible(false);
+    winShop.destroyList();
 }
 
 void GM_Gameworld::onUpdatePlayerCash(uint32_t newcash) {
