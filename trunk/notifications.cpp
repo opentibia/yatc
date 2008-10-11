@@ -251,3 +251,9 @@ void Notifications::showTutorial(uint8_t tutorialId)
 void Notifications::addMapMark(uint8_t icon, const Position& pos, const std::string& desc)
 {
 }
+
+// open the outfit window with these outfits as available
+void Notifications::openOutfit(const Outfit_t& current, const std::list<AvailOutfit_t>& available)
+{
+
+}

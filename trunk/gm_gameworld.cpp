@@ -842,7 +842,7 @@ void GM_Gameworld::closeShopWindow() {
 }
 
 void GM_Gameworld::onUpdatePlayerCash(uint32_t newcash) {
-    printf("New cash: %d\n", newcash);
+    winShop.setCash(newcash);
 }
 
 void GM_Gameworld::setDragInv(slots_t slotid) {

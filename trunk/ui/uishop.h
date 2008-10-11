@@ -60,6 +60,8 @@ public:
 	ShopItem currentSellItem;
 
     glictButton closebtn;
+    glictPanel *currentpnl;
+    uint32_t cash;
 
 	winShop_t();
 
@@ -71,6 +73,7 @@ public:
     void destroyList();
 	void addItemBuy (const ShopItem& itm);
 	void addItemSell (const ShopItem& itm);
+	void setCash(uint32_t newplayercash);
 
     void rebuildImage();
 
@@ -83,6 +86,7 @@ public:
 
 
     static void drawObject(glictRect *real, glictRect *clipped, glictContainer *caller);
+
 
     bool selling;
 

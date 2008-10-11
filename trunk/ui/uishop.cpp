@@ -21,7 +21,8 @@
 #include "uishop.h"
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
-winShop_t::winShop_t() {
+winShop_t::winShop_t()
+{
     window.SetCaption("NPC Trade");
     window.SetWidth(168);
     window.SetHeight(141);
@@ -143,22 +144,26 @@ winShop_t::winShop_t() {
     selling = false;
 
     dispItem = NULL;
+    currentpnl = NULL;
 
 
 }
 
-winShop_t::~winShop_t() {
+winShop_t::~winShop_t()
+{
     if (lsiBuy.size() || lsiSell.size())
         destroyList();
 }
 
-void winShop_t::drawObject(glictRect *real, glictRect *clipped, glictContainer *caller) {
+void winShop_t::drawObject(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
     winShop_t* ws = (winShop_t*)(caller->GetCustomData());
     if (ws->dispItem)
         ws->dispItem->Blit((int)real->left, (int)real->top);
 }
 
-void winShop_t::destroyList() {
+void winShop_t::destroyList()
+{
     for (std::list<glictPanel*>::iterator it = lsiBuy.begin(); it != lsiBuy.end(); it++) {
         #if (GLICT_APIREV >= 71)
         lstBuy.RemoveObject(*it);
@@ -194,11 +199,14 @@ void winShop_t::destroyList() {
     if (dispItem)
         delete dispItem;
     dispItem = NULL;
+
+    currentpnl = NULL;
 }
 
 
 
-void winShop_t::generateList(const std::list<ShopItem>& list) {
+void winShop_t::generateList(const std::list<ShopItem>& list)
+{
     destroyList();
     for (std::list<ShopItem>::const_iterator it = list.begin(); it != list.end(); it++) {
         addItemBuy(*it);
@@ -209,7 +217,8 @@ void winShop_t::generateList(const std::list<ShopItem>& list) {
     rebuildImage();
 }
 
-void winShop_t::addItemBuy (const ShopItem& itm) {
+void winShop_t::addItemBuy (const ShopItem& itm)
+{
     if (!itm.getBuyPrice())
         return;
     std::stringstream s;
@@ -245,7 +254,8 @@ void winShop_t::addItemBuy (const ShopItem& itm) {
 
 
 
-void winShop_t::addItemSell (const ShopItem& itm) {
+void winShop_t::addItemSell (const ShopItem& itm)
+{
     if (!itm.getSellPrice()) return;
     std::stringstream s;
 
@@ -280,7 +290,10 @@ void winShop_t::addItemSell (const ShopItem& itm) {
 
 
 
-void winShop_t::OnListbox(glictPos* pos, glictContainer *caller) {
+void winShop_t::OnListbox(glictPos* pos, glictContainer *caller)
+{
+    if (!caller)
+        return;
     winShop_t *wc = (winShop_t*) (((ShopItem*)caller->GetCustomData())->getExtraData());
     for (std::list<glictPanel*>::iterator it = wc->lsiBuy.begin(); it != wc->lsiBuy.end(); it++) {
         (*it)->SetBGActiveness(false);
@@ -292,16 +305,33 @@ void winShop_t::OnListbox(glictPos* pos, glictContainer *caller) {
     wc->currentBuyItem = *((ShopItem*)(caller->GetCustomData()));
     wc->currentSellItem = *((ShopItem*)(caller->GetCustomData()));
 
+    wc->currentpnl = (glictPanel*)caller;
+
     wc->rebuildImage();
+    wc->sbCt.SetMin(1);
+    if (wc->cash){
+        if (!wc->selling) {
+            if (wc->cash/wc->currentBuyItem.getBuyPrice()>1)
+                wc->sbCt.SetMax(wc->cash/wc->currentBuyItem.getBuyPrice());
+            else
+                wc->sbCt.SetMax(30);
+        }
+        else
+            wc->sbCt.SetMax(30);
+    } else {
+        wc->sbCt.SetMax(30);
+    }
 }
 
-void winShop_t::OnChangeCount(glictPos* pos, glictContainer *caller) {
+void winShop_t::OnChangeCount(glictPos* pos, glictContainer *caller)
+{
     winShop_t *wc = (winShop_t*) (caller->GetCustomData());
 
     wc->rebuildImage();
 }
 
-void winShop_t::rebuildImage() {
+void winShop_t::rebuildImage()
+{
     if (dispItem)
         delete dispItem;
 
@@ -333,9 +363,18 @@ void winShop_t::rebuildImage() {
     pnlPriceRight.SetCaption(ss.str());
     pnlPriceRight.SetPos(118-newwidth,112);
     pnlPriceRight.SetWidth(newwidth);
+
+    ss.str("");
+    ss << cash;
+    newwidth = glictFontSize(ss.str().c_str(),"aafont");
+    pnlMoneyRight.SetCaption(ss.str());
+    pnlMoneyRight.SetPos(118-newwidth,128);
+    pnlMoneyRight.SetWidth(newwidth);
+
 }
 
-void winShop_t::OnBuyClick(glictPos* pos, glictContainer *caller) {
+void winShop_t::OnBuyClick(glictPos* pos, glictContainer *caller)
+{
     winShop_t *wst = (winShop_t*)caller->GetCustomData();
     wst->selling=false;
     wst->lstSell.SetVisible(false);
@@ -347,10 +386,12 @@ void winShop_t::OnBuyClick(glictPos* pos, glictContainer *caller) {
     wst->sbCt.SetValue(1);
     wst->rebuildImage();
 
+    wst->currentpnl = NULL;
     if (wst->lsiBuy.size())
         OnListbox(NULL, *wst->lsiBuy.begin());
 }
-void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller){
+void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller)
+{
     winShop_t *wst = (winShop_t*)caller->GetCustomData();
     wst->selling=true;
     wst->lstSell.SetVisible(true);
@@ -362,11 +403,13 @@ void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller){
     wst->sbCt.SetValue(1);
     wst->rebuildImage();
 
+    wst->currentpnl = NULL;
     if (wst->lsiSell.size())
         OnListbox(NULL, *wst->lsiSell.begin());
 }
 
-void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller) {
+void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller)
+{
     winShop_t *wst = (winShop_t*)caller->GetCustomData();
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     if (!wst->selling) {
@@ -395,10 +438,16 @@ void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller) {
     printf("Done\n");
 }
 
-
-void winShop_t::OnClose(glictPos* pos, glictContainer *caller) {
+void winShop_t::OnClose(glictPos* pos, glictContainer *caller)
+{
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-	winContainer_t* window = (winContainer_t*)caller->GetCustomData();
+	winShop_t* window = (winShop_t*)caller->GetCustomData();
 
     gw->m_protocol->sendShopClose();
+    window->window.SetVisible(false);
+}
+void winShop_t::setCash(uint32_t newcash)
+{
+    cash = newcash;
+    OnListbox(NULL, currentpnl); // will rebuild image too
 }
