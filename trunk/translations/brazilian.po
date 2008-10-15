@@ -4,8 +4,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-11 21:30+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Heliton <helitonnordt@gmail.com>\n"
-"Language-Team: Heliton <helitonnordt@gmail.com>\n"
+"Last-Translator: jakexblaster (marcos cunha) <kinhocunha@gmail.com>\n"
+"Language-Team: Heliton, jakexblaster <helitonnordt@gmail.com, kinhocunha@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -80,23 +80,23 @@ msgstr "Cancelar"
 
 #: ../ui/skills.h:164
 msgid "Cap"
-msgstr "Capacidade"
+msgstr "Cap"
 
 #: ../ui/options.h:118
 msgid ""
 "Change general\n"
 "game options"
 msgstr ""
-"Modificar opções gerais\n"
-"do jogo"
+"Modificar opções\n"
+"gerais do jogo"
 
 #: ../ui/options.h:126
 msgid ""
 "Change graphics and\n"
 "performance settings"
 msgstr ""
-"Modificar opções gráficas e\n"
-"de desempenho"
+"Modificar opções gráficas\n"
+"e de desempenho"
 
 #: ../ui/optionsgeneral.h:71
 msgid "Classic Control"
@@ -141,7 +141,7 @@ msgstr "Editar os textos das suas hotkeys"
 
 #: ../ui/optionsui.cpp:319
 msgid "Engine change"
-msgstr "Modificar funcionamento"
+msgstr "Modificar motor gráfico"
 
 #: ../ui/mainmenu.cpp:44
 #: ../ui/login.h:45
@@ -171,7 +171,7 @@ msgstr "Perícia com Pesca"
 
 #: ../ui/skills.h:259
 msgid "Fist Fighting"
-msgstr "Perícia com Distância"
+msgstr "Perícia com Punho"
 
 #: ../ui/charlist.h:147
 msgid "Free Account"
@@ -179,7 +179,7 @@ msgstr "Conta Grátis"
 
 #: ../ui/optionsgraphics.h:80
 msgid "Fullscreen"
-msgstr "Tela Inteira"
+msgstr "Tela Cheia"
 
 #: ../ui/optionsui.cpp:92
 msgid ""
@@ -189,11 +189,12 @@ msgid ""
 "Available resolutions shows detected resolutions on\n"
 "your computer that the client can use while in fullscreen."
 msgstr ""
-"Tela inteira decide se o cliente vai ou não\n"
-"tomar a tela inteira.\n"
+"Tela cheia decide se o cliente vai ou não tomar\n"
+"a tela inteira.\n"
 "\n"
-"Resoluções disponíveis exibem resoluções detectadas no seu computador\n"
-"em que o cliente pode usar enquanto estiver no modo de tela inteira."
+"Resoluções disponíveis exibem resoluções detectadas\n"
+"no seu computador em que o cliente pode usar enquanto\n"
+"estiver no modo de tela cheia."
 
 #: ../ui/options.h:83
 msgid "General"
@@ -249,8 +250,8 @@ msgid ""
 "If you don't have\n"
 "an account yet:"
 msgstr ""
-"Se você ainda não possui\n"
-"uma conta:"
+"Se você ainda não\n"
+"possui uma conta:"
 
 #: ../ui/mainmenu.cpp:78
 msgid "Info"
@@ -278,7 +279,7 @@ msgstr "Nível Mágico"
 
 #: ../ui/skills.h:134
 msgid "Mana"
-msgstr "Mana"
+msgstr "Magia"
 
 #: ../ui/optionsui.cpp:212
 #: ../gm_mainmenu.cpp:527
@@ -336,6 +337,14 @@ msgid ""
 "  and is currently not recommended since it will be much slower\n"
 "  on most laptops and perhaps on many desktops.\n"
 msgstr ""
+"OpenGL é uma biblioteca gráfica de aceleração 3D via\n"
+" hardware. Para fazer uso dela, tenha certeza que você\n"
+" possui os drivers mais recentes para sua placa gráfica.\n"
+" Os drivers providos pela Microsoft serão insuficientes.\n"
+" Devido ao propósito centralizado do SDL, não foi dada\n"
+" muita atenção ao OpenGL e não é atualmente recomendada\n"
+" desde que será mais lento na maioria dos laptops e talvez\n"
+" em vários desktops."
 
 #: ../ui/mainmenu.cpp:66
 #: ../ui/options.h:76
@@ -354,10 +363,11 @@ msgid ""
 "To activate particular addon, premium players can\n"
 "solve various quests."
 msgstr ""
-"Escolha um traje e as cores para as partes do avatar do seu personagem.\n"
+"Escolha um traje e as cores para as partes do\n"
+"traje do seu personagem.\n"
 "Acessórios são ativados selecionando a caixa apropriada.\n"
-"Para ativar um acessório específico, jogadores premium podem\n"
-"resolver várias missões."
+"Para ativar um acessório específico, jogadores premium\n"
+"podem resolver várias missões."
 
 #: ../ui/charlist.h:152
 msgid "Premium Account"
@@ -365,7 +375,7 @@ msgstr "Conta Premium"
 
 #: ../ui/uishop.cpp:112
 msgid "Price:"
-msgstr "Preço"
+msgstr "Preço:"
 
 #: ../ui/uioutfit.cpp:61
 msgid "Primary"
@@ -392,13 +402,13 @@ msgid ""
 "\n"
 "To apply graphical engine change, you need to restart\n"
 msgstr ""
-"RECOMENDADO: Escolha SDL. Mas, tente o que funcionar melhor para você.\n"
+"RECOMENDADO: Escolha SDL. Porém, teste qual funciona melhor para você.\n"
 "\n"
-"Para aplicar a modificação da funcionalidade gráfica, você precisa reiniciar\n"
+"Para aplicar a modificação do motor gráfico, você precisa reiniciar\n"
 
 #: ../ui/optionsui.cpp:319
 msgid "Restart is required to apply engine change."
-msgstr "Reinicialização é necessária para aplicar a mudança de funcionalidade."
+msgstr "Reinicialização é necessária para aplicar a mudança no motor gráfico."
 
 #: ../ui/optionsui.cpp:108
 msgid ""
@@ -407,11 +417,11 @@ msgid ""
 "  at reasonable speed and even faster than OpenGL engine, with\n"
 "  fewer glitches. That can, of course, change anytime.\n"
 msgstr ""
-"SDL 1.2 é uma biblioteca de renderização de software 2D. Ela\n"
-"pode ser mais lenta, mas já que é o motor gráfico com melhor suporte,\n"
-"ela roda em uma velocidade razoável e até mais rápida que o motor\n"
-"gráfico OpenGL, com menos falhas. Isso pode, é claro, ser\n"
-"modificado a qualquer momento.\n"
+"SDL 1.2 é uma biblioteca de renderização de software 2D.\n"
+" Ela pode ser mais lenta, mas já que é o motor gráfico com\n"
+" melhor suporte, ela roda em uma velocidade razoável e até\n"
+" mais rápida que o motor gráfico OpenGL, com menos falhas.\n"
+" Isso pode, é claro, ser modificado a qualquer momento.\n"
 
 #: ../ui/uioutfit.cpp:68
 msgid "Secondary"
@@ -444,14 +454,15 @@ msgid ""
 "servers, or a proprietary server. To access OpenTibia\n"
 "servers, turn on the OT Encryption Key option."
 msgstr ""
-"Nome do servidor é o endereço de IP ou nome do host do\n"
-"servidor de login.\n"
+"Nome do servidor é o endereço de IP ou nome do\n"
+"host do servidor de login.\n"
 "\n"
 "\"Porta\" é a porta TCP do servidor de login.\n"
 "\n"
-"Você pode também escolher se você gostaria de acessar servidores\n"
-"OpenTibia, ou um servidor proprietário. Para acessar\n"
-"servidores OpenTibia, ative a opção \"Chave de Encriptação do OT\"."
+"Você pode também escolher se você gostaria de acessar\n"
+"servidores OpenTibia, ou um servidor proprietário. Para\n"
+"acessar servidores OpenTibia, ative a opção \"Chave de\n"
+"Encriptação do OT\"."
 
 #: ../ui/optionsnetwork.h:86
 msgid "Server port:"
@@ -515,7 +526,7 @@ msgstr "Exibir Efeitos Textuais"
 
 #: ../ui/optionsconsole.h:97
 msgid "Show Timestamps in Console"
-msgstr "Exibir Timestamps no Console"
+msgstr "Exibir data e hora no Console"
 
 #: ../ui/options.h:171
 msgid ""
@@ -539,7 +550,7 @@ msgstr "Pontos de Alma"
 
 #: ../ui/skills.h:179
 msgid "Stamina"
-msgstr "Resistência"
+msgstr "Vigor"
 
 #: ../ui/skills.h:261
 msgid "Sword Fighting"
@@ -563,7 +574,7 @@ msgstr "Desconhecido"
 
 #: ../ui/optionsui.cpp:107
 msgid "We offer two graphical engines:\n"
-msgstr "Nós oferecemos duas funcionalidades gráficas:\n"
+msgstr "Nós oferecemos dois motores gráficos:\n"
 
 #: ../ui/charlist.h:152
 msgid "days left"
