@@ -526,7 +526,7 @@ msgstr "Exibir Efeitos Textuais"
 
 #: ../ui/optionsconsole.h:97
 msgid "Show Timestamps in Console"
-msgstr "Exibir data e hora no Console"
+msgstr "Exibir Data e Hora no Terminal"
 
 #: ../ui/options.h:171
 msgid ""
