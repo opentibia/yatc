@@ -344,7 +344,7 @@ msgstr ""
 " Devido ao propósito centralizado do SDL, não foi dada\n"
 " muita atenção ao OpenGL e não é atualmente recomendada\n"
 " desde que será mais lento na maioria dos laptops e talvez\n"
-" em vários desktops."
+" em vários desktops.\n"
 
 #: ../ui/mainmenu.cpp:66
 #: ../ui/options.h:76
