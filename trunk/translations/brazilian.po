@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.2SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 21:30+0200\n"
+"POT-Creation-Date: 2008-10-24 00:02+0200\n"
 "PO-Revision-Date: \n"
-"Last-Translator: jakexblaster (marcos cunha) <kinhocunha@gmail.com>\n"
+"Last-Translator: Heliton <helitonnordt@gmail.com>\n"
 "Language-Team: Heliton, jakexblaster <helitonnordt@gmail.com, kinhocunha@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,10 +13,28 @@ msgstr ""
 "X-Poedit-Country: BRAZIL\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
+#: ../gm_mainmenu.cpp:330
+msgid ""
+" comes with ABSOLUTELY NO WARRANTY; \n"
+"for details see sections 11 and 12 in COPYING.\n"
+"This is free software, and you are welcome \n"
+"to redistribute it under certain conditions;\n"
+"see COPYING for details."
+msgstr ""
+" vem com ABSOLUTAMENTE NENHUMA GARANTIA;\n"
+"para detalhes consulte as seções 11 e 12 em COPYING.\n"
+"Este é um software livre, e você é bem-vindo \n"
+"para redistribuir em certas condições;\n"
+"consulte o COPYING para detalhes."
+
 #: ../ui/uishop.cpp:231
 #: ../ui/uishop.cpp:267
 msgid " gold"
 msgstr " ouro"
+
+#: ../gm_mainmenu.cpp:319
+msgid "(in no particular order)"
+msgstr "(sem ordem específica)"
 
 #: ../ui/charlist.h:84
 msgid "Account Status:"
@@ -78,6 +96,12 @@ msgstr "Comprar"
 msgid "Cancel"
 msgstr "Cancelar"
 
+# Talvez "não foi possível conectar com um servidor de login"?
+#: ../gm_mainmenu.cpp:501
+#, fuzzy
+msgid "Cannot connect to a login server."
+msgstr "Não foi possível conectar a um servidor de login."
+
 #: ../ui/skills.h:164
 msgid "Cap"
 msgstr "Cap"
@@ -119,9 +143,17 @@ msgstr "Terminal"
 msgid "Console Options"
 msgstr "Opções do Terminal"
 
+#: ../gm_mainmenu.cpp:326
+msgid "Contributors"
+msgstr "Contribuidores"
+
 #: ../ui/login.h:99
 msgid "Create Account"
 msgstr "Criar Conta"
+
+#: ../gm_mainmenu.cpp:307
+msgid "Current engine"
+msgstr "Motor gráfico atual"
 
 #: ../ui/options.h:134
 msgid "Customise the console"
@@ -152,8 +184,9 @@ msgstr "Entrar no Jogo"
 msgid "Entering game"
 msgstr "Entrando no jogo"
 
-#: ../gm_mainmenu.cpp:506
-#: ../gm_mainmenu.cpp:539
+#: ../gm_mainmenu.cpp:503
+#: ../gm_mainmenu.cpp:510
+#: ../gm_mainmenu.cpp:543
 msgid "Error"
 msgstr "Erro"
 
@@ -172,6 +205,14 @@ msgstr "Perícia com Pesca"
 #: ../ui/skills.h:259
 msgid "Fist Fighting"
 msgstr "Perícia com Punho"
+
+#: ../gm_mainmenu.cpp:505
+msgid ""
+"For more information take a look at the threads in the\n"
+"forums at otfans.net."
+msgstr ""
+"Para mais informações consulte os tópicos nos\n"
+"fórums do otfans.net."
 
 #: ../ui/charlist.h:147
 msgid "Free Account"
@@ -254,10 +295,11 @@ msgstr ""
 "possui uma conta:"
 
 #: ../ui/mainmenu.cpp:78
+#: ../gm_mainmenu.cpp:336
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:541
+#: ../gm_mainmenu.cpp:545
 msgid "Information"
 msgstr "Informação"
 
@@ -273,6 +315,10 @@ msgstr "Nível"
 msgid "Logging in"
 msgstr "Entrando"
 
+#: ../ui/uiinventory.cpp:170
+msgid "Look at"
+msgstr "Olhar"
+
 #: ../ui/skills.h:202
 msgid "Magic Level"
 msgstr "Nível Mágico"
@@ -282,7 +328,7 @@ msgid "Mana"
 msgstr "Magia"
 
 #: ../ui/optionsui.cpp:212
-#: ../gm_mainmenu.cpp:527
+#: ../gm_mainmenu.cpp:531
 msgid "Message of the Day"
 msgstr "Mensagem do Dia"
 
@@ -381,6 +427,10 @@ msgstr "Preço:"
 msgid "Primary"
 msgstr "Primário"
 
+#: ../gm_mainmenu.cpp:319
+msgid "Programmed by"
+msgstr "Programado por"
+
 #: ../ui/optionsnetwork.h:109
 #: ../ui/optionsnetwork.h:111
 #: ../ui/optionsnetwork.h:113
@@ -468,6 +518,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Porta do servidor:"
 
+#: ../mapui.cpp:527
 #: ../ui/uioutfit.cpp:37
 msgid "Set Outfit"
 msgstr "Colocar Traje"
@@ -568,15 +619,47 @@ msgstr ""
 "silenciosas e redução da temperatura da CPU) use a barra de\n"
 "rolagem abaixo. Note que a limitação do FPS é apenas uma aproximação."
 
+#: ../ui/uiinventory.cpp:172
+msgid "Trade with"
+msgstr "Negociar com"
+
 #: ../ui/charlist.h:91
 msgid "Unknown"
 msgstr "Desconhecido"
+
+#: ../ui/uiinventory.cpp:171
+msgid "Use"
+msgstr "Usar"
+
+#: ../gm_mainmenu.cpp:309
+msgid "Uses GLICT"
+msgstr "Usa GLICT"
+
+#: ../gm_mainmenu.cpp:311
+msgid "Uses OpenGL"
+msgstr "Usa OpenGL"
+
+#: ../gm_mainmenu.cpp:308
+msgid "Uses SDL"
+msgstr "Usa SDL"
 
 #: ../ui/optionsui.cpp:107
 msgid "We offer two graphical engines:\n"
 msgstr "Nós oferecemos dois motores gráficos:\n"
 
+#: ../gm_mainmenu.cpp:315
+msgid "[for info run with GL engine]\n"
+msgstr "[para informações execute com o motor gráfico GL]\n"
+
+#: ../gm_mainmenu.cpp:308
+msgid "compiled with"
+msgstr "compilado com"
+
 #: ../ui/charlist.h:152
 msgid "days left"
 msgstr "dias restantes"
+
+#: ../gm_mainmenu.cpp:322
+msgid "with inactive developers"
+msgstr "com desenvolvedores inativos"
 
