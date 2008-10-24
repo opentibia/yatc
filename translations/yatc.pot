@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 21:30+0200\n"
+"POT-Creation-Date: 2008-10-24 00:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,8 +16,21 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../gm_mainmenu.cpp:330
+msgid ""
+" comes with ABSOLUTELY NO WARRANTY; \n"
+"for details see sections 11 and 12 in COPYING.\n"
+"This is free software, and you are welcome \n"
+"to redistribute it under certain conditions;\n"
+"see COPYING for details."
+msgstr ""
+
 #: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
 msgid " gold"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:319
+msgid "(in no particular order)"
 msgstr ""
 
 #: ../ui/charlist.h:84
@@ -74,6 +87,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: ../gm_mainmenu.cpp:501
+msgid "Cannot connect to a login server."
+msgstr ""
+
 #: ../ui/skills.h:164
 msgid "Cap"
 msgstr ""
@@ -110,8 +127,16 @@ msgstr ""
 msgid "Console Options"
 msgstr ""
 
+#: ../gm_mainmenu.cpp:326
+msgid "Contributors"
+msgstr ""
+
 #: ../ui/login.h:99
 msgid "Create Account"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:307
+msgid "Current engine"
 msgstr ""
 
 #: ../ui/options.h:134
@@ -142,7 +167,7 @@ msgstr ""
 msgid "Entering game"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:506 ../gm_mainmenu.cpp:539
+#: ../gm_mainmenu.cpp:503 ../gm_mainmenu.cpp:510 ../gm_mainmenu.cpp:543
 msgid "Error"
 msgstr ""
 
@@ -160,6 +185,12 @@ msgstr ""
 
 #: ../ui/skills.h:259
 msgid "Fist Fighting"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:505
+msgid ""
+"For more information take a look at the threads in the\n"
+"forums at otfans.net."
 msgstr ""
 
 #: ../ui/charlist.h:147
@@ -231,11 +262,11 @@ msgid ""
 "an account yet:"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:78
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:336
 msgid "Info"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:541
+#: ../gm_mainmenu.cpp:545
 msgid "Information"
 msgstr ""
 
@@ -251,6 +282,10 @@ msgstr ""
 msgid "Logging in"
 msgstr ""
 
+#: ../ui/uiinventory.cpp:170
+msgid "Look at"
+msgstr ""
+
 #: ../ui/skills.h:202
 msgid "Magic Level"
 msgstr ""
@@ -259,7 +294,7 @@ msgstr ""
 msgid "Mana"
 msgstr ""
 
-#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:527
+#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:531
 msgid "Message of the Day"
 msgstr ""
 
@@ -337,6 +372,10 @@ msgstr ""
 msgid "Primary"
 msgstr ""
 
+#: ../gm_mainmenu.cpp:319
+msgid "Programmed by"
+msgstr ""
+
 #: ../ui/optionsnetwork.h:109 ../ui/optionsnetwork.h:111
 #: ../ui/optionsnetwork.h:113 ../ui/optionsnetwork.h:115
 #: ../ui/optionsnetwork.h:117 ../ui/optionsnetwork.h:119
@@ -403,7 +442,7 @@ msgstr ""
 msgid "Server port:"
 msgstr ""
 
-#: ../ui/uioutfit.cpp:37
+#: ../mapui.cpp:527 ../ui/uioutfit.cpp:37
 msgid "Set Outfit"
 msgstr ""
 
@@ -493,14 +532,46 @@ msgid ""
 "limiting is only approximate."
 msgstr ""
 
+#: ../ui/uiinventory.cpp:172
+msgid "Trade with"
+msgstr ""
+
 #: ../ui/charlist.h:91
 msgid "Unknown"
+msgstr ""
+
+#: ../ui/uiinventory.cpp:171
+msgid "Use"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:309
+msgid "Uses GLICT"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:311
+msgid "Uses OpenGL"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:308
+msgid "Uses SDL"
 msgstr ""
 
 #: ../ui/optionsui.cpp:107
 msgid "We offer two graphical engines:\n"
 msgstr ""
 
+#: ../gm_mainmenu.cpp:315
+msgid "[for info run with GL engine]\n"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:308
+msgid "compiled with"
+msgstr ""
+
 #: ../ui/charlist.h:152
 msgid "days left"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:322
+msgid "with inactive developers"
 msgstr ""

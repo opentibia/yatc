@@ -248,7 +248,7 @@ void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller)
 		focusOnDismiss->SetVisible(true);
 		focusOnDismiss->Focus(NULL);
 	}
-	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Repaint.\n");
+
 	m->renderScene();
 	//delete caller;
 }
@@ -304,36 +304,36 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< "\n"
 		<< c <<" 2007-2008 OpenTibia Team\n"
 		<< "\n"
-		<< "Current engine: " << g_engine->getName() << "\n"
-		<< "Uses SDL: " << int(SDL_Linked_Version()->major) << "." << int(SDL_Linked_Version()->minor) << "." << int(SDL_Linked_Version()->patch) << " (compiled with: " << int(sdl_compilever.major) <<"."<< int(sdl_compilever.minor) <<"."<< int(sdl_compilever.patch) << ")\n"
-		<< "Uses GLICT API rev: " << int(GLICT_APIREV) << "\n"
+		<< gettext("Current engine") << ": " << g_engine->getName() << "\n"
+		<< gettext("Uses SDL") << ": " << int(SDL_Linked_Version()->major) << "." << int(SDL_Linked_Version()->minor) << "." << int(SDL_Linked_Version()->patch) << " (" << gettext("compiled with") << ": " << int(sdl_compilever.major) <<"."<< int(sdl_compilever.minor) <<"."<< int(sdl_compilever.patch) << ")\n"
+		<< gettext("Uses GLICT") << " API rev: " << int(GLICT_APIREV) << "\n"
 		#ifdef USE_OPENGL
-		<< "Uses OpenGL: ";
+		<< gettext("Uses OpenGL") << ": ";
 		if (g_engine->hasGL())
             txt << glGetString(GL_VENDOR)  << " " << glGetString(GL_VERSION) << "\n";
 		else
-            txt << "[for info run with GL engine]\n";
+            txt << gettext("[for info run with GL engine]\n");
         txt
 		#endif
 		<< "\n"
-		<< "Programmed by (in no particular order):\n"
+		<< gettext("Programmed by") << " " << gettext("(in no particular order)") << ":\n"
 		<< b << " Ivan Vucica - Khaos\n"
 		<< b << " Nate Fries - nfries88\n"
-		<< "with inactive developers:\n"
+		<< gettext("with inactive developers") << ":\n"
 		<< b << " mips\n"
 		<< b << " Magnus KL - Smygflik\n"
 		<< "\n"
-		<< "Contributors:\n"
+		<< gettext("Contributors") << ":\n"
 		<< b << " mrauter\n"
 		<< b << " Mariusz Gliwinski - shd\n"
 		<< "\n"
-		<< PRODUCTSHORT << " comes with ABSOLUTELY NO WARRANTY; \n"
-		<< "for details see sections 11 and 12 in COPYING.\n"
-		<< "This is free software, and you are welcome \n"
-		<< "to redistribute it under certain conditions;\n"
-		<< "see COPYING for details.";
+		<< PRODUCTSHORT << gettext(" comes with ABSOLUTELY NO WARRANTY; \n"
+		   "for details see sections 11 and 12 in COPYING.\n"
+		   "This is free software, and you are welcome \n"
+		   "to redistribute it under certain conditions;\n"
+		   "see COPYING for details.");
 
-	m->msgBox(txt.str().c_str(), "About " PRODUCTSHORT, &m->pnlMainMenu.btnAbout);
+	m->msgBox(txt.str().c_str(), gettext("Info"), &m->pnlMainMenu.btnAbout);
 
 }
 
@@ -498,10 +498,14 @@ void GM_MainMenu::winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer
 void GM_MainMenu::onConnectionError(int message, const char* errortext)
 {
 	std::stringstream s;
-	s << //"There was an error while connecting." << std::endl <<
-		 //std::endl <<
-	     //"The following may help you identify error:" << std::endl <<
-	     errortext;
+	s << gettext("Cannot connect to a login server.") << std::endl << // FIXME (ivucica#5#): should print different message for gameworld serv;
+		std::endl <<
+		gettext("Error") << ": " << errortext << std::endl <<
+	     	std::endl <<
+		gettext("For more information take a look at the "
+		// FAQs in the\n Support section at yetanother.tibiaclient.com.
+		"threads in the\n"
+		"forums at otfans.net.");
 
 	winStatus.SetCaption(gettext("Error"));
 	winStatus.SetMessage(s.str());

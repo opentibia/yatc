@@ -29,6 +29,9 @@
 #include "mapui.h"
 #include "debugprint.h"
 #include "engine.h"
+#ifndef __APPLE__
+#include <libintl.h>
+#endif
 
 extern uint32_t g_frameTime;
 extern Engine* g_engine;
@@ -520,5 +523,7 @@ void MapUI::makePopup(Popup*popup,void*owner,void*arg) {
     MapUI *m = (MapUI*)(owner);
     glictPos *pos = (glictPos*)(arg);
 
-    popup->addItem("Set Outfit...", GM_Gameworld::onSetOutfit);
+    std::stringstream s;
+    s << gettext("Set Outfit") << "...";
+    popup->addItem(s.str(), GM_Gameworld::onSetOutfit);
 }

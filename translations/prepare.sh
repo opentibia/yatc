@@ -15,6 +15,7 @@ xgettext -d yatc -s -o yatc.pot \
 	../ui/optionsui.cpp \
 	../gm_mainmenu.cpp \
 	../gm_gameworld.cpp \
+	../mapui.cpp \
 	../ui/optionshotkeys.h \
 	../ui/optionsconsole.h \
 	../ui/login.h \
@@ -22,6 +23,7 @@ xgettext -d yatc -s -o yatc.pot \
 	../ui/uioutfit.cpp \
 	../ui/charlist.h \
 	../ui/uiinventory.h \
+	../ui/uiinventory.cpp \
 	../ui/skills.h \
 	../ui/itemmove.h \
 	../ui/health.h

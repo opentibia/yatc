@@ -8,17 +8,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.2SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 21:30+0200\n"
-"PO-Revision-Date: 2008-10-11 21:30+0200\n"
+"POT-Creation-Date: 2008-10-23 23:59+0200\n"
+"PO-Revision-Date: 2008-10-24 00:00+0200\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=cp1250\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit"
+
+#: ../gm_mainmenu.cpp:330
+msgid ""
+" comes with ABSOLUTELY NO WARRANTY; \n"
+"for details see sections 11 and 12 in COPYING.\n"
+"This is free software, and you are welcome \n"
+"to redistribute it under certain conditions;\n"
+"see COPYING for details."
+msgstr ""
+" dolazi bez IKAKVOG JAMSTVA; \n"
+"za detalje pogledajte dijelove 11 i 12 u COPYING.\n"
+"Ovo je slobodan softver, i slobodno ga\n"
+"kopirajte pod određenim uvjetima; pogledajte\n"
+"COPYING za detalje."
 
 #: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
 msgid " gold"
 msgstr " u zlatu"
+
+#: ../gm_mainmenu.cpp:319
+msgid "(in no particular order)"
+msgstr "(bez posebnog redoslijeda)"
 
 #: ../ui/charlist.h:84
 msgid "Account Status:"
@@ -46,11 +64,11 @@ msgstr "Napredne postavke"
 
 #: ../ui/uishop.cpp:100
 msgid "Amount:"
-msgstr "Kolicina:"
+msgstr "Količina:"
 
 #: ../ui/optionsgeneral.h:78
 msgid "Auto Chase Off"
-msgstr "Iskljuci auto-proganjanje"
+msgstr "Isključi auto-proganjanje"
 
 #: ../ui/optionsnetwork.h:125
 msgid "Autodetect"
@@ -74,6 +92,10 @@ msgstr "Kupi"
 msgid "Cancel"
 msgstr "Ponisti"
 
+#: ../gm_mainmenu.cpp:501
+msgid "Cannot connect to a login server."
+msgstr "Ne mogu se spojiti na server za prijavu."
+
 #: ../ui/skills.h:164
 msgid "Cap"
 msgstr "Kap"
@@ -83,7 +105,7 @@ msgid ""
 "Change general\n"
 "game options"
 msgstr ""
-"Uredi opce\n"
+"Uredi opće\n"
 "opcije igre"
 
 #: ../ui/options.h:126
@@ -96,7 +118,7 @@ msgstr ""
 
 #: ../ui/optionsgeneral.h:71
 msgid "Classic Control"
-msgstr "Klasicno upravljanje"
+msgstr "Klasično upravljanje"
 
 #: ../ui/skills.h:260
 msgid "Club Fighting"
@@ -114,9 +136,17 @@ msgstr "Konzola"
 msgid "Console Options"
 msgstr "Opcije konzole"
 
+#: ../gm_mainmenu.cpp:326
+msgid "Contributors"
+msgstr "Pridonositelji"
+
 #: ../ui/login.h:99
 msgid "Create Account"
-msgstr "Stvori racun"
+msgstr "Stvori račun"
+
+#: ../gm_mainmenu.cpp:307
+msgid "Current engine"
+msgstr "Trenutni engine"
 
 #: ../ui/options.h:134
 msgid "Customise the console"
@@ -146,9 +176,9 @@ msgstr "Ulaz u igru"
 msgid "Entering game"
 msgstr "Ulazim u igru"
 
-#: ../gm_mainmenu.cpp:506 ../gm_mainmenu.cpp:539
+#: ../gm_mainmenu.cpp:503 ../gm_mainmenu.cpp:510 ../gm_mainmenu.cpp:543
 msgid "Error"
-msgstr "Greska"
+msgstr "Greška"
 
 #: ../ui/mainmenu.cpp:89
 msgid "Exit Game"
@@ -164,11 +194,19 @@ msgstr "Ribarstvo"
 
 #: ../ui/skills.h:259
 msgid "Fist Fighting"
-msgstr "Borba sakama"
+msgstr "Borba šakama"
+
+#: ../gm_mainmenu.cpp:505
+msgid ""
+"For more information take a look at the threads in the\n"
+"forums at otfans.net."
+msgstr ""
+"Za više informacija, pogledajte teme u forumima na\n"
+"otfans.net"
 
 #: ../ui/charlist.h:147
 msgid "Free Account"
-msgstr "Besplatni racun"
+msgstr "Besplatni račun"
 
 #: ../ui/optionsgraphics.h:80
 msgid "Fullscreen"
@@ -182,20 +220,20 @@ msgid ""
 "Available resolutions shows detected resolutions on\n"
 "your computer that the client can use while in fullscreen."
 msgstr ""
-"Puni ekran odlucuje da li ce ili nece klijent\n"
+"Puni ekran odlučuje da li će ili neće klijent\n"
 "zauzimati cijeli ekran.\n"
 "\n"
 "Dostupne rezolucije pokazuje otkrivene rezolucije\n"
-"na vasem racunalu koje klijent moze koristiti dok\n"
+"na vašem računalu koje klijent može koristiti dok\n"
 "je u punom ekranu."
 
 #: ../ui/options.h:83
 msgid "General"
-msgstr "Opce"
+msgstr "Opće"
 
 #: ../ui/optionsgeneral.h:64
 msgid "General Options"
-msgstr "Opce opcije"
+msgstr "Opće opcije"
 
 #: ../ui/options.h:90
 msgid "Graphics"
@@ -203,11 +241,11 @@ msgstr "Grafika"
 
 #: ../ui/optionsgraphics.h:73
 msgid "Graphics Options"
-msgstr "Graficke opcije"
+msgstr "Grafičke opcije"
 
 #: ../ui/charlist.h:149
 msgid "Gratis Premium Account"
-msgstr "Gratis Premium Racun"
+msgstr "Gratis Premium Račun"
 
 #: ../ui/uioutfit.cpp:54
 msgid "Head"
@@ -221,11 +259,11 @@ msgstr "Zdravlje"
 #: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:160 ../gm_mainmenu.cpp:347
 #: ../ui/optionsconsole.h:121
 msgid "Help"
-msgstr "Pomoc"
+msgstr "Pomoć"
 
 #: ../ui/optionsui.cpp:82
 msgid "Help not done."
-msgstr "Pomoc nije napravljena."
+msgstr "Pomoć nije napravljena."
 
 #: ../ui/skills.h:119
 msgid "Hit Points"
@@ -241,13 +279,13 @@ msgid ""
 "an account yet:"
 msgstr ""
 "Ako jos nemate\n"
-"svoj racun:"
+"svoj račun:"
 
-#: ../ui/mainmenu.cpp:78
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:336
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:541
+#: ../gm_mainmenu.cpp:545
 msgid "Information"
 msgstr "Obavijest"
 
@@ -263,6 +301,10 @@ msgstr "Razina"
 msgid "Logging in"
 msgstr "Prijavljujem"
 
+#: ../ui/uiinventory.cpp:170
+msgid "Look at"
+msgstr "Pogledaj"
+
 #: ../ui/skills.h:202
 msgid "Magic Level"
 msgstr "Razina magije"
@@ -271,7 +313,7 @@ msgstr "Razina magije"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:527
+#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:531
 msgid "Message of the Day"
 msgstr "Poruka dana"
 
@@ -293,11 +335,11 @@ msgstr "Trgovina s NPCem"
 
 #: ../ui/options.h:111
 msgid "Network"
-msgstr "Mreza"
+msgstr "Mreža"
 
 #: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:67
 msgid "Network Options"
-msgstr "Mrezne opcije"
+msgstr "Mrežne opcije"
 
 #: ../ui/optionsnetwork.h:105
 msgid "OT Encryption Key"
@@ -319,12 +361,12 @@ msgid ""
 "  and is currently not recommended since it will be much slower\n"
 "  on most laptops and perhaps on many desktops.\n"
 msgstr ""
-"OpenGL je 3D hardverski ubrzana graficka biblioteka.\n"
+"OpenGL je 3D hardverski ubrzana grafička biblioteka.\n"
 "  Da biste je koristili, osigurajte da imate najnovije drivere\n"
-"  za graficku karticu. Oni koje daje Microsoft su nedovoljni.\n"
-"  Zbog SDL-centricnog dizajna, OpenGLu nismo davali previse\n"
-"  paznje i stoga nije preporucen jer ce biti mnogo sporiji na\n"
-"  vecini laptopa a mozda i mnogim desktopima.\n"
+"  za grafičku karticu. Oni koje daje Microsoft su nedovoljni.\n"
+"  Zbog SDL-centričnog dizajna, OpenGLu nismo davali previše\n"
+"  pažnje i stoga nije preporučen jer će biti mnogo sporiji na\n"
+"  većini laptopa, a možda i mnogim desktopima.\n"
 
 #: ../ui/mainmenu.cpp:66 ../ui/options.h:76
 msgid "Options"
@@ -344,13 +386,13 @@ msgid ""
 msgstr ""
 "Odaberite odijelo i odaberite boje za dijelove\n"
 "avatara vaseg lika.\n"
-"Dodaci se aktiviraju tako da upalite odgovarajucu\n"
-"kucicu. Da aktiviraju pojedini dodatak, premium\n"
-"igraci mogu rjesavati razne potrage."
+"Dodaci se aktiviraju tako da upalite odgovarajuću\n"
+"kućicu. Da aktiviraju pojedini dodatak, premium\n"
+"igrači mogu rješavati razne potrage."
 
 #: ../ui/charlist.h:152
 msgid "Premium Account"
-msgstr "Premium racun"
+msgstr "Premium račun"
 
 #: ../ui/uishop.cpp:112
 msgid "Price:"
@@ -359,6 +401,10 @@ msgstr "Cijena:"
 #: ../ui/uioutfit.cpp:61
 msgid "Primary"
 msgstr "Glavno"
+
+#: ../gm_mainmenu.cpp:319
+msgid "Programmed by"
+msgstr "Programirali"
 
 #: ../ui/optionsnetwork.h:109 ../ui/optionsnetwork.h:111
 #: ../ui/optionsnetwork.h:113 ../ui/optionsnetwork.h:115
@@ -377,9 +423,9 @@ msgid ""
 "\n"
 "To apply graphical engine change, you need to restart\n"
 msgstr ""
-"PREPORUKA: Odaberite SDL. Ali, probajte sto je bolje za vas.\n"
+"PREPORUKA: Odaberite SDL. Ali, probajte što je bolje za vas.\n"
 "\n"
-"Da primijenite promjenu enginea, trebate izaci i ponovno\n"
+"Da primijenite promjenu enginea, trebate izaći i ponovno\n"
 "pokrenuti igru.\n"
 
 #: ../ui/optionsui.cpp:319
@@ -394,9 +440,9 @@ msgid ""
 "  fewer glitches. That can, of course, change anytime.\n"
 msgstr ""
 "SDL 1.2 je 2D biblioteka za softversko crtanje. Trebala bi\n"
-"  biti najsporija, ali buduci da je to najodrzavaniji engine\n"
-"  vrti se na pristojnoj brzini i cak ponekad brze od OpenGL\n"
-"  enginea, s manje gresaka. To se dakako bilo kada moze\n"
+"  biti najsporija, ali budući da je to najodržavaniji engine\n"
+"  vrti se na pristojnoj brzini i čak ponekad brže od OpenGL\n"
+"  enginea, s manje grešaka. To se dakako bilo kada može\n"
 "  promijeniti.\n"
 
 #: ../ui/uioutfit.cpp:68
@@ -435,16 +481,16 @@ msgstr ""
 "\n"
 "Port je TCP port servera za prijavu.\n"
 "\n"
-"Takodjer mozete odabrati da li zelite pristupiti\n"
-"OpenTibia serverima ili vlasnickom serveru. Da\n"
+"Također možete odabrati da li želite pristupiti\n"
+"OpenTibia serverima ili vlasničkom serveru. Da\n"
 "pristupite OpenTibia serverima, upalite opciju\n"
-"OT Enkripcijski kljuc."
+"OT Enkripcijski ključ."
 
 #: ../ui/optionsnetwork.h:86
 msgid "Server port:"
 msgstr "Port servera:"
 
-#: ../ui/uioutfit.cpp:37
+#: ../mapui.cpp:527 ../ui/uioutfit.cpp:37
 msgid "Set Outfit"
 msgstr "Postavi odijelo"
 
@@ -453,7 +499,7 @@ msgid ""
 "Set network options,\n"
 "such as server."
 msgstr ""
-"Postavi mrezne opcije\n"
+"Postavi mrežne opcije\n"
 "poput servera."
 
 #: ../ui/itemmove.h:74
@@ -462,7 +508,7 @@ msgid ""
 "items you want to move:"
 msgstr ""
 "Odaberite broj\n"
-"stvari koje zelite seliti"
+"stvari koje želite seliti"
 
 #: ../ui/skills.h:264
 msgid "Shielding"
@@ -470,67 +516,67 @@ msgstr "Obrana"
 
 #: ../ui/optionsconsole.h:85
 msgid "Show Event Messages in Console"
-msgstr "Prikazi dogadjaje u konzoli"
+msgstr "Prikaži događaje u konzoli"
 
 #: ../ui/optionsgeneral.h:84
 msgid "Show Hints"
-msgstr "Prikazi savjete"
+msgstr "Prikaži savjete"
 
 #: ../ui/optionsconsole.h:79
 msgid "Show Info Messages in Console"
-msgstr "Prikazi info poruke u konzoli"
+msgstr "Prikaži info poruke u konzoli"
 
 #: ../ui/optionsconsole.h:103
 msgid "Show Levels in Console"
-msgstr "Prikazi levele u konzoli"
+msgstr "Prikaži levele u konzoli"
 
 #: ../ui/optionsgeneral.h:90
 msgid "Show Names of Creatures"
-msgstr "Prikazi nazive stvorova"
+msgstr "Prikaži nazive stvorova"
 
 #: ../ui/optionsconsole.h:109
 msgid "Show Private Messages in Game Window"
-msgstr "Prikazi privatne poruke u prozoru igre"
+msgstr "Prikaži privatne poruke u prozoru igre"
 
 #: ../ui/optionsconsole.h:91
 msgid "Show Status Messages in Console"
-msgstr "Prikazi statusne poruke u konzoli"
+msgstr "Prikaži statusne poruke u konzoli"
 
 #: ../ui/optionsgeneral.h:96
 msgid "Show Textual Effects"
-msgstr "Prikazi tekstualne efekte"
+msgstr "Prikaži tekstualne efekte"
 
 #: ../ui/optionsconsole.h:97
 msgid "Show Timestamps in Console"
-msgstr "Prikazi vrijeme u konzoli"
+msgstr "Prikaži vrijeme u konzoli"
 
 #: ../ui/options.h:171
 msgid ""
 "Show the most recent\n"
 "Message of the Day"
 msgstr ""
-"Prikazi najnoviju\n"
+"Prikaži najnoviju\n"
 "poruku dana"
 
 #: ../ui/skills.h:243
 msgid "Skill "
-msgstr "Vjestina"
+msgstr "Vještina "
 
 #: ../ui/skills.h:64
 msgid "Skills"
-msgstr "Vjestine"
+msgstr "Vještine"
 
 #: ../ui/skills.h:149
 msgid "Soul Points"
-msgstr "Bodovi duse"
+msgstr "Bodovi duše"
 
 #: ../ui/skills.h:179
 msgid "Stamina"
-msgstr "Izdrzljivost"
+msgstr "Izdržljivost"
 
 #: ../ui/skills.h:261
 msgid "Sword Fighting"
-msgstr "Borba macevima"
+msgstr "Borba mačevima"
 
 #: ../ui/optionsui.cpp:123
 msgid ""
@@ -540,19 +586,51 @@ msgid ""
 "limiting is only approximate."
 msgstr ""
 "Da biste odabrali maksimalni FPS (za smanjenu uporabu CPUa i\n"
-"graficke kartice, cime se smanjuje potrosnja struje, stisava\n"
-"rad i smanjuje temperatura CPUa) koristite traku za povlacenje\n"
-"koja je ovdje dolje. No, FPS ogranicenje je samo otprilike."
+"grafičke kartice, čime se smanjuje potrošnja struje, stišava\n"
+"rad i smanjuje temperatura CPUa) koristite traku za povlačenje\n"
+"koja je ovdje dolje. No, FPS ograničenje je samo otprilike."
+
+#: ../ui/uiinventory.cpp:172
+msgid "Trade with"
+msgstr "Trguj sa"
 
 #: ../ui/charlist.h:91
 msgid "Unknown"
 msgstr "Nepoznato"
 
+#: ../ui/uiinventory.cpp:171
+msgid "Use"
+msgstr "Koristi"
+
+#: ../gm_mainmenu.cpp:309
+msgid "Uses GLICT"
+msgstr "Koristi GLICT"
+
+#: ../gm_mainmenu.cpp:311
+msgid "Uses OpenGL"
+msgstr "Koristi OpenGL"
+
+#: ../gm_mainmenu.cpp:308
+msgid "Uses SDL"
+msgstr "Koristi SDL"
+
 #: ../ui/optionsui.cpp:107
 msgid "We offer two graphical engines:\n"
-msgstr "Nudimo dva graficka enginea:\n"
+msgstr "Nudimo dva grafička enginea:\n"
+
+#: ../gm_mainmenu.cpp:315
+msgid "[for info run with GL engine]\n"
+msgstr "[za podatke pokrenite s GL engineom]\n"
+
+#: ../gm_mainmenu.cpp:308
+msgid "compiled with"
+msgstr "prevedeno s"
 
 #: ../ui/charlist.h:152
 msgid "days left"
 msgstr "dana preostalo"
+
+#: ../gm_mainmenu.cpp:322
+msgid "with inactive developers"
+msgstr "uz neaktivne razvijatelje"
 

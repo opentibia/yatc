@@ -95,7 +95,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'V'] = 6;
 			charw[(unsigned char)'X'] = 6;
 			charw[(unsigned char)'Y'] = 6;
-            charw[(unsigned char)'Z'] = 6;
+			charw[(unsigned char)'Z'] = 6;
 
 			charw[(unsigned char)'a'] = 6;
 			charw[(unsigned char)'b'] = 6;
@@ -125,6 +125,13 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 
 			charw[(unsigned char)169] = 8; charh[(unsigned char)169] = 10;  // copyright symbol
+
+/*                        for(int i = 0; i < 255; i++){
+				if(i >= 32 && i < 255){
+					charw[i]+=1;
+				}
+			}*/
+
 
 			if (index == 4) { // outlined font
 				for(int i = 0;i < 255; i++){
@@ -174,7 +181,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 			charw[(unsigned char)'a'] = 5; charh[(unsigned char)'a'] = 6;
 			charw[(unsigned char)'c'] = 4; charh[(unsigned char)'c'] = 6;
-            charw[(unsigned char)'d'] = 5; charh[(unsigned char)'d'] = 6;
+			charw[(unsigned char)'d'] = 5; charh[(unsigned char)'d'] = 6;
 			charw[(unsigned char)'e'] = 5; charh[(unsigned char)'e'] = 7;
 			charw[(unsigned char)'f'] = 3; charh[(unsigned char)'f'] = 6;
 			charw[(unsigned char)'g'] = 4; charh[(unsigned char)'g'] = 8;
@@ -193,6 +200,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 			charw[(unsigned char)'u'] = 5; charh[(unsigned char)'u'] = 6;
 			charw[(unsigned char)'x'] = 5; charh[(unsigned char)'x'] = 6;
 			charw[(unsigned char)'y'] = 5; charh[(unsigned char)'y'] = 8;
+
 
 			break;
 
@@ -238,4 +246,11 @@ void Font::addColor(float r, float g, float b)
 void Font::resetColor()
 {
 	addColor(1,1,1); // setting it to white effectively resets the color
+}
+
+int Font::getSpacing() {
+// spacing between characters
+// only minifont has none
+	if (m_index==5) return 0;
+	return 1;
 }
