@@ -35,6 +35,7 @@ class Font{
 
 		int getWidth(char t) { return charw[(unsigned char)t]; }
 		int getHeight(char t) { return charh[(unsigned char)t]; }
+		int getSpacing();
 		void addColor(float r, float g, float b);
 		void resetColor();
 	private:

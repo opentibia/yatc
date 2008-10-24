@@ -41,7 +41,7 @@ public:
 	winLogin_t() {
 
 		window.SetWidth(231-4);
-		window.SetHeight(173-17);
+		window.SetHeight(173-17 - 2);
 		window.SetCaption(gettext("Enter Game"));
 		window.SetVisible(false);
 		window.SetBGColor(.4, .4, .4, 1.);
@@ -63,9 +63,9 @@ public:
 		pnlUsername.SetBGActiveness(false);
 		pnlUsername.SetFont("aafont");
 
-		txtUsername.SetPos(128,15);
+		txtUsername.SetPos(128,15 - 1);
 		txtUsername.SetWidth(216-134);
-		txtUsername.SetHeight(46-33);
+		txtUsername.SetHeight(46-33 + 2);
 		txtUsername.SetPassProtectCharacter('*');
 		txtUsername.SetAllowedChars("0123456789");
 		txtUsername.SetPrevious(!options.ui_compat ? (glictContainer*)&txtPassword : (glictContainer*)&btnCancel);
@@ -78,9 +78,9 @@ public:
 		pnlPassword.SetBGActiveness(false);
 		pnlPassword.SetFont("aafont");
 
-		txtPassword.SetPos(128,45);
+		txtPassword.SetPos(128,45-1);
 		txtPassword.SetWidth(216-134);
-		txtPassword.SetHeight(46-33);
+		txtPassword.SetHeight(46-33+2);
 		txtPassword.SetPassProtectCharacter('*');
 		txtPassword.SetAllowedChars(" !\"#$%/()=?*'+<>[]{}`~\\|;:_,.-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 		txtPassword.SetPrevious(&txtUsername);
@@ -89,11 +89,11 @@ public:
 		pnlCreateAc.SetWidth(131-17);
 		pnlCreateAc.SetHeight(24);
 		pnlCreateAc.SetCaption(gettext("If you don't have\nan account yet:"));
-		pnlCreateAc.SetPos(13,85);
+		pnlCreateAc.SetPos(13,85-12);
 		pnlCreateAc.SetBGActiveness(false);
 		pnlCreateAc.SetFont("aafont");
 
-		btnCreateAc.SetPos(128,94);
+		btnCreateAc.SetPos(128,94-12);
 		btnCreateAc.SetWidth(216-133);
 		btnCreateAc.SetHeight(112-95);
 		btnCreateAc.SetCaption(gettext("Create Account"));

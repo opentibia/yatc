@@ -61,8 +61,8 @@ void Engine::font_render(const char* txt, const void* font, float fontsize, floa
 		switch(*t) {
 			default:
 				f->Blit(*t,(int)cx,(int)cy);
-				cx += f->getWidth(*t)+1;
-				sizesofar += f->getWidth(*t)+1;
+				cx += f->getWidth(*t) + f->getSpacing();
+				sizesofar += f->getWidth(*t) + f->getSpacing();
 				break;
 			case '\t':
 				cx += (int)sizesofar % 15;// FIXME (ivucica#5#) use fmod
@@ -88,7 +88,7 @@ float Engine::font_size(const char* txt, const void* font, float fontsize)
 	int size = 0, len = strlen(txt);
 	int maxsize = 0;
 	for(int i = 0; i < len; i++) {
-		size += f->getWidth(txt[i])+1;
+		size += f->getWidth(txt[i]) + f->getSpacing();
 		if(txt[i] == '\n' || txt[i] == '\r'){
 			if(size > maxsize){
 				maxsize = size;

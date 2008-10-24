@@ -166,7 +166,11 @@ void pnlInventory_t::inventoryItemMakePopup(Popup*popup,void*owner,void*arg){
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     slots_t slotid = ((slots_t)((int)arg));
 
-    popup->addItem("Look at (Shift)",NULL);
-    popup->addItem("Use (Ctrl)",NULL);
-    popup->addItem("Trade with ...",NULL);
+    std::stringstream look,use,trade;
+    look << gettext("Look at") << " (Shift)";
+    use << gettext("Use") << " (Ctrl)";
+    trade << gettext("Trade with") << " ...";
+    popup->addItem(look.str(),NULL);
+    popup->addItem(use.str(),NULL);
+    popup->addItem(trade.str(),NULL);
 }
