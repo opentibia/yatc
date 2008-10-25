@@ -6,15 +6,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: YATC 0.2.2SVN\n"
+"Project-Id-Version: YATC 0.2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-23 23:59+0200\n"
+"POT-Creation-Date: 2008-10-25 21:18+0200\n"
 "PO-Revision-Date: 2008-10-24 00:00+0200\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../gm_mainmenu.cpp:330
 msgid ""
@@ -50,7 +50,7 @@ msgstr "Ime racuna:"
 msgid "Account number:"
 msgstr "Broj racuna:"
 
-#: ../ui/uioutfit.cpp:118
+#: ../ui/uioutfit.cpp:128
 msgid "Addon "
 msgstr "Dodatak "
 
@@ -88,7 +88,7 @@ msgstr "Kupi"
 
 #: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:161
 #: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
-#: ../ui/uioutfit.cpp:143 ../ui/charlist.h:112 ../ui/itemmove.h:108
+#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
 msgid "Cancel"
 msgstr "Ponisti"
 
@@ -152,7 +152,7 @@ msgstr "Trenutni engine"
 msgid "Customise the console"
 msgstr "Podesi konzolu"
 
-#: ../ui/uioutfit.cpp:75
+#: ../ui/uioutfit.cpp:83
 msgid "Detail"
 msgstr "Detalji"
 
@@ -247,7 +247,7 @@ msgstr "Grafičke opcije"
 msgid "Gratis Premium Account"
 msgstr "Gratis Premium Račun"
 
-#: ../ui/uioutfit.cpp:54
+#: ../ui/uioutfit.cpp:56
 msgid "Head"
 msgstr "Glava"
 
@@ -347,7 +347,7 @@ msgstr "OT enkripcijski kljuc"
 
 #: ../ui/options.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
 #: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
-#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:135 ../ui/charlist.h:104
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "U redu"
@@ -376,7 +376,7 @@ msgstr "Opcije"
 msgid "Password:"
 msgstr "Zaporka:"
 
-#: ../ui/uioutfit.cpp:84
+#: ../ui/uioutfit.cpp:94
 msgid ""
 "Pick an outfit and choose colors for parts of\n"
 "your character's avatar.\n"
@@ -398,7 +398,7 @@ msgstr "Premium račun"
 msgid "Price:"
 msgstr "Cijena:"
 
-#: ../ui/uioutfit.cpp:61
+#: ../ui/uioutfit.cpp:65
 msgid "Primary"
 msgstr "Glavno"
 
@@ -445,7 +445,7 @@ msgstr ""
 "  enginea, s manje grešaka. To se dakako bilo kada može\n"
 "  promijeniti.\n"
 
-#: ../ui/uioutfit.cpp:68
+#: ../ui/uioutfit.cpp:74
 msgid "Secondary"
 msgstr "Drugi"
 
@@ -490,7 +490,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Port servera:"
 
-#: ../mapui.cpp:527 ../ui/uioutfit.cpp:37
+#: ../mapui.cpp:527 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Postavi odijelo"
 
@@ -633,4 +633,3 @@ msgstr "dana preostalo"
 #: ../gm_mainmenu.cpp:322
 msgid "with inactive developers"
 msgstr "uz neaktivne razvijatelje"
-

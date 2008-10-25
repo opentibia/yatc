@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: YATC 0.2.2SVN\n"
+"Project-Id-Version: YATC 0.2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-24 00:02+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Heliton <helitonnordt@gmail.com>\n"
-"Language-Team: Heliton, jakexblaster <helitonnordt@gmail.com, kinhocunha@gmail.com>\n"
+"Language-Team: Heliton <helitonnordt@gmail.com>, jakexblaster <kinhocunha@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -98,7 +98,6 @@ msgstr "Cancelar"
 
 # Talvez "não foi possível conectar com um servidor de login"?
 #: ../gm_mainmenu.cpp:501
-#, fuzzy
 msgid "Cannot connect to a login server."
 msgstr "Não foi possível conectar a um servidor de login."
 

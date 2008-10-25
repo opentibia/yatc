@@ -19,9 +19,10 @@ Copyright (C) 2007-2008 OpenTibia Team
 
 Programming
   Ivan Vucica       - Khaos
+  Nate Fries        - nfries88
+with inactive developers
   Magnus K.L.       - Smygflik
                     - mips
-  Nate Fries        - nfries88
 
 Contributors
                     - mrauter
@@ -41,7 +42,7 @@ user interface library. For now we can connect to the login server, display
 character list, connect to game world, display basic map, and we can move
 around.
 
-This is readme for version 0.2.2SVN.
+This is readme for version 0.2.2.
 
 Please visit our site:
  http://sites.google.com/site/yatcclient
@@ -68,6 +69,9 @@ protocol. You can manually switch protocol in Options->Network.
 
 Under GNU/Linux, do not forget that caps matter. Tibia.spr is not the same
 as tibia.spr.
+
+We have gettext() l10n support but only if you compile from sources. We are
+currently unable to provide a consistent UI for all platforms.
 
 ==============================
 2. User interface - Main menu
@@ -112,6 +116,9 @@ On the bottom you will find a text box which you can use to chat. Pressing
 any letter or number focuses on the textbox automatically.
 
 Use arrow keys to move.
+Ctrl+click to "Use" item.
+Shift+click to "Look at" item.
+Alt+click to "Attack" creature.
 
 ==============================
 6. Configuration file
@@ -180,11 +187,12 @@ are as follows:
   Version to represent to server although another protocol is used. Server
   uses same protocol that's specified under 'protocol', but requires a
   different version sent. (Data files must also have appropriate signatures.)
+
+Some options may be undocumented.
 ===========================
 7. Observed issues
 
-* Some tiles are not rendered at all.
-* If creature steps over another creature, the creatures are swapped.
-  (Ordering problem.)
-* Under GNU/Linux, SDL timer mechanism seems to be causing freezes.
-
+* Odd freezes may occur.
+* There are various GLICT issues with moving windows, with refreshing scene 
+  on main menu etc
+* Moving items may fail.

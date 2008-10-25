@@ -11,7 +11,7 @@ if USE_OPENGL
 MAYBE_OPENGL = spritegl.cpp enginegl.cpp
 endif
 
-SUBDIRS = net gamecontent ui
+#SUBDIRS = net gamecontent ui
 
 yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		objects.cpp  \
@@ -58,13 +58,14 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/charlist.h ui/tutorialhints.h ui/itemmove.h \
 		ui/uiinventory.h ui/skills.h ui/uicontainer.h ui/uishop.h \
 		ui/uitrade.h ui/checkbox.h ui/uioutfit.h \
+		ui/optionsgfxadv.h ui/optionshotkeys.h ui/health.h \
 		\
 		product.h \
 		\
 		translations/yatc.pot translations/prepare.sh \
 		translations/merge.sh translations/polish.po
 		translations/build.sh translations/croatian.po \
-		translations/brazilian.po translations/swedish.po \
+		translations/brazilian.po \
 		translations/README  /
 		\
 		yatc.cbp yatc.dev \
