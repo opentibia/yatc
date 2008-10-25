@@ -21,7 +21,7 @@
 #ifndef __UI_LOGIN_H
 #define __UI_LOGIN_H
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(WIN32)
     #include <libintl.h>
 #else
     #define gettext(x) (x)

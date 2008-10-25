@@ -21,7 +21,7 @@
 #include <GLICT/globals.h>
 #include <GLICT/messagebox.h>
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(WIN32)
     #include <libintl.h>
 #else
     #define gettext(x) (x)

@@ -63,7 +63,6 @@ public:
     static void containerItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
 	static void containerItemOnMouseUp(glictPos *relmousepos, glictContainer* callerclass);
 
-#if (GLICT_APIREV >= 76)
     glictButton closebtn;
     glictButton btnCollapse;
     glictPanel pnlIcon;
@@ -71,7 +70,6 @@ public:
     Item* itemIcon;
 
     static void containerIconOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
-#endif
 
 };
 

@@ -27,7 +27,7 @@
 #include "optionsgraphics.h"
 #include "optionshotkeys.h"
 #include "optionsnetwork.h"
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(WIN32)
 	#include <libintl.h>
 #else
 	#define gettext(x) (x)
