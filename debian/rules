@@ -25,7 +25,7 @@ endif
 ifneq "$(wildcard /usr/share/misc/config.guess)" ""
 	cp -f /usr/share/misc/config.guess config.guess
 endif
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --bindir=\$${prefix}/games --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --datarootdir=\$${prefix}/games/share --datadir=\$${prefix}/games/share CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs"
+	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --bindir=\$${prefix}/games --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --datarootdir=\$${prefix}/share/games --datadir=\$${prefix}/share/games CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs"
 
 
 build: build-stamp
