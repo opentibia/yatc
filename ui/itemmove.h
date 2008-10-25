@@ -98,6 +98,7 @@ public:
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(20);
 		btnOk.SetCaption(gettext("Ok"));
+		btnOk.SetFont("minifont");
 		btnOk.SetCustomData(this);
 		btnOk.SetOnClick(winItemMove_t::moveItem);
 
@@ -106,6 +107,7 @@ public:
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(20);
 		btnCancel.SetCaption(gettext("Cancel"));
+		btnCancel.SetFont("minifont");
 		btnCancel.SetCustomData(this);
 		btnCancel.SetOnClick(winItemMove_t::onCancel);
 
