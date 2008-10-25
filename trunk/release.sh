@@ -229,7 +229,7 @@ EOF
 	echo "Copying debian/ dir"
 	cp -r ../../debian/ .
 
-	if [ $debchangelog != 'y' ]; then
+	if [ $debchangelog == 'y' ]; then
 		echo "Already modified original changelog, not touching new version"
 	else
 		echo "Modifying copy of changelog now"
