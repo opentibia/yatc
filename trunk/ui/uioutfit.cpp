@@ -22,13 +22,15 @@
 #include "../gamecontent/creature.h"
 #include "uioutfit.h"
 #include "../skin.h"
+#include "../gm_gameworld.h"
+#include "../net/protocolgame.h"
 #ifndef __APPLE__
     #include <libintl.h>
 #else
     #define gettext(x) (x)
 #endif
 
-static void __uioutfit__closeme(glictPos* pos, glictContainer *caller) { // REMOVE ME
+void winOutfit_t::onClose(glictPos* pos, glictContainer *caller) {
     ((glictWindow*)caller->GetCustomData())->SetVisible(false);
 }
 
@@ -53,27 +55,35 @@ winOutfit_t::winOutfit_t() {
     btnHead.SetHeight(20);
     btnHead.SetCaption(gettext("Head"));
     btnHead.SetFont("minifont");
+    btnHead.SetOnClick(onHead);
+    btnHead.SetCustomData(this);
 
-    window.AddObject(&btnPrimary);
-    btnPrimary.SetPos(167,39);
-    btnPrimary.SetWidth(58);
-    btnPrimary.SetHeight(20);
-    btnPrimary.SetCaption(gettext("Primary"));
-    btnPrimary.SetFont("minifont");
+    window.AddObject(&btnBody);
+    btnBody.SetPos(167,39);
+    btnBody.SetWidth(58);
+    btnBody.SetHeight(20);
+    btnBody.SetCaption(gettext("Primary"));
+    btnBody.SetFont("minifont");
+    btnBody.SetOnClick(onBody);
+    btnBody.SetCustomData(this);
 
-    window.AddObject(&btnSecondary);
-    btnSecondary.SetPos(167,63);
-    btnSecondary.SetWidth(58);
-    btnSecondary.SetHeight(20);
-    btnSecondary.SetCaption(gettext("Secondary"));
-    btnSecondary.SetFont("minifont");
+    window.AddObject(&btnLegs);
+    btnLegs.SetPos(167,63);
+    btnLegs.SetWidth(58);
+    btnLegs.SetHeight(20);
+    btnLegs.SetCaption(gettext("Secondary"));
+    btnLegs.SetFont("minifont");
+    btnLegs.SetOnClick(onLegs);
+    btnLegs.SetCustomData(this);
 
-    window.AddObject(&btnDetail);
-    btnDetail.SetPos(167,87);
-    btnDetail.SetWidth(58);
-    btnDetail.SetHeight(20);
-    btnDetail.SetCaption(gettext("Detail"));
-    btnDetail.SetFont("minifont");
+    window.AddObject(&btnFeet);
+    btnFeet.SetPos(167,87);
+    btnFeet.SetWidth(58);
+    btnFeet.SetHeight(20);
+    btnFeet.SetCaption(gettext("Detail"));
+    btnFeet.SetFont("minifont");
+    btnFeet.SetOnClick(onFeet);
+    btnFeet.SetCustomData(this);
 
     window.AddObject(&lblInstructions);
     lblInstructions.SetPos(167,120);
@@ -134,7 +144,8 @@ winOutfit_t::winOutfit_t() {
     btnOk.SetHeight(20);
     btnOk.SetCaption(gettext("Ok"));
     btnOk.SetFont("minifont");
-    btnOk.SetEnabled(false);
+    btnOk.SetOnClick(onApply);
+    btnOk.SetCustomData(this);
 
     window.AddObject(&btnCancel);
     btnCancel.SetPos(437,296);
@@ -142,10 +153,8 @@ winOutfit_t::winOutfit_t() {
     btnCancel.SetHeight(20);
     btnCancel.SetCaption(gettext("Cancel"));
     btnCancel.SetFont("minifont");
-    // temporary:
     btnCancel.SetCustomData(&window);
-    btnCancel.SetOnClick(__uioutfit__closeme);
-    // end temporary
+    btnCancel.SetOnClick(onClose);
 
     for (int j = 0; j < 7; j++) {
         for (int i = 0; i < 19; i++) {
@@ -157,8 +166,9 @@ winOutfit_t::winOutfit_t() {
             btn->SetHeight(12);
 
             btn->SetCaption("");
+            btn->SetOnClick(onColor);
 
-            btn->SetCustomData((void*)(j*19+i));
+            btn->SetCustomData(this);
             #if (GLICT_APIREV < 77)
             #warning To enjoy colors in outfit changing window, you need GLICT APIREV 77. Functionality otherwise ok.
             #endif
@@ -167,7 +177,7 @@ winOutfit_t::winOutfit_t() {
         }
     }
 
-    // FIXME we don't delete this in destructor
+    // TODO check! current way of deleting this in destructor may be invalid
     // FIXME is ffffff00 really a satisfying id that won't be used by the game itself?
     dispCreature = Creatures::getInstance().addCreature(0xFFFFFF00);
 
@@ -185,11 +195,18 @@ winOutfit_t::winOutfit_t() {
     printf("Configured outfit. LOADING GFX.\n");
 
     dispCreature->loadOutfit();
+
+}
+winOutfit_t::~winOutfit_t(){
+    Creatures::getInstance().removeCreature(0xFFFFFF00);
 }
 
-
 void winOutfit_t::onBtnPaint(glictRect *real, glictRect *clipped, glictContainer *caller) {
-    uint32_t col = Creatures::OutfitLookupTable[(int)(caller->GetCustomData())];
+
+    winOutfit_t* wo = (winOutfit_t*)caller->GetCustomData();
+    int colorid = (glictButton*)caller - &wo->btnColor[0];
+
+    uint32_t col = Creatures::OutfitLookupTable[colorid];
     oRGBA c(((col >> 16) & 0xFF), ((col >> 8) & 0xFF), (col & 0xFF), 255);
 
     g_engine->drawRectangle(real->left + 2, real->top + 2, 8, 8, c);
@@ -208,7 +225,12 @@ void winOutfit_t::openSelf(const Outfit_t& current, const std::list<AvailOutfit_
     window.SetVisible(true);
     m_availableOutfits = available;
     m_currentOutfit = m_availableOutfits.begin();
+    for(std::list<AvailOutfit_t>::iterator it = m_availableOutfits.begin(); it!=m_availableOutfits.end();it++)
+        if(current.m_looktype == it->id)
+            m_currentOutfit = it;
     rebuildGfx();
+
+    setActivePart(HEAD);
 }
 
 void winOutfit_t::rebuildGfx(){
@@ -231,4 +253,75 @@ void winOutfit_t::onPrev(glictPos* pos, glictContainer *caller){
         wo->m_currentOutfit=wo->m_availableOutfits.end();
     wo->m_currentOutfit--;
     wo->rebuildGfx();
+}
+
+void winOutfit_t::setActivePart(winOutfit_t_PARTS wp){
+    btnHead.SetHold(wp==HEAD);
+    btnBody.SetHold(wp==BODY);
+    btnLegs.SetHold(wp==LEGS);
+    btnFeet.SetHold(wp==FEET);
+
+    if (wp==HEAD)
+        setActiveColor(dispCreature->getOutfit().m_lookhead);
+    if (wp==BODY)
+        setActiveColor(dispCreature->getOutfit().m_lookbody);
+    if (wp==LEGS)
+        setActiveColor(dispCreature->getOutfit().m_looklegs);
+    if (wp==FEET)
+        setActiveColor(dispCreature->getOutfit().m_lookfeet);
+
+    m_currentPart=wp;
+
+}
+
+void winOutfit_t::setActiveColor(uint8_t color){
+    for(int i=0;i<19*7;i++){
+        btnColor[i].SetHold(color==i);
+    }
+}
+
+void winOutfit_t::onColor(glictPos* pos, glictContainer *caller){
+    winOutfit_t* wo = (winOutfit_t*)caller->GetCustomData();
+    int colorid = (glictButton*)caller - &wo->btnColor[0];
+    wo->setActiveColor(colorid);
+    winOutfit_t_PARTS wp = wo->m_currentPart;
+    if(wp==HEAD)
+        wo->dispCreature->getOutfit().m_lookhead = colorid;
+    if(wp==BODY)
+        wo->dispCreature->getOutfit().m_lookbody = colorid;
+    if(wp==LEGS)
+        wo->dispCreature->getOutfit().m_looklegs = colorid;
+    if(wp==FEET)
+        wo->dispCreature->getOutfit().m_lookfeet = colorid;
+    wo->rebuildGfx();
+}
+
+void winOutfit_t::onHead(glictPos* pos, glictContainer *caller){
+    winOutfit_t* wo = (winOutfit_t*)caller->GetCustomData();
+    wo->setActivePart(HEAD);
+}
+void winOutfit_t::onBody(glictPos* pos, glictContainer *caller){
+    winOutfit_t* wo = (winOutfit_t*)caller->GetCustomData();
+    wo->setActivePart(BODY);
+}
+void winOutfit_t::onLegs(glictPos* pos, glictContainer *caller){
+    winOutfit_t* wo = (winOutfit_t*)caller->GetCustomData();
+    wo->setActivePart(LEGS);
+}
+void winOutfit_t::onFeet(glictPos* pos, glictContainer *caller){
+    winOutfit_t* wo = (winOutfit_t*)caller->GetCustomData();
+    wo->setActivePart(FEET);
+}
+
+void winOutfit_t::onApply(glictPos* pos, glictContainer *caller) {
+    winOutfit_t* wo = (winOutfit_t*)caller->GetCustomData();
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    wo->window.SetVisible(false);
+    gw->m_protocol->sendSetOutfit(
+        wo->dispCreature->getOutfit().m_looktype,
+        wo->dispCreature->getOutfit().m_lookhead,
+        wo->dispCreature->getOutfit().m_lookbody,
+        wo->dispCreature->getOutfit().m_looklegs,
+        wo->dispCreature->getOutfit().m_lookfeet);
+
 }
