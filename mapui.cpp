@@ -29,8 +29,10 @@
 #include "mapui.h"
 #include "debugprint.h"
 #include "engine.h"
-#ifndef __APPLE__
-#include <libintl.h>
+#if !defined(__APPLE__) && !defined(WIN32)
+	#include <libintl.h>
+#else
+	#define gettext(x) (x)
 #endif
 
 extern uint32_t g_frameTime;

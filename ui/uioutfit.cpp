@@ -24,7 +24,7 @@
 #include "../skin.h"
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(WIN32)
     #include <libintl.h>
 #else
     #define gettext(x) (x)

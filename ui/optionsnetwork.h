@@ -24,7 +24,7 @@
 //#include <sstream> // FIXME (ivucica#1#): remove me after cleaning up the int=>str conversion
 #include "../util.h"
 #include <map>
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(WIN32)
     #include <libintl.h>
 #else
     #define gettext(x) (x)

@@ -8,6 +8,7 @@ list also kind of denotes priority.
 
 For the latest roadmap, see:
  http://tornado.zrs.hr/~ivucica/otflyspray/index.php?do=roadmap&project=2
+(link no longer working)
 
 Note: at the moment this was assembled only by ivucica, other developers
 should comment.
@@ -35,13 +36,13 @@ should comment.
 
 0.3
 ---
-* ghosting
-* outfit change window
+* ghosting +
+* outfit change window +
 * trading
-* party options
-* opening containers
-* private messaging with tabs
-* moving items
+* party options +
+* opening containers +
+* private messaging with tabs +
+* moving items +/-
 * remove dependence of animations upon VALUE/g_fps, make it VALUE*(ms difference between updates with SDL_GetTicks())/1000
 
 (due to lack of time, these were moved from 0.2 to 0.3)

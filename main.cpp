@@ -38,7 +38,7 @@ unsigned int MAXFPS=50;
 #include <GLICT/globals.h>
 #include <sstream>
 #include <stdlib.h>
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(WIN32)
 	#include <libintl.h>
 #else
 	#define gettext(x) (x)
@@ -292,7 +292,7 @@ int main(int argc, char *argv[])
 
 #endif
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(WIN32)
     // set up i18n stuff
     setlocale( LC_ALL, "" );
     bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );

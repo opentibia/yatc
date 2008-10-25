@@ -31,10 +31,10 @@
 #include "engine.h"
 #include "skin.h"
 
-#ifndef __APPLE__
-#include <libintl.h>
+#if !defined(__APPLE__) && !defined(WIN32)
+	#include <libintl.h>
 #else
-#define gettext(x) (x)
+	#define gettext(x) (x)
 #endif
 
 class pnlHealth_t {
