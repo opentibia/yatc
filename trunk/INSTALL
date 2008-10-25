@@ -1,6 +1,6 @@
 COMPILING YATC
 ==============
-Copyright (C) 2007 OpenTibia Team
+Copyright (C) 2007-2008 OpenTibia Team
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ Copyright (C) 2007 OpenTibia Team
 - autoconf 2.61
 - automake 1.10
 
+Please understand that while we have produced builds that run on MacOS X platform, we are currently unable to provide systematic instructions.
 
 2. Building on Linux/Unix
 =========================

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-24 00:02+0200\n"
+"POT-Creation-Date: 2008-10-25 21:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 msgid "Account number:"
 msgstr ""
 
-#: ../ui/uioutfit.cpp:118
+#: ../ui/uioutfit.cpp:128
 msgid "Addon "
 msgstr ""
 
@@ -83,7 +83,7 @@ msgstr ""
 
 #: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:161
 #: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
-#: ../ui/uioutfit.cpp:143 ../ui/charlist.h:112 ../ui/itemmove.h:108
+#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
 msgid "Cancel"
 msgstr ""
 
@@ -143,7 +143,7 @@ msgstr ""
 msgid "Customise the console"
 msgstr ""
 
-#: ../ui/uioutfit.cpp:75
+#: ../ui/uioutfit.cpp:83
 msgid "Detail"
 msgstr ""
 
@@ -230,7 +230,7 @@ msgstr ""
 msgid "Gratis Premium Account"
 msgstr ""
 
-#: ../ui/uioutfit.cpp:54
+#: ../ui/uioutfit.cpp:56
 msgid "Head"
 msgstr ""
 
@@ -328,7 +328,7 @@ msgstr ""
 
 #: ../ui/options.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
 #: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
-#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:135 ../ui/charlist.h:104
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr ""
@@ -351,7 +351,7 @@ msgstr ""
 msgid "Password:"
 msgstr ""
 
-#: ../ui/uioutfit.cpp:84
+#: ../ui/uioutfit.cpp:94
 msgid ""
 "Pick an outfit and choose colors for parts of\n"
 "your character's avatar.\n"
@@ -368,7 +368,7 @@ msgstr ""
 msgid "Price:"
 msgstr ""
 
-#: ../ui/uioutfit.cpp:61
+#: ../ui/uioutfit.cpp:65
 msgid "Primary"
 msgstr ""
 
@@ -406,7 +406,7 @@ msgid ""
 "  fewer glitches. That can, of course, change anytime.\n"
 msgstr ""
 
-#: ../ui/uioutfit.cpp:68
+#: ../ui/uioutfit.cpp:74
 msgid "Secondary"
 msgstr ""
 
@@ -442,7 +442,7 @@ msgstr ""
 msgid "Server port:"
 msgstr ""
 
-#: ../mapui.cpp:527 ../ui/uioutfit.cpp:37
+#: ../mapui.cpp:527 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr ""
 

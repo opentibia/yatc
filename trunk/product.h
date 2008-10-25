@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #ifndef PRODUCTNAME
-#define PRODUCTVERSION "0.2.2SVN"
+#define PRODUCTVERSION "0.2.2"
 #define PRODUCTSHORT "YATC"
 #define PRODUCTLONG "YATC - Yet Another Tibia Client"
 #define PRODUCTNAME PRODUCTSHORT " v" PRODUCTVERSION
