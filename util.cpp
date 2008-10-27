@@ -46,7 +46,9 @@ void str_replace(std::string &s, const std::string& what, const std::string& wit
 
 
 void NativeGUIError(const char* text, const char *title) {
+	#ifdef __APPLE__
 	printf("NativeGUIError('%s','%s');\n", text, title);
+	#endif
 	#ifdef WIN32
 		#ifndef WINCE
 			MessageBox(HWND_DESKTOP, text, title, MB_ICONSTOP);
@@ -80,12 +82,12 @@ void NativeGUIError(const char* text, const char *title) {
 
 bool fileexists(const char* filename){
     FILE *f;
-    printf("Checking for %s\n", filename);
     if ((f = yatc_fopen(filename, "r"))) {
         fclose(f);
         return true;
-    } else
+    } else {
         return false;
+	}
 }
 
 static bool __internal_fileexists(const char* filename){
@@ -113,18 +115,18 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 
 	return fopen(fopen_fn, mode);
 #else
-
 	if (__internal_fileexists(filename)) {
 		FILE *f = fopen(filename, mode);
 		if (f)
 			return f;
 	}
-
 	for (std::vector<std::string>::iterator it = searchpaths.begin(); it != searchpaths.end(); it++) {
 		std::string fn = (*it + "/" + filename).c_str();
+		#ifndef WIN32
 		if (fn[0] == '~')
 			fn = std::string(getenv("HOME")) + "/" + fn.substr(1);
-
+		#endif
+		
 		if (__internal_fileexists(fn.c_str())) {
 			FILE *f=fopen(fn.c_str(), mode);
 
@@ -134,7 +136,6 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 			// if the above is false, we probably don't have enough permissions for requested mode
 		}
 	}
-
 	// if not found anywhere in the path, let's see what we can do with it
 	#ifndef WIN32 // if these aren't windows, it's probably a unioxid; if not, we'll port later
 	if (mode[0] == 'w' || mode[0] == 'a') {// if we're trying to access for writing
@@ -180,7 +181,13 @@ void yatc_fopen_init(char *cmdline) {
 	char temp[250];
 	const char *lp;
 	if (!searchpath)
-		searchpath = "~/.yatc/:/usr/games/share/yatc-data/:/usr/games/share/tibia/:" DESTDIRS;
+	searchpath = 
+	#ifndef WIN32
+		"~/.yatc/:"
+		"/usr/games/share/yatc-data/:"
+		"/usr/games/share/tibia/:" 
+	#endif
+		DESTDIRS;
 
 	lp = searchpath;
 	for (const char* p=searchpath; ; p++) {

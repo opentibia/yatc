@@ -159,7 +159,11 @@ void onKeyDown(const SDL_Event& event)
 
 void checkFile(const char *filename)
 {
-	if (!fileexists(filename)) {
+    printf("Checking for %s...", filename);
+	if (fileexists(filename)) {
+		printf("[ok]\n");
+	} else {
+		printf("[no]\n");
 		std::stringstream s;
 		s << "Loading the data file '" << filename << "' has failed.\n";
 		s << "Please place '" << filename << "' in the same folder as " PRODUCTSHORT << ".\n";
@@ -204,6 +208,8 @@ void resetDefaultCursor()
 
 
 #if !defined(WIN32) && !defined(__APPLE__)
+#ifdef _GLIBCXX_DEBUG
+#if __WORDSIZE != 64
 void crashhndl(int sig, siginfo_t *info,
 				   void *secret) {
 
@@ -245,6 +251,8 @@ void crashhndl(int sig, siginfo_t *info,
     exit(0);
 }
 #endif
+#endif
+#endif
 
 
 
@@ -259,6 +267,7 @@ int main(int argc, char *argv[])
 
     #if !defined(WIN32) && !defined(__APPLE__)
     #ifdef _GLIBCXX_DEBUG
+	#if __WORDSIZE != 64
 
     /* Install our signal handler */
     struct sigaction sa;
@@ -270,6 +279,7 @@ int main(int argc, char *argv[])
     sigaction(SIGSEGV, &sa, NULL);
     sigaction(SIGFPE, &sa, NULL);
     #endif
+	#endif
     #endif
 
 
@@ -320,9 +330,9 @@ int main(int argc, char *argv[])
 
 
 
-	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Checking graphics files existence...");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Checking graphics files existence...\n");
 	checkFiles();
-	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, " passed\n");
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "All graphics files were found.\n");
 
 	options.Load();
 	MAXFPS = options.maxfps;
