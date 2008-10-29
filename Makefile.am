@@ -1,7 +1,7 @@
 
 AM_CXXFLAGS = -Wall
 
-AM_CPPFLAGS = $(ASSERT_FLAGS) $(DEBUG_FLAGS) $(SDLGFX_FLAGS) $(OPENGL_FLAGS) -DDESTDIRS=\"$(prefix):$(datadir)/:$(datarootdir)/:$(datadir)/yatc-data/:$(datarootdir)/yatc-data/:$(datarootdir)/tibia-data/:$(datadir)/tibia-data/\"
+AM_CPPFLAGS = $(ASSERT_FLAGS) $(DEBUG_FLAGS) $(SDLGFX_FLAGS) $(OPENGL_FLAGS) -DDESTDIRS=\"$(prefix):$(datadir)/:$(datarootdir)/:$(datadir)/yatc-data/:$(datarootdir)/yatc-data/:$(datarootdir)/tibia/:$(datadir)/tibia/\"
 
 AM_LDFLAGS = $(SDLGFX_FLAGS)
 #noinst_PROGRAMS = yatc

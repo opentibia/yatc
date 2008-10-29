@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([yatc],[0.2.21])
+AC_INIT([yatc],[0.2.3SVN])
 AC_CONFIG_SRCDIR([spritesdl.h])
 AM_INIT_AUTOMAKE([foreign])
 
