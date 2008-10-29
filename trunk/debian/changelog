@@ -1,3 +1,9 @@
+yatc (0.2.21-1) unstable; urgency=low
+ 
+  * New upstream release
+ 
+ -- Ivan Vucica <ivucica@gmail.com>  Wed, 29 Oct 2008 10:44:42 +0100
+ 
 yatc (0.2.2-2) unstable; urgency=low
  
   * Fixed FHS compatibility in debian rules (was: /usr/games/share)
