@@ -210,6 +210,11 @@ void resetDefaultCursor()
 #if !defined(WIN32) && !defined(__APPLE__)
 #ifdef _GLIBCXX_DEBUG
 #if __WORDSIZE != 64
+#define INSTRUCTION_POINTER_REGISTER REG_EIP
+#else
+#define INSTRUCTION_POINTER_REGISTER REG_RIP
+#endif //__WORDSIZE
+
 void crashhndl(int sig, siginfo_t *info,
 				   void *secret) {
 
@@ -217,6 +222,7 @@ void crashhndl(int sig, siginfo_t *info,
     char **messages = (char **)NULL;
     int i, trace_size = 0;
     ucontext_t *uc = (ucontext_t *)secret;
+    char addr2line_buffer[32];
 
     printf("CRASH\n");
 
@@ -224,13 +230,13 @@ void crashhndl(int sig, siginfo_t *info,
     if (sig == SIGSEGV)
     printf("Got signal %d, faulty address is %p, "
            "from %p\n", sig, (void*)info->si_addr,
-           (void*)uc->uc_mcontext.gregs[REG_EIP]);
+           (void*)uc->uc_mcontext.gregs[INSTRUCTION_POINTER_REGISTER]);
     else
     printf("Got signal %d\n", sig);
 
     trace_size = backtrace(trace, 32);
     /* overwrite sigaction with caller's address */
-    trace[1] = (void *) uc->uc_mcontext.gregs[REG_EIP];
+    trace[1] = (void *) uc->uc_mcontext.gregs[INSTRUCTION_POINTER_REGISTER];
 
 
 
@@ -243,14 +249,20 @@ void crashhndl(int sig, siginfo_t *info,
         std::stringstream x;
         x << "addr2line -C -e yatc " << std::hex << trace[i];
         system(x.str().c_str());
-
+        /*
+		NOTE (nfries88): This code is only commented because it is untested, I am not
+				on a Unix-like system at the moment.
+			If this is found to work as expected it should be used instead of the
+				stringstream code above, as this shouldn't use dynamic allocations.
+		sprintf(addr2line_buffer, "addr2line -C -e yatc %8x", trace[i]);
+		system(addr2line_buffer);
+		*/
     }
     SDL_WM_GrabInput(SDL_GRAB_OFF);
 
 
     exit(0);
 }
-#endif
 #endif
 #endif
 
@@ -267,7 +279,7 @@ int main(int argc, char *argv[])
 
     #if !defined(WIN32) && !defined(__APPLE__)
     #ifdef _GLIBCXX_DEBUG
-	#if __WORDSIZE != 64
+	/*#if __WORDSIZE != 64*/
 
     /* Install our signal handler */
     struct sigaction sa;
@@ -278,7 +290,7 @@ int main(int argc, char *argv[])
 
     sigaction(SIGSEGV, &sa, NULL);
     sigaction(SIGFPE, &sa, NULL);
-    #endif
+    /*#endif*/
 	#endif
     #endif
 
