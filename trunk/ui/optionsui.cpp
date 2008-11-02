@@ -25,6 +25,7 @@
 #include <GLICT/button.h>
 #include <GLICT/textbox.h>
 #include <sstream>
+#include <SDL/SDL_framerate.h>
 
 #if !defined(__APPLE__) && !defined(WIN32)
     #include <libintl.h>
@@ -39,6 +40,7 @@
 
 
 extern unsigned int MAXFPS;
+extern FPSmanager g_fpsmgr;
 
 void winOptions_t::initiateAll(glictContainer* desktop)
 {
@@ -319,6 +321,7 @@ void winOptions_t::winOptionsGraphicsAdvanced_btnOk_OnClick(glictPos* relmousepo
         g_game->msgBox(gettext("Restart is required to apply engine change."), gettext("Engine change"));
 	#endif
 	MAXFPS=options.maxfps;
+    SDL_setFramerate(&g_fpsmgr,MAXFPS);
 	options.Save();
 	winOptions->winOptionsGraphicsAdvanced.window.SetVisible(false);
 

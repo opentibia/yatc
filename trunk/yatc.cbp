@@ -99,81 +99,6 @@
 					<Add option="-lSDL_gfx" />
 				</Linker>
 			</Target>
-			<Target title="Debug WinCE">
-				<Option platforms="Unix;" />
-				<Option output="yatc.exe" prefix_auto="0" extension_auto="0" />
-				<Option object_output=".objswince/" />
-				<Option type="1" />
-				<Option compiler="mingw32ce_gnu_gcc_compiler" />
-				<Option projectLinkerOptionsRelation="1" />
-				<Compiler>
-					<Add option="-pedantic" />
-					<Add option="-Wall" />
-					<Add option="-g3" />
-					<Add option="-O0" />
-					<Add option="-DUSEASSERT" />
-				</Compiler>
-				<Linker>
-					<Add option="-lGLICT" />
-					<Add option="-lws32" />
-					<Add option="-lgmp" />
-					<Add option="-lSDL" />
-					<Add option="-lSDL_gfx" />
-				</Linker>
-			</Target>
-			<Target title="Debug MinGW32">
-				<Option platforms="Unix;" />
-				<Option output="yatc.exe" prefix_auto="0" extension_auto="0" />
-				<Option object_output=".objsmingw/" />
-				<Option type="0" />
-				<Option compiler="mingw_gnu_gcc_compiler" />
-				<Option projectLinkerOptionsRelation="1" />
-				<Compiler>
-					<Add option="-pedantic" />
-					<Add option="-Wall" />
-					<Add option="-g3" />
-					<Add option="-O0" />
-					<Add option="-DUSEASSERT" />
-					<Add option="-DUSE_OPENGL" />
-				</Compiler>
-				<Linker>
-					<Add option="-lGLICT" />
-					<Add option="-lopengl32" />
-					<Add option="-lwsock32" />
-					<Add option="-lglu32" />
-					<Add option="-lgmp" />
-					<Add option="-lmingw32" />
-					<Add option="-lSDLmain" />
-					<Add option="-lSDL" />
-					<Add option="-lSDL_gfx" />
-					<Add option="-g3 -O0" />
-				</Linker>
-			</Target>
-			<Target title="Release MinGW32">
-				<Option platforms="Unix;" />
-				<Option output="yatc.exe" prefix_auto="0" extension_auto="0" />
-				<Option object_output=".objsmingwr/" />
-				<Option type="0" />
-				<Option compiler="mingw_gnu_gcc_compiler" />
-				<Option projectLinkerOptionsRelation="1" />
-				<Compiler>
-					<Add option="-O2" />
-					<Add option="-DUSEASSERT" />
-					<Add option="-DUSE_OPENGL" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-					<Add option="-lGLICT" />
-					<Add option="-lopengl32" />
-					<Add option="-lwsock32" />
-					<Add option="-lglu32" />
-					<Add option="-lgmp" />
-					<Add option="-lmingw32" />
-					<Add option="-lSDLmain" />
-					<Add option="-lSDL" />
-					<Add option="-lSDL_gfx" />
-				</Linker>
-			</Target>
 		</Build>
 		<VirtualTargets>
 			<Add alias="All" targets="Debug Unix;Release Unix;Debug Windows;Release Windows;" />
@@ -197,9 +122,6 @@
 			<Option target="Debug Unix" />
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
-			<Option target="Debug WinCE" />
-			<Option target="Debug MinGW32" />
-			<Option target="Release MinGW32" />
 		</Unit>
 		<Unit filename="bigint.h" />
 		<Unit filename="codeguide.txt" />
@@ -225,8 +147,6 @@
 		<Unit filename="exchndl2.cxx">
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
-			<Option target="Debug MinGW32" />
-			<Option target="Release MinGW32" />
 		</Unit>
 		<Unit filename="fassert.h" />
 		<Unit filename="font.cpp" />
@@ -251,16 +171,10 @@
 		<Unit filename="gm_debug.cpp">
 			<Option target="Debug Unix" />
 			<Option target="Debug Windows" />
-			<Option target="Debug WinCE" />
-			<Option target="Debug MinGW32" />
-			<Option target="Release MinGW32" />
 		</Unit>
 		<Unit filename="gm_debug.h">
 			<Option target="Debug Unix" />
 			<Option target="Debug Windows" />
-			<Option target="Debug WinCE" />
-			<Option target="Debug MinGW32" />
-			<Option target="Release MinGW32" />
 		</Unit>
 		<Unit filename="gm_gameworld.cpp" />
 		<Unit filename="gm_gameworld.h" />
@@ -314,8 +228,6 @@
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug Windows" />
-			<Option target="Debug MinGW32" />
-			<Option target="Release MinGW32" />
 		</Unit>
 		<Unit filename="skin.cpp" />
 		<Unit filename="skin.h" />

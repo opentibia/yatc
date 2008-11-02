@@ -102,36 +102,6 @@ Skin::Skin() {
     txtb  = NULL;
     txtbr = NULL;
 
-    chktl = NULL;
-    chkt  = NULL;
-    chktr = NULL;
-    chkl  = NULL;
-    chkc  = NULL;
-    chkr  = NULL;
-    chkbl = NULL;
-    chkb  = NULL;
-    chkbr = NULL;
-
-    tmmtl = NULL;
-    tmmt  = NULL;
-    tmmtr = NULL;
-    tmml  = NULL;
-    tmmc  = NULL;
-    tmmr  = NULL;
-    tmmbl = NULL;
-    tmmb  = NULL;
-    tmmbr = NULL;
-
-    invtl = NULL;
-    invt  = NULL;
-    invtr = NULL;
-    invl  = NULL;
-    invc  = NULL;
-    invr  = NULL;
-    invbl = NULL;
-    invb  = NULL;
-    invbr = NULL;
-
     scutl = NULL;
     scut  = NULL;
     scutr = NULL;
@@ -233,6 +203,68 @@ Skin::Skin() {
     scpbr = NULL;
 
 
+
+    chktl = NULL;
+    chkt  = NULL;
+    chktr = NULL;
+    chkl  = NULL;
+    chkc  = NULL;
+    chkr  = NULL;
+    chkbl = NULL;
+    chkb  = NULL;
+    chkbr = NULL;
+
+    tmmtl = NULL;
+    tmmt  = NULL;
+    tmmtr = NULL;
+    tmml  = NULL;
+    tmmc  = NULL;
+    tmmr  = NULL;
+    tmmbl = NULL;
+    tmmb  = NULL;
+    tmmbr = NULL;
+
+    invtl = NULL;
+    invt  = NULL;
+    invtr = NULL;
+    invl  = NULL;
+    invc  = NULL;
+    invr  = NULL;
+    invbl = NULL;
+    invb  = NULL;
+    invbr = NULL;
+
+    cbctl = NULL;
+    cbct  = NULL;
+    cbctr = NULL;
+    cbcl  = NULL;
+    cbcc  = NULL;
+    cbcr  = NULL;
+    cbcbl = NULL;
+    cbcb  = NULL;
+    cbcbr = NULL;
+
+    cbatl = NULL;
+    cbat  = NULL;
+    cbatr = NULL;
+    cbal  = NULL;
+    cbac  = NULL;
+    cbar  = NULL;
+    cbabl = NULL;
+    cbab  = NULL;
+    cbabr = NULL;
+
+    cbptl = NULL;
+    cbpt  = NULL;
+    cbptr = NULL;
+    cbpl  = NULL;
+    cbpc  = NULL;
+    cbpr  = NULL;
+    cbpbl = NULL;
+    cbpb  = NULL;
+    cbpbr = NULL;
+
+
 }
 Skin::~Skin() {
     unloadSkin();
@@ -288,38 +320,6 @@ void Skin::loadSkin() {
 
 	glictGlobals.textboxSkin = &txt;
 
-    chk.SetTL		(chktl = new skinImage(308,	108,	1,		1));
-    chk.SetTop		(chkt  = new skinImage(309,	108,	10,		1));
-    chk.SetTR		(chktr = new skinImage(319,	108,	1,		1));
-    chk.SetLeft		(chkl  = new skinImage(308,	109,	1,		10));
-    chk.SetCenter	(chkc  = new skinImage(309,	109,	10,		10));
-    chk.SetRight	(chkr  = new skinImage(319,	109,	1,		10));
-    chk.SetBL		(chkbl = new skinImage(308,	119,	1,		1));
-    chk.SetBottom	(chkb  = new skinImage(309,	119,	10,		1));
-    chk.SetBR		(chkbr = new skinImage(319,	119,	1,		1));
-
-
-    tmm.SetTL		(tmmtl = new skinImage(44,		226,	5,		5));
-    tmm.SetTop		(tmmt  = new skinImage(43,		214,	32,		5));
-    tmm.SetTR		(tmmtr = new skinImage(49,		226,	5,		5));
-    tmm.SetLeft		(tmml  = new skinImage(0,		214,	5,		32));
-    tmm.SetCenter	(tmmc  = new skinImage(11,		214,	32,		32));
-    tmm.SetRight	(tmmr  = new skinImage(6,		214,	5,		32));
-    tmm.SetBL		(tmmbl = new skinImage(44,		231,	5,		5));
-    tmm.SetBottom	(tmmb  = new skinImage(43,		219,	32,		5));
-    tmm.SetBR		(tmmbr = new skinImage(49,		231,	5,		5));
-
-
-
-    inv.SetTL		(invtl = new skinImage(186,		64, 	1,		1));
-    inv.SetTop		(invt  = new skinImage(187,		64, 	31,		1));
-    inv.SetTR		(invtr = new skinImage(219,		64, 	1,		1));
-    inv.SetLeft		(invl  = new skinImage(186,		65,	    1,		31));
-    inv.SetCenter	(invc  = new skinImage(187,		65,	    31,		31));
-    inv.SetRight	(invr  = new skinImage(219,		65,	    1,		31));
-    inv.SetBL		(invbl = new skinImage(186,		97, 	1,		1));
-    inv.SetBottom	(invb  = new skinImage(187,		97,	    31,		1));
-    inv.SetBR		(invbr = new skinImage(219,		97,	    1,		1));
 #if GLICT_APIREV < 68
 #warning Skinned scrollbar buttons need at least GLICT apirev 68
 #else
@@ -443,6 +443,70 @@ void Skin::loadSkin() {
 
     glictGlobals.scrollbarPanelSkin = &scp;
 #endif
+
+
+    chk.SetTL		(chktl = new skinImage(308,	108,	1,		1));
+    chk.SetTop		(chkt  = new skinImage(309,	108,	10,		1));
+    chk.SetTR		(chktr = new skinImage(319,	108,	1,		1));
+    chk.SetLeft		(chkl  = new skinImage(308,	109,	1,		10));
+    chk.SetCenter	(chkc  = new skinImage(309,	109,	10,		10));
+    chk.SetRight	(chkr  = new skinImage(319,	109,	1,		10));
+    chk.SetBL		(chkbl = new skinImage(308,	119,	1,		1));
+    chk.SetBottom	(chkb  = new skinImage(309,	119,	10,		1));
+    chk.SetBR		(chkbr = new skinImage(319,	119,	1,		1));
+
+
+    tmm.SetTL		(tmmtl = new skinImage(44,		226,	5,		5));
+    tmm.SetTop		(tmmt  = new skinImage(43,		214,	32,		5));
+    tmm.SetTR		(tmmtr = new skinImage(49,		226,	5,		5));
+    tmm.SetLeft		(tmml  = new skinImage(0,		214,	5,		32));
+    tmm.SetCenter	(tmmc  = new skinImage(11,		214,	32,		32));
+    tmm.SetRight	(tmmr  = new skinImage(6,		214,	5,		32));
+    tmm.SetBL		(tmmbl = new skinImage(44,		231,	5,		5));
+    tmm.SetBottom	(tmmb  = new skinImage(43,		219,	32,		5));
+    tmm.SetBR		(tmmbr = new skinImage(49,		231,	5,		5));
+
+
+    inv.SetTL		(invtl = new skinImage(186,		64, 	1,		1));
+    inv.SetTop		(invt  = new skinImage(187,		64, 	31,		1));
+    inv.SetTR		(invtr = new skinImage(219,		64, 	1,		1));
+    inv.SetLeft		(invl  = new skinImage(186,		65,	    1,		31));
+    inv.SetCenter	(invc  = new skinImage(187,		65,	    31,		31));
+    inv.SetRight	(invr  = new skinImage(219,		65,	    1,		31));
+    inv.SetBL		(invbl = new skinImage(186,		97, 	1,		1));
+    inv.SetBottom	(invb  = new skinImage(187,		97,	    31,		1));
+    inv.SetBR		(invbr = new skinImage(219,		97,	    1,		1));
+
+    cbc.SetTL		(cbctl = new skinImage(210,     182,    2,      2));
+    cbc.SetTop		(cbct  = new skinImage(212,     182,    96,     2));
+    cbc.SetTR		(cbctr = new skinImage(308,     182,    2,      2));
+    cbc.SetLeft		(cbcl  = new skinImage(210,     184,    2,      14));
+    cbc.SetCenter	(cbcc  = new skinImage(212,     184,    96,     14));
+    cbc.SetRight	(cbcr  = new skinImage(308,     184,    2,      14));
+    cbc.SetBL		(cbcbl = new skinImage(210,     198,    2,      2));
+    cbc.SetBottom	(cbcb  = new skinImage(212,     198,    96,     2));
+    cbc.SetBR		(cbcbr = new skinImage(308,     198,    2,      2));
+
+    cba.SetTL		(cbatl = new skinImage(114,     200,    2,      2));
+    cba.SetTop		(cbat  = new skinImage(116,     200,    92,     2));
+    cba.SetTR		(cbatr = new skinImage(208,     200,    2,      2));
+    cba.SetLeft		(cbal  = new skinImage(114,     202,    2,      14));
+    cba.SetCenter	(cbac  = new skinImage(116,     202,    92,     14));
+    cba.SetRight	(cbar  = new skinImage(208,     202,    2,      14));
+    cba.SetBL		(cbabl = new skinImage(114,     216,    2,      2));
+    cba.SetBottom	(cbab  = new skinImage(116,     216,    92,     2));
+    cba.SetBR		(cbabr = new skinImage(208,     216,    2,      2));
+
+    cbp.SetTL		(cbptl = new skinImage(114+96,  200,    2,      2));
+    cbp.SetTop		(cbpt  = new skinImage(116+96,  200,    92,     2));
+    cbp.SetTR		(cbptr = new skinImage(208+96,  200,    2,      2));
+    cbp.SetLeft		(cbpl  = new skinImage(114+96,  202,    2,      14));
+    cbp.SetCenter	(cbpc  = new skinImage(116+96,  202,    92,     14));
+    cbp.SetRight	(cbpr  = new skinImage(208+96,  202,    2,      14));
+    cbp.SetBL		(cbpbl = new skinImage(114+96,  216,    2,      2));
+    cbp.SetBottom	(cbpb  = new skinImage(116+96,  216,    92,     2));
+    cbp.SetBR		(cbpbr = new skinImage(208+96,  216,    2,      2));
+
 }
 
 void Skin::unloadSkin() {
@@ -547,72 +611,6 @@ void Skin::unloadSkin() {
 
     glictGlobals.textboxSkin = NULL;
 
-
-//    printf("[Skin::unloadSkin] Unloading checkbox skin...\n");
-
-    if (chktl) delete chktl; chktl = NULL;
-    if (chkt)  delete chkt;  chkt  = NULL;
-    if (chktr) delete chktr; chktr = NULL;
-    if (chkl)  delete chkl;  chkl  = NULL;
-    if (chkc)  delete chkc;  chkc  = NULL;
-    if (chkr)  delete chkr;  chkr  = NULL;
-    if (chkbl) delete chkbl; chkbl = NULL;
-    if (chkb)  delete chkb;  chkb  = NULL;
-    if (chkbr) delete chkbr; chkbr = NULL;
-
-    chk.SetTL(NULL);
-    chk.SetTop(NULL);
-    chk.SetTR(NULL);
-    chk.SetLeft(NULL);
-    chk.SetCenter(NULL);
-    chk.SetRight(NULL);
-    chk.SetBL(NULL);
-    chk.SetBottom(NULL);
-    chk.SetBR(NULL);
-
-//    printf("[Skin::unloadSkin] Unloading panelmainmenu skin...\n");
-
-    if (tmmtl) delete tmmtl; tmmtl = NULL;
-    if (tmmt)  delete tmmt;  tmmt  = NULL;
-    if (tmmtr) delete tmmtr; tmmtr = NULL;
-    if (tmml)  delete tmml;  tmml  = NULL;
-    if (tmmc)  delete tmmc;  tmmc  = NULL;
-    if (tmmr)  delete tmmr;  tmmr  = NULL;
-    if (tmmbl) delete tmmbl; tmmbl = NULL;
-    if (tmmb)  delete tmmb;  tmmb  = NULL;
-    if (tmmbr) delete tmmbr; tmmbr = NULL;
-
-    tmm.SetTL(NULL);
-    tmm.SetTop(NULL);
-    tmm.SetTR(NULL);
-    tmm.SetLeft(NULL);
-    tmm.SetCenter(NULL);
-    tmm.SetRight(NULL);
-    tmm.SetBL(NULL);
-    tmm.SetBottom(NULL);
-    tmm.SetBR(NULL);
-
-//    printf("[Skin::unloadSkin] Unloading inventory element skin...\n");
-
-    if (invtl) delete invtl; invtl = NULL;
-    if (invt)  delete invt;  invt  = NULL;
-    if (invtr) delete invtr; invtr = NULL;
-    if (invl)  delete invl;  invl  = NULL;
-    if (invc)  delete invc;  invc  = NULL;
-    if (invr)  delete invr;  invr  = NULL;
-    if (invbl) delete invbl; invbl = NULL;
-    if (invb)  delete invb;  invb  = NULL;
-    if (invbr) delete invbr; invbr = NULL;
-
-    inv.SetTL(NULL);
-    inv.SetTop(NULL);
-    inv.SetTR(NULL);
-    inv.SetLeft(NULL);
-    inv.SetCenter(NULL);
-    inv.SetRight(NULL);
-    inv.SetBL(NULL);
-    inv.SetBottom(NULL);
-    inv.SetBR(NULL);
 
 #if GLICT_APIREV < 68
 #warning Skinned scrollbar buttons need at least GLICT apirev 68
@@ -839,5 +837,137 @@ void Skin::unloadSkin() {
 
     glictGlobals.scrollbarPanelSkin = NULL;
 #endif
+
+
+
+    if (chktl) delete chktl; chktl = NULL;
+    if (chkt)  delete chkt;  chkt  = NULL;
+    if (chktr) delete chktr; chktr = NULL;
+    if (chkl)  delete chkl;  chkl  = NULL;
+    if (chkc)  delete chkc;  chkc  = NULL;
+    if (chkr)  delete chkr;  chkr  = NULL;
+    if (chkbl) delete chkbl; chkbl = NULL;
+    if (chkb)  delete chkb;  chkb  = NULL;
+    if (chkbr) delete chkbr; chkbr = NULL;
+
+    chk.SetTL(NULL);
+    chk.SetTop(NULL);
+    chk.SetTR(NULL);
+    chk.SetLeft(NULL);
+    chk.SetCenter(NULL);
+    chk.SetRight(NULL);
+    chk.SetBL(NULL);
+    chk.SetBottom(NULL);
+    chk.SetBR(NULL);
+
+//    printf("[Skin::unloadSkin] Unloading panelmainmenu skin...\n");
+
+    if (tmmtl) delete tmmtl; tmmtl = NULL;
+    if (tmmt)  delete tmmt;  tmmt  = NULL;
+    if (tmmtr) delete tmmtr; tmmtr = NULL;
+    if (tmml)  delete tmml;  tmml  = NULL;
+    if (tmmc)  delete tmmc;  tmmc  = NULL;
+    if (tmmr)  delete tmmr;  tmmr  = NULL;
+    if (tmmbl) delete tmmbl; tmmbl = NULL;
+    if (tmmb)  delete tmmb;  tmmb  = NULL;
+    if (tmmbr) delete tmmbr; tmmbr = NULL;
+
+    tmm.SetTL(NULL);
+    tmm.SetTop(NULL);
+    tmm.SetTR(NULL);
+    tmm.SetLeft(NULL);
+    tmm.SetCenter(NULL);
+    tmm.SetRight(NULL);
+    tmm.SetBL(NULL);
+    tmm.SetBottom(NULL);
+    tmm.SetBR(NULL);
+
+//    printf("[Skin::unloadSkin] Unloading inventory element skin...\n");
+
+    if (invtl) delete invtl; invtl = NULL;
+    if (invt)  delete invt;  invt  = NULL;
+    if (invtr) delete invtr; invtr = NULL;
+    if (invl)  delete invl;  invl  = NULL;
+    if (invc)  delete invc;  invc  = NULL;
+    if (invr)  delete invr;  invr  = NULL;
+    if (invbl) delete invbl; invbl = NULL;
+    if (invb)  delete invb;  invb  = NULL;
+    if (invbr) delete invbr; invbr = NULL;
+
+    inv.SetTL(NULL);
+    inv.SetTop(NULL);
+    inv.SetTR(NULL);
+    inv.SetLeft(NULL);
+    inv.SetCenter(NULL);
+    inv.SetRight(NULL);
+    inv.SetBL(NULL);
+    inv.SetBottom(NULL);
+    inv.SetBR(NULL);
+
+
+
+
+    if (cbctl) delete cbctl; cbctl = NULL;
+    if (cbct)  delete cbct;  cbct  = NULL;
+    if (cbctr) delete cbctr; cbctr = NULL;
+    if (cbcl)  delete cbcl;  cbcl  = NULL;
+    if (cbcc)  delete cbcc;  cbcc  = NULL;
+    if (cbcr)  delete cbcr;  cbcr  = NULL;
+    if (cbcbl) delete cbcbl; cbcbl = NULL;
+    if (cbcb)  delete cbcb;  cbcb  = NULL;
+    if (cbcbr) delete cbcbr; cbcbr = NULL;
+
+    cbc.SetTL(NULL);
+    cbc.SetTop(NULL);
+    cbc.SetTR(NULL);
+    cbc.SetLeft(NULL);
+    cbc.SetCenter(NULL);
+    cbc.SetRight(NULL);
+    cbc.SetBL(NULL);
+    cbc.SetBottom(NULL);
+    cbc.SetBR(NULL);
+
+    if (cbatl) delete cbatl; cbatl = NULL;
+    if (cbat)  delete cbat;  cbat  = NULL;
+    if (cbatr) delete cbatr; cbatr = NULL;
+    if (cbal)  delete cbal;  cbal  = NULL;
+    if (cbac)  delete cbac;  cbac  = NULL;
+    if (cbar)  delete cbar;  cbar  = NULL;
+    if (cbabl) delete cbabl; cbabl = NULL;
+    if (cbab)  delete cbab;  cbab  = NULL;
+    if (cbabr) delete cbabr; cbabr = NULL;
+
+    cba.SetTL(NULL);
+    cba.SetTop(NULL);
+    cba.SetTR(NULL);
+    cba.SetLeft(NULL);
+    cba.SetCenter(NULL);
+    cba.SetRight(NULL);
+    cba.SetBL(NULL);
+    cba.SetBottom(NULL);
+    cba.SetBR(NULL);
+
+    if (cbptl) delete cbptl; cbptl = NULL;
+    if (cbpt)  delete cbpt;  cbpt  = NULL;
+    if (cbptr) delete cbptr; cbptr = NULL;
+    if (cbpl)  delete cbpl;  cbpl  = NULL;
+    if (cbpc)  delete cbpc;  cbpc  = NULL;
+    if (cbpr)  delete cbpr;  cbpr  = NULL;
+    if (cbpbl) delete cbpbl; cbpbl = NULL;
+    if (cbpb)  delete cbpb;  cbpb  = NULL;
+    if (cbpbr) delete cbpbr; cbpbr = NULL;
+
+    cbp.SetTL(NULL);
+    cbp.SetTop(NULL);
+    cbp.SetTR(NULL);
+    cbp.SetLeft(NULL);
+    cbp.SetCenter(NULL);
+    cbp.SetRight(NULL);
+    cbp.SetBL(NULL);
+    cbp.SetBottom(NULL);
+    cbp.SetBR(NULL);
+
+
+
 }
 

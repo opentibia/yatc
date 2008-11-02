@@ -1,36 +1,627 @@
-# YATC Translation to Swedish !!! WITH GOOGLE TRANSLATE !!!
+# YATC Translation to Swedish
 # Copyright (C) 2008 OpenTibia Team
 # This file is distributed under the same license as the YATC package.
-# Ivan Vucica <ivucica@gmail.com>, 2008.
+# Rasmus Karlsson <qwertyx@g33k.se>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.2SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-28 23:46+0200\n"
-"PO-Revision-Date: 2008-09-29 00:13+0200\n"
-"Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
-"Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
+"POT-Creation-Date: 2008-10-25 21:18+0200\n"
+"PO-Revision-Date: 2008-11-02 00:53+0100\n"
+"Last-Translator: Rasmus Karlsson <qwertyx@g33k.se>\n"
+"Language-Team: Rasmus Karlsson <qwertyx@g33k.se>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=cp1250\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/mainmenu.cpp:41
+
+#: ../gm_mainmenu.cpp:330
+msgid ""
+" comes with ABSOLUTELY NO WARRANTY; \n"
+"for details see sections 11 and 12 in COPYING.\n"
+"This is free software, and you are welcome \n"
+"to redistribute it under certain conditions;\n"
+"see COPYING for details."
+msgstr ""
+" kommer inte med NÅGON absolut garanti; \n"
+"för detaljer se sektion 11 och 12 i COPYING.\n"
+"Detta är en gratis programvara och du är välkommen \n"
+"att omfördela den under särskilda villkor;\n"
+"se COPYING för detaljer."
+
+#: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
+msgid " gold"
+msgstr " guld"
+
+#: ../gm_mainmenu.cpp:319
+msgid "(in no particular order)"
+msgstr "(i ingen speciell ordning)"
+
+#: ../ui/charlist.h:84
+msgid "Account Status:"
+msgstr "Kontostatus:"
+
+#: ../ui/login.h:133
+msgid "Account name:"
+msgstr "Kontonamn:"
+
+#: ../ui/login.h:61 ../ui/login.h:136
+msgid "Account number:"
+msgstr "Kontonummer:"
+
+#: ../ui/uioutfit.cpp:128
+msgid "Addon "
+msgstr "Tillägg "
+
+#: ../ui/optionsgraphics.h:110
+msgid "Advanced"
+msgstr "Avancerat"
+
+#: ../ui/optionsgraphics.h:102
+msgid "Advanced settings:"
+msgstr "Avancerade inställningar:"
+
+#: ../ui/uishop.cpp:100
+msgid "Amount:"
+msgstr "Mängd:"
+
+#: ../ui/optionsgeneral.h:78
+msgid "Auto Chase Off"
+msgstr "Autofölj Av"
+
+#: ../ui/optionsnetwork.h:125
+msgid "Autodetect"
+msgstr "Autodetektera"
+
+#: ../ui/optionsgraphics.h:86
+msgid "Available resolutions:"
+msgstr "Utnyttjingsbara upplösningar:"
+
+#: ../ui/skills.h:262
+msgid "Axe Fighting"
+msgstr "Yxskicklighet"
+
+#: ../ui/uishop.cpp:56
+msgid "Buy"
+msgstr "Köp"
+
+#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:161
+#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
+#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ../gm_mainmenu.cpp:501
+msgid "Cannot connect to a login server."
+msgstr "Kan inte ansluta till en loginserver."
+
+#: ../ui/skills.h:164
+msgid "Cap"
+msgstr "Kapacitet"
+
+#: ../ui/options.h:118
+msgid ""
+"Change general\n"
+"game options"
+msgstr ""
+"Ändra generella\n"
+"spelinställningar"
+
+#: ../ui/options.h:126
+msgid ""
+"Change graphics and\n"
+"performance settings"
+msgstr ""
+"Ändra grafiska och\n"
+"prestandainställningar"
+
+#: ../ui/optionsgeneral.h:71
+msgid "Classic Control"
+msgstr "Klassiska Kontroller"
+
+#: ../ui/skills.h:260
+msgid "Club Fighting"
+msgstr "Klubbsskicklighet"
+
+#: ../gm_mainmenu.cpp:373 ../gm_mainmenu.cpp:449
+msgid "Connecting to the server..."
+msgstr "Ansluter till servern..."
+
+#: ../ui/options.h:97
+msgid "Console"
+msgstr "Konsoll"
+
+#: ../ui/optionsconsole.h:70
+msgid "Console Options"
+msgstr "Konsollinställningar"
+
+#: ../gm_mainmenu.cpp:326
+msgid "Contributors"
+msgstr "Medhjälpare"
+
+#: ../ui/login.h:99
+msgid "Create Account"
+msgstr "Skapa Konto"
+
+#: ../gm_mainmenu.cpp:307
+msgid "Current engine"
+msgstr "Nuvarande motor"
+
+#: ../ui/options.h:134
+msgid "Customise the console"
+msgstr "Skräddarsy konsollen"
+
+#: ../ui/uioutfit.cpp:83
+msgid "Detail"
+msgstr "Detalj"
+
+#: ../ui/skills.h:263
+msgid "Distance Fighting"
+msgstr "Distansskicklighet"
+
+#: ../ui/options.h:142
+msgid "Edit your hotkey texts"
+msgstr "Ändra snabbtangetstexter"
+
+#: ../ui/optionsui.cpp:319
+msgid "Engine change"
+msgstr "Motorbyte"
+
+#: ../ui/mainmenu.cpp:44 ../ui/login.h:45
 msgid "Enter Game"
-msgstr "Ange Spel"
+msgstr "Starta Spelet"
 
-#: ../ui/mainmenu.cpp:86
+#: ../gm_mainmenu.cpp:448
+msgid "Entering game"
+msgstr "Startar Spelet"
+
+#: ../gm_mainmenu.cpp:503 ../gm_mainmenu.cpp:510 ../gm_mainmenu.cpp:543
+msgid "Error"
+msgstr "Fel"
+
+#: ../ui/mainmenu.cpp:89
 msgid "Exit Game"
-msgstr "Avsluta Spel"
+msgstr "Avsluta spel"
 
-#: ../ui/mainmenu.cpp:75
+#: ../ui/skills.h:78
+msgid "Experience"
+msgstr "Erfarenhet"
+
+#: ../ui/skills.h:265
+msgid "Fishing"
+msgstr "Fiske"
+
+#: ../ui/skills.h:259
+msgid "Fist Fighting"
+msgstr "Knytnävesskicklighet"
+
+#: ../gm_mainmenu.cpp:505
+msgid ""
+"For more information take a look at the threads in the\n"
+"forums at otfans.net."
+msgstr ""
+"För mer information, ta en titt på trådar i forumet\n"
+"på otfans.net."
+
+#: ../ui/charlist.h:147
+msgid "Free Account"
+msgstr "Gratiskonto"
+
+#: ../ui/optionsgraphics.h:80
+msgid "Fullscreen"
+msgstr "Fullskärmsläge"
+
+#: ../ui/optionsui.cpp:92
+msgid ""
+"Fullscreen decides whether or not the client will\n"
+"be taking the entire screen.\n"
+"\n"
+"Available resolutions shows detected resolutions on\n"
+"your computer that the client can use while in fullscreen."
+msgstr ""
+"Fullskärmsläget beslutar om klienten kommer ta upp hela\n"
+"skärmen eller inte.\n"
+"\n"
+"Tillgänliga upplösningar visar upptäckta upplösningar på\n"
+"din dator som klienten kan använda medan i fullskärmsläge."
+
+#: ../ui/options.h:83
+msgid "General"
+msgstr "Generellt"
+
+#: ../ui/optionsgeneral.h:64
+msgid "General Options"
+msgstr "Generella Inställningar"
+
+#: ../ui/options.h:90
+msgid "Graphics"
+msgstr "Grafik"
+
+#: ../ui/optionsgraphics.h:73
+msgid "Graphics Options"
+msgstr "Grafikinställningar"
+
+#: ../ui/charlist.h:149
+msgid "Gratis Premium Account"
+msgstr "Gratis Premiekonto"
+
+#: ../ui/uioutfit.cpp:56
+msgid "Head"
+msgstr "Huvud"
+
+#: ../ui/health.h:56
+msgid "Health"
+msgstr "Hälsa"
+
+#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:160 ../gm_mainmenu.cpp:347
+#: ../ui/optionsconsole.h:121
+msgid "Help"
+msgstr "Hjälp"
+
+#: ../ui/optionsui.cpp:82
+msgid "Help not done."
+msgstr "Hjälpsektionen är inte klar."
+
+#: ../ui/skills.h:119
+msgid "Hit Points"
+msgstr "Hälsopoäng"
+
+#: ../ui/options.h:104
+msgid "Hotkeys"
+msgstr "Snabbtangenter"
+
+#: ../ui/login.h:91
+msgid ""
+"If you don't have\n"
+"an account yet:"
+msgstr ""
+"Om du inte har\n"
+"ett konto än:"
+
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:336
 msgid "Info"
 msgstr "Info"
 
-#: ../ui/mainmenu.cpp:52
-msgid "Network Options"
-msgstr "N�tverk Val"
+#: ../gm_mainmenu.cpp:545
+msgid "Information"
+msgstr "Information"
 
-#: ../ui/mainmenu.cpp:63
+#: ../ui/uiinventory.h:55
+msgid "Inventory"
+msgstr "Inventarie"
+
+#: ../ui/skills.h:93
+msgid "Level"
+msgstr "Nivå"
+
+#: ../gm_mainmenu.cpp:372
+msgid "Logging in"
+msgstr "Loggar in"
+
+#: ../ui/uiinventory.cpp:170
+msgid "Look at"
+msgstr "Titta på"
+
+#: ../ui/skills.h:202
+msgid "Magic Level"
+msgstr "Maginivå"
+
+#: ../ui/skills.h:134
+msgid "Mana"
+msgstr "Mana"
+
+#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:531
+msgid "Message of the Day"
+msgstr "Dagens Meddelande"
+
+#: ../ui/uishop.cpp:124
+msgid "Money:"
+msgstr "Pengar:"
+
+#: ../ui/options.h:164
+msgid "Motd"
+msgstr "Motd"
+
+#: ../ui/itemmove.h:61
+msgid "Move Objects"
+msgstr "Flytta Objekt"
+
+#: ../ui/uishop.cpp:31
+msgid "NPC Trade"
+msgstr "NPC Handel"
+
+#: ../ui/options.h:111
+msgid "Network"
+msgstr "Nätverk"
+
+#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:67
+msgid "Network Options"
+msgstr "Nätverksinställningar"
+
+#: ../ui/optionsnetwork.h:105
+msgid "OT Encryption Key"
+msgstr "OT-enkryptionsnyckel"
+
+#: ../ui/options.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
+#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
+#: ../ui/itemmove.h:100
+msgid "Ok"
+msgstr "Ok"
+
+#: ../ui/optionsui.cpp:112
+msgid ""
+"OpenGL is a 3D hardware-accelerated graphical library.\n"
+"  To make use of it, make sure you have latest graphic card\n"
+"  drivers. Those provided by Microsoft will be insufficient.\n"
+"  Due to SDL-centric design, OpenGL was not given much thought\n"
+"  and is currently not recommended since it will be much slower\n"
+"  on most laptops and perhaps on many desktops.\n"
+msgstr ""
+"OpenGL är ett 3D hårdvaruacceleratgrafikbibliotek.\n"
+"  För att utnyttja det, se till att ha de senaste grafikkortsdrivrutinerna\n"
+"  De som ges ut utav Microsoft kommer inte att räcka.\n"
+"  På grund av SDL-designen så gavs inte OpenGL mycket åtanke\n"
+"  och är för tillfället inte rekommenderat för det blir mycket långsammare\n"
+"  På de flesta bärbara datorer, och kanske även stationära datorer.\n"
+
+#: ../ui/mainmenu.cpp:66 ../ui/options.h:76
 msgid "Options"
-msgstr "Val"
+msgstr "Inställningar"
+
+#: ../ui/login.h:76
+msgid "Password:"
+msgstr "Lösenord:"
+
+#: ../ui/uioutfit.cpp:94
+msgid ""
+"Pick an outfit and choose colors for parts of\n"
+"your character's avatar.\n"
+"Addons are activated by ticking the appropriate box.\n"
+"To activate particular addon, premium players can\n"
+"solve various quests."
+msgstr ""
+"Välj ett utsende och välj färg för delar av\n"
+"din karaktärs avatar.\n"
+"Tillägg är aktiverade genom att klicka i lämplig ruta.\n"
+"För att aktiva ett tillägg kan premiespelare\n"
+"lösa olika uppdrag."
+
+#: ../ui/charlist.h:152
+msgid "Premium Account"
+msgstr "Premiekonto"
+
+#: ../ui/uishop.cpp:112
+msgid "Price:"
+msgstr "Pris:"
+
+#: ../ui/uioutfit.cpp:65
+msgid "Primary"
+msgstr "Primär"
+
+#: ../gm_mainmenu.cpp:319
+msgid "Programmed by"
+msgstr "Programmerat av"
+
+#: ../ui/optionsnetwork.h:109 ../ui/optionsnetwork.h:111
+#: ../ui/optionsnetwork.h:113 ../ui/optionsnetwork.h:115
+#: ../ui/optionsnetwork.h:117 ../ui/optionsnetwork.h:119
+#: ../ui/optionsnetwork.h:121 ../ui/optionsnetwork.h:123
+msgid "Protocol"
+msgstr "Protokoll"
+
+#: ../gm_mainmenu.cpp:399
+msgid "Protocol detection failed"
+msgstr "Protokolldetektionen misslyckades"
+
+#: ../ui/optionsui.cpp:118
+msgid ""
+"RECOMMENDED: Choose SDL. But, try what works better for you.\n"
+"\n"
+"To apply graphical engine change, you need to restart\n"
+msgstr ""
+"REKOMMENDERAT: Välj SDL. Men testa och välj det som fungerar för dig\n"
+"\n"
+"För att versktälla ändring utav grafikmotor så krävs en omstart\n"
+
+#: ../ui/optionsui.cpp:319
+msgid "Restart is required to apply engine change."
+msgstr "Omstart krävs för att verkställa ändringen utav grafikmotor."
+
+#: ../ui/optionsui.cpp:108
+msgid ""
+"SDL 1.2 is a 2D software rendering library. It should be\n"
+"  slowest, but since it is the most maintained engine, it runs\n"
+"  at reasonable speed and even faster than OpenGL engine, with\n"
+"  fewer glitches. That can, of course, change anytime.\n"
+msgstr ""
+"SDL 1.2 är ett 2D programvarorendreringsbibliotek. Det är\n"
+"  troligtvis långsammast, men eftersom det är den mest underhållda\n"
+"  motorn, den körs relativt snabbt, snabbare än OpenGL motorn samt\n"
+"  med färre problem. Det kan, såklart, ändras när som helst.\n"
+
+#: ../ui/uioutfit.cpp:74
+msgid "Secondary"
+msgstr "Sekundär"
+
+#: ../ui/charlist.h:57
+msgid "Select Character"
+msgstr "Välj Karaktär"
+
+#: ../ui/charlist.h:71
+msgid "Select character:"
+msgstr "Välj karaktär:"
+
+#: ../ui/uishop.cpp:66
+msgid "Sell"
+msgstr "Sälj"
+
+#: ../ui/optionsnetwork.h:71
+msgid "Server address:"
+msgstr "Serveradress:"
+
+#: ../ui/optionsui.cpp:147
+msgid ""
+"Server name is the IP address or hostname of the\n"
+"login server.\n"
+"\n"
+"Port is the TCP port of the login server.\n"
+"\n"
+"You can also choose if you'd like to access OpenTibia\n"
+"servers, or a proprietary server. To access OpenTibia\n"
+"servers, turn on the OT Encryption Key option."
+msgstr ""
+"Servernamnet är IP-adressen eller hostnamnet av\n"
+"loginservern.\n"
+"\n"
+"Porten är TCP-porten av loginservern.\n"
+"\n"
+"Du kan också välja om du vill ha åtkomst till OpenTibia\n"
+"servrar, eller en vanlig serv er. För att komma åt OpenTibia\n"
+"servrar, sätt igång OT-enkryptionsnyckel inställningen."
+
+#: ../ui/optionsnetwork.h:86
+msgid "Server port:"
+msgstr "Server port:"
+
+#: ../mapui.cpp:527 ../ui/uioutfit.cpp:39
+msgid "Set Outfit"
+msgstr ""
+
+#: ../ui/options.h:150
+msgid ""
+"Set network options,\n"
+"such as server."
+msgstr ""
+
+#: ../ui/itemmove.h:74
+msgid ""
+"Set the number of \n"
+"items you want to move:"
+msgstr ""
+
+#: ../ui/skills.h:264
+msgid "Shielding"
+msgstr ""
+
+#: ../ui/optionsconsole.h:85
+msgid "Show Event Messages in Console"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:84
+msgid "Show Hints"
+msgstr "Visa Tips"
+
+#: ../ui/optionsconsole.h:79
+msgid "Show Info Messages in Console"
+msgstr "Visa Informationsmeddelanden i Konsollen"
+
+#: ../ui/optionsconsole.h:103
+msgid "Show Levels in Console"
+msgstr "Visa Nivå i Konsollen"
+
+#: ../ui/optionsgeneral.h:90
+msgid "Show Names of Creatures"
+msgstr "Visa Namn på Fiender"
+
+#: ../ui/optionsconsole.h:109
+msgid "Show Private Messages in Game Window"
+msgstr "Visa Privata Meddelanden i Spelfönstret"
+
+#: ../ui/optionsconsole.h:91
+msgid "Show Status Messages in Console"
+msgstr "Visa Statusmeddelanden i Konsollen"
+
+#: ../ui/optionsgeneral.h:96
+msgid "Show Textual Effects"
+msgstr "Visa Texteffekter"
+
+#: ../ui/optionsconsole.h:97
+msgid "Show Timestamps in Console"
+msgstr "Visa Tidsstämpel i Konsollen"
+
+#: ../ui/options.h:171
+msgid ""
+"Show the most recent\n"
+"Message of the Day"
+msgstr ""
+"Visa senaste\n"
+"Dagens meddelande"
+
+#: ../ui/skills.h:243
+msgid "Skill "
+msgstr "Färdighet "
+
+#: ../ui/skills.h:64
+msgid "Skills"
+msgstr "Färdigheter"
+
+#: ../ui/skills.h:149
+msgid "Soul Points"
+msgstr "Själspoäng"
+
+#: ../ui/skills.h:179
+msgid "Stamina"
+msgstr "Uthållighet"
+
+#: ../ui/skills.h:261
+msgid "Sword Fighting"
+msgstr "Svärdsskicklighet"
+
+#: ../ui/optionsui.cpp:123
+msgid ""
+"To choose maximum FPS (reducing the CPU and graphics card usage\n"
+"resulting in less power usage, quieter operation and reduced\n"
+"CPU temperature) use the scrollbar below. Note, though, FPS \n"
+"limiting is only approximate."
+msgstr ""
+"För att få ut maximal FPS (reducera CPU och grafikkortsanvändningen\n"
+"vilket resulterar i mindre kraftförbrukning, tystare verksamhet\n"
+"och minskad CPU temperatur) använd listen nedan. Notera dock att\n"
+"FPS-begränsningen bara är ungefär."
+
+#: ../ui/uiinventory.cpp:172
+msgid "Trade with"
+msgstr "Handla med"
+
+#: ../ui/charlist.h:91
+msgid "Unknown"
+msgstr "Okänd"
+
+#: ../ui/uiinventory.cpp:171
+msgid "Use"
+msgstr "Använd"
+
+#: ../gm_mainmenu.cpp:309
+msgid "Uses GLICT"
+msgstr "Använder GLICT"
+
+#: ../gm_mainmenu.cpp:311
+msgid "Uses OpenGL"
+msgstr "Använder OpenGL"
+
+#: ../gm_mainmenu.cpp:308
+msgid "Uses SDL"
+msgstr "Använder SDL"
+
+#: ../ui/optionsui.cpp:107
+msgid "We offer two graphical engines:\n"
+msgstr "Vi erbjuder två grafiska motorer:\n"
+
+#: ../gm_mainmenu.cpp:315
+msgid "[for info run with GL engine]\n"
+msgstr "[för information kör med GL motorn]\n"
+
+#: ../gm_mainmenu.cpp:308
+msgid "compiled with"
+msgstr "kompilerad med"
+
+#: ../ui/charlist.h:152
+msgid "days left"
+msgstr "dagar kvar"
+
+#: ../gm_mainmenu.cpp:322
+msgid "with inactive developers"
+msgstr "med inaktiva utvecklare"

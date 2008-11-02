@@ -240,6 +240,7 @@ void Font::addColor(float r, float g, float b)
         s->addColor(r,g,b);
 
         m_colorized[m_currentcolor] = s;
+        m_currentcolorized = m_colorized[m_currentcolor];
     }
 }
 

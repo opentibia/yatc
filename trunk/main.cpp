@@ -35,6 +35,7 @@ unsigned int MAXFPS=50;
 
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_framerate.h>
 #include <GLICT/globals.h>
 #include <sstream>
 #include <stdlib.h>
@@ -71,6 +72,8 @@ uint32_t g_frameTime = 0;
 uint32_t g_frameDiff = 0;
 
 int g_frames;
+
+FPSmanager g_fpsmgr; // for sdl_gfx's fps management functions
 
 void onKeyDown(const SDL_Event& event)
 {
@@ -404,10 +407,14 @@ int main(int argc, char *argv[])
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Skin has been loaded\n");
 
 
-        resetDefaultCursor();
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Constructing gamemode...\n");
+		resetDefaultCursor();
 		g_game = new GM_MainMenu();
 		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Initializing framerate manager...\n");
+        SDL_initFramerate(&g_fpsmgr);
+        SDL_setFramerate(&g_fpsmgr,MAXFPS);
 
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
@@ -468,10 +475,8 @@ int main(int argc, char *argv[])
 
 
             if (MAXFPS) {
-                if(g_frameTime - beginticks < 1000/MAXFPS - 10){
-                    SDL_Delay(1000/MAXFPS - (g_frameTime - beginticks) - 10);
-                }
-                while ((int)abs(((int)SDL_GetTicks()) - (int)beginticks) < (int)(1000/MAXFPS));
+                SDL_framerateDelay(&g_fpsmgr);
+
             }
 
 

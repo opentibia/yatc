@@ -74,8 +74,8 @@ void Engine::font_render(const char* txt, const void* font, float fontsize, floa
 				cy += f->getHeight('\n');
 				linessofar += 1.;
 				sizesofar = 0;
-				if (*t == '\n' && *(t + 1) == '\r' ||
-					*t == '\r' && *(t + 1)=='\n' )
+				if ((*t == '\n' && *(t + 1) == '\r') ||
+					(*t == '\r' && *(t + 1)=='\n' ))
 					t++;
 				break;
 		}
@@ -107,12 +107,21 @@ float Engine::font_size(const char* txt, const void* font, float fontsize)
 	return maxsize;
 }
 
+void Engine::font_color(const void* font, glictColor &col){
+    Font* f = (Font*)font;
+    f->resetColor();
+    f->addColor(col.r,col.g,col.b);
+
+}
+
+
 // set the callbacks up in the constructor
 Engine::Engine()
 {
 	glictGlobals.paintrectCallback = Engine::draw_rectangle;
 	glictGlobals.paintrectlinesCallback = Engine::draw_rectangle_lines;
 	glictGlobals.enableGlTranslate = false;
+	glictGlobals.windowTitleColor.r = glictGlobals.windowTitleColor.g = glictGlobals.windowTitleColor.b = 0.6;
 
 	doResize(options.w, options.h);
 
@@ -177,6 +186,11 @@ void Engine::initFont(glictFont **fnt, const char *fontname)
 	}
 	(*fnt)->SetRenderFunc(Engine::font_render);
 	(*fnt)->SetSizeFunc(Engine::font_size);
+	#if (GLICT_APIREV >= 85)
+        (*fnt)->SetColorFunc(Engine::font_color);
+    #else
+        #warning GLICT font coloring is not available. Upgrade to GLICT APIREV 85+.
+    #endif
 }
 
 void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t color)

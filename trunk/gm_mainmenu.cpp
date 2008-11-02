@@ -224,11 +224,16 @@ void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* f
 	mb->SetCaption(title);
 	mb->SetMessage(mbox);
 
-	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35);
+	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35 + 10 + 10);
 	int size1 = (int)glictFontSize(title, "system");
 	int size2 = (int)glictFontSize(mbox, "system");
-	mb->SetWidth(MAX(size1, size2));
+	mb->SetWidth(MAX(size1, size2) + 10 + 10);
 	mb->Focus(NULL);
+    #if (GLICT_APIREV >= 85)
+	mb->SetTextOffset(10,10);
+	#else
+	#warning For nicer msgboxes get GLICT APIREV 85+.
+	#endif
 
 	mb->GetSize(&s);
 
@@ -371,6 +376,11 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ProtocolConfig::createLoginConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption());
 	m->winStatus.SetCaption(gettext("Logging in"));
 	m->winStatus.SetMessage(gettext("Connecting to the server..."));
+	#if (GLICT_APIREV >= 85)
+	m->winStatus.SetTextOffset(10,10);
+	#else
+	#warning For nicer msgboxes get GLICT APIREV 85+.
+	#endif
 	m->winStatus.SetWidth(320);
 	m->winStatus.SetEnabled(false);
 	m->centerWindow(&m->winStatus);

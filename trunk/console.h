@@ -28,6 +28,8 @@
 #include "stdinttypes.h"
 #include "gamecontent/enums.h"
 
+class glictPanel;
+
 class ConsoleEntry {
 	public:
 		ConsoleEntry(std::string text, TextColor_t c=TEXTCOLOR_WHITE)
@@ -63,12 +65,16 @@ class Console {
         const std::string& getSpeakerName() const { return m_speakername; }
         uint32_t getChannelId()  const { return m_channelid; }
         int getConsoleId() const {return m_consoleid;}
+
+        void setAssignedButton(glictPanel *pnl) { m_assignedButton = pnl; }
+        glictPanel *getAssignedButton() const { return m_assignedButton; }
 	private:
 		std::vector <ConsoleEntry> m_content;
 		SDL_Surface *m_surface;
 		std::string m_speakername;
 		uint32_t m_channelid;
 		int m_consoleid;
+		glictPanel* m_assignedButton;
 };
 
 #endif

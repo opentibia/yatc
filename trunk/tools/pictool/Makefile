@@ -13,7 +13,7 @@ YATC.pic: pictool ../../yatc.bmp ../../inv.bmp
 	./pictool YATC.pic 0 ../../yatc.bmp --topic
 	./pictool YATC.pic 1 ../../inv.bmp --topic
 	./pictool YATC.pic 3 ../../ui.bmp --topic
-	cp YATC.pic Tibia.pic
+#	cp YATC.pic Tibia.pic
 	cp YATC.pic ../../Tibia.pic
 
 main.c: ../../sprdata.h
