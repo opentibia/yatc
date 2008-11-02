@@ -442,19 +442,10 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         }
     } else if (event.button.button == SDL_BUTTON_LEFT) {
         g_lastmousebutton = event.button.button;
-        if (m_popup) { // handle popup menu before attempting anything else
+        if (m_popup && !m_popup->wantsDeath()) { // handle popup menu before attempting anything else
             printf("Handling left mousedn on popup\n");
-            if (m_popup->cursorInside(pos.x,pos.y)) {
-                if (event.button.state == SDL_PRESSED){
-                    desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0, NULL);
-                } else  {// released
-                    desktop.CastEvent(GLICT_MOUSEUP, &pos, 0, NULL);
-                }
-            }
-            else {
-                printf("outside\n");
-                m_popup->prepareToDie();
-            }
+
+            m_popup->mouseClick(pos.x, pos.y);
         } else
         if (event.button.state == SDL_PRESSED){
             if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
@@ -547,12 +538,12 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
         } else
         if (event.button.state == SDL_RELEASED) {
-            bool hadpopup = m_popup;
+            bool hadpopup = (m_popup && !m_popup->wantsDeath());
             if (!desktop.CastEvent(GLICT_MOUSECLICK, &pos, 0)) {
                 m_mapui.handlePopup(pos.x, pos.y);
             }
 
-            if (m_popup && hadpopup ) { // if we have a popup AND it existed even before casting of click
+            if (hadpopup) { // if we have a popup AND it existed even before casting of click
                 performPopup(NULL,NULL,NULL); // destroy it please
             }
 
@@ -927,11 +918,16 @@ void GM_Gameworld::msgBox (const char* mbox, const char* title, glictContainer* 
 	mb->SetCaption(title);
 	mb->SetMessage(mbox);
 
-	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35);
+	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35 + 10 + 10);
 	int size1 = (int)glictFontSize(title, "system");
 	int size2 = (int)glictFontSize(mbox, "system");
-	mb->SetWidth(MAX(size1, size2));
+	mb->SetWidth(MAX(size1, size2) + 10 + 10);
 	mb->Focus(NULL);
+    #if (GLICT_APIREV >= 85)
+	mb->SetTextOffset(10,10);
+	#else
+	#warning For nicer msgboxes get GLICT APIREV 85+.
+	#endif
 
 	mb->GetSize(&s);
 
@@ -955,7 +951,7 @@ void GM_Gameworld::MBOnDismiss(glictPos* pos, glictContainer* caller)
 	//delete caller;
 }
 
-void GM_Gameworld::onSetOutfit() {
+void GM_Gameworld::onSetOutfit(PopupItem *parent) {
     // happens when user clicks on "Set Outfit" in right click popup menu
     GM_Gameworld *g = (GM_Gameworld*)g_game;
     g->m_protocol->sendRequestOutfit();

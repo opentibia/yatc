@@ -55,7 +55,7 @@ public:
     static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 
     // user interface reactions
-    static void onSetOutfit();
+    static void onSetOutfit(struct PopupItem *parent);
 
     // net/gamecontent reactions
 	virtual void onConnectionClosed();

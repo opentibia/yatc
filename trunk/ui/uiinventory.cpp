@@ -165,12 +165,47 @@ void pnlInventory_t::inventoryItemMakePopup(Popup*popup,void*owner,void*arg){
     pnlInventory_t* p = (pnlInventory_t*)owner;
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     slots_t slotid = ((slots_t)(VOIDP2INT(arg)));
+    Item* item = Inventory::getInstance().getItem(slotid);
+
+    if (!item) {
+        popup->prepareToDie();
+        return;
+    }
 
     std::stringstream look,use,trade;
     look << gettext("Look at") << " (Shift)";
-    use << gettext("Use") << " (Ctrl)";
+    if (!item->isExtendedUseable())
+        use << gettext("Use") << " (Ctrl)";
+    else
+        use << gettext("Use with...") << " (Ctrl)";
     trade << gettext("Trade with") << " ...";
-    popup->addItem(look.str(),NULL);
-    popup->addItem(use.str(),NULL);
-    popup->addItem(trade.str(),NULL);
+    popup->addItem(look.str(),onLookAt,(void*)slotid);
+    popup->addItem(use.str(),onUse,(void*)slotid);
+    popup->addItem(trade.str(),onTrade,(void*)slotid);
 }
+
+void pnlInventory_t::onLookAt(PopupItem* pi){
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    slots_t slotid = ((slots_t)(VOIDP2INT(pi->data)));
+    Position p(0xFFFF, slotid, 0);
+    Item* item = Inventory::getInstance().getItem(slotid);
+
+    gw->m_protocol->sendLookItem(p,item->getID(), 0);
+}
+void pnlInventory_t::onUse(PopupItem* pi){
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    slots_t slotid = ((slots_t)(VOIDP2INT(pi->data)));
+    Position p(0xFFFF, slotid, 0);
+    Item* item = Inventory::getInstance().getItem(slotid);
+
+    if (!item->isExtendedUseable()) {
+        gw->m_protocol->sendUseItem (p, item->getID(), 0);
+    } else {
+        gw->beginExtendedUse(item, 0, p);
+    }
+}
+void pnlInventory_t::onTrade(PopupItem*){
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    gw->msgBox("This functionality is not yet finished","TODO");
+}
+

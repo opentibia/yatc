@@ -78,6 +78,10 @@ public:
 	static void inventoryItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
     static void inventoryItemMakePopup(Popup*popup,void*owner,void*arg);
 
+    static void onLookAt(struct PopupItem*);
+    static void onUse(struct PopupItem*);
+    static void onTrade(struct PopupItem*);
+
 	/*glictContainer*/glictWindow panel; // it's a container, so it's transparent
 	glictPanel pnlItem[10];
 
