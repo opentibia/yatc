@@ -37,10 +37,6 @@ private:
 	glictSkinner btn;
 	skinImage *bthtl, *btht, *bthtr, *bthl, *bthc, *bthr, *bthbl, *bthb, *bthbr; // button highlighted
 	glictSkinner bth;
-	skinImage *txttl, *txtt, *txttr, *txtl, *txtc, *txtr, *txtbl, *txtb, *txtbr; // textbox
-	skinImage *chktl, *chkt, *chktr, *chkl, *chkc, *chkr, *chkbl, *chkb, *chkbr; // checkbox
-	skinImage *tmmtl, *tmmt, *tmmtr, *tmml, *tmmc, *tmmr, *tmmbl, *tmmb, *tmmbr; // tibia main menu panel
-	skinImage *invtl, *invt, *invtr, *invl, *invc, *invr, *invbl, *invb, *invbr; // inventory item panel bg
 	skinImage *scutl, *scut, *scutr, *scul, *scuc, *scur, *scubl, *scub, *scubr; // scrollbar up button
 	glictSkinner scu;
 	skinImage *shutl, *shut, *shutr, *shul, *shuc, *shur, *shubl, *shub, *shubr; // scrollbar up button, highlighted
@@ -61,8 +57,18 @@ private:
 	glictSkinner scb;
 	skinImage *scptl, *scpt, *scptr, *scpl, *scpc, *scpr, *scpbl, *scpb, *scpbr; // scrollbar panel bg
 	glictSkinner scp;
+
+
+	skinImage *txttl, *txtt, *txttr, *txtl, *txtc, *txtr, *txtbl, *txtb, *txtbr; // textbox
+	skinImage *chktl, *chkt, *chktr, *chkl, *chkc, *chkr, *chkbl, *chkb, *chkbr; // checkbox
+	skinImage *tmmtl, *tmmt, *tmmtr, *tmml, *tmmc, *tmmr, *tmmbl, *tmmb, *tmmbr; // tibia main menu panel
+	skinImage *invtl, *invt, *invtr, *invl, *invc, *invr, *invbl, *invb, *invbr; // inventory item panel bg
+	skinImage *cbctl, *cbct, *cbctr, *cbcl, *cbcc, *cbcr, *cbcbl, *cbcb, *cbcbr; // console button container bg
+	skinImage *cbatl, *cbat, *cbatr, *cbal, *cbac, *cbar, *cbabl, *cbab, *cbabr; // console button active bg
+	skinImage *cbptl, *cbpt, *cbptr, *cbpl, *cbpc, *cbpr, *cbpbl, *cbpb, *cbpbr; // console button passive bg
+
 public:
-	glictSkinner chk, tmm, inv;
+	glictSkinner chk, tmm, inv, cbc, cba, cbp;
 	glictSkinner txt;
 
 	friend class skinImage;

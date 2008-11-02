@@ -111,7 +111,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 			if (!transparent)
 				break;
 
-			debugprintf(".%c", ((i%32 == 31) ? '\n' : 0));
+/*			debugprintf(".%c", ((i%32 == 31) ? '\n' : 0));*/
 
 			i++;
 			chunksize++;
@@ -138,7 +138,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 				break;
 
 
-			debugprintf("%c%c", ((color/256) % 200 + 32), ((i%32 == 31) ? '\n' : 0));
+/*			debugprintf("%c%c", ((color/256) % 200 + 32), ((i%32 == 31) ? '\n' : 0));*/
 
 			fwrite(rgba, 3, 1, f);
 

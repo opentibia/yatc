@@ -102,7 +102,7 @@ int picdetails (const char* filename) {
 	printf("imagecount %d\n", fh.imgcount);
 	for(i = 0; i < fh.imgcount ; i++){
 		fread(&ph, sizeof(ph), 1, f);
-		printf("img%d width %d height %d bg rgb #%02x%02x%02x\n", i, ph.width, ph.height, ph.unk1, ph.unk2, ph.unk3);
+		 printf("img%d width %d height %d bg rgb #%02x%02x%02x\n", i, ph.width, ph.height, ph.unk1, ph.unk2, ph.unk3);
 		for(j = 0; j<ph.height; j++){
 			for(k = 0; k < ph.width; k++){
 				fread(&sprloc, sizeof(sprloc), 1, f);
@@ -124,7 +124,7 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 	void *data;
 	int i,j,k;
 	fi = fopen(filename, "rb");
-    fo = fopen("__tmp__.pic","wb+");
+	fo = fopen("__tmp__.pic","wb+");
 
 
 	if (!fi || !fo)
@@ -197,13 +197,13 @@ int writepic(const char* filename, int index, SDL_Surface *s){
 			fwrite(&ph, sizeof(ph), 1, fo);
 			for(j = 0; j < ph.height; j++){
 				for(k = 0; k < ph.width; k++){
-					printf("Placing %d %d on %d\n", j, k, sproffset);
+					/*printf("Placing %d %d on %d\n", j, k, sproffset);*/
 					fwrite(&sproffset, sizeof(sproffset), 1, fo);
 
 					continuationposo = ftell(fo);
 					fseek(fo, sproffset, SEEK_SET);
 					writesprite(fo, s, k * 32, j*32, &datasize);
-					printf("Its size is: %d\n", datasize);
+					/*printf("Its size is: %d\n", datasize);*/
 
 					fseek(fo, continuationposo, SEEK_SET);
 					sproffset += datasize+2;
@@ -254,7 +254,7 @@ int readpic (const char* filename, int index, SDL_Surface **sr) {
 			SDL_FillRect(s, NULL, magenta);
 
 			/* FIXME (ivucica#4#) Above statement is potentially unportable to architectures with
-			 * different endianess. Lilitputtans would be happier if we took a look at SDL
+			 * different endianess. Lilliputtans would be happier if we took a look at SDL
 			 * docs and corrected this. */
 
 			for(j = 0; j < ph.height; j++){

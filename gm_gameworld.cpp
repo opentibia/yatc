@@ -105,10 +105,13 @@ GM_Gameworld::GM_Gameworld()
 	winMove.window.SetVisible(false);
 
     desktop.AddObject(&pnlConsoleButtonContainer);
-    pnlConsoleButtonContainer.SetBGActiveness(false);
+    pnlConsoleButtonContainer.SetSkin(&g_skin.cbc);
+    //pnlConsoleButtonContainer.SetBGActiveness(false);
 
     createConsole(); // add default console
 	m_activeconsole = getDefaultConsole();
+	pnlConsoleButtons[0]->SetSkin(&g_skin.cba);
+	pnlConsoleButtons[0]->SetCaptionColor(0.7,0.7,0.7,1.0);
 
 	m_startTime = time(NULL);
 
@@ -172,7 +175,7 @@ void GM_Gameworld::doResize(float w, float h)
 
     pnlConsoleButtonContainer.SetPos(0,glictGlobals.h-150-14);
     pnlConsoleButtonContainer.SetWidth(glictGlobals.w);
-    pnlConsoleButtonContainer.SetHeight(14);
+    pnlConsoleButtonContainer.SetHeight(18);
 
 	DEBUGPRINT(0,0,"Updating scene\n");
 	updateScene(); // FIXME (ivucica#2#) potentially dangerous during call inside constructor (map possibly not loaded yet) -- gotta check with mips if we may draw map while it still isn't received from server via initial 0x64 packet
@@ -764,11 +767,14 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
 
 
     glictPanel* p = new glictPanel;
+    nc->setAssignedButton(p);
     p->SetCustomData(nc);
-    p->SetHeight(14);
+    p->SetHeight(18);
     p->SetCaption(s.str().c_str());
-    p->SetWidth(g_engine->sizeText(s.str().c_str(),"system"));
+    p->SetWidth(96); //g_engine->sizeText(s.str().c_str(),"system"));
+    p->SetTextOffset(96 / 2 - g_engine->sizeText(s.str().c_str(),"system") / 2, 4);
     p->SetBGColor(.2,.2,.2,1.);
+    p->SetCaptionColor(0.5,0.5,0.5);
     int sum=0;
     for (std::vector<glictPanel*>::iterator it = pnlConsoleButtons.begin(); it != pnlConsoleButtons.end(); it++) {
         (*it)->SetPos(sum,0);
@@ -776,6 +782,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     }
     p->SetPos(sum,0);
     p->SetOnClick(pnlConsoleButton_OnClick);
+    p->SetSkin(&g_skin.cbp);
     pnlConsoleButtonContainer.AddObject(p);
     pnlConsoleButtons.push_back(p);
 
@@ -958,4 +965,12 @@ void GM_Gameworld::openOutfitWindow(const Outfit_t& current, const std::list<Ava
     printf("Got outfit notification\n");
 
     g->winOutfit.openSelf(current, available);
+}
+
+void GM_Gameworld::setActiveConsole(Console* i){
+    m_activeconsole->getAssignedButton()->SetSkin(&g_skin.cbp);
+    m_activeconsole->getAssignedButton()->SetCaptionColor(0.5,0.5,0.5);
+    m_activeconsole = i;
+    m_activeconsole->getAssignedButton()->SetSkin(&g_skin.cba);
+    m_activeconsole->getAssignedButton()->SetCaptionColor(0.7,0.7,0.7);
 }

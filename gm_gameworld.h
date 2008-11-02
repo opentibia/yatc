@@ -117,7 +117,7 @@ private:
     void createConsole(const std::string& speaker) { createConsole(0,speaker); }
 
     Console* getActiveConsole() const {return m_activeconsole;}
-    void setActiveConsole(Console* i) {m_activeconsole = i;}
+    void setActiveConsole(Console* i);
 
 
     /* PRIMARY GUI */

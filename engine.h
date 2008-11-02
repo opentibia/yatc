@@ -93,6 +93,8 @@ class Engine
 		static void draw_rectangle_lines(float left, float right, float top, float bottom, GLICTCOLORCONST glictColor &col);
 		static void font_render(const char* txt, const void* font, float fontsize, float x, float y);
 		static float font_size(const char* txt, const void* font, float fontsize);
+		static void font_color(const void* font, glictColor &col);
+
 
 		int m_width;
 		int m_height;
