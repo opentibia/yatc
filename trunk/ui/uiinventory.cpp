@@ -164,7 +164,7 @@ void pnlInventory_t::inventoryItemOnMouseDown(glictPos *relmousepos,
 void pnlInventory_t::inventoryItemMakePopup(Popup*popup,void*owner,void*arg){
     pnlInventory_t* p = (pnlInventory_t*)owner;
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-    slots_t slotid = ((slots_t)((int)arg));
+    slots_t slotid = ((slots_t)(VOIDP2INT(arg)));
 
     std::stringstream look,use,trade;
     look << gettext("Look at") << " (Shift)";

@@ -24,6 +24,11 @@
 
 #include <string>
 #include <sstream>
+#if __WORDSIZE != 64
+    #define VOIDP2INT(x) ((int)(x))
+#else
+    #define VOIDP2INT(x) (   static_cast<int>(reinterpret_cast<long long>(x)) )
+#endif
 void str_replace(std::string &s, const std::string& what, const std::string& with);
 void NativeGUIError(const char* text, const char *title);
 bool fileexists(const char* filename);
