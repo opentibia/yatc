@@ -10,7 +10,7 @@ echo "These are accessible from our svn:"
 echo "  ..../svnroot/yatc/lib/fetcher-stdio/"
 echo "Put them into lib/ in current folder"
 echo "______________________"
-echo "Now press space to continue."
+echo "Now press enter to continue."
 pause
 read
 
