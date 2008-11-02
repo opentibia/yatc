@@ -28,16 +28,16 @@ Popup::~Popup() {
     }
 }
 
-void Popup::addItem(const std::string &txt, popupCallback_t cb) {
+void Popup::addItem(const std::string &txt, popupCallback_t cb, void* data) {
     PopupItem* pi = new PopupItem;
     pi->pnl.SetCustomData(pi);
     pi->txt = txt;
     pi->cb = cb;
+    pi->data = data;
     pi->pnl.SetCaption(txt);
     pi->pnl.SetBGActiveness(false);
     pi->pnl.SetHeight(14);
     pi->pnl.SetWidth(150);
-    pi->pnl.SetOnClick(onClick);
     pi->pnl.SetFont("aafont");
     pi->pnl.SetFocusable(false);
     pi->pnl.SetBGColor(.4, .4, .4, 1.);
@@ -53,12 +53,7 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb) {
 
 }
 
-void Popup::onClick(glictPos* pos, glictContainer *caller) {
-    PopupItem* pi = (PopupItem*)caller->GetCustomData();
-    if (pi->cb)
-        pi->cb();
-    pi->parent->prepareToDie();
-}
+
 
 void Popup::mouseOver(float x, float y) {
     for (std::vector<PopupItem*>::iterator it = items.begin(); it != items.end(); it++) {
@@ -68,13 +63,24 @@ void Popup::mouseOver(float x, float y) {
     }
     if (cursorInside(x,y)) {
         y -= list.GetY();
-        y /= 12;
+        y /= 14;
         if (y < items.size())
             items[y]->pnl.SetBGActiveness(true);
         else
-            printf("Warning: popup trid to highligh nonexisting listitem\n");
+            printf("Warning: popup tried to highligh nonexisting listitem\n");
     }
 
+}
+
+void Popup::mouseClick(float x, float y) {
+    if (cursorInside(x,y)) {
+        y -= list.GetY();
+        y /= 14;
+        if (y < items.size())
+            if (items[y]->cb)
+                items[y]->cb(items[y]);
+    }
+    prepareToDie();
 }
 
 bool Popup::cursorInside(float x, float y) {

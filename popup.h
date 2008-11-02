@@ -45,13 +45,14 @@
 #include <GLICT/panel.h>
 #include <GLICT/list.h>
 
-typedef void (*popupCallback_t)() ;
+typedef void (*popupCallback_t)(struct PopupItem *parent) ;
 
 struct PopupItem {
     std::string txt;
 
     glictPanel pnl;
     popupCallback_t cb;
+    void* data;
     class Popup* parent;
 };
 
@@ -60,9 +61,11 @@ public:
     Popup();
     ~Popup();
 
-    void addItem(const std::string &txt, popupCallback_t cb);
+    void addItem(const std::string &txt, popupCallback_t cb, void* data=NULL);
     void mouseOver(float x, float y);
-    static void onClick(glictPos* pos, glictContainer *caller);
+    //static void onClick(glictPos* pos, glictContainer *caller);
+    void mouseClick(float x, float y);
+
 
     glictList* getGlictList() { return &list; }
 
