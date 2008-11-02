@@ -1,6 +1,12 @@
+# YATC Translation to Brazilian
+# Copyright (C) 2008 OpenTibia Team
+# This file is distributed under the same license as the YATC package.
+# Heliton <helitonnordt@gmail.com>, jakexblaster <kinhocunha@gmail.com>, 2008.
+#
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: YATC 0.2.2\n"
+"Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-24 00:02+0200\n"
 "PO-Revision-Date: \n"
