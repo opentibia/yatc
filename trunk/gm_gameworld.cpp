@@ -111,7 +111,11 @@ GM_Gameworld::GM_Gameworld()
     createConsole(); // add default console
 	m_activeconsole = getDefaultConsole();
 	pnlConsoleButtons[0]->SetSkin(&g_skin.cba);
+	#if (GLICT_APIREV>=85)
 	pnlConsoleButtons[0]->SetCaptionColor(0.7,0.7,0.7,1.0);
+	#else
+	#warning No support for setcaptioncolor before glict apirev 85
+	#endif
 
 	m_startTime = time(NULL);
 
@@ -763,9 +767,13 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     p->SetHeight(18);
     p->SetCaption(s.str().c_str());
     p->SetWidth(96); //g_engine->sizeText(s.str().c_str(),"system"));
-    p->SetTextOffset(96 / 2 - g_engine->sizeText(s.str().c_str(),"system") / 2, 4);
     p->SetBGColor(.2,.2,.2,1.);
+    #if (GLICT_APIREV >= 85)
+    p->SetTextOffset(96 / 2 - g_engine->sizeText(s.str().c_str(),"system") / 2, 4);
     p->SetCaptionColor(0.5,0.5,0.5);
+    #else
+	#warning No support for setcaptioncolor before glict apirev 85
+	#endif
     int sum=0;
     for (std::vector<glictPanel*>::iterator it = pnlConsoleButtons.begin(); it != pnlConsoleButtons.end(); it++) {
         (*it)->SetPos(sum,0);
@@ -965,8 +973,16 @@ void GM_Gameworld::openOutfitWindow(const Outfit_t& current, const std::list<Ava
 
 void GM_Gameworld::setActiveConsole(Console* i){
     m_activeconsole->getAssignedButton()->SetSkin(&g_skin.cbp);
+    #if (GLICT_APIREV >= 85)
     m_activeconsole->getAssignedButton()->SetCaptionColor(0.5,0.5,0.5);
+    #else
+	#warning No support for setcaptioncolor before glict apirev 85
+	#endif
     m_activeconsole = i;
     m_activeconsole->getAssignedButton()->SetSkin(&g_skin.cba);
+    #if (GLICT_APIREV >= 85)
     m_activeconsole->getAssignedButton()->SetCaptionColor(0.7,0.7,0.7);
+    #else
+	#warning No support for setcaptioncolor before glict apirev 85
+	#endif
 }
