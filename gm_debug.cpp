@@ -48,11 +48,11 @@ extern Connection* g_connection;
 
 extern bool g_running;
 
-void cb1() {
+void cb1(PopupItem*) {
     ((GM_Debug*)g_game)->msgBox("You have clicked on the \"Hello world\" menu item", "Yipee");
 }
 
-void cb2() {
+void cb2(PopupItem*) {
     ((GM_Debug*)g_game)->msgBox("You have clicked on the \"Noob\" menu item", "Yipee");
 }
 
