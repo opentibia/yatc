@@ -36,35 +36,36 @@ class Data_File_FetcherDialog: public wxDialog
         //(*Handlers(Data_File_FetcherDialog)
         void OnQuit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
-        void OnButton3Click(wxCommandEvent& event);
+        void OnBtnDownloadClick(wxCommandEvent& event);
         void OnIdle(wxIdleEvent& event);
         //*)
         void OnWorkerEvent(wxCommandEvent& event);
 
         //(*Identifiers(Data_File_FetcherDialog)
         static const long ID_STATICTEXT1;
-        static const long ID_BUTTON1;
+        static const long ID_BTNABOUT;
         static const long ID_STATICLINE1;
-        static const long ID_BUTTON2;
+        static const long ID_BTNQUIT;
+        static const long ID_STATICTEXT3;
+        static const long ID_GAUGE1;
         static const long ID_STATICTEXT2;
         static const long ID_TEXTCTRL1;
         static const long ID_TEXTCTRL2;
-        static const long ID_BUTTON3;
-        static const long ID_GAUGE1;
+        static const long ID_BTNDOWNLOAD;
         //*)
 
         //(*Declarations(Data_File_FetcherDialog)
-        wxStaticText* StaticText2;
-        wxButton* Button1;
-        wxGauge* Gauge1;
+        wxStaticText* LblStatus;
+        wxStaticText* LblTypeIn;
+        wxButton* BtnAbout;
         wxStaticText* StaticText1;
         wxBoxSizer* BoxSizer2;
-        wxButton* Button2;
-        wxButton* Button3;
+        wxGauge* GauProgress;
         wxStaticLine* StaticLine1;
-        wxTextCtrl* TextCtrl2;
         wxBoxSizer* BoxSizer1;
-        wxTextCtrl* TextCtrl1;
+        wxButton* BtnQuit;
+        wxTextCtrl* TxtVerMajor;
+        wxButton* BtnDownload;
         //*)
 
         DECLARE_EVENT_TABLE()

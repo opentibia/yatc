@@ -1,6 +1,6 @@
 /***************************************************************
  * Name:      Data_File_FetcherMain.cpp
- * Purpose:   Code for Application Frame
+ * Purpose:   Code for Application Frame; Fetching Code
  * Author:    Ivan Vucica (ivucica@gmail.com)
  * Created:   2008-10-27
  * Copyright: Ivan Vucica (http://www.objectnetworks.net/)
@@ -14,6 +14,12 @@
 #include <wx/protocol/http.h>
 #include <wx/thread.h>
 #include <wx/wfstream.h>
+#include <wx/stopwatch.h>
+#include <wx/zstream.h>
+#include <wx/tarstrm.h>
+#include <sstream>
+#include <iomanip>
+#include <memory>
 
 //(*InternalHeaders(Data_File_FetcherDialog)
 #include <wx/settings.h>
@@ -56,14 +62,15 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 
 //(*IdInit(Data_File_FetcherDialog)
 const long Data_File_FetcherDialog::ID_STATICTEXT1 = wxNewId();
-const long Data_File_FetcherDialog::ID_BUTTON1 = wxNewId();
+const long Data_File_FetcherDialog::ID_BTNABOUT = wxNewId();
 const long Data_File_FetcherDialog::ID_STATICLINE1 = wxNewId();
-const long Data_File_FetcherDialog::ID_BUTTON2 = wxNewId();
+const long Data_File_FetcherDialog::ID_BTNQUIT = wxNewId();
+const long Data_File_FetcherDialog::ID_STATICTEXT3 = wxNewId();
+const long Data_File_FetcherDialog::ID_GAUGE1 = wxNewId();
 const long Data_File_FetcherDialog::ID_STATICTEXT2 = wxNewId();
 const long Data_File_FetcherDialog::ID_TEXTCTRL1 = wxNewId();
 const long Data_File_FetcherDialog::ID_TEXTCTRL2 = wxNewId();
-const long Data_File_FetcherDialog::ID_BUTTON3 = wxNewId();
-const long Data_File_FetcherDialog::ID_GAUGE1 = wxNewId();
+const long Data_File_FetcherDialog::ID_BTNDOWNLOAD = wxNewId();
 //*)
 const long Data_File_FetcherDialog::ID_WORKEREVENT = wxNewId();
 
@@ -92,14 +99,60 @@ public:
         printf("Usao u dretvu\n");
         isdownloading = true;
 
-        if (!h->Connect(_("download.tibia.com"))) {
+        count = 0;
+        //h->SetHeader ( wxT("Accept") , wxT("text/*") );
+        //h->SetHeader ( wxT("User-Agent"), wxGetApp().GetAppName() );
+        h->SetTimeout ( 120 );
+
+        if (!h->Connect(_("download.tibia.com"),80)) {
             castEvent(2);
             isdownloading = false;
             wxThread::Sleep(100);
             return 0;
         }
 
-        h_stream = h->GetInputStream("/tibia831.tgz");
+
+
+        /*if (!h->IsConnected()) {
+            printf("Connection was not established\n");
+            castEvent(2);
+            isdownloading = false;
+            wxThread::Sleep(100);
+            return 0;
+        }*/
+
+        castEvent(7);
+
+
+        h_stream = h->GetInputStream(_("/tibia831.tgz"));
+        if (!h_stream) {
+            printf("Failed to send request\n");
+            castEvent(2);
+            isdownloading = false;
+            wxThread::Sleep(100);
+            return 0;
+        }
+
+
+        castEvent(8);
+
+        /*if (h->GetResponse() != 200) {
+            printf("Unexpected response: %d\n", h->GetResponse());
+            castEvent(6);
+            isdownloading = false;
+            wxThread::Sleep(100);
+            return 0;
+        }*/
+        {
+            wxCriticalSectionLocker locker(m_critsect);
+
+            wxString some_wxstring = h->GetHeader("Content-length");
+            contentlength = atoi(some_wxstring.c_str());
+            printf("Length: %d\n", contentlength);
+        }
+
+
+        unlink("tibia831.tgz");
 
         wxFileOutputStream fos("tibia831.tgz");
         if (!fos.IsOk()){
@@ -108,6 +161,7 @@ public:
             wxThread::Sleep(100);
             return 0;
         }
+        wxMilliClock_t lasttime = 0;
         do {
             char buf[1024];
             if (TestDestroy()) {
@@ -116,25 +170,90 @@ public:
                 wxThread::Sleep(100);
                 return 0;
             }
-            printf(",");fflush(stdout);
+            //printf(",");fflush(stdout);
             h_stream->Read(buf, sizeof(buf));
-            printf(".");fflush(stdout);
+            //printf(".");fflush(stdout);
             fos.Write(buf, h_stream->LastRead());
+
+            increaseCount(h_stream->LastRead());
+
+            if (wxGetLocalTimeMillis() - lasttime >= 50) {
+                lasttime = wxGetLocalTimeMillis();
+                castEvent(5);
+            }
+
         } while(h_stream->LastRead());
+
+
+        delete h_stream; h_stream = NULL;
+        delete h; h = NULL;
+
+
+        unpackNow();
+
 
         castEvent(1);
         wxThread::Sleep(100);
         isdownloading = false;
+
+
         return 0;
     }
 
-    int whichEvent() const { return eventtype;}
+    void increaseCount(int amount){
+        wxCriticalSectionLocker locker(m_critsect);
+        count += amount;
+    }
+
+    void unpackNow() {
+        wxFFileInputStream fis("tibia831.tgz");
+        wxZlibInputStream zlis(fis);
+        wxTarInputStream tis(zlis);
+
+        if (tis.CanRead()) {
+            printf("Unpack ready\n");
+        }
+
+        std::auto_ptr<wxTarEntry> entry;
+        while (entry.reset(tis.GetNextEntry()), entry.get() != NULL) {
+            // access meta-data
+            wxString name = entry->GetName();
+            if (name == "Tibia/Tibia.pic") {
+                castEvent(10);
+                unpackEntry(tis, "Tibia.pic");
+            } else if (name == "Tibia/Tibia.dat") {
+                castEvent(11);
+                unpackEntry(tis, "Tibia.dat");
+            } else if (name == "Tibia/Tibia.spr") {
+                castEvent(12);
+                unpackEntry(tis, "Tibia.spr");
+            } else {
+                castEvent(9);
+            }
+        }
+
+    }
+    void unpackEntry(wxTarInputStream& tis, const char* fn) {
+        wxFileOutputStream fos(fn);
+        fos.Write(tis);
+    }
+
 
     void castEvent(int type) {
         // 1 == done
         // 2 == failed to connect
         // 3 == failed to open output file
         // 4 == terminated by main loop
+        // 5 == update progress bar
+        // 6 == unexpected http response
+
+        // 7 == connected, waiting for response
+        // 8 == downloading
+
+        // 9 == seeking in tar
+        // 10 == unpacking tibia.pic
+        // 11 == unpacking tibia.dat
+        // 12 == unpacking tibia.spr
         wxCommandEvent event( wxEVT_COMMAND_MENU_SELECTED, Data_File_FetcherDialog::ID_WORKEREVENT );
         event.SetInt( type );
 
@@ -142,14 +261,43 @@ public:
         wxPostEvent( m_frame, event );
 
     }
+
+    float getProgress() {
+        wxCriticalSectionLocker locker(m_critsect);
+        return _getProgress();
+    }
+    float _getProgress() {
+        if (!contentlength) return 0;
+        return (((float)count) / contentlength)*100;
+
+    }
+    std::string getOutputString() {
+        wxCriticalSectionLocker locker(m_critsect);
+        std::stringstream s;
+
+        s << std::setprecision(4) << _getProgress() << "% - ";
+        if (count < 1024)
+            s << count << "B";
+        else if (count < 1024*1024)
+            s << count/1024. << "KiB";
+        else
+            s << count/(1024.*1024.) << "MiB";
+        s << " of ";
+        s << contentlength / (1024*1024.) << "MiB";
+
+//        printf("S: %s\n", s.str().c_str());
+        return s.str();
+    }
+
+    wxCriticalSection m_critsect;
+
 private:
 
     wxHTTP *h;
     wxInputStream *h_stream;
     Data_File_FetcherDialog *m_frame;
-    wxCriticalSection m_critsect;
-
-    int eventtype;
+    int contentlength, count;
+    bool pickedUpStatus;
 
 } * fetchThread;
 
@@ -161,51 +309,54 @@ private:
 Data_File_FetcherDialog::Data_File_FetcherDialog(wxWindow* parent,wxWindowID id)
 {
     //(*Initialize(Data_File_FetcherDialog)
-    wxBoxSizer* BoxSizer4;
-    wxBoxSizer* BoxSizer5;
+    wxFlexGridSizer* FlexGridSizer2;
+    wxTextCtrl* TxtVerMinor;
+    wxFlexGridSizer* FlexGridSizer1;
     wxBoxSizer* BoxSizer3;
 
-    Create(parent, id, _("wxWidgets app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
+    Create(parent, wxID_ANY, _("Tibia Data File Fetcher"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
     SetClientSize(wxSize(599,86));
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
     BoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("YATC\nData File Fetcher"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+    StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Tibia\nData File Fetcher"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
     wxFont StaticText1Font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     if ( !StaticText1Font.Ok() ) StaticText1Font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     StaticText1Font.SetPointSize(20);
     StaticText1->SetFont(StaticText1Font);
     BoxSizer3->Add(StaticText1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 10);
     BoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    Button1 = new wxButton(this, ID_BUTTON1, _("About"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    BoxSizer2->Add(Button1, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 4);
+    BtnAbout = new wxButton(this, ID_BTNABOUT, _("About"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BTNABOUT"));
+    BoxSizer2->Add(BtnAbout, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 4);
     StaticLine1 = new wxStaticLine(this, ID_STATICLINE1, wxDefaultPosition, wxSize(245,2), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
     BoxSizer2->Add(StaticLine1, 0, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 4);
-    Button2 = new wxButton(this, ID_BUTTON2, _("Quit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
-    BoxSizer2->Add(Button2, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 4);
+    BtnQuit = new wxButton(this, ID_BTNQUIT, _("Quit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BTNQUIT"));
+    BoxSizer2->Add(BtnQuit, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 4);
     BoxSizer3->Add(BoxSizer2, 0, wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 4);
     BoxSizer1->Add(BoxSizer3, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    BoxSizer4 = new wxBoxSizer(wxVERTICAL);
-    BoxSizer5 = new wxBoxSizer(wxHORIZONTAL);
-    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Type in latest version:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-    BoxSizer5->Add(StaticText2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    TextCtrl1 = new wxTextCtrl(this, ID_TEXTCTRL1, _("8"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-    TextCtrl1->SetMaxLength(1);
-    BoxSizer5->Add(TextCtrl1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    TextCtrl2 = new wxTextCtrl(this, ID_TEXTCTRL2, _("31"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-    TextCtrl2->SetMaxLength(2);
-    BoxSizer5->Add(TextCtrl2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Button3 = new wxButton(this, ID_BUTTON3, _("Download"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
-    BoxSizer5->Add(Button3, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    BoxSizer4->Add(BoxSizer5, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Gauge1 = new wxGauge(this, ID_GAUGE1, 100, wxDefaultPosition, wxDLG_UNIT(this,wxSize(303,27)), 0, wxDefaultValidator, _T("ID_GAUGE1"));
-    BoxSizer4->Add(Gauge1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    BoxSizer1->Add(BoxSizer4, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
+    LblStatus = new wxStaticText(this, ID_STATICTEXT3, _("Ready"), wxDefaultPosition, wxSize(536,13), wxALIGN_CENTRE, _T("ID_STATICTEXT3"));
+    FlexGridSizer1->Add(LblStatus, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    GauProgress = new wxGauge(this, ID_GAUGE1, 100, wxDefaultPosition, wxDLG_UNIT(this,wxSize(302,15)), 0, wxDefaultValidator, _T("ID_GAUGE1"));
+    FlexGridSizer1->Add(GauProgress, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer2 = new wxFlexGridSizer(0, 4, 0, 0);
+    LblTypeIn = new wxStaticText(this, ID_STATICTEXT2, _("Type in latest version:"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+    FlexGridSizer2->Add(LblTypeIn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    TxtVerMajor = new wxTextCtrl(this, ID_TEXTCTRL1, _("8"), wxDefaultPosition, wxSize(18,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+    TxtVerMajor->SetMaxLength(1);
+    FlexGridSizer2->Add(TxtVerMajor, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    TxtVerMinor = new wxTextCtrl(this, ID_TEXTCTRL2, _("31"), wxDefaultPosition, wxSize(29,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    TxtVerMinor->SetMaxLength(2);
+    FlexGridSizer2->Add(TxtVerMinor, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BtnDownload = new wxButton(this, ID_BTNDOWNLOAD, _("Download"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BTNDOWNLOAD"));
+    FlexGridSizer2->Add(BtnDownload, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    FlexGridSizer1->Add(FlexGridSizer2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer1->Add(FlexGridSizer1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     SetSizer(BoxSizer1);
     BoxSizer1->SetSizeHints(this);
 
-    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnAbout);
-    Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnQuit);
-    Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnButton3Click);
+    Connect(ID_BTNABOUT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnAbout);
+    Connect(ID_BTNQUIT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnQuit);
+    Connect(ID_BTNDOWNLOAD,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnBtnDownloadClick);
     //*)
 }
 
@@ -224,11 +375,33 @@ void Data_File_FetcherDialog::OnQuit(wxCommandEvent& event)
 
 void Data_File_FetcherDialog::OnAbout(wxCommandEvent& event)
 {
-    wxString msg = wxbuildinfo(long_f);
-    wxMessageBox(msg, _("Welcome to..."));
+    wxString msg = _(
+        "Tibia Data File Fetcher\n"
+        "\n"
+        "Originally designed for YATC.\n"
+        "This program will fetch the GNU/Linux version of Tibia\n"
+        "and extract data files from it. Use at your own\n"
+        "responsibility.\n"
+        "\n"
+        "Copyright (c) 2008 Ivan Vucica\n"
+        "\n"
+        "Tibia File Fetcher comes with ABSOLUTELY NO WARRANTY; \n"
+        "for details see sections 11 and 12 in COPYING.\n"
+		"This is free software, and you are welcome \n"
+		"to redistribute it under certain conditions;\n"
+		"see COPYING for details.\n"
+		"\n"
+		"If you have not received a copy of the license,\n"
+		"please write to the author at: ivucica@gmail.com\n"
+		"\n"
+		"Do not forget! If you modify the sources, according to\n"
+		"our license, you MUST share a copy of modified sources\n"
+		"along with the binary.")
+		    + wxbuildinfo(long_f);
+    wxMessageBox(msg, _("About TDFF"));
 }
 
-void Data_File_FetcherDialog::OnButton3Click(wxCommandEvent& event)
+void Data_File_FetcherDialog::OnBtnDownloadClick(wxCommandEvent& event)
 {
     fetchThread = new FetchThread(this);
     fetchThread->Create();
@@ -260,6 +433,62 @@ void Data_File_FetcherDialog::OnIdle(wxIdleEvent& event)
 }
 
 void Data_File_FetcherDialog::OnWorkerEvent(wxCommandEvent& event){
-    printf("Received a message\n");
-    printf("%d\n", event.GetInt());
+    /*printf("Received a message\n");
+    printf("%d\n", event.GetInt());*/
+    switch (event.GetInt()) {
+
+        default:
+        printf("Unhandled event\n");
+        break;
+
+
+        case 1:// == done
+        GauProgress->SetValue(100);
+        LblStatus->SetLabel("Done");
+        break;
+        case 2:// == failed to connect
+        LblStatus->SetLabel("Failed to connect\n");
+        break;
+        case 3:// == failed to open output file
+        LblStatus->SetLabel("Failed to output file");
+        break;
+        case 4:// == terminated by main loop
+        LblStatus->SetLabel("Terminated by main loop");
+        break;
+        case 5:{// == update progress bar
+            std::stringstream s;
+            GauProgress->SetValue(fetchThread->getProgress());
+
+            s << "Downloading... " << fetchThread->getOutputString();
+            LblStatus->SetLabel(s.str());
+
+            break;
+        }
+        case 6:// == unexpected http response
+        LblStatus->SetLabel("Unexpected HTTP response");
+        break;
+        case 7:// == connected
+        LblStatus->SetLabel("Connected, waiting for response...");
+        break;
+        case 8:// == downloading
+        LblStatus->SetLabel("Download starting...");
+        break;
+
+        case 9:// == seeking in tar
+        LblStatus->SetLabel("Seeking...");
+        break;
+        case 10:// == tibia.pic
+        LblStatus->SetLabel("Unpacking Tibia.pic...");
+        GauProgress->SetValue(30);
+        break;
+        case 11:// == tibia.dat
+        LblStatus->SetLabel("Unpacking Tibia.dat...");
+        GauProgress->SetValue(60);
+        break;
+        case 12:// == tibia.spr
+        LblStatus->SetLabel("Unpacking Tibia.spr...");
+        GauProgress->SetValue(90);
+        break;
+
+    }
 }
