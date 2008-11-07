@@ -17,6 +17,7 @@
 #include <wx/statline.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
+#include <wx/gauge.h>
 //*)
 
 class Data_File_FetcherDialog: public wxDialog
@@ -26,6 +27,10 @@ class Data_File_FetcherDialog: public wxDialog
         Data_File_FetcherDialog(wxWindow* parent,wxWindowID id = -1);
         virtual ~Data_File_FetcherDialog();
 
+
+
+        static const long ID_WORKEREVENT;
+
     private:
 
         //(*Handlers(Data_File_FetcherDialog)
@@ -34,6 +39,7 @@ class Data_File_FetcherDialog: public wxDialog
         void OnButton3Click(wxCommandEvent& event);
         void OnIdle(wxIdleEvent& event);
         //*)
+        void OnWorkerEvent(wxCommandEvent& event);
 
         //(*Identifiers(Data_File_FetcherDialog)
         static const long ID_STATICTEXT1;
@@ -44,11 +50,13 @@ class Data_File_FetcherDialog: public wxDialog
         static const long ID_TEXTCTRL1;
         static const long ID_TEXTCTRL2;
         static const long ID_BUTTON3;
+        static const long ID_GAUGE1;
         //*)
 
         //(*Declarations(Data_File_FetcherDialog)
         wxStaticText* StaticText2;
         wxButton* Button1;
+        wxGauge* Gauge1;
         wxStaticText* StaticText1;
         wxBoxSizer* BoxSizer2;
         wxButton* Button2;

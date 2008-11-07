@@ -4,7 +4,7 @@
  * Author:    Ivan Vucica (ivucica@gmail.com)
  * Created:   2008-10-27
  * Copyright: Ivan Vucica (http://www.objectnetworks.net/)
- * License:
+ * License:   GNU General Public License v2
  **************************************************************/
 
 #include "Data_File_FetcherApp.h"
