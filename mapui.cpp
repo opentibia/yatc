@@ -180,13 +180,16 @@ void MapUI::renderMap() {
 
                         bool performPaint = true;
                         if(const Creature* c = thing->getCreature()){
-                            if(c->getWalkState() != 1. || c->isPreWalking()){// it's walking?
-                                performPaint = false;
+                            if(c->getWalkState() != 1. ){// it's walking?
+                                if (!((c->getLookDir() == DIRECTION_SOUTH && !c->isPreWalking()) ||
+                                    (c->getLookDir() == DIRECTION_NORTH && c->isPreWalking()) ||
+                                    (c->getLookDir() == DIRECTION_EAST && !c->isPreWalking()) ||
+                                    (c->getLookDir() == DIRECTION_WEST && c->isPreWalking())))
+                                    performPaint = false;
                             }
                         }
 
 						if (performPaint)
-                            printf("regular paint\n");
 						    thing->Blit(screenx - (int)(tile_height*8.*scale),
 							    		screeny - (int)(tile_height*8.*scale),
 								    	scale, tile_x, tile_y);
@@ -351,8 +354,11 @@ void MapUI::drawTileGhosts(int x, int y, int z, int screenx, int screeny, float 
 
                 int screenx2=screenx, screeny2=screeny;
 
-                if (c && (c->getWalkState() != 1. || c->isPreWalking())) {
-                    printf("ghost paint\n");
+                if (c && c->getWalkState() != 1.) {
+                    if (c->getLookDir() == DIRECTION_SOUTH && !c->isPreWalking()) continue;
+                    if (c->getLookDir() == DIRECTION_NORTH && c->isPreWalking()) continue;
+                    if (c->getLookDir() == DIRECTION_EAST && !c->isPreWalking()) continue;
+                    if (c->getLookDir() == DIRECTION_WEST && c->isPreWalking()) continue;
                     switch (c->getLookDir()) {
 
                         case DIRECTION_NORTH:

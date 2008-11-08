@@ -167,13 +167,52 @@ void checkFile(const char *filename)
 		printf("[ok]\n");
 	} else {
 		printf("[no]\n");
-		std::stringstream s;
-		s << "Loading the data file '" << filename << "' has failed.\n";
-		s << "Please place '" << filename << "' in the same folder as " PRODUCTSHORT << ".\n";
-		s << "If you are a Debian user, you may have forgotten to install\n";
-		s << "the 'tibia-data' or 'yatc-data' package.";
-		NativeGUIError(s.str().c_str(), PRODUCTSHORT " Fatal Error");
+
+		std::string fetcherfn = "";
+
+        if ((fetcherfn=yatc_findfile("tdffetcher"))=="") {
+		    if ((fetcherfn=yatc_findfile("tdffetcher.exe"))=="") {
+                std::string forreplace;
+                forreplace = gettext("Loading the data file 'FILENAMEHERE' has failed.\n"
+                        "Please place 'FILENAMEHERE' in the same folder as " PRODUCTSHORT ".\n"
+                        #if !defined(WIN32) && !defined(__APPLE__)
+                        "If you are a Debian user, you may have forgotten to install\n"
+                        "the 'tibia-data' or 'yatc-data' package."
+                        #endif
+                        );
+
+                str_replace(forreplace, "FILENAMEHERE", filename);
+                NativeGUIError(forreplace.c_str(), gettext(PRODUCTSHORT " Fatal Error"));
+                return;
+		    }
+        }
+
+        std::string forreplace;
+
+        forreplace = gettext("You are missing 'FILENAMEHERE'.\n"
+                "We will launch Tibia Data File Fetcher which should automatically install\n"
+                "data files required for " PRODUCTSHORT ".\n"
+                "\n"
+                "You will have to manually restart YATC afterwards.\n"
+                "\n"
+                #if !defined(WIN32) && !defined(__APPLE__)
+                "If you are a Debian user, you may have forgotten to install\n"
+                "the 'tibia-data' or 'yatc-data' package. If you believe that\n"
+                "
+                #endif
+                );
+        str_replace(forreplace, "FILENAMEHERE", filename);
+
+        NativeGUIError(forreplace.c_str(), gettext(PRODUCTSHORT " Missing Files"));
+
+        // hack to make the cmdline box disappear
+        if (fetcherfn == "tdffetcher.exe") fetcherfn = "start tdffetcher.exe";
+
+        system(fetcherfn.c_str());
+
+
 		exit(1);
+
 	}
 
 }
