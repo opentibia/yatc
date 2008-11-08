@@ -83,7 +83,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	aniSize = partSize * m_obj->ydiv;
 
     if(n->getOutfit().m_looktype != 0){
-        activeframe = (m_walkState == 1. ? n->getTurnDir() :  n->getLookDir()) * spriteSize; // creature must have different turning direction and looking (moving) direction... if moving, moving direction takes precendence, if standing, turning direction takes precendence
+        activeframe = ((m_walkState == 1. && !isPreWalking()) ? n->getTurnDir() :  n->getLookDir()) * spriteSize; // creature must have different turning direction and looking (moving) direction... if moving, moving direction takes precendence, if standing, turning direction takes precendence
     }
 
 

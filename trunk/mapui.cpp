@@ -180,7 +180,7 @@ void MapUI::renderMap() {
 
                         bool performPaint = true;
                         if(const Creature* c = thing->getCreature()){
-                            if(c->getWalkState() != 1. ){// it's walking?
+                            if(c->getWalkState() != 1. || c->isPreWalking()){// it's walking?
                                 if (!((c->getLookDir() == DIRECTION_SOUTH && !c->isPreWalking()) ||
                                     (c->getLookDir() == DIRECTION_NORTH && c->isPreWalking()) ||
                                     (c->getLookDir() == DIRECTION_EAST && !c->isPreWalking()) ||
@@ -354,7 +354,7 @@ void MapUI::drawTileGhosts(int x, int y, int z, int screenx, int screeny, float 
 
                 int screenx2=screenx, screeny2=screeny;
 
-                if (c && c->getWalkState() != 1.) {
+                if (c && (c->getWalkState() != 1. || c->isPreWalking())) {
                     if (c->getLookDir() == DIRECTION_SOUTH && !c->isPreWalking()) continue;
                     if (c->getLookDir() == DIRECTION_NORTH && c->isPreWalking()) continue;
                     if (c->getLookDir() == DIRECTION_EAST && !c->isPreWalking()) continue;
