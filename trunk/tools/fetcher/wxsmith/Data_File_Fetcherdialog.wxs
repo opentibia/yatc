@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxDialog" name="Data_File_FetcherDialog">
-		<title>wxWidgets app</title>
+		<title>Tibia Data File Fetcher</title>
 		<size>599,86</size>
 		<id_arg>0</id_arg>
 		<object class="wxBoxSizer" variable="BoxSizer1" member="yes">
@@ -10,7 +10,7 @@
 				<object class="wxBoxSizer" variable="BoxSizer3" member="no">
 					<object class="sizeritem">
 						<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
-							<label>YATC&#x0A;Data File Fetcher</label>
+							<label>Tibia&#x0A;Data File Fetcher</label>
 							<font>
 								<size>20</size>
 								<sysfont>wxSYS_DEFAULT_GUI_FONT</sysfont>
@@ -100,7 +100,7 @@
 								<option>1</option>
 							</object>
 							<object class="sizeritem">
-								<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TxtVerMinor" member="no">
+								<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TxtVerMinor" member="yes">
 									<value>31</value>
 									<maxlength>2</maxlength>
 									<size>29,23</size>

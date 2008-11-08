@@ -101,6 +101,33 @@ static bool __internal_fileexists(const char* filename){
 
 static std::vector<std::string > searchpaths;
 
+
+std::string yatc_findfile(const char* filename){
+    for (std::vector<std::string>::iterator it = searchpaths.begin(); it != searchpaths.end(); it++) {
+		std::string fn = (*it + "/" + filename).c_str();
+		#ifndef WIN32
+		if (fn[0] == '~')
+			fn = std::string(getenv("HOME")) + "/" + fn.substr(1);
+		#endif
+
+		if (__internal_fileexists(fn.c_str())) {
+			FILE *f=fopen(fn.c_str(), "r");
+
+			if (f) {
+			    fclose(f);
+				return fn;
+			}
+			// if the above is false, we probably don't have enough permissions for requested mode
+		}
+	}
+	FILE *f=fopen(filename, "r");
+	if(f){
+	    fclose(f);
+	    return filename;
+	}
+	return "";
+}
+
 FILE *yatc_fopen(const char* filename, const char* mode) {
 #ifdef WINCE
 	/* ugly as hell, but WINCE's fopen does not use current working dir
@@ -126,7 +153,7 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 		if (fn[0] == '~')
 			fn = std::string(getenv("HOME")) + "/" + fn.substr(1);
 		#endif
-		
+
 		if (__internal_fileexists(fn.c_str())) {
 			FILE *f=fopen(fn.c_str(), mode);
 
@@ -181,11 +208,11 @@ void yatc_fopen_init(char *cmdline) {
 	char temp[250];
 	const char *lp;
 	if (!searchpath)
-	searchpath = 
+	searchpath =
 	#ifndef WIN32
 		"~/.yatc/:"
 		"/usr/games/share/yatc-data/:"
-		"/usr/games/share/tibia/:" 
+		"/usr/games/share/tibia/:"
 	#endif
 		DESTDIRS;
 

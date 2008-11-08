@@ -60,6 +60,7 @@ class Data_File_FetcherDialog: public wxDialog
         wxButton* BtnAbout;
         wxStaticText* StaticText1;
         wxBoxSizer* BoxSizer2;
+        wxTextCtrl* TxtVerMinor;
         wxGauge* GauProgress;
         wxStaticLine* StaticLine1;
         wxBoxSizer* BoxSizer1;

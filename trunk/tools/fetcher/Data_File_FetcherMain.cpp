@@ -17,6 +17,7 @@
 #include <wx/stopwatch.h>
 #include <wx/zstream.h>
 #include <wx/tarstrm.h>
+
 #include <sstream>
 #include <iomanip>
 #include <memory>
@@ -86,6 +87,7 @@ END_EVENT_TABLE()
 
 // khaotic vars
 bool isdownloading = false;
+wxString version;
 
 class FetchThread : public wxThread
 {
@@ -96,8 +98,21 @@ public:
     }
 
     ExitCode Entry() {
-        printf("Usao u dretvu\n");
         isdownloading = true;
+
+        /*
+        if (!unpackNow()) {
+            castEvent(13);
+            wxThread::Sleep(100);
+            isdownloading = false;
+        } else {
+            castEvent(1);
+            wxThread::Sleep(100);
+            isdownloading = false;
+        }
+        return 0;
+        */
+
 
         count = 0;
         //h->SetHeader ( wxT("Accept") , wxT("text/*") );
@@ -111,20 +126,10 @@ public:
             return 0;
         }
 
-
-
-        /*if (!h->IsConnected()) {
-            printf("Connection was not established\n");
-            castEvent(2);
-            isdownloading = false;
-            wxThread::Sleep(100);
-            return 0;
-        }*/
-
         castEvent(7);
 
 
-        h_stream = h->GetInputStream(_("/tibia831.tgz"));
+        h_stream = h->GetInputStream(_("/") + version + ".tgz");
         if (!h_stream) {
             printf("Failed to send request\n");
             castEvent(2);
@@ -136,13 +141,6 @@ public:
 
         castEvent(8);
 
-        /*if (h->GetResponse() != 200) {
-            printf("Unexpected response: %d\n", h->GetResponse());
-            castEvent(6);
-            isdownloading = false;
-            wxThread::Sleep(100);
-            return 0;
-        }*/
         {
             wxCriticalSectionLocker locker(m_critsect);
 
@@ -152,9 +150,9 @@ public:
         }
 
 
-        unlink("tibia831.tgz");
+        unlink((version + ".tgz").c_str());
 
-        wxFileOutputStream fos("tibia831.tgz");
+        wxFileOutputStream fos(version + ".tgz");
         if (!fos.IsOk()){
             castEvent(3);
             isdownloading = false;
@@ -170,9 +168,8 @@ public:
                 wxThread::Sleep(100);
                 return 0;
             }
-            //printf(",");fflush(stdout);
+
             h_stream->Read(buf, sizeof(buf));
-            //printf(".");fflush(stdout);
             fos.Write(buf, h_stream->LastRead());
 
             increaseCount(h_stream->LastRead());
@@ -189,12 +186,15 @@ public:
         delete h; h = NULL;
 
 
-        unpackNow();
-
-
-        castEvent(1);
-        wxThread::Sleep(100);
-        isdownloading = false;
+        if (!unpackNow()) {
+            castEvent(13);
+            wxThread::Sleep(100);
+            isdownloading = false;
+        } else {
+            castEvent(1);
+            wxThread::Sleep(100);
+            isdownloading = false;
+        }
 
 
         return 0;
@@ -205,33 +205,35 @@ public:
         count += amount;
     }
 
-    void unpackNow() {
-        wxFFileInputStream fis("tibia831.tgz");
+    bool unpackNow() {
+        wxFFileInputStream fis(version + ".tgz");
         wxZlibInputStream zlis(fis);
         wxTarInputStream tis(zlis);
 
-        if (tis.CanRead()) {
-            printf("Unpack ready\n");
+        if (!tis.CanRead()) {
+            return false;
         }
 
         std::auto_ptr<wxTarEntry> entry;
         while (entry.reset(tis.GetNextEntry()), entry.get() != NULL) {
             // access meta-data
             wxString name = entry->GetName();
-            if (name == "Tibia/Tibia.pic") {
+            printf("%s\n", name.c_str());
+            if (name == "Tibia/Tibia.pic" || name == "Tibia\\Tibia.pic") {
                 castEvent(10);
                 unpackEntry(tis, "Tibia.pic");
-            } else if (name == "Tibia/Tibia.dat") {
+            } else if (name == "Tibia/Tibia.dat" || name == "Tibia\\Tibia.dat") {
                 castEvent(11);
                 unpackEntry(tis, "Tibia.dat");
-            } else if (name == "Tibia/Tibia.spr") {
+            } else if (name == "Tibia/Tibia.spr" || name == "Tibia\\Tibia.spr") {
                 castEvent(12);
                 unpackEntry(tis, "Tibia.spr");
             } else {
+                printf("Name unrecognized\n");
                 castEvent(9);
             }
         }
-
+        return true;
     }
     void unpackEntry(wxTarInputStream& tis, const char* fn) {
         wxFileOutputStream fos(fn);
@@ -254,6 +256,8 @@ public:
         // 10 == unpacking tibia.pic
         // 11 == unpacking tibia.dat
         // 12 == unpacking tibia.spr
+
+        // 13 == unpack failed
         wxCommandEvent event( wxEVT_COMMAND_MENU_SELECTED, Data_File_FetcherDialog::ID_WORKEREVENT );
         event.SetInt( type );
 
@@ -310,7 +314,6 @@ Data_File_FetcherDialog::Data_File_FetcherDialog(wxWindow* parent,wxWindowID id)
 {
     //(*Initialize(Data_File_FetcherDialog)
     wxFlexGridSizer* FlexGridSizer2;
-    wxTextCtrl* TxtVerMinor;
     wxFlexGridSizer* FlexGridSizer1;
     wxBoxSizer* BoxSizer3;
 
@@ -403,6 +406,7 @@ void Data_File_FetcherDialog::OnAbout(wxCommandEvent& event)
 
 void Data_File_FetcherDialog::OnBtnDownloadClick(wxCommandEvent& event)
 {
+    version = _("tibia") + TxtVerMajor->GetValue() + TxtVerMinor->GetValue();
     fetchThread = new FetchThread(this);
     fetchThread->Create();
     fetchThread->Run();
@@ -489,6 +493,8 @@ void Data_File_FetcherDialog::OnWorkerEvent(wxCommandEvent& event){
         LblStatus->SetLabel("Unpacking Tibia.spr...");
         GauProgress->SetValue(90);
         break;
-
+        case 13:// == unpack failed
+        LblStatus->SetLabel("Unpack failed");
+        break;
     }
 }
