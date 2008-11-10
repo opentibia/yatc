@@ -331,6 +331,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< gettext("Contributors") << ":\n"
 		<< b << " mrauter\n"
 		<< b << " Mariusz Gliwinski - shd\n"
+		<< b << " Vindeamatrix510\n"
 		<< "\n"
 		<< PRODUCTSHORT << gettext(" comes with ABSOLUTELY NO WARRANTY; \n"
 		   "for details see sections 11 and 12 in COPYING.\n"
