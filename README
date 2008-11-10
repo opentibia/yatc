@@ -27,6 +27,7 @@ with inactive developers
 Contributors
                     - mrauter
   Mariusz Gliwinski - shd
+                    - Vindeamatrix510
 
 
 Authors mentioned in no particular order.
@@ -193,6 +194,6 @@ Some options may be undocumented.
 7. Observed issues
 
 * Odd freezes may occur.
-* There are various GLICT issues with moving windows, with refreshing scene 
+* There are various GLICT issues with moving windows, with refreshing scene
   on main menu etc
 * Moving items may fail.
