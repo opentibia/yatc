@@ -345,17 +345,29 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
 	Direction dir = DIRECTION_NORTH;
 	int action = 0;
 	switch (key.sym) {
-	case SDLK_LEFT:
+	case SDLK_LEFT: case SDLK_KP4:
 		action = 1; dir = DIRECTION_WEST;
 		break;
-	case SDLK_RIGHT:
+	case SDLK_RIGHT: case SDLK_KP6:
 		action = 1; dir = DIRECTION_EAST;
 		break;
-	case SDLK_UP:
+	case SDLK_UP: case SDLK_KP8:
 		action = 1; dir = DIRECTION_NORTH;
 		break;
-	case SDLK_DOWN:
+	case SDLK_DOWN: case SDLK_KP2:
 		action = 1; dir = DIRECTION_SOUTH;
+		break;
+	case SDLK_KP1:
+		action = 1; dir = DIRECTION_SW;
+		break;
+	case SDLK_KP3:
+		action = 1; dir = DIRECTION_SE;
+		break;
+	case SDLK_KP7:
+		action = 1; dir = DIRECTION_NW;
+		break;
+	case SDLK_KP9:
+		action = 1; dir = DIRECTION_NE;
 		break;
 
     case SDLK_ESCAPE:
@@ -389,7 +401,7 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
 
 			if (key.mod & KMOD_CTRL)
 				m_protocol->sendTurn(dir);
-			else {
+			else if(!(dir >= DIRECTION_NE && (key.mod & KMOD_NUM))) {
 				Creatures::getInstance().getPlayer()->startWalk();
 				m_protocol->sendMove(dir);
 			}
