@@ -89,7 +89,7 @@ void onKeyDown(const SDL_Event& event)
 		// ignore shiftpresses
 		break;
 
-	case SDLK_LEFT: case SDLK_RIGHT: case SDLK_UP: case SDLK_DOWN:
+	case SDLK_LEFT: case SDLK_RIGHT: case SDLK_UP: case SDLK_DOWN: case SDLK_KP1: case SDLK_KP2: case SDLK_KP3: case SDLK_KP4: case SDLK_KP6: case SDLK_KP7: case SDLK_KP8: case SDLK_KP9:
 	case SDLK_PAGEUP: case SDLK_PAGEDOWN:  case SDLK_HOME: case SDLK_END:
 	case SDLK_F1: case SDLK_F2: case SDLK_F3: case SDLK_F4: case SDLK_F5: case SDLK_F6: case SDLK_F7: case SDLK_F8: case SDLK_F9: case SDLK_F10: case SDLK_F11: case SDLK_F12:
 		g_game->specKeyPress(event.key.keysym);
