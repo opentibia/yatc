@@ -344,31 +344,73 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 {
 	Direction dir = DIRECTION_NORTH;
 	int action = 0;
+	bool ret = false;
+
 	switch (key.sym) {
-	case SDLK_LEFT: case SDLK_KP4:
+	case SDLK_LEFT:
 		action = 1; dir = DIRECTION_WEST;
-		return true;
-	case SDLK_RIGHT: case SDLK_KP6:
+		ret = true;
+		break;
+	case SDLK_RIGHT:
 		action = 1; dir = DIRECTION_EAST;
-		return true;
-	case SDLK_UP: case SDLK_KP8:
+		ret = true;
+		break;
+	case SDLK_UP:
 		action = 1; dir = DIRECTION_NORTH;
-		return true;
-	case SDLK_DOWN: case SDLK_KP2:
+		ret = true;
+		break;
+	case SDLK_DOWN:
 		action = 1; dir = DIRECTION_SOUTH;
-		return true;
+		ret = true;
+		break;
 	case SDLK_KP1:
-		action = 1; dir = DIRECTION_SW;
-		return true;
+		if((!key.mod & KMOD_NUM)) {
+			action = 1; dir = DIRECTION_SW;
+			ret = true;
+		}
+		break;
+	case SDLK_KP2:
+		if((!key.mod & KMOD_NUM)) {
+			action = 1; dir = DIRECTION_SOUTH;
+			ret = true;
+		}
+		break;
 	case SDLK_KP3:
-		action = 1; dir = DIRECTION_SE;
-		return true;
+		if((!key.mod & KMOD_NUM)) {
+			action = 1; dir = DIRECTION_SE;
+			ret = true;
+		}
+		break;
+	case SDLK_KP4:
+		if((!key.mod & KMOD_NUM)) {
+			action = 1; dir = DIRECTION_WEST;
+			ret = true;
+		}
+		break;
+	case SDLK_KP6:
+		if((!key.mod & KMOD_NUM)) {
+			action = 1; dir = DIRECTION_EAST;
+			ret = true;
+		}
+		break;
 	case SDLK_KP7:
-		action = 1; dir = DIRECTION_NW;
-		return true;
+		if((!key.mod & KMOD_NUM)) {
+			action = 1; dir = DIRECTION_NW;
+			ret = true;
+		}
+		break;
+	case SDLK_KP8:
+		if((!key.mod & KMOD_NUM)) {
+			action = 1; dir = DIRECTION_NORTH;
+			ret = true;
+		}
+		break;
 	case SDLK_KP9:
-		action = 1; dir = DIRECTION_NE;
-		return true;
+		if((!key.mod & KMOD_NUM)) {
+			action = 1; dir = DIRECTION_NE;
+			ret = true;
+		}
+		break;
 
     case SDLK_ESCAPE:
     	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Terminating protocol connection from gameworld by esc...\n");
@@ -384,14 +426,16 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
         DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Switch to main menu\n");
         delete g_game;
         g_game = new GM_MainMenu;
-        return true;
+        ret = true;
+		break;
 	case SDLK_F11:
 		action = 255;
-		return true;
+		ret = true;
+		break;
 	default:
 		action = 0;
-        return false;
-
+        ret = false;
+		break;
 	}
 
 	switch (action) {
@@ -403,7 +447,7 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 
 			if (key.mod & KMOD_CTRL)
 				m_protocol->sendTurn(dir);
-			else if(!(dir >= DIRECTION_NE && (key.mod & KMOD_NUM))) {
+			else {
 				Creatures::getInstance().getPlayer()->startWalk();
 				m_protocol->sendMove(dir);
 			}
@@ -415,7 +459,7 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		// FIXME (ivucica#1#) debugging action, just for testing (ctrl+a)
 		getDefaultConsole()->insertEntry(std::string("No debugging action"));
 	}
-
+	return ret;
 }
 
 void GM_Gameworld::mouseEvent(SDL_Event& event)
