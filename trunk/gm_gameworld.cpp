@@ -340,35 +340,35 @@ void GM_Gameworld::keyPress (char key)
 
 }
 
-void GM_Gameworld::specKeyPress (const SDL_keysym& key)
+bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 {
 	Direction dir = DIRECTION_NORTH;
 	int action = 0;
 	switch (key.sym) {
 	case SDLK_LEFT: case SDLK_KP4:
 		action = 1; dir = DIRECTION_WEST;
-		break;
+		return true;
 	case SDLK_RIGHT: case SDLK_KP6:
 		action = 1; dir = DIRECTION_EAST;
-		break;
+		return true;
 	case SDLK_UP: case SDLK_KP8:
 		action = 1; dir = DIRECTION_NORTH;
-		break;
+		return true;
 	case SDLK_DOWN: case SDLK_KP2:
 		action = 1; dir = DIRECTION_SOUTH;
-		break;
+		return true;
 	case SDLK_KP1:
 		action = 1; dir = DIRECTION_SW;
-		break;
+		return true;
 	case SDLK_KP3:
 		action = 1; dir = DIRECTION_SE;
-		break;
+		return true;
 	case SDLK_KP7:
 		action = 1; dir = DIRECTION_NW;
-		break;
+		return true;
 	case SDLK_KP9:
 		action = 1; dir = DIRECTION_NE;
-		break;
+		return true;
 
     case SDLK_ESCAPE:
     	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Terminating protocol connection from gameworld by esc...\n");
@@ -384,12 +384,14 @@ void GM_Gameworld::specKeyPress (const SDL_keysym& key)
         DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Switch to main menu\n");
         delete g_game;
         g_game = new GM_MainMenu;
-        return;
+        return true;
 	case SDLK_F11:
 		action = 255;
-		break;
+		return true;
 	default:
 		action = 0;
+        return false;
+
 	}
 
 	switch (action) {

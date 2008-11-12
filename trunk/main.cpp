@@ -92,19 +92,15 @@ void onKeyDown(const SDL_Event& event)
 	case SDLK_LEFT: case SDLK_RIGHT: case SDLK_UP: case SDLK_DOWN: case SDLK_KP1: case SDLK_KP2: case SDLK_KP3: case SDLK_KP4: case SDLK_KP6: case SDLK_KP7: case SDLK_KP8: case SDLK_KP9:
 	case SDLK_PAGEUP: case SDLK_PAGEDOWN:  case SDLK_HOME: case SDLK_END:
 	case SDLK_F1: case SDLK_F2: case SDLK_F3: case SDLK_F4: case SDLK_F5: case SDLK_F6: case SDLK_F7: case SDLK_F8: case SDLK_F9: case SDLK_F10: case SDLK_F11: case SDLK_F12:
-		g_game->specKeyPress(event.key.keysym);
-		break;
+		if (g_game->specKeyPress(event.key.keysym))
+            break;
 	default:
 		// glict expects what glut usually serves: completely prepared keys,
 		// with shift already parsed and all that
 		// we'll try to do the parsing here or elsewhere
 
-
 		if(key < 32){
 			switch(key){
-
-
-
 			case SDLK_BACKSPACE:
 			case SDLK_TAB:
 			case SDLK_RETURN:
@@ -114,7 +110,6 @@ void onKeyDown(const SDL_Event& event)
 				return;
 			}
 		}
-
 
 		if((event.key.keysym.mod & KMOD_NUM) && key >= 256 && key <= 271){ //Numeric keypad
 			switch(key){
@@ -146,16 +141,12 @@ void onKeyDown(const SDL_Event& event)
 			// for some retarded reason, apparently SDL on MacOSX gives SDLK_DELETE on backspace.
 			// whatever. this should be the fix.
 			if (key != SDLK_BACKSPACE)
-
 #endif
 		    key = event.key.keysym.unicode;
 		}
 
 		if(key > 255)
 			return;
-
-		//printf("Key: %d %s\n", key, SDL_GetKeyName((SDLKey)key));
-
 		g_game->keyPress(key);
 	}
 }

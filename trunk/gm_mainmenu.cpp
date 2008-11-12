@@ -203,7 +203,6 @@ void GM_MainMenu::keyPress (char key)
 			winLogin.btnOk.Focus(NULL);
 
 	}
-
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 	renderUI();
 }
