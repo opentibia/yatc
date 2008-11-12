@@ -46,7 +46,7 @@ public:
 	virtual void updateScene() {}
 	virtual void mouseEvent (SDL_Event&) {}
 	virtual void keyPress (char key) {}
-	virtual void specKeyPress (const SDL_keysym&) {}
+	virtual bool specKeyPress (const SDL_keysym&) { return false;}
 	virtual void doResize(float w, float h) {}
 
 	virtual void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL) {printf("Warning: %s not redefined\n",__PRETTY_FUNCTION__ ); }
