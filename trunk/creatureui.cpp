@@ -160,7 +160,21 @@ void CreatureUI::drawName(int x, int y, float scale) const
 	//printf("%g\n", centralizationoffset); // FIXME (ivucica#1#) if this is removed, centralizationoffset doesn't have proper value. remove this and investigate!
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), 150);
+    int hp = n->getHealth();
+    oRGBA col;
+    if (hp >= 50.0) {
+        col.r = 50./hp;
+        col.g = 1.;
+        col.b = 0.;
+        col.a = 1.;
+    } else {
+        col.r = 1.;
+        col.g = hp / 50.;
+        col.b = 0.;
+        col.a = 1.;
+    }
+
+	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
 }
 
 void CreatureUI::drawSkullsShields(int x, int y, float scale) const
