@@ -229,11 +229,10 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
         }
         else
         {
-            f->addColor(color.r, color.g, color.b+0.01);
+            f->addColor(color.b, color.g, color.r); // FIXME (ivucica#1#): WTF FIXME should be RGB not BGR!?
         }
 
 
-        printf("%s - %g %g %g %g\n", text, color.r, color.g, color.b, color.a);
 
         glictFontRender(text, font, x, y);
     }
