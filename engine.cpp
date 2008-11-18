@@ -213,6 +213,31 @@ void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t 
         glictFontRender(text, font, x, y);
     }
 }
+void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA color)
+{
+    Font *f = (Font*)(glictFindFont(font)->GetFontParam());
+	if (!f)
+	{
+        glictFontRender(text, font, x, y);
+	}
+    else
+    {
+        if (color.r == color.g && color.g == color.b && color.b == 1.)
+        {
+
+            f->resetColor();
+        }
+        else
+        {
+            f->addColor(color.r, color.g, color.b+0.01);
+        }
+
+
+        printf("%s - %g %g %g %g\n", text, color.r, color.g, color.b, color.a);
+
+        glictFontRender(text, font, x, y);
+    }
+}
 
 void Engine::doResize(int w, int h)
 {

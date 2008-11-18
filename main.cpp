@@ -188,8 +188,7 @@ void checkFile(const char *filename)
                 "\n"
                 #if !defined(WIN32) && !defined(__APPLE__)
                 "If you are a Debian user, you may have forgotten to install\n"
-                "the 'tibia-data' or 'yatc-data' package. If you believe that\n"
-                "
+                "the 'tibia-data' or 'yatc-data' package."
                 #endif
                 );
         str_replace(forreplace, "FILENAMEHERE", filename);
