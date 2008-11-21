@@ -54,6 +54,7 @@ MapUI::MapUI() {
 
 	m_w = m_vpw*32;
 	m_h = m_vph*32;
+
 }
 
 MapUI::~MapUI() {

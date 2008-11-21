@@ -62,6 +62,7 @@ private:
 
 	Sprite* background;
 	Sprite* spr;
+	Sprite* map;
 	ThingUI* thing;
     Popup* popup;
     bool killpopup;
