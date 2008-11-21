@@ -146,6 +146,7 @@ GM_Debug::GM_Debug()
 	if(g_engine){
 		background = g_engine->createSprite("Tibia.pic", 0);
 		spr = g_engine->createSprite("Tibia.spr", 200);
+		map = g_engine->createSprite("12712407.map");
 		//thing = new ItemUI(6401, 1);
 		thing = NULL;
 
@@ -161,6 +162,7 @@ GM_Debug::~GM_Debug()
 {
 	delete background;
 	delete spr;
+	delete map;
 	delete thing;
 }
 void GM_Debug::updateScene()
@@ -183,6 +185,8 @@ void GM_Debug::renderScene()
 		spr->Blit(50,50);
 	if(thing)
 		thing->Blit(100,50);
+    if(map)
+        map->Blit(50,200);
 /*
     std::stringstream testchar;
     testchar << (char)('u'+32);

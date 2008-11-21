@@ -302,6 +302,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 						}
 					}
 				}
+				break;
 			}
 			else{
 				fseek(f, sizeof(sprloc)*ph.height*ph.width, SEEK_CUR);
@@ -314,6 +315,38 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		m_pixelformat = GL_RGBA;
 		#endif
 		m_loaded = true;
+	}
+	else if(extension == "map"){
+        FILE *f;
+		SDL_Surface *s = NULL;
+
+        f = yatc_fopen(filename.c_str(), "rb");
+		if(!f){
+			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Minimap file %s not found\n", filename.c_str());
+			goto loadFail;
+		}
+
+        s = SDL_CreateRGBSurface(SDL_SWSURFACE, 256, 256, 32, rmask, gmask, bmask, amask);
+
+        for (int i = 0; i < 256; i++)
+            for (int j = 0; j < 256; j++)
+            {
+                char c;
+                fread(&c, 1, 1, f);
+                char b = (c % 6) / 5. * 255;
+                char g = ((c / 6) % 6) / 5. * 255;
+                char r = (c / 36) / 5. * 255;
+                putPixel(i,j, SDL_MapRGB(s->format,r,g,b) ,s);
+            }
+
+
+
+        #ifdef USE_OPENGL
+		m_pixelformat = GL_RGBA;
+		#endif
+        m_image = s;
+		m_loaded = true;
+
 	}
 	else{
 		// m_image is already marked as NULL, so we're over
