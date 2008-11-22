@@ -223,6 +223,7 @@ void GM_Gameworld::updateScene()
 	#endif
 
 	m_mapui.renderMap();
+	m_automap.renderSelf(options.w-256, 0, 256,256);
 
 
 	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
@@ -740,11 +741,17 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
 
 }
 
-void GM_Gameworld::onCreatureMove(uint32_t id)
+void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos)
 {
+    Creature* c = Creatures::getInstance().getCreature(id);
 	if (id != GlobalVariables::getPlayerID() || !Creatures::getInstance().getPlayer()->isPreWalking() )
-		Creatures::getInstance().getCreature(id)->startWalk();
-	Creatures::getInstance().getCreature(id)->confirmWalk();
+		c->startWalk();
+	c->confirmWalk();
+
+	if (id == GlobalVariables::getPlayerID())
+	{
+	    m_automap.setPos(newPos.x, newPos.y, newPos.z);
+	}
 //	printf("Moving %d\n", id);
 
 }

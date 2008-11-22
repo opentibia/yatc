@@ -32,6 +32,7 @@
 #include "ui/uishop.h"
 #include "ui/uitrade.h"
 #include "ui/uioutfit.h"
+#include "automap.h"
 
 class Console;
 class Tile;
@@ -66,7 +67,7 @@ public:
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message);
-	void onCreatureMove(uint32_t id);
+	void onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos);
 	void onChangeSkills();
 	void onChangeStats();
 	void onUpdatePlayerCash(uint32_t newcash);
@@ -160,6 +161,8 @@ private:
 
     slots_t m_draggingInv;
     uint32_t m_draggingCtrId, m_draggingCtrSlot;
+
+    Automap m_automap;
 
 	ProtocolGame* m_protocol;
 	friend class pnlInventory_t;

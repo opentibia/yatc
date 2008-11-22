@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-11 21:30+0200\n"
+"POT-Creation-Date: 2008-11-22 16:57+0100\n"
 "PO-Revision-Date: 2008-10-24 01:34+0200\n"
 "Last-Translator: FightingElf (Dawid Pietrzak) <fightingelf@gmail.com>\n"
 "Language-Team: FightingElf <fightingelf@gmail.com>\n"
@@ -16,9 +16,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../gm_mainmenu.cpp:348
+msgid ""
+" comes with ABSOLUTELY NO WARRANTY; \n"
+"for details see sections 11 and 12 in COPYING.\n"
+"This is free software, and you are welcome \n"
+"to redistribute it under certain conditions;\n"
+"see COPYING for details."
+msgstr ""
+
 #: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
 msgid " gold"
 msgstr " złota"
+
+#: ../gm_mainmenu.cpp:336
+msgid "(in no particular order)"
+msgstr ""
+
+#: ../ui/optionsui.cpp:123
+msgid "."
+msgstr ""
 
 #: ../ui/charlist.h:84
 msgid "Account Status:"
@@ -32,7 +49,7 @@ msgstr "Nazwa konta:"
 msgid "Account number:"
 msgstr "Numer konta:"
 
-#: ../ui/uioutfit.cpp:118
+#: ../ui/uioutfit.cpp:128
 msgid "Addon "
 msgstr "Dodatek "
 
@@ -70,9 +87,14 @@ msgstr "Kup"
 
 #: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:161
 #: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
-#: ../ui/uioutfit.cpp:143 ../ui/charlist.h:112 ../ui/itemmove.h:108
+#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
 msgid "Cancel"
 msgstr "Anuluj"
+
+#: ../gm_mainmenu.cpp:538
+#, fuzzy
+msgid "Cannot connect to a login server."
+msgstr "Łączenie z serwerem..."
 
 #: ../ui/skills.h:164
 msgid "Cap"
@@ -102,7 +124,7 @@ msgstr "Klasyczne Sterowanie"
 msgid "Club Fighting"
 msgstr "Walka Obuchem"
 
-#: ../gm_mainmenu.cpp:373 ../gm_mainmenu.cpp:449
+#: ../gm_mainmenu.cpp:391 ../gm_mainmenu.cpp:480
 msgid "Connecting to the server..."
 msgstr "Łączenie z serwerem..."
 
@@ -114,15 +136,23 @@ msgstr "Konsola"
 msgid "Console Options"
 msgstr "Opcje Konsoli"
 
+#: ../gm_mainmenu.cpp:343
+msgid "Contributors"
+msgstr ""
+
 #: ../ui/login.h:99
 msgid "Create Account"
 msgstr "Załóż Konto"
+
+#: ../gm_mainmenu.cpp:324
+msgid "Current engine"
+msgstr ""
 
 #: ../ui/options.h:134
 msgid "Customise the console"
 msgstr "Dostosuj konsolę"
 
-#: ../ui/uioutfit.cpp:75
+#: ../ui/uioutfit.cpp:83
 msgid "Detail"
 msgstr "Szczegół"
 
@@ -134,7 +164,7 @@ msgstr "Walka Dystansowa"
 msgid "Edit your hotkey texts"
 msgstr "Zmień opisy hotkey'ów"
 
-#: ../ui/optionsui.cpp:319
+#: ../ui/optionsui.cpp:321
 msgid "Engine change"
 msgstr "Zmiana silnika"
 
@@ -142,11 +172,11 @@ msgstr "Zmiana silnika"
 msgid "Enter Game"
 msgstr "Wejdź do Gry"
 
-#: ../gm_mainmenu.cpp:448
+#: ../gm_mainmenu.cpp:479
 msgid "Entering game"
 msgstr "Wchodzenie do gry"
 
-#: ../gm_mainmenu.cpp:506 ../gm_mainmenu.cpp:539
+#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:584
 msgid "Error"
 msgstr "Błąd"
 
@@ -166,6 +196,12 @@ msgstr "Rybactwo"
 msgid "Fist Fighting"
 msgstr "Walka Pięściami"
 
+#: ../gm_mainmenu.cpp:542
+msgid ""
+"For more information take a look at the threads in the\n"
+"forums at otfans.net."
+msgstr ""
+
 #: ../ui/charlist.h:147
 msgid "Free Account"
 msgstr "Konto Darmowe"
@@ -174,7 +210,7 @@ msgstr "Konto Darmowe"
 msgid "Fullscreen"
 msgstr "Pełny Ekran"
 
-#: ../ui/optionsui.cpp:92
+#: ../ui/optionsui.cpp:94
 msgid ""
 "Fullscreen decides whether or not the client will\n"
 "be taking the entire screen.\n"
@@ -208,7 +244,7 @@ msgstr "Ustawienia Grafiki"
 msgid "Gratis Premium Account"
 msgstr "Darmowe Konto Premium"
 
-#: ../ui/uioutfit.cpp:54
+#: ../ui/uioutfit.cpp:56
 msgid "Head"
 msgstr "Głowa"
 
@@ -217,12 +253,12 @@ msgid "Health"
 msgstr "Życie"
 
 #: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:160 ../gm_mainmenu.cpp:347
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:162 ../gm_mainmenu.cpp:365
 #: ../ui/optionsconsole.h:121
 msgid "Help"
 msgstr "Pomoc"
 
-#: ../ui/optionsui.cpp:82
+#: ../ui/optionsui.cpp:84
 msgid "Help not done."
 msgstr "Pomoc nie wykonana."
 
@@ -242,11 +278,11 @@ msgstr ""
 "Jeżeli nie masz\n"
 "jeszcze konta:"
 
-#: ../ui/mainmenu.cpp:78
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:354
 msgid "Info"
 msgstr "O programie"
 
-#: ../gm_mainmenu.cpp:541
+#: ../gm_mainmenu.cpp:586
 msgid "Information"
 msgstr "Informacja"
 
@@ -258,9 +294,13 @@ msgstr "Ekwipunek"
 msgid "Level"
 msgstr "Poziom"
 
-#: ../gm_mainmenu.cpp:372
+#: ../gm_mainmenu.cpp:390
 msgid "Logging in"
 msgstr "Logowanie"
+
+#: ../ui/uiinventory.cpp:176
+msgid "Look at"
+msgstr ""
 
 #: ../ui/skills.h:202
 msgid "Magic Level"
@@ -270,7 +310,7 @@ msgstr "Poziom Magiczny"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:527
+#: ../ui/optionsui.cpp:214 ../gm_mainmenu.cpp:568
 msgid "Message of the Day"
 msgstr "Wiadomość Dnia"
 
@@ -304,12 +344,12 @@ msgstr "Klucz kodowania OT"
 
 #: ../ui/options.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
 #: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
-#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:135 ../ui/charlist.h:104
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "Ok"
 
-#: ../ui/optionsui.cpp:112
+#: ../ui/optionsui.cpp:114
 msgid ""
 "OpenGL is a 3D hardware-accelerated graphical library.\n"
 "  To make use of it, make sure you have latest graphic card\n"
@@ -333,7 +373,7 @@ msgstr "Opcje"
 msgid "Password:"
 msgstr "Hasło:"
 
-#: ../ui/uioutfit.cpp:84
+#: ../ui/uioutfit.cpp:94
 msgid ""
 "Pick an outfit and choose colors for parts of\n"
 "your character's avatar.\n"
@@ -355,9 +395,13 @@ msgstr "Konto Premium"
 msgid "Price:"
 msgstr "Cena:"
 
-#: ../ui/uioutfit.cpp:61
+#: ../ui/uioutfit.cpp:65
 msgid "Primary"
 msgstr "Główne"
+
+#: ../gm_mainmenu.cpp:336
+msgid "Programmed by"
+msgstr ""
 
 #: ../ui/optionsnetwork.h:109 ../ui/optionsnetwork.h:111
 #: ../ui/optionsnetwork.h:113 ../ui/optionsnetwork.h:115
@@ -366,11 +410,11 @@ msgstr "Główne"
 msgid "Protocol"
 msgstr "Protokół"
 
-#: ../gm_mainmenu.cpp:399
+#: ../gm_mainmenu.cpp:430
 msgid "Protocol detection failed"
 msgstr "Detakcja protokołu zawiodła"
 
-#: ../ui/optionsui.cpp:118
+#: ../ui/optionsui.cpp:120
 msgid ""
 "RECOMMENDED: Choose SDL. But, try what works better for you.\n"
 "\n"
@@ -380,11 +424,11 @@ msgstr ""
 "\n"
 "Aby zaakceptować silnik graficzny, musisz zrestartować program.\n"
 
-#: ../ui/optionsui.cpp:319
+#: ../ui/optionsui.cpp:321
 msgid "Restart is required to apply engine change."
 msgstr "Restart wymagany do przełączenia silnika."
 
-#: ../ui/optionsui.cpp:108
+#: ../ui/optionsui.cpp:110
 msgid ""
 "SDL 1.2 is a 2D software rendering library. It should be\n"
 "  slowest, but since it is the most maintained engine, it runs\n"
@@ -396,7 +440,7 @@ msgstr ""
 "  działa dopuszczalną prędkością, a nawet czasem szybszą niż\n"
 "  OpenGL, z kilkoma dodatkami. Oczywiście to się może zmienić.\n"
 
-#: ../ui/uioutfit.cpp:68
+#: ../ui/uioutfit.cpp:74
 msgid "Secondary"
 msgstr "Poboczny"
 
@@ -416,7 +460,7 @@ msgstr "Sprzedaj"
 msgid "Server address:"
 msgstr "Adres serwera:"
 
-#: ../ui/optionsui.cpp:147
+#: ../ui/optionsui.cpp:149
 msgid ""
 "Server name is the IP address or hostname of the\n"
 "login server.\n"
@@ -440,7 +484,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Port serwera:"
 
-#: ../ui/uioutfit.cpp:37
+#: ../mapui.cpp:530 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Zmień Wygląd"
 
@@ -528,7 +572,11 @@ msgstr "Wigor"
 msgid "Sword Fighting"
 msgstr "Walka Mieczem"
 
-#: ../ui/optionsui.cpp:123
+#: ../ui/uiinventory.cpp:209
+msgid "This functionality is not yet finished"
+msgstr ""
+
+#: ../ui/optionsui.cpp:125
 msgid ""
 "To choose maximum FPS (reducing the CPU and graphics card usage\n"
 "resulting in less power usage, quieter operation and reduced\n"
@@ -540,14 +588,50 @@ msgstr ""
 "temperatury procesora) użyj paska niżej. Proszę wziąć pod uwagę,\n"
 "że limit FPS nie jest dokładny (w przybliżeniu)."
 
+#: ../ui/uiinventory.cpp:181
+msgid "Trade with"
+msgstr ""
+
 #: ../ui/charlist.h:91
 msgid "Unknown"
 msgstr "Nieznany"
 
-#: ../ui/optionsui.cpp:107
+#: ../ui/uiinventory.cpp:178
+msgid "Use"
+msgstr ""
+
+#: ../ui/uiinventory.cpp:180
+msgid "Use with..."
+msgstr ""
+
+#: ../gm_mainmenu.cpp:326
+msgid "Uses GLICT"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:328
+msgid "Uses OpenGL"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:325
+msgid "Uses SDL"
+msgstr ""
+
+#: ../ui/optionsui.cpp:109
 msgid "We offer two graphical engines:\n"
 msgstr "Oferujemy dwa silniki graficzne:\n"
+
+#: ../gm_mainmenu.cpp:332
+msgid "[for info run with GL engine]\n"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:325
+msgid "compiled with"
+msgstr ""
 
 #: ../ui/charlist.h:152
 msgid "days left"
 msgstr "dni pozostało"
+
+#: ../gm_mainmenu.cpp:339
+msgid "with inactive developers"
+msgstr ""

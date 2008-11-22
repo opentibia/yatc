@@ -39,7 +39,7 @@ unsigned int MAXFPS=50;
 #include <GLICT/globals.h>
 #include <sstream>
 #include <stdlib.h>
-#if !defined(__APPLE__) && !defined(WIN32)
+#if defined(HAVE_LIBINTL_H)
 	#include <libintl.h>
 #else
 	#define gettext(x) (x)
@@ -174,7 +174,7 @@ void checkFile(const char *filename)
 
                 str_replace(forreplace, "FILENAMEHERE", filename);
                 NativeGUIError(forreplace.c_str(), gettext(PRODUCTSHORT " Fatal Error"));
-                return;
+                exit(1);
 		    }
         }
 
@@ -346,15 +346,6 @@ int main(int argc, char *argv[])
 
 #endif
 
-#if !defined(__APPLE__) && !defined(WIN32)
-    // set up i18n stuff
-    setlocale( LC_ALL, "" );
-    bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );
-    textdomain( "yatc" );
-    bind_textdomain_codeset("yatc","windows-1252");
-
-#endif
-
 	//setenv("SDL_VIDEODRIVER", "aalib", 0);
 	//setenv("AAOPTS","-width 200 -height 70 -dim -reverse -bold -normal -boldfont  -eight -extended ",0);
 	//setenv("AAFont","-*-fixed-bold-*-*-*-*-55-*-*-*-*-*-*",0);
@@ -368,18 +359,36 @@ int main(int argc, char *argv[])
 		" There is NO WARRANTY, to the extent permitted by law. \n"
 		" Review LICENSE in " PRODUCTSHORT " distribution for details.\n");
 
+
     yatc_fopen_init(argv[0]);
-    printf("Testing translation to %s:\n", getenv("LANG"));
+
+
+
+	options.Load();
+	MAXFPS = options.maxfps;
+
+
+
+#if HAVE_LIBINTL_H
+    // set up i18n stuff
+    std::string l = "LANG=";
+    if(options.lang.size())
+    {
+        l+=options.lang;
+        putenv(l.c_str());
+    }
+    setlocale( LC_ALL, "");//options.lang.c_str() );
+    bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );
+    textdomain( "yatc" );
+    bind_textdomain_codeset("yatc","windows-1252");
+#endif
+
+    printf("Testing translation to %s:\n", getenv("LC_ALL"));
     printf(" %s == Enter Game\n", gettext("Enter Game"));
-
-
 
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Checking graphics files existence...\n");
 	checkFiles();
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "All graphics files were found.\n");
-
-	options.Load();
-	MAXFPS = options.maxfps;
 
 
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Initializing windowing...\n");

@@ -21,7 +21,7 @@
 #ifndef __UI_OPTIONSCONSOLE_H
 #define __UI_OPTIONSCONSOLE_H
 
-#if !defined(__APPLE__) && !defined(WIN32)
+#if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else
     #define gettext(x) (x)

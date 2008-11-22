@@ -206,6 +206,6 @@ void pnlInventory_t::onUse(PopupItem* pi){
 }
 void pnlInventory_t::onTrade(PopupItem*){
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-    gw->msgBox("This functionality is not yet finished","TODO");
+    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
 }
 

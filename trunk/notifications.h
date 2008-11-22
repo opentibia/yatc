@@ -70,7 +70,7 @@ class Notifications{
 		//SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
 		static void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level,
 			const std::string& message);
-		static void onCreatureMove(uint32_t id);
+		static void onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos);
 		static void onUpdatePlayerCash(uint32_t newcash);
 
 		//**** Open/Close inGame windows ****

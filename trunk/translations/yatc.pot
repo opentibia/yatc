@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-02 20:42+0100\n"
+"POT-Creation-Date: 2008-11-22 16:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../gm_mainmenu.cpp:335
+#: ../gm_mainmenu.cpp:348
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in COPYING.\n"
@@ -29,8 +29,12 @@ msgstr ""
 msgid " gold"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:324
+#: ../gm_mainmenu.cpp:336
 msgid "(in no particular order)"
+msgstr ""
+
+#: ../ui/optionsui.cpp:123
+msgid "."
 msgstr ""
 
 #: ../ui/charlist.h:84
@@ -87,7 +91,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:511
+#: ../gm_mainmenu.cpp:538
 msgid "Cannot connect to a login server."
 msgstr ""
 
@@ -115,7 +119,7 @@ msgstr ""
 msgid "Club Fighting"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:378 ../gm_mainmenu.cpp:459
+#: ../gm_mainmenu.cpp:391 ../gm_mainmenu.cpp:480
 msgid "Connecting to the server..."
 msgstr ""
 
@@ -127,7 +131,7 @@ msgstr ""
 msgid "Console Options"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:331
+#: ../gm_mainmenu.cpp:343
 msgid "Contributors"
 msgstr ""
 
@@ -135,7 +139,7 @@ msgstr ""
 msgid "Create Account"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:312
+#: ../gm_mainmenu.cpp:324
 msgid "Current engine"
 msgstr ""
 
@@ -163,11 +167,11 @@ msgstr ""
 msgid "Enter Game"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:458
+#: ../gm_mainmenu.cpp:479
 msgid "Entering game"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:513 ../gm_mainmenu.cpp:520 ../gm_mainmenu.cpp:553
+#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:584
 msgid "Error"
 msgstr ""
 
@@ -187,7 +191,7 @@ msgstr ""
 msgid "Fist Fighting"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:515
+#: ../gm_mainmenu.cpp:542
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -239,7 +243,7 @@ msgid "Health"
 msgstr ""
 
 #: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:162 ../gm_mainmenu.cpp:352
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:162 ../gm_mainmenu.cpp:365
 #: ../ui/optionsconsole.h:121
 msgid "Help"
 msgstr ""
@@ -262,11 +266,11 @@ msgid ""
 "an account yet:"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:341
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:354
 msgid "Info"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:555
+#: ../gm_mainmenu.cpp:586
 msgid "Information"
 msgstr ""
 
@@ -278,11 +282,11 @@ msgstr ""
 msgid "Level"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:377
+#: ../gm_mainmenu.cpp:390
 msgid "Logging in"
 msgstr ""
 
-#: ../ui/uiinventory.cpp:170
+#: ../ui/uiinventory.cpp:176
 msgid "Look at"
 msgstr ""
 
@@ -294,7 +298,7 @@ msgstr ""
 msgid "Mana"
 msgstr ""
 
-#: ../ui/optionsui.cpp:214 ../gm_mainmenu.cpp:541
+#: ../ui/optionsui.cpp:214 ../gm_mainmenu.cpp:568
 msgid "Message of the Day"
 msgstr ""
 
@@ -372,7 +376,7 @@ msgstr ""
 msgid "Primary"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:324
+#: ../gm_mainmenu.cpp:336
 msgid "Programmed by"
 msgstr ""
 
@@ -383,7 +387,7 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:409
+#: ../gm_mainmenu.cpp:430
 msgid "Protocol detection failed"
 msgstr ""
 
@@ -442,7 +446,7 @@ msgstr ""
 msgid "Server port:"
 msgstr ""
 
-#: ../mapui.cpp:529 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:530 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr ""
 
@@ -524,6 +528,10 @@ msgstr ""
 msgid "Sword Fighting"
 msgstr ""
 
+#: ../ui/uiinventory.cpp:209
+msgid "This functionality is not yet finished"
+msgstr ""
+
 #: ../ui/optionsui.cpp:125
 msgid ""
 "To choose maximum FPS (reducing the CPU and graphics card usage\n"
@@ -532,7 +540,7 @@ msgid ""
 "limiting is only approximate."
 msgstr ""
 
-#: ../ui/uiinventory.cpp:172
+#: ../ui/uiinventory.cpp:181
 msgid "Trade with"
 msgstr ""
 
@@ -540,19 +548,23 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: ../ui/uiinventory.cpp:171
+#: ../ui/uiinventory.cpp:178
 msgid "Use"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:314
+#: ../ui/uiinventory.cpp:180
+msgid "Use with..."
+msgstr ""
+
+#: ../gm_mainmenu.cpp:326
 msgid "Uses GLICT"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:316
+#: ../gm_mainmenu.cpp:328
 msgid "Uses OpenGL"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:313
+#: ../gm_mainmenu.cpp:325
 msgid "Uses SDL"
 msgstr ""
 
@@ -560,11 +572,11 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:320
+#: ../gm_mainmenu.cpp:332
 msgid "[for info run with GL engine]\n"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:313
+#: ../gm_mainmenu.cpp:325
 msgid "compiled with"
 msgstr ""
 
@@ -572,6 +584,6 @@ msgstr ""
 msgid "days left"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:327
+#: ../gm_mainmenu.cpp:339
 msgid "with inactive developers"
 msgstr ""

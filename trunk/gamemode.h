@@ -73,7 +73,7 @@ public:
 		const std::string& message) {}
     virtual void onUpdatePlayerCash(uint32_t newcash) {}
 
-	virtual void onCreatureMove(uint32_t id) {}
+	virtual void onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos) {}
 
 	virtual void onChangeSkills() {}
 	virtual void onChangeStats() {}

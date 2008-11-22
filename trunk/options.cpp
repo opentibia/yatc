@@ -44,6 +44,7 @@ Options::Options()
 	motdtext = "No current information.";
 	motdnum = 0;
 	ui_compat = false;
+	lang = "";
 
 	// [general]
 	classiccontrol = 0;
@@ -123,6 +124,9 @@ void Options::Save()
 	ss.str("");
 	ss << ui_compat;
 	section->addKey("ui_compat", ss.str());
+	ss.str("");
+	ss << lang;
+	section->addKey("lang", ss.str());
 	ss.str("");
 
 
@@ -237,6 +241,7 @@ void Options::Load()
 	motdnum = atoi(configHandler->getKeyValue("client", "motdnum").c_str());
 	motdtext = configHandler->getKeyValue("client", "motdtext");
 	ui_compat = (atoi(configHandler->getKeyValue("client", "ui_compat").c_str()) == 1);
+	lang = configHandler->getKeyValue("client", "lang");
 
 	// [general]
 	classiccontrol = (atoi(configHandler->getKeyValue("general", "classiccontrol").c_str()) == 1);

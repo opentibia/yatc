@@ -51,6 +51,7 @@ public:
 	std::string motdtext;
 	int motdnum;
 	bool ui_compat;
+	std::string lang;
 
 	// [general]
 	bool classiccontrol;

@@ -28,7 +28,7 @@
 #include "../engine.h"
 #include "../gamecontent/globalvars.h"
 #include "../util.h"
-#if !defined(___APPLE__) && !defined(WIN32)
+#if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else
     #define gettext(x) (x)

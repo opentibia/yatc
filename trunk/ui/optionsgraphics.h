@@ -23,7 +23,7 @@
 
 #include <GLICT/list.h>
 #include <sstream>
-#if !defined(__APPLE__) && !defined(WIN32)
+#if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else
     #define gettext(x) (x)
@@ -218,7 +218,7 @@ public:
 					}
 				}
 			}
-			
+
 			for(i=0;modes[i];++i)
 				AddResolution(modes[i]->w, modes[i]->h, 16);
 			for(i=0;modes[i];++i)
