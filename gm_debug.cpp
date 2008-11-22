@@ -20,6 +20,7 @@
 
 #include <GLICT/globals.h>
 #include <GLICT/messagebox.h>
+#include <iomanip>
 
 #include "gm_debug.h"
 #include "defines.h"
@@ -96,6 +97,58 @@ void GM_Debug::UpdateOnClick(glictPos* relmousepos, glictContainer* callerclass)
         DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "GREATNESS!\n");
 
 }
+void GM_Debug::UpdateMapOnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+    GM_Debug *gd = (GM_Debug*)g_game;
+
+    gd->px = atoi(gd->txtLocX.GetCaption().c_str()); // playerx
+    gd->py = atoi(gd->txtLocY.GetCaption().c_str());
+    gd->pz = atoi(gd->txtLocZ.GetCaption().c_str());
+
+    int xs = gd->px - gd->mapw/2;
+    int ys = gd->py - gd->maph/2;
+    int xe = gd->px + gd->mapw/2;
+    int ye = gd->py + gd->maph/2;
+
+
+
+    gd->mapcount = 0;
+
+    for (int i = 0; i < 4; i++){
+        delete gd->map[i];
+        gd->map[i] = NULL;
+        gd->mapfns[i] = "";
+    }
+
+    for (int j = ys; j<ye; j+=gd->maph-1)
+        for (int i = xs; i<xe; i+=gd->mapw-1)
+        {
+
+            std::stringstream x,y,z,minimapfnss;
+            x << setw(3) << setfill('0') << i / 256;
+            y << setw(3) << setfill('0') << j / 256;
+            z << setw(2) << setfill('0') << gd->pz;
+            minimapfnss << x.str() << y.str() << z.str() << ".map";
+
+            bool has_map = false;
+            /*for(int k=0; k<gd->mapcount; k++)
+            {
+                if(gd->mapfns[i] == minimapfnss.str())
+                {
+                    has_map = true;
+                    break;
+                }
+            }*/
+
+            if (!has_map)
+            {
+                gd->mapcount++;
+                gd->mapfns[gd->mapcount-1] = minimapfnss.str();
+                gd->map[gd->mapcount-1] = g_engine->createSprite(minimapfnss.str());
+            }
+
+        }
+}
 
 GM_Debug::GM_Debug()
 {
@@ -140,13 +193,41 @@ GM_Debug::GM_Debug()
 	btnUpdate.SetBGColor(1,0,0,1);
 	btnUpdate.SetOnClick(GM_Debug::UpdateOnClick);
 
+
+    desktop.AddObject(&txtLocX);
+    desktop.AddObject(&txtLocY);
+    desktop.AddObject(&txtLocZ);
+    txtLocX.SetWidth(50);
+    txtLocY.SetWidth(50);
+    txtLocZ.SetWidth(50);
+    txtLocX.SetCaption("32630");
+    txtLocY.SetCaption("31880");
+    txtLocZ.SetCaption("7");
+    txtLocX.SetHeight(16);
+    txtLocY.SetHeight(16);
+    txtLocZ.SetHeight(16);
+    txtLocX.SetPos(50,190);
+    txtLocY.SetPos(100,190);
+    txtLocZ.SetPos(150,190);
+
+    desktop.AddObject(&btnUpdateMap);
+    btnUpdateMap.SetPos(200,190);
+    btnUpdateMap.SetHeight(16);
+    btnUpdateMap.SetWidth(120);
+    btnUpdateMap.SetCaption("Update map");
+    btnUpdateMap.SetOnClick(GM_Debug::UpdateMapOnClick);
+
+
+
     popup = NULL;
     killpopup = false;
+    map[0] = map[1] = map[2] = map[3] = NULL;
+    mapw = 256;
+    maph = 256;
 
 	if(g_engine){
 		background = g_engine->createSprite("Tibia.pic", 0);
 		spr = g_engine->createSprite("Tibia.spr", 200);
-		map = g_engine->createSprite("12712407.map");
 		//thing = new ItemUI(6401, 1);
 		thing = NULL;
 
@@ -185,8 +266,19 @@ void GM_Debug::renderScene()
 		spr->Blit(50,50);
 	if(thing)
 		thing->Blit(100,50);
-    if(map)
-        map->Blit(50,200);
+
+
+    int xs = px - mapw/2;
+    int ys = py - maph/2;
+    int xe = px + mapw/2;
+    int ye = px + mapw/2;
+
+
+    if (map[0]) map[0]->Blit(0,0, xs%256, ys%256, 256-(xs%256), 256-(ys%256));
+    if (map[1]) map[1]->Blit(256-(xs%256),0, 0, ys%256, mapw-(256-(xs%256)), 256-(ys%256));
+    if (map[2]) map[2]->Blit(0,256-(ys%256), xs%256, 0, 256-(xs%256), maph-(256-(ys%256)));
+    if (map[3]) map[3]->Blit(256-(xs%256),256-(ys%256), 0, 0, mapw-(256-(xs%256)), maph-(256-(ys%256)));
+
 /*
     std::stringstream testchar;
     testchar << (char)('u'+32);
