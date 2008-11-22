@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-25 21:18+0200\n"
+"POT-Creation-Date: 2008-11-22 16:57+0100\n"
 "PO-Revision-Date: 2008-11-02 20:17+0100\n"
 "Last-Translator: Rasmus Karlsson <qwerty@wuut.se>\n"
 "Language-Team: Rasmus Karlsson <qwerty@wuut.se>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: ../gm_mainmenu.cpp:330
+#: ../gm_mainmenu.cpp:348
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in COPYING.\n"
@@ -33,9 +33,13 @@ msgstr ""
 msgid " gold"
 msgstr " guld"
 
-#: ../gm_mainmenu.cpp:319
+#: ../gm_mainmenu.cpp:336
 msgid "(in no particular order)"
 msgstr "(i ingen speciell ordning)"
+
+#: ../ui/optionsui.cpp:123
+msgid "."
+msgstr ""
 
 #: ../ui/charlist.h:84
 msgid "Account Status:"
@@ -91,7 +95,7 @@ msgstr "Köp"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../gm_mainmenu.cpp:501
+#: ../gm_mainmenu.cpp:538
 msgid "Cannot connect to a login server."
 msgstr "Kan inte ansluta till en loginserver."
 
@@ -123,7 +127,7 @@ msgstr "Klassiska Kontroller"
 msgid "Club Fighting"
 msgstr "Klubbsskicklighet"
 
-#: ../gm_mainmenu.cpp:373 ../gm_mainmenu.cpp:449
+#: ../gm_mainmenu.cpp:391 ../gm_mainmenu.cpp:480
 msgid "Connecting to the server..."
 msgstr "Ansluter till servern..."
 
@@ -135,7 +139,7 @@ msgstr "Konsoll"
 msgid "Console Options"
 msgstr "Konsollinställningar"
 
-#: ../gm_mainmenu.cpp:326
+#: ../gm_mainmenu.cpp:343
 msgid "Contributors"
 msgstr "Medhjälpare"
 
@@ -143,7 +147,7 @@ msgstr "Medhjälpare"
 msgid "Create Account"
 msgstr "Skapa Konto"
 
-#: ../gm_mainmenu.cpp:307
+#: ../gm_mainmenu.cpp:324
 msgid "Current engine"
 msgstr "Nuvarande motor"
 
@@ -163,7 +167,7 @@ msgstr "Distansskicklighet"
 msgid "Edit your hotkey texts"
 msgstr "Ändra snabbtangetstexter"
 
-#: ../ui/optionsui.cpp:319
+#: ../ui/optionsui.cpp:321
 msgid "Engine change"
 msgstr "Motorbyte"
 
@@ -171,11 +175,11 @@ msgstr "Motorbyte"
 msgid "Enter Game"
 msgstr "Starta Spelet"
 
-#: ../gm_mainmenu.cpp:448
+#: ../gm_mainmenu.cpp:479
 msgid "Entering game"
 msgstr "Startar Spelet"
 
-#: ../gm_mainmenu.cpp:503 ../gm_mainmenu.cpp:510 ../gm_mainmenu.cpp:543
+#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:584
 msgid "Error"
 msgstr "Fel"
 
@@ -195,7 +199,7 @@ msgstr "Fiske"
 msgid "Fist Fighting"
 msgstr "Knytnävesskicklighet"
 
-#: ../gm_mainmenu.cpp:505
+#: ../gm_mainmenu.cpp:542
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -211,7 +215,7 @@ msgstr "Gratiskonto"
 msgid "Fullscreen"
 msgstr "Fullskärmsläge"
 
-#: ../ui/optionsui.cpp:92
+#: ../ui/optionsui.cpp:94
 msgid ""
 "Fullscreen decides whether or not the client will\n"
 "be taking the entire screen.\n"
@@ -254,12 +258,12 @@ msgid "Health"
 msgstr "Hälsa"
 
 #: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:160 ../gm_mainmenu.cpp:347
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:162 ../gm_mainmenu.cpp:365
 #: ../ui/optionsconsole.h:121
 msgid "Help"
 msgstr "Hjälp"
 
-#: ../ui/optionsui.cpp:82
+#: ../ui/optionsui.cpp:84
 msgid "Help not done."
 msgstr "Hjälpsektionen är inte klar."
 
@@ -279,11 +283,11 @@ msgstr ""
 "Om du inte har\n"
 "ett konto än:"
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:336
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:354
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:545
+#: ../gm_mainmenu.cpp:586
 msgid "Information"
 msgstr "Information"
 
@@ -295,11 +299,11 @@ msgstr "Inventarie"
 msgid "Level"
 msgstr "Nivå"
 
-#: ../gm_mainmenu.cpp:372
+#: ../gm_mainmenu.cpp:390
 msgid "Logging in"
 msgstr "Loggar in"
 
-#: ../ui/uiinventory.cpp:170
+#: ../ui/uiinventory.cpp:176
 msgid "Look at"
 msgstr "Titta på"
 
@@ -311,7 +315,7 @@ msgstr "Maginivå"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:212 ../gm_mainmenu.cpp:531
+#: ../ui/optionsui.cpp:214 ../gm_mainmenu.cpp:568
 msgid "Message of the Day"
 msgstr "Dagens Meddelande"
 
@@ -350,7 +354,7 @@ msgstr "OT-enkryptionsnyckel"
 msgid "Ok"
 msgstr "Ok"
 
-#: ../ui/optionsui.cpp:112
+#: ../ui/optionsui.cpp:114
 msgid ""
 "OpenGL is a 3D hardware-accelerated graphical library.\n"
 "  To make use of it, make sure you have latest graphic card\n"
@@ -400,7 +404,7 @@ msgstr "Pris:"
 msgid "Primary"
 msgstr "Primär"
 
-#: ../gm_mainmenu.cpp:319
+#: ../gm_mainmenu.cpp:336
 msgid "Programmed by"
 msgstr "Programmerat av"
 
@@ -411,11 +415,11 @@ msgstr "Programmerat av"
 msgid "Protocol"
 msgstr "Protokoll"
 
-#: ../gm_mainmenu.cpp:399
+#: ../gm_mainmenu.cpp:430
 msgid "Protocol detection failed"
 msgstr "Protokolldetektionen misslyckades"
 
-#: ../ui/optionsui.cpp:118
+#: ../ui/optionsui.cpp:120
 msgid ""
 "RECOMMENDED: Choose SDL. But, try what works better for you.\n"
 "\n"
@@ -425,11 +429,11 @@ msgstr ""
 "\n"
 "För att versktälla ändring utav grafikmotor så krävs en omstart\n"
 
-#: ../ui/optionsui.cpp:319
+#: ../ui/optionsui.cpp:321
 msgid "Restart is required to apply engine change."
 msgstr "Omstart krävs för att verkställa ändringen utav grafikmotor."
 
-#: ../ui/optionsui.cpp:108
+#: ../ui/optionsui.cpp:110
 msgid ""
 "SDL 1.2 is a 2D software rendering library. It should be\n"
 "  slowest, but since it is the most maintained engine, it runs\n"
@@ -461,7 +465,7 @@ msgstr "Sälj"
 msgid "Server address:"
 msgstr "Serveradress:"
 
-#: ../ui/optionsui.cpp:147
+#: ../ui/optionsui.cpp:149
 msgid ""
 "Server name is the IP address or hostname of the\n"
 "login server.\n"
@@ -485,7 +489,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Server port:"
 
-#: ../mapui.cpp:527 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:530 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Bestäm utseende"
 
@@ -493,14 +497,16 @@ msgstr "Bestäm utseende"
 msgid ""
 "Set network options,\n"
 "such as server."
-msgstr "Ställ in nätverksinställningar,\n"
+msgstr ""
+"Ställ in nätverksinställningar,\n"
 "som till exempel server."
 
 #: ../ui/itemmove.h:74
 msgid ""
 "Set the number of \n"
 "items you want to move:"
-msgstr "Välj antalet föremål\n"
+msgstr ""
+"Välj antalet föremål\n"
 "du vill flytta:"
 
 #: ../ui/skills.h:264
@@ -571,7 +577,11 @@ msgstr "Uthållighet"
 msgid "Sword Fighting"
 msgstr "Svärdsskicklighet"
 
-#: ../ui/optionsui.cpp:123
+#: ../ui/uiinventory.cpp:209
+msgid "This functionality is not yet finished"
+msgstr ""
+
+#: ../ui/optionsui.cpp:125
 msgid ""
 "To choose maximum FPS (reducing the CPU and graphics card usage\n"
 "resulting in less power usage, quieter operation and reduced\n"
@@ -583,7 +593,7 @@ msgstr ""
 "och minskad CPU temperatur) använd listen nedan. Notera dock att\n"
 "FPS-begränsningen bara är ungefär."
 
-#: ../ui/uiinventory.cpp:172
+#: ../ui/uiinventory.cpp:181
 msgid "Trade with"
 msgstr "Handla med"
 
@@ -591,31 +601,35 @@ msgstr "Handla med"
 msgid "Unknown"
 msgstr "Okänd"
 
-#: ../ui/uiinventory.cpp:171
+#: ../ui/uiinventory.cpp:178
 msgid "Use"
 msgstr "Använd"
 
-#: ../gm_mainmenu.cpp:309
+#: ../ui/uiinventory.cpp:180
+msgid "Use with..."
+msgstr ""
+
+#: ../gm_mainmenu.cpp:326
 msgid "Uses GLICT"
 msgstr "Använder GLICT"
 
-#: ../gm_mainmenu.cpp:311
+#: ../gm_mainmenu.cpp:328
 msgid "Uses OpenGL"
 msgstr "Använder OpenGL"
 
-#: ../gm_mainmenu.cpp:308
+#: ../gm_mainmenu.cpp:325
 msgid "Uses SDL"
 msgstr "Använder SDL"
 
-#: ../ui/optionsui.cpp:107
+#: ../ui/optionsui.cpp:109
 msgid "We offer two graphical engines:\n"
 msgstr "Vi erbjuder två grafiska motorer:\n"
 
-#: ../gm_mainmenu.cpp:315
+#: ../gm_mainmenu.cpp:332
 msgid "[for info run with GL engine]\n"
 msgstr "[för information kör med GL motorn]\n"
 
-#: ../gm_mainmenu.cpp:308
+#: ../gm_mainmenu.cpp:325
 msgid "compiled with"
 msgstr "kompilerad med"
 
@@ -623,7 +637,6 @@ msgstr "kompilerad med"
 msgid "days left"
 msgstr "dagar kvar"
 
-#: ../gm_mainmenu.cpp:322
+#: ../gm_mainmenu.cpp:339
 msgid "with inactive developers"
 msgstr "med inaktiva utvecklare"
-

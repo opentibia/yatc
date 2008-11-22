@@ -53,7 +53,7 @@ public:
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
 	void doResize(float w, float h);
-	
+
 	virtual winOptions_t* getOptionsWindow() { return &winOptions; }
 
 	void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);
@@ -65,7 +65,7 @@ public:
 	void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
 
 	void onEnterGame();
-	
+
 	ClientVersion_t getActiveProtocol();
 private:
 	glictContainer desktop;
@@ -80,6 +80,7 @@ private:
 
 
 	glictMessageBox winStatus;
+	glictButton btnGoToDebug;
 
 	Sprite* background;
 protected:
@@ -102,6 +103,8 @@ protected:
 
 	static void winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass);
 	static void winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer* callerclass);
+
+	static void btnGoToDebug_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 

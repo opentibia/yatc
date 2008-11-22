@@ -31,7 +31,7 @@
 #include "engine.h"
 #include "skin.h"
 
-#if !defined(__APPLE__) && !defined(WIN32)
+#if defined(HAVE_LIBINTL_H)
 	#include <libintl.h>
 #else
 	#define gettext(x) (x)

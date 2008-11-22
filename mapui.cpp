@@ -29,7 +29,7 @@
 #include "mapui.h"
 #include "debugprint.h"
 #include "engine.h"
-#if !defined(__APPLE__) && !defined(WIN32)
+#if defined(HAVE_LIBINTL_H)
 	#include <libintl.h>
 #else
 	#define gettext(x) (x)

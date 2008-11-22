@@ -522,7 +522,7 @@ bool ProtocolGame::parseCreatureMove(NetworkMessage& msg)
         RAISE_PROTOCOL_ERROR("Creature move - addThing");
     }
 
-    Notifications::onCreatureMove(creature->getId());
+    Notifications::onCreatureMove(creature->getId(),oldPos,newPos);
 
     creature->setMoving(oldPos);
 

@@ -264,11 +264,8 @@ void CreatureUI::loadOutfit()
 
 	Outfit_t outfit = n->getOutfit();
 
-
-
 	for(uint32_t i = 0; i < m_obj->numsprites ; i++){
 		Sprite* spr;
-
 		if(m_obj->blendframes > 1){
 			 // if it's a template, then let's just put a NULL in there
             if((i / (m_obj->height * m_obj->width)) % 2 ) {

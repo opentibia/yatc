@@ -31,6 +31,7 @@
 #include "thingui.h"
 
 #include "popup.h"
+#include "automap.h"
 
 class GM_Debug : public GameMode
 {
@@ -66,12 +67,15 @@ private:
 
 	Sprite* background;
 	Sprite* spr;
-	Sprite* map[4];
-	int mapw, maph, px, py, pz, mapcount;
-	std::string mapfns[4];
 	ThingUI* thing;
     Popup* popup;
     bool killpopup;
+
+    Sprite* map[4];
+	int mapw, maph, px, py, pz, mapcount;
+	std::string mapfns[4];
+	Automap a;
+
 };
 
 #endif

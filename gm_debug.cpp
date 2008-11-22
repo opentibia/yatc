@@ -148,6 +148,9 @@ void GM_Debug::UpdateMapOnClick(glictPos* relmousepos, glictContainer* callercla
             }
 
         }
+
+
+    gd->a.setPos(gd->px,gd->py,gd->pz);
 }
 
 GM_Debug::GM_Debug()
@@ -200,8 +203,8 @@ GM_Debug::GM_Debug()
     txtLocX.SetWidth(50);
     txtLocY.SetWidth(50);
     txtLocZ.SetWidth(50);
-    txtLocX.SetCaption("32630");
-    txtLocY.SetCaption("31880");
+    txtLocX.SetCaption("32400");
+    txtLocY.SetCaption("31750");
     txtLocZ.SetCaption("7");
     txtLocX.SetHeight(16);
     txtLocY.SetHeight(16);
@@ -218,10 +221,11 @@ GM_Debug::GM_Debug()
     btnUpdateMap.SetOnClick(GM_Debug::UpdateMapOnClick);
 
 
-
+printf("1\n");
     popup = NULL;
     killpopup = false;
     map[0] = map[1] = map[2] = map[3] = NULL;
+    mapcount = 0;
     mapw = 256;
     maph = 256;
 
@@ -237,6 +241,7 @@ GM_Debug::GM_Debug()
 		NativeGUIError("Somehow, engine managed to not initialize.", PRODUCTSHORT " Fatal Error");
 		exit(1);
 	}
+	printf("2\n");
 }
 
 GM_Debug::~GM_Debug()
@@ -264,20 +269,22 @@ void GM_Debug::renderScene()
 		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
 	if(spr)
 		spr->Blit(50,50);
-	if(thing)
+ 	if(thing)
 		thing->Blit(100,50);
 
 
     int xs = px - mapw/2;
     int ys = py - maph/2;
     int xe = px + mapw/2;
-    int ye = px + mapw/2;
+    int ye = py + maph/2;
 
 
     if (map[0]) map[0]->Blit(0,0, xs%256, ys%256, 256-(xs%256), 256-(ys%256));
     if (map[1]) map[1]->Blit(256-(xs%256),0, 0, ys%256, mapw-(256-(xs%256)), 256-(ys%256));
     if (map[2]) map[2]->Blit(0,256-(ys%256), xs%256, 0, 256-(xs%256), maph-(256-(ys%256)));
     if (map[3]) map[3]->Blit(256-(xs%256),256-(ys%256), 0, 0, mapw-(256-(xs%256)), maph-(256-(ys%256)));
+
+    a.renderSelf(400,0,256,256);
 
 /*
     std::stringstream testchar;
@@ -287,6 +294,8 @@ void GM_Debug::renderScene()
         g_engine->drawText(testchar.str().c_str(), "system", 0+(i%8)*12,300+(i/8)*12, i);
     }
 */
+
+
 	desktop.RememberTransformations();
 	desktop.Paint();
 

@@ -1146,7 +1146,6 @@ char* bigint_toBase(BigInt i, int base, int &len) {
             else
                 r += 'A'-10;
         }
-        printf("%c\n", r);
         i = i / base;
 
         res << char(r);

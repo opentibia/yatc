@@ -21,13 +21,14 @@
 #include <GLICT/globals.h>
 #include <GLICT/messagebox.h>
 
-#if !defined(__APPLE__) && !defined(WIN32)
+#if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else
     #define gettext(x) (x)
 #endif
 #include "gm_mainmenu.h"
 #include "gm_gameworld.h"
+#include "gm_debug.h"
 #include "defines.h"
 #include "engine.h"
 #include "sprite.h"
@@ -71,6 +72,18 @@ GM_MainMenu::GM_MainMenu()
 	/* ********************** OPTIONS *************************** */
     winOptions.initiateAll(&desktop);
 
+    /* ********************** OTHERS ***************************** */
+    #ifdef DEBUG_BUILD
+    desktop.AddObject(&btnGoToDebug);
+    btnGoToDebug.SetCaption("GM_Debug");
+    btnGoToDebug.SetWidth(84);
+    btnGoToDebug.SetHeight(20);
+    btnGoToDebug.SetPos(16,16);
+    btnGoToDebug.SetBGColor(.8,.8,.8,1.);
+    btnGoToDebug.SetFont("minifont",8);
+    btnGoToDebug.SetOnClick(btnGoToDebug_OnClick);
+
+    #endif
 
     Font* mf = (Font*)(glictFindFont("minifont")->GetFontParam());
     mf->resetColor();
@@ -181,7 +194,8 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
     }
     g_engine->resetClipping();
 
-	renderScene();
+    if (dynamic_cast<GM_MainMenu*>(g_game))
+        renderScene();
 
 }
 
@@ -386,6 +400,14 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	m->centerWindow(&m->winStatus);
 	m->desktop.AddObject(&m->winStatus);
 
+    m->updateScene();
+    m->renderScene();
+    g_engine->Flip();
+    m->updateScene();
+    m->renderScene();
+    g_engine->Flip();
+
+
 	//DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "SetVisible...\n");
 }
 ClientVersion_t GM_MainMenu::getActiveProtocol(){
@@ -503,6 +525,14 @@ void GM_MainMenu::winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer
 	m->renderScene();
 
 }
+void GM_MainMenu::btnGoToDebug_OnClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+    #ifdef DEBUG_BUILD
+    delete g_game;
+    g_game = new GM_Debug;
+    #endif
+}
+
 
 /* ********** Responses to notifications *********** */
 void GM_MainMenu::onConnectionError(int message, const char* errortext)
@@ -540,8 +570,12 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 
 	winStatus.SetCaption(gettext("Message of the Day"));
 	winStatus.SetMessage(text);
-	winStatus.SetEnabled(true);
+	winStatus.SetWidth(glictFontSize(text.c_str(), "system"));
+	winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
+    winStatus.SetEnabled(true);
 	winStatus.Focus(NULL);
+
+	this->centerWindow(&winStatus);
 
 	winStatus.SetOnDismiss(winMotd_OnDismiss);
 	renderScene();
@@ -571,8 +605,11 @@ void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int
 void GM_MainMenu::onEnterGame()
 {
     //s_alreadyloggedinonce = true;
+    printf("Destroying list\n");
     winCharlist.destroyList();
-
+    printf("Destroyed list\n");
 	delete g_game;
+	printf("Entering gameworld\n");
 	g_game = new GM_Gameworld;
+	printf("Entered\n");
 }
