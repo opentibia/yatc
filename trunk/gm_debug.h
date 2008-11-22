@@ -52,6 +52,7 @@ private:
 	static void ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void ExitOnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void UpdateOnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void UpdateMapOnClick(glictPos* relmousepos, glictContainer* callerclass);
 
 	glictContainer desktop;
 	glictButton btnButton;
@@ -60,9 +61,14 @@ private:
 	glictTextbox txtItem;
 	glictButton btnUpdate;
 
+	glictTextbox txtLocX, txtLocY, txtLocZ;
+	glictButton btnUpdateMap;
+
 	Sprite* background;
 	Sprite* spr;
-	Sprite* map;
+	Sprite* map[4];
+	int mapw, maph, px, py, pz, mapcount;
+	std::string mapfns[4];
 	ThingUI* thing;
     Popup* popup;
     bool killpopup;
