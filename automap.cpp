@@ -117,50 +117,39 @@ void Automap::setTileColor(int i, int j, int k, uint8_t color, uint8_t speedinde
     p.x = i; p.y = j; p.z = k; p.color = color;
 
     writeFiles[minimapfnss.str()].push_back(p);
-    printf("Recording a write demand to %s\n", minimapfnss.str().c_str());
 }
 
 void Automap::flushTiles()
 {
     writeFilesMap::iterator it;
-    if(writeFiles.size())printf("Flushing %d files\n", writeFiles.size());
     for(it=writeFiles.begin();it!=writeFiles.end();it++)
     {
         FILE* f=NULL;
         if (!fileexists(it->first.c_str()))
         {
-            printf("CREATING %s\n", it->first.c_str());
-            f = yatc_fopen(it->first.c_str(),"rb+");
-            if (!f) return;
-            printf("Create succeeded\n");
+            f = yatc_fopen(it->first.c_str(),"wb+");
+            if (!f) {
+                continue;
+            }
             // let's put an integer, 0, to the end of the file ...
             // this should denote how many map marks there are on the map ...
             uint32_t zero=0;
             fseek(f, 256*256*2, SEEK_SET);
             fwrite(&zero, 4,1,f);
-            printf("Write succeeded\n");
-            printf("CREATED %s\n", it->first.c_str());
         }
-        printf("Accessing %s...\n", it->first.c_str());
         if (!f) f = yatc_fopen(it->first.c_str(),"rb+");
-        printf("Verifying access\n");
         if (!f) {
-            printf("COULD NOT ACCESS %s FOR WRITING\n", it->first.c_str());
-            return;
+            continue;
         }
         //fseek(f, 256*256 *2, SEEK_SET);
-        printf(">>> Now writing %d new entries...", it->second.size());
         for (std::vector<posAndColor>::iterator it2 = it->second.begin(); it2 != it->second.end(); it2++)
         {
-            printf("%02x", it2->color);
             fseek(f, (it2->x%256) * 256 + (it2->y%256), SEEK_SET);
             fwrite(&it2->color, 1, 1, f);
             fseek(f, 256*256 + (it2->x%256) * 256 + (it2->y%256), SEEK_SET);
             fwrite(&it2->speedindex, 1, 1, f);
         }
-        printf("\n");
         fclose(f);
-        printf("Flushed %s\n", it->first.c_str());
     }
     writeFiles.clear();
 }

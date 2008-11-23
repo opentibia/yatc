@@ -203,7 +203,7 @@ GM_Debug::GM_Debug()
     txtLocX.SetWidth(50);
     txtLocY.SetWidth(50);
     txtLocZ.SetWidth(50);
-    txtLocX.SetCaption("32400");
+    txtLocX.SetCaption("32600");
     txtLocY.SetCaption("31750");
     txtLocZ.SetCaption("7");
     txtLocX.SetHeight(16);
