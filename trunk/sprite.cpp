@@ -331,10 +331,10 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
         for (int i = 0; i < 256; i++)
             for (int j = 0; j < 256; j++)
             {
-                char c;
+                uint8_t c;
                 fread(&c, 1, 1, f);
-                char b = (c % 6) / 6. * 255;
-                char g = ((c / 6) % 6) / 6. * 255;
+                char b = (c % 6) / 5. * 255;
+                char g = ((c / 6) % 6) / 5. * 255;
                 char r = (c / 36.) / 6. * 255;
 
                     /*ar[j*MINIMAPW+i].b = (c % 6) / 5. * 255;
