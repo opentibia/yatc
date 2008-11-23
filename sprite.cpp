@@ -337,12 +337,44 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
                 char g = ((c / 6) % 6) / 5. * 255;
                 char r = (c / 36.) / 6. * 255;
 
-                    /*ar[j*MINIMAPW+i].b = (c % 6) / 5. * 255;
-					ar[j*MINIMAPW+i].g = ((c / 6) % 6) / 5. * 255;
-					ar[j*MINIMAPW+i].r = (c / 36) / 5. * 255;*/
-
                 putPixel(i,j, SDL_MapRGB(s->format,r,g,b) ,s);
             }
+
+
+        // below is SAMPLE code for reading speed indices
+        // and map tags. this DOESNT really belong in sprite reading!
+        // it's here just for documentation
+
+        for (int i = 0; i < 256; i++)
+            for (int j = 0; j < 256; j++)
+            {
+                uint8_t s; // speedindex
+                fread(&s, 1, 1, f);
+            }
+
+
+        if (!feof(f)) {
+            uint32_t marksCount=0; // map marks
+            fread(&marksCount, 4, 1, f);
+            if (marksCount >100) marksCount = 100;
+            for(int i=0;i<marksCount;i++)
+            {
+                uint32_t x, y, type;
+                uint16_t length;
+                char *text;
+
+                fread(&x, sizeof(x), 1, f);
+                fread(&y, sizeof(y), 1, f);
+                fread(&type, sizeof(type), 1, f);
+                fread(&length, sizeof(length), 1, f);
+                text = (char*)malloc(length+1);
+                fread(text, length, 1, f);
+                text[length] = 0;
+                free(text);
+            }
+        }
+        fclose(f);
+
 
 
 

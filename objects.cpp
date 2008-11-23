@@ -234,8 +234,6 @@ bool Objects::loadDat(const char* filename)
 	uint16_t read_short, read_short2;
 	uint32_t maxObjects = 0;
 
-    printf("LOADING DATA FILE %s\n", filename);
-
 	FILE *fp = yatc_fopen(filename, "rb");
 	if(!fp){
 		return false;
