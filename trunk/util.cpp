@@ -82,7 +82,9 @@ void NativeGUIError(const char* text, const char *title) {
 
 bool fileexists(const char* filename){
     FILE *f;
+    printf("<checking if %s exists>\n", filename);
     if ((f = yatc_fopen(filename, "r"))) {
+        printf("<closing>\n");
         fclose(f);
         return true;
     } else {

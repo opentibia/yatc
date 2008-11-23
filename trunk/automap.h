@@ -43,6 +43,7 @@ public:
     void renderSelf(int x, int y, int w, int h);
     void setTileColor(int x, int y, int z, uint8_t color,uint8_t speedindex);
     void flushTiles();
+    void getTileColor(int x, int y, int z, uint8_t &color,uint8_t &speedindex);
 private:
 	Sprite* map[4];
 	int mapw, maph, px, py, pz, mapcount;

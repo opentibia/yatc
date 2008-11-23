@@ -292,7 +292,7 @@ void MapUI::renderMap() {
 
 			int screenx = (int)(i*scaledSize + walkoffx);
 			int screeny = (int)(j*scaledSize + walkoffy);
-			int groundspeed = tile->getGround() ? Objects::getInstance()->getItemType( tile->getGround()->getID() )->speed : 500;
+			int groundspeed = tile->getSpeedIndex();
 
 			int32_t thingsCount = tile->getThingCount() - 1;
 			int32_t drawIndex = 1;

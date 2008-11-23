@@ -333,9 +333,14 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
             {
                 char c;
                 fread(&c, 1, 1, f);
-                char b = (c % 6) / 5. * 255;
-                char g = ((c / 6) % 6) / 5. * 255;
-                char r = (c / 36) / 5. * 255;
+                char b = (c % 6) / 6. * 255;
+                char g = ((c / 6) % 6) / 6. * 255;
+                char r = (c / 36.) / 6. * 255;
+
+                    /*ar[j*MINIMAPW+i].b = (c % 6) / 5. * 255;
+					ar[j*MINIMAPW+i].g = ((c / 6) % 6) / 5. * 255;
+					ar[j*MINIMAPW+i].r = (c / 36) / 5. * 255;*/
+
                 putPixel(i,j, SDL_MapRGB(s->format,r,g,b) ,s);
             }
 

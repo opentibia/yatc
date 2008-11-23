@@ -89,6 +89,7 @@ public:
 
     virtual void showTutorial(uint8_t id) {}
 
+    virtual void onTileUpdate(const Position& pos) {}
 
 };
 

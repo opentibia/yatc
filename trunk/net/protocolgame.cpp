@@ -411,7 +411,7 @@ bool ProtocolGame::parseTileAddThing(NetworkMessage& msg)
     if(!tile->addThing(thing, true)){
         RAISE_PROTOCOL_ERROR("Tile Add - addThing");
     }
-
+    Notifications::onTileUpdate(tilePos);
     return true;
 }
 bool ProtocolGame::parseTileTransformThing(NetworkMessage& msg)
@@ -457,7 +457,7 @@ bool ProtocolGame::parseTileTransformThing(NetworkMessage& msg)
             RAISE_PROTOCOL_ERROR("Tile Transform - insertThing");
         }
     }
-
+    Notifications::onTileUpdate(tilePos);
     return true;
 }
 bool ProtocolGame::parseTileRemoveThing(NetworkMessage& msg)
@@ -482,6 +482,7 @@ bool ProtocolGame::parseTileRemoveThing(NetworkMessage& msg)
         RAISE_PROTOCOL_ERROR("Tile Remove - removeThing");
     }
     Thing::deleteThing(thing);
+    Notifications::onTileUpdate(tilePos);
     return true;
 }
 bool ProtocolGame::parseCreatureMove(NetworkMessage& msg)
@@ -1844,6 +1845,7 @@ bool ProtocolGame::setTileDescription(NetworkMessage& msg, const Position& pos)
 		MSG_INSPECT_U16(inspectTileId);
 		if(inspectTileId >= 0xFF00){
 			//end of the tile
+            Notifications::onTileUpdate(pos);
 			return true;
 		}
 		else{
@@ -1864,5 +1866,6 @@ bool ProtocolGame::setTileDescription(NetworkMessage& msg, const Position& pos)
 			}
 		}
 	}
+	printf("...should not reach this message...");
 }
 

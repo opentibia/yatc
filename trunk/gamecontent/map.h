@@ -90,6 +90,8 @@ public:
 	const Creature* getTopCreature() const;
 	const Item* getGround() const;
 	int getUseStackpos() const;
+	uint8_t  getMinimapColor() const;
+	uint16_t getSpeedIndex() const;
 
 	typedef std::list<Effect*> EffectList;
 	void addEffect(uint32_t effect);
@@ -121,6 +123,7 @@ public:
 
 	//returns the tile at position x,y,z
 	const Tile* getTile(uint32_t x, uint32_t y, uint32_t z) const;
+	const Tile* getTile(const Position& pos) const;
 	Tile* getTile(uint32_t x, uint32_t y, uint32_t z);
 	Tile* getTile(const Position& pos) {return getTile(pos.x, pos.y, pos.z);}
 

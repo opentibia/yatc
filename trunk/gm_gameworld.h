@@ -76,6 +76,7 @@ public:
     void openShopWindow(const std::list<ShopItem>& itemlist);
     void closeShopWindow();
     void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
+    void onTileUpdate(const Position& pos);
 
     void showTutorial(uint8_t id);
 
@@ -98,6 +99,7 @@ public:
 	void dragComplete(Position& toPos);
 
     void performPopup(PopupProducerCallback cb,void*owner,void*arg);
+
 protected:
 
 private:

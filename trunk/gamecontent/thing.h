@@ -48,6 +48,8 @@ public:
 
 	virtual const Item* getItem() const {return NULL;}
 	virtual const Creature* getCreature() const {return NULL;}
+
+	virtual uint8_t getMapColor() const { return 0; }
 };
 
 #endif

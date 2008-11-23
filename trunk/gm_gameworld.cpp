@@ -132,7 +132,7 @@ GM_Gameworld::GM_Gameworld()
 
     SDL_SetCursor(g_engine->m_cursorBasic);
 
-
+    m_automap.setPos(GlobalVariables::getPlayerPosition().x,GlobalVariables::getPlayerPosition().y,GlobalVariables::getPlayerPosition().z);
 }
 
 GM_Gameworld::~GM_Gameworld ()
@@ -223,6 +223,7 @@ void GM_Gameworld::updateScene()
 	#endif
 
 	m_mapui.renderMap();
+	m_automap.flushTiles();
 	m_automap.renderSelf(options.w-256, 0, 256,256);
 
 
@@ -765,8 +766,16 @@ void GM_Gameworld::onChangeStats()
     pnlHealth.updateSelf();
 	winSkills.updateSelf();
 }
+void GM_Gameworld::onTileUpdate(const Position& pos)
+{
+    Tile* t = Map::getInstance().getTile(pos);
+    t->getMinimapColor();
+    t->getSpeedIndex();
+    m_automap.setTileColor(pos.x,pos.y,pos.z, t->getMinimapColor(), t->getSpeedIndex());
+}
 
 
+///////////////////////////////////////////////
 std::vector<Console*>::iterator GM_Gameworld::findConsole_it(uint32_t channelid)
 {
     for(std::vector<Console*>::iterator it=m_consoles.begin(); it != m_consoles.end(); it++) {

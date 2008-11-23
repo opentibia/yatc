@@ -300,6 +300,23 @@ void Tile::addEffect(uint32_t effect)
 	m_effects.push_back(new Effect(effect));
 }
 
+uint16_t Tile::getSpeedIndex() const
+{
+    return getGround() ? Objects::getInstance()->getItemType( getGround()->getID() )->speed : 500;
+}
+uint8_t Tile::getMinimapColor() const
+{
+    ThingVector::const_iterator it;
+    uint8_t color=0;
+    if(getGround()) color = getGround()->getMapColor();
+    for(it = m_objects.begin(); it != m_objects.end(); ++it){
+        if((*it)->getMapColor()) color=(*it)->getMapColor();
+    }
+    printf("Map color %02x\n", color);
+    return color;
+}
+
+
 //*************** Map **************************
 
 #define POS2INDEX(x, y, z) ((uint64_t)(x & 0xFFFF) << 24 | (y & 0xFFFF) << 8 | (z & 0xFF))
