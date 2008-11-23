@@ -72,6 +72,7 @@ class Notifications{
 			const std::string& message);
 		static void onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos);
 		static void onUpdatePlayerCash(uint32_t newcash);
+		static void onTileUpdate(const Position& pos);
 
 		//**** Open/Close inGame windows ****
 		//open item text window

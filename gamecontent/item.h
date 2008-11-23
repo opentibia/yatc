@@ -57,6 +57,7 @@ public:
 
 	bool hasHeight() const { return m_it->hasHeight;}
 
+    virtual uint8_t getMapColor() const { return getObjectType()->mapColor; }
 protected:
 
 	Item(uint16_t id, uint8_t count);

@@ -255,6 +255,11 @@ void Notifications::addMapMark(uint8_t icon, const Position& pos, const std::str
 // open the outfit window with these outfits as available
 void Notifications::openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available)
 {
-    printf("Dispatch outfit notification\n");
     g_game->openOutfitWindow(current, available);
+}
+
+// when tile is updated...
+void Notifications::onTileUpdate(const Position& pos)
+{
+    g_game->onTileUpdate(pos);
 }
