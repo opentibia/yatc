@@ -56,14 +56,14 @@ svn revert debian/changelog
 svn revert product.h
 svn revert README
 
-sed s/0.2.3SVN/$version/g product.h > product.h.new
+sed s/0.2.3/$version/g product.h > product.h.new
 mv product.h.new product.h
-sed s/0.2.3SVN/$version/g README > README.new
+sed s/0.2.3/$version/g README > README.new
 mv README.new README
 
 svn revert configure.ac
 
-sed s/0.2.3SVN/$version/g configure.ac > configure.ac.new
+sed s/0.2.3/$version/g configure.ac > configure.ac.new
 mv configure.ac.new configure.ac
 
 
