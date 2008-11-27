@@ -10,6 +10,7 @@
 		002F39FA09D0881F00EBEB88 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
 		002F3A0009D0884600EBEB88 /* SDL.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
 		7F23B2FF0E97A5780006C1FC /* protocolgame83.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F23B2FD0E97A5770006C1FC /* protocolgame83.cpp */; };
+		7F39F83A0EDEFB5400ED6F10 /* automap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F39F8380EDEFB5400ED6F10 /* automap.cpp */; };
 		7F4EC8700E941C5A00A1218E /* glict.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC86F0E941C5A00A1218E /* glict.framework */; };
 		7F4EC8730E941C7300A1218E /* SDL_gfx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8720E941C7300A1218E /* SDL_gfx.framework */; };
 		7F4EC8770E941D1000A1218E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8760E941D1000A1218E /* OpenGL.framework */; };
@@ -108,6 +109,8 @@
 		32CA4F630368D1EE00C91783 /* yatc_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yatc_Prefix.pch; sourceTree = "<group>"; };
 		7F23B2FD0E97A5770006C1FC /* protocolgame83.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame83.cpp; sourceTree = "<group>"; };
 		7F23B2FE0E97A5780006C1FC /* protocolgame83.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame83.h; sourceTree = "<group>"; };
+		7F39F8380EDEFB5400ED6F10 /* automap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = automap.cpp; sourceTree = "<group>"; };
+		7F39F8390EDEFB5400ED6F10 /* automap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = automap.h; sourceTree = "<group>"; };
 		7F4EC86F0E941C5A00A1218E /* glict.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = glict.framework; path = /Library/Frameworks/glict.framework; sourceTree = "<absolute>"; };
 		7F4EC8720E941C7300A1218E /* SDL_gfx.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_gfx.framework; path = /Library/Frameworks/SDL_gfx.framework; sourceTree = "<absolute>"; };
 		7F4EC8760E941D1000A1218E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
@@ -360,6 +363,8 @@
 				7FA4FB3D0E93D5AA0089D560 /* ui */,
 				7FA4FB160E93D5A10089D560 /* net */,
 				7FA4FB140E93D5990089D560 /* sprdata.c */,
+				7F39F8380EDEFB5400ED6F10 /* automap.cpp */,
+				7F39F8390EDEFB5400ED6F10 /* automap.h */,
 				7FA4FAF30E93D5900089D560 /* enginesdl.h */,
 				7FA4FAF40E93D5900089D560 /* bigint.h */,
 				7FA4FAF50E93D5900089D560 /* engine.h */,
@@ -653,6 +658,7 @@
 				7FA4FB7C0E93D5B30089D560 /* map.cpp in Sources */,
 				7F23B2FF0E97A5780006C1FC /* protocolgame83.cpp in Sources */,
 				7FAA754D0E97CD8D0033E348 /* protocolgame831.cpp in Sources */,
+				7F39F83A0EDEFB5400ED6F10 /* automap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

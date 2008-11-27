@@ -25,7 +25,12 @@
 #include <GLICT/button.h>
 #include <GLICT/textbox.h>
 #include <sstream>
-#include <SDL/SDL_framerate.h>
+#ifdef __APPLE__
+	#include <SDL_gfx/SDL_framerate.h>
+#else
+	#include <SDL/SDL_framerate.h>
+#endif
+
 
 #if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
