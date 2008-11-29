@@ -43,7 +43,10 @@ user interface library. For now we can connect to the login server, display
 character list, connect to game world, display basic map, and we can move
 around.
 
-This is readme for version 0.2.21.
+This is readme for version 0.2.3.
+
+Do you plan to package our software? If so, make sure you contact Khaos via
+OtFans.
 
 Please visit our site:
  http://sites.google.com/site/yatcclient
