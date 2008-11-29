@@ -312,7 +312,6 @@ uint8_t Tile::getMinimapColor() const
     for(it = m_objects.begin(); it != m_objects.end(); ++it){
         if((*it)->getMapColor()) color=(*it)->getMapColor();
     }
-    printf("Map color %02x\n", color);
     return color;
 }
 
