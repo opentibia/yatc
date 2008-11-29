@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-22 16:57+0100\n"
+"POT-Creation-Date: 2008-11-29 11:39+0100\n"
 "PO-Revision-Date: 2008-10-24 01:34+0200\n"
 "Last-Translator: FightingElf (Dawid Pietrzak) <fightingelf@gmail.com>\n"
 "Language-Team: FightingElf <fightingelf@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../gm_mainmenu.cpp:348
+#: ../gm_mainmenu.cpp:349
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in COPYING.\n"
@@ -29,11 +29,11 @@ msgstr ""
 msgid " gold"
 msgstr " złota"
 
-#: ../gm_mainmenu.cpp:336
+#: ../gm_mainmenu.cpp:337
 msgid "(in no particular order)"
 msgstr ""
 
-#: ../ui/optionsui.cpp:123
+#: ../ui/optionsui.cpp:128
 msgid "."
 msgstr ""
 
@@ -91,7 +91,7 @@ msgstr "Kup"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: ../gm_mainmenu.cpp:538
+#: ../gm_mainmenu.cpp:541
 #, fuzzy
 msgid "Cannot connect to a login server."
 msgstr "Łączenie z serwerem..."
@@ -124,7 +124,7 @@ msgstr "Klasyczne Sterowanie"
 msgid "Club Fighting"
 msgstr "Walka Obuchem"
 
-#: ../gm_mainmenu.cpp:391 ../gm_mainmenu.cpp:480
+#: ../gm_mainmenu.cpp:392 ../gm_mainmenu.cpp:481
 msgid "Connecting to the server..."
 msgstr "Łączenie z serwerem..."
 
@@ -136,7 +136,7 @@ msgstr "Konsola"
 msgid "Console Options"
 msgstr "Opcje Konsoli"
 
-#: ../gm_mainmenu.cpp:343
+#: ../gm_mainmenu.cpp:344
 msgid "Contributors"
 msgstr ""
 
@@ -144,7 +144,7 @@ msgstr ""
 msgid "Create Account"
 msgstr "Załóż Konto"
 
-#: ../gm_mainmenu.cpp:324
+#: ../gm_mainmenu.cpp:325
 msgid "Current engine"
 msgstr ""
 
@@ -164,7 +164,7 @@ msgstr "Walka Dystansowa"
 msgid "Edit your hotkey texts"
 msgstr "Zmień opisy hotkey'ów"
 
-#: ../ui/optionsui.cpp:321
+#: ../ui/optionsui.cpp:326
 msgid "Engine change"
 msgstr "Zmiana silnika"
 
@@ -172,11 +172,11 @@ msgstr "Zmiana silnika"
 msgid "Enter Game"
 msgstr "Wejdź do Gry"
 
-#: ../gm_mainmenu.cpp:479
+#: ../gm_mainmenu.cpp:480
 msgid "Entering game"
 msgstr "Wchodzenie do gry"
 
-#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:584
+#: ../gm_mainmenu.cpp:543 ../gm_mainmenu.cpp:550 ../gm_mainmenu.cpp:587
 msgid "Error"
 msgstr "Błąd"
 
@@ -196,7 +196,7 @@ msgstr "Rybactwo"
 msgid "Fist Fighting"
 msgstr "Walka Pięściami"
 
-#: ../gm_mainmenu.cpp:542
+#: ../gm_mainmenu.cpp:545
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -210,7 +210,7 @@ msgstr "Konto Darmowe"
 msgid "Fullscreen"
 msgstr "Pełny Ekran"
 
-#: ../ui/optionsui.cpp:94
+#: ../ui/optionsui.cpp:99
 msgid ""
 "Fullscreen decides whether or not the client will\n"
 "be taking the entire screen.\n"
@@ -253,12 +253,12 @@ msgid "Health"
 msgstr "Życie"
 
 #: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:162 ../gm_mainmenu.cpp:365
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:366
 #: ../ui/optionsconsole.h:121
 msgid "Help"
 msgstr "Pomoc"
 
-#: ../ui/optionsui.cpp:84
+#: ../ui/optionsui.cpp:89
 msgid "Help not done."
 msgstr "Pomoc nie wykonana."
 
@@ -278,11 +278,11 @@ msgstr ""
 "Jeżeli nie masz\n"
 "jeszcze konta:"
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:354
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:355
 msgid "Info"
 msgstr "O programie"
 
-#: ../gm_mainmenu.cpp:586
+#: ../gm_mainmenu.cpp:589
 msgid "Information"
 msgstr "Informacja"
 
@@ -294,7 +294,7 @@ msgstr "Ekwipunek"
 msgid "Level"
 msgstr "Poziom"
 
-#: ../gm_mainmenu.cpp:390
+#: ../gm_mainmenu.cpp:391
 msgid "Logging in"
 msgstr "Logowanie"
 
@@ -310,7 +310,7 @@ msgstr "Poziom Magiczny"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:214 ../gm_mainmenu.cpp:568
+#: ../ui/optionsui.cpp:219 ../gm_mainmenu.cpp:571
 msgid "Message of the Day"
 msgstr "Wiadomość Dnia"
 
@@ -349,7 +349,7 @@ msgstr "Klucz kodowania OT"
 msgid "Ok"
 msgstr "Ok"
 
-#: ../ui/optionsui.cpp:114
+#: ../ui/optionsui.cpp:119
 msgid ""
 "OpenGL is a 3D hardware-accelerated graphical library.\n"
 "  To make use of it, make sure you have latest graphic card\n"
@@ -399,7 +399,7 @@ msgstr "Cena:"
 msgid "Primary"
 msgstr "Główne"
 
-#: ../gm_mainmenu.cpp:336
+#: ../gm_mainmenu.cpp:337
 msgid "Programmed by"
 msgstr ""
 
@@ -410,11 +410,11 @@ msgstr ""
 msgid "Protocol"
 msgstr "Protokół"
 
-#: ../gm_mainmenu.cpp:430
+#: ../gm_mainmenu.cpp:431
 msgid "Protocol detection failed"
 msgstr "Detakcja protokołu zawiodła"
 
-#: ../ui/optionsui.cpp:120
+#: ../ui/optionsui.cpp:125
 msgid ""
 "RECOMMENDED: Choose SDL. But, try what works better for you.\n"
 "\n"
@@ -424,11 +424,11 @@ msgstr ""
 "\n"
 "Aby zaakceptować silnik graficzny, musisz zrestartować program.\n"
 
-#: ../ui/optionsui.cpp:321
+#: ../ui/optionsui.cpp:326
 msgid "Restart is required to apply engine change."
 msgstr "Restart wymagany do przełączenia silnika."
 
-#: ../ui/optionsui.cpp:110
+#: ../ui/optionsui.cpp:115
 msgid ""
 "SDL 1.2 is a 2D software rendering library. It should be\n"
 "  slowest, but since it is the most maintained engine, it runs\n"
@@ -460,7 +460,7 @@ msgstr "Sprzedaj"
 msgid "Server address:"
 msgstr "Adres serwera:"
 
-#: ../ui/optionsui.cpp:149
+#: ../ui/optionsui.cpp:154
 msgid ""
 "Server name is the IP address or hostname of the\n"
 "login server.\n"
@@ -576,7 +576,7 @@ msgstr "Walka Mieczem"
 msgid "This functionality is not yet finished"
 msgstr ""
 
-#: ../ui/optionsui.cpp:125
+#: ../ui/optionsui.cpp:130
 msgid ""
 "To choose maximum FPS (reducing the CPU and graphics card usage\n"
 "resulting in less power usage, quieter operation and reduced\n"
@@ -604,27 +604,27 @@ msgstr ""
 msgid "Use with..."
 msgstr ""
 
-#: ../gm_mainmenu.cpp:326
+#: ../gm_mainmenu.cpp:327
 msgid "Uses GLICT"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:328
+#: ../gm_mainmenu.cpp:329
 msgid "Uses OpenGL"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:325
+#: ../gm_mainmenu.cpp:326
 msgid "Uses SDL"
 msgstr ""
 
-#: ../ui/optionsui.cpp:109
+#: ../ui/optionsui.cpp:114
 msgid "We offer two graphical engines:\n"
 msgstr "Oferujemy dwa silniki graficzne:\n"
 
-#: ../gm_mainmenu.cpp:332
+#: ../gm_mainmenu.cpp:333
 msgid "[for info run with GL engine]\n"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:325
+#: ../gm_mainmenu.cpp:326
 msgid "compiled with"
 msgstr ""
 
@@ -632,6 +632,6 @@ msgstr ""
 msgid "days left"
 msgstr "dni pozostało"
 
-#: ../gm_mainmenu.cpp:339
+#: ../gm_mainmenu.cpp:340
 msgid "with inactive developers"
 msgstr ""

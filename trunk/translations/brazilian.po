@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-22 16:57+0100\n"
+"POT-Creation-Date: 2008-11-29 11:39+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Heliton <helitonnordt@gmail.com>\n"
 "Language-Team: Heliton <helitonnordt@gmail.com>, jakexblaster "
@@ -20,7 +20,7 @@ msgstr ""
 "X-Poedit-Country: BRAZIL\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../gm_mainmenu.cpp:348
+#: ../gm_mainmenu.cpp:349
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in COPYING.\n"
@@ -38,11 +38,11 @@ msgstr ""
 msgid " gold"
 msgstr " ouro"
 
-#: ../gm_mainmenu.cpp:336
+#: ../gm_mainmenu.cpp:337
 msgid "(in no particular order)"
 msgstr "(sem ordem específica)"
 
-#: ../ui/optionsui.cpp:123
+#: ../ui/optionsui.cpp:128
 msgid "."
 msgstr ""
 
@@ -101,7 +101,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 # Talvez "não foi possível conectar com um servidor de login"?
-#: ../gm_mainmenu.cpp:538
+#: ../gm_mainmenu.cpp:541
 msgid "Cannot connect to a login server."
 msgstr "Não foi possível conectar a um servidor de login."
 
@@ -133,7 +133,7 @@ msgstr "Controle Clássico"
 msgid "Club Fighting"
 msgstr "Perícia com Clava"
 
-#: ../gm_mainmenu.cpp:391 ../gm_mainmenu.cpp:480
+#: ../gm_mainmenu.cpp:392 ../gm_mainmenu.cpp:481
 msgid "Connecting to the server..."
 msgstr "Conectando no servidor..."
 
@@ -145,7 +145,7 @@ msgstr "Terminal"
 msgid "Console Options"
 msgstr "Opções do Terminal"
 
-#: ../gm_mainmenu.cpp:343
+#: ../gm_mainmenu.cpp:344
 msgid "Contributors"
 msgstr "Contribuidores"
 
@@ -153,7 +153,7 @@ msgstr "Contribuidores"
 msgid "Create Account"
 msgstr "Criar Conta"
 
-#: ../gm_mainmenu.cpp:324
+#: ../gm_mainmenu.cpp:325
 msgid "Current engine"
 msgstr "Motor gráfico atual"
 
@@ -173,7 +173,7 @@ msgstr "Perícia com Distância"
 msgid "Edit your hotkey texts"
 msgstr "Editar os textos das suas hotkeys"
 
-#: ../ui/optionsui.cpp:321
+#: ../ui/optionsui.cpp:326
 msgid "Engine change"
 msgstr "Modificar motor gráfico"
 
@@ -181,11 +181,11 @@ msgstr "Modificar motor gráfico"
 msgid "Enter Game"
 msgstr "Entrar no Jogo"
 
-#: ../gm_mainmenu.cpp:479
+#: ../gm_mainmenu.cpp:480
 msgid "Entering game"
 msgstr "Entrando no jogo"
 
-#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:584
+#: ../gm_mainmenu.cpp:543 ../gm_mainmenu.cpp:550 ../gm_mainmenu.cpp:587
 msgid "Error"
 msgstr "Erro"
 
@@ -205,7 +205,7 @@ msgstr "Perícia com Pesca"
 msgid "Fist Fighting"
 msgstr "Perícia com Punho"
 
-#: ../gm_mainmenu.cpp:542
+#: ../gm_mainmenu.cpp:545
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -221,7 +221,7 @@ msgstr "Conta Grátis"
 msgid "Fullscreen"
 msgstr "Tela Cheia"
 
-#: ../ui/optionsui.cpp:94
+#: ../ui/optionsui.cpp:99
 msgid ""
 "Fullscreen decides whether or not the client will\n"
 "be taking the entire screen.\n"
@@ -265,12 +265,12 @@ msgid "Health"
 msgstr "Saúde"
 
 #: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:162 ../gm_mainmenu.cpp:365
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:366
 #: ../ui/optionsconsole.h:121
 msgid "Help"
 msgstr "Ajuda"
 
-#: ../ui/optionsui.cpp:84
+#: ../ui/optionsui.cpp:89
 msgid "Help not done."
 msgstr "Ajuda não finalizada."
 
@@ -290,11 +290,11 @@ msgstr ""
 "Se você ainda não\n"
 "possui uma conta:"
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:354
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:355
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:586
+#: ../gm_mainmenu.cpp:589
 msgid "Information"
 msgstr "Informação"
 
@@ -306,7 +306,7 @@ msgstr "Inventório"
 msgid "Level"
 msgstr "Nível"
 
-#: ../gm_mainmenu.cpp:390
+#: ../gm_mainmenu.cpp:391
 msgid "Logging in"
 msgstr "Entrando"
 
@@ -322,7 +322,7 @@ msgstr "Nível Mágico"
 msgid "Mana"
 msgstr "Magia"
 
-#: ../ui/optionsui.cpp:214 ../gm_mainmenu.cpp:568
+#: ../ui/optionsui.cpp:219 ../gm_mainmenu.cpp:571
 msgid "Message of the Day"
 msgstr "Mensagem do Dia"
 
@@ -361,7 +361,7 @@ msgstr "Chave de Encriptação do OT"
 msgid "Ok"
 msgstr "Ok"
 
-#: ../ui/optionsui.cpp:114
+#: ../ui/optionsui.cpp:119
 msgid ""
 "OpenGL is a 3D hardware-accelerated graphical library.\n"
 "  To make use of it, make sure you have latest graphic card\n"
@@ -413,7 +413,7 @@ msgstr "Preço:"
 msgid "Primary"
 msgstr "Primário"
 
-#: ../gm_mainmenu.cpp:336
+#: ../gm_mainmenu.cpp:337
 msgid "Programmed by"
 msgstr "Programado por"
 
@@ -424,11 +424,11 @@ msgstr "Programado por"
 msgid "Protocol"
 msgstr "Protocolo"
 
-#: ../gm_mainmenu.cpp:430
+#: ../gm_mainmenu.cpp:431
 msgid "Protocol detection failed"
 msgstr "A detecção do protocolo falhou"
 
-#: ../ui/optionsui.cpp:120
+#: ../ui/optionsui.cpp:125
 msgid ""
 "RECOMMENDED: Choose SDL. But, try what works better for you.\n"
 "\n"
@@ -438,11 +438,11 @@ msgstr ""
 "\n"
 "Para aplicar a modificação do motor gráfico, você precisa reiniciar\n"
 
-#: ../ui/optionsui.cpp:321
+#: ../ui/optionsui.cpp:326
 msgid "Restart is required to apply engine change."
 msgstr "Reinicialização é necessária para aplicar a mudança no motor gráfico."
 
-#: ../ui/optionsui.cpp:110
+#: ../ui/optionsui.cpp:115
 msgid ""
 "SDL 1.2 is a 2D software rendering library. It should be\n"
 "  slowest, but since it is the most maintained engine, it runs\n"
@@ -475,7 +475,7 @@ msgstr "Vender"
 msgid "Server address:"
 msgstr "Endereço do servidor:"
 
-#: ../ui/optionsui.cpp:149
+#: ../ui/optionsui.cpp:154
 msgid ""
 "Server name is the IP address or hostname of the\n"
 "login server.\n"
@@ -592,7 +592,7 @@ msgstr "Perícia com Espada"
 msgid "This functionality is not yet finished"
 msgstr ""
 
-#: ../ui/optionsui.cpp:125
+#: ../ui/optionsui.cpp:130
 msgid ""
 "To choose maximum FPS (reducing the CPU and graphics card usage\n"
 "resulting in less power usage, quieter operation and reduced\n"
@@ -620,27 +620,27 @@ msgstr "Usar"
 msgid "Use with..."
 msgstr ""
 
-#: ../gm_mainmenu.cpp:326
+#: ../gm_mainmenu.cpp:327
 msgid "Uses GLICT"
 msgstr "Usa GLICT"
 
-#: ../gm_mainmenu.cpp:328
+#: ../gm_mainmenu.cpp:329
 msgid "Uses OpenGL"
 msgstr "Usa OpenGL"
 
-#: ../gm_mainmenu.cpp:325
+#: ../gm_mainmenu.cpp:326
 msgid "Uses SDL"
 msgstr "Usa SDL"
 
-#: ../ui/optionsui.cpp:109
+#: ../ui/optionsui.cpp:114
 msgid "We offer two graphical engines:\n"
 msgstr "Nós oferecemos dois motores gráficos:\n"
 
-#: ../gm_mainmenu.cpp:332
+#: ../gm_mainmenu.cpp:333
 msgid "[for info run with GL engine]\n"
 msgstr "[para informações execute com o motor gráfico GL]\n"
 
-#: ../gm_mainmenu.cpp:325
+#: ../gm_mainmenu.cpp:326
 msgid "compiled with"
 msgstr "compilado com"
 
@@ -648,6 +648,6 @@ msgstr "compilado com"
 msgid "days left"
 msgstr "dias restantes"
 
-#: ../gm_mainmenu.cpp:339
+#: ../gm_mainmenu.cpp:340
 msgid "with inactive developers"
 msgstr "com desenvolvedores inativos"

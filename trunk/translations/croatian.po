@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-22 16:57+0100\n"
+"POT-Creation-Date: 2008-11-29 11:39+0100\n"
 "PO-Revision-Date: 2008-10-24 00:00+0200\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=cp1250\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../gm_mainmenu.cpp:348
+#: ../gm_mainmenu.cpp:349
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in COPYING.\n"
@@ -34,10 +34,13 @@ msgstr ""
 msgid " gold"
 msgstr " u zlatu"
 
-#: ../gm_mainmenu.cpp:336
+#: ../gm_mainmenu.cpp:337
 msgid "(in no particular order)"
 msgstr "(bez posebnog redoslijeda)"
 
+#: ../ui/optionsui.cpp:128
+msgid "."
+msgstr "."
 
 #: ../ui/charlist.h:84
 msgid "Account Status:"
@@ -93,7 +96,7 @@ msgstr "Kupi"
 msgid "Cancel"
 msgstr "Ponisti"
 
-#: ../gm_mainmenu.cpp:538
+#: ../gm_mainmenu.cpp:541
 msgid "Cannot connect to a login server."
 msgstr "Ne mogu se spojiti na server za prijavu."
 
@@ -125,7 +128,7 @@ msgstr "Klasièno upravljanje"
 msgid "Club Fighting"
 msgstr "Borba toljagama"
 
-#: ../gm_mainmenu.cpp:391 ../gm_mainmenu.cpp:480
+#: ../gm_mainmenu.cpp:392 ../gm_mainmenu.cpp:481
 msgid "Connecting to the server..."
 msgstr "Spajam se na server..."
 
@@ -137,7 +140,7 @@ msgstr "Konzola"
 msgid "Console Options"
 msgstr "Opcije konzole"
 
-#: ../gm_mainmenu.cpp:343
+#: ../gm_mainmenu.cpp:344
 msgid "Contributors"
 msgstr "Pridonositelji"
 
@@ -145,7 +148,7 @@ msgstr "Pridonositelji"
 msgid "Create Account"
 msgstr "Stvori raèun"
 
-#: ../gm_mainmenu.cpp:324
+#: ../gm_mainmenu.cpp:325
 msgid "Current engine"
 msgstr "Trenutni engine"
 
@@ -165,7 +168,7 @@ msgstr "Borba na daljinu"
 msgid "Edit your hotkey texts"
 msgstr "Uredi tekstove kratica"
 
-#: ../ui/optionsui.cpp:321
+#: ../ui/optionsui.cpp:326
 msgid "Engine change"
 msgstr "Promjena enginea"
 
@@ -173,11 +176,11 @@ msgstr "Promjena enginea"
 msgid "Enter Game"
 msgstr "Ulaz u igru"
 
-#: ../gm_mainmenu.cpp:479
+#: ../gm_mainmenu.cpp:480
 msgid "Entering game"
 msgstr "Ulazim u igru"
 
-#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:584
+#: ../gm_mainmenu.cpp:543 ../gm_mainmenu.cpp:550 ../gm_mainmenu.cpp:587
 msgid "Error"
 msgstr "Greška"
 
@@ -197,7 +200,7 @@ msgstr "Ribarstvo"
 msgid "Fist Fighting"
 msgstr "Borba šakama"
 
-#: ../gm_mainmenu.cpp:542
+#: ../gm_mainmenu.cpp:545
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -213,7 +216,7 @@ msgstr "Besplatni raèun"
 msgid "Fullscreen"
 msgstr "Puni ekran"
 
-#: ../ui/optionsui.cpp:94
+#: ../ui/optionsui.cpp:99
 msgid ""
 "Fullscreen decides whether or not the client will\n"
 "be taking the entire screen.\n"
@@ -257,12 +260,12 @@ msgid "Health"
 msgstr "Zdravlje"
 
 #: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:162 ../gm_mainmenu.cpp:365
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:366
 #: ../ui/optionsconsole.h:121
 msgid "Help"
 msgstr "Pomoæ"
 
-#: ../ui/optionsui.cpp:84
+#: ../ui/optionsui.cpp:89
 msgid "Help not done."
 msgstr "Pomoæ nije napravljena."
 
@@ -282,11 +285,11 @@ msgstr ""
 "Ako jos nemate\n"
 "svoj raèun:"
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:354
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:355
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:586
+#: ../gm_mainmenu.cpp:589
 msgid "Information"
 msgstr "Obavijest"
 
@@ -298,7 +301,7 @@ msgstr "Inventar"
 msgid "Level"
 msgstr "Razina"
 
-#: ../gm_mainmenu.cpp:390
+#: ../gm_mainmenu.cpp:391
 msgid "Logging in"
 msgstr "Prijavljujem"
 
@@ -314,7 +317,7 @@ msgstr "Razina magije"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:214 ../gm_mainmenu.cpp:568
+#: ../ui/optionsui.cpp:219 ../gm_mainmenu.cpp:571
 msgid "Message of the Day"
 msgstr "Poruka dana"
 
@@ -353,7 +356,7 @@ msgstr "OT enkripcijski kljuc"
 msgid "Ok"
 msgstr "U redu"
 
-#: ../ui/optionsui.cpp:114
+#: ../ui/optionsui.cpp:119
 msgid ""
 "OpenGL is a 3D hardware-accelerated graphical library.\n"
 "  To make use of it, make sure you have latest graphic card\n"
@@ -403,7 +406,7 @@ msgstr "Cijena:"
 msgid "Primary"
 msgstr "Glavno"
 
-#: ../gm_mainmenu.cpp:336
+#: ../gm_mainmenu.cpp:337
 msgid "Programmed by"
 msgstr "Programirali"
 
@@ -414,11 +417,11 @@ msgstr "Programirali"
 msgid "Protocol"
 msgstr "Protokol"
 
-#: ../gm_mainmenu.cpp:430
+#: ../gm_mainmenu.cpp:431
 msgid "Protocol detection failed"
 msgstr "Otkrivanje protokola neuspjelo"
 
-#: ../ui/optionsui.cpp:120
+#: ../ui/optionsui.cpp:125
 msgid ""
 "RECOMMENDED: Choose SDL. But, try what works better for you.\n"
 "\n"
@@ -429,11 +432,11 @@ msgstr ""
 "Da primijenite promjenu enginea, trebate izaæi i ponovno\n"
 "pokrenuti igru.\n"
 
-#: ../ui/optionsui.cpp:321
+#: ../ui/optionsui.cpp:326
 msgid "Restart is required to apply engine change."
 msgstr "Da promijenite engine morate ponovno pokrenuti igru."
 
-#: ../ui/optionsui.cpp:110
+#: ../ui/optionsui.cpp:115
 msgid ""
 "SDL 1.2 is a 2D software rendering library. It should be\n"
 "  slowest, but since it is the most maintained engine, it runs\n"
@@ -466,7 +469,7 @@ msgstr "Prodaja"
 msgid "Server address:"
 msgstr "Adresa servera:"
 
-#: ../ui/optionsui.cpp:149
+#: ../ui/optionsui.cpp:154
 msgid ""
 "Server name is the IP address or hostname of the\n"
 "login server.\n"
@@ -583,7 +586,7 @@ msgstr "Borba maèevima"
 msgid "This functionality is not yet finished"
 msgstr "Ova funkcionalnost još nije gotova"
 
-#: ../ui/optionsui.cpp:125
+#: ../ui/optionsui.cpp:130
 msgid ""
 "To choose maximum FPS (reducing the CPU and graphics card usage\n"
 "resulting in less power usage, quieter operation and reduced\n"
@@ -611,27 +614,27 @@ msgstr "Koristi"
 msgid "Use with..."
 msgstr "Koristi s..."
 
-#: ../gm_mainmenu.cpp:326
+#: ../gm_mainmenu.cpp:327
 msgid "Uses GLICT"
 msgstr "Koristi GLICT"
 
-#: ../gm_mainmenu.cpp:328
+#: ../gm_mainmenu.cpp:329
 msgid "Uses OpenGL"
 msgstr "Koristi OpenGL"
 
-#: ../gm_mainmenu.cpp:325
+#: ../gm_mainmenu.cpp:326
 msgid "Uses SDL"
 msgstr "Koristi SDL"
 
-#: ../ui/optionsui.cpp:109
+#: ../ui/optionsui.cpp:114
 msgid "We offer two graphical engines:\n"
 msgstr "Nudimo dva grafièka enginea:\n"
 
-#: ../gm_mainmenu.cpp:332
+#: ../gm_mainmenu.cpp:333
 msgid "[for info run with GL engine]\n"
 msgstr "[za podatke pokrenite s GL engineom]\n"
 
-#: ../gm_mainmenu.cpp:325
+#: ../gm_mainmenu.cpp:326
 msgid "compiled with"
 msgstr "prevedeno s"
 
@@ -639,6 +642,6 @@ msgstr "prevedeno s"
 msgid "days left"
 msgstr "dana preostalo"
 
-#: ../gm_mainmenu.cpp:339
+#: ../gm_mainmenu.cpp:340
 msgid "with inactive developers"
 msgstr "uz neaktivne razvijatelje"
