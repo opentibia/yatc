@@ -23,3 +23,6 @@ echo "sv_SE"
 mkdir -p sv_SE/LC_MESSAGES
 msgfmt -c -v -o sv_SE/LC_MESSAGES/yatc.mo swedish.po
 
+echo "es_ES"
+mkdir -p es_ES/LC_MESSAGES
+msgfmt -c -v -o es_ES/LC_MESSAGES/yatc.mo spanish.po

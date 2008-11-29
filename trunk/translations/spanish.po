@@ -1,0 +1,652 @@
+# YATC Translation to Spanish
+# Copyright (C) 2008 OpenTibia Team
+# This file is distributed under the same license as the YATC package.
+# kupi <kupi.ots@gmail.com>, <kupi_ots@hotmail.com>, 2008.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: YATC 0.2.3SVN\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-23 18:06+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: kupi <kupi.ots@gmail.com>\n"
+"Language-Team: kupi <kupi.ots@gmail.com>, <kupi_ots@hotmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Espa?ol\n"
+"X-Poedit-Country: Espa?a, Mexico, Chile, Colombia\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../gm_mainmenu.cpp:348
+msgid ""
+" comes with ABSOLUTELY NO WARRANTY; \n"
+"for details see sections 11 and 12 in COPYING.\n"
+"This is free software, and you are welcome \n"
+"to redistribute it under certain conditions;\n"
+"see COPYING for details."
+msgstr ""
+" NO viene ABSOLUTAMENTE con ninguna GARANTIA;\n"
+"Para más detalles, véase las secciones 11 y 12 en la copia.\n"
+"Este es un software libre, y usted es bienvenido \n"
+"a redistribuir bajo ciertas condiciones;\n"
+"ver la COPIA para obtener más detalles."
+
+#: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
+msgid " gold"
+msgstr " oro"
+
+#: ../gm_mainmenu.cpp:336
+msgid "(in no particular order)"
+msgstr "(en ningún orden particular)"
+
+#: ../ui/optionsui.cpp:123
+msgid "."
+msgstr ""
+
+#: ../ui/charlist.h:84
+msgid "Account Status:"
+msgstr "Estado de la cuenta:"
+
+#: ../ui/login.h:133
+msgid "Account name:"
+msgstr "Nombre de la cuenta:"
+
+#: ../ui/login.h:61 ../ui/login.h:136
+msgid "Account number:"
+msgstr "Número de la cuenta:"
+
+#: ../ui/uioutfit.cpp:128
+msgid "Addon "
+msgstr "Addon "
+
+#: ../ui/optionsgraphics.h:110
+msgid "Advanced"
+msgstr "Avanzado"
+
+#: ../ui/optionsgraphics.h:102
+msgid "Advanced settings:"
+msgstr "Configuraciones avanzadas:"
+
+#: ../ui/uishop.cpp:100
+msgid "Amount:"
+msgstr "Quantidad:"
+
+#: ../ui/optionsgeneral.h:78
+msgid "Auto Chase Off"
+msgstr "Perseguición Automática Apagada"
+
+#: ../ui/optionsnetwork.h:125
+msgid "Autodetect"
+msgstr "Auto-detectar"
+
+#: ../ui/optionsgraphics.h:86
+msgid "Available resolutions:"
+msgstr "Resoluciones disponibles:"
+
+#: ../ui/skills.h:262
+msgid "Axe Fighting"
+msgstr "Lucha con Hacha"
+
+#: ../ui/uishop.cpp:56
+msgid "Buy"
+msgstr "Comprar"
+
+#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:161
+#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
+#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
+msgid "Cancel"
+msgstr "Cancelar"
+
+# Tal vez "no se puede conectar a un servidor de acceso"?
+#: ../gm_mainmenu.cpp:538
+msgid "Cannot connect to a login server."
+msgstr "No se puede conectar a un servidor de acceso."
+
+#: ../ui/skills.h:164
+msgid "Cap"
+msgstr "Cap"
+
+#: ../ui/options.h:118
+msgid ""
+"Change general\n"
+"game options"
+msgstr ""
+"Modificar opciones\n"
+"generales del juego"
+
+#: ../ui/options.h:126
+msgid ""
+"Change graphics and\n"
+"performance settings"
+msgstr ""
+"Modificar opciones gráficas\n"
+"y ajustes de rendimiento"
+
+#: ../ui/optionsgeneral.h:71
+msgid "Classic Control"
+msgstr "Control Clássico"
+
+#: ../ui/skills.h:260
+msgid "Club Fighting"
+msgstr "Lucha con Pu?os"
+
+#: ../gm_mainmenu.cpp:391 ../gm_mainmenu.cpp:480
+msgid "Connecting to the server..."
+msgstr "Conectando al servidor..."
+
+#: ../ui/options.h:97
+msgid "Console"
+msgstr "Terminal"
+
+#: ../ui/optionsconsole.h:70
+msgid "Console Options"
+msgstr "Opciones de la Consola"
+
+#: ../gm_mainmenu.cpp:343
+msgid "Contributors"
+msgstr "Contribuidores"
+
+#: ../ui/login.h:99
+msgid "Create Account"
+msgstr "Crear Cuenta"
+
+#: ../gm_mainmenu.cpp:324
+msgid "Current engine"
+msgstr "Motor gráfico atual"
+
+#: ../ui/options.h:134
+msgid "Customise the console"
+msgstr "Personalizar la consola"
+
+#: ../ui/uioutfit.cpp:83
+msgid "Detail"
+msgstr "Detalles"
+
+#: ../ui/skills.h:263
+msgid "Distance Fighting"
+msgstr "Lucha a Distancia"
+
+#: ../ui/options.h:142
+msgid "Edit your hotkey texts"
+msgstr "Editar tus textos de hotkeys"
+
+#: ../ui/optionsui.cpp:321
+msgid "Engine change"
+msgstr "Modificar motor gráfico"
+
+#: ../ui/mainmenu.cpp:44 ../ui/login.h:45
+msgid "Enter Game"
+msgstr "Entrar al Juego"
+
+#: ../gm_mainmenu.cpp:479
+msgid "Entering game"
+msgstr "Entrando al juego"
+
+#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:584
+msgid "Error"
+msgstr "Error"
+
+#: ../ui/mainmenu.cpp:89
+msgid "Exit Game"
+msgstr "Sair del Juego"
+
+#: ../ui/skills.h:78
+msgid "Experience"
+msgstr "Experiencia"
+
+#: ../ui/skills.h:265
+msgid "Fishing"
+msgstr "Lucha de Pesca"
+
+#: ../ui/skills.h:259
+msgid "Fist Fighting"
+msgstr "Lucha de Pu?o"
+
+#: ../gm_mainmenu.cpp:542
+msgid ""
+"For more information take a look at the threads in the\n"
+"forums at otfans.net."
+msgstr ""
+"Para obtener más información, eche un vistazo a los tópicos\n"
+"del foro otfans.net, or eotfans.net."
+
+#: ../ui/charlist.h:147
+msgid "Free Account"
+msgstr "Cuenta Grátis"
+
+#: ../ui/optionsgraphics.h:80
+msgid "Fullscreen"
+msgstr "Completa"
+
+#: ../ui/optionsui.cpp:94
+msgid ""
+"Fullscreen decides whether or not the client will\n"
+"be taking the entire screen.\n"
+"\n"
+"Available resolutions shows detected resolutions on\n"
+"your computer that the client can use while in fullscreen."
+msgstr ""
+"Decice si utilizar pantalla completa del cliente o no quiere\n"
+"utilizar toda la pantalla completa.\n"
+"\n"
+"Resoluciones disponibles a resoluciones de visualización detectados\n"
+"en el equipo donde se puede utilizar\n"
+"está en modo de pantalla completa."
+
+#: ../ui/options.h:83
+msgid "General"
+msgstr "General"
+
+#: ../ui/optionsgeneral.h:64
+msgid "General Options"
+msgstr "Opciones Generales"
+
+#: ../ui/options.h:90
+msgid "Graphics"
+msgstr "Gráficos"
+
+#: ../ui/optionsgraphics.h:73
+msgid "Graphics Options"
+msgstr "Opciones Gráficas"
+
+#: ../ui/charlist.h:149
+msgid "Gratis Premium Account"
+msgstr "Cuenta Premium Grátis"
+
+#: ../ui/uioutfit.cpp:56
+msgid "Head"
+msgstr "Cabeza"
+
+#: ../ui/health.h:56
+msgid "Health"
+msgstr "Salud"
+
+#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:147
+#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:162 ../gm_mainmenu.cpp:365
+#: ../ui/optionsconsole.h:121
+msgid "Help"
+msgstr "Ayuda"
+
+#: ../ui/optionsui.cpp:84
+msgid "Help not done."
+msgstr "Ayuda no finalizada."
+
+#: ../ui/skills.h:119
+msgid "Hit Points"
+msgstr "Puntos de Vida"
+
+#: ../ui/options.h:104
+msgid "Hotkeys"
+msgstr "Hotkeys"
+
+#: ../ui/login.h:91
+msgid ""
+"If you don't have\n"
+"an account yet:"
+msgstr ""
+"Si aun no\n"
+"tiene una cuenta:"
+
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:354
+msgid "Info"
+msgstr "Info"
+
+#: ../gm_mainmenu.cpp:586
+msgid "Information"
+msgstr "Información"
+
+#: ../ui/uiinventory.h:55
+msgid "Inventory"
+msgstr "Inventório"
+
+#: ../ui/skills.h:93
+msgid "Level"
+msgstr "Nivel"
+
+#: ../gm_mainmenu.cpp:390
+msgid "Logging in"
+msgstr "Entrando"
+
+#: ../ui/uiinventory.cpp:176
+msgid "Look at"
+msgstr "Mira"
+
+#: ../ui/skills.h:202
+msgid "Magic Level"
+msgstr "Nivel Mágico"
+
+#: ../ui/skills.h:134
+msgid "Mana"
+msgstr "Mana"
+
+#: ../ui/optionsui.cpp:214 ../gm_mainmenu.cpp:568
+msgid "Message of the Day"
+msgstr "Mensage del Dia"
+
+#: ../ui/uishop.cpp:124
+msgid "Money:"
+msgstr "Dinero:"
+
+#: ../ui/options.h:164
+msgid "Motd"
+msgstr "Motd"
+
+#: ../ui/itemmove.h:61
+msgid "Move Objects"
+msgstr "Mover Objetos"
+
+#: ../ui/uishop.cpp:31
+msgid "NPC Trade"
+msgstr "Comercializar con NPC"
+
+#: ../ui/options.h:111
+msgid "Network"
+msgstr "Red"
+
+#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:67
+msgid "Network Options"
+msgstr "Opciones de Red"
+
+#: ../ui/optionsnetwork.h:105
+msgid "OT Encryption Key"
+msgstr "LLave de Encriptación del OT"
+
+#: ../ui/options.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:154
+#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
+#: ../ui/itemmove.h:100
+msgid "Ok"
+msgstr "Ok"
+
+#: ../ui/optionsui.cpp:114
+msgid ""
+"OpenGL is a 3D hardware-accelerated graphical library.\n"
+"  To make use of it, make sure you have latest graphic card\n"
+"  drivers. Those provided by Microsoft will be insufficient.\n"
+"  Due to SDL-centric design, OpenGL was not given much thought\n"
+"  and is currently not recommended since it will be much slower\n"
+"  on most laptops and perhaps on many desktops.\n"
+msgstr ""
+"OpenGL es una biblioteca gráfica de acceleración 3D via\n"
+" hardware. Para hazer uso de el, tenga la asegúrese que\n"
+" tiene los drivers más recientes para su tarjeta gráfica.\n"
+" Los drivers proporcionados por Microsoft serán insuficientes.\n"
+" Devida a la finalidad central de SDL, no se da mucha\n"
+" importancia a OpenGL y no se recomienda atualmente dado\n"
+" que será más lento en la mayoría de ordenadores portatiles\n"
+" y tal vez tambien en muchos ordenadores de sobremesa.\n"
+
+#: ../ui/mainmenu.cpp:66 ../ui/options.h:76
+msgid "Options"
+msgstr "Opciones"
+
+#: ../ui/login.h:76
+msgid "Password:"
+msgstr "Password:"
+
+#: ../ui/uioutfit.cpp:94
+msgid ""
+"Pick an outfit and choose colors for parts of\n"
+"your character's avatar.\n"
+"Addons are activated by ticking the appropriate box.\n"
+"To activate particular addon, premium players can\n"
+"solve various quests."
+msgstr ""
+"Elija un traje y los colores de las partes del\n"
+"traje de su personage.\n"
+"Addons se ativaran marcando la casilla correspondiente.\n"
+"Para ativar un addon particular, jugadores premium\n"
+"pueden resolver diversas misiones."
+
+#: ../ui/charlist.h:152
+msgid "Premium Account"
+msgstr "Cuenta Premium"
+
+#: ../ui/uishop.cpp:112
+msgid "Price:"
+msgstr "Precio:"
+
+#: ../ui/uioutfit.cpp:65
+msgid "Primary"
+msgstr "Primário"
+
+#: ../gm_mainmenu.cpp:336
+msgid "Programmed by"
+msgstr "Programado por"
+
+#: ../ui/optionsnetwork.h:109 ../ui/optionsnetwork.h:111
+#: ../ui/optionsnetwork.h:113 ../ui/optionsnetwork.h:115
+#: ../ui/optionsnetwork.h:117 ../ui/optionsnetwork.h:119
+#: ../ui/optionsnetwork.h:121 ../ui/optionsnetwork.h:123
+msgid "Protocol"
+msgstr "Protocolo"
+
+#: ../gm_mainmenu.cpp:430
+msgid "Protocol detection failed"
+msgstr "La detección del protocolo falló"
+
+#: ../ui/optionsui.cpp:120
+msgid ""
+"RECOMMENDED: Choose SDL. But, try what works better for you.\n"
+"\n"
+"To apply graphical engine change, you need to restart\n"
+msgstr ""
+"RECOMENDADO: Escoja SDL. Sin embargo, teste qual funciona mejor para usted.\n"
+"\n"
+"Para aplicar el canvio del motor gráfico, es necesario reiniciar\n"
+
+#: ../ui/optionsui.cpp:321
+msgid "Restart is required to apply engine change."
+msgstr "Es necesario reiniciar para aplicar el cambio de motor gráfico."
+
+#: ../ui/optionsui.cpp:110
+msgid ""
+"SDL 1.2 is a 2D software rendering library. It should be\n"
+"  slowest, but since it is the most maintained engine, it runs\n"
+"  at reasonable speed and even faster than OpenGL engine, with\n"
+"  fewer glitches. That can, of course, change anytime.\n"
+msgstr ""
+"SDL 1.2 es una biblioteca de software para la presentación 2D.\n"
+" Puede ser más lento, pero ya que es el motor gráfico con\n"
+" mejor soporte, que se ejecuta a una velocidad razonable, e incluso\n"
+" Más rápido que el motor gráfico OpenGL, con menos fracasos.\n"
+" Esto puede, por supuesto, ser modificado en cualquier momento.\n"
+
+#: ../ui/uioutfit.cpp:74
+msgid "Secondary"
+msgstr "Secundário"
+
+#: ../ui/charlist.h:57
+msgid "Select Character"
+msgstr "Selecionar Personaje"
+
+#: ../ui/charlist.h:71
+msgid "Select character:"
+msgstr "Selecionar personaje:"
+
+#: ../ui/uishop.cpp:66
+msgid "Sell"
+msgstr "Vender"
+
+#: ../ui/optionsnetwork.h:71
+msgid "Server address:"
+msgstr "Dirección del servidor:"
+
+#: ../ui/optionsui.cpp:149
+msgid ""
+"Server name is the IP address or hostname of the\n"
+"login server.\n"
+"\n"
+"Port is the TCP port of the login server.\n"
+"\n"
+"You can also choose if you'd like to access OpenTibia\n"
+"servers, or a proprietary server. To access OpenTibia\n"
+"servers, turn on the OT Encryption Key option."
+msgstr ""
+"Nombre del servidor es la dirección IP o el nombre\n"
+"host del servidor de acceso.\n"
+"\n"
+"\"Port\" es el port TCP del servidor de acceso.\n"
+"\n"
+"También puede elegir si desea tener acceso a\n"
+"OpenTibia servidores, o un servidor de propiedad. Para\n"
+"acceder a OpenTibia, active la opción \"LLave de\n"
+"Encriptación del OT\"."
+
+#: ../ui/optionsnetwork.h:86
+msgid "Server port:"
+msgstr "Port del servidor:"
+
+#: ../mapui.cpp:530 ../ui/uioutfit.cpp:39
+msgid "Set Outfit"
+msgstr "Colocar Traje"
+
+#: ../ui/options.h:150
+msgid ""
+"Set network options,\n"
+"such as server."
+msgstr ""
+"Configurar opciones de red,\n"
+"como la dirección del servidor."
+
+#: ../ui/itemmove.h:74
+msgid ""
+"Set the number of \n"
+"items you want to move:"
+msgstr ""
+"Coloque el número de\n"
+"items que usted desea mover:"
+
+#: ../ui/skills.h:264
+msgid "Shielding"
+msgstr "Lucha con Defesa"
+
+#: ../ui/optionsconsole.h:85
+msgid "Show Event Messages in Console"
+msgstr "Mostrar mensajes de sucesos en la consola"
+
+#: ../ui/optionsgeneral.h:84
+msgid "Show Hints"
+msgstr "Mostrar sugerencias"
+
+#: ../ui/optionsconsole.h:79
+msgid "Show Info Messages in Console"
+msgstr "Mostrar Mensajes de Información en la Consola"
+
+#: ../ui/optionsconsole.h:103
+msgid "Show Levels in Console"
+msgstr "Mostrar los Niveles en la Consola"
+
+#: ../ui/optionsgeneral.h:90
+msgid "Show Names of Creatures"
+msgstr "Mostrar Nombres de las Criaturas"
+
+#: ../ui/optionsconsole.h:109
+msgid "Show Private Messages in Game Window"
+msgstr "Mostrar Mensajes Privados en la Ventana de Juego"
+
+#: ../ui/optionsconsole.h:91
+msgid "Show Status Messages in Console"
+msgstr "Mostrar Mensajes de Estado en la Consola"
+
+#: ../ui/optionsgeneral.h:96
+msgid "Show Textual Effects"
+msgstr "Mostrar Efectos de Texto"
+
+#: ../ui/optionsconsole.h:97
+msgid "Show Timestamps in Console"
+msgstr "Mostrar Tiempo en la Consola"
+
+#: ../ui/options.h:171
+msgid ""
+"Show the most recent\n"
+"Message of the Day"
+msgstr ""
+"Mostrar el mensaje más\n"
+"reciente del dia"
+
+#: ../ui/skills.h:243
+msgid "Skill "
+msgstr "Habilidad"
+
+#: ../ui/skills.h:64
+msgid "Skills"
+msgstr "Habilidades"
+
+#: ../ui/skills.h:149
+msgid "Soul Points"
+msgstr "Puntos de Alma"
+
+#: ../ui/skills.h:179
+msgid "Stamina"
+msgstr "Resistencia"
+
+#: ../ui/skills.h:261
+msgid "Sword Fighting"
+msgstr "Lucha con Espada"
+
+#: ../ui/uiinventory.cpp:209
+msgid "This functionality is not yet finished"
+msgstr "Esta función aun no esta disponible"
+
+#: ../ui/optionsui.cpp:125
+msgid ""
+"To choose maximum FPS (reducing the CPU and graphics card usage\n"
+"resulting in less power usage, quieter operation and reduced\n"
+"CPU temperature) use the scrollbar below. Note, though, FPS \n"
+"limiting is only approximate."
+msgstr ""
+"Para elejir la máxima FPS (reducción de la CPU y tarjeta gráfica\n"
+"resultante en el uso de menos energía, más silenciosos y la operación\n"
+"de reducción de Temperatura de CPU) el uso por debajo de la barra de\n"
+"desplazamiento. Nota, sin embargo, la limitación de FPS es sólo aproximada."
+
+#: ../ui/uiinventory.cpp:181
+msgid "Trade with"
+msgstr "Negociar con"
+
+#: ../ui/charlist.h:91
+msgid "Unknown"
+msgstr "Desconocido"
+
+#: ../ui/uiinventory.cpp:178
+msgid "Use"
+msgstr "Usar"
+
+#: ../ui/uiinventory.cpp:180
+msgid "Use with..."
+msgstr "Uso con..."
+
+#: ../gm_mainmenu.cpp:326
+msgid "Uses GLICT"
+msgstr "Usa GLICT"
+
+#: ../gm_mainmenu.cpp:328
+msgid "Uses OpenGL"
+msgstr "Usa OpenGL"
+
+#: ../gm_mainmenu.cpp:325
+msgid "Uses SDL"
+msgstr "Usa SDL"
+
+#: ../ui/optionsui.cpp:109
+msgid "We offer two graphical engines:\n"
+msgstr "Ofrecemos dos motores gráficos:\n"
+
+#: ../gm_mainmenu.cpp:332
+msgid "[for info run with GL engine]\n"
+msgstr "[información para ejecutar el motor gráfico con GL]\n"
+
+#: ../gm_mainmenu.cpp:325
+msgid "compiled with"
+msgstr "compilado con"
+
+#: ../ui/charlist.h:152
+msgid "days left"
+msgstr "dias restantes"
+
+#: ../gm_mainmenu.cpp:339
+msgid "with inactive developers"
+msgstr "con los desarrolladores inactivos"
