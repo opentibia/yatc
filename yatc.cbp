@@ -21,6 +21,7 @@
 					<Add option="-D_GLIBCXX_DEBUG" />
 					<Add option="-D_GLIBCXX_DEBUG_PEDANTIC" />
 					<Add option="-DDEBUG_BUILD" />
+					<Add option="-DHAVE_LIBINTL_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
@@ -41,6 +42,7 @@
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
 				</Compiler>
 				<Linker>
 					<Add library="GL" />
@@ -91,6 +93,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -103,6 +106,7 @@
 					<Add option="-lSDLmain" />
 					<Add option="-lSDL" />
 					<Add option="-lSDL_gfx" />
+					<Add option="-lintl" />
 				</Linker>
 			</Target>
 		</Build>
@@ -236,6 +240,7 @@
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug Windows" />
+			<Option target="Release Windows" />
 		</Unit>
 		<Unit filename="skin.cpp" />
 		<Unit filename="skin.h" />

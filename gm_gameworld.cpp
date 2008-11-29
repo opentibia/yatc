@@ -485,7 +485,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         if (m_draggingPrep && !m_dragging) {
             printf("Move %g %g compared to %g %g\n", pos.x, pos.y, m_dragBegin.x, m_dragBegin.y);
             if (abs(int(pos.x - m_dragBegin.x)) > 2 || abs(int(pos.y - m_dragBegin.y)) > 2) {
-                int x,y,z;
+                uint32_t x,y,z;
                 m_dragging = true; // TODO (ivucica#5#) kick out m_dragging; m_dragThing can be NULL when we're not draggging
                 SDL_SetCursor(g_engine->m_cursorUse);
 
@@ -509,7 +509,8 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         if (m_popup && !m_popup->wantsDeath()) { // handle popup menu before attempting anything else
             printf("Handling left mousedn on popup\n");
 
-            m_popup->mouseClick(pos.x, pos.y);
+            if (event.button.state == SDL_RELEASED)
+                m_popup->mouseClick(pos.x, pos.y);
         } else
         if (event.button.state == SDL_PRESSED){
             if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
@@ -518,7 +519,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             } else if (isExtendedUsing()){ // otherwise handle as appropriate
                 printf("Performing extended use\n");
                 const Thing* thing;
-                int x,y,z;
+                uint32_t x,y,z;
                 int stackpos;
                 bool isextended;
 
@@ -538,7 +539,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             } else if (SDL_GetModState() & KMOD_CTRL) {
                 printf("It's a use\n");
                 const Thing* thing;
-                int x,y,z;
+                uint32_t x,y,z;
                 int stackpos;
                 bool isextended;
 
@@ -555,7 +556,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             } else if (SDL_GetModState() & KMOD_SHIFT) {
                 printf("It's a look\n");
                 const Thing* thing;
-                int x,y,z;
+                uint32_t x,y,z;
                 int stackpos;
 
                 m_mapui.lookAtItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos);
@@ -579,7 +580,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 // TODO (nfries88): walk by clicking
                 if (m_dragging){
 
-                    int dx,dy,dz;
+                    uint32_t dx,dy,dz;
                     m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz);
                     Position dest(dx, dy, dz);
 					dragComplete(dest);
@@ -831,7 +832,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
         s << speaker;
     } else {
         nc = new Console();
-        s << "Console";
+        s << gettext("Console");
     }
 
 
@@ -843,7 +844,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     p->SetWidth(96); //g_engine->sizeText(s.str().c_str(),"system"));
     p->SetBGColor(.2,.2,.2,1.);
     #if (GLICT_APIREV >= 85)
-    p->SetTextOffset(96 / 2 - g_engine->sizeText(s.str().c_str(),"system") / 2, 4);
+    p->SetTextOffset(96 / 2 - g_engine->sizeText(s.str().c_str(),"gamefont") / 2, 4);
     p->SetCaptionColor(0.5,0.5,0.5);
     #else
 	#warning No support for setcaptioncolor before glict apirev 85
@@ -856,6 +857,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     p->SetPos(sum,0);
     p->SetOnClick(pnlConsoleButton_OnClick);
     p->SetSkin(&g_skin.cbp);
+    p->SetFont("gamefont");
     pnlConsoleButtonContainer.AddObject(p);
     pnlConsoleButtons.push_back(p);
 
@@ -987,7 +989,7 @@ void GM_Gameworld::dragComplete(Position& toPos)
 
 void GM_Gameworld::showTutorial(uint8_t id) {
     if (UITutorialHints::getInstance().showHint(id))
-        this->msgBox(UITutorialHints::getInstance().getTutorialHint(id).c_str(), "Tutorial Hint");
+        this->msgBox(UITutorialHints::getInstance().getTutorialHint(id).c_str(), gettext("Tutorial Hint"));
 }
 
 

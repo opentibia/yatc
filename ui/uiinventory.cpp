@@ -173,14 +173,20 @@ void pnlInventory_t::inventoryItemMakePopup(Popup*popup,void*owner,void*arg){
     }
 
     std::stringstream look,use,trade;
-    look << gettext("Look at") << " (Shift)";
-    if (!item->isExtendedUseable())
-        use << gettext("Use") << " (Ctrl)";
-    else
+    look << gettext("Look") << " (Shift)";
+    if (item->isExtendedUseable())
         use << gettext("Use with...") << " (Ctrl)";
+    else
+        if (Objects::getInstance()->getItemType(item->getID())->container)
+            use << gettext("Open") << " (Ctrl)";
+        else
+            use << gettext("Use") << " (Ctrl)";
+
+
     trade << gettext("Trade with") << " ...";
     popup->addItem(look.str(),onLookAt,(void*)slotid);
     popup->addItem(use.str(),onUse,(void*)slotid);
+    popup->addItem("-",NULL,NULL);
     popup->addItem(trade.str(),onTrade,(void*)slotid);
 }
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-29 11:39+0100\n"
+"POT-Creation-Date: 2008-11-29 22:55+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Heliton <helitonnordt@gmail.com>\n"
 "Language-Team: Heliton <helitonnordt@gmail.com>, jakexblaster "
@@ -46,6 +46,26 @@ msgstr "(sem ordem específica)"
 msgid "."
 msgstr ""
 
+#: ../ui/tutorialhints.cpp:93
+msgid "<Observe the battle window>"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:134
+msgid "<Observe the follow button>"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:137
+msgid "<Observe the health bar>"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:77
+msgid "<Observe the quest button>"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:114
+msgid "<The outfit window should be opened now>"
+msgstr ""
+
 #: ../ui/charlist.h:84
 msgid "Account Status:"
 msgstr "Status da Conta:"
@@ -57,6 +77,10 @@ msgstr "Nome da conta:"
 #: ../ui/login.h:61 ../ui/login.h:136
 msgid "Account number:"
 msgstr "Número da conta:"
+
+#: ../mapui.cpp:601
+msgid "Add to VIP list"
+msgstr ""
 
 #: ../ui/uioutfit.cpp:128
 msgid "Addon "
@@ -70,9 +94,17 @@ msgstr "Avançado"
 msgid "Advanced settings:"
 msgstr "Configurações avançadas:"
 
+#: ../ui/tutorialhints.cpp:117
+msgid "Ah, the all-mighty trade window. This hint is not written yet."
+msgstr ""
+
 #: ../ui/uishop.cpp:100
 msgid "Amount:"
 msgstr "Quantidade:"
+
+#: ../mapui.cpp:584
+msgid "Attack"
+msgstr ""
 
 #: ../ui/optionsgeneral.h:78
 msgid "Auto Chase Off"
@@ -137,7 +169,7 @@ msgstr "Perícia com Clava"
 msgid "Connecting to the server..."
 msgstr "Conectando no servidor..."
 
-#: ../ui/options.h:97
+#: ../ui/options.h:97 ../gm_gameworld.cpp:835
 msgid "Console"
 msgstr "Terminal"
 
@@ -148,6 +180,10 @@ msgstr "Opções do Terminal"
 #: ../gm_mainmenu.cpp:344
 msgid "Contributors"
 msgstr "Contribuidores"
+
+#: ../mapui.cpp:616
+msgid "Copy Name"
+msgstr ""
 
 #: ../ui/login.h:99
 msgid "Create Account"
@@ -204,6 +240,10 @@ msgstr "Perícia com Pesca"
 #: ../ui/skills.h:259
 msgid "Fist Fighting"
 msgstr "Perícia com Punho"
+
+#: ../mapui.cpp:589
+msgid "Follow"
+msgstr ""
 
 #: ../gm_mainmenu.cpp:545
 msgid ""
@@ -290,6 +330,10 @@ msgstr ""
 "Se você ainda não\n"
 "possui uma conta:"
 
+#: ../mapui.cpp:605
+msgid "Ignore"
+msgstr ""
+
 #: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:355
 msgid "Info"
 msgstr "Info"
@@ -302,6 +346,11 @@ msgstr "Informação"
 msgid "Inventory"
 msgstr "Inventório"
 
+#: ../mapui.cpp:609
+#, fuzzy
+msgid "Invite to Party"
+msgstr "Inventório"
+
 #: ../ui/skills.h:93
 msgid "Level"
 msgstr "Nível"
@@ -310,9 +359,19 @@ msgstr "Nível"
 msgid "Logging in"
 msgstr "Entrando"
 
-#: ../ui/uiinventory.cpp:176
-msgid "Look at"
+#: ../mapui.cpp:550 ../ui/uiinventory.cpp:176
+#, fuzzy
+msgid "Look"
 msgstr "Olhar"
+
+#: ../ui/tutorialhints.cpp:127
+msgid ""
+"Looks like you've met a marked player. See the skull? That means that guy "
+"fought \n"
+"with someone. The {white skull} means he just tried to fight with someone a "
+"few \n"
+"minutes ago, and {red skull} means he killed several people."
+msgstr ""
 
 #: ../ui/skills.h:202
 msgid "Magic Level"
@@ -324,6 +383,11 @@ msgstr "Magia"
 
 #: ../ui/optionsui.cpp:219 ../gm_mainmenu.cpp:571
 msgid "Message of the Day"
+msgstr "Mensagem do Dia"
+
+#: ../mapui.cpp:597
+#, fuzzy
+msgid "Message to"
 msgstr "Mensagem do Dia"
 
 #: ../ui/uishop.cpp:124
@@ -350,6 +414,12 @@ msgstr "Rede"
 msgid "Network Options"
 msgstr "Opções de Rede"
 
+#: ../ui/tutorialhints.cpp:84
+msgid ""
+"Now you've got a {bag} to carry stuff in and there's already a {coat}\n"
+"in there. {Drag} the coat from the {bag} to the {armor slot} to wear it."
+msgstr ""
+
 #: ../ui/optionsnetwork.h:105
 msgid "OT Encryption Key"
 msgstr "Chave de Encriptação do OT"
@@ -360,6 +430,16 @@ msgstr "Chave de Encriptação do OT"
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "Ok"
+
+#: ../ui/tutorialhints.cpp:73
+msgid ""
+"Ok; you can also try {clicking} on the {minimap}. For example \n"
+"there's a {marker} on the minimap now, try moving there."
+msgstr ""
+
+#: ../mapui.cpp:562 ../ui/uiinventory.cpp:181
+msgid "Open"
+msgstr ""
 
 #: ../ui/optionsui.cpp:119
 msgid ""
@@ -500,7 +580,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Porta do servidor:"
 
-#: ../mapui.cpp:530 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:575 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Colocar Traje"
 
@@ -576,6 +656,13 @@ msgstr "Habilidade"
 msgid "Skills"
 msgstr "Habilidades"
 
+#: ../ui/tutorialhints.cpp:100
+msgid ""
+"So the {container window} opened. {Drag} whatever's in it into your {bag} "
+"to \n"
+"take it with you. You need to collect three cockroach legs for the NPC!"
+msgstr ""
+
 #: ../ui/skills.h:149
 msgid "Soul Points"
 msgstr "Pontos de Alma"
@@ -588,7 +675,24 @@ msgstr "Vigor"
 msgid "Sword Fighting"
 msgstr "Perícia com Espada"
 
-#: ../ui/uiinventory.cpp:209
+#: ../ui/tutorialhints.cpp:104
+msgid ""
+"The {shovel}, which is now in your inventory, is used to dig stuff up. "
+"It's \n"
+"very useful for exploring new areas. So go to the east, and you should find "
+"a \n"
+"{loose stone pile}, try {ctrl+clicking} on the {shovel} and then on the "
+"{stones}.\n"
+"When you use an item on another item, it's called extended using."
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:80
+msgid ""
+"There's a {chest} in here. So try {ctrl+clicking} (commonly called \n"
+"'Use') on it to open it."
+msgstr ""
+
+#: ../mapui.cpp:640 ../ui/uiinventory.cpp:215
 msgid "This functionality is not yet finished"
 msgstr ""
 
@@ -604,19 +708,30 @@ msgstr ""
 "silenciosas e redução da temperatura da CPU) use a barra de\n"
 "rolagem abaixo. Note que a limitação do FPS é apenas uma aproximação."
 
-#: ../ui/uiinventory.cpp:181
+#: ../ui/tutorialhints.cpp:88
+msgid ""
+"To lit the {torch}, try {ctrl+clicking} on it. Torches burn out slowly \n"
+"while they're on, so don't forget to {ctrl+click} (use) it when you don't\n"
+"need it. Many things can be ctrl+clicked in this game, so try looking around."
+msgstr ""
+
+#: ../ui/uiinventory.cpp:186
 msgid "Trade with"
 msgstr "Negociar com"
+
+#: ../gm_gameworld.cpp:991
+msgid "Tutorial Hint"
+msgstr ""
 
 #: ../ui/charlist.h:91
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: ../ui/uiinventory.cpp:178
+#: ../mapui.cpp:564 ../ui/uiinventory.cpp:183
 msgid "Use"
 msgstr "Usar"
 
-#: ../ui/uiinventory.cpp:180
+#: ../mapui.cpp:559 ../ui/uiinventory.cpp:178
 msgid "Use with..."
 msgstr ""
 
@@ -635,6 +750,33 @@ msgstr "Usa SDL"
 #: ../ui/optionsui.cpp:114
 msgid "We offer two graphical engines:\n"
 msgstr "Nós oferecemos dois motores gráficos:\n"
+
+#: ../ui/tutorialhints.cpp:70
+msgid "Welcome to YATC! Use {arrows} or {mouse} to move around."
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:120
+msgid ""
+"Welcome to the village! There are a few more marks on your map now with "
+"important\n"
+"locations and NPCs. You're now supposed to fight until level 8, when you "
+"can \n"
+"choose a vocation and go to the mainland."
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:96
+msgid ""
+"Why fight if you can't profit, right? So when you kill something, just "
+"loot \n"
+"its {body}. Just do a {ctrl+click} on it."
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:110
+msgid ""
+"With the {rope} you can climb up from dungeons and caves. Find a {rope "
+"spot}, \n"
+"{ctrl+click} on the {rope}, and then on the {rope spot}."
+msgstr ""
 
 #: ../gm_mainmenu.cpp:333
 msgid "[for info run with GL engine]\n"

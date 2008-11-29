@@ -18,6 +18,11 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#if defined(HAVE_LIBINTL_H)
+	#include <libintl.h>
+#else
+	#define gettext(x) (x)
+#endif
 #include "tutorialhints.h"
 UITutorialHints::UITutorialHints() {
 
@@ -61,59 +66,76 @@ UITutorialHints::UITutorialHints() {
     // is selected, e.g. GFDL.
 
 
-    m_tutorialhints[1] =
-        "Welcome to YATC! Use {arrows} or {mouse} to move around.";
-    m_tutorialhints[2] =
+    m_tutorialhints[1] = gettext(
+        "Welcome to YATC! Use {arrows} or {mouse} to move around."
+        );
+    m_tutorialhints[2] = gettext(
         "Ok; you can also try {clicking} on the {minimap}. For example \n"
-        "there's a {marker} on the minimap now, try moving there.";
-    m_tutorialhints[3] =
-        "<Observe the quest button>";
-    m_tutorialhints[4] =
+        "there's a {marker} on the minimap now, try moving there."
+        );
+    m_tutorialhints[3] = gettext(
+        "<Observe the quest button>"
+        );
+    m_tutorialhints[4] = gettext(
         "There's a {chest} in here. So try {ctrl+clicking} (commonly called \n"
-        "'Use') on it to open it.";
-    m_tutorialhints[5] =
+        "'Use') on it to open it."
+        );
+    m_tutorialhints[5] = gettext(
         "Now you've got a {bag} to carry stuff in and there's already a {coat}\n"
-        "in there. {Drag} the coat from the {bag} to the {armor slot} to wear it.";
-    m_tutorialhints[6] =
+        "in there. {Drag} the coat from the {bag} to the {armor slot} to wear it."
+        );
+    m_tutorialhints[6] = gettext(
         "To lit the {torch}, try {ctrl+clicking} on it. Torches burn out slowly \n"
         "while they're on, so don't forget to {ctrl+click} (use) it when you don't\n"
-        "need it. Many things can be ctrl+clicked in this game, so try looking around.";
-    m_tutorialhints[7] =
-        "<Observe the battle window>";
-    m_tutorialhints[8] =
+        "need it. Many things can be ctrl+clicked in this game, so try looking around."
+        );
+    m_tutorialhints[7] = gettext(
+        "<Observe the battle window>"
+        );
+    m_tutorialhints[8] = gettext(
         "Why fight if you can't profit, right? So when you kill something, just loot \n"
-        "its {body}. Just do a {ctrl+click} on it.";
-    m_tutorialhints[9] =
+        "its {body}. Just do a {ctrl+click} on it."
+        );
+    m_tutorialhints[9] = gettext(
         "So the {container window} opened. {Drag} whatever's in it into your {bag} to \n"
-        "take it with you. You need to collect three cockroach legs for the NPC!";
-    m_tutorialhints[10] =
+        "take it with you. You need to collect three cockroach legs for the NPC!"
+        );
+    m_tutorialhints[10] = gettext(
         "The {shovel}, which is now in your inventory, is used to dig stuff up. It's \n"
         "very useful for exploring new areas. So go to the east, and you should find a \n"
         "{loose stone pile}, try {ctrl+clicking} on the {shovel} and then on the {stones}.\n"
-        "When you use an item on another item, it's called extended using.";
-    m_tutorialhints[11] =
+        "When you use an item on another item, it's called extended using."
+        );
+    m_tutorialhints[11] = gettext(
         "With the {rope} you can climb up from dungeons and caves. Find a {rope spot}, \n"
-        "{ctrl+click} on the {rope}, and then on the {rope spot}.";
-    m_tutorialhints[12] =
-        "<The outfit window should be opened now>";
-    m_tutorialhints[13] =
-        "Ah, the all-mighty trade window. This hint is not written yet.";
-    m_tutorialhints[14] =
+        "{ctrl+click} on the {rope}, and then on the {rope spot}."
+        );
+    m_tutorialhints[12] = gettext(
+        "<The outfit window should be opened now>"
+        );
+    m_tutorialhints[13] = gettext(
+        "Ah, the all-mighty trade window. This hint is not written yet."
+        );
+    m_tutorialhints[14] = gettext(
         "Welcome to the village! There are a few more marks on your map now with important\n"
-        "locations and NPCs. You're now supposed and fight until level 8, when you can \n"
-        "choose a vocation and go to the mainland.";
+        "locations and NPCs. You're now supposed to fight until level 8, when you can \n"
+        "choose a vocation and go to the mainland."
+        );
     m_tutorialhints[15] =
         ""; // empty text; do not display
-    m_tutorialhints[16] =
+    m_tutorialhints[16] = gettext(
         "Looks like you've met a marked player. See the skull? That means that guy fought \n"
         "with someone. The {white skull} means he just tried to fight with someone a few \n"
-        "minutes ago, and {red skull} means he killed several people.";
+        "minutes ago, and {red skull} means he killed several people."
+        );
     m_tutorialhints[17] =
         ""; // empty text; do not display
-    m_tutorialhints[18] =
-        "<Observe the follow button>";
-    m_tutorialhints[19] =
-        "<Observe the health bar>";
+    m_tutorialhints[18] = gettext(
+        "<Observe the follow button>"
+        );
+    m_tutorialhints[19] = gettext(
+        "<Observe the health bar>"
+        );
 
 }
 

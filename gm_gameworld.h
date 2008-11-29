@@ -162,7 +162,7 @@ private:
     int m_dragStackPos;
 
     slots_t m_draggingInv;
-    uint32_t m_draggingCtrId, m_draggingCtrSlot;
+    int m_draggingCtrId, m_draggingCtrSlot;
 
     Automap m_automap;
 
