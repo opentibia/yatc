@@ -39,7 +39,8 @@ extern uint32_t g_frameTime;
 extern Engine* g_engine;
 
 
-MapUI::MapUI() {
+MapUI::MapUI()
+{
 	m_x = 0;
 	m_y = 0;
 
@@ -57,10 +58,12 @@ MapUI::MapUI() {
 
 }
 
-MapUI::~MapUI() {
+MapUI::~MapUI()
+{
 }
 
-void MapUI::renderMap() {
+void MapUI::renderMap()
+{
 
 	// FIXME (ivucica#2#) make renderMap use m_x,m_y and m_w,m_h
 
@@ -407,7 +410,7 @@ void MapUI::drawTileEffects(Tile* tile, int screenx, int screeny, float scale, u
 }
 
 
-void MapUI::useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos, bool &extended)
+void MapUI::useItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos, bool &extended)
 {
 	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
 
@@ -442,7 +445,7 @@ void MapUI::attackCreature(int x, int y, const Creature* &creature)
 }
 
 
-void MapUI::lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos)
+void MapUI::lookAtItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos)
 {
     Position p;
 	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
@@ -461,7 +464,7 @@ void MapUI::lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, 
 }
 
 
-void MapUI::dragThing(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos)
+void MapUI::dragThing(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos)
 {
     Position p;
 	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
@@ -479,7 +482,7 @@ void MapUI::dragThing(int x, int y, const Thing* &thing, int &retx, int &rety, i
 
 }
 
-Tile* MapUI::translateClickToTile(int x, int y, int &retx, int &rety, int &retz)
+Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, uint32_t &retz)
 {
     // FIXME (ivucica#1#) make this use m_x,m_y and m_w,m_h
 
@@ -513,7 +516,8 @@ Tile* MapUI::translateClickToTile(int x, int y, int &retx, int &rety, int &retz)
 	return tile;
 }
 
-bool MapUI::handlePopup(int x, int y) {
+bool MapUI::handlePopup(int x, int y)
+{
     if (x > 64 && y > 64 && x < 64+15*32 && y < 64+11*32) { // click within visible area of map?
         glictPos p;
         p.x = x; p.y = y;
@@ -522,11 +526,116 @@ bool MapUI::handlePopup(int x, int y) {
 	return true;
 }
 
-void MapUI::makePopup(Popup*popup,void*owner,void*arg) {
+void MapUI::makePopup(Popup*popup,void*owner,void*arg)
+{
     MapUI *m = (MapUI*)(owner);
-    glictPos *pos = (glictPos*)(arg);
+    glictPos &pos = *((glictPos*)(arg));
+    uint32_t retx, rety, retz;
+	Position playerpos = GlobalVariables::getPlayerPosition();
+
+
+    Tile* t = m->translateClickToTile(pos.x, pos.y, retx, rety, retz);
+    m->m_lastRightclickTilePos.x = retx;
+    m->m_lastRightclickTilePos.y = rety;
+    m->m_lastRightclickTilePos.z = retz;
+
+
+    // TODO (ivucica#5#): if clicked on dark, right click must say "you cant see anything"
+    // but first we must implement lighting at all ... :)
 
     std::stringstream s;
-    s << gettext("Set Outfit") << "...";
-    popup->addItem(s.str(), GM_Gameworld::onSetOutfit);
+
+    // look at appears always
+    s.str("");
+    s << gettext("Look") << " (Shift)";
+    popup->addItem(s.str(), MapUI::onLookAt, m);
+
+    // use depends on kind of item
+    Item* item = dynamic_cast<Item*>(t->getThingByStackPos(t->getUseStackpos()));
+    s.str("");
+    if (item)
+    {
+        if (item->isExtendedUseable())
+            s << gettext("Use with...") << " (Ctrl)";
+        else
+            if (Objects::getInstance()->getItemType(item->getID())->container)
+                s << gettext("Open") << " (Ctrl)";
+            else
+                s << gettext("Use") << " (Ctrl)";
+        popup->addItem(s.str(), MapUI::onUse, m);
+    }
+
+
+
+    if (retx == playerpos.x && rety == playerpos.y && retz == playerpos.z)
+    {
+        popup->addItem("-",NULL,NULL);
+
+        s.str("");
+        s << gettext("Set Outfit") << "...";
+        popup->addItem(s.str(), GM_Gameworld::onSetOutfit);
+    } else
+    // attack depends if there is a creature and we're NOT on player pos
+    if (const Creature *c = t->getTopCreature())
+    {
+        popup->addItem("-",NULL,NULL);
+
+        s.str("");
+        s << gettext("Attack") << " (Alt)";
+        popup->addItem(s.str(),onUnimplemented);
+
+
+        s.str("");
+        s << gettext("Follow");
+        popup->addItem(s.str(),onUnimplemented);
+
+        if (!c->isMonster() && !c->isNpc())
+        {
+            popup->addItem("-",NULL,NULL);
+
+            s.str("");
+            s << gettext("Message to") << " " << c->getName();
+            popup->addItem(s.str(),onUnimplemented);
+
+            s.str("");
+            s << gettext("Add to VIP list");
+            popup->addItem(s.str(),onUnimplemented);
+
+            s.str("");
+            s << gettext("Ignore") << " " << c->getName();
+            popup->addItem(s.str(),onUnimplemented);
+
+            s.str("");
+            s << gettext("Invite to Party");
+            popup->addItem(s.str(),onUnimplemented);
+
+        }
+
+        popup->addItem("-",NULL,NULL);
+        s.str("");
+        s << gettext("Copy Name");
+        popup->addItem(s.str(),onUnimplemented);
+
+    }
+
+
+
+}
+
+
+void MapUI::onLookAt(PopupItem *parent)
+{
+    onUnimplemented(parent);
+}
+void MapUI::onUse(PopupItem *parent)
+{
+    onUnimplemented(parent);
+}
+
+void MapUI::onUnimplemented(PopupItem *parent)
+{
+    MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
 }

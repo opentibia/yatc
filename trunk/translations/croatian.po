@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-29 11:39+0100\n"
+"POT-Creation-Date: 2008-11-29 22:55+0100\n"
 "PO-Revision-Date: 2008-10-24 00:00+0200\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
@@ -42,6 +42,26 @@ msgstr "(bez posebnog redoslijeda)"
 msgid "."
 msgstr "."
 
+#: ../ui/tutorialhints.cpp:93
+msgid "<Observe the battle window>"
+msgstr "<Pogledajte prozor Bitka>"
+
+#: ../ui/tutorialhints.cpp:134
+msgid "<Observe the follow button>"
+msgstr "<Pogledajte tipku za slijediti>"
+
+#: ../ui/tutorialhints.cpp:137
+msgid "<Observe the health bar>"
+msgstr "<Pogledajte traku zdravlja>"
+
+#: ../ui/tutorialhints.cpp:77
+msgid "<Observe the quest button>"
+msgstr "<Pogledajte tipku Potrage>"
+
+#: ../ui/tutorialhints.cpp:114
+msgid "<The outfit window should be opened now>"
+msgstr "<Sada bi se trebao otvoriti prozor s odijelom>"
+
 #: ../ui/charlist.h:84
 msgid "Account Status:"
 msgstr "Stanje racuna:"
@@ -53,6 +73,10 @@ msgstr "Ime raèuna:"
 #: ../ui/login.h:61 ../ui/login.h:136
 msgid "Account number:"
 msgstr "Broj raèuna:"
+
+#: ../mapui.cpp:601
+msgid "Add to VIP list"
+msgstr "Dodaj u kontakte"
 
 #: ../ui/uioutfit.cpp:128
 msgid "Addon "
@@ -66,9 +90,17 @@ msgstr "Napredno"
 msgid "Advanced settings:"
 msgstr "Napredne postavke"
 
+#: ../ui/tutorialhints.cpp:117
+msgid "Ah, the all-mighty trade window. This hint is not written yet."
+msgstr "Ah, prozor za trgovanje. Ovaj savjet još nije napisan."
+
 #: ../ui/uishop.cpp:100
 msgid "Amount:"
 msgstr "Kolièina:"
+
+#: ../mapui.cpp:584
+msgid "Attack"
+msgstr "Napadni"
 
 #: ../ui/optionsgeneral.h:78
 msgid "Auto Chase Off"
@@ -132,7 +164,7 @@ msgstr "Borba toljagama"
 msgid "Connecting to the server..."
 msgstr "Spajam se na server..."
 
-#: ../ui/options.h:97
+#: ../ui/options.h:97 ../gm_gameworld.cpp:835
 msgid "Console"
 msgstr "Konzola"
 
@@ -143,6 +175,10 @@ msgstr "Opcije konzole"
 #: ../gm_mainmenu.cpp:344
 msgid "Contributors"
 msgstr "Pridonositelji"
+
+#: ../mapui.cpp:616
+msgid "Copy Name"
+msgstr "Kopiraj ime"
 
 #: ../ui/login.h:99
 msgid "Create Account"
@@ -199,6 +235,10 @@ msgstr "Ribarstvo"
 #: ../ui/skills.h:259
 msgid "Fist Fighting"
 msgstr "Borba šakama"
+
+#: ../mapui.cpp:589
+msgid "Follow"
+msgstr "Slijedi"
 
 #: ../gm_mainmenu.cpp:545
 msgid ""
@@ -285,6 +325,10 @@ msgstr ""
 "Ako jos nemate\n"
 "svoj raèun:"
 
+#: ../mapui.cpp:605
+msgid "Ignore"
+msgstr "Ignoriraj"
+
 #: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:355
 msgid "Info"
 msgstr "Info"
@@ -297,6 +341,10 @@ msgstr "Obavijest"
 msgid "Inventory"
 msgstr "Inventar"
 
+#: ../mapui.cpp:609
+msgid "Invite to Party"
+msgstr "Pozovi u grupu"
+
 #: ../ui/skills.h:93
 msgid "Level"
 msgstr "Razina"
@@ -305,9 +353,23 @@ msgstr "Razina"
 msgid "Logging in"
 msgstr "Prijavljujem"
 
-#: ../ui/uiinventory.cpp:176
-msgid "Look at"
+#: ../mapui.cpp:550 ../ui/uiinventory.cpp:176
+msgid "Look"
 msgstr "Pogledaj"
+
+#: ../ui/tutorialhints.cpp:127
+msgid ""
+"Looks like you've met a marked player. See the skull? That means that guy "
+"fought \n"
+"with someone. The {white skull} means he just tried to fight with someone a "
+"few \n"
+"minutes ago, and {red skull} means he killed several people."
+msgstr ""
+"Èini se da ste sreli oznaèenog igraèa. Vidite lubanju? To znaèi da se tip  "
+"borio \n"
+"s nekime. Primjerice, {bijela lubanja} znaèi da se pokušao boriti s nekime "
+"pred \n"
+"par minuta, a {crvena lubanja} znaèi da je ubio više ljudi."
 
 #: ../ui/skills.h:202
 msgid "Magic Level"
@@ -320,6 +382,10 @@ msgstr "Mana"
 #: ../ui/optionsui.cpp:219 ../gm_mainmenu.cpp:571
 msgid "Message of the Day"
 msgstr "Poruka dana"
+
+#: ../mapui.cpp:597
+msgid "Message to"
+msgstr "Poruka za"
 
 #: ../ui/uishop.cpp:124
 msgid "Money:"
@@ -345,6 +411,15 @@ msgstr "Mreža"
 msgid "Network Options"
 msgstr "Mrežne opcije"
 
+#: ../ui/tutorialhints.cpp:84
+msgid ""
+"Now you've got a {bag} to carry stuff in and there's already a {coat}\n"
+"in there. {Drag} the coat from the {bag} to the {armor slot} to wear it."
+msgstr ""
+"Sada imate {vreæu} u kojoj možete nositi stvari, i u njoj je veæ\n"
+"{odijelo}. Sada, {odvucite} odijelo iz {vreæe} u {mjesto za oklop} da "
+"bistega obukli."
+
 #: ../ui/optionsnetwork.h:105
 msgid "OT Encryption Key"
 msgstr "OT enkripcijski kljuc"
@@ -355,6 +430,18 @@ msgstr "OT enkripcijski kljuc"
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "U redu"
+
+#: ../ui/tutorialhints.cpp:73
+msgid ""
+"Ok; you can also try {clicking} on the {minimap}. For example \n"
+"there's a {marker} on the minimap now, try moving there."
+msgstr ""
+"U redu; takoðer možete pokušati {kliknuti} na {minimapu}. Primjerice,\n"
+"sada postoji {oznaka} na karti, pokušajte se tamo pomaknuti."
+
+#: ../mapui.cpp:562 ../ui/uiinventory.cpp:181
+msgid "Open"
+msgstr "Otvori"
 
 #: ../ui/optionsui.cpp:119
 msgid ""
@@ -494,7 +581,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Port servera:"
 
-#: ../mapui.cpp:530 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:575 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Postavi odijelo"
 
@@ -570,6 +657,15 @@ msgstr "Vještina "
 msgid "Skills"
 msgstr "Vještine"
 
+#: ../ui/tutorialhints.cpp:100
+msgid ""
+"So the {container window} opened. {Drag} whatever's in it into your {bag} "
+"to \n"
+"take it with you. You need to collect three cockroach legs for the NPC!"
+msgstr ""
+"Sad se otvorio {prozor spremnika}. {Odvucite} štogod je u njemu u {vreæu} \n"
+"da biste to ponijeli sa sobom. Trebate skupiti tri noge žohara sa NPCa!"
+
 #: ../ui/skills.h:149
 msgid "Soul Points"
 msgstr "Bodovi duše"
@@ -582,7 +678,34 @@ msgstr "Izdržljivost"
 msgid "Sword Fighting"
 msgstr "Borba maèevima"
 
-#: ../ui/uiinventory.cpp:209
+#: ../ui/tutorialhints.cpp:104
+msgid ""
+"The {shovel}, which is now in your inventory, is used to dig stuff up. "
+"It's \n"
+"very useful for exploring new areas. So go to the east, and you should find "
+"a \n"
+"{loose stone pile}, try {ctrl+clicking} on the {shovel} and then on the "
+"{stones}.\n"
+"When you use an item on another item, it's called extended using."
+msgstr ""
+"Ova {lopata}, koja je sad u vašem inventaru, koristi se za iskopavanje. "
+"Vrlo\n"
+"je korisna za istraživanje novih podruèja. Pa odite na istog i trebali "
+"biste\n"
+"pronaæi {labavu nakupinu kamenja}, pokušajte {ctrl+kliknuti} na {lopatu} i "
+"zatim\n"
+"na {kamenje}."
+
+#: ../ui/tutorialhints.cpp:80
+msgid ""
+"There's a {chest} in here. So try {ctrl+clicking} (commonly called \n"
+"'Use') on it to open it."
+msgstr ""
+"Ovdje je {škrinja}. Pokušajte {ctrl+kliknuti} (takoðer se zove "
+"'Korištenje')\n"
+"da biste je otvorili."
+
+#: ../mapui.cpp:640 ../ui/uiinventory.cpp:215
 msgid "This functionality is not yet finished"
 msgstr "Ova funkcionalnost još nije gotova"
 
@@ -598,19 +721,36 @@ msgstr ""
 "rad i smanjuje temperatura CPUa) koristite traku za povlaèenje\n"
 "koja je ovdje dolje. No, FPS ogranièenje je samo otprilike."
 
-#: ../ui/uiinventory.cpp:181
+#: ../ui/tutorialhints.cpp:88
+msgid ""
+"To lit the {torch}, try {ctrl+clicking} on it. Torches burn out slowly \n"
+"while they're on, so don't forget to {ctrl+click} (use) it when you don't\n"
+"need it. Many things can be ctrl+clicked in this game, so try looking around."
+msgstr ""
+"Da biste upalili {baklju}, pokušajte {ctrl+kliknuti} na nju. Baklje lagano\n"
+"izgaraju dok su upaljene, stoga ne zaboravite {ctrl+kliknuti} (iskoristiti) "
+"je\n"
+"kada je ne koristiti. Mnoge stvari se mogu ctrl+kliknuti u ovoj igri, pa "
+"malo\n"
+"isprobavajte."
+
+#: ../ui/uiinventory.cpp:186
 msgid "Trade with"
 msgstr "Trguj sa"
+
+#: ../gm_gameworld.cpp:991
+msgid "Tutorial Hint"
+msgstr "Savjet za prohod"
 
 #: ../ui/charlist.h:91
 msgid "Unknown"
 msgstr "Nepoznato"
 
-#: ../ui/uiinventory.cpp:178
+#: ../mapui.cpp:564 ../ui/uiinventory.cpp:183
 msgid "Use"
 msgstr "Koristi"
 
-#: ../ui/uiinventory.cpp:180
+#: ../mapui.cpp:559 ../ui/uiinventory.cpp:178
 msgid "Use with..."
 msgstr "Koristi s..."
 
@@ -629,6 +769,42 @@ msgstr "Koristi SDL"
 #: ../ui/optionsui.cpp:114
 msgid "We offer two graphical engines:\n"
 msgstr "Nudimo dva grafièka enginea:\n"
+
+#: ../ui/tutorialhints.cpp:70
+msgid "Welcome to YATC! Use {arrows} or {mouse} to move around."
+msgstr "Dobrodošli u YATC! Koristite {strelice} ili {miša} da se kreæete."
+
+#: ../ui/tutorialhints.cpp:120
+msgid ""
+"Welcome to the village! There are a few more marks on your map now with "
+"important\n"
+"locations and NPCs. You're now supposed to fight until level 8, when you "
+"can \n"
+"choose a vocation and go to the mainland."
+msgstr ""
+"Dobrodošli u selo! Sada ima još par oznaka na vašoj karti s važnim mjestima\n"
+"i NPCovima. Sada biste se trebali boriti do razine 8, kada možete izabrati\n"
+"zvanje i otiæi u glavnu zemlju."
+
+#: ../ui/tutorialhints.cpp:96
+msgid ""
+"Why fight if you can't profit, right? So when you kill something, just "
+"loot \n"
+"its {body}. Just do a {ctrl+click} on it."
+msgstr ""
+"Zašto se boriti ako ne možete profitirati? Stoga kad nešto ubijete, samo "
+"prekopajte\n"
+"{tijelo}. Samo {ctrl+kliknete} na njega."
+
+#: ../ui/tutorialhints.cpp:110
+msgid ""
+"With the {rope} you can climb up from dungeons and caves. Find a {rope "
+"spot}, \n"
+"{ctrl+click} on the {rope}, and then on the {rope spot}."
+msgstr ""
+"S {užetom} se možete penjati iz tamnica i peæina. Pronaðite {toèku za "
+"penjanje\n"
+"{ctrl+kliknite} na {uže}, i zatim na {toèku za penjanje}."
 
 #: ../gm_mainmenu.cpp:333
 msgid "[for info run with GL engine]\n"

@@ -24,6 +24,7 @@
 #include "gamecontent/map.h"
 
 class Popup;
+class PopupItem;
 
 class MapUI {
 	public:
@@ -35,15 +36,15 @@ class MapUI {
 		void setPos(int x, int y) { m_x = x; m_y = y; }
 		void setSize(int w, int h) { m_w = w; m_h = h; }
 
-		void useItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos, bool &extended);
+		void useItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos, bool &extended);
 		void attackCreature(int x, int y, const Creature* &creature);
-		void lookAtItem(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos);
-		void dragThing(int x, int y, const Thing* &thing, int &retx, int &rety, int &retz, int &stackpos);
+		void lookAtItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos);
+		void dragThing(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos);
 
 		bool handlePopup(int x, int y);
 
-        Tile* translateClickToTile(int x, int y, int &absx, int &absy, int &absz);
-        Tile* translateClickToTile(int x, int y) {int ax,ay,az; return translateClickToTile(x,y,ax,ay,az);}
+        Tile* translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, uint32_t &retz);
+        Tile* translateClickToTile(int x, int y) {uint32_t ax,ay,az; return translateClickToTile(x,y,ax,ay,az);}
 
         static void makePopup(Popup*popup,void*owner,void*arg);
 
@@ -54,6 +55,14 @@ class MapUI {
 
 		uint32_t m_vpw;
 		uint32_t m_vph;
+
+		Position m_lastRightclickTilePos;
+
+		static void onLookAt(PopupItem *parent);
+		static void onUse(PopupItem *parent);
+
+		static void onUnimplemented(PopupItem *parent);
+
 	protected:
 		void drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height);
         void drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height);
