@@ -38,7 +38,7 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb, void* data) {
     pi->pnl.SetBGActiveness(false);
     pi->pnl.SetHeight(14);
     pi->pnl.SetWidth(150);
-    pi->pnl.SetFont("aafont");
+    pi->pnl.SetFont("gamefont");
     pi->pnl.SetFocusable(false);
     pi->pnl.SetBGColor(.4, .4, .4, 1.);
     pi->parent = this;
