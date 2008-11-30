@@ -67,6 +67,11 @@ sed s/0.2.4SVN/$version/g configure.ac > configure.ac.new
 mv configure.ac.new configure.ac
 
 
+echo "Building translations..."
+cd translations
+./build.sh
+cd ..
+
 
 if [ -z $srcrelease ]; then
 	srcrelease='y'
@@ -124,6 +129,12 @@ if [ $win32release != "n" ]; then
 	cp sdl.dll "yatc-$version"
 	cp yatc.exe "yatc-$version"
 	cp exchndl.dll "yatc-$version"
+	mkdir "yatc-$version/translations/"
+	cp -R translations/hr_HR "yatc-$version/translations/hr_HR"
+	cp -R translations/pl_PL "yatc-$version/translations/pl_PL"
+	cp -R translations/pt_BR "yatc-$version/translations/pt_BR"
+	cp -R translations/sv_SE "yatc-$version/translations/sv_SE"	
+
 	zip -r "yatc-$version.zip" "yatc-$version/"
 	echo "Windows release built!"
 	read
