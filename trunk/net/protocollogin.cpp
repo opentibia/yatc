@@ -76,13 +76,13 @@ void ProtocolLogin::onConnect()
 	char* rsaBuffer = output.getBuffer() + sizeBefore;
 	RSA::getInstance()->encrypt(rsaBuffer, 128);
 
-	bool oldChecksumState = m_connection->getChecksumState();
-	m_connection->setChecksumState(false);
-	
+	//bool oldChecksumState = m_connection->getChecksumState();
+	//m_connection->setChecksumState(true);
+
 	m_connection->sendMessage(output);
 	m_connection->setKey((char*)k, 4*sizeof(uint32_t));
 	m_connection->setCryptoState(true);
-	m_connection->setChecksumState(oldChecksumState);
+	//m_connection->setChecksumState(oldChecksumState);
 
 	m_account = 0;
 	m_password = "";
