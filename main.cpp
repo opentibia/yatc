@@ -380,7 +380,7 @@ int main(int argc, char *argv[])
     if(options.lang.size())
     {
         l+=options.lang;
-        putenv(l.c_str());
+        putenv((char*)l.c_str());
     }
     setlocale( LC_ALL, "");//options.lang.c_str() );
     bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );
