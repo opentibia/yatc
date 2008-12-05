@@ -51,8 +51,15 @@ Console::~Console()
 }
 void Console::paintConsole(float left, float top, float right, float bottom)
 {
+    for(int i = left; i < right; i += 96){
+		for(int j = top; j < bottom; j += 96){
+			g_engine->getUISprite()->Blit(i, j, 0, 0, MIN(right-i, 96), MIN(bottom-j, 96));
+		}
+	}
+
 	float x, y;
 	x = left; y = bottom;
+
 	for (std::vector<ConsoleEntry>::reverse_iterator it=m_content.rbegin(); it!=m_content.rend(); it++) {
 		y -= it->paintEntry(x, y);
 		if (y < top)

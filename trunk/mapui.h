@@ -41,6 +41,8 @@ class MapUI {
 		void lookAtItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos);
 		void dragThing(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos);
 
+		void useItem(Tile* tile, const Thing* &thing, int &stackpos, bool &extended);
+
 		bool handlePopup(int x, int y);
 
         Tile* translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, uint32_t &retz);
@@ -57,9 +59,12 @@ class MapUI {
 		uint32_t m_vph;
 
 		Position m_lastRightclickTilePos;
+		uint32_t m_popupCreatureID;
 
 		static void onLookAt(PopupItem *parent);
 		static void onUse(PopupItem *parent);
+		static void onAttack(PopupItem *parent);
+		static void onFollow(PopupItem *parent);
 
 		static void onUnimplemented(PopupItem *parent);
 
@@ -68,6 +73,7 @@ class MapUI {
         void drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height);
 
 		int getMinZ();
+
 
 };
 

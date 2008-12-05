@@ -113,7 +113,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		//Green square around the followed creature
 		else if(n->getID() == GlobalVariables::getFollowID()) {
 			// "Lime Green" - may not be the right color
-			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 30, 30, oRGBA(50, 205, 50, 255));
+			g_engine->drawRectangleLines((x+2) + walkoffx, (y+2) + walkoffy, 28, 28, oRGBA(50, 205, 50, 255));
 		}
 
 		for(uint32_t i = 0; i < m_obj->height; ++i){

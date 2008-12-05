@@ -22,6 +22,7 @@
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
 
+
 extern int g_lastmousebutton;
 
 winContainer_t::winContainer_t(Container* _container, uint32_t cid) {
@@ -122,9 +123,13 @@ void winContainer_t::OnClose(glictPos* pos, glictContainer *caller) {
 
 void winContainer_t::containerItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
 	winContainer_t* window = (winContainer_t*)caller->GetCustomData();
 	uint32_t slot_id = window->getSlotId(caller);
 	Item* item = window->container->getItem(slot_id);
+
+    if(ptrx > clipped->left && ptrx < clipped->right && ptry > clipped->top && ptry < clipped->bottom && gw->isDragging())
+        g_engine->drawRectangleLines(clipped->left, clipped->top, clipped->right-clipped->left, clipped->bottom-clipped->top, oRGBA(255,255,255,255));
 
 	if(item != NULL)
 	{

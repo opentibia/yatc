@@ -31,9 +31,12 @@ extern int g_lastmousebutton;
 
 void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
+    GM_Gameworld* gw = (GM_Gameworld*)g_game;
 
 	slots_t slot = (slots_t)((glictPanel*)caller - (glictPanel*)caller->GetCustomData() + 1); // customdata stores the address of pnlItem[0], and caller is pnlItem[slot]...
 
+    if(ptrx > clipped->left && ptrx < clipped->right && ptry > clipped->top && ptry < clipped->bottom && gw->isDragging())
+        g_engine->drawRectangleLines(clipped->left, clipped->top, clipped->right-clipped->left, clipped->bottom-clipped->top, oRGBA(255,255,255,255));
 
 	Item* item=Inventory::getInstance().getItem(slot);
 	if (item){

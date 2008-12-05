@@ -387,15 +387,17 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 
+    std::string text;
 	ProtocolConfig::createLoginConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption());
 	m->winStatus.SetCaption(gettext("Logging in"));
-	m->winStatus.SetMessage(gettext("Connecting to the server..."));
+	m->winStatus.SetMessage(text=gettext("Connecting to the server..."));
 	#if (GLICT_APIREV >= 85)
 	m->winStatus.SetTextOffset(10,10);
 	#else
 	#warning For nicer msgboxes get GLICT APIREV 85+.
 	#endif
-	m->winStatus.SetWidth(320);
+    m->winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
+	m->winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
 	m->winStatus.SetEnabled(false);
 	m->centerWindow(&m->winStatus);
 	m->desktop.AddObject(&m->winStatus);
@@ -475,11 +477,14 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
 	ProtocolConfig::createGameConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);
 
+    std::string text;
 	m->desktop.AddObject(&m->winStatus);
 	m->centerWindow(&m->winStatus);
 	m->winStatus.SetCaption(gettext("Entering game"));
-	m->winStatus.SetMessage(gettext("Connecting to the server..."));
-
+	m->winStatus.SetMessage(text=gettext("Connecting to the server..."));
+    m->winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
+	m->winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
+	m->centerWindow(&m->winStatus);
 }
 
 void GM_MainMenu::winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -550,6 +555,9 @@ void GM_MainMenu::onConnectionError(int message, const char* errortext)
 	winStatus.SetCaption(gettext("Error"));
 	winStatus.SetMessage(s.str());
 	winStatus.SetEnabled(true);
+    winStatus.SetWidth(glictFontSize(s.str().c_str(), "system") + 2*10); // 10 = size of text margin
+	winStatus.SetHeight(glictFontNumberOfLines(s.str().c_str())*12 + 50);
+	centerWindow(&winStatus);
 	renderScene();
 }
 void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
@@ -570,11 +578,10 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 
 	winStatus.SetCaption(gettext("Message of the Day"));
 	winStatus.SetMessage(text);
-	winStatus.SetWidth(glictFontSize(text.c_str(), "system"));
+	winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
 	winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
     winStatus.SetEnabled(true);
 	winStatus.Focus(NULL);
-
 	this->centerWindow(&winStatus);
 
 	winStatus.SetOnDismiss(winMotd_OnDismiss);
@@ -592,6 +599,10 @@ void GM_MainMenu::openMessageWindow(WindowMessage_t type, const std::string& tex
 	winStatus.SetEnabled(true);
 	winStatus.Focus(NULL);
 	winStatus.SetOnDismiss(winStatus_ErrorOnDismiss);
+    winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
+	winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
+	centerWindow(&winStatus);
+
 	renderScene();
 }
 

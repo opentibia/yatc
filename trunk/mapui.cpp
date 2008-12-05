@@ -29,6 +29,7 @@
 #include "mapui.h"
 #include "debugprint.h"
 #include "engine.h"
+#include "net/protocolgame.h"
 #if defined(HAVE_LIBINTL_H)
 	#include <libintl.h>
 #else
@@ -414,9 +415,15 @@ void MapUI::useItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t 
 {
 	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
 
+    useItem(tile,thing,stackpos,extended);
+}
+
+void MapUI::useItem(Tile* tile, const Thing* &thing, int &stackpos, bool &extended)
+{
     if (!tile) {
         thing = NULL;
         stackpos = -1;
+        extended = false;
         return;
     }
 	// get stackpos of thing that we clicked on
@@ -432,6 +439,7 @@ void MapUI::useItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t 
     else
         extended = false;
 }
+
 
 void MapUI::attackCreature(int x, int y, const Creature* &creature)
 {
@@ -580,14 +588,15 @@ void MapUI::makePopup(Popup*popup,void*owner,void*arg)
     {
         popup->addItem("-",NULL,NULL);
 
+
         s.str("");
         s << gettext("Attack") << " (Alt)";
-        popup->addItem(s.str(),onUnimplemented);
-
+        popup->addItem(s.str(),onAttack,m);
+        m->m_popupCreatureID = c->getID();
 
         s.str("");
         s << gettext("Follow");
-        popup->addItem(s.str(),onUnimplemented);
+        popup->addItem(s.str(),onFollow,m);
 
         if (!c->isMonster() && !c->isNpc())
         {
@@ -629,8 +638,44 @@ void MapUI::onLookAt(PopupItem *parent)
 }
 void MapUI::onUse(PopupItem *parent)
 {
-    onUnimplemented(parent);
+    MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    Tile* t = Map::getInstance().getTile(m->m_lastRightclickTilePos);
+
+    const Thing* thing;
+    int stackpos;
+    bool isextended;
+
+    m->useItem(t, thing, stackpos, isextended);
+
+    if(stackpos != -1){
+        if(!isextended){
+            gw->m_protocol->sendUseItem(t->getPos(), thing->getID(), stackpos );
+        } else {
+            gw->beginExtendedUse(thing,stackpos,t->getPos());
+        }
+    }
+
+
 }
+
+void MapUI::onAttack(PopupItem *parent)
+{
+    MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->m_protocol->sendAttackCreature(m->m_popupCreatureID);
+    GlobalVariables::setAttackID(m->m_popupCreatureID);
+}
+void MapUI::onFollow(PopupItem *parent)
+{
+    MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->m_protocol->sendFollowCreature(m->m_popupCreatureID);
+    GlobalVariables::setFollowID(m->m_popupCreatureID);
+}
+
 
 void MapUI::onUnimplemented(PopupItem *parent)
 {
