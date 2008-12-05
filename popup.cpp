@@ -34,7 +34,7 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb, void* data) {
     pi->txt = txt;
     pi->cb = cb;
     pi->data = data;
-    pi->pnl.SetCaption(txt);
+    pi->pnl.SetCaption(txt == "-" ? "____________" : txt);
     pi->pnl.SetBGActiveness(false);
     pi->pnl.SetHeight(14);
     pi->pnl.SetWidth(150);
@@ -49,8 +49,6 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb, void* data) {
     list.SetWidth(150);
     list.SetBGColor(.1, .1, .1,1);
 
-
-
 }
 
 
@@ -64,7 +62,7 @@ void Popup::mouseOver(float x, float y) {
     if (cursorInside(x,y)) {
         y -= list.GetY();
         y /= 14;
-        if (y < items.size())
+        if (y < items.size() && items[y]->txt != "-")
             items[y]->pnl.SetBGActiveness(true);
         else
             printf("Warning: popup tried to highligh nonexisting listitem\n");

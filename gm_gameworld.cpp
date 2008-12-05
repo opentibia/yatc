@@ -177,7 +177,7 @@ void GM_Gameworld::doResize(float w, float h)
 
 	pnlTraffic.SetPos(w-200, 0);
 
-    pnlConsoleButtonContainer.SetPos(0,glictGlobals.h-150-14);
+    pnlConsoleButtonContainer.SetPos(0,glictGlobals.h-150-18);
     pnlConsoleButtonContainer.SetWidth(glictGlobals.w);
     pnlConsoleButtonContainer.SetHeight(18);
 
@@ -226,9 +226,6 @@ void GM_Gameworld::updateScene()
 	m_automap.flushTiles();
 	m_automap.renderSelf(options.w-256, 0, 256,256);
 
-
-	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
-
 	if (time(NULL)-m_startTime) {
 		double txbph, rxbph, trbph;
 		std::stringstream s;
@@ -265,6 +262,10 @@ void GM_Gameworld::updateScene()
 
 	desktop.Paint();
 	g_engine->resetClipping();
+
+
+	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
+
 
 }
 
@@ -309,7 +310,7 @@ void GM_Gameworld::keyPress (char key)
                         m_protocol->sendSay(SPEAK_PRIVATE, recipient,newmsg);
                         Console*c = findConsole(recipient);
                         if (c) {
-                            c->insertEntry(ConsoleEntry(newmsg, "You",TEXTCOLOR_LIGHTBLUE)); // FIXME (ivucica#3#) "you" should be name of player's character
+                            c->insertEntry(ConsoleEntry(newmsg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() ,TEXTCOLOR_LIGHTBLUE));
                         }
                         sent = true;
                     }
@@ -317,12 +318,12 @@ void GM_Gameworld::keyPress (char key)
 
 		    } else {
 		        if (getActiveConsole()->getSpeakerName() == "NPCs") { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
-		            getActiveConsole()->insertEntry(ConsoleEntry(msg, "You", TEXTCOLOR_LIGHTBLUE));
+		            getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
 		            m_protocol->sendSay(SPEAK_PRIVATE_PN, msg);
 		            sent = true;
 		        } else
 		        if (getActiveConsole()->getSpeakerName().size()) {
-		            getActiveConsole()->insertEntry(ConsoleEntry(msg, "You", TEXTCOLOR_LIGHTBLUE));
+		            getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
 		            m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
 		            sent = true;
 		        }

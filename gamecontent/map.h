@@ -97,10 +97,15 @@ public:
 	void addEffect(uint32_t effect);
 	EffectList& getEffects() { return m_effects;}
 
+    const Position& getPos() const { return m_position; }
+
 private:
 	Item* m_ground;
 	ThingVector m_objects;
 	EffectList m_effects;
+	Position m_position;
+
+	void setPos(const Position& pos) { m_position = pos; }
 
 	friend class Map;
 };

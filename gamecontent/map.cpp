@@ -384,6 +384,8 @@ Tile* Map::setTile(uint32_t x, uint32_t y, uint32_t z)
 		uint64_t posIndex = POS2INDEX(x, y, z);
 		m_coordinates[posIndex] = i;
 
+		m_tiles[i].setPos(Position(x,y,z));
+
 		return &m_tiles[i];
 		return NULL;
 	}

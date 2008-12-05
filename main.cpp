@@ -224,9 +224,9 @@ void setIcon()
     printf("Setting icon\n");
 	g_engine = NULL;
 	SDL_WM_SetCaption(PRODUCTNAME, PRODUCTNAME);
-	ObjectType* o = Objects::getInstance()->getOutfitType(130);
-	SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)*4]);
-	SpriteSDL *st = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)*5]);
+	ObjectType* o = Objects::getInstance()->getOutfitType(58);
+	SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2]);
+	SpriteSDL *st = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2+1]);
 	s->templatedColorize(st, 79, 94, 88, 82);
 	s->setAsIcon();
 	delete s;
