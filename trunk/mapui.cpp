@@ -672,8 +672,14 @@ void MapUI::onFollow(PopupItem *parent)
     MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendFollowCreature(m->m_popupCreatureID);
-    GlobalVariables::setFollowID(m->m_popupCreatureID);
+    if (GlobalVariables::getFollowID() == m->m_popupCreatureID)
+    {
+        gw->m_protocol->sendCancelMove();
+        GlobalVariables::setFollowID(0);
+    } else {
+        gw->m_protocol->sendFollowCreature(m->m_popupCreatureID);
+        GlobalVariables::setFollowID(m->m_popupCreatureID);
+    }
 }
 
 
