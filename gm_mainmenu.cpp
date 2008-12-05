@@ -336,7 +336,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< "\n"
 		<< gettext("Programmed by") << " " << gettext("(in no particular order)") << ":\n"
 		<< b << " Ivan Vucica - Khaos\n"
-		<< b << " Nate Fries - nfries88\n"
+		<< b << " Nate Fries - nfries88 " << gettext("(in the navy)") << "\n"
 		<< gettext("with inactive developers") << ":\n"
 		<< b << " mips\n"
 		<< b << " Magnus KL - Smygflik\n"
