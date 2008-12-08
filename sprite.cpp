@@ -469,7 +469,7 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 			putPixel(j, i, SDL_MapRGB(getBasicImage()->format, ro, go, bo), m_image);
 		}
 	}
-
+    rebuildSelf();
 }
 
 void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
@@ -596,12 +596,18 @@ void Sprite::addColor(float r, float g, float b)
 {
 	register uint8_t ro, go, bo, ao;  // old rgba
 	register uint32_t pv; // pixel value
+
+	if (r > 1) r = 1;
+	if (g > 1) g = 1;
+	if (b > 1) b = 1;
+
 	if(r == m_r && g == m_g && b == m_b){
 		return;
 	}
 	SDL_LockSurface(m_image);
 	SDL_LockSurface(m_coloredimage);
 
+bool nomoredebug=false;
 	for(register int i = 0; i < m_image->w; i++){
 		for(register int j =0; j < m_image->h; j++){
 		    if (!getBasicImage()) {
@@ -611,8 +617,14 @@ void Sprite::addColor(float r, float g, float b)
 		        printf("I don't have image's pixels!\n");
 		    }
 			SDL_GetRGBA(pv=getPixel(i,j, m_image), m_image->format, &ro, &go, &bo, &ao);
+
 			if(ao){
 				putPixel(i, j, SDL_MapRGBA(m_image->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
+
+				if ((ro*r > 50 || go*g > 50 || bo * b > 50) && ao > 0 &&  !nomoredebug) {
+				    printf("%g %g %g %d; %g %g %g %g\n", ro*r, go*g, bo*b, ao, r, g, b, 255);
+				    nomoredebug=true;
+				}
 			}
 		}
 	}

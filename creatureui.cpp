@@ -25,6 +25,7 @@
 #include "fassert.h"
 #include "gamecontent/creature.h"
 #include "gamecontent/globalvars.h"
+#include "options.h"
 
 static std::map<uint32_t, Sprite*> s_spritecache;
 extern uint32_t g_frameTime;
@@ -146,6 +147,8 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 
 void CreatureUI::drawName(int x, int y, float scale) const
 {
+
+    if (!options.shownames) return;
 	float walkoffx = 0.f, walkoffy = 0.f;
 
 
@@ -155,7 +158,11 @@ void CreatureUI::drawName(int x, int y, float scale) const
 		return;
 	}
 
-	volatile float centralizationoffset = -(g_engine->sizeText( n->getName().c_str(), "gamefont" ) / 2) + 16 - 8;
+
+    std::string name = n->getName().c_str();
+    name[0] = toupper(name[0]);
+
+	volatile float centralizationoffset = -(g_engine->sizeText( name.c_str(), "gamefont" ) / 2) + 16 - 8;
 	//float centralizationoffset = 0;
 	//printf("%g\n", centralizationoffset); // FIXME (ivucica#1#) if this is removed, centralizationoffset doesn't have proper value. remove this and investigate!
 	getWalkOffset(walkoffx, walkoffy, scale);
@@ -163,18 +170,22 @@ void CreatureUI::drawName(int x, int y, float scale) const
     int hp = n->getHealth();
     oRGBA col;
     if (hp >= 50.0) {
-        col.r = 50./hp;
-        col.g = 1.;
+        col.r = (1. - (hp/200.))*255.;
+        col.g = (0.75 + hp/400.)*255.;
         col.b = 0.;
-        col.a = 1.;
+        col.a = 255.;
     } else {
-        col.r = 1.;
-        col.g = hp / 50.;
+        col.r = 255.;
+        col.g = (hp / 50.) * 255.;
         col.b = 0.;
         col.a = 1.;
     }
+    printf("Drawing color %g %g %g\n", col.r, col.g, col.b, col.a);
 
-	g_engine->drawText(n->getName().c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
+	g_engine->drawText(name.c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
+
+	g_engine->drawRectangle(x + walkoffx + centralizationoffset, y - 14 + walkoffy, (g_engine->sizeText( name.c_str(), "gamefont" )), 6, oRGBA(0,0,0,1));
+	g_engine->drawRectangle(x + walkoffx + centralizationoffset+1, y - 13 + walkoffy, ((g_engine->sizeText( name.c_str(), "gamefont" ))-2)*(hp/100.), 4, col);
 }
 
 void CreatureUI::drawSkullsShields(int x, int y, float scale) const

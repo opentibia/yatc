@@ -18,29 +18,25 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifndef __SPRITEGL_H
-#define __SPRITEGL_H
 
-#include <string>
-#include "sprite.h"
+// NOT UPDATED TO PROTOCOL 84 YET!!!!!!!
 
-class SpriteGL : public Sprite
+#include "../fassert.h"
+#include "protocolgame84.h"
+
+ProtocolGame84::ProtocolGame84(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
+ProtocolGame83(accountname, password, name, isGM)
 {
-	public:
-		SpriteGL(const std::string& filename, int index = 0);
-		SpriteGL(const std::string& filename, int index, int x, int y, int w, int h);
-		virtual ~SpriteGL();
+	//
+}
 
-		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
-		void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
-		void buildGLTexture();
-		void addColor(float r, float g, float b);
-        void destroyGLTexture();
-        void rebuildSelf();
-	private:
-		GLuint m_texture;
-		double m_multiplierx, m_multipliery;
-		uint32_t m_engineCreationTimestamp;
-};
+ProtocolGame84::~ProtocolGame84()
+{
+	//
+}
 
-#endif
+void ProtocolGame84::checkVersion()
+{
+	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_840);
+}
+

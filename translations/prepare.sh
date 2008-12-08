@@ -8,7 +8,7 @@
 echo "Extracting..."
 xgettext -d yatc -s -o yatc.pot \
 	../ui/mainmenu.cpp \
-	../ui/options.h \
+	../ui/optionsui.h \
 	../ui/optionsgeneral.h \
 	../ui/optionsnetwork.h \
 	../ui/optionsgraphics.h \

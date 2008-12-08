@@ -65,7 +65,7 @@ public:
 		lblEngine.SetFont("aafont");
 		lblEngine.SetBGActiveness(false);
 
-		window.AddObject(&btnEngineSDL);
+        window.AddObject(&btnEngineSDL);
 		btnEngineSDL.SetPos(14, 30);
 		btnEngineSDL.SetWidth(56);
 		btnEngineSDL.SetHeight(18);

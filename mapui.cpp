@@ -39,6 +39,7 @@
 extern uint32_t g_frameTime;
 extern Engine* g_engine;
 
+#include "options.h"
 
 MapUI::MapUI()
 {
@@ -232,7 +233,7 @@ void MapUI::renderMap()
 		}
 
 		//draw animated texts
-		{
+		if (options.showtexteffects) {
 		Map::AnimatedTextList& aniTexts = Map::getInstance().getAnimatedTexts(z);
 		Map::AnimatedTextList::iterator it = aniTexts.begin();
 		while(it != aniTexts.end()){
@@ -632,11 +633,11 @@ void MapUI::makePopup(Popup*popup,void*owner,void*arg)
 }
 
 
-void MapUI::onLookAt(PopupItem *parent)
+void MapUI::onLookAt(Popup::Item *parent)
 {
     onUnimplemented(parent);
 }
-void MapUI::onUse(PopupItem *parent)
+void MapUI::onUse(Popup::Item *parent)
 {
     MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
@@ -659,7 +660,7 @@ void MapUI::onUse(PopupItem *parent)
 
 }
 
-void MapUI::onAttack(PopupItem *parent)
+void MapUI::onAttack(Popup::Item *parent)
 {
     MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
@@ -667,7 +668,7 @@ void MapUI::onAttack(PopupItem *parent)
     gw->m_protocol->sendAttackCreature(m->m_popupCreatureID);
     GlobalVariables::setAttackID(m->m_popupCreatureID);
 }
-void MapUI::onFollow(PopupItem *parent)
+void MapUI::onFollow(Popup::Item *parent)
 {
     MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
@@ -683,7 +684,7 @@ void MapUI::onFollow(PopupItem *parent)
 }
 
 
-void MapUI::onUnimplemented(PopupItem *parent)
+void MapUI::onUnimplemented(Popup::Item *parent)
 {
     MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;

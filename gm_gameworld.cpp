@@ -223,7 +223,8 @@ void GM_Gameworld::updateScene()
 	#endif
 
 	m_mapui.renderMap();
-	m_automap.flushTiles();
+	//if (m_automap.tileCount() > 250)
+        m_automap.flushTiles();
 	m_automap.renderSelf(options.w-256, 0, 256,256);
 
 	if (time(NULL)-m_startTime) {
@@ -367,49 +368,49 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		ret = true;
 		break;
 	case SDLK_KP1:
-		if((!key.mod & KMOD_NUM)) {
+		if(!(key.mod & KMOD_NUM)) {
 			action = 1; dir = DIRECTION_SW;
 			ret = true;
 		}
 		break;
 	case SDLK_KP2:
-		if((!key.mod & KMOD_NUM)) {
+		if(!(key.mod & KMOD_NUM)) {
 			action = 1; dir = DIRECTION_SOUTH;
 			ret = true;
 		}
 		break;
 	case SDLK_KP3:
-		if((!key.mod & KMOD_NUM)) {
+		if(!(key.mod & KMOD_NUM)) {
 			action = 1; dir = DIRECTION_SE;
 			ret = true;
 		}
 		break;
 	case SDLK_KP4:
-		if((!key.mod & KMOD_NUM)) {
+		if(!(key.mod & KMOD_NUM)) {
 			action = 1; dir = DIRECTION_WEST;
 			ret = true;
 		}
 		break;
 	case SDLK_KP6:
-		if((!key.mod & KMOD_NUM)) {
+		if(!(key.mod & KMOD_NUM)) {
 			action = 1; dir = DIRECTION_EAST;
 			ret = true;
 		}
 		break;
 	case SDLK_KP7:
-		if((!key.mod & KMOD_NUM)) {
+		if(!(key.mod & KMOD_NUM)) {
 			action = 1; dir = DIRECTION_NW;
 			ret = true;
 		}
 		break;
 	case SDLK_KP8:
-		if((!key.mod & KMOD_NUM)) {
+		if(!(key.mod & KMOD_NUM)) {
 			action = 1; dir = DIRECTION_NORTH;
 			ret = true;
 		}
 		break;
 	case SDLK_KP9:
-		if((!key.mod & KMOD_NUM)) {
+		if(!(key.mod & KMOD_NUM)) {
 			action = 1; dir = DIRECTION_NE;
 			ret = true;
 		}
@@ -1036,7 +1037,7 @@ void GM_Gameworld::MBOnDismiss(glictPos* pos, glictContainer* caller)
 	//delete caller;
 }
 
-void GM_Gameworld::onSetOutfit(PopupItem *parent) {
+void GM_Gameworld::onSetOutfit(Popup::Item *parent) {
     // happens when user clicks on "Set Outfit" in right click popup menu
     GM_Gameworld *g = (GM_Gameworld*)g_game;
     g->m_protocol->sendRequestOutfit();

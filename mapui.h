@@ -22,9 +22,7 @@
 #define __MAPUI_H
 
 #include "gamecontent/map.h"
-
-class Popup;
-class PopupItem;
+#include "popup.h"
 
 class MapUI {
 	public:
@@ -61,12 +59,12 @@ class MapUI {
 		Position m_lastRightclickTilePos;
 		uint32_t m_popupCreatureID;
 
-		static void onLookAt(PopupItem *parent);
-		static void onUse(PopupItem *parent);
-		static void onAttack(PopupItem *parent);
-		static void onFollow(PopupItem *parent);
+		static void onLookAt(Popup::Item *parent);
+		static void onUse(Popup::Item *parent);
+		static void onAttack(Popup::Item *parent);
+		static void onFollow(Popup::Item *parent);
 
-		static void onUnimplemented(PopupItem *parent);
+		static void onUnimplemented(Popup::Item *parent);
 
 	protected:
 		void drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height);

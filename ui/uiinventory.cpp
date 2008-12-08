@@ -193,7 +193,7 @@ void pnlInventory_t::inventoryItemMakePopup(Popup*popup,void*owner,void*arg){
     popup->addItem(trade.str(),onTrade,(void*)slotid);
 }
 
-void pnlInventory_t::onLookAt(PopupItem* pi){
+void pnlInventory_t::onLookAt(Popup::Item* pi){
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     slots_t slotid = ((slots_t)(VOIDP2INT(pi->data)));
     Position p(0xFFFF, slotid, 0);
@@ -201,7 +201,7 @@ void pnlInventory_t::onLookAt(PopupItem* pi){
 
     gw->m_protocol->sendLookItem(p,item->getID(), 0);
 }
-void pnlInventory_t::onUse(PopupItem* pi){
+void pnlInventory_t::onUse(Popup::Item* pi){
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     slots_t slotid = ((slots_t)(VOIDP2INT(pi->data)));
     Position p(0xFFFF, slotid, 0);
@@ -213,7 +213,7 @@ void pnlInventory_t::onUse(PopupItem* pi){
         gw->beginExtendedUse(item, 0, p);
     }
 }
-void pnlInventory_t::onTrade(PopupItem*){
+void pnlInventory_t::onTrade(Popup::Item*){
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
 }

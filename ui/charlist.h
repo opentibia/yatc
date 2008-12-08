@@ -76,7 +76,7 @@ public:
 		lstChars.SetPos(14,30);
 		lstChars.SetWidth(200);
 		lstChars.SetHeight(146);
-		lstChars.SetBGColor(.2,.2,.2,1.);
+		lstChars.SetBGColor(.25,.25,.25,1.);
 		if (options.ui_compat) lstChars.SetNext(&btnOk);
 
 		lblAccStatus.SetWidth(200);

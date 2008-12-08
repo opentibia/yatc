@@ -35,8 +35,7 @@
     #define gettext(x) (x)
 #endif
 
-class Popup;
-
+#include "popup.h"
 class pnlInventory_t {
 public:
 	pnlInventory_t() {
@@ -78,9 +77,9 @@ public:
 	static void inventoryItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
     static void inventoryItemMakePopup(Popup*popup,void*owner,void*arg);
 
-    static void onLookAt(struct PopupItem*);
-    static void onUse(struct PopupItem*);
-    static void onTrade(struct PopupItem*);
+    static void onLookAt(Popup::Item*);
+    static void onUse(Popup::Item*);
+    static void onTrade(Popup::Item*);
 
 	/*glictContainer*/glictWindow panel; // it's a container, so it's transparent
 	glictPanel pnlItem[10];

@@ -45,23 +45,27 @@
 #include <GLICT/panel.h>
 #include <GLICT/list.h>
 
-typedef void (*popupCallback_t)(struct PopupItem *parent) ;
 
-struct PopupItem {
-    std::string txt;
-
-    glictPanel pnl;
-    popupCallback_t cb;
-    void* data;
-    class Popup* parent;
-};
 
 class Popup {
+
 public:
+    struct Item;
+    typedef void (*Callback_t)(struct Item *parent);
+
+    struct Item {
+        std::string txt;
+
+        glictPanel pnl;
+        Callback_t cb;
+        void* data;
+        class Popup* parent;
+    };
+
     Popup();
     ~Popup();
 
-    void addItem(const std::string &txt, popupCallback_t cb, void* data=NULL);
+    void addItem(const std::string &txt, Callback_t cb, void* data=NULL);
     void mouseOver(float x, float y);
     //static void onClick(glictPos* pos, glictContainer *caller);
     void mouseClick(float x, float y);
@@ -75,7 +79,7 @@ public:
 
 private:
     glictList list;
-    std::vector<PopupItem*> items;
+    std::vector<Item*> items;
     bool wantdeath;
 };
 

@@ -18,29 +18,31 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifndef __SPRITEGL_H
-#define __SPRITEGL_H
 
-#include <string>
-#include "sprite.h"
+#ifndef __PROTOCOLGAME84_H
+#define __PROTOCOLGAME84_H
 
-class SpriteGL : public Sprite
+#include "protocolgame83.h"
+
+class Thing;
+class Item;
+
+class ProtocolGame84 : public ProtocolGame83
 {
 	public:
-		SpriteGL(const std::string& filename, int index = 0);
-		SpriteGL(const std::string& filename, int index, int x, int y, int w, int h);
-		virtual ~SpriteGL();
+		virtual ~ProtocolGame84();
 
-		void Blit(float destx, float desty, float srcx, float srcy, float width, float height);
-		void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
-		void buildGLTexture();
-		void addColor(float r, float g, float b);
-        void destroyGLTexture();
-        void rebuildSelf();
-	private:
-		GLuint m_texture;
-		double m_multiplierx, m_multipliery;
-		uint32_t m_engineCreationTimestamp;
+		virtual const char* getProtocolName() { return "Protocol84";}
+		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_840; }
+
+	protected:
+		ProtocolGame84(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
+
+		virtual void checkVersion();
+
+		friend class ProtocolConfig;
 };
 
 #endif
+
+

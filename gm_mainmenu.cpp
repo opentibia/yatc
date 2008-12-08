@@ -149,6 +149,7 @@ void GM_MainMenu::doResize(float w, float h)
 
 void GM_MainMenu::renderScene()
 {
+    g_engine->resetClipping();
 	if(background)
 		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
 
@@ -389,8 +390,8 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 
     std::string text;
 	ProtocolConfig::createLoginConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption());
-	m->winStatus.SetCaption(gettext("Logging in"));
-	m->winStatus.SetMessage(text=gettext("Connecting to the server..."));
+	m->winStatus.SetCaption(gettext("Connecting"));
+	m->winStatus.SetMessage(text=gettext("Your character list is being loaded. Please wait."));
 	#if (GLICT_APIREV >= 85)
 	m->winStatus.SetTextOffset(10,10);
 	#else
@@ -405,12 +406,7 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
     m->updateScene();
     m->renderScene();
     g_engine->Flip();
-    m->updateScene();
-    m->renderScene();
-    g_engine->Flip();
-
-
-	//DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "SetVisible...\n");
+    //DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "SetVisible...\n");
 }
 ClientVersion_t GM_MainMenu::getActiveProtocol(){
 	ClientVersion_t proto = options.protocol;
@@ -480,8 +476,8 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
     std::string text;
 	m->desktop.AddObject(&m->winStatus);
 	m->centerWindow(&m->winStatus);
-	m->winStatus.SetCaption(gettext("Entering game"));
-	m->winStatus.SetMessage(text=gettext("Connecting to the server..."));
+	m->winStatus.SetCaption(gettext("Connecting"));
+	m->winStatus.SetMessage(text=gettext("Connecting to the game world. Please wait."));
     m->winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
 	m->winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
 	m->centerWindow(&m->winStatus);
@@ -576,10 +572,23 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 	options.motdtext = text;
 	options.Save();
 
+    std::string displayText = text;
+    {
+        // translating motd
+        str_replace(displayText, "Welcome to Tibia!", gettext("Welcome to Tibia!"));
+        str_replace(displayText, "Due to a technical problem we had to reset\nthe game world", gettext("Due to a technical problem we had to reset\nthe game world"));
+        str_replace(displayText, "to the state of", gettext("to the state of"));
+        str_replace(displayText, "We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future.", gettext("We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future."));
+        str_replace(displayText, "For more information about Tibia visit our\nwebsite at", gettext("For more information about Tibia visit our\nwebsite at"));
+        str_replace(displayText, "Have fun in Tibia!", gettext("Have fun in Tibia!"));
+        str_replace(displayText, "Welcome to", gettext("Welcome to"));
+        str_replace(displayText, "Have fun in", gettext("Have fun in"));
+    }
+
 	winStatus.SetCaption(gettext("Message of the Day"));
-	winStatus.SetMessage(text);
-	winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
-	winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
+	winStatus.SetMessage(displayText);
+	winStatus.SetWidth(glictFontSize(displayText.c_str(), "system") + 2*10); // 10 = size of text margin
+	winStatus.SetHeight(glictFontNumberOfLines(displayText.c_str())*12 + 50);
     winStatus.SetEnabled(true);
 	winStatus.Focus(NULL);
 	this->centerWindow(&winStatus);

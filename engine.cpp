@@ -229,7 +229,7 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
         }
         else
         {
-            f->addColor(color.b, color.g, color.r); // FIXME (ivucica#1#): WTF FIXME should be RGB not BGR!?
+            f->addColor(color.b/255, color.g/255, color.r/255); // FIXME (ivucica#1#): WTF FIXME should be RGB not BGR!?
         }
 
 

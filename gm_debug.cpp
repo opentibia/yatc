@@ -49,13 +49,21 @@ extern Connection* g_connection;
 
 extern bool g_running;
 
-void cb1(PopupItem*) {
+void cb1(Popup::Item*) {
     ((GM_Debug*)g_game)->msgBox("You have clicked on the \"Hello world\" menu item", "Yipee");
 }
 
-void cb2(PopupItem*) {
+void cb2(Popup::Item*) {
     ((GM_Debug*)g_game)->msgBox("You have clicked on the \"Noob\" menu item", "Yipee");
 }
+
+void cb3(ChoiceGrid* parent, ChoiceGrid::Item* item, ChoiceGrid::Item* olditem) {
+    if (olditem)
+        printf("Old item: %s\n", olditem->txt.c_str());
+    ((GM_Debug*)g_game)->msgBox("You have clicked on a choicegrid item", item->txt.c_str());
+}
+
+
 
 void GM_Debug::ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
@@ -221,7 +229,18 @@ GM_Debug::GM_Debug()
     btnUpdateMap.SetOnClick(GM_Debug::UpdateMapOnClick);
 
 
-printf("1\n");
+    desktop.AddObject(grid.getGrid());
+    grid.getGrid()->SetPos(0, 0);
+    grid.setRows(3);
+    grid.setItemSize(100,20);
+    grid.setPadding(5,5);
+    grid.addItem("Hello world", NULL, NULL);
+    grid.addItem("Testing grid", NULL, NULL);
+    grid.addItem("How about this", NULL, NULL);
+    grid.addItem("This rox", NULL, NULL);
+    grid.addItem("Sure?", NULL, NULL);
+    grid.setOnClick(cb3);
+
     popup = NULL;
     killpopup = false;
     map[0] = map[1] = map[2] = map[3] = NULL;
