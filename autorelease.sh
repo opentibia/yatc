@@ -1,3 +1,14 @@
+mkdir GLICT
+cd GLICT
+svn co http://glict.svn.sf.net/svnroot/glict/trunk/glict/ .
+./autogen.sh
+./configure
+make
+cd ..
+export CFLAGS="-I`pwd`/GLICT/ -L`pwd`/GLICT/GLICT/"
+export CXXFLAGS="-I`pwd`/GLICT/ -L`pwd`/GLICT/GLICT/"
+export LDFLAGS="-L`pwd`/GLICT/GLICT/"
+
 cat - > autorelease.tmp << EOF
 n
 y
@@ -9,7 +20,7 @@ y
 ./autorelease.patchchangelog.sh
 EOF
 
-sed s/YATCVERS/0.2.1~nightly-`date +%Y%m%d`/g autorelease.tmp > autorelease.tmp.new
+sed s/YATCVERS/0.2.4~nightly-`date +%Y%m%d`/g autorelease.tmp > autorelease.tmp.new
 mv autorelease.tmp.new autorelease.tmp
 
 cat - > autorelease.patchchangelog.sh << EOF
