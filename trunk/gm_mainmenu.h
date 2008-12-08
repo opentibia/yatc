@@ -35,7 +35,7 @@
 #include "ui/mainmenu.h"
 #include "ui/login.h"
 #include "ui/charlist.h"
-#include "ui/options.h"
+#include "ui/optionsui.h"
 #include "ui/optionsgeneral.h"
 #include "ui/optionsconsole.h"
 #include "ui/optionsgraphics.h"

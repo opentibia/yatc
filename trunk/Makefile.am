@@ -20,12 +20,12 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		sprdata.c font.cpp confighandler.cpp gm_gameworld.cpp \
 		skin.cpp thingui.cpp itemui.cpp creatureui.cpp effectui.cpp \
 		distanceui.cpp mapui.cpp console.cpp popup.cpp \
-		bigint.cpp automap.cpp \
+		bigint.cpp automap.cpp choicegrid.cpp \
 		\
 		net/connection.cpp net/networkmessage.cpp net/protocolgame80.cpp \
 		net/protocolgame81.cpp net/protocolgame811.cpp net/protocolgame82.cpp \
 		net/protocolgame821.cpp net/protocolgame822.cpp \
-		net/protocolgame83.cpp net/protocolgame831.cpp \
+		net/protocolgame83.cpp net/protocolgame831.cpp protocol84.cpp \
 		net/rsa.cpp net/encryption.cpp net/protocolgame.cpp net/protocollogin.cpp \
 		\
 		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp \
@@ -36,18 +36,18 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
 
 EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
-		engine.h gamemode.h options.h spritesdl.h \
+		engine.h gamemode.h optionsui.h spritesdl.h \
 		enginegl.h gm_debug.h notifications.h sprite.h util.h \
 		sprdata.h font.h confighandler.h gm_gameworld.h \
 		skin.h thingui.h itemui.h creatureui.h console.h effectui.h \
 		distanceui.h mapui.h \
-		bigint.h fassert.h stdinttypes.h popup.h \
-		automap.h \
+		bigint.h fassert.h stdinttypes.h popup.h automap.h \
+		choicegrid.h \
 		\
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h net/protocolgame811.h net/protocolgame82.h \
 		net/protocolgame821.h net/protocolgame822.h \
-		net/protocolgame83.h net/protocolgame831.h \
+		net/protocolgame83.h net/protocolgame831.h protocolgame84.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \
 		gamecontent/inventory.h gamecontent/item.h gamecontent/map.h \

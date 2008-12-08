@@ -58,6 +58,7 @@ class Sprite
         virtual void addColor(float r, float g, float b);
         virtual void resetColor() {addColor(1,1,1); }
         virtual void templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, uint8_t legs, uint8_t feet);
+        virtual void rebuildSelf() {} // in case some engine (like GL) needs to rebuild texture from SDL surface ...
 		void templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b);
 
 		void Stretch(float neww, float newh, int smooth = -1, bool force = false);

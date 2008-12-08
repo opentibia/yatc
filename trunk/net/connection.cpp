@@ -39,6 +39,7 @@
 #include "protocolgame822.h"
 #include "protocolgame83.h"
 #include "protocolgame831.h"
+#include "protocolgame84.h"
 #include "../debugprint.h"
 #include "../util.h" // yatc_fopen
 
@@ -93,6 +94,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	case CLIENT_VERSION_831:
 		m_clientVersion = CLIENT_VERSION_831;
 		break;
+	case CLIENT_VERSION_840:
+		m_clientVersion = CLIENT_VERSION_840;
+		break;
 	default:
 		ASSERT(0);
 		break;
@@ -143,6 +147,14 @@ ClientVersion_t ProtocolConfig::detectVersion()
         sprSignature == 0x48c8e712 &&
         picSignature == 0x48562106)
         return CLIENT_VERSION_831;
+
+
+	// 8.4 -- currently undetected since it's still a test version
+    /*if (datSignature == 0x48da1fb6 &&
+        sprSignature == 0x48c8e712 &&
+        picSignature == 0x48562106)
+        return CLIENT_VERSION_840;*/
+
 
 	return CLIENT_VERSION_AUTO; // failure
 }
@@ -211,6 +223,9 @@ ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountnam
 		break;
 	case CLIENT_VERSION_831:
 		protocol = new ProtocolGame831(accountname, password, name, isGM);
+		break;
+	case CLIENT_VERSION_840:
+		protocol = new ProtocolGame84(accountname, password, name, isGM);
 		break;
 	default:
 		return NULL;

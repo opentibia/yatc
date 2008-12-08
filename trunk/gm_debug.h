@@ -29,6 +29,7 @@
 #include "gamemode.h"
 #include "sprite.h"
 #include "thingui.h"
+#include "choicegrid.h"
 
 #include "popup.h"
 #include "automap.h"
@@ -75,6 +76,8 @@ private:
 	int mapw, maph, px, py, pz, mapcount;
 	std::string mapfns[4];
 	Automap a;
+
+	ChoiceGrid grid;
 
 };
 

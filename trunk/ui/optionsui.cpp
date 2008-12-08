@@ -39,7 +39,7 @@
 #endif
 
 #include "../options.h"
-#include "options.h"
+#include "optionsui.h"
 #include "../gamemode.h"
 #include "../product.h"
 
@@ -216,7 +216,21 @@ void winOptions_t::winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContai
 {
 	winOptions_t* winOptions = g_game->getOptionsWindow();
 	winOptions->window.SetVisible(false);
-	g_game->msgBox(options.motdtext.c_str(), gettext("Message of the Day"), &winOptions->window);
+
+	std::string displayText = options.motdtext;
+    {
+        // translating motd
+        str_replace(displayText, "Welcome to Tibia!", gettext("Welcome to Tibia!"));
+        str_replace(displayText, "Due to a technical problem we had to reset\nthe game world", gettext("Due to a technical problem we had to reset\nthe game world"));
+        str_replace(displayText, "to the state of", gettext("to the state of"));
+        str_replace(displayText, "We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future.", gettext("We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future."));
+        str_replace(displayText, "For more information about Tibia visit our\nwebsite at", gettext("For more information about Tibia visit our\nwebsite at"));
+        str_replace(displayText, "Have fun in Tibia!", gettext("Have fun in Tibia!"));
+        str_replace(displayText, "Welcome to", gettext("Welcome to"));
+        str_replace(displayText, "Have fun in", gettext("Have fun in"));
+    }
+
+	g_game->msgBox(displayText.c_str(), gettext("Message of the Day"), &winOptions->window);
 }
 
 void winOptions_t::winOptions_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)

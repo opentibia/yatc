@@ -23,13 +23,13 @@ Popup::Popup() {
     wantdeath = false;
 }
 Popup::~Popup() {
-    for (std::vector<PopupItem*>::iterator it = items.begin(); it != items.end(); it++) {
+    for (std::vector<Popup::Item*>::iterator it = items.begin(); it != items.end(); it++) {
         delete *it;
     }
 }
 
-void Popup::addItem(const std::string &txt, popupCallback_t cb, void* data) {
-    PopupItem* pi = new PopupItem;
+void Popup::addItem(const std::string &txt, Callback_t cb, void* data) {
+    Popup::Item* pi = new Popup::Item;
     pi->pnl.SetCustomData(pi);
     pi->txt = txt;
     pi->cb = cb;
@@ -54,8 +54,8 @@ void Popup::addItem(const std::string &txt, popupCallback_t cb, void* data) {
 
 
 void Popup::mouseOver(float x, float y) {
-    for (std::vector<PopupItem*>::iterator it = items.begin(); it != items.end(); it++) {
-        PopupItem* pi = *it;
+    for (std::vector<Popup::Item*>::iterator it = items.begin(); it != items.end(); it++) {
+        Popup::Item* pi = *it;
 
         pi->pnl.SetBGActiveness(false);
     }

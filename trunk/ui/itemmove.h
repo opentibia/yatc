@@ -133,6 +133,7 @@ public:
 		sbCt.SetStep(1);
 		sbCt.SetValue(_count);
 		window.SetVisible(true);
+		window.Focus(NULL);
 	}
 
 	static void onChangeCount(glictPos* pos, glictContainer *caller)

@@ -31,6 +31,7 @@
 #endif
 #include "../net/connection.h"
 #include "checkbox.h"
+#include "../choicegrid.h"
 class winOptionsNetwork_t {
 public:
 
@@ -45,7 +46,9 @@ public:
 
     uiCheckbox chkOTKey;
 
-	std::map<ClientVersion_t, glictButton> btnProtocol;
+	//std::map<ClientVersion_t, glictButton> btnProtocol;
+	ChoiceGrid btnProtocol;
+	std::vector <ChoiceGrid::Item*> protocols;
 
 	// 10 189, 210 2
 	glictPanel pnlSeparator;
@@ -105,57 +108,47 @@ public:
 		chkOTKey.SetCaption(gettext("OT Encryption Key"));
 
 
-		window.AddObject(&btnProtocol[CLIENT_VERSION_800]);
-		btnProtocol[CLIENT_VERSION_800].SetCaption(std::string(gettext("Protocol")) + " 8.0");
-		window.AddObject(&btnProtocol[CLIENT_VERSION_810]);
-		btnProtocol[CLIENT_VERSION_810].SetCaption(std::string(gettext("Protocol")) + " 8.1");
-		window.AddObject(&btnProtocol[CLIENT_VERSION_811]);
-		btnProtocol[CLIENT_VERSION_811].SetCaption(std::string(gettext("Protocol")) + " 8.11");
-		window.AddObject(&btnProtocol[CLIENT_VERSION_820]);
-		btnProtocol[CLIENT_VERSION_820].SetCaption(std::string(gettext("Protocol")) + " 8.2");
-		window.AddObject(&btnProtocol[CLIENT_VERSION_821]);
-		btnProtocol[CLIENT_VERSION_821].SetCaption(std::string(gettext("Protocol")) + " 8.21");
-		window.AddObject(&btnProtocol[CLIENT_VERSION_822]);
-		btnProtocol[CLIENT_VERSION_822].SetCaption(std::string(gettext("Protocol")) + " 8.22");
-		window.AddObject(&btnProtocol[CLIENT_VERSION_830]);
-		btnProtocol[CLIENT_VERSION_830].SetCaption(std::string(gettext("Protocol")) + " 8.3");
-		window.AddObject(&btnProtocol[CLIENT_VERSION_831]);
-		btnProtocol[CLIENT_VERSION_831].SetCaption(std::string(gettext("Protocol")) + " 8.31");
-		window.AddObject(&btnProtocol[CLIENT_VERSION_AUTO]);
-		btnProtocol[CLIENT_VERSION_AUTO].SetCaption(gettext("Autodetect"));
 
-		int pc=0;
-		for (std::map<ClientVersion_t, glictButton>::iterator it = btnProtocol.begin(); it != btnProtocol.end(); it++) {
-			it->second.SetHeight(20);
-			it->second.SetWidth(100);
-			it->second.SetPos(16+(pc%2)*100, 100+(pc/2)*24);
-			it->second.SetCustomData(this);
-			it->second.SetOnClick(winOptionsNetwork_t::OnProtocol);
-			pc++;
-		}
+		window.AddObject(btnProtocol.getGrid());
+		btnProtocol.getGrid()->SetPos(12,96);
+		btnProtocol.setItemSize(100,20);
+		btnProtocol.setPadding(4,4);
+		btnProtocol.setRows(2);
+		btnProtocol.setOnClick(OnProtocol);
+		btnProtocol.setData(this);
+		btnProtocol.setFont("system");
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.0", NULL, (void*)CLIENT_VERSION_800));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.1", NULL, (void*)CLIENT_VERSION_810));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.11", NULL, (void*)CLIENT_VERSION_820));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.2", NULL, (void*)CLIENT_VERSION_821));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.22", NULL, (void*)CLIENT_VERSION_822));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.3", NULL, (void*)CLIENT_VERSION_830));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.31", NULL, (void*)CLIENT_VERSION_831));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.4", NULL, (void*)CLIENT_VERSION_840));
+		protocols.push_back(btnProtocol.addItem(gettext("Autodetect"), NULL, (void*)CLIENT_VERSION_AUTO));
 
 		window.AddObject(&pnlSeparator);
-		pnlSeparator.SetPos(10, 100+((pc-1)/2+1)*24 + 3);
+		pnlSeparator.SetPos(10, 100+((btnProtocol.getCount()-1)/2+1)*24 + 3);
 		pnlSeparator.SetWidth(210);
 		pnlSeparator.SetHeight(2);
 		pnlSeparator.SetBGColor(.2,.2,.2,1.);
 
 		window.AddObject(&btnHelp);
-		btnHelp.SetPos(72, 210-102 + ((pc-1)/2+1)*24);
+		btnHelp.SetPos(72, 210-102 + ((btnProtocol.getCount()-1)/2+1)*24);
 		btnHelp.SetWidth(43);
 		btnHelp.SetHeight(19);
 		btnHelp.SetCaption(gettext("Help"));
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
-		btnOk.SetPos(125, 210-102 + ((pc-1)/2+1)*24);
+		btnOk.SetPos(125, 210-102 + ((btnProtocol.getCount()-1)/2+1)*24);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(19);
 		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
-		btnCancel.SetPos(178, 210-102 + ((pc-1)/2+1)*24);
+		btnCancel.SetPos(178, 210-102 + ((btnProtocol.getCount()-1)/2+1)*24);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(19);
 		btnCancel.SetCaption(gettext("Cancel"));
@@ -171,11 +164,13 @@ public:
         chkOTKey.SetValue(options.otkey);
 
 		currentversion = options.protocol;
-		for (std::map<ClientVersion_t, glictButton>::iterator it = btnProtocol.begin(); it != btnProtocol.end(); it++) {
-			if (it->first == currentversion)
-				it->second.SetHold(true);
-			else
-				it->second.SetHold(false);
+        for (std::vector<ChoiceGrid::Item*>::iterator it = protocols.begin(); it != protocols.end(); it++) {
+
+            ChoiceGrid::Item* i = *it;
+            if ((ClientVersion_t)((int)i->data) == currentversion)
+            {
+                btnProtocol.setSelected(i);
+            }
 		}
 	}
 
@@ -187,18 +182,11 @@ public:
 		options.Save();
 	}
 
-	static void OnProtocol(glictPos* pos, glictContainer *caller) {
-		glictButton* b = (glictButton*)caller;
-		winOptionsNetwork_t* won = (winOptionsNetwork_t*)b->GetCustomData();
+	static void OnProtocol(ChoiceGrid* parent, ChoiceGrid::Item* item, ChoiceGrid::Item* olditem) {
 
-		for (std::map<ClientVersion_t, glictButton>::iterator it = won->btnProtocol.begin(); it != won->btnProtocol.end(); it++) {
-			if (&it->second == b) {
-				won->currentversion = it->first;
-			} else {
-				it->second.SetHold(false);
-			}
-		}
-		b->SetHold(true);
+		winOptionsNetwork_t* won = (winOptionsNetwork_t*)parent->getData();
+		won->currentversion = (ClientVersion_t)((int)item->data);
+
 	}
 
 };

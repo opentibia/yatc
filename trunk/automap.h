@@ -51,6 +51,7 @@ private:
 
     typedef std::map<std::string, std::vector<posAndColor> >  writeFilesMap;
 	writeFilesMap writeFiles;
+	int m_tileCount;
 };
 
 #endif

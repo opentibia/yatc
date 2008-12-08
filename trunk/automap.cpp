@@ -30,6 +30,7 @@ Automap::Automap()
     mapcount = 0;
     mapw = 256;
     maph = 256;
+    m_tileCount=0;
 }
 Automap::~Automap()
 {
@@ -76,6 +77,22 @@ void Automap::updateSelf()
                 mapcount++;
                 mapfns[mapcount-1] = minimapfnss.str();
                 map[mapcount-1] = g_engine->createSprite(minimapfnss.str());
+
+
+/*
+// We NEED to update sprites! We flush only every n tiles!
+                if ((std::map<std::string, std::vector<posAndColor> >::iterator mit = writeFiles.find(minimapfnss.str())) != writeFiles.end())
+                {
+                    for(std::vector<posAndColor> it = mit->second.begin(); it != mit->second.end(); it++)
+                    {
+                        if (it->x == i && it->y == j) {
+
+                        }
+                    }
+                }
+*/
+
+
             }
         }
 }
@@ -117,6 +134,8 @@ void Automap::setTileColor(int i, int j, int k, uint8_t color, uint8_t speedinde
     p.x = i; p.y = j; p.z = k; p.color = color;
 
     writeFiles[minimapfnss.str()].push_back(p);
+
+    m_tileCount++;
 }
 
 void Automap::flushTiles()
@@ -151,6 +170,7 @@ void Automap::flushTiles()
         }
         fclose(f);
     }
+    m_tileCount = 0;
     writeFiles.clear();
 }
 

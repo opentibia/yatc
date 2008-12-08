@@ -79,7 +79,8 @@ enum ClientVersion_t{
 	CLIENT_VERSION_821 = 821,
 	CLIENT_VERSION_822 = 822,
 	CLIENT_VERSION_830 = 830,
-	CLIENT_VERSION_831 = 831
+	CLIENT_VERSION_831 = 831,
+	CLIENT_VERSION_840 = 840
 };
 
 enum ClientOS_t{
@@ -206,7 +207,7 @@ class Protocol
 
 		void usesAccountName(bool doUseAccName) { m_usesaccountname = doUseAccName; }
 		bool doesUseAccountName() const { return m_usesaccountname; }
-	
+
 	protected:
 		void setErrorDesc(const std::string& message){ setErrorDesc(message.c_str());}
 		void setErrorDesc(const char* message){ m_errorMessage = message;}
