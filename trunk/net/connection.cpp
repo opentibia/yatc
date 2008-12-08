@@ -149,11 +149,11 @@ ClientVersion_t ProtocolConfig::detectVersion()
         return CLIENT_VERSION_831;
 
 
-	// 8.4 -- currently undetected since it's still a test version
-    /*if (datSignature == 0x48da1fb6 &&
-        sprSignature == 0x48c8e712 &&
-        picSignature == 0x48562106)
-        return CLIENT_VERSION_840;*/
+	// 8.4 -- currently test version
+    if (datSignature == 0x4933eb4d &&
+        sprSignature == 0x4933eb0d &&
+        picSignature == 0x49144178)
+        return CLIENT_VERSION_840;
 
 
 	return CLIENT_VERSION_AUTO; // failure
