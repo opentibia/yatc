@@ -19,6 +19,8 @@
 //////////////////////////////////////////////////////////////////////
 #include <sstream>
 #include <iomanip>
+#include <map>
+#include <vector>
 #include "automap.h"
 #include "sprite.h"
 #include "engine.h"
@@ -43,18 +45,13 @@ void Automap::updateSelf()
     int xe = px + mapw/2;
     int ye = py + maph/2;
 
-
+    int oldmapcount = mapcount;
     mapcount = 0;
-
-    for (int i = 0; i < 4; i++){
-        delete map[i];
-        map[i] = NULL;
-        mapfns[i] = "";
-    }
 
     for (int j = ys; j<ye; j+=maph-1)
         for (int i = xs; i<xe; i+=mapw-1)
         {
+
 
             std::stringstream x,y,z,minimapfnss;
             x << setw(3) << setfill('0') << i / 256;
@@ -63,34 +60,48 @@ void Automap::updateSelf()
             minimapfnss << x.str() << y.str() << z.str() << ".map";
 
             bool has_map = false;
-            /*for(int k=0; k<gd->mapcount; k++)
-            {
-                if(gd->mapfns[i] == minimapfnss.str())
-                {
-                    has_map = true;
-                    break;
-                }
-            }*/
-
+            if (mapcount < oldmapcount && minimapfnss.str() != mapfns[mapcount]) {
+                delete map[mapcount];
+                map[mapcount] = NULL;
+                mapfns[mapcount] = "";
+            } else {
+                has_map = true;
+            }
+            mapcount++;
             if (!has_map)
             {
-                mapcount++;
                 mapfns[mapcount-1] = minimapfnss.str();
                 map[mapcount-1] = g_engine->createSprite(minimapfnss.str());
 
+            }
 
-/*
-// We NEED to update sprites! We flush only every n tiles!
-                if ((std::map<std::string, std::vector<posAndColor> >::iterator mit = writeFiles.find(minimapfnss.str())) != writeFiles.end())
-                {
-                    for(std::vector<posAndColor> it = mit->second.begin(); it != mit->second.end(); it++)
+
+            writeFilesMap::iterator mit;
+            // We NEED to update sprites! We flush only every n tiles!
+            if (( mit = writeFiles.find(minimapfnss.str())) != writeFiles.end())
+            {
+                printf("Weee!\n");
+                if(map[mapcount-1]) {
+                    printf("locking\n");
+                    SDL_Surface* s=map[mapcount-1]->lockSurface();
+                    printf("locked\n");
+                    printf("entries: %d\n", mit->second.size());
+                    for(std::vector<posAndColor>::iterator it = mit->second.begin(); it != mit->second.end(); it++)
                     {
-                        if (it->x == i && it->y == j) {
+                        //printf("it %p\n", it);
+                        uint8_t c = it->color;
+                        uint8_t b = uint8_t((c % 6) / 5. * 255);
+                        uint8_t g = uint8_t(((c / 6) % 6) / 5. * 255);
+                        uint8_t r = uint8_t((c / 36.) / 6. * 255);
 
-                        }
+                        printf("%d %d\n", it->x, it->y);
+                        printf("format %p\n", s->format);
+                        printf("surface %p\n", s);
+                        map[mapcount-1]->putPixel(it->x % 256,it->y % 256,SDL_MapRGB(s->format,r,g,b),s);
+
                     }
+                    map[mapcount-1]->unlockSurface();
                 }
-*/
 
 
             }

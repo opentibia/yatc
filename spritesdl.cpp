@@ -21,6 +21,11 @@
 #include "enginesdl.h"
 #include "spritesdl.h"
 
+SpriteSDL::SpriteSDL(int w, int h, const oRGBA& c) : Sprite(w, h, c)
+{
+
+}
+
 SpriteSDL::SpriteSDL(const std::string& filename, int index) : Sprite(filename, index)
 {
 

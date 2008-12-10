@@ -225,8 +225,26 @@ void setIcon()
 	g_engine = NULL;
 	SDL_WM_SetCaption(PRODUCTNAME, PRODUCTNAME);
 	ObjectType* o = Objects::getInstance()->getOutfitType(58);
-	SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2]);
+
+    SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2]);
 	SpriteSDL *st = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2+1]);
+	/*
+    SpriteSDL *s = new SpriteSDL(64, 64, oRGBA(255,0,255));
+    SpriteSDL *st = new SpriteSDL(64, 64, oRGBA(255,0,255));
+    for(uint32_t i = 0; i < 0->height; ++i){
+        for(uint32_t j = 0; j < 0->width; ++j){
+
+            ASSERT(activeframe + aframes < m_obj->numsprites);
+
+
+            SpriteSDL *sub = new SpriteSDL("Tibia.spr", o->imageData[(activeframe+aframes)* o->blendframes*2);
+            SpriteSDL *subt = new SpriteSDL("Tibia.spr", o->imageData[(activeframe+aframes)* o->blendframes*2+1]);
+
+        SDL_Surface *surf = sub->getSurface();
+        SDL_Rect src = {x,y,w,h};
+        SDL_Rect dst = {0,0,w,h};
+        SDL_BlitSurface(m_image, &src, ns, &dst);
+    }*/
 	s->templatedColorize(st, 79, 94, 88, 82);
 	s->setAsIcon();
 	delete s;

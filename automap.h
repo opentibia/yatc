@@ -44,6 +44,8 @@ public:
     void setTileColor(int x, int y, int z, uint8_t color,uint8_t speedindex);
     void flushTiles();
     void getTileColor(int x, int y, int z, uint8_t &color,uint8_t &speedindex);
+
+    inline int tileCount() const { return m_tileCount; }
 private:
 	Sprite* map[4];
 	int mapw, maph, px, py, pz, mapcount;

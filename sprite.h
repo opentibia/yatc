@@ -34,10 +34,11 @@
 #include "stdinttypes.h"
 
 class SDL_Surface;
-
+class oRGBA;
 class Sprite
 {
 	public:
+        Sprite(int w, int h, const oRGBA& c);
 		Sprite(const std::string& filename, int index);
 		Sprite(const std::string& filename, int index, int x, int y, int w, int h);
 		virtual ~Sprite();

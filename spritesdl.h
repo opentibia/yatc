@@ -27,6 +27,7 @@
 class SpriteSDL : public Sprite
 {
 public:
+    SpriteSDL(int w, int h, const oRGBA& c);
 	SpriteSDL(const std::string& filename, int index = 0);
 	SpriteSDL(const std::string& filename, int index, int x, int y, int w, int h);
 
