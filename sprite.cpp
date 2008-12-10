@@ -227,6 +227,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			goto loadFail;
 		}
+		SDL_LockSurface(m_image);
 
 		// dont make static since if we change the rendering engine at runtime,
 		//  this may change too
@@ -248,6 +249,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
             }
         }
 		fclose(f);
+		SDL_UnlockSurface(m_image);
 		SDL_UpdateRect(m_image, 0, 0, 32, 32);
 
 		#ifdef USE_OPENGL
@@ -277,6 +279,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 			if(i == index){
 				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, rmask, gmask, bmask, amask);
+				SDL_LockSurface(s);
 				if (!s) {
 					DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "Failed to create surface of size %dx%d\n", ph.width*32, ph.height*32);
 					fclose(f);
@@ -302,6 +305,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 						}
 					}
 				}
+				SDL_UnlockSurface(s);
 				break;
 			}
 			else{
@@ -327,6 +331,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		}
 
         s = SDL_CreateRGBSurface(SDL_SWSURFACE, 256, 256, 32, rmask, gmask, bmask, amask);
+        SDL_LockSurface(s);
 
         for (int i = 0; i < 256; i++)
             for (int j = 0; j < 256; j++)
@@ -374,7 +379,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
             }
         }
         fclose(f);
-
+        SDL_UnlockSurface(s);
 
 
 
@@ -695,3 +700,14 @@ SDL_Cursor* Sprite::createCursor(int topx, int topy, int w, int h, int hot_x, in
   return SDL_CreateCursor(data, mask, 32, 32, hot_x, hot_y);
 }
 
+
+SDL_Surface* Sprite::lockSurface()
+{
+    SDL_LockSurface(m_image);
+}
+void Sprite::unlockSurface()
+{
+    SDL_UnlockSurface(m_image);
+    Stretch(getWidth(), getHeight());
+    rebuildSelf();
+}

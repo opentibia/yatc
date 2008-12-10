@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-08 01:10+0100\n"
+"POT-Creation-Date: 2008-12-10 20:47+0100\n"
 "PO-Revision-Date: 2008-11-30 01:44+0100\n"
 "Last-Translator: Rasmus Karlsson <qwerty@wuut.se>\n"
 "Language-Team: Rasmus Karlsson <qwerty@wuut.se>\n"
@@ -40,6 +40,10 @@ msgstr "(i ingen speciell ordning)"
 #: ../gm_mainmenu.cpp:340
 msgid "(in the navy)"
 msgstr ""
+
+#: ../ui/optionsui.cpp:128
+msgid "."
+msgstr "."
 
 #: ../ui/tutorialhints.cpp:93
 msgid "<Observe the battle window>"
@@ -127,7 +131,7 @@ msgstr "Köp"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../gm_mainmenu.cpp:542
+#: ../gm_mainmenu.cpp:543
 msgid "Cannot connect to a login server."
 msgstr "Kan inte ansluta till en loginserver."
 
@@ -159,11 +163,11 @@ msgstr "Klassiska Kontroller"
 msgid "Club Fighting"
 msgstr "Klubbsskicklighet"
 
-#: ../gm_mainmenu.cpp:393 ../gm_mainmenu.cpp:479
+#: ../gm_mainmenu.cpp:393 ../gm_mainmenu.cpp:480
 msgid "Connecting"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:480
+#: ../gm_mainmenu.cpp:481
 #, fuzzy
 msgid "Connecting to the game world. Please wait."
 msgstr "Ansluter till servern..."
@@ -196,6 +200,19 @@ msgstr "Nuvarande motor"
 msgid "Customise the console"
 msgstr "Skräddarsy konsollen"
 
+#: ../gm_mainmenu.cpp:420
+msgid ""
+"Data files in the directory either:\n"
+"* do not belong to same protocol version, or\n"
+"* are modified and with unknown signatures.\n"
+"\n"
+"Either get correct files from a single known\n"
+"client version, or make sure that you have\n"
+"correct signatures in the files, or go to\n"
+"Options->Network and choose the correct\n"
+"protocol."
+msgstr ""
+
 #: ../ui/uioutfit.cpp:83
 msgid "Detail"
 msgstr "Detalj"
@@ -204,7 +221,7 @@ msgstr "Detalj"
 msgid "Distance Fighting"
 msgstr "Distansskicklighet"
 
-#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:579
+#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:580
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
@@ -222,7 +239,7 @@ msgstr "Motorbyte"
 msgid "Enter Game"
 msgstr "Starta Spelet"
 
-#: ../gm_mainmenu.cpp:544 ../gm_mainmenu.cpp:551 ../gm_mainmenu.cpp:603
+#: ../gm_mainmenu.cpp:545 ../gm_mainmenu.cpp:552 ../gm_mainmenu.cpp:604
 msgid "Error"
 msgstr "Fel"
 
@@ -246,13 +263,13 @@ msgstr "Knytnävesskicklighet"
 msgid "Follow"
 msgstr "Följ"
 
-#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:582
+#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:583
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:546
+#: ../gm_mainmenu.cpp:547
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -302,11 +319,11 @@ msgstr "Grafikinställningar"
 msgid "Gratis Premium Account"
 msgstr "Gratis Premiekonto"
 
-#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:585
+#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:586
 msgid "Have fun in"
 msgstr ""
 
-#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:583
+#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:584
 msgid "Have fun in Tibia!"
 msgstr ""
 
@@ -352,7 +369,7 @@ msgstr "Ignorera"
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:605
+#: ../gm_mainmenu.cpp:606
 msgid "Information"
 msgstr "Information"
 
@@ -394,7 +411,7 @@ msgstr "Maginivå"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:588
+#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:589
 msgid "Message of the Day"
 msgstr "Dagens Meddelande"
 
@@ -518,7 +535,7 @@ msgstr "Programmerat av"
 msgid "Protocol"
 msgstr "Protokoll"
 
-#: ../gm_mainmenu.cpp:429
+#: ../gm_mainmenu.cpp:430
 msgid "Protocol detection failed"
 msgstr "Protokolldetektionen misslyckades"
 
@@ -774,7 +791,7 @@ msgstr "Använder OpenGL"
 msgid "Uses SDL"
 msgstr "Använder SDL"
 
-#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:581
+#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:582
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
@@ -784,11 +801,11 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr "Vi erbjuder två grafiska motorer:\n"
 
-#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:584
+#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:585
 msgid "Welcome to"
 msgstr ""
 
-#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:578
+#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:579
 msgid "Welcome to Tibia!"
 msgstr ""
 
@@ -845,16 +862,13 @@ msgstr "kompilerad med"
 msgid "days left"
 msgstr "dagar kvar"
 
-#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:580
+#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:581
 msgid "to the state of"
 msgstr ""
 
 #: ../gm_mainmenu.cpp:341
 msgid "with inactive developers"
 msgstr "med inaktiva utvecklare"
-
-#~ msgid "."
-#~ msgstr "."
 
 #~ msgid "Entering game"
 #~ msgstr "Startar Spelet"

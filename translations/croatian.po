@@ -3,13 +3,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-08 01:10+0100\n"
+"POT-Creation-Date: 2008-12-10 20:47+0100\n"
 "PO-Revision-Date: 2008-12-08 01:10+0100\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=cp1250\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../gm_mainmenu.cpp:350
 msgid ""
@@ -36,6 +36,10 @@ msgstr "(bez posebnog redoslijeda)"
 #: ../gm_mainmenu.cpp:340
 msgid "(in the navy)"
 msgstr "(u mornarici)"
+
+#: ../ui/optionsui.cpp:128
+msgid "."
+msgstr "."
 
 #: ../ui/tutorialhints.cpp:93
 msgid "<Observe the battle window>"
@@ -123,7 +127,7 @@ msgstr "Kupi"
 msgid "Cancel"
 msgstr "Ponisti"
 
-#: ../gm_mainmenu.cpp:542
+#: ../gm_mainmenu.cpp:543
 msgid "Cannot connect to a login server."
 msgstr "Ne mogu se spojiti na server za prijavu."
 
@@ -155,11 +159,11 @@ msgstr "Klasièno upravljanje"
 msgid "Club Fighting"
 msgstr "Borba toljagama"
 
-#: ../gm_mainmenu.cpp:393 ../gm_mainmenu.cpp:479
+#: ../gm_mainmenu.cpp:393 ../gm_mainmenu.cpp:480
 msgid "Connecting"
 msgstr "Spajanje"
 
-#: ../gm_mainmenu.cpp:480
+#: ../gm_mainmenu.cpp:481
 msgid "Connecting to the game world. Please wait."
 msgstr "Spajam se u igru. Molimo prièekajte."
 
@@ -191,6 +195,19 @@ msgstr "Trenutni engine"
 msgid "Customise the console"
 msgstr "Podesi konzolu"
 
+#: ../gm_mainmenu.cpp:420
+msgid ""
+"Data files in the directory either:\n"
+"* do not belong to same protocol version, or\n"
+"* are modified and with unknown signatures.\n"
+"\n"
+"Either get correct files from a single known\n"
+"client version, or make sure that you have\n"
+"correct signatures in the files, or go to\n"
+"Options->Network and choose the correct\n"
+"protocol."
+msgstr """Datoteke s podacima u direktoriju ili:\n""* ne pripadaju istoj verziji protokola, ili\n""* su modificirane i s nepoznatim potpisima.\n""\n""Ili nabavite valjane datoteke iz jedne poznate\n""verzije klijenta, ili osigurajte da imate ispravne\n""potpise u datotekama, ili odite na Opcije->Mreža i\n""odaberite ispravan protokol."
+
 #: ../ui/uioutfit.cpp:83
 msgid "Detail"
 msgstr "Detalji"
@@ -199,7 +216,7 @@ msgstr "Detalji"
 msgid "Distance Fighting"
 msgstr "Borba na daljinu"
 
-#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:579
+#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:580
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
@@ -219,7 +236,7 @@ msgstr "Promjena enginea"
 msgid "Enter Game"
 msgstr "Ulaz u igru"
 
-#: ../gm_mainmenu.cpp:544 ../gm_mainmenu.cpp:551 ../gm_mainmenu.cpp:603
+#: ../gm_mainmenu.cpp:545 ../gm_mainmenu.cpp:552 ../gm_mainmenu.cpp:604
 msgid "Error"
 msgstr "Greška"
 
@@ -243,7 +260,7 @@ msgstr "Borba šakama"
 msgid "Follow"
 msgstr "Slijedi"
 
-#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:582
+#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:583
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
@@ -251,7 +268,7 @@ msgstr ""
 "Za više informacija o Tibiji posjetite našu\n"
 "web stranicu na "
 
-#: ../gm_mainmenu.cpp:546
+#: ../gm_mainmenu.cpp:547
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -302,11 +319,11 @@ msgstr "Grafièke opcije"
 msgid "Gratis Premium Account"
 msgstr "Gratis Premium Raèun"
 
-#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:585
+#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:586
 msgid "Have fun in"
 msgstr "Zabavite se u svijetu "
 
-#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:583
+#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:584
 msgid "Have fun in Tibia!"
 msgstr "Zabavite se u Tibiji!"
 
@@ -352,7 +369,7 @@ msgstr "Ignoriraj"
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:605
+#: ../gm_mainmenu.cpp:606
 msgid "Information"
 msgstr "Obavijest"
 
@@ -394,7 +411,7 @@ msgstr "Razina magije"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:588
+#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:589
 msgid "Message of the Day"
 msgstr "Poruka dana"
 
@@ -519,7 +536,7 @@ msgstr "Programirali"
 msgid "Protocol"
 msgstr "Protokol"
 
-#: ../gm_mainmenu.cpp:429
+#: ../gm_mainmenu.cpp:430
 msgid "Protocol detection failed"
 msgstr "Otkrivanje protokola neuspjelo"
 
@@ -781,7 +798,7 @@ msgstr "Koristi OpenGL"
 msgid "Uses SDL"
 msgstr "Koristi SDL"
 
-#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:581
+#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:582
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
@@ -794,11 +811,11 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr "Nudimo dva grafièka enginea:\n"
 
-#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:584
+#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:585
 msgid "Welcome to"
 msgstr "Dobrodošli u "
 
-#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:578
+#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:579
 msgid "Welcome to Tibia!"
 msgstr "Dobrodošli u Tibiju!"
 
@@ -854,16 +871,13 @@ msgstr "prevedeno s"
 msgid "days left"
 msgstr "dana preostalo"
 
-#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:580
+#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:581
 msgid "to the state of"
 msgstr "na stanje dana"
 
 #: ../gm_mainmenu.cpp:341
 msgid "with inactive developers"
 msgstr "uz neaktivne razvijatelje"
-
-#~ msgid "."
-#~ msgstr "."
 
 #~ msgid "Entering game"
 #~ msgstr "Ulazim u igru"

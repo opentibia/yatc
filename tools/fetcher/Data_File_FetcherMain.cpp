@@ -32,7 +32,11 @@
 
 
 
-
+// for stat
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+// end for stat
 
 
 //helper functions
@@ -149,42 +153,47 @@ public:
             printf("Length: %d\n", contentlength);
         }
 
+        struct stat st;
+        stat((version + ".tgz").c_str(), &st);
+        size_t size = st.st_size;
+        if (size != contentlength)
+        {
 
-        unlink((version + ".tgz").c_str());
+            unlink((version + ".tgz").c_str());
 
-        wxFileOutputStream fos(version + ".tgz");
-        if (!fos.IsOk()){
-            castEvent(3);
-            isdownloading = false;
-            wxThread::Sleep(100);
-            return 0;
-        }
-        wxMilliClock_t lasttime = 0;
-        do {
-            char buf[1024];
-            if (TestDestroy()) {
-                castEvent(4);
+            wxFileOutputStream fos(version + ".tgz");
+            if (!fos.IsOk()){
+                castEvent(3);
                 isdownloading = false;
                 wxThread::Sleep(100);
                 return 0;
             }
+            wxMilliClock_t lasttime = 0;
+            do {
+                char buf[1024];
+                if (TestDestroy()) {
+                    castEvent(4);
+                    isdownloading = false;
+                    wxThread::Sleep(100);
+                    return 0;
+                }
 
-            h_stream->Read(buf, sizeof(buf));
-            fos.Write(buf, h_stream->LastRead());
+                h_stream->Read(buf, sizeof(buf));
+                fos.Write(buf, h_stream->LastRead());
 
-            increaseCount(h_stream->LastRead());
+                increaseCount(h_stream->LastRead());
 
-            if (wxGetLocalTimeMillis() - lasttime >= 50) {
-                lasttime = wxGetLocalTimeMillis();
-                castEvent(5);
-            }
+                if (wxGetLocalTimeMillis() - lasttime >= 50) {
+                    lasttime = wxGetLocalTimeMillis();
+                    castEvent(5);
+                }
 
-        } while(h_stream->LastRead());
+            } while(h_stream->LastRead());
 
 
-        delete h_stream; h_stream = NULL;
-        delete h; h = NULL;
-
+            delete h_stream; h_stream = NULL;
+            delete h; h = NULL;
+        }
 
         if (!unpackNow()) {
             castEvent(13);
@@ -347,7 +356,7 @@ Data_File_FetcherDialog::Data_File_FetcherDialog(wxWindow* parent,wxWindowID id)
     TxtVerMajor = new wxTextCtrl(this, ID_TEXTCTRL1, _("8"), wxDefaultPosition, wxSize(18,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
     TxtVerMajor->SetMaxLength(1);
     FlexGridSizer2->Add(TxtVerMajor, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    TxtVerMinor = new wxTextCtrl(this, ID_TEXTCTRL2, _("31"), wxDefaultPosition, wxSize(29,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    TxtVerMinor = new wxTextCtrl(this, ID_TEXTCTRL2, _("40"), wxDefaultPosition, wxSize(29,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
     TxtVerMinor->SetMaxLength(2);
     FlexGridSizer2->Add(TxtVerMinor, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BtnDownload = new wxButton(this, ID_BTNDOWNLOAD, _("Download"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BTNDOWNLOAD"));
@@ -490,7 +499,7 @@ void Data_File_FetcherDialog::OnWorkerEvent(wxCommandEvent& event){
         GauProgress->SetValue(60);
         break;
         case 12:// == tibia.spr
-        LblStatus->SetLabel("Unpacking Tibia.spr...");
+        LblStatus->SetLabel("Unpacking Tibia.spr... (this may take a while, be patient!)");
         GauProgress->SetValue(90);
         break;
         case 13:// == unpack failed

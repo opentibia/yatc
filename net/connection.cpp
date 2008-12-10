@@ -148,10 +148,8 @@ ClientVersion_t ProtocolConfig::detectVersion()
         picSignature == 0x48562106)
         return CLIENT_VERSION_831;
 
-
-	// 8.4 -- currently test version
-    if (datSignature == 0x4933eb4d &&
-        sprSignature == 0x4933eb0d &&
+    if (datSignature == 0x493d607a &&
+        sprSignature == 0x493d4e7c &&
         picSignature == 0x49144178)
         return CLIENT_VERSION_840;
 
