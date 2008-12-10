@@ -18,9 +18,6 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-
-// NOT UPDATED TO PROTOCOL 84 YET!!!!!!!
-
 #include "../fassert.h"
 #include "protocolgame84.h"
 

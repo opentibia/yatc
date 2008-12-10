@@ -56,17 +56,15 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory="C:\wxWidgets-2.8.9\lib\gcc_lib\msw" />
+					<Add directory="C:\MinGW\include\common" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="C:\wxWidgets-2.8.9\lib\gcc_lib\msw" />
+					<Add directory="C:\MinGW\include\common" />
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="libwxmsw28_core.a" />
-					<Add library="libwxbase28.a" />
-					<Add library="libwxpng.a" />
-					<Add library="libwxzlib.a" />
-					<Add library="libwxbase28_net.a" />
+					<Add library="wxmsw28" />
 					<Add library="libkernel32.a" />
 					<Add library="libuser32.a" />
 					<Add library="libgdi32.a" />
@@ -82,6 +80,8 @@
 					<Add library="libodbc32.a" />
 					<Add library="jpeg" />
 					<Add library="tiff" />
+					<Add library="png" />
+					<Add library="z" />
 					<Add directory="C:\wxWidgets-2.8.9\lib\gcc_lib" />
 				</Linker>
 			</Target>

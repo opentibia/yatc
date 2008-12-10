@@ -69,6 +69,15 @@ class Sprite
 		SDL_Cursor* createCursor(int topx, int topy, int w, int h, int hot_x, int hot_y);
 
 
+
+        // use functions for direct modification SPARINGLY!
+        virtual SDL_Surface* getSurface() { return m_image; }
+        virtual SDL_Surface* lockSurface();
+        virtual void unlockSurface();
+
+        void putPixel(int x, int y, uint32_t pixel, SDL_Surface *img = NULL);
+		uint32_t getPixel(int x, int y, SDL_Surface *img = NULL);
+
 	protected:
 		Sprite(const Sprite& original);
 
@@ -85,8 +94,6 @@ class Sprite
 		float m_r, m_g, m_b;
 
 	private:
-		void putPixel(int x, int y, uint32_t pixel, SDL_Surface *img = NULL);
-		uint32_t getPixel(int x, int y, SDL_Surface *img = NULL);
 
 		bool m_loaded;
 		SDL_Surface *m_image, *m_stretchimage, *m_coloredimage;

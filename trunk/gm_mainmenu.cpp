@@ -415,18 +415,19 @@ ClientVersion_t GM_MainMenu::getActiveProtocol(){
 
 	if (!proto) {
 
-		std::stringstream t;
-		unsigned char c = 149; // bullet
-		t << "Data files in the directory either:\n" <<
-		c << "do not belong to same protocol version, or\n" <<
-		c << "are modified and with unknown signatures.\n" <<
-		"\n" <<
-		"Either get correct files from a single known\n" <<
-		"client version, or make sure that you have\n" <<
-		"correct signatures in the files, or go to\n" <<
-		"Options->Network and choose the correct\n" <<
-		"protocol.";
-		msgBox(t.str().c_str(),gettext("Protocol detection failed"));
+		std::string t;
+		unsigned char c[2] = { 149, 0} ; // bullet
+		t = gettext("Data files in the directory either:\n"
+		"* do not belong to same protocol version, or\n"
+		"* are modified and with unknown signatures.\n"
+		"\n"
+		"Either get correct files from a single known\n"
+		"client version, or make sure that you have\n"
+		"correct signatures in the files, or go to\n"
+		"Options->Network and choose the correct\n"
+		"protocol.");
+		str_replace(t, "*", "\x95");
+		msgBox(t.c_str(),gettext("Protocol detection failed"));
 
 	}
 	return proto;

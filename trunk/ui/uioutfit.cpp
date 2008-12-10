@@ -193,9 +193,9 @@ winOutfit_t::winOutfit_t() {
     dispCreature->setTurnDir((Direction)2);
 
     printf("Configured outfit. LOADING GFX.\n");
-
+    uint32_t ticks = SDL_GetTicks();
     dispCreature->loadOutfit();
-    printf("Loaded creature\n");
+    printf("Loaded creature in %d ticks\n", SDL_GetTicks() - ticks);
 }
 winOutfit_t::~winOutfit_t(){
     Creatures::getInstance().removeCreature(0xFFFFFF00);
