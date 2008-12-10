@@ -180,7 +180,6 @@ void CreatureUI::drawName(int x, int y, float scale) const
         col.b = 0.;
         col.a = 1.;
     }
-    printf("Drawing color %g %g %g\n", col.r, col.g, col.b, col.a);
 
 	g_engine->drawText(name.c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
 

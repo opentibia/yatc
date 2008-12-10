@@ -38,6 +38,12 @@ class ProtocolGame84 : public ProtocolGame83
 	protected:
 		ProtocolGame84(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
+
+        char translateSpeakClassFromInternal(SpeakClasses_t s);
+        SpeakClasses_t translateSpeakClassToInternal(char s);
+        MessageType_t translateTextMessageToInternal(uint8_t messageType);
+
+
 		virtual void checkVersion();
 
 		friend class ProtocolConfig;

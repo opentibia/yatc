@@ -239,14 +239,14 @@ char ProtocolGame82::translateSpeakClassFromInternal(SpeakClasses_t s){
             return 0x06;
         case SPEAK_CHANNEL_Y:
             return 0x07;
-        /*
+
         case SPEAK_RVR_CHANNEL:
             return 0x08; // reporting rule violation - ctrl+r
         case SPEAK_RVR_ANSWER:
             return 0x09; // answering report
         case SPEAK_RVR_CONTINUE:
             return 0x0A; // answering the answer of report
-        */
+
         case SPEAK_BROADCAST:
             return 0x0B;
         case SPEAK_CHANNEL_R1:
@@ -285,14 +285,14 @@ SpeakClasses_t ProtocolGame82::translateSpeakClassToInternal(char s){
             return SPEAK_PRIVATE;
         case 0x07:
             return SPEAK_CHANNEL_Y;
-        /*
-        case SPEAK_RVR_CHANNEL:
-            return 0x08; // reporting rule violation - ctrl+r
-        case SPEAK_RVR_ANSWER:
-            return 0x09; // answering report
-        case SPEAK_RVR_CONTINUE:
-            return 0x0A; // answering the answer of report
-        */
+
+        case 0x08:
+            return SPEAK_RVR_CHANNEL; // reporting rule violation - ctrl+r
+        case 0x09:
+            return SPEAK_RVR_ANSWER; // answering report
+        case 0x0A:
+            return SPEAK_RVR_CONTINUE; // answering the answer of report
+
         case 0x0B:
             return SPEAK_BROADCAST;
         case 0x0C:
@@ -301,6 +301,7 @@ SpeakClasses_t ProtocolGame82::translateSpeakClassToInternal(char s){
             return SPEAK_PRIVATE_RED;
         case 0x0E:
             return SPEAK_CHANNEL_O;
+        // 0x0F
         case 0x10:
             return SPEAK_CHANNEL_R2;
         // 0x11
