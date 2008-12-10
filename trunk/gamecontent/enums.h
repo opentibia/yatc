@@ -98,7 +98,9 @@ enum MessageType_t{
 	MSG_INFO_DESCR          = 0x16, /*Green message in game window and in the console*/
 	MSG_STATUS_SMALL        = 0x17, /*White message at the bottom of the game window"*/
 	MSG_STATUS_CONSOLE_BLUE = 0x18, /*Blue message in the console*/
-	MSG_STATUS_CONSOLE_RED  = 0x19  /*Red message in the console*/
+	MSG_STATUS_CONSOLE_RED  = 0x19, /*Red message in the console*/
+
+	MSG_STATUS_CONSOLE_ORNG2        /*Second orange message type added in 8.4 */
 };
 
 enum SpeakClasses_t{
@@ -125,7 +127,12 @@ enum SpeakClasses_t{
 
 
 	SPEAK_PRIVATE_PN, // player to npc, from 8.2 onwards
-	SPEAK_PRIVATE_NP  // npc to player, from 8.2 onwards
+	SPEAK_PRIVATE_NP,  // npc to player, from 8.2 onwards
+	SPEAK_RVR_CHANNEL, // initial send to ctrl+r channel, 8.2 onwards (?!)
+	SPEAK_RVR_ANSWER, // answer to ctrl+r channel, 8.2 onwards (?!)
+	SPEAK_RVR_CONTINUE, // answering answer to report, 8.2 onwards (?!)
+
+    SPEAK_CHANNEL_W // white, 8.4 onwards
 };
 
 struct CharacterList_t{

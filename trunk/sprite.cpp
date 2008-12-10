@@ -607,7 +607,7 @@ void Sprite::addColor(float r, float g, float b)
 	SDL_LockSurface(m_image);
 	SDL_LockSurface(m_coloredimage);
 
-bool nomoredebug=false;
+static bool nomoredebug=false;
 	for(register int i = 0; i < m_image->w; i++){
 		for(register int j =0; j < m_image->h; j++){
 		    if (!getBasicImage()) {
@@ -622,7 +622,7 @@ bool nomoredebug=false;
 				putPixel(i, j, SDL_MapRGBA(m_image->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
 
 				if ((ro*r > 50 || go*g > 50 || bo * b > 50) && ao > 0 &&  !nomoredebug) {
-				    printf("%g %g %g %d; %g %g %g %g\n", ro*r, go*g, bo*b, ao, r, g, b, 255);
+				    printf("INVALID COLOR: %g %g %g %d; %g %g %g %d\n", ro*r, go*g, bo*b, ao, r, g, b, 255);
 				    nomoredebug=true;
 				}
 			}
