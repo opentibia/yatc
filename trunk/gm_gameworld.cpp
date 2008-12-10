@@ -137,6 +137,7 @@ GM_Gameworld::GM_Gameworld()
 
 GM_Gameworld::~GM_Gameworld ()
 {
+    m_automap.flushTiles();
     DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Terminating protocol connection from gameworld...\n");
 	delete g_connection;
 	g_connection = NULL;
@@ -223,7 +224,7 @@ void GM_Gameworld::updateScene()
 	#endif
 
 	m_mapui.renderMap();
-	//if (m_automap.tileCount() > 250)
+	if (m_automap.tileCount() > 250)
         m_automap.flushTiles();
 	m_automap.renderSelf(options.w-256, 0, 256,256);
 

@@ -64,6 +64,32 @@ typedef struct {
 #include "engine.h"
 
 
+Sprite::Sprite(int w, int h, const oRGBA& c)
+{
+    // create blank sprite
+    #ifdef USE_OPENGL
+	m_pixelformat = GL_NONE;
+	#endif
+	m_image = NULL;
+	m_stretchimage = NULL;
+	m_coloredimage = NULL;
+	m_loaded = false;
+	m_smoothstretch = 0;
+    m_r = 1.f;
+    m_g = 1.f;
+    m_b = 1.f;
+
+
+    char spec[256];
+    sprintf(spec, "%d %d %g %g %g %g.blank", w,h,c.r,c.g,c.b,c.a);
+
+
+    m_filename = spec;
+    m_index = 0;
+
+    loadSurfaceFromFile(spec,0);
+
+}
 Sprite::Sprite(const std::string& filename, int index)
 {
 	#ifdef USE_OPENGL
@@ -338,9 +364,9 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
             {
                 uint8_t c;
                 fread(&c, 1, 1, f);
-                char b = (c % 6) / 5. * 255;
-                char g = ((c / 6) % 6) / 5. * 255;
-                char r = (c / 36.) / 6. * 255;
+                uint8_t b = uint8_t((c % 6) / 5. * 255);
+                uint8_t g = uint8_t(((c / 6) % 6) / 5. * 255);
+                uint8_t r = uint8_t((c / 36.) / 6. * 255);
 
                 putPixel(i,j, SDL_MapRGB(s->format,r,g,b) ,s);
             }
@@ -359,7 +385,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 
         if (!feof(f)) {
-            uint32_t marksCount=0; // map marks
+            int32_t marksCount=0; // map marks
             fread(&marksCount, 4, 1, f);
             if (marksCount >100) marksCount = 100;
             for(int i=0;i<marksCount;i++)
@@ -384,6 +410,22 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 
         #ifdef USE_OPENGL
+		m_pixelformat = GL_RGBA;
+		#endif
+        m_image = s;
+		m_loaded = true;
+
+	}
+	else if(extension=="blank"){
+	    double r,g,b,a;
+	    int w,h;
+	    sscanf(m_filename.c_str(), "%d %d %lg %lg %lg %lg", &w,&h,&r,&g,&b,&a);
+
+        SDL_Surface *s = SDL_CreateRGBSurface(SDL_SWSURFACE, 256, 256, 32, rmask, gmask, bmask, amask);
+        Uint32 color = SDL_MapRGB(m_image->format, (int)r, (int)g, (int)b);
+		SDL_FillRect(m_image, NULL, color);
+
+		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
 		#endif
         m_image = s;
@@ -704,6 +746,7 @@ SDL_Cursor* Sprite::createCursor(int topx, int topy, int w, int h, int hot_x, in
 SDL_Surface* Sprite::lockSurface()
 {
     SDL_LockSurface(m_image);
+    return m_image;
 }
 void Sprite::unlockSurface()
 {
