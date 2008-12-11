@@ -11,8 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2008-12-10 20:47+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: jakexblaster <kinhocunha@gmail.com>\n"
-"Language-Team: Heliton <helitonnordt@gmail.com>, jakexblaster "
-"<kinhocunha@gmail.com>\n"
+"Language-Team: Heliton <helitonnordt@gmail.com>, jakexblaster <kinhocunha@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,7 +33,8 @@ msgstr ""
 "para redistribuir em certas condições;\n"
 "consulte o COPYING para detalhes."
 
-#: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
+#: ../ui/uishop.cpp:231
+#: ../ui/uishop.cpp:267
 msgid " gold"
 msgstr " ouro"
 
@@ -78,7 +78,8 @@ msgstr "Status da Conta:"
 msgid "Account name:"
 msgstr "Nome da conta:"
 
-#: ../ui/login.h:61 ../ui/login.h:136
+#: ../ui/login.h:61
+#: ../ui/login.h:136
 msgid "Account number:"
 msgstr "Número da conta:"
 
@@ -100,8 +101,7 @@ msgstr "Configurações avançadas:"
 
 #: ../ui/tutorialhints.cpp:117
 msgid "Ah, the all-mighty trade window. This hint is not written yet."
-msgstr ""
-"Ah, a toda-poderosa janela de negociação. Esta dica ainda não foi escrita."
+msgstr "Ah, a toda-poderosa janela de negociação. Esta dica ainda não foi escrita."
 
 #: ../ui/uishop.cpp:100
 msgid "Amount:"
@@ -131,9 +131,14 @@ msgstr "Perícia com Machado"
 msgid "Buy"
 msgstr "Comprar"
 
-#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:154
-#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
-#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
+#: ../ui/optionsgeneral.h:122
+#: ../ui/optionsnetwork.h:154
+#: ../ui/optionsgraphics.h:140
+#: ../ui/optionsconsole.h:135
+#: ../ui/login.h:122
+#: ../ui/uioutfit.cpp:154
+#: ../ui/charlist.h:112
+#: ../ui/itemmove.h:109
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -170,16 +175,17 @@ msgstr "Controle Clássico"
 msgid "Club Fighting"
 msgstr "Perícia com Clava"
 
-#: ../gm_mainmenu.cpp:393 ../gm_mainmenu.cpp:480
+#: ../gm_mainmenu.cpp:393
+#: ../gm_mainmenu.cpp:480
 msgid "Connecting"
-msgstr ""
+msgstr "Conectando"
 
 #: ../gm_mainmenu.cpp:481
-#, fuzzy
 msgid "Connecting to the game world. Please wait."
-msgstr "Conectando no servidor..."
+msgstr "Conectando ao jogo. Favor aguardar."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:837
+#: ../ui/optionsui.h:97
+#: ../gm_gameworld.cpp:837
 msgid "Console"
 msgstr "Terminal"
 
@@ -228,11 +234,14 @@ msgstr "Detalhe"
 msgid "Distance Fighting"
 msgstr "Perícia com Distância"
 
-#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:580
+#: ../ui/optionsui.cpp:224
+#: ../gm_mainmenu.cpp:580
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
 msgstr ""
+"Devido a um problema técnico tivemos que restaurar\n"
+"o jogo"
 
 #: ../ui/optionsui.h:142
 msgid "Edit your hotkey texts"
@@ -242,11 +251,14 @@ msgstr "Editar os textos das suas hotkeys"
 msgid "Engine change"
 msgstr "Modificar motor gráfico"
 
-#: ../ui/mainmenu.cpp:44 ../ui/login.h:45
+#: ../ui/mainmenu.cpp:44
+#: ../ui/login.h:45
 msgid "Enter Game"
 msgstr "Entrar no Jogo"
 
-#: ../gm_mainmenu.cpp:545 ../gm_mainmenu.cpp:552 ../gm_mainmenu.cpp:604
+#: ../gm_mainmenu.cpp:545
+#: ../gm_mainmenu.cpp:552
+#: ../gm_mainmenu.cpp:604
 msgid "Error"
 msgstr "Erro"
 
@@ -270,11 +282,14 @@ msgstr "Perícia com Punho"
 msgid "Follow"
 msgstr "Seguir"
 
-#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:583
+#: ../ui/optionsui.cpp:227
+#: ../gm_mainmenu.cpp:583
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
 msgstr ""
+"Para mais informações sobre Tibia visite nosso\n"
+"site em"
 
 #: ../gm_mainmenu.cpp:547
 msgid ""
@@ -327,13 +342,15 @@ msgstr "Opções Gráficas"
 msgid "Gratis Premium Account"
 msgstr "Conta Premium Grátis"
 
-#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:586
+#: ../ui/optionsui.cpp:230
+#: ../gm_mainmenu.cpp:586
 msgid "Have fun in"
-msgstr ""
+msgstr "Divirta-se no "
 
-#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:584
+#: ../ui/optionsui.cpp:228
+#: ../gm_mainmenu.cpp:584
 msgid "Have fun in Tibia!"
-msgstr ""
+msgstr "Divirta-se no Tibia!"
 
 #: ../ui/uioutfit.cpp:56
 msgid "Head"
@@ -343,8 +360,11 @@ msgstr "Cabeça"
 msgid "Health"
 msgstr "Saúde"
 
-#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:140
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:367
+#: ../ui/optionsgeneral.h:108
+#: ../ui/optionsnetwork.h:140
+#: ../ui/optionsgraphics.h:126
+#: ../ui/optionsui.cpp:167
+#: ../gm_mainmenu.cpp:367
 #: ../ui/optionsconsole.h:121
 msgid "Help"
 msgstr "Ajuda"
@@ -373,7 +393,8 @@ msgstr ""
 msgid "Ignore"
 msgstr "Ignorar"
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:356
+#: ../ui/mainmenu.cpp:78
+#: ../gm_mainmenu.cpp:356
 msgid "Info"
 msgstr "Info"
 
@@ -393,24 +414,20 @@ msgstr "Convidar para o Time"
 msgid "Level"
 msgstr "Nível"
 
-#: ../mapui.cpp:559 ../ui/uiinventory.cpp:179
+#: ../mapui.cpp:559
+#: ../ui/uiinventory.cpp:179
 msgid "Look"
 msgstr "Olhar"
 
 #: ../ui/tutorialhints.cpp:127
 msgid ""
-"Looks like you've met a marked player. See the skull? That means that guy "
-"fought \n"
-"with someone. The {white skull} means he just tried to fight with someone a "
-"few \n"
+"Looks like you've met a marked player. See the skull? That means that guy fought \n"
+"with someone. The {white skull} means he just tried to fight with someone a few \n"
 "minutes ago, and {red skull} means he killed several people."
 msgstr ""
-"Parece que você encontrou um jogador marcado. Consegue ver a caveira? "
-"Significa que\n"
-"este cara lutou contra alguem. A {caveira branca} significa que ele tentou "
-"lutar contra\n"
-"alguém a alguns minutos atrás, e a {caveira vermelha} significa que ele "
-"matou muita gente."
+"Parece que você encontrou um jogador marcado. Consegue ver a caveira? Significa que\n"
+"este cara lutou contra alguem. A {caveira branca} significa que ele tentou lutar contra\n"
+"alguém a alguns minutos atrás, e a {caveira vermelha} significa que ele matou muita gente."
 
 #: ../ui/skills.h:202
 msgid "Magic Level"
@@ -420,7 +437,8 @@ msgstr "Nível Mágico"
 msgid "Mana"
 msgstr "Magia"
 
-#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:589
+#: ../ui/optionsui.cpp:233
+#: ../gm_mainmenu.cpp:589
 msgid "Message of the Day"
 msgstr "Mensagem do Dia"
 
@@ -448,7 +466,8 @@ msgstr "Comercializar com o NPC"
 msgid "Network"
 msgstr "Rede"
 
-#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:70
+#: ../ui/mainmenu.cpp:55
+#: ../ui/optionsnetwork.h:70
 msgid "Network Options"
 msgstr "Opções de Rede"
 
@@ -465,9 +484,15 @@ msgstr ""
 msgid "OT Encryption Key"
 msgstr "Chave de Encriptação do OT"
 
-#: ../ui/optionsui.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
-#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
+#: ../ui/optionsui.h:186
+#: ../ui/optionsgeneral.h:115
+#: ../ui/optionsnetwork.h:147
+#: ../ui/optionsgraphics.h:133
+#: ../ui/optionsconsole.h:128
+#: ../ui/login.h:113
+#: ../ui/uishop.cpp:145
+#: ../ui/uioutfit.cpp:145
+#: ../ui/charlist.h:104
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "Ok"
@@ -480,7 +505,8 @@ msgstr ""
 "Ok; você pode tentar também {clicar} no {minimapa}. Por exemplo,\n"
 "há um {marcador} no minimapa agora, tente ir para lá."
 
-#: ../mapui.cpp:571 ../ui/uiinventory.cpp:184
+#: ../mapui.cpp:571
+#: ../ui/uiinventory.cpp:184
 msgid "Open"
 msgstr "Abrir"
 
@@ -502,7 +528,8 @@ msgstr ""
 " desde que será mais lento na maioria dos laptops e talvez\n"
 " em vários desktops.\n"
 
-#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76
+#: ../ui/mainmenu.cpp:66
+#: ../ui/optionsui.h:76
 msgid "Options"
 msgstr "Opções"
 
@@ -540,10 +567,14 @@ msgstr "Primário"
 msgid "Programmed by"
 msgstr "Programado por"
 
-#: ../ui/optionsnetwork.h:120 ../ui/optionsnetwork.h:121
-#: ../ui/optionsnetwork.h:122 ../ui/optionsnetwork.h:123
-#: ../ui/optionsnetwork.h:124 ../ui/optionsnetwork.h:125
-#: ../ui/optionsnetwork.h:126 ../ui/optionsnetwork.h:127
+#: ../ui/optionsnetwork.h:120
+#: ../ui/optionsnetwork.h:121
+#: ../ui/optionsnetwork.h:122
+#: ../ui/optionsnetwork.h:123
+#: ../ui/optionsnetwork.h:124
+#: ../ui/optionsnetwork.h:125
+#: ../ui/optionsnetwork.h:126
+#: ../ui/optionsnetwork.h:127
 msgid "Protocol"
 msgstr "Protocolo"
 
@@ -623,7 +654,8 @@ msgstr ""
 msgid "Server port:"
 msgstr "Porta do servidor:"
 
-#: ../mapui.cpp:584 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:584
+#: ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Colocar Traje"
 
@@ -701,8 +733,7 @@ msgstr "Habilidades"
 
 #: ../ui/tutorialhints.cpp:100
 msgid ""
-"So the {container window} opened. {Drag} whatever's in it into your {bag} "
-"to \n"
+"So the {container window} opened. {Drag} whatever's in it into your {bag} to \n"
 "take it with you. You need to collect three cockroach legs for the NPC!"
 msgstr ""
 "Então a {janela de contêiner} se abriu. {Arraste} qualquer coisa de dentro\n"
@@ -723,19 +754,14 @@ msgstr "Perícia com Espada"
 
 #: ../ui/tutorialhints.cpp:104
 msgid ""
-"The {shovel}, which is now in your inventory, is used to dig stuff up. "
-"It's \n"
-"very useful for exploring new areas. So go to the east, and you should find "
-"a \n"
-"{loose stone pile}, try {ctrl+clicking} on the {shovel} and then on the "
-"{stones}.\n"
+"The {shovel}, which is now in your inventory, is used to dig stuff up. It's \n"
+"very useful for exploring new areas. So go to the east, and you should find a \n"
+"{loose stone pile}, try {ctrl+clicking} on the {shovel} and then on the {stones}.\n"
 "When you use an item on another item, it's called extended using."
 msgstr ""
 "A {pá}, que agora está no seu inventário, é usada para escavar. É bastante\n"
-"util para explorar novas áreas. Então vá para o leste, e você deverá "
-"encontrar\n"
-"{algumas pedras}, tente {segurar o Ctrl e clicar} na {pá} e então clicar "
-"nas\n"
+"util para explorar novas áreas. Então vá para o leste, e você deverá encontrar\n"
+"{algumas pedras}, tente {segurar o Ctrl e clicar} na {pá} e então clicar nas\n"
 "{pedras}. Quando você usa um item junto com outro, chamamos de uso extendido."
 
 #: ../ui/tutorialhints.cpp:80
@@ -746,7 +772,8 @@ msgstr ""
 "Há uma {arca} aqui. Então tente {clicar segurando o Ctrl} (é como\n"
 "'Usar' através do menu) sobre isso para abri-la."
 
-#: ../mapui.cpp:692 ../ui/uiinventory.cpp:218
+#: ../mapui.cpp:692
+#: ../ui/uiinventory.cpp:218
 msgid "This functionality is not yet finished"
 msgstr "Esta funcionalidade não está pronta ainda"
 
@@ -770,8 +797,7 @@ msgid ""
 msgstr ""
 "Para acender a {tocha}, tente {segurar o Ctrl e clicar}. Tochas queimam\n"
 "devagar quando estão em uso, então não esqueça de {apagar} ('Usar') ela\n"
-"quando nao precisar da sua luz. Várias coisas podem ser 'usadas' neste "
-"jogo,\n"
+"quando nao precisar da sua luz. Várias coisas podem ser 'usadas' neste jogo,\n"
 "pois tente ao redor."
 
 #: ../ui/uiinventory.cpp:189
@@ -786,11 +812,13 @@ msgstr "Dica de Tutorial"
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: ../mapui.cpp:573 ../ui/uiinventory.cpp:186
+#: ../mapui.cpp:573
+#: ../ui/uiinventory.cpp:186
 msgid "Use"
 msgstr "Usar"
 
-#: ../mapui.cpp:568 ../ui/uiinventory.cpp:181
+#: ../mapui.cpp:568
+#: ../ui/uiinventory.cpp:181
 msgid "Use with..."
 msgstr "Usar com..."
 
@@ -806,23 +834,28 @@ msgstr "Usa OpenGL"
 msgid "Uses SDL"
 msgstr "Usa SDL"
 
-#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:582
+#: ../ui/optionsui.cpp:226
+#: ../gm_mainmenu.cpp:582
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
 msgstr ""
+"Nos desculpamos por qualquer incoveniência. É claro\n"
+"que trabalhamos duro para prevenir tais problemas no futuro."
 
 #: ../ui/optionsui.cpp:114
 msgid "We offer two graphical engines:\n"
 msgstr "Nós oferecemos dois motores gráficos:\n"
 
-#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:585
+#: ../ui/optionsui.cpp:229
+#: ../gm_mainmenu.cpp:585
 msgid "Welcome to"
-msgstr ""
+msgstr "Bem-vindo ao "
 
-#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:579
+#: ../ui/optionsui.cpp:223
+#: ../gm_mainmenu.cpp:579
 msgid "Welcome to Tibia!"
-msgstr ""
+msgstr "Bem-vindo ao Tibia!"
 
 #: ../ui/tutorialhints.cpp:70
 msgid "Welcome to YATC! Use {arrows} or {mouse} to move around."
@@ -830,22 +863,17 @@ msgstr "Bem vindo ao YATC! Use {as setas} ou o {mouse} para se movimentar."
 
 #: ../ui/tutorialhints.cpp:120
 msgid ""
-"Welcome to the village! There are a few more marks on your map now with "
-"important\n"
-"locations and NPCs. You're now supposed to fight until level 8, when you "
-"can \n"
+"Welcome to the village! There are a few more marks on your map now with important\n"
+"locations and NPCs. You're now supposed to fight until level 8, when you can \n"
 "choose a vocation and go to the mainland."
 msgstr ""
-"Bem vindo a vila! Existem mais alguns marcadores no seu mapa com "
-"localizações\n"
-"importantes e NPCs. Presupõe-se que você irá lutar até o nível 8, quando "
-"você\n"
+"Bem vindo a vila! Existem mais alguns marcadores no seu mapa com localizações\n"
+"importantes e NPCs. Presupõe-se que você irá lutar até o nível 8, quando você\n"
 "irá escolher uma vocação e ir para a ilha principal."
 
 #: ../ui/tutorialhints.cpp:96
 msgid ""
-"Why fight if you can't profit, right? So when you kill something, just "
-"loot \n"
+"Why fight if you can't profit, right? So when you kill something, just loot \n"
 "its {body}. Just do a {ctrl+click} on it."
 msgstr ""
 "Porque lutar se você não pode lucrar, né? Então quando matar algo, vasculhe\n"
@@ -853,17 +881,15 @@ msgstr ""
 
 #: ../ui/tutorialhints.cpp:110
 msgid ""
-"With the {rope} you can climb up from dungeons and caves. Find a {rope "
-"spot}, \n"
+"With the {rope} you can climb up from dungeons and caves. Find a {rope spot}, \n"
 "{ctrl+click} on the {rope}, and then on the {rope spot}."
 msgstr ""
-"Com a {corda} você pode subir calabouços e cavernas. Procure uma {marca de "
-"corda},\n"
+"Com a {corda} você pode subir calabouços e cavernas. Procure uma {marca de corda},\n"
 "{segure Ctrl e clique} na {corda}, e então clique na {marca de corda}."
 
 #: ../gm_mainmenu.cpp:394
 msgid "Your character list is being loaded. Please wait."
-msgstr ""
+msgstr "A lista de personagens está sendo carregada. Favor aguardar."
 
 #: ../gm_mainmenu.cpp:334
 msgid "[for info run with GL engine]\n"
@@ -877,9 +903,10 @@ msgstr "compilado com"
 msgid "days left"
 msgstr "dias restantes"
 
-#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:581
+#: ../ui/optionsui.cpp:225
+#: ../gm_mainmenu.cpp:581
 msgid "to the state of"
-msgstr ""
+msgstr "ao estado de"
 
 #: ../gm_mainmenu.cpp:341
 msgid "with inactive developers"
@@ -887,6 +914,6 @@ msgstr "com desenvolvedores inativos"
 
 #~ msgid "Entering game"
 #~ msgstr "Entrando no jogo"
-
 #~ msgid "Logging in"
 #~ msgstr "Entrando"
+
