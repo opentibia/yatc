@@ -1,12 +1,12 @@
 CFLAGS= -O0 -g3 -Wall
 all:  pictool
 clean: 
-	rm main.o ../../sprdata.o
+	rm main.o picfuncs.o ../../sprdata.o 
 
 rebuild: clean all
 
-pictool: main.o ../../sprdata.o
-	$(CC) main.o ../../sprdata.o -o pictool  -lSDL -O0 -g3
+pictool: main.o picfuncs.o ../../sprdata.o
+	$(CC) main.o picfuncs.o ../../sprdata.o -o pictool  -lSDL -O0 -g3
 
 YATC.pic: pictool ../../yatc.bmp ../../inv.bmp
 	cp ../../831/Tibia.pic YATC.pic
@@ -16,5 +16,6 @@ YATC.pic: pictool ../../yatc.bmp ../../inv.bmp
 #	cp YATC.pic Tibia.pic
 	cp YATC.pic ../../Tibia.pic
 
-main.c: ../../sprdata.h
+main.c: picfuncs.h ../../sprdata.h
 
+picfuncs.c: picfuncs.h

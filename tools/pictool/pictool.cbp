@@ -36,7 +36,7 @@
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="tibia.pic 3 tibia3.bmp " />
+				<Option parameters="..\..\tibia.pic 3 tibia3.bmp " />
 				<Compiler>
 					<Add option="-g3 -O0" />
 				</Compiler>
@@ -68,16 +68,20 @@
 		<Linker>
 			<Add library="SDL" />
 		</Linker>
+		<Unit filename="..\..\exchndl2.cxx">
+			<Option target="Debug Windows" />
+		</Unit>
 		<Unit filename="..\..\sprdata.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\sprdata.h" />
-		<Unit filename="exchndl2.cxx">
-			<Option target="Debug Windows" />
-		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="picfuncs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="picfuncs.h" />
 		<Unit filename="winmain.c">
 			<Option compilerVar="CC" />
 			<Option target="Debug Windows" />
