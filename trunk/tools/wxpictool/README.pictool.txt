@@ -37,11 +37,3 @@ use your operating system's command line. This is a too wide subject, you
 will have to learn this by yourself.
 
 To read instructions, run pictool without arguments.
-
-
-		pictool comes with ABSOLUTELY NO WARRANTY;
-		for details see sections 11 and 12 in file COPYING.
-
-		This is free software, and you are welcome
-		to redistribute it under certain conditions;
-		see file COPYING for details.

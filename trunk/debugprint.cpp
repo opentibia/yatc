@@ -113,8 +113,9 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 		#ifdef WINCE
 		fclose(lf);
 		#endif
-		va_end(vl);
+
 	}
+	va_end(vl);
 }
 
 void DEBUGMARKER (unsigned int size, const char *val)
