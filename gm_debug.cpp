@@ -49,6 +49,11 @@ extern Connection* g_connection;
 
 extern bool g_running;
 
+#include "stackpanel.h"
+#define YSPWINDOWS 5
+static yatcStackPanel yatcstackpanel;
+static glictWindow yspwTest[YSPWINDOWS];
+
 void cb1(Popup::Item*) {
     ((GM_Debug*)g_game)->msgBox("You have clicked on the \"Hello world\" menu item", "Yipee");
 }
@@ -241,6 +246,20 @@ GM_Debug::GM_Debug()
     grid.addItem("Sure?", NULL, NULL);
     grid.setOnClick(cb3);
 
+    desktop.AddObject(&yatcstackpanel);
+    yatcstackpanel.SetPos(400,100);
+    yatcstackpanel.SetHeight(200);
+    yatcstackpanel.SetWidth(100);
+    yatcstackpanel.SetBGActiveness(false);
+    for (int i = 0; i < YSPWINDOWS; i++) {
+        std::stringstream s;
+        s << "yspwTest[" << i << "]";
+        yspwTest[i].SetHeight(15);
+        yspwTest[i].SetCaption(s.str().c_str());
+        yatcstackpanel.AddObject(&yspwTest[i]);
+    }
+
+
     popup = NULL;
     killpopup = false;
     map[0] = map[1] = map[2] = map[3] = NULL;
@@ -328,8 +347,6 @@ void GM_Debug::mouseEvent(SDL_Event& event)
 
 	desktop.TransformScreenCoords(&pos);
 
-    if (event.type != SDL_MOUSEMOTION)
-        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Casting click on %g %g (%d %d)\n", pos.x, pos.y, ptrx, ptry);
 
     bool hadpopup = false;
     if (popup) {
@@ -373,13 +390,18 @@ void GM_Debug::mouseEvent(SDL_Event& event)
 
     }
 
-    if (event.type == SDL_MOUSEMOTION)
-        return;
-
-    if (event.button.state == SDL_PRESSED)
-        desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
-    if (event.button.state != SDL_PRESSED)
-        desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+    if (event.type != SDL_MOUSEMOTION) {
+        if (event.button.state == SDL_PRESSED)
+            desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0);
+        else
+            desktop.CastEvent(GLICT_MOUSEUP, &pos, 0);
+    } else {
+        #if (GLICT_APIREV >= 67)
+        desktop.CastEvent(GLICT_MOUSEMOVE, &pos, 0);
+        #else
+        #warning We need GLICT apirev 67 or greater to support basic movable windows.
+        #endif
+    }
 
     if (hadpopup) {
         if (!killpopup && event.type == SDL_MOUSEBUTTONUP) {
