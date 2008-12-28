@@ -348,10 +348,10 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< b << " Vindeamatrix510\n"
 		<< "\n"
 		<< PRODUCTSHORT << gettext(" comes with ABSOLUTELY NO WARRANTY; \n"
-		   "for details see sections 11 and 12 in COPYING.\n"
+		   "for details see sections 11 and 12 in file COPYING.\n"
 		   "This is free software, and you are welcome \n"
 		   "to redistribute it under certain conditions;\n"
-		   "see COPYING for details.");
+		   "see file COPYING for details.");
 
 	m->msgBox(txt.str().c_str(), gettext("Info"), &m->pnlMainMenu.btnAbout);
 

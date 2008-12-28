@@ -6,84 +6,118 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin\Debug\wxPicTool" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Debug\" />
+			<Target title="Debug Windows">
+				<Option platforms="Windows;" />
+				<Option output="bin/Debug/wxPicTool" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D__WXDEBUG__" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-D__WXMSW__" />
 				</Compiler>
 				<ResourceCompiler>
-					<Add directory="C:\MinGW\wxWidgets-2.8.6-msw-static\lib\gcc_lib\mswd" />
+					<Add directory="C:/MinGW/wxWidgets-2.8.6-msw-static/lib/gcc_lib/mswd" />
 				</ResourceCompiler>
 				<Linker>
-					<Add directory="C:\MinGW\wxWidgets-2.8.6-msw-static\lib\gcc_lib" />
+					<Add library="libkernel32.a" />
+					<Add library="libuser32.a" />
+					<Add library="libgdi32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libcomdlg32.a" />
+					<Add library="libadvapi32.a" />
+					<Add library="libshell32.a" />
+					<Add library="libole32.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libuuid.a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libwsock32.a" />
+					<Add library="libodbc32.a" />
+					<Add library="SDL" />
+					<Add directory="C:/MinGW/wxWidgets-2.8.6-msw-static/lib/gcc_lib" />
 				</Linker>
 			</Target>
-			<Target title="Release">
-				<Option output="bin\Release\wxPicTool" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Release\" />
+			<Target title="Release Windows">
+				<Option platforms="Windows;" />
+				<Option output="bin/Release/wxPicTool" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-IC:\MinGW\include\common" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-D__WXMSW__" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lwxmsw28 -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lcomctl32 -lwsock32 -lodbc32 -ljpeg -ltiff -lpng -lz" />
+					<Add library="libkernel32.a" />
+					<Add library="libuser32.a" />
+					<Add library="libgdi32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libcomdlg32.a" />
+					<Add library="libadvapi32.a" />
+					<Add library="libshell32.a" />
+					<Add library="libole32.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libuuid.a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libwsock32.a" />
+					<Add library="libodbc32.a" />
+					<Add library="SDL" />
+				</Linker>
+			</Target>
+			<Target title="Debug Unix">
+				<Option platforms="Unix;" />
+				<Option output="wxpictool" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="`wx-config --cflags`" />
+					<Add option="-g3 -O0" />
+				</Compiler>
+				<Linker>
+					<Add option="`wx-config --libs`" />
+					<Add option="-g3 -O0" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-pipe" />
-			<Add option="-mthreads" />
-			<Add option='[[if (PLATFORM == PLATFORM_MSW &amp;&amp; (GetCompilerFactory().GetCompilerVersionString(_T(&quot;gcc&quot;)) &gt;= _T(&quot;4.0.0&quot;))) print(_T(&quot;-Wno-attributes&quot;));]]' />
-			<Add option="-D__GNUWIN32__" />
-			<Add option="-D__WXMSW__" />
-			<Add directory="C:\MinGW\wxWidgets-2.8.6-msw-static\include" />
-			<Add directory="C:\MinGW\wxWidgets-2.8.6-msw-static\contrib\include" />
+			<Add option='[[if (PLATFORM == PLATFORM_MSW &amp;&amp; (GetCompilerFactory().GetCompilerVersionString(_T(&quot;gcc&quot;)) &gt;= _T(&quot;4.0.0&quot;))) print(_T(&quot;-Wno-attributes -mthreads&quot;));]]' />
+			<Add directory="C:/MinGW/wxWidgets-2.8.6-msw-static/include" />
+			<Add directory="C:/MinGW/wxWidgets-2.8.6-msw-static/contrib/include" />
 		</Compiler>
 		<ResourceCompiler>
-			<Add directory="C:\MinGW\wxWidgets-2.8.6-msw-static\include" />
+			<Add directory="C:/MinGW/wxWidgets-2.8.6-msw-static/include" />
 		</ResourceCompiler>
 		<Linker>
-			<Add library="libkernel32.a" />
-			<Add library="libuser32.a" />
-			<Add library="libgdi32.a" />
-			<Add library="libwinspool.a" />
-			<Add library="libcomdlg32.a" />
-			<Add library="libadvapi32.a" />
-			<Add library="libshell32.a" />
-			<Add library="libole32.a" />
-			<Add library="liboleaut32.a" />
-			<Add library="libuuid.a" />
-			<Add library="libcomctl32.a" />
-			<Add library="libwsock32.a" />
-			<Add library="libodbc32.a" />
 			<Add library="SDL" />
 		</Linker>
-		<Unit filename="..\..\sprdata.c">
+		<Unit filename="../../sprdata.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\sprdata.h" />
-		<Unit filename="..\pictool\picfuncs.c">
+		<Unit filename="../../sprdata.h" />
+		<Unit filename="../pictool/picfuncs.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\pictool\picfuncs.h" />
+		<Unit filename="../pictool/picfuncs.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
+			<Option target="Debug Windows" />
+			<Option target="Release Windows" />
 		</Unit>
 		<Unit filename="wxPicToolApp.cpp" />
 		<Unit filename="wxPicToolApp.h" />
 		<Unit filename="wxPicToolMain.cpp" />
 		<Unit filename="wxPicToolMain.h" />
-		<Unit filename="wxsmith\wxPicToolframe.wxs" />
+		<Unit filename="wxsmith/wxPicToolframe.wxs" />
 		<Extensions>
 			<code_completion />
 			<envvars />

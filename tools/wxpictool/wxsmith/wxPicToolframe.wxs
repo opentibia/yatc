@@ -5,7 +5,7 @@
 		<size>400,405</size>
 		<bg>wxSYS_COLOUR_BTNFACE</bg>
 		<id_arg>0</id_arg>
-		<style>wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxMINIMIZE_BOX|wxSIMPLE_BORDER</style>
+		<style>wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxMINIMIZE_BOX|wxSTATIC_BORDER</style>
 		<handler function="OnClose" entry="EVT_CLOSE" />
 		<object class="wxStaticText" name="ID_STATICTEXT1" variable="lblProgramName" member="yes">
 			<label>wxPicTool</label>
@@ -60,8 +60,8 @@
 					</object>
 					<object class="wxButton" name="ID_BUTTON4" variable="btnExtractOne" member="yes">
 						<label>Extract to ...</label>
-						<pos>200,72</pos>
-						<size>128,23</size>
+						<pos>190,72</pos>
+						<size>150,23</size>
 						<handler function="OnbtnExtractOneClick" entry="EVT_BUTTON" />
 					</object>
 				</object>
@@ -97,8 +97,8 @@
 					</object>
 					<object class="wxButton" name="ID_BUTTON5" variable="btnImportOne" member="yes">
 						<label>Import from ...</label>
-						<pos>200,72</pos>
-						<size>128,23</size>
+						<pos>190,72</pos>
+						<size>150,23</size>
 						<handler function="OnbtnImportOneClick" entry="EVT_BUTTON" />
 					</object>
 				</object>

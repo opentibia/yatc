@@ -19,6 +19,7 @@
 
 #include <wx/filedlg.h>
 #include <wx/dirdlg.h>
+#include <errno.h>
 #include "../pictool/picfuncs.h"
 //helper functions
 enum wxbuildinfoformat {
@@ -90,7 +91,7 @@ wxPicToolFrame::wxPicToolFrame(wxWindow* parent,wxWindowID id)
     wxMenuBar* MenuBar1;
     wxMenu* Menu2;
 
-    Create(parent, wxID_ANY, _("wxPicTool"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxMINIMIZE_BOX|wxSIMPLE_BORDER, _T("wxID_ANY"));
+    Create(parent, wxID_ANY, _("wxPicTool"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxMINIMIZE_BOX|wxSTATIC_BORDER, _T("wxID_ANY"));
     SetClientSize(wxSize(400,405));
     SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
     lblProgramName = new wxStaticText(this, ID_STATICTEXT1, _("wxPicTool"), wxPoint(16,24), wxDefaultSize, 0, _T("ID_STATICTEXT1"));
@@ -111,7 +112,7 @@ wxPicToolFrame::wxPicToolFrame(wxWindow* parent,wxWindowID id)
     lstTBChoice->Append(_("7 - AAFont"));
     txtTBChoice = new wxTextCtrl(Panel3, ID_TXTTBCHOICE, wxEmptyString, wxPoint(88,144), wxSize(56,21), 0, wxDefaultValidator, _T("ID_TXTTBCHOICE"));
     StaticText1 = new wxStaticText(Panel3, ID_STATICTEXT2, _("Custom:"), wxPoint(24,152), wxDefaultSize, 0, _T("ID_STATICTEXT2"));
-    btnExtractOne = new wxButton(Panel3, ID_BUTTON4, _("Extract to ..."), wxPoint(200,72), wxSize(128,23), 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    btnExtractOne = new wxButton(Panel3, ID_BUTTON4, _("Extract to ..."), wxPoint(190,72), wxSize(150,23), 0, wxDefaultValidator, _T("ID_BUTTON4"));
     page = new wxPanel(nbActions, ID_PANEL5, wxDefaultPosition, wxSize(297,182), wxTAB_TRAVERSAL, _T("ID_PANEL5"));
     lstFBChoice = new wxListBox(page, ID_LISTBOX2, wxPoint(16,16), wxSize(132,120), 0, 0, 0, wxDefaultValidator, _T("ID_LISTBOX2"));
     lstFBChoice->Append(_("0 - Background"));
@@ -124,7 +125,7 @@ wxPicToolFrame::wxPicToolFrame(wxWindow* parent,wxWindowID id)
     lstFBChoice->Append(_("7 - AAFont"));
     txtFBChoice = new wxTextCtrl(page, ID_TEXTCTRL2, wxEmptyString, wxPoint(88,144), wxSize(56,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
     StaticText5 = new wxStaticText(page, ID_STATICTEXT6, _("Custom:"), wxPoint(24,152), wxDefaultSize, 0, _T("ID_STATICTEXT6"));
-    btnImportOne = new wxButton(page, ID_BUTTON5, _("Import from ..."), wxPoint(200,72), wxSize(128,23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
+    btnImportOne = new wxButton(page, ID_BUTTON5, _("Import from ..."), wxPoint(190,72), wxSize(150,23), 0, wxDefaultValidator, _T("ID_BUTTON5"));
     Panel1 = new wxPanel(nbActions, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
     btnExtractAll = new wxButton(Panel1, ID_BUTTON1, _("Extract all"), wxPoint(144,80), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
     StaticText3 = new wxStaticText(Panel1, ID_STATICTEXT4, _("Files will be called Tibia0.bmp, Tibia1.bmp, ..."), wxPoint(80,48), wxDefaultSize, 0, _T("ID_STATICTEXT4"));
@@ -135,10 +136,10 @@ wxPicToolFrame::wxPicToolFrame(wxWindow* parent,wxWindowID id)
     nbActions->AddPage(page, _("One from BMP"), false);
     nbActions->AddPage(Panel1, _("All to BMP"), false);
     nbActions->AddPage(Panel2, _("All from BMP"), false);
-    btnPic = new wxButton(this, ID_BTNPIC, _("Browse..."), wxPoint(264,88), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BTNPIC"));
+    btnPic = new wxButton(this, ID_BTNPIC, _("Browse..."), wxPoint(264,88), wxSize(85,24), 0, wxDefaultValidator, _T("ID_BTNPIC"));
     StaticText2 = new wxStaticText(this, ID_STATICTEXT3, _("Choose dir:"), wxPoint(16,120), wxDefaultSize, 0, _T("ID_STATICTEXT3"));
     txtOutput = new wxTextCtrl(this, ID_TEXTCTRL1, _("./"), wxPoint(96,112), wxSize(152,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
-    btnOutput = new wxButton(this, ID_BUTTON2, _("Browse..."), wxPoint(264,112), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    btnOutput = new wxButton(this, ID_BUTTON2, _("Browse..."), wxPoint(264,112), wxSize(85,24), 0, wxDefaultValidator, _T("ID_BUTTON2"));
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -186,12 +187,18 @@ void wxPicToolFrame::OnQuit(wxCommandEvent& event)
 void wxPicToolFrame::OnAbout(wxCommandEvent& event)
 {
     wxString msg = wxbuildinfo(long_f);
-    wxMessageBox(_("wxPicTool\n"
+    wxMessageBox(_("wxPicTool 0.8 SVN\n"
                    "\n"
                    "Adaptation of ANSI C PicTool from OpenTibia project.\n"
                    "ANSI C PicTool (c) 2007-2008 Ivan Vucica\n"
                    "wxPicTool (c) 2008 Ivan Vucica\n"
-                   "\n")
+                   "\n"
+                   "wxPicTool comes with ABSOLUTELY NO WARRANTY; \n"
+                   "for details see sections 11 and 12 in file COPYING.\n"
+                   "This is free software, and you are welcome \n"
+		           "to redistribute it under certain conditions;\n"
+		           "see file COPYING for details.\n"
+		           "\n")
                    + msg, _("wxPicTool"));
 }
 
