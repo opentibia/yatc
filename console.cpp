@@ -51,6 +51,7 @@ Console::~Console()
 }
 void Console::paintConsole(float left, float top, float right, float bottom)
 {
+    g_engine->setClipping(left,top,right-left,bottom-top);
     for(int i = left; i < right; i += 96){
 		for(int j = top; j < bottom; j += 96){
 			g_engine->getUISprite()->Blit(i, j, 0, 0, MIN(right-i, 96), MIN(bottom-j, 96));
@@ -65,6 +66,7 @@ void Console::paintConsole(float left, float top, float right, float bottom)
 		if (y < top)
 			break;
 	}
+	g_engine->resetClipping();
 
 }
 void Console::insertEntry(ConsoleEntry ce) {

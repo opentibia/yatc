@@ -94,9 +94,6 @@ void Automap::updateSelf()
                         uint8_t g = uint8_t(((c / 6) % 6) / 5. * 255);
                         uint8_t r = uint8_t((c / 36.) / 6. * 255);
 
-                        printf("%d %d\n", it->x, it->y);
-                        printf("format %p\n", s->format);
-                        printf("surface %p\n", s);
                         map[mapcount-1]->putPixel(it->x % 256,it->y % 256,SDL_MapRGB(s->format,r,g,b),s);
 
                     }

@@ -73,13 +73,61 @@ GM_Gameworld::GM_Gameworld()
 	m_protocol = (ProtocolGame*)g_connection->getProtocol();
 
 	#ifndef WINCE
-	desktop.AddObject(&pnlInventory.panel);
-	pnlInventory.panel.SetPos(600, 20);
-	desktop.AddObject(&winSkills.window);
-	winSkills.window.SetPos(600, 180);
-	desktop.AddObject(&pnlHealth.panel);
-	pnlHealth.panel.SetPos(600, 350);
+	// first, let's construct right side panel
+	desktop.AddObject(&pnlRightSide);
+	pnlRightSide.SetPos(750 - (150 + 4), 0 );
+	pnlRightSide.SetWidth(150 + 4); // 4 is for border
+	pnlRightSide.SetHeight(600); // dynamic and updated later
+	pnlRightSide.SetSkin(&g_skin.cbp);
+
+	pnlRightSide.AddObject(&yspRightSide);
+	yspRightSide.SetPos(0,0);
+	yspRightSide.SetBGActiveness(false);
+	yspRightSide.SetWidth(150);
+	yspRightSide.SetHeight(600); // dynamic and updated later
+
+	#if (GLICT_APIREV>=95)
+	#define RIGHTSIDE yspRightSide
+	#define AUTOSETPOS true
+	#else
+	#define RIGHTSIDE pnlRightSide
+	#define AUTOSETPOS false
+	#warning You are using too old GLICT; right side bar will be messed up.
 	#endif
+
+
+
+
+
+    // objects which didnt get set up in constructors and require initial setup...
+    pnlTraffic.SetWidth(150);
+	pnlTraffic.SetHeight(40);
+    pnlTraffic.SetSkin(&g_skin.inv);
+	pnlTraffic.SetFont("gamefont", 10);
+	pnlTraffic.SetCaption("...");
+
+
+    // now let's get crackin
+
+    RIGHTSIDE.AddObject(&pnlTraffic);
+	if (!AUTOSETPOS) pnlTraffic.SetPos(10,10);
+	RIGHTSIDE.AddObject(&pnlInventory.panel);
+	if (!AUTOSETPOS) pnlInventory.panel.SetPos(600, 20);
+	RIGHTSIDE.AddObject(&winSkills.window);
+	if (!AUTOSETPOS) winSkills.window.SetPos(600, 180);
+	RIGHTSIDE.AddObject(&pnlHealth.panel);
+	if (!AUTOSETPOS) pnlHealth.panel.SetPos(600, 350);
+
+	#if (GLICT_APIREV>=95)
+    yspRightSide.RebuildList();
+    pnlTraffic.Focus(NULL);
+    #endif
+
+	#endif
+
+
+
+
 	desktop.AddObject(&winShop.window);
 	winShop.window.SetPos(600,450);
 	winShop.window.SetVisible(false);
@@ -87,20 +135,21 @@ GM_Gameworld::GM_Gameworld()
 	winTrade.window.SetPos(600, 450);
 	winTrade.window.SetVisible(false);
 
+
+
+
+
+
+
+
 	desktop.AddObject(&winOutfit.window);
 	winOutfit.window.SetPos(200,200);
 	winOutfit.window.SetVisible(false);
 
-	desktop.AddObject(&pnlTraffic);
-	pnlTraffic.SetPos(10,10);
-	pnlTraffic.SetWidth(200);
-	pnlTraffic.SetHeight(40);
-	pnlTraffic.SetBGActiveness(false);
-	pnlTraffic.SetFont("gamefont", 10);
-	pnlTraffic.SetCaption("...");
 	desktop.AddObject(&txtConsoleEntry);
 	txtConsoleEntry.SetHeight(12);
 	txtConsoleEntry.SetCaption("");
+
 	desktop.AddObject(&winMove.window);
 	winMove.window.SetVisible(false);
 
@@ -173,13 +222,17 @@ void GM_Gameworld::doResize(float w, float h)
 	desktop.SetHeight(h);
 	desktop.ResetTransformations();
 
-	txtConsoleEntry.SetWidth(w);
+	pnlRightSide.SetHeight(h);
+	yspRightSide.SetHeight(h);
+	pnlRightSide.SetPos(w-150,0); // ysp is always on 0,0
+
+	txtConsoleEntry.SetWidth(w-150);
 	txtConsoleEntry.SetPos(0,h-12);
 
 	pnlTraffic.SetPos(w-200, 0);
 
     pnlConsoleButtonContainer.SetPos(0,glictGlobals.h-150-18);
-    pnlConsoleButtonContainer.SetWidth(glictGlobals.w);
+    pnlConsoleButtonContainer.SetWidth(glictGlobals.w-150);
     pnlConsoleButtonContainer.SetHeight(18);
 
 	DEBUGPRINT(0,0,"Updating scene\n");
@@ -255,6 +308,7 @@ void GM_Gameworld::updateScene()
 
     if (m_popup)
         if (m_popup->wantsDeath()) {
+            printf("Removing popup\n");
             desktop.RemoveObject(m_popup->getGlictList());
             desktop.DelayedRemove();
             delete m_popup;
@@ -266,7 +320,7 @@ void GM_Gameworld::updateScene()
 	g_engine->resetClipping();
 
 
-	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w, glictGlobals.h-12);
+	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-150, glictGlobals.h-12);
 
 
 }
@@ -481,12 +535,13 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
     if (event.type == SDL_MOUSEMOTION) {
         #if (GLICT_APIREV >= 67)
+        //printf("Casting mousemove\n");
         desktop.CastEvent(GLICT_MOUSEMOVE, &pos, 0);
         #else
         #warning We need GLICT apirev 67 or greater to support basic movable windows.
         #endif
         if (m_draggingPrep && !m_dragging) {
-            printf("Move %g %g compared to %g %g\n", pos.x, pos.y, m_dragBegin.x, m_dragBegin.y);
+            //printf("Move %g %g compared to %g %g\n", pos.x, pos.y, m_dragBegin.x, m_dragBegin.y);
             if (abs(int(pos.x - m_dragBegin.x)) > 2 || abs(int(pos.y - m_dragBegin.y)) > 2) {
                 uint32_t x,y,z;
                 m_dragging = true; // TODO (ivucica#5#) kick out m_dragging; m_dragThing can be NULL when we're not draggging
@@ -588,8 +643,6 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                     Position dest(dx, dy, dz);
 					dragComplete(dest);
                     dismissDrag();
-                    printf("Released from drag\n");
-
                 }
                 dismissDrag();
                 m_draggingPrep = false;
@@ -979,7 +1032,6 @@ void GM_Gameworld::dragComplete(Position& toPos)
 			else if(dragItem->getCount() > 1)
 				throwDialog = true;
 		}
-
 		if(!throwDialog) {
 			m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, toPos, count);
 		}

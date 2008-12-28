@@ -32,6 +32,7 @@
 #include "ui/uishop.h"
 #include "ui/uitrade.h"
 #include "ui/uioutfit.h"
+#include "stackpanel.h"
 #include "automap.h"
 
 class Console;
@@ -88,7 +89,12 @@ public:
     bool isExtendedUsing() const { return (m_extendedthing != NULL); }
 
 	bool isDragging() const {return m_dragging;}
-	void dismissDrag() { if (m_dragging) SDL_SetCursor(g_engine->m_cursorBasic); m_dragging = false; m_draggingPrep = false; }
+	void dismissDrag() {
+	    if (m_dragging)
+            SDL_SetCursor(g_engine->m_cursorBasic);
+        m_dragging = false;
+        m_draggingPrep = false;
+    }
 	void getDragData(const Thing*& dragThing, Position& dragPos, int& dragStackPos) const {
 	    dragThing = m_dragThing;
 	    dragPos = m_dragPos;
@@ -125,6 +131,9 @@ private:
 
     /* PRIMARY GUI */
 	glictContainer desktop;
+	glictPanel pnlRightSide;
+	yatcStackPanel yspRightSide;
+
 	pnlInventory_t pnlInventory;
 	pnlHealth_t pnlHealth;
 	winSkills_t winSkills;

@@ -44,8 +44,8 @@ class EngineSDL : public Engine
 			SDL_Flip(m_screen);
 		}
 
-        void setClipping(int top, int left, int width, int height) {
-            SDL_Rect r = {top, left, width, height};
+        void setClipping(int left, int top, int width, int height) {
+            SDL_Rect r = {left, top, width, height};
             SDL_SetClipRect(m_screen, &r);
         }
 		void resetClipping() {
