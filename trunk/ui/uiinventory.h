@@ -81,7 +81,7 @@ public:
     static void onUse(Popup::Item*);
     static void onTrade(Popup::Item*);
 
-	/*glictContainer*/glictWindow panel; // it's a container, so it's transparent
+	glictWindow panel;
 	glictPanel pnlItem[10];
 
 };

@@ -42,7 +42,7 @@ extern "C" {
 #if (0)
 #define dbgprintf printf
 #else
-static void dbgprintf(const char* txt, ...) {}
+#define dbgprintf
 #endif
 
 #include <SDL/SDL.h>

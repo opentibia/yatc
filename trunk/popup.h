@@ -47,6 +47,8 @@
 
 
 
+
+typedef glictPanel popupItemGUIType;
 class Popup {
 
 public:
@@ -56,7 +58,7 @@ public:
     struct Item {
         std::string txt;
 
-        glictPanel pnl;
+        popupItemGUIType pnl;
         Callback_t cb;
         void* data;
         class Popup* parent;
