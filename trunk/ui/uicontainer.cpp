@@ -170,6 +170,7 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 {
     if (g_lastmousebutton != SDL_BUTTON_LEFT)
         return;
+
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
 
 	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
@@ -182,7 +183,6 @@ void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
 		Position dest(0xFFFF, id | 0x40, slot_id);
 	    gw->dragComplete(dest);
         gw->dismissDrag();
-
 	}
 }
 

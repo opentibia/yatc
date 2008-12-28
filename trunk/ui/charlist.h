@@ -126,10 +126,11 @@ public:
 
 		for (std::vector<glictPanel*>::iterator it = lsiChars.begin(); it != lsiChars.end(); it++) {
 		    #if (GLICT_APIREV >= 71)
+		    printf(".");
 		    lstChars.RemoveObject(*it);
             lstChars.DelayedRemove();
 		    #else
-            #warning Stuff wont work ok till you upgrade to GLICT APIREV < 71
+            #warning Stuff wont work ok till you upgrade to GLICT APIREV >= 71
             #endif
 
             delete (CharacterList_t*)((*it)->GetCustomData());

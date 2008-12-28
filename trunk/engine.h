@@ -63,7 +63,7 @@ class Engine
 
         virtual void resetClipping() {
         }
-        virtual void setClipping(int top, int left, int width, int height) {
+        virtual void setClipping(int left, int top, int width, int height) {
             static bool printedwarning = false;
             if (printedwarning) return;
             printedwarning = true;
