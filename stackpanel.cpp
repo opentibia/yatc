@@ -115,6 +115,8 @@ void yatcStackPanel::_updateDraggedChildPos(const glictPos &eventmousepos)
 
 void yatcStackPanel::Paint()
 {
+#if (GLICT_APIREV>=95)
     glictGlobals.PaintRect(clipleft, clipright, cliptop, MIN(clipbottom, cliptop + totalheight), glictColor(0,0,0,1));
+#endif
     glictList::Paint();
 }

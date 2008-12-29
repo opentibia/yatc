@@ -57,7 +57,7 @@ typedef struct {
 } picfileheader_t;
 typedef struct {
 	uint8_t width, height;
-	uint8_t unk1, unk2, unk3;
+	uint8_t unk1, unk2, unk3; // FIXME (ivucica#4#) zerocoolz says this should be colorkey, according to http://otfans.net/showpost.php?p=840634&postcount=134
 } picpicheader_t;
 #pragma pack()
 
@@ -264,7 +264,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
         if (where) {
             fseek(f, where, SEEK_SET);
 
-            fgetc(f); fgetc(f); fgetc(f); // TODO (ivucica#4#) maybe we should figure out what do these do?
+            fgetc(f); fgetc(f); fgetc(f); // FIXME (ivucica#4#) zerocoolz says this should be colorkey, according to http://otfans.net/showpost.php?p=840634&postcount=134
             if (readSprData(f, m_image, 0, 0)) {
                 // error happened
                 DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Problem in readSprData()\n");
