@@ -37,7 +37,7 @@ typedef struct {
 } fileheader_t;
 typedef struct {
 	uint8_t width, height;
-	uint8_t unk1, unk2, unk3;
+	uint8_t unk1, unk2, unk3; /* FIXME (ivucica#4#) zerocoolz says this should be colorkey, according to http://otfans.net/showpost.php?p=840634&postcount=134 */
 } picheader_t;
 #pragma pack()
 
