@@ -256,7 +256,7 @@ EOF
 	./configure --prefix=/usr --bindir=/usr/games --mandir=/usr/share/man --datadir=/usr/games/share --datarootdir=/usr/games/share
 
 	echo "dpkg-buildpackage"
-	dpkg-buildpackage -rfakeroot
+	dpkg-buildpackage -d -rfakeroot
 
 	echo "Output files located in $debtempdir/."
 	echo "Named: "
