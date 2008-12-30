@@ -285,7 +285,7 @@ bool Tile::addThing(Thing *thing, bool pushThing/* = false*/)
 			}
 		}
 		else{
-			if(itThingOrder > thingOrder){
+			if(itThingOrder >= thingOrder){ // this should be >= too; rendering becomes correct that way. is this overall correct, though?
 				break;
 			}
 		}

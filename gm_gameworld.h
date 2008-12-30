@@ -106,6 +106,13 @@ public:
 
     void performPopup(PopupProducerCallback cb,void*owner,void*arg);
 
+
+    Console* getDefaultConsole() { return *getDefaultConsole_it(); }
+    Console* findConsole(uint32_t channelid) { return *findConsole_it(channelid); }
+    Console* findConsole(const std::string& speaker) { return *findConsole_it(speaker); }
+    Console* getActiveConsole() const {return m_activeconsole;}
+    void setActiveConsole(Console* i);
+
 protected:
 
 private:
@@ -116,17 +123,11 @@ private:
 
 
 
-    Console* getDefaultConsole() { return *getDefaultConsole_it(); }
-    Console* findConsole(uint32_t channelid) { return *findConsole_it(channelid); }
-    Console* findConsole(const std::string& speaker) { return *findConsole_it(speaker); }
-
     static void pnlConsoleButton_OnClick(glictPos* relmousepos, glictContainer* caller);
 
     void createConsole(uint32_t channelid=0, const std::string& speaker="");
     void createConsole(const std::string& speaker) { createConsole(0,speaker); }
 
-    Console* getActiveConsole() const {return m_activeconsole;}
-    void setActiveConsole(Console* i);
 
 
     /* PRIMARY GUI */

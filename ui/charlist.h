@@ -97,6 +97,7 @@ public:
 		pnlSeparator.SetBGColor(.1,.1,.1,1.);
 		pnlSeparator.SetWidth(210);
 		pnlSeparator.SetHeight(2);
+		pnlSeparator.SetSkin(&g_skin.chk);
 
 		btnOk.SetPos(123, 247);
 		btnOk.SetWidth(43);

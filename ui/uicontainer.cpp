@@ -144,13 +144,18 @@ void winContainer_t::containerItemOnPaint(glictRect *real, glictRect *clipped, g
 
 void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer* callerclass)
 {
-    if (g_lastmousebutton != SDL_BUTTON_LEFT)
-        return;
 	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
 	uint32_t slot_id = window->getSlotId(callerclass);
 	Item* item = window->container->getItem(slot_id);
     Position p(0xFFFF, window->containerId | 0x40, slot_id);
     GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
+
+    if (g_lastmousebutton == SDL_BUTTON_RIGHT) {
+        gameclass->performPopup(winContainer_t::containerItemMakePopup,window,(void*)slot_id);
+        return;
+    }
+
 
     if (gameclass->isExtendedUsing()) {
         gameclass->performExtendedUse(p, item, 0);
@@ -213,3 +218,62 @@ void winContainer_t::containerIconOnPaint(glictRect *real, glictRect *clipped, g
 	ObjectType* t = Objects::getInstance()->getItemType(item->getID());
 	item->Blit((int)real->left, (int)real->top, 12./(32.f * MAX(t->height, t->width)));
 }
+
+
+void winContainer_t::containerItemMakePopup(Popup*popup,void*owner,void*arg){
+    winContainer_t* p = (winContainer_t*)owner;
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    slots_t slotid = ((slots_t)(VOIDP2INT(arg)));
+    Item* item = p->container->getItem(slotid);
+
+    if (!item) {
+        popup->prepareToDie();
+        return;
+    }
+
+    std::stringstream look,use,trade;
+    look << gettext("Look") << " (Shift)";
+    if (item->isExtendedUseable())
+        use << gettext("Use with...") << " (Ctrl)";
+    else
+        if (Objects::getInstance()->getItemType(item->getID())->container)
+            use << gettext("Open") << " (Ctrl)";
+        else
+            use << gettext("Use") << " (Ctrl)";
+
+
+    trade << gettext("Trade with") << " ...";
+    popup->setOwner(p);
+    popup->addItem(look.str(),onLookAt,(void*)slotid);
+    popup->addItem(use.str(),onUse,(void*)slotid);
+    popup->addItem("-",NULL,NULL);
+    popup->addItem(trade.str(),onTrade,(void*)slotid);
+}
+
+void winContainer_t::onLookAt(Popup::Item* pi){
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    winContainer_t *c = (winContainer_t *)pi->parent->getOwner();
+    slots_t slotid = ((slots_t)(VOIDP2INT(pi->data)));
+    Position p(0xFFFF, c->containerId | 0x40, slotid);
+    Item* item = c->container->getItem(slotid);
+
+    gw->m_protocol->sendLookItem(p,item->getID(), 0);
+}
+void winContainer_t::onUse(Popup::Item* pi){
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    winContainer_t *c = (winContainer_t *)pi->parent->getOwner();
+    slots_t slotid = ((slots_t)(VOIDP2INT(pi->data)));
+    Position p(0xFFFF, c->containerId | 0x40, slotid);
+    Item* item = c->container->getItem(slotid);
+
+    if (!item->isExtendedUseable()) {
+        gw->m_protocol->sendUseItem (p, item->getID(), 0);
+    } else {
+        gw->beginExtendedUse(item, 0, p);
+    }
+}
+void winContainer_t::onTrade(Popup::Item*){
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
+}
+

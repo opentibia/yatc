@@ -27,6 +27,7 @@
 #include "../gamecontent/container.h"
 #include <cmath>
 #include "../defines.h"
+#include "../popup.h"
 
 class winContainer_t {
 public:
@@ -62,6 +63,7 @@ public:
 	static void containerItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
     static void containerItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
 	static void containerItemOnMouseUp(glictPos *relmousepos, glictContainer* callerclass);
+    static void containerItemMakePopup(Popup*popup,void*owner,void*arg);
 
     glictButton closebtn;
     glictButton btnCollapse;
@@ -71,6 +73,10 @@ public:
 
     static void containerIconOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
 
+
+    static void onLookAt(Popup::Item*);
+    static void onUse(Popup::Item*);
+    static void onTrade(Popup::Item*);
 };
 
 #endif

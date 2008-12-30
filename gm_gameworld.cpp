@@ -285,7 +285,7 @@ void GM_Gameworld::updateScene()
 	m_mapui.renderMap();
 	if (m_automap.tileCount() > 250)
         m_automap.flushTiles();
-	m_automap.renderSelf(options.w-256, 0, 256,256);
+	m_automap.renderSelf(options.w-256 -170, 0, 256,256);
 
 	if (time(NULL)-m_startTime) {
 		double txbph, rxbph, trbph;
