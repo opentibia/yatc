@@ -134,6 +134,11 @@ void winContainer_t::containerItemOnPaint(glictRect *real, glictRect *clipped, g
 	if(item != NULL)
 	{
 		item->Blit((int)real->left, (int)real->top, 1.f);
+		if (item->getCount()>1) {
+            std::stringstream s;
+            s << (int)item->getCount();
+            g_engine->drawText(s.str().c_str(), "gamefont", (int)real->right - g_engine->sizeText(s.str().c_str(), "gamefont") - 2, (int)real->bottom - 12, TEXTCOLOR_WHITE);
+        }
 	}
 }
 
@@ -205,5 +210,6 @@ void winContainer_t::containerIconOnPaint(glictRect *real, glictRect *clipped, g
 {
 	Item* item = (Item*)caller->GetCustomData();
 	g_engine->resetClipping();
-	item->Blit((int)real->left, (int)real->top, 12./32.f);
+	ObjectType* t = Objects::getInstance()->getItemType(item->getID());
+	item->Blit((int)real->left, (int)real->top, 12./(32.f * MAX(t->height, t->width)));
 }

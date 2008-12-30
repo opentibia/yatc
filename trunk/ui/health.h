@@ -39,7 +39,12 @@
 
 class pnlHealth_t {
 public:
-    glictWindow panel; // 170x34
+#if (GLICT_APIREV >= 98)
+    glictPanel panel; // 170x34
+#else
+    glictWindow panel __attribute__ ((deprecated));
+#endif
+
 
     glictPanel pnlHealth; // 220,76 12x11 => 7,5 12x11
     glictPanel pnlMana; // 220,87 12x11 => 7,19 12x11
@@ -53,9 +58,16 @@ public:
 
 	pnlHealth_t() {
 
-        panel.SetCaption(gettext("Health"));
-		panel.SetWidth(170);
+		panel.SetWidth(150); // was 170
 		panel.SetHeight(34);
+		#if (GLICT_APIREV >= 98)
+		panel.SetDraggable(true);
+		panel.SetSkin(&g_skin.background);
+		panel.SetFocusable(true);
+		#else
+		#warning Health is not properly drawn until you upgrade to GLICT 98+
+		panel.SetCaption(gettext("Health"));
+		#endif
 
 		panel.AddObject(&pnlHealth);
 		pnlHealth.SetPos(7,5);
@@ -134,10 +146,12 @@ public:
         s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_HEALTH);
 		lblHealth.SetCaption(s.str());
+		lblHealth.SetPos(140-glictFontSize(s.str().c_str(), "system"), 6);
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_MANA);
 		lblMana.SetCaption(s.str());
+		lblMana.SetPos(140-glictFontSize(s.str().c_str(), "system"), 20);
     }
 
 

@@ -31,44 +31,46 @@ public:
 
 private:
 
-	skinImage *wintl, *wint, *wintr, *winl, *winc, *winr, *winbl, *winb, *winbr; // window
-	glictSkinner win;
-	skinImage *btntl, *btnt, *btntr, *btnl, *btnc, *btnr, *btnbl, *btnb, *btnbr; // button
-	glictSkinner btn;
-	skinImage *bthtl, *btht, *bthtr, *bthl, *bthc, *bthr, *bthbl, *bthb, *bthbr; // button highlighted
-	glictSkinner bth;
-	skinImage *scutl, *scut, *scutr, *scul, *scuc, *scur, *scubl, *scub, *scubr; // scrollbar up button
-	glictSkinner scu;
-	skinImage *shutl, *shut, *shutr, *shul, *shuc, *shur, *shubl, *shub, *shubr; // scrollbar up button, highlighted
-	glictSkinner shu;
-	skinImage *scdtl, *scdt, *scdtr, *scdl, *scdc, *scdr, *scdbl, *scdb, *scdbr; // scrollbar dn button
-	glictSkinner scd;
-	skinImage *shdtl, *shdt, *shdtr, *shdl, *shdc, *shdr, *shdbl, *shdb, *shdbr; // scrollbar dn button, highlighted
-	glictSkinner shd;
-	skinImage *scltl, *sclt, *scltr, *scll, *sclc, *sclr, *sclbl, *sclb, *sclbr; // scrollbar lt button
-	glictSkinner scl;
-	skinImage *shltl, *shlt, *shltr, *shll, *shlc, *shlr, *shlbl, *shlb, *shlbr; // scrollbar lt button, highlighted
-	glictSkinner shl;
-	skinImage *scrtl, *scrt, *scrtr, *scrl, *scrc, *scrr, *scrbl, *scrb, *scrbr; // scrollbar rt button
-	glictSkinner scr;
-	skinImage *shrtl, *shrt, *shrtr, *shrl, *shrc, *shrr, *shrbl, *shrb, *shrbr; // scrollbar rt button, highlighted
-	glictSkinner shr;
-	skinImage *scbtl, *scbt, *scbtr, *scbl, *scbc, *scbr, *scbbl, *scbb, *scbbr; // scrollbar drag button
-	glictSkinner scb;
-	skinImage *scptl, *scpt, *scptr, *scpl, *scpc, *scpr, *scpbl, *scpb, *scpbr; // scrollbar panel bg
-	glictSkinner scp;
+	skinImage *windowtl, *windowt, *windowtr, *windowl, *windowc, *windowr, *windowbl, *windowb, *windowbr; // window
+	glictSkinner window;
+	skinImage *btnntl, *btnnt, *btnntr, *btnnl, *btnnc, *btnnr, *btnnbl, *btnnb, *btnnbr; // button
+	glictSkinner btnn;
+	skinImage *btnhtl, *btnht, *btnhtr, *btnhl, *btnhc, *btnhr, *btnhbl, *btnhb, *btnhbr; // button highlighted
+	glictSkinner btnh;
+	skinImage *scrollbaruptl, *scrollbarupt, *scrollbaruptr, *scrollbarupl, *scrollbarupc, *scrollbarupr, *scrollbarupbl, *scrollbarupb, *scrollbarupbr; // scrollbar up button
+	glictSkinner scrollbarup;
+	skinImage *scrollbaruphtl, *scrollbarupht, *scrollbaruphtr, *scrollbaruphl, *scrollbaruphc, *scrollbaruphr, *scrollbaruphbl, *scrollbaruphb, *scrollbaruphbr; // scrollbar up button, highlighted
+	glictSkinner scrollbaruph;
+	skinImage *scrollbardntl, *scrollbardnt, *scrollbardntr, *scrollbardnl, *scrollbardnc, *scrollbardnr, *scrollbardnbl, *scrollbardnb, *scrollbardnbr; // scrollbar dn button
+	glictSkinner scrollbardn;
+	skinImage *scrollbardnhtl, *scrollbardnht, *scrollbardnhtr, *scrollbardnhl, *scrollbardnhc, *scrollbardnhr, *scrollbardnhbl, *scrollbardnhb, *scrollbardnhbr; // scrollbar dn button, highlighted
+	glictSkinner scrollbardnh;
+	skinImage *scrollbarlttl, *scrollbarltt, *scrollbarlttr, *scrollbarltl, *scrollbarltc, *scrollbarltr, *scrollbarltbl, *scrollbarltb, *scrollbarltbr; // scrollbar lt button
+	glictSkinner scrollbarlt;
+	skinImage *scrollbarlthtl, *scrollbarltht, *scrollbarlthtr, *scrollbarlthl, *scrollbarlthc, *scrollbarlthr, *scrollbarlthbl, *scrollbarlthb, *scrollbarlthbr; // scrollbar lt button, highlighted
+	glictSkinner scrollbarlth;
+	skinImage *scrollbarrttl, *scrollbarrtt, *scrollbarrttr, *scrollbarrtl, *scrollbarrtc, *scrollbarrtr, *scrollbarrtbl, *scrollbarrtb, *scrollbarrtbr; // scrollbarrtollbar rt button
+	glictSkinner scrollbarrt;
+	skinImage *scrollbarrthtl, *scrollbarrtht, *scrollbarrthtr, *scrollbarrthl, *scrollbarrthc, *scrollbarrthr, *scrollbarrthbl, *scrollbarrthb, *scrollbarrthbr; // scrollbar rt button, highlighted
+	glictSkinner scrollbarrth;
+	skinImage *scrollbarbtntl, *scrollbarbtnt, *scrollbarbtntr, *scrollbarbtnl, *scrollbarbtnc, *scrollbarbtnr, *scrollbarbtnbl, *scrollbarbtnb, *scrollbarbtnbr; // scrollbar drag button
+	glictSkinner scrollbarbtn;
+	skinImage *scrollbarbgtl, *scrollbarbgt, *scrollbarbgtr, *scrollbarbgl, *scrollbarbgc, *scrollbarbgr, *scrollbarbgbl, *scrollbarbgb, *scrollbarbgbr; // scrollbar panel bg
+	glictSkinner scrollbarbg;
 
 
 	skinImage *txttl, *txtt, *txttr, *txtl, *txtc, *txtr, *txtbl, *txtb, *txtbr; // textbox
 	skinImage *chktl, *chkt, *chktr, *chkl, *chkc, *chkr, *chkbl, *chkb, *chkbr; // checkbox
 	skinImage *tmmtl, *tmmt, *tmmtr, *tmml, *tmmc, *tmmr, *tmmbl, *tmmb, *tmmbr; // tibia main menu panel
 	skinImage *invtl, *invt, *invtr, *invl, *invc, *invr, *invbl, *invb, *invbr; // inventory item panel bg
-	skinImage *cbctl, *cbct, *cbctr, *cbcl, *cbcc, *cbcr, *cbcbl, *cbcb, *cbcbr; // console button container bg
-	skinImage *cbatl, *cbat, *cbatr, *cbal, *cbac, *cbar, *cbabl, *cbab, *cbabr; // console button active bg
-	skinImage *cbptl, *cbpt, *cbptr, *cbpl, *cbpc, *cbpr, *cbpbl, *cbpb, *cbpbr; // console button passive bg
+	skinImage *consoletabbgtl, *consoletabbgt, *consoletabbgtr, *consoletabbgl, *consoletabbgc, *consoletabbgr, *consoletabbgbl, *consoletabbgb, *consoletabbgbr; // console button container bg
+	skinImage *consoletabactivetl, *consoletabactivet, *consoletabactivetr, *consoletabactivel, *consoletabactivec, *consoletabactiver, *consoletabactivebl, *consoletabactiveb, *consoletabactivebr; // console button active bg
+	skinImage *consoletabpassivetl, *consoletabpassivet, *consoletabpassivetr, *consoletabpassivel, *consoletabpassivec, *consoletabpassiver, *consoletabpassivebl, *consoletabpassiveb, *consoletabpassivebr; // console button passive bg
+
+	skinImage *backgroundtl, *backgroundt, *backgroundtr, *backgroundl, *backgroundc, *backgroundr, *backgroundbl, *backgroundb, *backgroundbr; // general background
 
 public:
-	glictSkinner chk, tmm, inv, cbc, cba, cbp;
+	glictSkinner chk, tmm, inv, consoletabbg, consoletabactive, consoletabpassive, background;
 	glictSkinner txt;
 
 	friend class skinImage;

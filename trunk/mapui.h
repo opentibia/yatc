@@ -31,8 +31,10 @@ class MapUI {
 
 		void renderMap();
 
-		void setPos(int x, int y) { m_x = x; m_y = y; }
-		void setSize(int w, int h) { m_w = w; m_h = h; }
+		inline void setPos(int x, int y) { m_x = x; m_y = y; }
+		inline void setSize(int w, int h) { m_w = w; m_h = h; }
+		inline int getWidth() const { return m_w; }
+		inline int getHeight() const { return m_h; }
 
 		void useItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos, bool &extended);
 		void attackCreature(int x, int y, const Creature* &creature);

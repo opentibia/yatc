@@ -57,6 +57,8 @@ void Engine::font_render(const char* txt, const void* font, float fontsize, floa
 	float cx = x, cy = y ;
 	float sizesofar = 0.f;
 	float linessofar = 0.f;
+
+
 	for(const char* t = txt; *t; ++t){
 		switch(*t) {
 			default:

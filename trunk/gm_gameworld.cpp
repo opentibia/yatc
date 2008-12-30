@@ -75,15 +75,15 @@ GM_Gameworld::GM_Gameworld()
 	#ifndef WINCE
 	// first, let's construct right side panel
 	desktop.AddObject(&pnlRightSide);
-	pnlRightSide.SetPos(750 - (150 + 4), 0 );
-	pnlRightSide.SetWidth(150 + 4); // 4 is for border
+	pnlRightSide.SetPos(750 - (170 + 4), 0 );
+	pnlRightSide.SetWidth(170 + 4); // 4 is for border
 	pnlRightSide.SetHeight(600); // dynamic and updated later
-	pnlRightSide.SetSkin(&g_skin.cbp);
+	pnlRightSide.SetSkin(&g_skin.consoletabpassive);
 
 	pnlRightSide.AddObject(&yspRightSide);
 	yspRightSide.SetPos(0,0);
 	yspRightSide.SetBGActiveness(false);
-	yspRightSide.SetWidth(150);
+	yspRightSide.SetWidth(170);
 	yspRightSide.SetHeight(600); // dynamic and updated later
 
 	#if (GLICT_APIREV>=95)
@@ -100,27 +100,29 @@ GM_Gameworld::GM_Gameworld()
 
 
     // objects which didnt get set up in constructors and require initial setup...
-    pnlTraffic.SetWidth(150);
+    pnlTraffic.SetWidth(170);
 	pnlTraffic.SetHeight(40);
     pnlTraffic.SetSkin(&g_skin.inv);
 	pnlTraffic.SetFont("gamefont", 10);
 	pnlTraffic.SetCaption("...");
-
+	#if (GLICT_APIREV>=98)
+	pnlTraffic.SetDraggable(true);
+    pnlTraffic.SetFocusable(true);
+    #endif
 
     // now let's get crackin
 
     RIGHTSIDE.AddObject(&pnlTraffic);
-	if (!AUTOSETPOS) pnlTraffic.SetPos(10,10);
+	if (!AUTOSETPOS) pnlTraffic.SetPos(0,0);
 	RIGHTSIDE.AddObject(&pnlInventory.panel);
 	if (!AUTOSETPOS) pnlInventory.panel.SetPos(600, 20);
-	RIGHTSIDE.AddObject(&winSkills.window);
-	if (!AUTOSETPOS) winSkills.window.SetPos(600, 180);
 	RIGHTSIDE.AddObject(&pnlHealth.panel);
 	if (!AUTOSETPOS) pnlHealth.panel.SetPos(600, 350);
+	RIGHTSIDE.AddObject(&winSkills.window);
+	if (!AUTOSETPOS) winSkills.window.SetPos(600, 180);
 
 	#if (GLICT_APIREV>=95)
     yspRightSide.RebuildList();
-    pnlTraffic.Focus(NULL);
     #endif
 
 	#endif
@@ -154,12 +156,12 @@ GM_Gameworld::GM_Gameworld()
 	winMove.window.SetVisible(false);
 
     desktop.AddObject(&pnlConsoleButtonContainer);
-    pnlConsoleButtonContainer.SetSkin(&g_skin.cbc);
+    pnlConsoleButtonContainer.SetSkin(&g_skin.consoletabbg);
     //pnlConsoleButtonContainer.SetBGActiveness(false);
 
     createConsole(); // add default console
 	m_activeconsole = getDefaultConsole();
-	pnlConsoleButtons[0]->SetSkin(&g_skin.cba);
+	pnlConsoleButtons[0]->SetSkin(&g_skin.consoletabactive);
 	#if (GLICT_APIREV>=85)
 	pnlConsoleButtons[0]->SetCaptionColor(0.7,0.7,0.7,1.0);
 	#else
@@ -218,21 +220,25 @@ GM_Gameworld::~GM_Gameworld ()
 
 void GM_Gameworld::doResize(float w, float h)
 {
+    int wi=(int)w, hi=(int)h; // just to avoid warnings
 	desktop.SetWidth(w);
 	desktop.SetHeight(h);
 	desktop.ResetTransformations();
 
+	m_mapui.setSize(wi,hi);
+
 	pnlRightSide.SetHeight(h);
 	yspRightSide.SetHeight(h);
-	pnlRightSide.SetPos(w-150,0); // ysp is always on 0,0
+	printf("Height: %g\n", h);
+	pnlRightSide.SetPos(w-170,0); // ysp is always on 0,0
 
-	txtConsoleEntry.SetWidth(w-150);
+	txtConsoleEntry.SetWidth(w-170);
 	txtConsoleEntry.SetPos(0,h-12);
 
 	pnlTraffic.SetPos(w-200, 0);
 
     pnlConsoleButtonContainer.SetPos(0,glictGlobals.h-150-18);
-    pnlConsoleButtonContainer.SetWidth(glictGlobals.w-150);
+    pnlConsoleButtonContainer.SetWidth(glictGlobals.w-170);
     pnlConsoleButtonContainer.SetHeight(18);
 
 	DEBUGPRINT(0,0,"Updating scene\n");
@@ -320,7 +326,7 @@ void GM_Gameworld::updateScene()
 	g_engine->resetClipping();
 
 
-	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-150, glictGlobals.h-12);
+	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-170, glictGlobals.h-12);
 
 
 }
@@ -661,7 +667,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         if (event.button.state == SDL_RELEASED) {
             bool hadpopup = (m_popup && !m_popup->wantsDeath());
             if (!desktop.CastEvent(GLICT_MOUSECLICK, &pos, 0)) {
-                m_mapui.handlePopup(pos.x, pos.y);
+                m_mapui.handlePopup((int)pos.x, (int)pos.y);
             }
 
             if (hadpopup) { // if we have a popup AND it existed even before casting of click
@@ -900,7 +906,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     p->SetWidth(96); //g_engine->sizeText(s.str().c_str(),"system"));
     p->SetBGColor(.2,.2,.2,1.);
     #if (GLICT_APIREV >= 85)
-    p->SetTextOffset(96 / 2 - g_engine->sizeText(s.str().c_str(),"gamefont") / 2, 4);
+    p->SetTextOffset(int(96 / 2 - g_engine->sizeText(s.str().c_str(),"gamefont") / 2), 4);
     p->SetCaptionColor(0.5,0.5,0.5);
     #else
 	#warning No support for setcaptioncolor before glict apirev 85
@@ -912,7 +918,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     }
     p->SetPos(sum,0);
     p->SetOnClick(pnlConsoleButton_OnClick);
-    p->SetSkin(&g_skin.cbp);
+    p->SetSkin(&g_skin.consoletabpassive);
     p->SetFont("gamefont");
     pnlConsoleButtonContainer.AddObject(p);
     pnlConsoleButtons.push_back(p);
@@ -925,7 +931,7 @@ void GM_Gameworld::openContainer(uint32_t cid)
 	Container* container = Containers::getInstance().getContainer(cid);
 	winContainer_t* window = new winContainer_t(container, cid);
 
-	desktop.AddObject(&window->window);
+	yspRightSide.AddObject(&window->window);
 	containers.push_back(window);
 }
 
@@ -945,8 +951,9 @@ void GM_Gameworld::closeContainer(uint32_t cid)
 
 	if(window)
 	{
-		desktop.RemoveObject(&window->window);
-		desktop.DelayedRemove();
+		yspRightSide.RemoveObject(&window->window);
+		yspRightSide.DelayedRemove();
+		yspRightSide.RebuildList();
 		containers.erase(it);
 		delete window;
 	}
@@ -1097,20 +1104,19 @@ void GM_Gameworld::onSetOutfit(Popup::Item *parent) {
 }
 void GM_Gameworld::openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available){
     GM_Gameworld *g = (GM_Gameworld*)g_game;
-    printf("Got outfit notification\n");
 
     g->winOutfit.openSelf(current, available);
 }
 
 void GM_Gameworld::setActiveConsole(Console* i){
-    m_activeconsole->getAssignedButton()->SetSkin(&g_skin.cbp);
+    m_activeconsole->getAssignedButton()->SetSkin(&g_skin.consoletabpassive);
     #if (GLICT_APIREV >= 85)
     m_activeconsole->getAssignedButton()->SetCaptionColor(0.5,0.5,0.5);
     #else
 	#warning No support for setcaptioncolor before glict apirev 85
 	#endif
     m_activeconsole = i;
-    m_activeconsole->getAssignedButton()->SetSkin(&g_skin.cba);
+    m_activeconsole->getAssignedButton()->SetSkin(&g_skin.consoletabactive);
     #if (GLICT_APIREV >= 85)
     m_activeconsole->getAssignedButton()->SetCaptionColor(0.7,0.7,0.7);
     #else

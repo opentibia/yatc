@@ -62,35 +62,35 @@ void skinImage::Paint(float destx, float desty, float w, float h) {
 
 
 Skin::Skin() {
-    wintl = NULL;
-    wint  = NULL;
-    wintr = NULL;
-    winl  = NULL;
-    winc  = NULL;
-    winr  = NULL;
-    winbl = NULL;
-    winb  = NULL;
-    winbr = NULL;
+    windowtl = NULL;
+    windowt  = NULL;
+    windowtr = NULL;
+    windowl  = NULL;
+    windowc  = NULL;
+    windowr  = NULL;
+    windowbl = NULL;
+    windowb  = NULL;
+    windowbr = NULL;
 
-    btntl = NULL;
-    btnt  = NULL;
-    btntr = NULL;
-    btnl  = NULL;
-    btnc  = NULL;
-    btnr  = NULL;
-    btnbl = NULL;
-    btnb  = NULL;
-    btnbr = NULL;
+    btnntl = NULL;
+    btnnt  = NULL;
+    btnntr = NULL;
+    btnnl  = NULL;
+    btnnc  = NULL;
+    btnnr  = NULL;
+    btnnbl = NULL;
+    btnnb  = NULL;
+    btnnbr = NULL;
 
-    bthtl = NULL;
-    btht  = NULL;
-    bthtr = NULL;
-    bthl  = NULL;
-    bthc  = NULL;
-    bthr  = NULL;
-    bthbl = NULL;
-    bthb  = NULL;
-    bthbr = NULL;
+    btnhtl = NULL;
+    btnht  = NULL;
+    btnhtr = NULL;
+    btnhl  = NULL;
+    btnhc  = NULL;
+    btnhr  = NULL;
+    btnhbl = NULL;
+    btnhb  = NULL;
+    btnhbr = NULL;
 
     txttl = NULL;
     txtt  = NULL;
@@ -102,105 +102,105 @@ Skin::Skin() {
     txtb  = NULL;
     txtbr = NULL;
 
-    scutl = NULL;
-    scut  = NULL;
-    scutr = NULL;
-    scul  = NULL;
-    scuc  = NULL;
-    scur  = NULL;
-    scubl = NULL;
-    scub  = NULL;
-    scubr = NULL;
+    scrollbaruptl = NULL;
+    scrollbarupt  = NULL;
+    scrollbaruptr = NULL;
+    scrollbarupl  = NULL;
+    scrollbarupc  = NULL;
+    scrollbarupr  = NULL;
+    scrollbarupbl = NULL;
+    scrollbarupb  = NULL;
+    scrollbarupbr = NULL;
 
-    shutl = NULL;
-    shut  = NULL;
-    shutr = NULL;
-    shul  = NULL;
-    shuc  = NULL;
-    shur  = NULL;
-    shubl = NULL;
-    shub  = NULL;
-    shubr = NULL;
+    scrollbaruphtl = NULL;
+    scrollbarupht  = NULL;
+    scrollbaruphtr = NULL;
+    scrollbaruphl  = NULL;
+    scrollbaruphc  = NULL;
+    scrollbaruphr  = NULL;
+    scrollbaruphbl = NULL;
+    scrollbaruphb  = NULL;
+    scrollbaruphbr = NULL;
 
-    scdtl = NULL;
-    scdt  = NULL;
-    scdtr = NULL;
-    scdl  = NULL;
-    scdc  = NULL;
-    scdr  = NULL;
-    scdbl = NULL;
-    scdb  = NULL;
-    scdbr = NULL;
+    scrollbardntl = NULL;
+    scrollbardnt  = NULL;
+    scrollbardntr = NULL;
+    scrollbardnl  = NULL;
+    scrollbardnc  = NULL;
+    scrollbardnr  = NULL;
+    scrollbardnbl = NULL;
+    scrollbardnb  = NULL;
+    scrollbardnbr = NULL;
 
-    shdtl = NULL;
-    shdt  = NULL;
-    shdtr = NULL;
-    shdl  = NULL;
-    shdc  = NULL;
-    shdr  = NULL;
-    shdbl = NULL;
-    shdb  = NULL;
-    shdbr = NULL;
+    scrollbardnhtl = NULL;
+    scrollbardnht  = NULL;
+    scrollbardnhtr = NULL;
+    scrollbardnhl  = NULL;
+    scrollbardnhc  = NULL;
+    scrollbardnhr  = NULL;
+    scrollbardnhbl = NULL;
+    scrollbardnhb  = NULL;
+    scrollbardnhbr = NULL;
 
-    scltl = NULL;
-    sclt  = NULL;
-    scltr = NULL;
-    scll  = NULL;
-    sclc  = NULL;
-    sclr  = NULL;
-    sclbl = NULL;
-    sclb  = NULL;
-    sclbr = NULL;
+    scrollbarlttl = NULL;
+    scrollbarltt  = NULL;
+    scrollbarlttr = NULL;
+    scrollbarltl  = NULL;
+    scrollbarltc  = NULL;
+    scrollbarltr  = NULL;
+    scrollbarltbl = NULL;
+    scrollbarltb  = NULL;
+    scrollbarltbr = NULL;
 
-    shltl = NULL;
-    shlt  = NULL;
-    shltr = NULL;
-    shll  = NULL;
-    shlc  = NULL;
-    shlr  = NULL;
-    shlbl = NULL;
-    shlb  = NULL;
-    shlbr = NULL;
+    scrollbarlthtl = NULL;
+    scrollbarltht  = NULL;
+    scrollbarlthtr = NULL;
+    scrollbarlthl  = NULL;
+    scrollbarlthc  = NULL;
+    scrollbarlthr  = NULL;
+    scrollbarlthbl = NULL;
+    scrollbarlthb  = NULL;
+    scrollbarlthbr = NULL;
 
-    scrtl = NULL;
-    scrt  = NULL;
-    scrtr = NULL;
-    scrl  = NULL;
-    scrc  = NULL;
-    scrr  = NULL;
-    scrbl = NULL;
-    scrb  = NULL;
-    scrbr = NULL;
+    scrollbarrttl = NULL;
+    scrollbarrtt  = NULL;
+    scrollbarrttr = NULL;
+    scrollbarrtl  = NULL;
+    scrollbarrtc  = NULL;
+    scrollbarrtr  = NULL;
+    scrollbarrtbl = NULL;
+    scrollbarrtb  = NULL;
+    scrollbarrtbr = NULL;
 
-    shrtl = NULL;
-    shrt  = NULL;
-    shrtr = NULL;
-    shrl  = NULL;
-    shrc  = NULL;
-    shrr  = NULL;
-    shrbl = NULL;
-    shrb  = NULL;
-    shrbr = NULL;
+    scrollbarrthtl = NULL;
+    scrollbarrtht  = NULL;
+    scrollbarrthtr = NULL;
+    scrollbarrthl  = NULL;
+    scrollbarrthc  = NULL;
+    scrollbarrthr  = NULL;
+    scrollbarrthbl = NULL;
+    scrollbarrthb  = NULL;
+    scrollbarrthbr = NULL;
 
-    scbtl = NULL;
-    scbt  = NULL;
-    scbtr = NULL;
-    scbl  = NULL;
-    scbc  = NULL;
-    scbr  = NULL;
-    scbbl = NULL;
-    scbb  = NULL;
-    scbbr = NULL;
+    scrollbarbtntl = NULL;
+    scrollbarbtnt  = NULL;
+    scrollbarbtntr = NULL;
+    scrollbarbtnl  = NULL;
+    scrollbarbtnc  = NULL;
+    scrollbarbtnr  = NULL;
+    scrollbarbtnbl = NULL;
+    scrollbarbtnb  = NULL;
+    scrollbarbtnbr = NULL;
 
-    scptl = NULL;
-    scpt  = NULL;
-    scptr = NULL;
-    scpl  = NULL;
-    scpc  = NULL;
-    scpr  = NULL;
-    scpbl = NULL;
-    scpb  = NULL;
-    scpbr = NULL;
+    scrollbarbgtl = NULL;
+    scrollbarbgt  = NULL;
+    scrollbarbgtr = NULL;
+    scrollbarbgl  = NULL;
+    scrollbarbgc  = NULL;
+    scrollbarbgr  = NULL;
+    scrollbarbgbl = NULL;
+    scrollbarbgb  = NULL;
+    scrollbarbgbr = NULL;
 
 
 
@@ -234,36 +234,45 @@ Skin::Skin() {
     invb  = NULL;
     invbr = NULL;
 
-    cbctl = NULL;
-    cbct  = NULL;
-    cbctr = NULL;
-    cbcl  = NULL;
-    cbcc  = NULL;
-    cbcr  = NULL;
-    cbcbl = NULL;
-    cbcb  = NULL;
-    cbcbr = NULL;
+    consoletabbgtl = NULL;
+    consoletabbgt  = NULL;
+    consoletabbgtr = NULL;
+    consoletabbgl  = NULL;
+    consoletabbgc  = NULL;
+    consoletabbgr  = NULL;
+    consoletabbgbl = NULL;
+    consoletabbgb  = NULL;
+    consoletabbgbr = NULL;
 
-    cbatl = NULL;
-    cbat  = NULL;
-    cbatr = NULL;
-    cbal  = NULL;
-    cbac  = NULL;
-    cbar  = NULL;
-    cbabl = NULL;
-    cbab  = NULL;
-    cbabr = NULL;
+    consoletabactivetl = NULL;
+    consoletabactivet  = NULL;
+    consoletabactivetr = NULL;
+    consoletabactivel  = NULL;
+    consoletabactivec  = NULL;
+    consoletabactiver  = NULL;
+    consoletabactivebl = NULL;
+    consoletabactiveb  = NULL;
+    consoletabactivebr = NULL;
 
-    cbptl = NULL;
-    cbpt  = NULL;
-    cbptr = NULL;
-    cbpl  = NULL;
-    cbpc  = NULL;
-    cbpr  = NULL;
-    cbpbl = NULL;
-    cbpb  = NULL;
-    cbpbr = NULL;
+    consoletabpassivetl = NULL;
+    consoletabpassivet  = NULL;
+    consoletabpassivetr = NULL;
+    consoletabpassivel  = NULL;
+    consoletabpassivec  = NULL;
+    consoletabpassiver  = NULL;
+    consoletabpassivebl = NULL;
+    consoletabpassiveb  = NULL;
+    consoletabpassivebr = NULL;
 
+    backgroundtl = NULL;
+    backgroundt  = NULL;
+    backgroundtr = NULL;
+    backgroundl  = NULL;
+    backgroundc  = NULL;
+    backgroundr  = NULL;
+    backgroundbl = NULL;
+    backgroundb  = NULL;
+    backgroundbr = NULL;
 
 }
 Skin::~Skin() {
@@ -271,41 +280,41 @@ Skin::~Skin() {
 
 }
 void Skin::loadSkin() {
-    win.SetTL		(wintl = new skinImage(106,	183,	4,		17));
-    win.SetTop		(wint  = new skinImage(114,	183,	96,		17));
-    win.SetTR		(wintr = new skinImage(110,	183,	4,		17));
-    win.SetLeft		(winl  = new skinImage(256,	0,		4,		96));
-    win.SetCenter	(winc  = new skinImage(0,	0,		96,		96));
-    win.SetRight	(winr  = new skinImage(260,	0,		4,		96));
-    win.SetBL		(winbl = new skinImage(2,	193,	4,		4)); // FIXME
-    win.SetBottom	(winb  = new skinImage(2,	193,	96,		4));
-    win.SetBR		(winbr = new skinImage(2,	193,	4,		4)); // FIXME
+    window.SetTL		(windowtl = new skinImage(106,	183,	4,		17));
+    window.SetTop		(windowt  = new skinImage(114,	183,	96,		17));
+    window.SetTR		(windowtr = new skinImage(110,	183,	4,		17));
+    window.SetLeft		(windowl  = new skinImage(256,	0,		4,		96));
+    window.SetCenter	(windowc  = new skinImage(0,	0,		96,		96));
+    window.SetRight	(windowr  = new skinImage(260,	0,		4,		96));
+    window.SetBL		(windowbl = new skinImage(2,	193,	4,		4)); // FIXME
+    window.SetBottom	(windowb  = new skinImage(2,	193,	96,		4));
+    window.SetBR		(windowbr = new skinImage(2,	193,	4,		4)); // FIXME
 
-	glictGlobals.windowBodySkin = &win;
+	glictGlobals.windowBodySkin = &window;
 
-    btn.SetTL		(btntl = new skinImage(174,	138,	1,		1));
-    btn.SetTop		(btnt  = new skinImage(175,	138,	32,		1));
-    btn.SetTR		(btntr = new skinImage(207,	138,	1,		1));
-    btn.SetLeft		(btnl  = new skinImage(174,	139,	1,		18));
-    btn.SetCenter	(btnc  = new skinImage(175,	139,	32,		18));
-    btn.SetRight	(btnr  = new skinImage(207,	139,	1,		18));
-    btn.SetBL		(btnbl = new skinImage(174,	157,	1,		1));
-    btn.SetBottom	(btnb  = new skinImage(175,	157,	32,		1));
-    btn.SetBR		(btnbr = new skinImage(207,	157,	1,		1));
+    btnn.SetTL		(btnntl = new skinImage(174,	138,	1,		1));
+    btnn.SetTop		(btnnt  = new skinImage(175,	138,	32,		1));
+    btnn.SetTR		(btnntr = new skinImage(207,	138,	1,		1));
+    btnn.SetLeft	(btnnl  = new skinImage(174,	139,	1,		18));
+    btnn.SetCenter	(btnnc  = new skinImage(175,	139,	32,		18));
+    btnn.SetRight	(btnnr  = new skinImage(207,	139,	1,		18));
+    btnn.SetBL		(btnnbl = new skinImage(174,	157,	1,		1));
+    btnn.SetBottom	(btnnb  = new skinImage(175,	157,	32,		1));
+    btnn.SetBR		(btnnbr = new skinImage(207,	157,	1,		1));
 
-	glictGlobals.buttonSkin = &btn;
+	glictGlobals.buttonSkin = &btnn;
 
-    bth.SetTL		(bthtl = new skinImage(174,	158,	1,		1));
-    bth.SetTop		(btht  = new skinImage(175,	158,	32,		1));
-    bth.SetTR		(bthtr = new skinImage(207,	158,	1,		1));
-    bth.SetLeft		(bthl  = new skinImage(174,	159,	1,		18));
-    bth.SetCenter	(bthc  = new skinImage(175,	159,	32,		18));
-    bth.SetRight	(bthr  = new skinImage(207,	159,	1,		18));
-    bth.SetBL		(bthbl = new skinImage(174,	177,	1,		1));
-    bth.SetBottom	(bthb  = new skinImage(175,	177,	32,		1));
-    bth.SetBR		(bthbr = new skinImage(207,	177,	1,		1));
+    btnh.SetTL		(btnhtl = new skinImage(174,	158,	1,		1));
+    btnh.SetTop		(btnht  = new skinImage(175,	158,	32,		1));
+    btnh.SetTR		(btnhtr = new skinImage(207,	158,	1,		1));
+    btnh.SetLeft	(btnhl  = new skinImage(174,	159,	1,		18));
+    btnh.SetCenter	(btnhc  = new skinImage(175,	159,	32,		18));
+    btnh.SetRight	(btnhr  = new skinImage(207,	159,	1,		18));
+    btnh.SetBL		(btnhbl = new skinImage(174,	177,	1,		1));
+    btnh.SetBottom	(btnhb  = new skinImage(175,	177,	32,		1));
+    btnh.SetBR		(btnhbr = new skinImage(207,	177,	1,		1));
 
-	glictGlobals.buttonHighlightSkin = &bth;
+	glictGlobals.buttonHighlightSkin = &btnh;
 
     // FIXME (ivucica#4#) looks like the "unchecked checkbox" is not the same as "textbox" -- see: "XPlike Tibia.pic" for more info
     txt.SetTL		(txttl = new skinImage(308,	96,		1,		1)); // in fact it looks like we have to HARDCODE this piece of skin.
@@ -313,7 +322,7 @@ void Skin::loadSkin() {
     txt.SetTR		(txttr = new skinImage(319,	96,		1,		1));
     txt.SetLeft		(txtl  = new skinImage(308,	97,		1,		10));
     txt.SetCenter	(txtc  = new skinImage(309,	97,		10,		10));
-    txt.SetRight	(txtr  = new skinImage(319,	97,		1,		10));
+    txt.SetRight	    (txtr  = new skinImage(319,	97,		1,		10));
     txt.SetBL		(txtbl = new skinImage(308,	107,	1,		1));
     txt.SetBottom	(txtb  = new skinImage(309,	107,	10,		1));
     txt.SetBR		(txtbr = new skinImage(319,	107,	1,		1));
@@ -323,125 +332,125 @@ void Skin::loadSkin() {
 #if GLICT_APIREV < 68
 #warning Skinned scrollbar buttons need at least GLICT apirev 68
 #else
-    scu.SetTL		(scutl = NULL);
-    scu.SetTop		(scut  = NULL);
-    scu.SetTR		(scutr = NULL);
-    scu.SetLeft		(scul  = NULL);
-    scu.SetCenter	(scuc  = new skinImage(232,		64,	    12,		12));
-    scu.SetRight	(scur  = NULL);
-    scu.SetBL		(scubl = NULL);
-    scu.SetBottom	(scub  = NULL);
-    scu.SetBR		(scubr = NULL);
+    scrollbarup.SetTL		(scrollbaruptl = NULL);
+    scrollbarup.SetTop		(scrollbarupt  = NULL);
+    scrollbarup.SetTR		(scrollbaruptr = NULL);
+    scrollbarup.SetLeft		(scrollbarupl  = NULL);
+    scrollbarup.SetCenter	(scrollbarupc  = new skinImage(232,		64,	    12,		12));
+    scrollbarup.SetRight	(scrollbarupr  = NULL);
+    scrollbarup.SetBL		(scrollbarupbl = NULL);
+    scrollbarup.SetBottom	(scrollbarupb  = NULL);
+    scrollbarup.SetBR		(scrollbarupbr = NULL);
 
-    glictGlobals.scrollbarUpperSkin = &scu;
+    glictGlobals.scrollbarUpperSkin = &scrollbarup;
 
-    shu.SetTL		(shutl = NULL);
-    shu.SetTop		(shut  = NULL);
-    shu.SetTR		(shutr = NULL);
-    shu.SetLeft		(shul  = NULL);
-    shu.SetCenter	(shuc  = new skinImage(234,		122,    12,		12));
-    shu.SetRight	(shur  = NULL);
-    shu.SetBL		(shubl = NULL);
-    shu.SetBottom	(shub  = NULL);
-    shu.SetBR		(shubr = NULL);
+    scrollbaruph.SetTL		(scrollbaruphtl = NULL);
+    scrollbaruph.SetTop		(scrollbarupht  = NULL);
+    scrollbaruph.SetTR		(scrollbaruphtr = NULL);
+    scrollbaruph.SetLeft	(scrollbaruphl  = NULL);
+    scrollbaruph.SetCenter	(scrollbaruphc  = new skinImage(234,		122,    12,		12));
+    scrollbaruph.SetRight	(scrollbaruphr  = NULL);
+    scrollbaruph.SetBL		(scrollbaruphbl = NULL);
+    scrollbaruph.SetBottom	(scrollbaruphb  = NULL);
+    scrollbaruph.SetBR		(scrollbaruphbr = NULL);
 
-    glictGlobals.scrollbarUpperHighlightSkin = &shu;
+    glictGlobals.scrollbarUpperHighlightSkin = &scrollbaruph;
 
-    scd.SetTL		(scdtl = NULL);
-    scd.SetTop		(scdt  = NULL);
-    scd.SetTR		(scdtr = NULL);
-    scd.SetLeft		(scdl  = NULL);
-    scd.SetCenter	(scdc  = new skinImage(244,		64,	    12,		12));
-    scd.SetRight	(scdr  = NULL);
-    scd.SetBL		(scdbl = NULL);
-    scd.SetBottom	(scdb  = NULL);
-    scd.SetBR		(scdbr = NULL);
+    scrollbardn.SetTL		(scrollbardntl = NULL);
+    scrollbardn.SetTop		(scrollbardnt  = NULL);
+    scrollbardn.SetTR		(scrollbardntr = NULL);
+    scrollbardn.SetLeft		(scrollbardnl  = NULL);
+    scrollbardn.SetCenter	(scrollbardnc  = new skinImage(244,		64,	    12,		12));
+    scrollbardn.SetRight	(scrollbardnr  = NULL);
+    scrollbardn.SetBL		(scrollbardnbl = NULL);
+    scrollbardn.SetBottom	(scrollbardnb  = NULL);
+    scrollbardn.SetBR		(scrollbardnbr = NULL);
 
-    glictGlobals.scrollbarLowerSkin = &scd;
+    glictGlobals.scrollbarLowerSkin = &scrollbardn;
 
-    shd.SetTL		(shdtl = NULL);
-    shd.SetTop		(shdt  = NULL);
-    shd.SetTR		(shdtr = NULL);
-    shd.SetLeft		(shdl  = NULL);
-    shd.SetCenter	(shdc  = new skinImage(246,		122,    12,		12));
-    shd.SetRight	(shdr  = NULL);
-    shd.SetBL		(shdbl = NULL);
-    shd.SetBottom	(shdb  = NULL);
-    shd.SetBR		(shdbr = NULL);
+    scrollbardnh.SetTL		(scrollbardnhtl = NULL);
+    scrollbardnh.SetTop		(scrollbardnht  = NULL);
+    scrollbardnh.SetTR		(scrollbardnhtr = NULL);
+    scrollbardnh.SetLeft	(scrollbardnhl  = NULL);
+    scrollbardnh.SetCenter	(scrollbardnhc  = new skinImage(246,		122,    12,		12));
+    scrollbardnh.SetRight	(scrollbardnhr  = NULL);
+    scrollbardnh.SetBL		(scrollbardnhbl = NULL);
+    scrollbardnh.SetBottom	(scrollbardnhb  = NULL);
+    scrollbardnh.SetBR		(scrollbardnhbr = NULL);
 
-    glictGlobals.scrollbarLowerHighlightSkin = &shd;
+    glictGlobals.scrollbarLowerHighlightSkin = &scrollbardnh;
 
-    scl.SetTL		(scltl = NULL);
-    scl.SetTop		(sclt  = NULL);
-    scl.SetTR		(scltr = NULL);
-    scl.SetLeft		(scll  = NULL);
-    scl.SetCenter	(sclc  = new skinImage(232,		76,	    12,		12));
-    scl.SetRight	(sclr  = NULL);
-    scl.SetBL		(sclbl = NULL);
-    scl.SetBottom	(sclb  = NULL);
-    scl.SetBR		(sclbr = NULL);
+    scrollbarlt.SetTL		(scrollbarlttl = NULL);
+    scrollbarlt.SetTop		(scrollbarltt  = NULL);
+    scrollbarlt.SetTR		(scrollbarlttr = NULL);
+    scrollbarlt.SetLeft		(scrollbarltl  = NULL);
+    scrollbarlt.SetCenter	(scrollbarltc  = new skinImage(232,		76,	    12,		12));
+    scrollbarlt.SetRight	(scrollbarltr  = NULL);
+    scrollbarlt.SetBL		(scrollbarltbl = NULL);
+    scrollbarlt.SetBottom	(scrollbarltb  = NULL);
+    scrollbarlt.SetBR		(scrollbarltbr = NULL);
 
-    glictGlobals.scrollbarLeftSkin = &scl;
+    glictGlobals.scrollbarLeftSkin = &scrollbarlt;
 
-    shl.SetTL		(shltl = NULL);
-    shl.SetTop		(shlt  = NULL);
-    shl.SetTR		(shltr = NULL);
-    shl.SetLeft		(shll  = NULL);
-    shl.SetCenter	(shlc  = new skinImage(234,		134,    12,		12));
-    shl.SetRight	(shlr  = NULL);
-    shl.SetBL		(shlbl = NULL);
-    shl.SetBottom	(shlb  = NULL);
-    shl.SetBR		(shlbr = NULL);
+    scrollbarlth.SetTL		(scrollbarlthtl = NULL);
+    scrollbarlth.SetTop		(scrollbarltht  = NULL);
+    scrollbarlth.SetTR		(scrollbarlthtr = NULL);
+    scrollbarlth.SetLeft	(scrollbarlthl  = NULL);
+    scrollbarlth.SetCenter	(scrollbarlthc  = new skinImage(234,		134,    12,		12));
+    scrollbarlth.SetRight	(scrollbarlthr  = NULL);
+    scrollbarlth.SetBL		(scrollbarlthbl = NULL);
+    scrollbarlth.SetBottom	(scrollbarlthb  = NULL);
+    scrollbarlth.SetBR		(scrollbarlthbr = NULL);
 
-    glictGlobals.scrollbarLeftHighlightSkin = &shl;
+    glictGlobals.scrollbarLeftHighlightSkin = &scrollbarlth;
 
-    scr.SetTL		(scrtl = NULL);
-    scr.SetTop		(scrt  = NULL);
-    scr.SetTR		(scrtr = NULL);
-    scr.SetLeft		(scrl  = NULL);
-    scr.SetCenter	(scrc  = new skinImage(244,		76,	    12,		12));
-    scr.SetRight	(scrr  = NULL);
-    scr.SetBL		(scrbl = NULL);
-    scr.SetBottom	(scrb  = NULL);
-    scr.SetBR		(scrbr = NULL);
+    scrollbarrt.SetTL		(scrollbarrttl = NULL);
+    scrollbarrt.SetTop		(scrollbarrtt  = NULL);
+    scrollbarrt.SetTR		(scrollbarrttr = NULL);
+    scrollbarrt.SetLeft		(scrollbarrtl  = NULL);
+    scrollbarrt.SetCenter	(scrollbarrtc  = new skinImage(244,		76,	    12,		12));
+    scrollbarrt.SetRight	(scrollbarrtr  = NULL);
+    scrollbarrt.SetBL		(scrollbarrtbl = NULL);
+    scrollbarrt.SetBottom	(scrollbarrtb  = NULL);
+    scrollbarrt.SetBR		(scrollbarrtbr = NULL);
 
-    glictGlobals.scrollbarRightSkin = &scr;
+    glictGlobals.scrollbarRightSkin = &scrollbarrt;
 
-    shr.SetTL		(shrtl = NULL);
-    shr.SetTop		(shrt  = NULL);
-    shr.SetTR		(shrtr = NULL);
-    shr.SetLeft		(shrl  = NULL);
-    shr.SetCenter	(shrc  = new skinImage(246,		134,    12,		12));
-    shr.SetRight	(shrr  = NULL);
-    shr.SetBL		(shrbl = NULL);
-    shr.SetBottom	(shrb  = NULL);
-    shr.SetBR		(shrbr = NULL);
+    scrollbarrth.SetTL		(scrollbarrthtl = NULL);
+    scrollbarrth.SetTop		(scrollbarrtht  = NULL);
+    scrollbarrth.SetTR		(scrollbarrthtr = NULL);
+    scrollbarrth.SetLeft	(scrollbarrthl  = NULL);
+    scrollbarrth.SetCenter	(scrollbarrthc  = new skinImage(246,		134,    12,		12));
+    scrollbarrth.SetRight	(scrollbarrthr  = NULL);
+    scrollbarrth.SetBL		(scrollbarrthbl = NULL);
+    scrollbarrth.SetBottom	(scrollbarrthb  = NULL);
+    scrollbarrth.SetBR		(scrollbarrthbr = NULL);
 
-    glictGlobals.scrollbarRightHighlightSkin = &shr;
+    glictGlobals.scrollbarRightHighlightSkin = &scrollbarrth;
 
-    scb.SetTL		(scbtl = NULL);
-    scb.SetTop		(scbt  = NULL);
-    scb.SetTR		(scbtr = NULL);
-    scb.SetLeft		(scbl  = NULL);
-    scb.SetCenter	(scbc  = new skinImage(220,		64,    12,		12));
-    scb.SetRight	(scbr  = NULL);
-    scb.SetBL		(scbbl = NULL);
-    scb.SetBottom	(scbb  = NULL);
-    scb.SetBR		(scbbr = NULL);
+    scrollbarbtn.SetTL		(scrollbarbtntl = NULL);
+    scrollbarbtn.SetTop		(scrollbarbtnt  = NULL);
+    scrollbarbtn.SetTR		(scrollbarbtntr = NULL);
+    scrollbarbtn.SetLeft	(scrollbarbtnl  = NULL);
+    scrollbarbtn.SetCenter	(scrollbarbtnc  = new skinImage(220,		64,    12,		12));
+    scrollbarbtn.SetRight	(scrollbarbtnr  = NULL);
+    scrollbarbtn.SetBL		(scrollbarbtnbl = NULL);
+    scrollbarbtn.SetBottom	(scrollbarbtnb  = NULL);
+    scrollbarbtn.SetBR		(scrollbarbtnbr = NULL);
 
-    glictGlobals.scrollbarDragSkin = &scb;
+    glictGlobals.scrollbarDragSkin = &scrollbarbtn;
 
-    scp.SetTL		(scptl = NULL);
-    scp.SetTop		(scpt  = NULL);
-    scp.SetTR		(scptr = NULL);
-    scp.SetLeft		(scpl  = new skinImage(264,		0,     1,		96));
-    scp.SetCenter	(scpc  = new skinImage(265,		0,     10,		96));
-    scp.SetRight	(scpr  = new skinImage(275,		0,     1,		96));
-    scp.SetBL		(scpbl = NULL);
-    scp.SetBottom	(scpb  = NULL);
-    scp.SetBR		(scpbr = NULL);
+    scrollbarbg.SetTL		(scrollbarbgtl = NULL);
+    scrollbarbg.SetTop		(scrollbarbgt  = NULL);
+    scrollbarbg.SetTR		(scrollbarbgtr = NULL);
+    scrollbarbg.SetLeft		(scrollbarbgl  = new skinImage(264,		0,     1,		96));
+    scrollbarbg.SetCenter	(scrollbarbgc  = new skinImage(265,		0,     10,		96));
+    scrollbarbg.SetRight	(scrollbarbgr  = new skinImage(275,		0,     1,		96));
+    scrollbarbg.SetBL		(scrollbarbgbl = NULL);
+    scrollbarbg.SetBottom	(scrollbarbgb  = NULL);
+    scrollbarbg.SetBR		(scrollbarbgbr = NULL);
 
-    glictGlobals.scrollbarPanelSkin = &scp;
+    glictGlobals.scrollbarPanelSkin = &scrollbarbg;
 #endif
 
 
@@ -477,62 +486,72 @@ void Skin::loadSkin() {
     inv.SetBottom	(invb  = new skinImage(187,		97,	    31,		1));
     inv.SetBR		(invbr = new skinImage(219,		97,	    1,		1));
 
-    cbc.SetTL		(cbctl = new skinImage(210,     182,    2,      2));
-    cbc.SetTop		(cbct  = new skinImage(212,     182,    96,     2));
-    cbc.SetTR		(cbctr = new skinImage(308,     182,    2,      2));
-    cbc.SetLeft		(cbcl  = new skinImage(210,     184,    2,      14));
-    cbc.SetCenter	(cbcc  = new skinImage(212,     184,    96,     14));
-    cbc.SetRight	(cbcr  = new skinImage(308,     184,    2,      14));
-    cbc.SetBL		(cbcbl = new skinImage(210,     198,    2,      2));
-    cbc.SetBottom	(cbcb  = new skinImage(212,     198,    96,     2));
-    cbc.SetBR		(cbcbr = new skinImage(308,     198,    2,      2));
+    consoletabbg.SetTL		(consoletabbgtl = new skinImage(210,     182,    2,      2));
+    consoletabbg.SetTop		(consoletabbgt  = new skinImage(212,     182,    96,     2));
+    consoletabbg.SetTR		(consoletabbgtr = new skinImage(308,     182,    2,      2));
+    consoletabbg.SetLeft	(consoletabbgl  = new skinImage(210,     184,    2,      14));
+    consoletabbg.SetCenter	(consoletabbgc  = new skinImage(212,     184,    96,     14));
+    consoletabbg.SetRight	(consoletabbgr  = new skinImage(308,     184,    2,      14));
+    consoletabbg.SetBL		(consoletabbgbl = new skinImage(210,     198,    2,      2));
+    consoletabbg.SetBottom	(consoletabbgb  = new skinImage(212,     198,    96,     2));
+    consoletabbg.SetBR		(consoletabbgbr = new skinImage(308,     198,    2,      2));
 
-    cba.SetTL		(cbatl = new skinImage(114,     200,    2,      2));
-    cba.SetTop		(cbat  = new skinImage(116,     200,    92,     2));
-    cba.SetTR		(cbatr = new skinImage(208,     200,    2,      2));
-    cba.SetLeft		(cbal  = new skinImage(114,     202,    2,      14));
-    cba.SetCenter	(cbac  = new skinImage(116,     202,    92,     14));
-    cba.SetRight	(cbar  = new skinImage(208,     202,    2,      14));
-    cba.SetBL		(cbabl = new skinImage(114,     216,    2,      2));
-    cba.SetBottom	(cbab  = new skinImage(116,     216,    92,     2));
-    cba.SetBR		(cbabr = new skinImage(208,     216,    2,      2));
+    consoletabactive.SetTL		(consoletabactivetl = new skinImage(114,     200,    2,      2));
+    consoletabactive.SetTop		(consoletabactivet  = new skinImage(116,     200,    92,     2));
+    consoletabactive.SetTR		(consoletabactivetr = new skinImage(208,     200,    2,      2));
+    consoletabactive.SetLeft	(consoletabactivel  = new skinImage(114,     202,    2,      14));
+    consoletabactive.SetCenter	(consoletabactivec  = new skinImage(116,     202,    92,     14));
+    consoletabactive.SetRight	(consoletabactiver  = new skinImage(208,     202,    2,      14));
+    consoletabactive.SetBL		(consoletabactivebl = new skinImage(114,     216,    2,      2));
+    consoletabactive.SetBottom	(consoletabactiveb  = new skinImage(116,     216,    92,     2));
+    consoletabactive.SetBR		(consoletabactivebr = new skinImage(208,     216,    2,      2));
 
-    cbp.SetTL		(cbptl = new skinImage(114+96,  200,    2,      2));
-    cbp.SetTop		(cbpt  = new skinImage(116+96,  200,    92,     2));
-    cbp.SetTR		(cbptr = new skinImage(208+96,  200,    2,      2));
-    cbp.SetLeft		(cbpl  = new skinImage(114+96,  202,    2,      14));
-    cbp.SetCenter	(cbpc  = new skinImage(116+96,  202,    92,     14));
-    cbp.SetRight	(cbpr  = new skinImage(208+96,  202,    2,      14));
-    cbp.SetBL		(cbpbl = new skinImage(114+96,  216,    2,      2));
-    cbp.SetBottom	(cbpb  = new skinImage(116+96,  216,    92,     2));
-    cbp.SetBR		(cbpbr = new skinImage(208+96,  216,    2,      2));
+    consoletabpassive.SetTL		(consoletabpassivetl = new skinImage(114+96,  200,    2,      2));
+    consoletabpassive.SetTop	(consoletabpassivet  = new skinImage(116+96,  200,    92,     2));
+    consoletabpassive.SetTR		(consoletabpassivetr = new skinImage(208+96,  200,    2,      2));
+    consoletabpassive.SetLeft	(consoletabpassivel  = new skinImage(114+96,  202,    2,      14));
+    consoletabpassive.SetCenter	(consoletabpassivec  = new skinImage(116+96,  202,    92,     14));
+    consoletabpassive.SetRight	(consoletabpassiver  = new skinImage(208+96,  202,    2,      14));
+    consoletabpassive.SetBL		(consoletabpassivebl = new skinImage(114+96,  216,    2,      2));
+    consoletabpassive.SetBottom	(consoletabpassiveb  = new skinImage(116+96,  216,    92,     2));
+    consoletabpassive.SetBR		(consoletabpassivebr = new skinImage(208+96,  216,    2,      2));
+
+    background.SetTL		(backgroundtl = NULL);
+    background.SetTop	    (backgroundt  = NULL);
+    background.SetTR		(backgroundtr = NULL);
+    background.SetLeft	    (backgroundl  = NULL);
+    background.SetCenter	(backgroundc  = new skinImage(0,  0,    96,     96));
+    background.SetRight	    (backgroundr  = NULL);
+    background.SetBL		(backgroundbl = NULL);
+    background.SetBottom	(backgroundb  = NULL);
+    background.SetBR		(backgroundbr = NULL);
 
 }
 
 void Skin::unloadSkin() {
 
 //    printf("[Skin::unloadSkin] Unloading window skin...\n");
-    if (wintl) delete wintl; wintl = NULL;
-    if (wint)  delete wint;  wint  = NULL;
-    if (wintr) delete wintr; wintr = NULL;
-    if (winl)  delete winl;  winl  = NULL;
-    if (winc)  delete winc;  winc  = NULL;
-    if (winr)  delete winr;  winr  = NULL;
-    if (winbl) delete winbl; winbl = NULL;
-    if (winb)  delete winb;  winb  = NULL;
-    if (winbr) delete winbr; winbr = NULL;
+    if (windowtl) delete windowtl; windowtl = NULL;
+    if (windowt)  delete windowt;  windowt  = NULL;
+    if (windowtr) delete windowtr; windowtr = NULL;
+    if (windowl)  delete windowl;  windowl  = NULL;
+    if (windowc)  delete windowc;  windowc  = NULL;
+    if (windowr)  delete windowr;  windowr  = NULL;
+    if (windowbl) delete windowbl; windowbl = NULL;
+    if (windowb)  delete windowb;  windowb  = NULL;
+    if (windowbr) delete windowbr; windowbr = NULL;
 
 
 
-    win.SetTL(NULL);
-    win.SetTop(NULL);
-    win.SetTR(NULL);
-    win.SetLeft(NULL);
-    win.SetCenter(NULL);
-    win.SetRight(NULL);
-    win.SetBL(NULL);
-    win.SetBottom(NULL);
-    win.SetBR(NULL);
+    window.SetTL(NULL);
+    window.SetTop(NULL);
+    window.SetTR(NULL);
+    window.SetLeft(NULL);
+    window.SetCenter(NULL);
+    window.SetRight(NULL);
+    window.SetBL(NULL);
+    window.SetBottom(NULL);
+    window.SetBR(NULL);
 
     glictGlobals.windowBodySkin = NULL;
 
@@ -540,50 +559,50 @@ void Skin::unloadSkin() {
 
 //    printf("[Skin::unloadSkin] Unloading button skin...\n");
 
-    if (btntl) delete btntl; btntl = NULL;
-    if (btnt)  delete btnt;  btnt  = NULL;
-    if (btntr) delete btntr; btntr = NULL;
-    if (btnl)  delete btnl;  btnl  = NULL;
-    if (btnc)  delete btnc;  btnc  = NULL;
-    if (btnr)  delete btnr;  btnr  = NULL;
-    if (btnbl) delete btnbl; btnbl = NULL;
-    if (btnb)  delete btnb;  btnb  = NULL;
-    if (btnbr) delete btnbr; btnbr = NULL;
+    if (btnntl) delete btnntl; btnntl = NULL;
+    if (btnnt)  delete btnnt;  btnnt  = NULL;
+    if (btnntr) delete btnntr; btnntr = NULL;
+    if (btnnl)  delete btnnl;  btnnl  = NULL;
+    if (btnnc)  delete btnnc;  btnnc  = NULL;
+    if (btnnr)  delete btnnr;  btnnr  = NULL;
+    if (btnnbl) delete btnnbl; btnnbl = NULL;
+    if (btnnb)  delete btnnb;  btnnb  = NULL;
+    if (btnnbr) delete btnnbr; btnnbr = NULL;
 
-    btn.SetTL(NULL);
-    btn.SetTop(NULL);
-    btn.SetTR(NULL);
-    btn.SetLeft(NULL);
-    btn.SetCenter(NULL);
-    btn.SetRight(NULL);
-    btn.SetBL(NULL);
-    btn.SetBottom(NULL);
-    btn.SetBR(NULL);
+    btnn.SetTL(NULL);
+    btnn.SetTop(NULL);
+    btnn.SetTR(NULL);
+    btnn.SetLeft(NULL);
+    btnn.SetCenter(NULL);
+    btnn.SetRight(NULL);
+    btnn.SetBL(NULL);
+    btnn.SetBottom(NULL);
+    btnn.SetBR(NULL);
 
     glictGlobals.buttonSkin = NULL;
 
 
 //    printf("[Skin::unloadSkin] Unloading highlighted button skin...\n");
 
-    if (bthtl) delete bthtl; bthtl = NULL;
-    if (btht)  delete btht;  btht  = NULL;
-    if (bthtr) delete bthtr; bthtr = NULL;
-    if (bthl)  delete bthl;  bthl  = NULL;
-    if (bthc)  delete bthc;  bthc  = NULL;
-    if (bthr)  delete bthr;  bthr  = NULL;
-    if (bthbl) delete bthbl; bthbl = NULL;
-    if (bthb)  delete bthb;  bthb  = NULL;
-    if (bthbr) delete bthbr; bthbr = NULL;
+    if (btnhtl) delete btnhtl; btnhtl = NULL;
+    if (btnht)  delete btnht;  btnht  = NULL;
+    if (btnhtr) delete btnhtr; btnhtr = NULL;
+    if (btnhl)  delete btnhl;  btnhl  = NULL;
+    if (btnhc)  delete btnhc;  btnhc  = NULL;
+    if (btnhr)  delete btnhr;  btnhr  = NULL;
+    if (btnhbl) delete btnhbl; btnhbl = NULL;
+    if (btnhb)  delete btnhb;  btnhb  = NULL;
+    if (btnhbr) delete btnhbr; btnhbr = NULL;
 
-    bth.SetTL(NULL);
-    bth.SetTop(NULL);
-    bth.SetTR(NULL);
-    bth.SetLeft(NULL);
-    bth.SetCenter(NULL);
-    bth.SetRight(NULL);
-    bth.SetBL(NULL);
-    bth.SetBottom(NULL);
-    bth.SetBR(NULL);
+    btnh.SetTL(NULL);
+    btnh.SetTop(NULL);
+    btnh.SetTR(NULL);
+    btnh.SetLeft(NULL);
+    btnh.SetCenter(NULL);
+    btnh.SetRight(NULL);
+    btnh.SetBL(NULL);
+    btnh.SetBottom(NULL);
+    btnh.SetBR(NULL);
 
     glictGlobals.buttonHighlightSkin = NULL;
 
@@ -615,225 +634,225 @@ void Skin::unloadSkin() {
 #if GLICT_APIREV < 68
 #warning Skinned scrollbar buttons need at least GLICT apirev 68
 #else
-    if (scutl) delete scutl; scutl = NULL;
-    if (scut)  delete scut;  scut  = NULL;
-    if (scutr) delete scutr; scutr = NULL;
-    if (scul)  delete scul;  scul  = NULL;
-    if (scuc)  delete scuc;  scuc  = NULL;
-    if (scur)  delete scur;  scur  = NULL;
-    if (scubl) delete scubl; scubl = NULL;
-    if (scub)  delete scub;  scub  = NULL;
-    if (scubr) delete scubr; scubr = NULL;
+    if (scrollbaruptl) delete scrollbaruptl; scrollbaruptl = NULL;
+    if (scrollbarupt)  delete scrollbarupt;  scrollbarupt  = NULL;
+    if (scrollbaruptr) delete scrollbaruptr; scrollbaruptr = NULL;
+    if (scrollbarupl)  delete scrollbarupl;  scrollbarupl  = NULL;
+    if (scrollbarupc)  delete scrollbarupc;  scrollbarupc  = NULL;
+    if (scrollbarupr)  delete scrollbarupr;  scrollbarupr  = NULL;
+    if (scrollbarupbl) delete scrollbarupbl; scrollbarupbl = NULL;
+    if (scrollbarupb)  delete scrollbarupb;  scrollbarupb  = NULL;
+    if (scrollbarupbr) delete scrollbarupbr; scrollbarupbr = NULL;
 
-    scu.SetTL(NULL);
-    scu.SetTop(NULL);
-    scu.SetTR(NULL);
-    scu.SetLeft(NULL);
-    scu.SetCenter(NULL);
-    scu.SetRight(NULL);
-    scu.SetBL(NULL);
-    scu.SetBottom(NULL);
-    scu.SetBR(NULL);
+    scrollbarup.SetTL(NULL);
+    scrollbarup.SetTop(NULL);
+    scrollbarup.SetTR(NULL);
+    scrollbarup.SetLeft(NULL);
+    scrollbarup.SetCenter(NULL);
+    scrollbarup.SetRight(NULL);
+    scrollbarup.SetBL(NULL);
+    scrollbarup.SetBottom(NULL);
+    scrollbarup.SetBR(NULL);
 
     glictGlobals.scrollbarUpperSkin = NULL;
 
-    if (shutl) delete shutl; shutl = NULL;
-    if (shut)  delete shut;  shut  = NULL;
-    if (shutr) delete shutr; shutr = NULL;
-    if (shul)  delete shul;  shul  = NULL;
-    if (shuc)  delete shuc;  shuc  = NULL;
-    if (shur)  delete shur;  shur  = NULL;
-    if (shubl) delete shubl; shubl = NULL;
-    if (shub)  delete shub;  shub  = NULL;
-    if (shubr) delete shubr; shubr = NULL;
+    if (scrollbaruphtl) delete scrollbaruphtl; scrollbaruphtl = NULL;
+    if (scrollbarupht)  delete scrollbarupht;  scrollbarupht  = NULL;
+    if (scrollbaruphtr) delete scrollbaruphtr; scrollbaruphtr = NULL;
+    if (scrollbaruphl)  delete scrollbaruphl;  scrollbaruphl  = NULL;
+    if (scrollbaruphc)  delete scrollbaruphc;  scrollbaruphc  = NULL;
+    if (scrollbaruphr)  delete scrollbaruphr;  scrollbaruphr  = NULL;
+    if (scrollbaruphbl) delete scrollbaruphbl; scrollbaruphbl = NULL;
+    if (scrollbaruphb)  delete scrollbaruphb;  scrollbaruphb  = NULL;
+    if (scrollbaruphbr) delete scrollbaruphbr; scrollbaruphbr = NULL;
 
-    shu.SetTL(NULL);
-    shu.SetTop(NULL);
-    shu.SetTR(NULL);
-    shu.SetLeft(NULL);
-    shu.SetCenter(NULL);
-    shu.SetRight(NULL);
-    shu.SetBL(NULL);
-    shu.SetBottom(NULL);
-    shu.SetBR(NULL);
+    scrollbaruph.SetTL(NULL);
+    scrollbaruph.SetTop(NULL);
+    scrollbaruph.SetTR(NULL);
+    scrollbaruph.SetLeft(NULL);
+    scrollbaruph.SetCenter(NULL);
+    scrollbaruph.SetRight(NULL);
+    scrollbaruph.SetBL(NULL);
+    scrollbaruph.SetBottom(NULL);
+    scrollbaruph.SetBR(NULL);
 
     glictGlobals.scrollbarUpperHighlightSkin = NULL;
 
 
-    if (scdtl) delete scdtl; scdtl = NULL;
-    if (scdt)  delete scdt;  scdt  = NULL;
-    if (scdtr) delete scdtr; scdtr = NULL;
-    if (scdl)  delete scdl;  scdl  = NULL;
-    if (scdc)  delete scdc;  scdc  = NULL;
-    if (scdr)  delete scdr;  scdr  = NULL;
-    if (scdbl) delete scdbl; scdbl = NULL;
-    if (scdb)  delete scdb;  scdb  = NULL;
-    if (scdbr) delete scdbr; scdbr = NULL;
+    if (scrollbardntl) delete scrollbardntl; scrollbardntl = NULL;
+    if (scrollbardnt)  delete scrollbardnt;  scrollbardnt  = NULL;
+    if (scrollbardntr) delete scrollbardntr; scrollbardntr = NULL;
+    if (scrollbardnl)  delete scrollbardnl;  scrollbardnl  = NULL;
+    if (scrollbardnc)  delete scrollbardnc;  scrollbardnc  = NULL;
+    if (scrollbardnr)  delete scrollbardnr;  scrollbardnr  = NULL;
+    if (scrollbardnbl) delete scrollbardnbl; scrollbardnbl = NULL;
+    if (scrollbardnb)  delete scrollbardnb;  scrollbardnb  = NULL;
+    if (scrollbardnbr) delete scrollbardnbr; scrollbardnbr = NULL;
 
-    scd.SetTL(NULL);
-    scd.SetTop(NULL);
-    scd.SetTR(NULL);
-    scd.SetLeft(NULL);
-    scd.SetCenter(NULL);
-    scd.SetRight(NULL);
-    scd.SetBL(NULL);
-    scd.SetBottom(NULL);
-    scd.SetBR(NULL);
+    scrollbardn.SetTL(NULL);
+    scrollbardn.SetTop(NULL);
+    scrollbardn.SetTR(NULL);
+    scrollbardn.SetLeft(NULL);
+    scrollbardn.SetCenter(NULL);
+    scrollbardn.SetRight(NULL);
+    scrollbardn.SetBL(NULL);
+    scrollbardn.SetBottom(NULL);
+    scrollbardn.SetBR(NULL);
 
     glictGlobals.scrollbarLowerSkin = NULL;
 
-    if (shdtl) delete shdtl; shdtl = NULL;
-    if (shdt)  delete shdt;  shdt  = NULL;
-    if (shdtr) delete shdtr; shdtr = NULL;
-    if (shdl)  delete shdl;  shdl  = NULL;
-    if (shdc)  delete shdc;  shdc  = NULL;
-    if (shdr)  delete shdr;  shdr  = NULL;
-    if (shdbl) delete shdbl; shdbl = NULL;
-    if (shdb)  delete shdb;  shdb  = NULL;
-    if (shdbr) delete shdbr; shdbr = NULL;
+    if (scrollbardnhtl) delete scrollbardnhtl; scrollbardnhtl = NULL;
+    if (scrollbardnht)  delete scrollbardnht;  scrollbardnht  = NULL;
+    if (scrollbardnhtr) delete scrollbardnhtr; scrollbardnhtr = NULL;
+    if (scrollbardnhl)  delete scrollbardnhl;  scrollbardnhl  = NULL;
+    if (scrollbardnhc)  delete scrollbardnhc;  scrollbardnhc  = NULL;
+    if (scrollbardnhr)  delete scrollbardnhr;  scrollbardnhr  = NULL;
+    if (scrollbardnhbl) delete scrollbardnhbl; scrollbardnhbl = NULL;
+    if (scrollbardnhb)  delete scrollbardnhb;  scrollbardnhb  = NULL;
+    if (scrollbardnhbr) delete scrollbardnhbr; scrollbardnhbr = NULL;
 
-    shd.SetTL(NULL);
-    shd.SetTop(NULL);
-    shd.SetTR(NULL);
-    shd.SetLeft(NULL);
-    shd.SetCenter(NULL);
-    shd.SetRight(NULL);
-    shd.SetBL(NULL);
-    shd.SetBottom(NULL);
-    shd.SetBR(NULL);
+    scrollbardnh.SetTL(NULL);
+    scrollbardnh.SetTop(NULL);
+    scrollbardnh.SetTR(NULL);
+    scrollbardnh.SetLeft(NULL);
+    scrollbardnh.SetCenter(NULL);
+    scrollbardnh.SetRight(NULL);
+    scrollbardnh.SetBL(NULL);
+    scrollbardnh.SetBottom(NULL);
+    scrollbardnh.SetBR(NULL);
 
     glictGlobals.scrollbarLowerHighlightSkin = NULL;
 
-    if (scltl) delete scltl; scltl = NULL;
-    if (sclt)  delete sclt;  sclt  = NULL;
-    if (scltr) delete scltr; scltr = NULL;
-    if (scll)  delete scll;  scll  = NULL;
-    if (sclc)  delete sclc;  sclc  = NULL;
-    if (sclr)  delete sclr;  sclr  = NULL;
-    if (sclbl) delete sclbl; sclbl = NULL;
-    if (sclb)  delete sclb;  sclb  = NULL;
-    if (sclbr) delete sclbr; sclbr = NULL;
+    if (scrollbarlttl) delete scrollbarlttl; scrollbarlttl = NULL;
+    if (scrollbarltt)  delete scrollbarltt;  scrollbarltt  = NULL;
+    if (scrollbarlttr) delete scrollbarlttr; scrollbarlttr = NULL;
+    if (scrollbarltl)  delete scrollbarltl;  scrollbarltl  = NULL;
+    if (scrollbarltc)  delete scrollbarltc;  scrollbarltc  = NULL;
+    if (scrollbarltr)  delete scrollbarltr;  scrollbarltr  = NULL;
+    if (scrollbarltbl) delete scrollbarltbl; scrollbarltbl = NULL;
+    if (scrollbarltb)  delete scrollbarltb;  scrollbarltb  = NULL;
+    if (scrollbarltbr) delete scrollbarltbr; scrollbarltbr = NULL;
 
-    scl.SetTL(NULL);
-    scl.SetTop(NULL);
-    scl.SetTR(NULL);
-    scl.SetLeft(NULL);
-    scl.SetCenter(NULL);
-    scl.SetRight(NULL);
-    scl.SetBL(NULL);
-    scl.SetBottom(NULL);
-    scl.SetBR(NULL);
+    scrollbarlt.SetTL(NULL);
+    scrollbarlt.SetTop(NULL);
+    scrollbarlt.SetTR(NULL);
+    scrollbarlt.SetLeft(NULL);
+    scrollbarlt.SetCenter(NULL);
+    scrollbarlt.SetRight(NULL);
+    scrollbarlt.SetBL(NULL);
+    scrollbarlt.SetBottom(NULL);
+    scrollbarlt.SetBR(NULL);
 
     glictGlobals.scrollbarLeftSkin = NULL;
 
-    if (shltl) delete shltl; shltl = NULL;
-    if (shlt)  delete shlt;  shlt  = NULL;
-    if (shltr) delete shltr; shltr = NULL;
-    if (shll)  delete shll;  shll  = NULL;
-    if (shlc)  delete shlc;  shlc  = NULL;
-    if (shlr)  delete shlr;  shlr  = NULL;
-    if (shlbl) delete shlbl; shlbl = NULL;
-    if (shlb)  delete shlb;  shlb  = NULL;
-    if (shlbr) delete shlbr; shlbr = NULL;
+    if (scrollbarlthtl) delete scrollbarlthtl; scrollbarlthtl = NULL;
+    if (scrollbarltht)  delete scrollbarltht;  scrollbarltht  = NULL;
+    if (scrollbarlthtr) delete scrollbarlthtr; scrollbarlthtr = NULL;
+    if (scrollbarlthl)  delete scrollbarlthl;  scrollbarlthl  = NULL;
+    if (scrollbarlthc)  delete scrollbarlthc;  scrollbarlthc  = NULL;
+    if (scrollbarlthr)  delete scrollbarlthr;  scrollbarlthr  = NULL;
+    if (scrollbarlthbl) delete scrollbarlthbl; scrollbarlthbl = NULL;
+    if (scrollbarlthb)  delete scrollbarlthb;  scrollbarlthb  = NULL;
+    if (scrollbarlthbr) delete scrollbarlthbr; scrollbarlthbr = NULL;
 
-    shl.SetTL(NULL);
-    shl.SetTop(NULL);
-    shl.SetTR(NULL);
-    shl.SetLeft(NULL);
-    shl.SetCenter(NULL);
-    shl.SetRight(NULL);
-    shl.SetBL(NULL);
-    shl.SetBottom(NULL);
-    shl.SetBR(NULL);
+    scrollbarlth.SetTL(NULL);
+    scrollbarlth.SetTop(NULL);
+    scrollbarlth.SetTR(NULL);
+    scrollbarlth.SetLeft(NULL);
+    scrollbarlth.SetCenter(NULL);
+    scrollbarlth.SetRight(NULL);
+    scrollbarlth.SetBL(NULL);
+    scrollbarlth.SetBottom(NULL);
+    scrollbarlth.SetBR(NULL);
 
-    glictGlobals.scrollbarRightHighlightSkin = NULL;
+    glictGlobals.scrollbarLeftHighlightSkin = NULL;
 
 
-    if (scrtl) delete scrtl; scrtl = NULL;
-    if (scrt)  delete scrt;  scrt  = NULL;
-    if (scrtr) delete scrtr; scrtr = NULL;
-    if (scrl)  delete scrl;  scrl  = NULL;
-    if (scrc)  delete scrc;  scrc  = NULL;
-    if (scrr)  delete scrr;  scrr  = NULL;
-    if (scrbl) delete scrbl; scrbl = NULL;
-    if (scrb)  delete scrb;  scrb  = NULL;
-    if (scrbr) delete scrbr; scrbr = NULL;
+    if (scrollbarrttl) delete scrollbarrttl; scrollbarrttl = NULL;
+    if (scrollbarrtt)  delete scrollbarrtt;  scrollbarrtt  = NULL;
+    if (scrollbarrttr) delete scrollbarrttr; scrollbarrttr = NULL;
+    if (scrollbarrtl)  delete scrollbarrtl;  scrollbarrtl  = NULL;
+    if (scrollbarrtc)  delete scrollbarrtc;  scrollbarrtc  = NULL;
+    if (scrollbarrtr)  delete scrollbarrtr;  scrollbarrtr  = NULL;
+    if (scrollbarrtbl) delete scrollbarrtbl; scrollbarrtbl = NULL;
+    if (scrollbarrtb)  delete scrollbarrtb;  scrollbarrtb  = NULL;
+    if (scrollbarrtbr) delete scrollbarrtbr; scrollbarrtbr = NULL;
 
-    scr.SetTL(NULL);
-    scr.SetTop(NULL);
-    scr.SetTR(NULL);
-    scr.SetLeft(NULL);
-    scr.SetCenter(NULL);
-    scr.SetRight(NULL);
-    scr.SetBL(NULL);
-    scr.SetBottom(NULL);
-    scr.SetBR(NULL);
+    scrollbarrt.SetTL(NULL);
+    scrollbarrt.SetTop(NULL);
+    scrollbarrt.SetTR(NULL);
+    scrollbarrt.SetLeft(NULL);
+    scrollbarrt.SetCenter(NULL);
+    scrollbarrt.SetRight(NULL);
+    scrollbarrt.SetBL(NULL);
+    scrollbarrt.SetBottom(NULL);
+    scrollbarrt.SetBR(NULL);
 
     glictGlobals.scrollbarRightSkin = NULL;
 
-    if (shrtl) delete shrtl; shrtl = NULL;
-    if (shrt)  delete shrt;  shrt  = NULL;
-    if (shrtr) delete shrtr; shrtr = NULL;
-    if (shrl)  delete shrl;  shrl  = NULL;
-    if (shrc)  delete shrc;  shrc  = NULL;
-    if (shrr)  delete shrr;  shrr  = NULL;
-    if (shrbl) delete shrbl; shrbl = NULL;
-    if (shrb)  delete shrb;  shrb  = NULL;
-    if (shrbr) delete shrbr; shrbr = NULL;
+    if (scrollbarrthtl) delete scrollbarrthtl; scrollbarrthtl = NULL;
+    if (scrollbarrtht)  delete scrollbarrtht;  scrollbarrtht  = NULL;
+    if (scrollbarrthtr) delete scrollbarrthtr; scrollbarrthtr = NULL;
+    if (scrollbarrthl)  delete scrollbarrthl;  scrollbarrthl  = NULL;
+    if (scrollbarrthc)  delete scrollbarrthc;  scrollbarrthc  = NULL;
+    if (scrollbarrthr)  delete scrollbarrthr;  scrollbarrthr  = NULL;
+    if (scrollbarrthbl) delete scrollbarrthbl; scrollbarrthbl = NULL;
+    if (scrollbarrthb)  delete scrollbarrthb;  scrollbarrthb  = NULL;
+    if (scrollbarrthbr) delete scrollbarrthbr; scrollbarrthbr = NULL;
 
-    shr.SetTL(NULL);
-    shr.SetTop(NULL);
-    shr.SetTR(NULL);
-    shr.SetLeft(NULL);
-    shr.SetCenter(NULL);
-    shr.SetRight(NULL);
-    shr.SetBL(NULL);
-    shr.SetBottom(NULL);
-    shr.SetBR(NULL);
+    scrollbarrth.SetTL(NULL);
+    scrollbarrth.SetTop(NULL);
+    scrollbarrth.SetTR(NULL);
+    scrollbarrth.SetLeft(NULL);
+    scrollbarrth.SetCenter(NULL);
+    scrollbarrth.SetRight(NULL);
+    scrollbarrth.SetBL(NULL);
+    scrollbarrth.SetBottom(NULL);
+    scrollbarrth.SetBR(NULL);
 
     glictGlobals.scrollbarRightHighlightSkin = NULL;
 
-    if (scbtl) delete scbtl; scbtl = NULL;
-    if (scbt)  delete scbt;  scbt  = NULL;
-    if (scbtr) delete scbtr; scbtr = NULL;
-    if (scbl)  delete scbl;  scbl  = NULL;
-    if (scbc)  delete scbc;  scbc  = NULL;
-    if (scbr)  delete scbr;  scbr  = NULL;
-    if (scbbl) delete scbbl; scbbl = NULL;
-    if (scbb)  delete scbb;  scbb  = NULL;
-    if (scbbr) delete scbbr; scbbr = NULL;
+    if (scrollbarbtntl) delete scrollbarbtntl; scrollbarbtntl = NULL;
+    if (scrollbarbtnt)  delete scrollbarbtnt;  scrollbarbtnt  = NULL;
+    if (scrollbarbtntr) delete scrollbarbtntr; scrollbarbtntr = NULL;
+    if (scrollbarbtnl)  delete scrollbarbtnl;  scrollbarbtnl  = NULL;
+    if (scrollbarbtnc)  delete scrollbarbtnc;  scrollbarbtnc  = NULL;
+    if (scrollbarbtnr)  delete scrollbarbtnr;  scrollbarbtnr  = NULL;
+    if (scrollbarbtnbl) delete scrollbarbtnbl; scrollbarbtnbl = NULL;
+    if (scrollbarbtnb)  delete scrollbarbtnb;  scrollbarbtnb  = NULL;
+    if (scrollbarbtnbr) delete scrollbarbtnbr; scrollbarbtnbr = NULL;
 
-    scb.SetTL(NULL);
-    scb.SetTop(NULL);
-    scb.SetTR(NULL);
-    scb.SetLeft(NULL);
-    scb.SetCenter(NULL);
-    scb.SetRight(NULL);
-    scb.SetBL(NULL);
-    scb.SetBottom(NULL);
-    scb.SetBR(NULL);
+    scrollbarbtn.SetTL(NULL);
+    scrollbarbtn.SetTop(NULL);
+    scrollbarbtn.SetTR(NULL);
+    scrollbarbtn.SetLeft(NULL);
+    scrollbarbtn.SetCenter(NULL);
+    scrollbarbtn.SetRight(NULL);
+    scrollbarbtn.SetBL(NULL);
+    scrollbarbtn.SetBottom(NULL);
+    scrollbarbtn.SetBR(NULL);
 
     glictGlobals.scrollbarDragSkin = NULL;
 
-    if (scptl) delete scptl; scptl = NULL;
-    if (scpt)  delete scpt;  scpt  = NULL;
-    if (scptr) delete scptr; scptr = NULL;
-    if (scpl)  delete scpl;  scpl  = NULL;
-    if (scpc)  delete scpc;  scpc  = NULL;
-    if (scpr)  delete scpr;  scpr  = NULL;
-    if (scpbl) delete scpbl; scpbl = NULL;
-    if (scpb)  delete scpb;  scpb  = NULL;
-    if (scpbr) delete scpbr; scpbr = NULL;
+    if (scrollbarbgtl) delete scrollbarbgtl; scrollbarbgtl = NULL;
+    if (scrollbarbgt)  delete scrollbarbgt;  scrollbarbgt  = NULL;
+    if (scrollbarbgtr) delete scrollbarbgtr; scrollbarbgtr = NULL;
+    if (scrollbarbgl)  delete scrollbarbgl;  scrollbarbgl  = NULL;
+    if (scrollbarbgc)  delete scrollbarbgc;  scrollbarbgc  = NULL;
+    if (scrollbarbgr)  delete scrollbarbgr;  scrollbarbgr  = NULL;
+    if (scrollbarbgbl) delete scrollbarbgbl; scrollbarbgbl = NULL;
+    if (scrollbarbgb)  delete scrollbarbgb;  scrollbarbgb  = NULL;
+    if (scrollbarbgbr) delete scrollbarbgbr; scrollbarbgbr = NULL;
 
-    scp.SetTL(NULL);
-    scp.SetTop(NULL);
-    scp.SetTR(NULL);
-    scp.SetLeft(NULL);
-    scp.SetCenter(NULL);
-    scp.SetRight(NULL);
-    scp.SetBL(NULL);
-    scp.SetBottom(NULL);
-    scp.SetBR(NULL);
+    scrollbarbg.SetTL(NULL);
+    scrollbarbg.SetTop(NULL);
+    scrollbarbg.SetTR(NULL);
+    scrollbarbg.SetLeft(NULL);
+    scrollbarbg.SetCenter(NULL);
+    scrollbarbg.SetRight(NULL);
+    scrollbarbg.SetBL(NULL);
+    scrollbarbg.SetBottom(NULL);
+    scrollbarbg.SetBR(NULL);
 
     glictGlobals.scrollbarPanelSkin = NULL;
 #endif
@@ -907,67 +926,87 @@ void Skin::unloadSkin() {
 
 
 
-    if (cbctl) delete cbctl; cbctl = NULL;
-    if (cbct)  delete cbct;  cbct  = NULL;
-    if (cbctr) delete cbctr; cbctr = NULL;
-    if (cbcl)  delete cbcl;  cbcl  = NULL;
-    if (cbcc)  delete cbcc;  cbcc  = NULL;
-    if (cbcr)  delete cbcr;  cbcr  = NULL;
-    if (cbcbl) delete cbcbl; cbcbl = NULL;
-    if (cbcb)  delete cbcb;  cbcb  = NULL;
-    if (cbcbr) delete cbcbr; cbcbr = NULL;
+    if (consoletabbgtl) delete consoletabbgtl; consoletabbgtl = NULL;
+    if (consoletabbgt)  delete consoletabbgt;  consoletabbgt  = NULL;
+    if (consoletabbgtr) delete consoletabbgtr; consoletabbgtr = NULL;
+    if (consoletabbgl)  delete consoletabbgl;  consoletabbgl  = NULL;
+    if (consoletabbgc)  delete consoletabbgc;  consoletabbgc  = NULL;
+    if (consoletabbgr)  delete consoletabbgr;  consoletabbgr  = NULL;
+    if (consoletabbgbl) delete consoletabbgbl; consoletabbgbl = NULL;
+    if (consoletabbgb)  delete consoletabbgb;  consoletabbgb  = NULL;
+    if (consoletabbgbr) delete consoletabbgbr; consoletabbgbr = NULL;
 
-    cbc.SetTL(NULL);
-    cbc.SetTop(NULL);
-    cbc.SetTR(NULL);
-    cbc.SetLeft(NULL);
-    cbc.SetCenter(NULL);
-    cbc.SetRight(NULL);
-    cbc.SetBL(NULL);
-    cbc.SetBottom(NULL);
-    cbc.SetBR(NULL);
+    consoletabbg.SetTL(NULL);
+    consoletabbg.SetTop(NULL);
+    consoletabbg.SetTR(NULL);
+    consoletabbg.SetLeft(NULL);
+    consoletabbg.SetCenter(NULL);
+    consoletabbg.SetRight(NULL);
+    consoletabbg.SetBL(NULL);
+    consoletabbg.SetBottom(NULL);
+    consoletabbg.SetBR(NULL);
 
-    if (cbatl) delete cbatl; cbatl = NULL;
-    if (cbat)  delete cbat;  cbat  = NULL;
-    if (cbatr) delete cbatr; cbatr = NULL;
-    if (cbal)  delete cbal;  cbal  = NULL;
-    if (cbac)  delete cbac;  cbac  = NULL;
-    if (cbar)  delete cbar;  cbar  = NULL;
-    if (cbabl) delete cbabl; cbabl = NULL;
-    if (cbab)  delete cbab;  cbab  = NULL;
-    if (cbabr) delete cbabr; cbabr = NULL;
+    if (consoletabactivetl) delete consoletabactivetl; consoletabactivetl = NULL;
+    if (consoletabactivet)  delete consoletabactivet;  consoletabactivet  = NULL;
+    if (consoletabactivetr) delete consoletabactivetr; consoletabactivetr = NULL;
+    if (consoletabactivel)  delete consoletabactivel;  consoletabactivel  = NULL;
+    if (consoletabactivec)  delete consoletabactivec;  consoletabactivec  = NULL;
+    if (consoletabactiver)  delete consoletabactiver;  consoletabactiver  = NULL;
+    if (consoletabactivebl) delete consoletabactivebl; consoletabactivebl = NULL;
+    if (consoletabactiveb)  delete consoletabactiveb;  consoletabactiveb  = NULL;
+    if (consoletabactivebr) delete consoletabactivebr; consoletabactivebr = NULL;
 
-    cba.SetTL(NULL);
-    cba.SetTop(NULL);
-    cba.SetTR(NULL);
-    cba.SetLeft(NULL);
-    cba.SetCenter(NULL);
-    cba.SetRight(NULL);
-    cba.SetBL(NULL);
-    cba.SetBottom(NULL);
-    cba.SetBR(NULL);
+    consoletabactive.SetTL(NULL);
+    consoletabactive.SetTop(NULL);
+    consoletabactive.SetTR(NULL);
+    consoletabactive.SetLeft(NULL);
+    consoletabactive.SetCenter(NULL);
+    consoletabactive.SetRight(NULL);
+    consoletabactive.SetBL(NULL);
+    consoletabactive.SetBottom(NULL);
+    consoletabactive.SetBR(NULL);
 
-    if (cbptl) delete cbptl; cbptl = NULL;
-    if (cbpt)  delete cbpt;  cbpt  = NULL;
-    if (cbptr) delete cbptr; cbptr = NULL;
-    if (cbpl)  delete cbpl;  cbpl  = NULL;
-    if (cbpc)  delete cbpc;  cbpc  = NULL;
-    if (cbpr)  delete cbpr;  cbpr  = NULL;
-    if (cbpbl) delete cbpbl; cbpbl = NULL;
-    if (cbpb)  delete cbpb;  cbpb  = NULL;
-    if (cbpbr) delete cbpbr; cbpbr = NULL;
+    if (consoletabpassivetl) delete consoletabpassivetl; consoletabpassivetl = NULL;
+    if (consoletabpassivet)  delete consoletabpassivet;  consoletabpassivet  = NULL;
+    if (consoletabpassivetr) delete consoletabpassivetr; consoletabpassivetr = NULL;
+    if (consoletabpassivel)  delete consoletabpassivel;  consoletabpassivel  = NULL;
+    if (consoletabpassivec)  delete consoletabpassivec;  consoletabpassivec  = NULL;
+    if (consoletabpassiver)  delete consoletabpassiver;  consoletabpassiver  = NULL;
+    if (consoletabpassivebl) delete consoletabpassivebl; consoletabpassivebl = NULL;
+    if (consoletabpassiveb)  delete consoletabpassiveb;  consoletabpassiveb  = NULL;
+    if (consoletabpassivebr) delete consoletabpassivebr; consoletabpassivebr = NULL;
 
-    cbp.SetTL(NULL);
-    cbp.SetTop(NULL);
-    cbp.SetTR(NULL);
-    cbp.SetLeft(NULL);
-    cbp.SetCenter(NULL);
-    cbp.SetRight(NULL);
-    cbp.SetBL(NULL);
-    cbp.SetBottom(NULL);
-    cbp.SetBR(NULL);
+    consoletabpassive.SetTL(NULL);
+    consoletabpassive.SetTop(NULL);
+    consoletabpassive.SetTR(NULL);
+    consoletabpassive.SetLeft(NULL);
+    consoletabpassive.SetCenter(NULL);
+    consoletabpassive.SetRight(NULL);
+    consoletabpassive.SetBL(NULL);
+    consoletabpassive.SetBottom(NULL);
+    consoletabpassive.SetBR(NULL);
 
 
+
+    if (backgroundtl) delete backgroundtl; backgroundtl = NULL;
+    if (backgroundt)  delete backgroundt;  backgroundt  = NULL;
+    if (backgroundtr) delete backgroundtr; backgroundtr = NULL;
+    if (backgroundl)  delete backgroundl;  backgroundl  = NULL;
+    if (backgroundc)  delete backgroundc;  backgroundc  = NULL;
+    if (backgroundr)  delete backgroundr;  backgroundr  = NULL;
+    if (backgroundbl) delete backgroundbl; backgroundbl = NULL;
+    if (backgroundb)  delete backgroundb;  backgroundb  = NULL;
+    if (backgroundbr) delete backgroundbr; backgroundbr = NULL;
+
+    background.SetTL(NULL);
+    background.SetTop(NULL);
+    background.SetTR(NULL);
+    background.SetLeft(NULL);
+    background.SetCenter(NULL);
+    background.SetRight(NULL);
+    background.SetBL(NULL);
+    background.SetBottom(NULL);
+    background.SetBR(NULL);
 
 }
 
