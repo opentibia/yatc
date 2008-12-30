@@ -51,9 +51,17 @@ public:
             8, 91,  // ring
             83, 91};// hand
 
-        panel.SetCaption(gettext("Inventory"));
 		panel.SetHeight(150);
 		panel.SetWidth(150);
+        #if (GLICT_APIREV >= 98)
+		panel.SetDraggable(true);
+		panel.SetSkin(&g_skin.background);
+		panel.SetFocusable(true);
+		#else
+		#warning Inventory is not properly drawn until you upgrade to GLICT 98+
+        panel.SetCaption(gettext("Inventory"));
+		#endif
+
 		for (int i = 0; i < 10; i++) {
 			panel.AddObject(pnlItem+i);
 			pnlItem[i].SetPos(posInvSlots[i*2], posInvSlots[i*2+1]);
@@ -81,7 +89,12 @@ public:
     static void onUse(Popup::Item*);
     static void onTrade(Popup::Item*);
 
-	glictWindow panel;
+#if (GLICT_APIREV >= 98)
+    glictPanel panel; // 170x34
+#else
+	glictWindow panel __attribute__((deprecated));
+#endif
+
 	glictPanel pnlItem[10];
 
 };

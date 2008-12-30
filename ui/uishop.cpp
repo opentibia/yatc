@@ -163,8 +163,14 @@ winShop_t::~winShop_t()
 void winShop_t::drawObject(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
     winShop_t* ws = (winShop_t*)(caller->GetCustomData());
-    if (ws->dispItem)
+    if (ws->dispItem) {
         ws->dispItem->Blit((int)real->left, (int)real->top);
+        if (ws->dispItem->getCount()>1) {
+            std::stringstream s;
+            s << (int)ws->dispItem->getCount();
+            g_engine->drawText(s.str().c_str(), "gamefont", (int)real->right - g_engine->sizeText(s.str().c_str(), "gamefont") - 2, (int)real->bottom - 12, TEXTCOLOR_WHITE);
+        }
+    }
 }
 
 void winShop_t::destroyList()
@@ -174,7 +180,7 @@ void winShop_t::destroyList()
         lstBuy.RemoveObject(*it);
         lstBuy.DelayedRemove();
         #else
-        #warning Stuff wont work ok till you upgrade to GLICT APIREV < 71
+        #warning Stuff wont work ok till you upgrade to GLICT APIREV >= 71
         #endif
 
         bool unique=true;
@@ -192,7 +198,7 @@ void winShop_t::destroyList()
         lstSell.RemoveObject(*it);
         lstSell.DelayedRemove();
         #else
-        #warning Stuff wont work ok till you upgrade to GLICT APIREV < 71
+        #warning Stuff wont work ok till you upgrade to GLICT APIREV >= 71
         #endif
 
         delete (ShopItem*)((*it)->GetCustomData());
@@ -375,7 +381,6 @@ void winShop_t::rebuildImage()
     pnlMoneyRight.SetCaption(ss.str());
     pnlMoneyRight.SetPos(118-newwidth,128);
     pnlMoneyRight.SetWidth(newwidth);
-
 }
 
 void winShop_t::OnBuyClick(glictPos* pos, glictContainer *caller)

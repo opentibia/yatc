@@ -92,7 +92,12 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 
 
 		g_engine->drawText(s.str().c_str(), "minifont", (int)real->left + 2, (int)real->top + 2, TEXTCOLOR_WHITE);
-	}
+	} else if (item)
+        if (item->getCount()>1) {
+            std::stringstream s;
+            s << (int)item->getCount();
+            g_engine->drawText(s.str().c_str(), "gamefont", (int)real->right - g_engine->sizeText(s.str().c_str(), "gamefont") - 2, (int)real->bottom - 12, TEXTCOLOR_WHITE);
+        }
 
 }
 void pnlInventory_t::inventoryItemOnClick(glictPos *relmousepos,
