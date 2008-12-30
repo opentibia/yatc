@@ -156,6 +156,7 @@ public:
 		pnlSeparator1.SetWidth(250);
 		pnlSeparator1.SetHeight(2);
 		pnlSeparator1.SetBGColor(.2,.2,.2,1.);
+		pnlSeparator1.SetSkin(&g_skin.chk);
 
 		window.AddObject(&btnMotd);
 		btnMotd.SetPos(15, 198);
@@ -177,7 +178,7 @@ public:
 		pnlSeparator2.SetWidth(260);
 		pnlSeparator2.SetHeight(2);
 		pnlSeparator2.SetBGColor(.2,.2,.2,1.);
-
+        pnlSeparator2.SetSkin(&g_skin.chk);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(227, 248);

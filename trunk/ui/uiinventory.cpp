@@ -87,9 +87,7 @@ void pnlInventory_t::inventoryItemOnPaint(glictRect *real, glictRect *clipped, g
 		if (item)
 			if (item->getCount()>1)
 				count << (int)item->getCount() << "x";
-
 		s << "Slot " << (int)slot << "\n" << count.str();
-
 
 		g_engine->drawText(s.str().c_str(), "minifont", (int)real->left + 2, (int)real->top + 2, TEXTCOLOR_WHITE);
 	} else if (item)

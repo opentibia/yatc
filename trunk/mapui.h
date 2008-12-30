@@ -42,6 +42,7 @@ class MapUI {
 		void dragThing(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos);
 
 		void useItem(Tile* tile, const Thing* &thing, int &stackpos, bool &extended);
+        void lookAtItem(Tile* tile, const Thing* &thing, int &stackpos);
 
 		bool handlePopup(int x, int y);
 
@@ -65,6 +66,7 @@ class MapUI {
 		static void onUse(Popup::Item *parent);
 		static void onAttack(Popup::Item *parent);
 		static void onFollow(Popup::Item *parent);
+		static void onMessageTo(Popup::Item *parent);
 
 		static void onUnimplemented(Popup::Item *parent);
 

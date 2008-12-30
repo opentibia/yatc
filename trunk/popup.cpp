@@ -64,7 +64,7 @@ void Popup::mouseOver(float x, float y) {
         y /= 14;
         if (y < items.size() && items[y]->txt != "-")
             items[y]->pnl.SetBGActiveness(true);
-        else
+        else if (items[y]->txt != "-") // separator
             printf("Warning: popup tried to highligh nonexisting listitem\n");
     }
 

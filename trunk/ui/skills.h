@@ -222,13 +222,7 @@ public:
 		pnlSeparator.SetWidth(130);
 		pnlSeparator.SetHeight(2);
 		pnlSeparator.SetBGColor(.7, .7, .7, 1.);
-
-
-
-
-
-
-
+        pnlSeparator.SetSkin(&g_skin.chk);
 
 
 

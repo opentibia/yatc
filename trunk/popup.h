@@ -79,10 +79,14 @@ public:
     bool wantsDeath() const { return wantdeath; }
     bool cursorInside(float x, float y);
 
+    inline void setOwner(void* owner) { this->owner = owner; }
+    inline void*getOwner() const      { return owner; }
+
 private:
     glictList list;
     std::vector<Item*> items;
     bool wantdeath;
+    void* owner;
 };
 
 #endif

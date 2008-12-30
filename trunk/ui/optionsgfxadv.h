@@ -130,6 +130,7 @@ public:
 		pnlSeparator.SetWidth(241);
 		pnlSeparator.SetHeight(2);
 		pnlSeparator.SetBGColor(.2,.2,.2,1.);
+		pnlSeparator.SetSkin(&g_skin.chk);
 
 		window.AddObject(&btnHelp);
 		btnHelp.SetPos(100, 286);

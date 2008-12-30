@@ -459,6 +459,10 @@ void MapUI::lookAtItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32
     Position p;
 	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
 
+	lookAtItem(tile, thing, stackpos);
+}
+void MapUI::lookAtItem(Tile* tile, const Thing* &thing, int &stackpos)
+{
     if(!tile){
         thing = NULL;
         stackpos = -1;
@@ -605,7 +609,7 @@ void MapUI::makePopup(Popup*popup,void*owner,void*arg)
 
             s.str("");
             s << gettext("Message to") << " " << c->getName();
-            popup->addItem(s.str(),onUnimplemented);
+            popup->addItem(s.str(),onMessageTo,m);
 
             s.str("");
             s << gettext("Add to VIP list");
@@ -635,7 +639,17 @@ void MapUI::makePopup(Popup*popup,void*owner,void*arg)
 
 void MapUI::onLookAt(Popup::Item *parent)
 {
-    onUnimplemented(parent);
+    MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    Tile* t = Map::getInstance().getTile(m->m_lastRightclickTilePos);
+
+    const Thing* thing;
+    int stackpos;
+    bool isextended;
+
+    m->lookAtItem(t, thing, stackpos);
+
+    gw->m_protocol->sendLookItem(t->getPos(), thing->getID(), stackpos );
 }
 void MapUI::onUse(Popup::Item *parent)
 {
@@ -681,6 +695,16 @@ void MapUI::onFollow(Popup::Item *parent)
         gw->m_protocol->sendFollowCreature(m->m_popupCreatureID);
         GlobalVariables::setFollowID(m->m_popupCreatureID);
     }
+}
+
+void MapUI::onMessageTo(Popup::Item *parent)
+{
+    MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->setActiveConsole(gw->findConsole(Creatures::getInstance().getCreature(m->m_popupCreatureID)->getName()));
+
+
 }
 
 

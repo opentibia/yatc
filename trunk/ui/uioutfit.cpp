@@ -137,6 +137,7 @@ winOutfit_t::winOutfit_t() {
     pnlSeparator.SetPos(9,286);
     pnlSeparator.SetWidth(471);
     pnlSeparator.SetHeight(2);
+    pnlSeparator.SetSkin(&g_skin.chk);
 
     window.AddObject(&btnOk);
     btnOk.SetPos(384,296);
