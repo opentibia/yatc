@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-10 20:47+0100\n"
+"POT-Creation-Date: 2009-01-03 17:17+0100\n"
 "PO-Revision-Date: 2008-12-08 01:10+0100\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
@@ -14,18 +14,18 @@ msgstr ""
 #: ../gm_mainmenu.cpp:350
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
-"for details see sections 11 and 12 in COPYING.\n"
+"for details see sections 11 and 12 in file COPYING.\n"
 "This is free software, and you are welcome \n"
 "to redistribute it under certain conditions;\n"
-"see COPYING for details."
+"see file COPYING for details."
 msgstr ""
 " dolazi bez IKAKVOG JAMSTVA; \n"
-"za detalje pogledajte dijelove 11 i 12 u COPYING.\n"
+"za detalje pogledajte dijelove 11 i 12 u datoteci COPYING.\n"
 "Ovo je slobodan softver, i slobodno ga\n"
 "kopirajte pod odreðenim uvjetima; pogledajte\n"
-"COPYING za detalje."
+"datoteku COPYING za detalje."
 
-#: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
+#: ../ui/uishop.cpp:237 ../ui/uishop.cpp:273
 msgid " gold"
 msgstr " u zlatu"
 
@@ -36,10 +36,6 @@ msgstr "(bez posebnog redoslijeda)"
 #: ../gm_mainmenu.cpp:340
 msgid "(in the navy)"
 msgstr "(u mornarici)"
-
-#: ../ui/optionsui.cpp:128
-msgid "."
-msgstr "."
 
 #: ../ui/tutorialhints.cpp:93
 msgid "<Observe the battle window>"
@@ -65,15 +61,15 @@ msgstr "<Sada bi se trebao otvoriti prozor s odijelom>"
 msgid "Account Status:"
 msgstr "Stanje racuna:"
 
-#: ../ui/login.h:133
+#: ../ui/login.h:134
 msgid "Account name:"
 msgstr "Ime raèuna:"
 
-#: ../ui/login.h:61 ../ui/login.h:136
+#: ../ui/login.h:61 ../ui/login.h:137
 msgid "Account number:"
 msgstr "Broj raèuna:"
 
-#: ../mapui.cpp:611
+#: ../mapui.cpp:615
 msgid "Add to VIP list"
 msgstr "Dodaj u kontakte"
 
@@ -97,7 +93,7 @@ msgstr "Ah, prozor za trgovanje. Ovaj savjet još nije napisan."
 msgid "Amount:"
 msgstr "Kolièina:"
 
-#: ../mapui.cpp:594
+#: ../mapui.cpp:598
 msgid "Attack"
 msgstr "Napadni"
 
@@ -113,7 +109,7 @@ msgstr "Otkrij"
 msgid "Available resolutions:"
 msgstr "Dostupne rezolucije:"
 
-#: ../ui/skills.h:262
+#: ../ui/skills.h:256
 msgid "Axe Fighting"
 msgstr "Borba sjekirom"
 
@@ -121,9 +117,9 @@ msgstr "Borba sjekirom"
 msgid "Buy"
 msgstr "Kupi"
 
-#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:154
-#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
-#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
+#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:155
+#: ../ui/optionsgraphics.h:141 ../ui/optionsconsole.h:136 ../ui/login.h:123
+#: ../ui/uioutfit.cpp:155 ../ui/charlist.h:113 ../ui/itemmove.h:109
 msgid "Cancel"
 msgstr "Ponisti"
 
@@ -155,7 +151,7 @@ msgstr ""
 msgid "Classic Control"
 msgstr "Klasièno upravljanje"
 
-#: ../ui/skills.h:260
+#: ../ui/skills.h:254
 msgid "Club Fighting"
 msgstr "Borba toljagama"
 
@@ -167,7 +163,7 @@ msgstr "Spajanje"
 msgid "Connecting to the game world. Please wait."
 msgstr "Spajam se u igru. Molimo prièekajte."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:837
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:897
 msgid "Console"
 msgstr "Konzola"
 
@@ -179,7 +175,7 @@ msgstr "Opcije konzole"
 msgid "Contributors"
 msgstr "Pridonositelji"
 
-#: ../mapui.cpp:626
+#: ../mapui.cpp:630
 msgid "Copy Name"
 msgstr "Kopiraj ime"
 
@@ -206,13 +202,21 @@ msgid ""
 "correct signatures in the files, or go to\n"
 "Options->Network and choose the correct\n"
 "protocol."
-msgstr """Datoteke s podacima u direktoriju ili:\n""* ne pripadaju istoj verziji protokola, ili\n""* su modificirane i s nepoznatim potpisima.\n""\n""Ili nabavite valjane datoteke iz jedne poznate\n""verzije klijenta, ili osigurajte da imate ispravne\n""potpise u datotekama, ili odite na Opcije->Mreža i\n""odaberite ispravan protokol."
+msgstr ""
+"Datoteke s podacima u direktoriju ili:\n"
+"* ne pripadaju istoj verziji protokola, ili\n"
+"* su modificirane i s nepoznatim potpisima.\n"
+"\n"
+"Ili nabavite valjane datoteke iz jedne poznate\n"
+"verzije klijenta, ili osigurajte da imate ispravne\n"
+"potpise u datotekama, ili odite na Opcije->Mreža i\n"
+"odaberite ispravan protokol."
 
 #: ../ui/uioutfit.cpp:83
 msgid "Detail"
 msgstr "Detalji"
 
-#: ../ui/skills.h:263
+#: ../ui/skills.h:257
 msgid "Distance Fighting"
 msgstr "Borba na daljinu"
 
@@ -248,15 +252,15 @@ msgstr "Izlaz"
 msgid "Experience"
 msgstr "Iskustvo"
 
-#: ../ui/skills.h:265
+#: ../ui/skills.h:259
 msgid "Fishing"
 msgstr "Ribarstvo"
 
-#: ../ui/skills.h:259
+#: ../ui/skills.h:253
 msgid "Fist Fighting"
 msgstr "Borba šakama"
 
-#: ../mapui.cpp:599
+#: ../mapui.cpp:603
 msgid "Follow"
 msgstr "Slijedi"
 
@@ -276,7 +280,7 @@ msgstr ""
 "Za više informacija, pogledajte teme u forumima na\n"
 "otfans.net"
 
-#: ../ui/charlist.h:147
+#: ../ui/charlist.h:149
 msgid "Free Account"
 msgstr "Besplatni raèun"
 
@@ -315,7 +319,7 @@ msgstr "Grafika"
 msgid "Graphics Options"
 msgstr "Grafièke opcije"
 
-#: ../ui/charlist.h:149
+#: ../ui/charlist.h:151
 msgid "Gratis Premium Account"
 msgstr "Gratis Premium Raèun"
 
@@ -331,13 +335,13 @@ msgstr "Zabavite se u Tibiji!"
 msgid "Head"
 msgstr "Glava"
 
-#: ../ui/health.h:56
+#: ../ui/health.h:69
 msgid "Health"
 msgstr "Zdravlje"
 
-#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:140
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:367
-#: ../ui/optionsconsole.h:121
+#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:141
+#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:367
+#: ../ui/optionsconsole.h:122
 msgid "Help"
 msgstr "Pomoæ"
 
@@ -361,7 +365,7 @@ msgstr ""
 "Ako jos nemate\n"
 "svoj raèun:"
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:619
 msgid "Ignore"
 msgstr "Ignoriraj"
 
@@ -373,11 +377,11 @@ msgstr "Info"
 msgid "Information"
 msgstr "Obavijest"
 
-#: ../ui/uiinventory.h:54
+#: ../ui/uiinventory.h:62
 msgid "Inventory"
 msgstr "Inventar"
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:623
 msgid "Invite to Party"
 msgstr "Pozovi u grupu"
 
@@ -385,7 +389,7 @@ msgstr "Pozovi u grupu"
 msgid "Level"
 msgstr "Razina"
 
-#: ../mapui.cpp:559 ../ui/uiinventory.cpp:179
+#: ../mapui.cpp:563 ../ui/uiinventory.cpp:182
 msgid "Look"
 msgstr "Pogledaj"
 
@@ -415,7 +419,7 @@ msgstr "Mana"
 msgid "Message of the Day"
 msgstr "Poruka dana"
 
-#: ../mapui.cpp:607
+#: ../mapui.cpp:611
 msgid "Message to"
 msgstr "Poruka za"
 
@@ -423,7 +427,7 @@ msgstr "Poruka za"
 msgid "Money:"
 msgstr "Novac:"
 
-#: ../ui/optionsui.h:164
+#: ../ui/optionsui.h:165
 msgid "Motd"
 msgstr "Motd"
 
@@ -456,9 +460,9 @@ msgstr ""
 msgid "OT Encryption Key"
 msgstr "OT enkripcijski kljuc"
 
-#: ../ui/optionsui.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
-#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
+#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:148
+#: ../ui/optionsgraphics.h:134 ../ui/optionsconsole.h:129 ../ui/login.h:114
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:146 ../ui/charlist.h:105
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "U redu"
@@ -471,7 +475,7 @@ msgstr ""
 "U redu; takoðer možete pokušati {kliknuti} na {minimapu}. Primjerice,\n"
 "sada postoji {oznaka} na karti, pokušajte se tamo pomaknuti."
 
-#: ../mapui.cpp:571 ../ui/uiinventory.cpp:184
+#: ../mapui.cpp:575 ../ui/uiinventory.cpp:187
 msgid "Open"
 msgstr "Otvori"
 
@@ -513,7 +517,7 @@ msgstr ""
 "kuæicu. Da aktiviraju pojedini dodatak, premium\n"
 "igraèi mogu rješavati razne potrage."
 
-#: ../ui/charlist.h:152
+#: ../ui/charlist.h:154
 msgid "Premium Account"
 msgstr "Premium raèun"
 
@@ -613,7 +617,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Port servera:"
 
-#: ../mapui.cpp:584 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:588 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Postavi odijelo"
 
@@ -633,7 +637,7 @@ msgstr ""
 "Odaberite broj\n"
 "stvari koje želite seliti"
 
-#: ../ui/skills.h:264
+#: ../ui/skills.h:258
 msgid "Shielding"
 msgstr "Obrana"
 
@@ -673,7 +677,7 @@ msgstr "Prikaži tekstualne efekte"
 msgid "Show Timestamps in Console"
 msgstr "Prikaži vrijeme u konzoli"
 
-#: ../ui/optionsui.h:171
+#: ../ui/optionsui.h:172
 msgid ""
 "Show the most recent\n"
 "Message of the Day"
@@ -681,7 +685,7 @@ msgstr ""
 "Prikaži najnoviju\n"
 "poruku dana"
 
-#: ../ui/skills.h:243
+#: ../ui/skills.h:237
 msgid "Skill "
 msgstr "Vještina "
 
@@ -706,7 +710,7 @@ msgstr "Bodovi duše"
 msgid "Stamina"
 msgstr "Izdržljivost"
 
-#: ../ui/skills.h:261
+#: ../ui/skills.h:255
 msgid "Sword Fighting"
 msgstr "Borba maèevima"
 
@@ -737,7 +741,7 @@ msgstr ""
 "'Korištenje')\n"
 "da biste je otvorili."
 
-#: ../mapui.cpp:692 ../ui/uiinventory.cpp:218
+#: ../mapui.cpp:716 ../ui/uiinventory.cpp:221
 msgid "This functionality is not yet finished"
 msgstr "Ova funkcionalnost još nije gotova"
 
@@ -766,11 +770,11 @@ msgstr ""
 "malo\n"
 "isprobavajte."
 
-#: ../ui/uiinventory.cpp:189
+#: ../ui/uiinventory.cpp:192
 msgid "Trade with"
 msgstr "Trguj sa"
 
-#: ../gm_gameworld.cpp:994
+#: ../gm_gameworld.cpp:1054
 msgid "Tutorial Hint"
 msgstr "Savjet za prohod"
 
@@ -778,11 +782,11 @@ msgstr "Savjet za prohod"
 msgid "Unknown"
 msgstr "Nepoznato"
 
-#: ../mapui.cpp:573 ../ui/uiinventory.cpp:186
+#: ../mapui.cpp:577 ../ui/uiinventory.cpp:189
 msgid "Use"
 msgstr "Koristi"
 
-#: ../mapui.cpp:568 ../ui/uiinventory.cpp:181
+#: ../mapui.cpp:572 ../ui/uiinventory.cpp:184
 msgid "Use with..."
 msgstr "Koristi s..."
 
@@ -867,7 +871,7 @@ msgstr "[za podatke pokrenite s GL engineom]\n"
 msgid "compiled with"
 msgstr "prevedeno s"
 
-#: ../ui/charlist.h:152
+#: ../ui/charlist.h:154
 msgid "days left"
 msgstr "dana preostalo"
 
@@ -878,6 +882,9 @@ msgstr "na stanje dana"
 #: ../gm_mainmenu.cpp:341
 msgid "with inactive developers"
 msgstr "uz neaktivne razvijatelje"
+
+#~ msgid "."
+#~ msgstr "."
 
 #~ msgid "Entering game"
 #~ msgstr "Ulazim u igru"

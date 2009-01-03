@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-10 20:47+0100\n"
+"POT-Creation-Date: 2009-01-03 17:17+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: kupi <kupi.ots@gmail.com>\n"
 "Language-Team: kupi <kupi.ots@gmail.com>, <kupi_ots@hotmail.com>\n"
@@ -20,12 +20,13 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: ../gm_mainmenu.cpp:350
+#, fuzzy
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
-"for details see sections 11 and 12 in COPYING.\n"
+"for details see sections 11 and 12 in file COPYING.\n"
 "This is free software, and you are welcome \n"
 "to redistribute it under certain conditions;\n"
-"see COPYING for details."
+"see file COPYING for details."
 msgstr ""
 " NO viene ABSOLUTAMENTE con ninguna GARANTIA;\n"
 "Para más detalles, véase las secciones 11 y 12 en la copia.\n"
@@ -33,7 +34,7 @@ msgstr ""
 "a redistribuir bajo ciertas condiciones;\n"
 "ver la COPIA para obtener más detalles."
 
-#: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
+#: ../ui/uishop.cpp:237 ../ui/uishop.cpp:273
 msgid " gold"
 msgstr " oro"
 
@@ -44,10 +45,6 @@ msgstr "(en ningún orden particular)"
 #: ../gm_mainmenu.cpp:340
 msgid "(in the navy)"
 msgstr "(En la marina)"
-
-#: ../ui/optionsui.cpp:128
-msgid "."
-msgstr ""
 
 #: ../ui/tutorialhints.cpp:93
 msgid "<Observe the battle window>"
@@ -73,15 +70,15 @@ msgstr "<La ventana de Outfits debe abrirse ahora."
 msgid "Account Status:"
 msgstr "Estado de la cuenta:"
 
-#: ../ui/login.h:133
+#: ../ui/login.h:134
 msgid "Account name:"
 msgstr "Nombre de la cuenta:"
 
-#: ../ui/login.h:61 ../ui/login.h:136
+#: ../ui/login.h:61 ../ui/login.h:137
 msgid "Account number:"
 msgstr "Número de la cuenta:"
 
-#: ../mapui.cpp:611
+#: ../mapui.cpp:615
 msgid "Add to VIP list"
 msgstr "Añadir a la lista de VIP"
 
@@ -105,7 +102,7 @@ msgstr "Ah, ventana de comercio. Aun no escrita."
 msgid "Amount:"
 msgstr "Quantidad:"
 
-#: ../mapui.cpp:594
+#: ../mapui.cpp:598
 msgid "Attack"
 msgstr "Atacar"
 
@@ -121,7 +118,7 @@ msgstr "Auto-detectar"
 msgid "Available resolutions:"
 msgstr "Resoluciones disponibles:"
 
-#: ../ui/skills.h:262
+#: ../ui/skills.h:256
 msgid "Axe Fighting"
 msgstr "Lucha con Hacha"
 
@@ -129,9 +126,9 @@ msgstr "Lucha con Hacha"
 msgid "Buy"
 msgstr "Comprar"
 
-#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:154
-#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
-#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
+#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:155
+#: ../ui/optionsgraphics.h:141 ../ui/optionsconsole.h:136 ../ui/login.h:123
+#: ../ui/uioutfit.cpp:155 ../ui/charlist.h:113 ../ui/itemmove.h:109
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -163,7 +160,7 @@ msgstr ""
 msgid "Classic Control"
 msgstr "Control Clássico"
 
-#: ../ui/skills.h:260
+#: ../ui/skills.h:254
 msgid "Club Fighting"
 msgstr "Lucha con Puños"
 
@@ -175,7 +172,7 @@ msgstr ""
 msgid "Connecting to the game world. Please wait."
 msgstr "Conectando al mundo del juego. Porfavo espere."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:837
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:897
 msgid "Console"
 msgstr "Terminal"
 
@@ -187,7 +184,7 @@ msgstr "Opciones de la Consola"
 msgid "Contributors"
 msgstr "Contribuidores"
 
-#: ../mapui.cpp:626
+#: ../mapui.cpp:630
 msgid "Copy Name"
 msgstr "Copiar el Nombre"
 
@@ -220,7 +217,7 @@ msgstr ""
 msgid "Detail"
 msgstr "Detalles"
 
-#: ../ui/skills.h:263
+#: ../ui/skills.h:257
 msgid "Distance Fighting"
 msgstr "Lucha a Distancia"
 
@@ -254,15 +251,15 @@ msgstr "Sair del Juego"
 msgid "Experience"
 msgstr "Experiencia"
 
-#: ../ui/skills.h:265
+#: ../ui/skills.h:259
 msgid "Fishing"
 msgstr "Lucha de Pesca"
 
-#: ../ui/skills.h:259
+#: ../ui/skills.h:253
 msgid "Fist Fighting"
 msgstr "Lucha de Puño"
 
-#: ../mapui.cpp:599
+#: ../mapui.cpp:603
 msgid "Follow"
 msgstr "Seguir"
 
@@ -280,7 +277,7 @@ msgstr ""
 "Para obtener más información, eche un vistazo a los tópicos\n"
 "del foro otfans.net, o eotfans.net."
 
-#: ../ui/charlist.h:147
+#: ../ui/charlist.h:149
 msgid "Free Account"
 msgstr "Cuenta Grátis"
 
@@ -319,7 +316,7 @@ msgstr "Gráficos"
 msgid "Graphics Options"
 msgstr "Opciones Gráficas"
 
-#: ../ui/charlist.h:149
+#: ../ui/charlist.h:151
 msgid "Gratis Premium Account"
 msgstr "Cuenta Premium Grátis"
 
@@ -335,13 +332,13 @@ msgstr "¡Diviértete en Tibia!"
 msgid "Head"
 msgstr "Cabeza"
 
-#: ../ui/health.h:56
+#: ../ui/health.h:69
 msgid "Health"
 msgstr "Salud"
 
-#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:140
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:367
-#: ../ui/optionsconsole.h:121
+#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:141
+#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:367
+#: ../ui/optionsconsole.h:122
 msgid "Help"
 msgstr "Ayuda"
 
@@ -365,7 +362,7 @@ msgstr ""
 "Si aun no\n"
 "tiene una cuenta:"
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:619
 msgid "Ignore"
 msgstr "Ignorar"
 
@@ -377,11 +374,11 @@ msgstr "Info"
 msgid "Information"
 msgstr "Información"
 
-#: ../ui/uiinventory.h:54
+#: ../ui/uiinventory.h:62
 msgid "Inventory"
 msgstr "Inventório"
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:623
 msgid "Invite to Party"
 msgstr "Invitar a la fiesta"
 
@@ -389,7 +386,7 @@ msgstr "Invitar a la fiesta"
 msgid "Level"
 msgstr "Nivel"
 
-#: ../mapui.cpp:559 ../ui/uiinventory.cpp:179
+#: ../mapui.cpp:563 ../ui/uiinventory.cpp:182
 msgid "Look"
 msgstr "Mirar"
 
@@ -418,7 +415,7 @@ msgstr "Mana"
 msgid "Message of the Day"
 msgstr "Mensage del Dia"
 
-#: ../mapui.cpp:607
+#: ../mapui.cpp:611
 msgid "Message to"
 msgstr "Mensage para"
 
@@ -426,7 +423,7 @@ msgstr "Mensage para"
 msgid "Money:"
 msgstr "Dinero:"
 
-#: ../ui/optionsui.h:164
+#: ../ui/optionsui.h:165
 msgid "Motd"
 msgstr "Motd"
 
@@ -460,9 +457,9 @@ msgstr ""
 msgid "OT Encryption Key"
 msgstr "LLave de Encriptación del OT"
 
-#: ../ui/optionsui.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
-#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
+#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:148
+#: ../ui/optionsgraphics.h:134 ../ui/optionsconsole.h:129 ../ui/login.h:114
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:146 ../ui/charlist.h:105
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "Ok"
@@ -476,7 +473,7 @@ msgstr ""
 "ejemplo \n"
 "Hay una {marca} en el minimapa ahora, trate de pasar por allí."
 
-#: ../mapui.cpp:571 ../ui/uiinventory.cpp:184
+#: ../mapui.cpp:575 ../ui/uiinventory.cpp:187
 msgid "Open"
 msgstr "Abrir"
 
@@ -520,7 +517,7 @@ msgstr ""
 "Para ativar un addon particular, jugadores premium\n"
 "pueden resolver diversas misiones."
 
-#: ../ui/charlist.h:152
+#: ../ui/charlist.h:154
 msgid "Premium Account"
 msgstr "Cuenta Premium"
 
@@ -619,7 +616,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Port del servidor:"
 
-#: ../mapui.cpp:584 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:588 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Colocar Traje"
 
@@ -639,7 +636,7 @@ msgstr ""
 "Coloque el número de\n"
 "items que usted desea mover:"
 
-#: ../ui/skills.h:264
+#: ../ui/skills.h:258
 msgid "Shielding"
 msgstr "Lucha con Defesa"
 
@@ -679,7 +676,7 @@ msgstr "Mostrar Efectos de Texto"
 msgid "Show Timestamps in Console"
 msgstr "Mostrar Tiempo en la Consola"
 
-#: ../ui/optionsui.h:171
+#: ../ui/optionsui.h:172
 msgid ""
 "Show the most recent\n"
 "Message of the Day"
@@ -687,7 +684,7 @@ msgstr ""
 "Mostrar el mensaje más\n"
 "reciente del dia"
 
-#: ../ui/skills.h:243
+#: ../ui/skills.h:237
 msgid "Skill "
 msgstr "Habilidad"
 
@@ -713,7 +710,7 @@ msgstr "Puntos de Alma"
 msgid "Stamina"
 msgstr "Resistencia"
 
-#: ../ui/skills.h:261
+#: ../ui/skills.h:255
 msgid "Sword Fighting"
 msgstr "Lucha con Espada"
 
@@ -744,7 +741,7 @@ msgstr ""
 "llamado \n"
 "'Usar') sobre él para abrirlo."
 
-#: ../mapui.cpp:692 ../ui/uiinventory.cpp:218
+#: ../mapui.cpp:716 ../ui/uiinventory.cpp:221
 msgid "This functionality is not yet finished"
 msgstr "Esta función aun no esta disponible"
 
@@ -773,11 +770,11 @@ msgstr ""
 "lo necesiten. Muchas cosas pueden ser usadas mediante ctrl + clic en este "
 "juego, por tanto miren a su alrededor."
 
-#: ../ui/uiinventory.cpp:189
+#: ../ui/uiinventory.cpp:192
 msgid "Trade with"
 msgstr "Negociar con"
 
-#: ../gm_gameworld.cpp:994
+#: ../gm_gameworld.cpp:1054
 msgid "Tutorial Hint"
 msgstr "Tutorial de sugerencia"
 
@@ -785,11 +782,11 @@ msgstr "Tutorial de sugerencia"
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../mapui.cpp:573 ../ui/uiinventory.cpp:186
+#: ../mapui.cpp:577 ../ui/uiinventory.cpp:189
 msgid "Use"
 msgstr "Usar"
 
-#: ../mapui.cpp:568 ../ui/uiinventory.cpp:181
+#: ../mapui.cpp:572 ../ui/uiinventory.cpp:184
 msgid "Use with..."
 msgstr "Uso con..."
 
@@ -876,7 +873,7 @@ msgstr "[información para ejecutar el motor gráfico con GL]\n"
 msgid "compiled with"
 msgstr "compilado con"
 
-#: ../ui/charlist.h:152
+#: ../ui/charlist.h:154
 msgid "days left"
 msgstr "dias restantes"
 
