@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-10 20:47+0100\n"
+"POT-Creation-Date: 2009-01-03 17:17+0100\n"
 "PO-Revision-Date: 2008-11-30 01:44+0100\n"
 "Last-Translator: Rasmus Karlsson <qwerty@wuut.se>\n"
 "Language-Team: Rasmus Karlsson <qwerty@wuut.se>\n"
@@ -16,12 +16,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../gm_mainmenu.cpp:350
+#, fuzzy
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
-"for details see sections 11 and 12 in COPYING.\n"
+"for details see sections 11 and 12 in file COPYING.\n"
 "This is free software, and you are welcome \n"
 "to redistribute it under certain conditions;\n"
-"see COPYING for details."
+"see file COPYING for details."
 msgstr ""
 " kommer inte med NÅGON absolut garanti; \n"
 "för detaljer se sektion 11 och 12 i COPYING.\n"
@@ -29,7 +30,7 @@ msgstr ""
 "att omfördela den under särskilda villkor;\n"
 "se COPYING för detaljer."
 
-#: ../ui/uishop.cpp:231 ../ui/uishop.cpp:267
+#: ../ui/uishop.cpp:237 ../ui/uishop.cpp:273
 msgid " gold"
 msgstr " guld"
 
@@ -40,10 +41,6 @@ msgstr "(i ingen speciell ordning)"
 #: ../gm_mainmenu.cpp:340
 msgid "(in the navy)"
 msgstr ""
-
-#: ../ui/optionsui.cpp:128
-msgid "."
-msgstr "."
 
 #: ../ui/tutorialhints.cpp:93
 msgid "<Observe the battle window>"
@@ -69,15 +66,15 @@ msgstr "<Utseendefönstret ska ha öppnats nu>"
 msgid "Account Status:"
 msgstr "Kontostatus:"
 
-#: ../ui/login.h:133
+#: ../ui/login.h:134
 msgid "Account name:"
 msgstr "Kontonamn:"
 
-#: ../ui/login.h:61 ../ui/login.h:136
+#: ../ui/login.h:61 ../ui/login.h:137
 msgid "Account number:"
 msgstr "Kontonummer:"
 
-#: ../mapui.cpp:611
+#: ../mapui.cpp:615
 msgid "Add to VIP list"
 msgstr "Lägg till i VIP-listan"
 
@@ -101,7 +98,7 @@ msgstr "Ah, det mäktige handelsfönstret. Detta hint är inte skrivet än."
 msgid "Amount:"
 msgstr "Mängd:"
 
-#: ../mapui.cpp:594
+#: ../mapui.cpp:598
 msgid "Attack"
 msgstr "Attackera"
 
@@ -117,7 +114,7 @@ msgstr "Autodetektera"
 msgid "Available resolutions:"
 msgstr "Utnyttjingsbara upplösningar:"
 
-#: ../ui/skills.h:262
+#: ../ui/skills.h:256
 msgid "Axe Fighting"
 msgstr "Yxskicklighet"
 
@@ -125,9 +122,9 @@ msgstr "Yxskicklighet"
 msgid "Buy"
 msgstr "Köp"
 
-#: ../ui/optionsgeneral.h:122 ../ui/optionsnetwork.h:154
-#: ../ui/optionsgraphics.h:140 ../ui/optionsconsole.h:135 ../ui/login.h:122
-#: ../ui/uioutfit.cpp:154 ../ui/charlist.h:112 ../ui/itemmove.h:109
+#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:155
+#: ../ui/optionsgraphics.h:141 ../ui/optionsconsole.h:136 ../ui/login.h:123
+#: ../ui/uioutfit.cpp:155 ../ui/charlist.h:113 ../ui/itemmove.h:109
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -159,7 +156,7 @@ msgstr ""
 msgid "Classic Control"
 msgstr "Klassiska Kontroller"
 
-#: ../ui/skills.h:260
+#: ../ui/skills.h:254
 msgid "Club Fighting"
 msgstr "Klubbsskicklighet"
 
@@ -172,7 +169,7 @@ msgstr ""
 msgid "Connecting to the game world. Please wait."
 msgstr "Ansluter till servern..."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:837
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:897
 msgid "Console"
 msgstr "Konsoll"
 
@@ -184,7 +181,7 @@ msgstr "Konsollinställningar"
 msgid "Contributors"
 msgstr "Medhjälpare"
 
-#: ../mapui.cpp:626
+#: ../mapui.cpp:630
 msgid "Copy Name"
 msgstr "Kopiera namn"
 
@@ -217,7 +214,7 @@ msgstr ""
 msgid "Detail"
 msgstr "Detalj"
 
-#: ../ui/skills.h:263
+#: ../ui/skills.h:257
 msgid "Distance Fighting"
 msgstr "Distansskicklighet"
 
@@ -251,15 +248,15 @@ msgstr "Avsluta spel"
 msgid "Experience"
 msgstr "Erfarenhet"
 
-#: ../ui/skills.h:265
+#: ../ui/skills.h:259
 msgid "Fishing"
 msgstr "Fiske"
 
-#: ../ui/skills.h:259
+#: ../ui/skills.h:253
 msgid "Fist Fighting"
 msgstr "Knytnävesskicklighet"
 
-#: ../mapui.cpp:599
+#: ../mapui.cpp:603
 msgid "Follow"
 msgstr "Följ"
 
@@ -277,7 +274,7 @@ msgstr ""
 "För mer information, ta en titt på trådar i forumet\n"
 "på otfans.net."
 
-#: ../ui/charlist.h:147
+#: ../ui/charlist.h:149
 msgid "Free Account"
 msgstr "Gratiskonto"
 
@@ -315,7 +312,7 @@ msgstr "Grafik"
 msgid "Graphics Options"
 msgstr "Grafikinställningar"
 
-#: ../ui/charlist.h:149
+#: ../ui/charlist.h:151
 msgid "Gratis Premium Account"
 msgstr "Gratis Premiekonto"
 
@@ -331,13 +328,13 @@ msgstr ""
 msgid "Head"
 msgstr "Huvud"
 
-#: ../ui/health.h:56
+#: ../ui/health.h:69
 msgid "Health"
 msgstr "Hälsa"
 
-#: ../ui/optionsgeneral.h:108 ../ui/optionsnetwork.h:140
-#: ../ui/optionsgraphics.h:126 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:367
-#: ../ui/optionsconsole.h:121
+#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:141
+#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:367
+#: ../ui/optionsconsole.h:122
 msgid "Help"
 msgstr "Hjälp"
 
@@ -361,7 +358,7 @@ msgstr ""
 "Om du inte har\n"
 "ett konto än:"
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:619
 msgid "Ignore"
 msgstr "Ignorera"
 
@@ -373,11 +370,11 @@ msgstr "Info"
 msgid "Information"
 msgstr "Information"
 
-#: ../ui/uiinventory.h:54
+#: ../ui/uiinventory.h:62
 msgid "Inventory"
 msgstr "Inventarie"
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:623
 msgid "Invite to Party"
 msgstr "Bjud in till Grupp"
 
@@ -385,7 +382,7 @@ msgstr "Bjud in till Grupp"
 msgid "Level"
 msgstr "Nivå"
 
-#: ../mapui.cpp:559 ../ui/uiinventory.cpp:179
+#: ../mapui.cpp:563 ../ui/uiinventory.cpp:182
 msgid "Look"
 msgstr "Titta"
 
@@ -415,7 +412,7 @@ msgstr "Mana"
 msgid "Message of the Day"
 msgstr "Dagens Meddelande"
 
-#: ../mapui.cpp:607
+#: ../mapui.cpp:611
 msgid "Message to"
 msgstr "Meddelande till"
 
@@ -423,7 +420,7 @@ msgstr "Meddelande till"
 msgid "Money:"
 msgstr "Pengar:"
 
-#: ../ui/optionsui.h:164
+#: ../ui/optionsui.h:165
 msgid "Motd"
 msgstr "Motd"
 
@@ -455,9 +452,9 @@ msgstr ""
 msgid "OT Encryption Key"
 msgstr "OT-enkryptionsnyckel"
 
-#: ../ui/optionsui.h:186 ../ui/optionsgeneral.h:115 ../ui/optionsnetwork.h:147
-#: ../ui/optionsgraphics.h:133 ../ui/optionsconsole.h:128 ../ui/login.h:113
-#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:145 ../ui/charlist.h:104
+#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:148
+#: ../ui/optionsgraphics.h:134 ../ui/optionsconsole.h:129 ../ui/login.h:114
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:146 ../ui/charlist.h:105
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "Ok"
@@ -470,7 +467,7 @@ msgstr ""
 "Ok; Du kan också testa {clicking} på miniatyrkartan. Till exempel \n"
 "så finns det en {marker} på miniatyrkartan nu, försök gå dit."
 
-#: ../mapui.cpp:571 ../ui/uiinventory.cpp:184
+#: ../mapui.cpp:575 ../ui/uiinventory.cpp:187
 msgid "Open"
 msgstr "Öppna"
 
@@ -512,7 +509,7 @@ msgstr ""
 "För att aktiva ett tillägg kan premiespelare\n"
 "lösa olika uppdrag."
 
-#: ../ui/charlist.h:152
+#: ../ui/charlist.h:154
 msgid "Premium Account"
 msgstr "Premiekonto"
 
@@ -609,7 +606,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Server port:"
 
-#: ../mapui.cpp:584 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:588 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Bestäm utseende"
 
@@ -629,7 +626,7 @@ msgstr ""
 "Välj antalet föremål\n"
 "du vill flytta:"
 
-#: ../ui/skills.h:264
+#: ../ui/skills.h:258
 msgid "Shielding"
 msgstr "Sköldskicklighet"
 
@@ -669,7 +666,7 @@ msgstr "Visa Texteffekter"
 msgid "Show Timestamps in Console"
 msgstr "Visa Tidsstämpel i Konsollen"
 
-#: ../ui/optionsui.h:171
+#: ../ui/optionsui.h:172
 msgid ""
 "Show the most recent\n"
 "Message of the Day"
@@ -677,7 +674,7 @@ msgstr ""
 "Visa senaste\n"
 "Dagens meddelande"
 
-#: ../ui/skills.h:243
+#: ../ui/skills.h:237
 msgid "Skill "
 msgstr "Färdighet "
 
@@ -702,7 +699,7 @@ msgstr "Själspoäng"
 msgid "Stamina"
 msgstr "Uthållighet"
 
-#: ../ui/skills.h:261
+#: ../ui/skills.h:255
 msgid "Sword Fighting"
 msgstr "Svärdsskicklighet"
 
@@ -731,7 +728,7 @@ msgstr ""
 "Det finns en {chest} här inne. Försök {ctrl+clicking} (kallas även \n"
 "'Använd') på den för att öppna den."
 
-#: ../mapui.cpp:692 ../ui/uiinventory.cpp:218
+#: ../mapui.cpp:716 ../ui/uiinventory.cpp:221
 msgid "This functionality is not yet finished"
 msgstr "Denna funktionalitet är inte klar än"
 
@@ -759,11 +756,11 @@ msgstr ""
 "behöver den. Många saker kan bli ctrl+klickade i detta spel, så testa det "
 "gärna."
 
-#: ../ui/uiinventory.cpp:189
+#: ../ui/uiinventory.cpp:192
 msgid "Trade with"
 msgstr "Handla med"
 
-#: ../gm_gameworld.cpp:994
+#: ../gm_gameworld.cpp:1054
 msgid "Tutorial Hint"
 msgstr "Handledning Tips"
 
@@ -771,11 +768,11 @@ msgstr "Handledning Tips"
 msgid "Unknown"
 msgstr "Okänd"
 
-#: ../mapui.cpp:573 ../ui/uiinventory.cpp:186
+#: ../mapui.cpp:577 ../ui/uiinventory.cpp:189
 msgid "Use"
 msgstr "Använd"
 
-#: ../mapui.cpp:568 ../ui/uiinventory.cpp:181
+#: ../mapui.cpp:572 ../ui/uiinventory.cpp:184
 msgid "Use with..."
 msgstr "Använd med..."
 
@@ -858,7 +855,7 @@ msgstr "[för information kör med GL motorn]\n"
 msgid "compiled with"
 msgstr "kompilerad med"
 
-#: ../ui/charlist.h:152
+#: ../ui/charlist.h:154
 msgid "days left"
 msgstr "dagar kvar"
 
@@ -869,6 +866,9 @@ msgstr ""
 #: ../gm_mainmenu.cpp:341
 msgid "with inactive developers"
 msgstr "med inaktiva utvecklare"
+
+#~ msgid "."
+#~ msgstr "."
 
 #~ msgid "Entering game"
 #~ msgstr "Startar Spelet"
