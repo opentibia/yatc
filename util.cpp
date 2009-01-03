@@ -279,3 +279,43 @@ int64time.QuadPart /= 10000000;
 return *inTT;
 }
 #endif
+
+
+
+void
+openurl(const char *url)
+{
+    // lifted off http://www.archivum.info/sdl@lists.libsdl.org/2007-10/msg00078.html
+    // from a post by Gabriele Greco
+    // will use later on
+#ifdef WIN32
+    ShellExecute(GetActiveWindow(),
+         "open", url, NULL, NULL, SW_SHOWNORMAL);
+#elif defined(__APPLE__)
+    char buffer[256];
+    snprintf(buffer, sizeof(buffer), "open %s", url);
+    system(buffer);
+#else
+    char *apps[] = {"x-www-browser",
+                    "firefox", // iceweasel has an alias on debian
+                    "opera",
+                    "mozilla",
+                    "galeon",
+                    "konqueror", NULL};
+
+    char buffer[256];
+    int i = 0;
+
+    while (apps[i]) {
+        snprintf(buffer, sizeof(buffer), "which %s >/dev/null", apps[i]);
+        if (system(buffer) == 0) {
+            snprintf(buffer, sizeof(buffer), "%s %s", apps[i], url);
+            system(buffer);
+            return;
+        }
+        i++;
+    }
+#endif
+
+}
+
