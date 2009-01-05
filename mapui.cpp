@@ -488,8 +488,7 @@ void MapUI::dragThing(int x, int y, const Thing* &thing, uint32_t &retx, uint32_
         return;
     }
 	// get stackpos of thing that we clicked on
-	stackpos = tile->getThingCount()-1;
-
+	stackpos = tile->getUseStackpos();
 	// get thing that we clicked on
     thing = tile->getThingByStackPos(stackpos);
 

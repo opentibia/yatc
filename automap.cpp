@@ -85,7 +85,7 @@ void Automap::updateSelf()
                     printf("locking\n");
                     SDL_Surface* s=map[mapcount-1]->lockSurface();
                     printf("locked\n");
-                    printf("entries: %d\n", mit->second.size());
+                    printf("entries: %ld\n", mit->second.size());
                     for(std::vector<posAndColor>::iterator it = mit->second.begin(); it != mit->second.end(); it++)
                     {
                         //printf("it %p\n", it);

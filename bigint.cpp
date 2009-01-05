@@ -531,7 +531,7 @@ BigInt BigInt::operator*( int n )
     result.sign = sign * nsign;
     if( !result.sign ) return result;
 
-    int i, j;
+    int i, j = 0;
     for( i = 0; n; i++ )
     {
         int dig = n % 10;
@@ -558,7 +558,7 @@ BigInt BigInt::operator*( BigInt n )
     result.sign = sign * n.sign;
     if( !result.sign ) return result;
 
-    int i, j;
+    int i, j = 0;
     for( i = 0; i < n.size; i++ )
     {
         if( n.digits[i] )

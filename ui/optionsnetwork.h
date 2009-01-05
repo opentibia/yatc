@@ -168,7 +168,7 @@ public:
         for (std::vector<ChoiceGrid::Item*>::iterator it = protocols.begin(); it != protocols.end(); it++) {
 
             ChoiceGrid::Item* i = *it;
-            if ((ClientVersion_t)((int)i->data) == currentversion)
+            if ((ClientVersion_t)((long)i->data) == currentversion)
             {
                 btnProtocol.setSelected(i);
             }
@@ -186,7 +186,7 @@ public:
 	static void OnProtocol(ChoiceGrid* parent, ChoiceGrid::Item* item, ChoiceGrid::Item* olditem) {
 
 		winOptionsNetwork_t* won = (winOptionsNetwork_t*)parent->getData();
-		won->currentversion = (ClientVersion_t)((int)item->data);
+		won->currentversion = (ClientVersion_t)((long)item->data);
 
 	}
 
