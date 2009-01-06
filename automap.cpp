@@ -68,18 +68,20 @@ void Automap::updateSelf()
                 has_map = true;
             }
             mapcount++;
+            Sprite* activeMap = NULL;
             if (!has_map)
             {
                 mapfns[mapcount-1] = minimapfnss.str();
-                map[mapcount-1] = g_engine->createSprite(minimapfnss.str());
+                map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
 		if (!map[mapcount-1]->isLoaded()) {
 			printf("Trying to spawn map by flushtiling\n");
 			delete map[mapcount-1];
-			mapfns[mapcount] = "";
 			flushTiles();
-			map[mapcount-1] = g_engine->createSprite(minimapfnss.str());
-			printf("Loaded: %s\n", map[mapcount-1]->isLoaded() ? "yes" : "no");
+			map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
+			printf("Loaded: %s\n", activeMap->isLoaded() ? "yes" : "no");
 		}
+            } else {
+                activeMap = map[mapcount-1];
             }
 
 
@@ -87,10 +89,10 @@ void Automap::updateSelf()
             // We NEED to update sprites! We flush only every n tiles!
             if (( mit = writeFiles.find(minimapfnss.str())) != writeFiles.end())
             {
-                if(map[mapcount-1]) if (map[mapcount-1]->isLoaded()) {
+                if(activeMap && activeMap->isLoaded()) {
                     printf("locking\n");
-                    SDL_Surface* s=map[mapcount-1]->lockSurface();
-                    printf("locked\n");
+                    SDL_Surface* s=activeMap->lockSurface();
+                    printf("locked for %d pixels\n", mit->second.size());
                     for(std::vector<posAndColor>::iterator it = mit->second.begin(); it != mit->second.end(); it++)
                     {
                         //printf("it %p\n", it);
@@ -99,11 +101,17 @@ void Automap::updateSelf()
                         uint8_t g = uint8_t(((c / 6) % 6) / 5. * 255);
                         uint8_t r = uint8_t((c / 36.) / 6. * 255);
 
-                        map[mapcount-1]->putPixel(it->x % 256,it->y % 256,SDL_MapRGB(s->format,r,g,b),s);
+                        activeMap->putPixel(it->x % 256,it->y % 256,SDL_MapRGB(s->format,r,g,b),s);
 
                     }
                     printf("unlocked\n");
-                    map[mapcount-1]->unlockSurface();
+                    activeMap->unlockSurface();
+                } else {
+                    printf("Found but not updated since it's unloadable\n");
+                    delete activeMap;
+                    flushTiles();
+                    map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
+                    printf("Retried. If this fails .... *sigh*\n");
                 }
 
 
@@ -162,6 +170,7 @@ void Automap::flushTiles()
         {
             f = yatc_fopen(it->first.c_str(),"wb+");
             if (!f) {
+		printf("Could not create %s\n", it->first.c_str());
                 continue;
             }
             // let's put an integer, 0, to the end of the file ...
@@ -172,6 +181,7 @@ void Automap::flushTiles()
         }
         if (!f) f = yatc_fopen(it->first.c_str(),"rb+");
         if (!f) {
+            printf("Could not open %s\n", it->first.c_str());
             continue;
         }
         //fseek(f, 256*256 *2, SEEK_SET);
