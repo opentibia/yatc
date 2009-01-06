@@ -47,7 +47,7 @@ void Automap::updateSelf()
 
     int oldmapcount = mapcount;
     mapcount = 0;
-
+    printf("Updating automap\n");
     for (int j = ys; j<ye; j+=maph-1)
         for (int i = xs; i<xe; i+=mapw-1)
         {
@@ -72,7 +72,14 @@ void Automap::updateSelf()
             {
                 mapfns[mapcount-1] = minimapfnss.str();
                 map[mapcount-1] = g_engine->createSprite(minimapfnss.str());
-
+		if (!map[mapcount-1]->isLoaded()) {
+			printf("Trying to spawn map by flushtiling\n");
+			delete map[mapcount-1];
+			mapfns[mapcount] = "";
+			flushTiles();
+			map[mapcount-1] = g_engine->createSprite(minimapfnss.str());
+			printf("Loaded: %s\n", map[mapcount-1]->isLoaded() ? "yes" : "no");
+		}
             }
 
 
@@ -80,12 +87,10 @@ void Automap::updateSelf()
             // We NEED to update sprites! We flush only every n tiles!
             if (( mit = writeFiles.find(minimapfnss.str())) != writeFiles.end())
             {
-                printf("Weee!\n");
-                if(map[mapcount-1]) {
+                if(map[mapcount-1]) if (map[mapcount-1]->isLoaded()) {
                     printf("locking\n");
                     SDL_Surface* s=map[mapcount-1]->lockSurface();
                     printf("locked\n");
-                    printf("entries: %ld\n", mit->second.size());
                     for(std::vector<posAndColor>::iterator it = mit->second.begin(); it != mit->second.end(); it++)
                     {
                         //printf("it %p\n", it);
@@ -97,6 +102,7 @@ void Automap::updateSelf()
                         map[mapcount-1]->putPixel(it->x % 256,it->y % 256,SDL_MapRGB(s->format,r,g,b),s);
 
                     }
+                    printf("unlocked\n");
                     map[mapcount-1]->unlockSurface();
                 }
 
