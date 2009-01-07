@@ -1653,7 +1653,7 @@ void ProtocolGame::sendRequestOutfit()
 }
 
 void ProtocolGame::sendSetOutfit(uint16_t looktype, uint8_t head, uint8_t body,
-								   uint8_t legs, uint8_t feet)
+								   uint8_t legs, uint8_t feet, uint8_t addons)
 {
 	PROTOCOLGAME_SEND_FUNCTION;
 	m_outputMessage.addMessageType(0xD3);
@@ -1662,6 +1662,7 @@ void ProtocolGame::sendSetOutfit(uint16_t looktype, uint8_t head, uint8_t body,
 	m_outputMessage.addU8(body);
 	m_outputMessage.addU8(legs);
 	m_outputMessage.addU8(feet);
+	m_outputMessage.addU8(addons);
 }
 
 void ProtocolGame::sendAddVip(const std::string& name)

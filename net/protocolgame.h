@@ -175,7 +175,7 @@ class ProtocolGame : public Protocol
 		virtual void sendCancelMove();
 		virtual void sendRequestOutfit();
 		virtual void sendSetOutfit(uint16_t looktype, uint8_t head, uint8_t body,
-			uint8_t legs, uint8_t feet);
+			uint8_t legs, uint8_t feet, uint8_t addons=0);
 		virtual void sendAddVip(const std::string& name);
 		virtual void sendRemVip(uint32_t playerid);
 		virtual void sendBugReport(const std::string& text);
