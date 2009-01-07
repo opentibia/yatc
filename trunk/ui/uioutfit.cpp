@@ -323,6 +323,7 @@ void winOutfit_t::onApply(glictPos* pos, glictContainer *caller) {
         wo->dispCreature->getOutfit().m_lookhead,
         wo->dispCreature->getOutfit().m_lookbody,
         wo->dispCreature->getOutfit().m_looklegs,
-        wo->dispCreature->getOutfit().m_lookfeet);
+        wo->dispCreature->getOutfit().m_lookfeet,
+        0); // FIXME last argument (addons) not used or sent
 
 }
