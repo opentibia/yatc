@@ -73,13 +73,13 @@ void Automap::updateSelf()
             {
                 mapfns[mapcount-1] = minimapfnss.str();
                 map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
-		if (!map[mapcount-1]->isLoaded()) {
-			printf("Trying to spawn map by flushtiling\n");
-			delete map[mapcount-1];
-			flushTiles();
-			map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
-			printf("Loaded: %s\n", activeMap->isLoaded() ? "yes" : "no");
-		}
+                if (!map[mapcount-1]->isLoaded()) {
+                    printf("Trying to spawn map by flushtiling\n");
+                    delete map[mapcount-1];
+                    flushTiles();
+                    map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
+                    printf("Loaded: %s\n", activeMap->isLoaded() ? "yes" : "no");
+                }
             } else {
                 activeMap = map[mapcount-1];
             }

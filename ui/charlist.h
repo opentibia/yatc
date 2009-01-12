@@ -48,9 +48,10 @@ public:
 
 	std::vector<glictPanel*> lsiChars;
 	CharacterList_t currentChar;
-
+    int currentCharId;
 
 	winCharlist_t() {
+        currentCharId = 0;
 
 		window.SetWidth(228);
 		window.SetHeight(273);
@@ -77,6 +78,7 @@ public:
 		lstChars.SetWidth(200);
 		lstChars.SetHeight(146);
 		lstChars.SetBGColor(.25,.25,.25,1.);
+		lstChars.SetFocusable(true);
 		if (options.ui_compat) lstChars.SetNext(&btnOk);
 
 		lblAccStatus.SetWidth(200);
@@ -191,8 +193,11 @@ public:
 
 	static void OnListbox(glictPos* pos, glictContainer *caller) {
 		winCharlist_t *wc = (winCharlist_t*) (((CharacterList_t*)caller->GetCustomData())->extra);
+		int i=0;
 		for (std::vector<glictPanel*>::iterator it = wc->lsiChars.begin(); it != wc->lsiChars.end(); it++) {
 			(*it)->SetBGActiveness(false);
+			if (*it == caller) wc->currentCharId = i;
+			i++;
 		}
 		((glictPanel*)caller)->SetBGActiveness(true);
 		wc->currentChar = *((CharacterList_t*)(caller->GetCustomData()));
