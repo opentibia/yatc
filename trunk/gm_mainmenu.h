@@ -52,6 +52,8 @@ public:
 	void renderUI();
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
+	bool specKeyPress (const SDL_keysym& key);
+
 	void doResize(float w, float h);
 
 	virtual winOptions_t* getOptionsWindow() { return &winOptions; }

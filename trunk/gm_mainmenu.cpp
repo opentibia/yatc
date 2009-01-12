@@ -202,7 +202,7 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 
 void GM_MainMenu::keyPress (char key)
 {
-	//printf("Key %c %d\n", key, key);
+    // login assistance for login box
 	if (!options.ui_compat) {
 		if (glictGlobals.topFocused == &winLogin.txtUsername && key == 13)
 			winLogin.btnOk.Focus(NULL);
@@ -216,10 +216,51 @@ void GM_MainMenu::keyPress (char key)
 		}
 		else if (glictGlobals.topFocused == &winLogin.txtPassword && key == 13)
 			winLogin.btnOk.Focus(NULL);
-
 	}
+	if (glictGlobals.topFocused && glictGlobals.topFocused->GetParent() && (
+        glictGlobals.topFocused == &winLogin.window || glictGlobals.topFocused->GetParent() == &winLogin.window) &&
+        key == 27) {
+        key=13;
+        winCharlist.btnCancel.Focus(NULL);
+        }
+
+	// login assistance for charlist
+    if (glictGlobals.topFocused == &winCharlist.lstChars) {
+        if (key == 13) {
+            winCharlist.btnOk.Focus(NULL);
+        } else
+        if (key == 27) {
+            winCharlist.btnCancel.Focus(NULL);
+        }
+
+    }
+
+
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+
 	renderUI();
+}
+
+bool GM_MainMenu::specKeyPress (const SDL_keysym& key)
+{
+    // login assistance for charlist
+	if (glictGlobals.topFocused == &winCharlist.lstChars) {
+	    if (key.sym == SDLK_DOWN) {
+            int newchar = winCharlist.currentCharId+1;
+            if (newchar >= winCharlist.lsiChars.size()) newchar = 0;
+	        winCharlist_t::OnListbox(NULL, winCharlist.lsiChars[newchar]);
+	        renderUI();
+	        return true;
+	    }
+	    if (key.sym == SDLK_UP) {
+            int newchar = winCharlist.currentCharId-1;
+            if (newchar < 0) newchar = winCharlist.lsiChars.size()-1;
+	        winCharlist_t::OnListbox(NULL, winCharlist.lsiChars[newchar]);
+	        renderUI();
+	        return true;
+	    }
+	}
+	return false;
 }
 
 void GM_MainMenu::centerWindow (glictWindow *win)

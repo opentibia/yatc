@@ -27,6 +27,7 @@
 #include <GLICT/textbox.h>
 #include <GLICT/button.h>
 #include <GLICT/window.h>
+#include <GLICT/globals.h>
 
 #include "../skin.h"
 #if defined(HAVE_LIBINTL_H)
