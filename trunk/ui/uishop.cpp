@@ -320,18 +320,13 @@ void winShop_t::OnListbox(glictPos* pos, glictContainer *caller)
 
     wc->rebuildImage();
     wc->sbCt.SetMin(1);
-    if (wc->cash){
-        if (!wc->selling) {
-            if (wc->cash/wc->currentBuyItem.getBuyPrice()>1)
-                wc->sbCt.SetMax(wc->cash/wc->currentBuyItem.getBuyPrice());
-            else
-                wc->sbCt.SetMax(30);
-        }
-        else
-            wc->sbCt.SetMax(30);
-    } else {
-        wc->sbCt.SetMax(30);
+    if(wc->cash && !wc->selling && wc->currentBuyItem.getBuyPrice() != 0 &&
+			wc->cash/wc->currentBuyItem.getBuyPrice() > 1){
+		wc->sbCt.SetMax(wc->cash/wc->currentBuyItem.getBuyPrice());
     }
+	else{
+		wc->sbCt.SetMax(30);
+	}
 }
 
 void winShop_t::OnChangeCount(glictPos* pos, glictContainer *caller)
