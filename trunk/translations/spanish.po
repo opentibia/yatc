@@ -20,7 +20,6 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: ../gm_mainmenu.cpp:350
-#, fuzzy
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in file COPYING.\n"
@@ -28,11 +27,11 @@ msgid ""
 "to redistribute it under certain conditions;\n"
 "see file COPYING for details."
 msgstr ""
-" NO viene ABSOLUTAMENTE con ninguna GARANTIA;\n"
-"Para más detalles, véase las secciones 11 y 12 en la copia.\n"
-"Este es un software libre, y usted es bienvenido \n"
-"a redistribuir bajo ciertas condiciones;\n"
-"ver la COPIA para obtener más detalles."
+" viene SIN GARANTÍA DE NINGUNA CLASE;\n"
+"Para más detalles, véase las secciones 11 y 12 del archivo COPYING.\n"
+"Este es un software libre, y usted lo puede \n"
+"redistribuir bajo ciertas condiciones;\n"
+"vea el archivo COPYING para obtener más detalles."
 
 #: ../ui/uishop.cpp:237 ../ui/uishop.cpp:273
 msgid " gold"
@@ -100,7 +99,7 @@ msgstr "Ah, ventana de comercio. Aun no escrita."
 
 #: ../ui/uishop.cpp:100
 msgid "Amount:"
-msgstr "Quantidad:"
+msgstr "Cantidad:"
 
 #: ../mapui.cpp:598
 msgid "Attack"
@@ -108,7 +107,7 @@ msgstr "Atacar"
 
 #: ../ui/optionsgeneral.h:78
 msgid "Auto Chase Off"
-msgstr "Perseguición Automática Apagada"
+msgstr "Persecución Automática Apagada"
 
 #: ../ui/optionsnetwork.h:128
 msgid "Autodetect"
@@ -134,7 +133,7 @@ msgstr "Cancelar"
 
 #: ../gm_mainmenu.cpp:543
 msgid "Cannot connect to a login server."
-msgstr "No se puede conectar a un servidor de acceso."
+msgstr "No se puede conectar al servidor de acceso."
 
 #: ../ui/skills.h:164
 msgid "Cap"
@@ -158,7 +157,7 @@ msgstr ""
 
 #: ../ui/optionsgeneral.h:71
 msgid "Classic Control"
-msgstr "Control Clássico"
+msgstr "Control Clásico"
 
 #: ../ui/skills.h:254
 msgid "Club Fighting"
@@ -166,15 +165,15 @@ msgstr "Lucha con Puños"
 
 #: ../gm_mainmenu.cpp:393 ../gm_mainmenu.cpp:480
 msgid "Connecting"
-msgstr ""
+msgstr "Conectando"
 
 #: ../gm_mainmenu.cpp:481
 msgid "Connecting to the game world. Please wait."
-msgstr "Conectando al mundo del juego. Porfavo espere."
+msgstr "Conectando al mundo del juego. Por favor espere."
 
 #: ../ui/optionsui.h:97 ../gm_gameworld.cpp:897
 msgid "Console"
-msgstr "Terminal"
+msgstr "Consola"
 
 #: ../ui/optionsconsole.h:70
 msgid "Console Options"
@@ -194,7 +193,7 @@ msgstr "Crear Cuenta"
 
 #: ../gm_mainmenu.cpp:326
 msgid "Current engine"
-msgstr "Motor gráfico atual"
+msgstr "Motor gráfico actual"
 
 #: ../ui/optionsui.h:134
 msgid "Customise the console"
@@ -212,6 +211,15 @@ msgid ""
 "Options->Network and choose the correct\n"
 "protocol."
 msgstr ""
+"Los archivos de datos del directorio:\n"
+"* o no pertenecen a la misma version del protocolo, o\n"
+"* están modificados.\n"
+"\n"
+"Consiga los archivos correctos de una sola\n"
+"versión del cliente y asegurese de que no estén\n"
+"modificados, o vaya a Options->Network y\n"
+"seleccione la version correcta\n"
+"del protocolo."
 
 #: ../ui/uioutfit.cpp:83
 msgid "Detail"
@@ -226,6 +234,8 @@ msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
 msgstr ""
+"Debido a problemas técnicos hemos tenido que\n"
+"reiniciar el servido del juego."
 
 #: ../ui/optionsui.h:142
 msgid "Edit your hotkey texts"
@@ -253,7 +263,7 @@ msgstr "Experiencia"
 
 #: ../ui/skills.h:259
 msgid "Fishing"
-msgstr "Lucha de Pesca"
+msgstr "Pesca"
 
 #: ../ui/skills.h:253
 msgid "Fist Fighting"
@@ -274,8 +284,8 @@ msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
 msgstr ""
-"Para obtener más información, eche un vistazo a los tópicos\n"
-"del foro otfans.net, o eotfans.net."
+"Para obtener más información, eche un vistazo al\n"
+"foro otfans.net(en inglés), o eotfans.net."
 
 #: ../ui/charlist.h:149
 msgid "Free Account"
@@ -376,11 +386,11 @@ msgstr "Información"
 
 #: ../ui/uiinventory.h:62
 msgid "Inventory"
-msgstr "Inventório"
+msgstr "Inventario"
 
 #: ../mapui.cpp:623
 msgid "Invite to Party"
-msgstr "Invitar a la fiesta"
+msgstr "Invitar al grupo"
 
 #: ../ui/skills.h:93
 msgid "Level"
@@ -399,7 +409,7 @@ msgid ""
 "minutes ago, and {red skull} means he killed several people."
 msgstr ""
 "Parece que has encontrado un jugador marcado. ¿Puede usted ver la calavera? "
-"Esto significa que este jugado lucho con alguien \n"
+"Esto significa que este jugador lucho con alguien \n"
 "La {calavera blanca} significa que trató de luchar contra alguien \n"
 "hace unos minutos, y la {calavera roja} significa que mató a muchas personas."
 
@@ -413,11 +423,11 @@ msgstr "Mana"
 
 #: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:589
 msgid "Message of the Day"
-msgstr "Mensage del Dia"
+msgstr "Mensaje del Dia"
 
 #: ../mapui.cpp:611
 msgid "Message to"
-msgstr "Mensage para"
+msgstr "Mensaje para"
 
 #: ../ui/uishop.cpp:124
 msgid "Money:"
@@ -433,7 +443,7 @@ msgstr "Mover Objetos"
 
 #: ../ui/uishop.cpp:31
 msgid "NPC Trade"
-msgstr "Comercializar con NPC"
+msgstr "Comerciar con NPC"
 
 #: ../ui/optionsui.h:111
 msgid "Network"
@@ -448,7 +458,7 @@ msgid ""
 "Now you've got a {bag} to carry stuff in and there's already a {coat}\n"
 "in there. {Drag} the coat from the {bag} to the {armor slot} to wear it."
 msgstr ""
-"Ahora usted recivira una {mochila} para llevar cosas y ya la puedes llenar "
+"Ahora usted recibira una {mochila} para llevar cosas y ya la puedes llenar "
 "con una {capa}. \n"
 "{Arrastre} la capa de la {mochila} a la {ranura de la armadura} para "
 "llevarlo."
@@ -487,13 +497,13 @@ msgid ""
 "  on most laptops and perhaps on many desktops.\n"
 msgstr ""
 "OpenGL es una biblioteca gráfica de acceleración 3D via\n"
-" hardware. Para hazer uso de el, tenga la asegúrese que\n"
+" hardware. Para hacer uso de ella, asegúrese de que\n"
 " tiene los drivers más recientes para su tarjeta gráfica.\n"
 " Los drivers proporcionados por Microsoft serán insuficientes.\n"
-" Devida a la finalidad central de SDL, no se da mucha\n"
-" importancia a OpenGL y no se recomienda atualmente dado\n"
-" que será más lento en la mayoría de ordenadores portatiles\n"
-" y tal vez tambien en muchos ordenadores de sobremesa.\n"
+" Debida al diseño centrado en SDL, no se ha probado lo\n"
+" suficiente OpenGL y no se recomienda actualmente. Es posible\n"
+" que sea más lento en la mayoría de ordenadores portatiles\n"
+" y tal vez también en muchos ordenadores de sobremesa.\n"
 
 #: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76
 msgid "Options"
@@ -512,9 +522,9 @@ msgid ""
 "solve various quests."
 msgstr ""
 "Elija un traje y los colores de las partes del\n"
-"traje de su personage.\n"
-"Addons se ativaran marcando la casilla correspondiente.\n"
-"Para ativar un addon particular, jugadores premium\n"
+"traje de su personaje.\n"
+"Addons se activaran marcando la casilla correspondiente.\n"
+"Para activar un addon particular, los jugadores premium\n"
 "pueden resolver diversas misiones."
 
 #: ../ui/charlist.h:154
@@ -527,7 +537,7 @@ msgstr "Precio:"
 
 #: ../ui/uioutfit.cpp:65
 msgid "Primary"
-msgstr "Primário"
+msgstr "Primario"
 
 #: ../gm_mainmenu.cpp:338
 msgid "Programmed by"
@@ -550,9 +560,9 @@ msgid ""
 "\n"
 "To apply graphical engine change, you need to restart\n"
 msgstr ""
-"RECOMENDADO: Escoja SDL. Sin embargo, teste qual funciona mejor para usted.\n"
+"RECOMENDADO: Elegir SDL. Sin embargo, pruebe cual funciona mejor para usted.\n"
 "\n"
-"Para aplicar el canvio del motor gráfico, es necesario reiniciar\n"
+"Para aplicar el cambio del motor gráfico, es necesario reiniciar\n"
 
 #: ../ui/optionsui.cpp:340
 msgid "Restart is required to apply engine change."
@@ -567,13 +577,13 @@ msgid ""
 msgstr ""
 "SDL 1.2 es una biblioteca de software para la presentación 2D.\n"
 " Puede ser más lento, pero ya que es el motor gráfico con\n"
-" mejor soporte, que se ejecuta a una velocidad razonable, e incluso\n"
-" Más rápido que el motor gráfico OpenGL, con menos fracasos.\n"
+" mejor soporte, se ejecuta a una velocidad razonable, e incluso\n"
+" más rápido que el motor gráfico OpenGL, con menos errores.\n"
 " Esto puede, por supuesto, ser modificado en cualquier momento.\n"
 
 #: ../ui/uioutfit.cpp:74
 msgid "Secondary"
-msgstr "Secundário"
+msgstr "Secundario"
 
 #: ../ui/charlist.h:57
 msgid "Select Character"
@@ -605,16 +615,16 @@ msgstr ""
 "Nombre del servidor es la dirección IP o el nombre\n"
 "host del servidor de acceso.\n"
 "\n"
-"\"Port\" es el port TCP del servidor de acceso.\n"
+"\"Puerto\" es el puerto TCP del servidor de acceso.\n"
 "\n"
 "También puede elegir si desea tener acceso a\n"
-"OpenTibia servidores, o un servidor de propiedad. Para\n"
+"servidores OpenTibia, o un servidor oficial. Para\n"
 "acceder a OpenTibia, active la opción \"LLave de\n"
 "Encriptación del OT\"."
 
 #: ../ui/optionsnetwork.h:89
 msgid "Server port:"
-msgstr "Port del servidor:"
+msgstr "Puerto del servidor:"
 
 #: ../mapui.cpp:588 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
@@ -626,7 +636,7 @@ msgid ""
 "such as server."
 msgstr ""
 "Configurar opciones de red,\n"
-"como la dirección del servidor."
+"como la dirección IP del servidor."
 
 #: ../ui/itemmove.h:74
 msgid ""
@@ -638,7 +648,7 @@ msgstr ""
 
 #: ../ui/skills.h:258
 msgid "Shielding"
-msgstr "Lucha con Defesa"
+msgstr "Defensa con escudo"
 
 #: ../ui/optionsconsole.h:85
 msgid "Show Event Messages in Console"
@@ -681,8 +691,8 @@ msgid ""
 "Show the most recent\n"
 "Message of the Day"
 msgstr ""
-"Mostrar el mensaje más\n"
-"reciente del dia"
+"Mostrar el \"Mensaje del Día\" más\n"
+"reciente"
 
 #: ../ui/skills.h:237
 msgid "Skill "
@@ -698,7 +708,7 @@ msgid ""
 "to \n"
 "take it with you. You need to collect three cockroach legs for the NPC!"
 msgstr ""
-"Por lo tanto, la {ventana de contenifo} esta abierta. {Arrastre}, cualquier "
+"Por lo tanto, la {ventana del contenedor} esta abierta. {Arrastre}, cualquier "
 "objeto en su (mochila) \n"
 "Usted necesita reunir tres patas de cucaracha para el NPC!"
 
@@ -726,10 +736,9 @@ msgid ""
 msgstr ""
 "La {pala}, que se encuentra ahora en su inventario, se utiliza para cavar "
 "hasta cuevas. Es \n"
-"muy útil para explorar nuevas áreas. Así que ve hacia el este, y usted debe "
-"encontrar a \n"
-"{pilas de piedras sueltas}, pulsa {ctrl + clic} sobre la {pala} y luego en "
-"las {piedras}. \n"
+"muy útil para explorar nuevas áreas. Así que vaya hacia el este, y usted debe "
+"encontrar {pilas de piedras sueltas}, pulsa {ctrl + clic} sobre la {pala} "
+"y luego en las {piedras}. \n"
 "Cuando se utiliza un objeto sobre otro objeto, se llama uso extendido."
 
 #: ../ui/tutorialhints.cpp:80
@@ -737,7 +746,7 @@ msgid ""
 "There's a {chest} in here. So try {ctrl+clicking} (commonly called \n"
 "'Use') on it to open it."
 msgstr ""
-"Hay una {chest} aquí. Por lo tanto pulsa {ctrl + clic} (normalmente "
+"Hay una {cofre} aquí. Por lo tanto pulsa {ctrl + clic} (normalmente "
 "llamado \n"
 "'Usar') sobre él para abrirlo."
 
@@ -772,11 +781,11 @@ msgstr ""
 
 #: ../ui/uiinventory.cpp:192
 msgid "Trade with"
-msgstr "Negociar con"
+msgstr "Comerciar con"
 
 #: ../gm_gameworld.cpp:1054
 msgid "Tutorial Hint"
-msgstr "Tutorial de sugerencia"
+msgstr "Sugerencia"
 
 #: ../ui/charlist.h:91
 msgid "Unknown"
@@ -788,7 +797,7 @@ msgstr "Usar"
 
 #: ../mapui.cpp:572 ../ui/uiinventory.cpp:184
 msgid "Use with..."
-msgstr "Uso con..."
+msgstr "Usar con..."
 
 #: ../gm_mainmenu.cpp:328
 msgid "Uses GLICT"
@@ -847,7 +856,7 @@ msgid ""
 "its {body}. Just do a {ctrl+click} on it."
 msgstr ""
 "Por qué luchar si no puede beneficiarse, ¿verdad? Por lo tanto, cuando usted "
-"mata a algo, simplemente para el botín de \n"
+"mata a algo, simplemente tome el botín de \n"
 "su {cuerpo}. Pulsa {ctrl + clic} sobre el mismo cuerpo."
 
 #: ../ui/tutorialhints.cpp:110
