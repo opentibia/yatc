@@ -25,201 +25,183 @@
 #include "sprite.h"
 #include "engine.h"
 #include "util.h"
+#include "gamecontent/globalvars.h"
+
+
+bool MiniMapArea::save()
+{
+	std::stringstream x, y, z, minimapfnss;
+	//get the name of the file
+	x << setw(3) << setfill('0') << m_basepos.x / 256;
+    y << setw(3) << setfill('0') << m_basepos.y / 256;
+    z << setw(2) << setfill('0') << m_basepos.z;
+    minimapfnss << x.str() << y.str() << z.str() << ".map";
+    FILE* f = yatc_fopen(minimapfnss.str().c_str(), "wb");
+    if(!f){
+    	return false;
+    }
+    fwrite(m_color, 1, 256*256, f);
+    fwrite(m_speed, 1, 256*256, f);
+
+    //save map marks if any
+    for(std::list<MapMark*>::iterator it = m_marks.begin(); it != m_marks.end(); ++it){
+    	fwrite(&((*it)->x), 1, 4, f);
+    	fwrite(&((*it)->y), 1, 4, f);
+    	fwrite(&((*it)->type), 1, 4, f);
+		uint16_t length = (*it)->text.size();
+    	fwrite(&length, 1, 2, f);
+    	fwrite((*it)->text.c_str(), 1, length, f);
+    }
+
+
+    fclose(f);
+    return true;
+}
+
+bool MiniMapArea::load()
+{
+	//get the name of the file
+	std::stringstream x, y, z, minimapfnss;
+	x << setw(3) << setfill('0') << m_basepos.x / 256;
+    y << setw(3) << setfill('0') << m_basepos.y / 256;
+    z << setw(2) << setfill('0') << m_basepos.z;
+    minimapfnss << x.str() << y.str() << z.str() << ".map";
+    FILE* f = yatc_fopen(minimapfnss.str().c_str(), "rb");
+    if(!f){
+    	memset(m_color, 0, 256*256);
+    	memset(m_speed, 255, 256*256);
+    	return false;
+    }
+
+    fread(m_color, 1, 256*256, f);
+    fread(m_speed, 1, 256*256, f);
+
+	if(!feof(f)){ //there are map marks
+		int32_t marksCount = 0;
+		fread(&marksCount, 4, 1, f);
+		if(marksCount > 100) marksCount = 100;
+		for(int i = 0; i < marksCount; ++i){
+			uint32_t x, y, type;
+			uint16_t length;
+			char *text;
+
+			fread(&x, 4, 1, f);
+			fread(&y, 4, 1, f);
+			fread(&type, 4, 1, f);
+			fread(&length, 2, 1, f);
+			text = new char[length + 1];
+			fread(text, length, 1, f);
+			text[length] = 0;
+
+			MapMark* mark = new MapMark(x, y, type, text);
+			m_marks.push_back(mark);
+
+			delete[] text;
+		}
+	}
+    fclose(f);
+
+    return true;
+}
 
 Automap::Automap()
 {
-    map[0] = map[1] = map[2] = map[3] = NULL;
-    mapcount = 0;
-    mapw = 256;
-    maph = 256;
-    m_tileCount=0;
+	m_mapw = 256;
+	m_maph = 256;
+	oRGBA color; //default color
+	m_bitmap = g_engine->createSprite(m_mapw, m_maph, color);
 }
+
 Automap::~Automap()
 {
+	delete m_bitmap;
+	for(std::map<uint32_t, MiniMapArea*>::iterator it = m_areas.begin(); it != m_areas.end(); ++it){
+		delete it->second;
+	}
+}
+
+void Automap::setTileColor(int x, int y, int z, uint8_t color, uint8_t speedindex)
+{
+	uint32_t posindex = (z & 0xFF) | ((y & 0xFF00) << 8) | ((x & 0xFF00) << 16);
+	std::map<uint32_t, MiniMapArea*>::iterator it = m_areas.find(posindex);
+	if(it != m_areas.end()){
+		it->second->setTileColor(x & 0xFF, y & 0xFF, color, speedindex);
+	}
+	else{
+		MiniMapArea* area = new MiniMapArea(x, y, z);
+		area->setTileColor(x & 0xFF, y & 0xFF, color, speedindex);
+		m_areas[posindex] = area;
+	}
+}
+
+void Automap::getTileColor(int x, int y, int z, uint8_t &color, uint8_t &speedindex)
+{
+	uint32_t posindex = (z & 0xFF) | ((y & 0xFF00) << 8) | ((x & 0xFF00) << 16);
+	std::map<uint32_t, MiniMapArea*>::iterator it = m_areas.find(posindex);
+	if(it != m_areas.end()){
+		it->second->getTileColor(x & 0xFF, y & 0xFF, color, speedindex);
+	}
+	else{
+		MiniMapArea* area = new MiniMapArea(x, y, z);
+		area->getTileColor(x & 0xFF, y & 0xFF, color, speedindex);
+		m_areas[posindex] = area;
+	}
 }
 
 void Automap::updateSelf()
 {
-    int xs = px - mapw/2;
-    int ys = py - maph/2;
-    int xe = px + mapw/2;
-    int ye = py + maph/2;
+	//TODO: optimize how is generated the sprite
+	// now it is completly rebuilt for every step
+    int x1 = m_pos.x - m_mapw/2;
+    int y1 = m_pos.y - m_maph/2;
 
-    int oldmapcount = mapcount;
-    mapcount = 0;
-    printf("Updating automap\n");
-    for (int j = ys; j<ye; j+=maph-1)
-        for (int i = xs; i<xe; i+=mapw-1)
-        {
+	SDL_Surface* s = m_bitmap->lockSurface();
+	for(int i = 0; i < m_mapw; i++){
+		for(int j = 0; j < m_maph; j++){
 
+			int tmpx = x1 + i;
+			int tmpy = y1 + j;
+			if(tmpx < 0 || tmpy < 0 || tmpx > 0xFFFF || tmpy > 0xFFFF){
+				m_bitmap->putPixel(i, j, SDL_MapRGB(s->format, 0, 0, 0) ,s);
+			}
+			else{
+				uint8_t color, speedIndex;
+				getTileColor(tmpx, tmpy, m_pos.z, color, speedIndex);
 
-            std::stringstream x,y,z,minimapfnss;
-            x << setw(3) << setfill('0') << i / 256;
-            y << setw(3) << setfill('0') << j / 256;
-            z << setw(2) << setfill('0') << pz;
-            minimapfnss << x.str() << y.str() << z.str() << ".map";
+				uint8_t b = uint8_t((color % 6) / 5. * 255);
+				uint8_t g = uint8_t(((color / 6) % 6) / 5. * 255);
+				uint8_t r = uint8_t((color / 36.) / 6. * 255);
 
-            bool has_map = false;
-            if (mapcount < oldmapcount && minimapfnss.str() != mapfns[mapcount]) {
-                delete map[mapcount];
-                map[mapcount] = NULL;
-                mapfns[mapcount] = "";
-            } else {
-                has_map = true;
-            }
-            mapcount++;
-            Sprite* activeMap = NULL;
-            if (!has_map)
-            {
-                mapfns[mapcount-1] = minimapfnss.str();
-                map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
-                if (!map[mapcount-1]->isLoaded()) {
-                    printf("Trying to spawn map by flushtiling\n");
-                    delete map[mapcount-1];
-                    flushTiles();
-                    map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
-                    printf("Loaded: %s\n", activeMap->isLoaded() ? "yes" : "no");
-                }
-            } else {
-                activeMap = map[mapcount-1];
-            }
-
-
-            writeFilesMap::iterator mit;
-            // We NEED to update sprites! We flush only every n tiles!
-            if (( mit = writeFiles.find(minimapfnss.str())) != writeFiles.end())
-            {
-                if(activeMap && activeMap->isLoaded()) {
-                    printf("locking\n");
-                    SDL_Surface* s=activeMap->lockSurface();
-                    printf("locked for %d pixels\n", mit->second.size());
-                    for(std::vector<posAndColor>::iterator it = mit->second.begin(); it != mit->second.end(); it++)
-                    {
-                        //printf("it %p\n", it);
-                        uint8_t c = it->color;
-                        uint8_t b = uint8_t((c % 6) / 5. * 255);
-                        uint8_t g = uint8_t(((c / 6) % 6) / 5. * 255);
-                        uint8_t r = uint8_t((c / 36.) / 6. * 255);
-
-                        activeMap->putPixel(it->x % 256,it->y % 256,SDL_MapRGB(s->format,r,g,b),s);
-
-                    }
-                    printf("unlocked\n");
-                    activeMap->unlockSurface();
-                } else {
-                    printf("Found but not updated since it's unloadable\n");
-                    delete activeMap;
-                    flushTiles();
-                    map[mapcount-1] = activeMap = g_engine->createSprite(minimapfnss.str());
-                    printf("Retried. If this fails .... *sigh*\n");
-                }
-
-
-            }
-        }
+				m_bitmap->putPixel(i, j, SDL_MapRGB(s->format, r, g, b) ,s);
+			}
+		}
+	}
+	m_bitmap->unlockSurface();
 }
 
-void Automap::setPos(int x, int y, int z)
+void Automap::setPos(const Position& pos)
 {
-    px = x;
-    py = y;
-    pz = z;
+    m_pos = pos;
     updateSelf();
 }
 
 void Automap::renderSelf(int x, int y, int w, int h) // parameters specify where on the screen it should be painted
 {
-    // FIXME (ivucica#1#): fix use of w and h; currently they need to be default values 256x256
-    int xs = px - w/2;
-    int ys = py - h/2;
-    int xe = px + w/2;
-    int ye = py + h/2;
+    // FIXME (ivucica#1#): fix use of w and h;
+    //currently they need to be default values 256x256
 
+    if(GlobalVariables::getPlayerPosition() != m_pos){
+    	setPos(GlobalVariables::getPlayerPosition());
+    }
 
-    if (map[0]) map[0]->Blit(x,y, xs%256, ys%256, 256-(xs%256), 256-(ys%256));
-    if (map[1]) map[1]->Blit(x+256-(xs%256),y, 0, ys%256, w-(256-(xs%256)), 256-(ys%256));
-    if (map[2]) map[2]->Blit(x,y+256-(ys%256), xs%256, 0, 256-(xs%256), h-(256-(ys%256)));
-    if (map[3]) map[3]->Blit(x+256-(xs%256),y+256-(ys%256), 0, 0, w-(256-(xs%256)), h-(256-(ys%256)));
+	//draw the minimap
+    m_bitmap->Blit(x, y);
 
-    g_engine->drawRectangle(x+w/2,y+h/2,3,3, oRGBA(1,1,1,1));
-}
-
-void Automap::setTileColor(int i, int j, int k, uint8_t color, uint8_t speedindex)
-{
-    std::stringstream x,y,z,minimapfnss;
-    x << setw(3) << setfill('0') << i / 256;
-    y << setw(3) << setfill('0') << j / 256;
-    z << setw(2) << setfill('0') << k;
-    minimapfnss << x.str() << y.str() << z.str() << ".map";
-
-    posAndColor p;
-    p.x = i; p.y = j; p.z = k; p.color = color;
-
-    writeFiles[minimapfnss.str()].push_back(p);
-
-    m_tileCount++;
+    //mark where is the player
+    g_engine->drawRectangle(x + w/2, y + h/2, 3, 3, oRGBA(1,1,1,1));
 }
 
 void Automap::flushTiles()
 {
-    writeFilesMap::iterator it;
-    for(it=writeFiles.begin();it!=writeFiles.end();it++)
-    {
-        FILE* f=NULL;
-        if (!fileexists(it->first.c_str()))
-        {
-            f = yatc_fopen(it->first.c_str(),"wb+");
-            if (!f) {
-		printf("Could not create %s\n", it->first.c_str());
-                continue;
-            }
-            // let's put an integer, 0, to the end of the file ...
-            // this should denote how many map marks there are on the map ...
-            uint32_t zero=0;
-            fseek(f, 256*256*2, SEEK_SET);
-            fwrite(&zero, 4,1,f);
-        }
-        if (!f) f = yatc_fopen(it->first.c_str(),"rb+");
-        if (!f) {
-            printf("Could not open %s\n", it->first.c_str());
-            continue;
-        }
-        //fseek(f, 256*256 *2, SEEK_SET);
-        for (std::vector<posAndColor>::iterator it2 = it->second.begin(); it2 != it->second.end(); it2++)
-        {
-            fseek(f, (it2->x%256) * 256 + (it2->y%256), SEEK_SET);
-            fwrite(&it2->color, 1, 1, f);
-            fseek(f, 256*256 + (it2->x%256) * 256 + (it2->y%256), SEEK_SET);
-            fwrite(&it2->speedindex, 1, 1, f);
-        }
-        fclose(f);
-    }
-    m_tileCount = 0;
-    writeFiles.clear();
-}
-
-void Automap::getTileColor(int i, int j, int k, uint8_t &color, uint8_t &speedindex)
-{
-    std::stringstream x,y,z,minimapfnss;
-
-    x << setw(3) << setfill('0') << i / 256;
-    y << setw(3) << setfill('0') << j / 256;
-    z << setw(2) << setfill('0') << k;
-    minimapfnss << x.str() << y.str() << z.str() << ".map";
-    FILE *f = yatc_fopen(minimapfnss.str().c_str(),"rb");
-    if(!f)
-    {
-        color = 0;
-        speedindex = 255;
-        return;
-    }
-
-    fseek(f, (i%256) * 256 + (j%256), SEEK_SET);
-    fread(&color, 1, 1, f);
-    fseek(f, 256*256 + (i%256) * 256 + (j%256), SEEK_SET);
-    fread(&speedindex, 1, 1, f);
-
-    fclose(f);
-    return;
-
+	//
 }

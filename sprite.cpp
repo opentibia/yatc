@@ -346,84 +346,14 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		#endif
 		m_loaded = true;
 	}
-	else if(extension == "map"){
-        FILE *f;
-		SDL_Surface *s = NULL;
-
-        f = yatc_fopen(filename.c_str(), "rb");
-		if(!f){
-			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Minimap file %s not found\n", filename.c_str());
-			goto loadFail;
-		}
-
-        s = SDL_CreateRGBSurface(SDL_SWSURFACE, 256, 256, 32, rmask, gmask, bmask, amask);
-        SDL_LockSurface(s);
-
-        for (int i = 0; i < 256; i++)
-            for (int j = 0; j < 256; j++)
-            {
-                uint8_t c;
-                fread(&c, 1, 1, f);
-                uint8_t b = uint8_t((c % 6) / 5. * 255);
-                uint8_t g = uint8_t(((c / 6) % 6) / 5. * 255);
-                uint8_t r = uint8_t((c / 36.) / 6. * 255);
-
-                putPixel(i,j, SDL_MapRGB(s->format,r,g,b) ,s);
-            }
-
-
-        // below is SAMPLE code for reading speed indices
-        // and map tags. this DOESNT really belong in sprite reading!
-        // it's here just for documentation
-
-        for (int i = 0; i < 256; i++)
-            for (int j = 0; j < 256; j++)
-            {
-                uint8_t s; // speedindex
-                fread(&s, 1, 1, f);
-            }
-
-
-        if (!feof(f)) {
-            int32_t marksCount=0; // map marks
-            fread(&marksCount, 4, 1, f);
-            if (marksCount >100) marksCount = 100;
-            for(int i=0;i<marksCount;i++)
-            {
-                uint32_t x, y, type;
-                uint16_t length;
-                char *text;
-
-                fread(&x, sizeof(x), 1, f);
-                fread(&y, sizeof(y), 1, f);
-                fread(&type, sizeof(type), 1, f);
-                fread(&length, sizeof(length), 1, f);
-                text = (char*)malloc(length+1);
-                fread(text, length, 1, f);
-                text[length] = 0;
-                free(text);
-            }
-        }
-        fclose(f);
-        SDL_UnlockSurface(s);
-
-
-
-        #ifdef USE_OPENGL
-		m_pixelformat = GL_RGBA;
-		#endif
-        m_image = s;
-		m_loaded = true;
-
-	}
 	else if(extension=="blank"){
 	    double r,g,b,a;
 	    int w,h;
 	    sscanf(m_filename.c_str(), "%d %d %lg %lg %lg %lg", &w,&h,&r,&g,&b,&a);
 
         SDL_Surface *s = SDL_CreateRGBSurface(SDL_SWSURFACE, 256, 256, 32, rmask, gmask, bmask, amask);
-        Uint32 color = SDL_MapRGB(m_image->format, (int)r, (int)g, (int)b);
-		SDL_FillRect(m_image, NULL, color);
+        Uint32 color = SDL_MapRGB(s->format, (int)r, (int)g, (int)b);
+		SDL_FillRect(s, NULL, color);
 
 		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
