@@ -39,6 +39,9 @@ class EngineSDL : public Engine
 		{
 			return new SpriteSDL(filename, index);
 		}
+		virtual Sprite* createSprite(int w, int h, const oRGBA& c){
+			return new SpriteSDL(w, h, c);
+		}
 
 		virtual void Flip(){
 			SDL_Flip(m_screen);

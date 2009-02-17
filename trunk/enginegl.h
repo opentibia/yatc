@@ -44,6 +44,9 @@ class EngineGL : public Engine
 		{
 			return new SpriteGL(filename, index);
 		}
+		virtual Sprite* createSprite(int w, int h, const oRGBA& c){
+			return new SpriteGL(w, h, c);
+		}
 
         virtual const char* getName() const {return "OpenGL";}
         bool hasGL() const { return true; }

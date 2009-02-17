@@ -22,38 +22,74 @@
 #define __AUTOMAP_H
 
 #include <string>
-#include <vector>
+#include <list>
 #include <map>
+#include "gamecontent/position.h"
 class Sprite;
+
+class MiniMapArea{
+public:
+	MiniMapArea(int x, int y, int z){
+		m_basepos.x = x & 0xFF00;
+		m_basepos.y = y & 0xFF00;
+		m_basepos.z = z & 0xFF;
+		load();
+	}
+	~MiniMapArea(){
+		save();
+	}
+
+	void getTileColor(uint16_t x, uint16_t y, uint8_t& color, uint8_t& speedindex){
+		color = m_color[x][y];
+		speedindex = m_speed[x][y];
+	}
+
+	void setTileColor(uint16_t x, uint16_t y, uint8_t color, uint8_t speedindex){
+		m_color[x][y] = color;
+		m_speed[x][y] = speedindex;
+	}
+
+	bool save();
+
+protected:
+	bool load();
+
+	uint8_t m_color[256][256];
+	uint8_t m_speed[256][256];
+
+	struct MapMark{
+		MapMark(uint32_t _x, uint32_t _y, uint32_t _type, const char* _text){
+			x = _x; y = _y; type = _type; text = _text;
+		}
+		uint32_t x, y, type;
+		std::string text;
+	};
+
+	std::list<MapMark*> m_marks;
+	Position m_basepos;
+};
 
 class Automap
 {
-
-    typedef struct {
-        int x,y,z;
-        uint8_t color,speedindex;
-    } posAndColor;
-
 public:
     Automap();
     ~Automap();
 
     void updateSelf();
-    void setPos(int x, int y, int z);
+    void setPos(const Position& pos);
     void renderSelf(int x, int y, int w, int h);
+
+	void flushTiles();
+
     void setTileColor(int x, int y, int z, uint8_t color,uint8_t speedindex);
-    void flushTiles();
     void getTileColor(int x, int y, int z, uint8_t &color,uint8_t &speedindex);
 
-    inline int tileCount() const { return m_tileCount; }
 private:
-	Sprite* map[4];
-	int mapw, maph, px, py, pz, mapcount;
-	std::string mapfns[4];
+	std::map<uint32_t, MiniMapArea*> m_areas;
+	Position m_pos;
+	Sprite* m_bitmap;
 
-    typedef std::map<std::string, std::vector<posAndColor> >  writeFilesMap;
-	writeFilesMap writeFiles;
-	int m_tileCount;
+	int m_mapw, m_maph;
 };
 
 #endif

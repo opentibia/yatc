@@ -54,6 +54,7 @@ class Engine
 		int getWindowHeight() const {return m_height;};
 
 		virtual Sprite* createSprite(const std::string& filename, int index = 0) = 0;
+		virtual Sprite* createSprite(int w, int h, const oRGBA& c) = 0;
 
 		virtual void Flip() = 0;
 
