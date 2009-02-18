@@ -29,30 +29,18 @@ class Sprite;
 
 class MiniMapArea{
 public:
-	MiniMapArea(int x, int y, int z){
-		m_basepos.x = x & 0xFF00;
-		m_basepos.y = y & 0xFF00;
-		m_basepos.z = z & 0xFF;
-		load();
-	}
-	~MiniMapArea(){
-		save();
-	}
+	MiniMapArea(int x, int y, int z);
+	~MiniMapArea();
 
-	void getTileColor(uint16_t x, uint16_t y, uint8_t& color, uint8_t& speedindex){
-		color = m_color[x][y];
-		speedindex = m_speed[x][y];
-	}
-
-	void setTileColor(uint16_t x, uint16_t y, uint8_t color, uint8_t speedindex){
-		m_color[x][y] = color;
-		m_speed[x][y] = speedindex;
-	}
+	void setTileColor(uint16_t x, uint16_t y, uint8_t color, uint8_t speedindex);
 
 	bool save();
 
+	Sprite* getSprite(){ return m_bitmap;}
+
 protected:
 	bool load();
+	void getRGB(uint8_t color, uint8_t& r, uint8_t& g, uint8_t& b);
 
 	uint8_t m_color[256][256];
 	uint8_t m_speed[256][256];
@@ -67,6 +55,7 @@ protected:
 
 	std::list<MapMark*> m_marks;
 	Position m_basepos;
+	Sprite* m_bitmap;
 };
 
 class Automap
@@ -75,21 +64,13 @@ public:
     Automap();
     ~Automap();
 
-    void updateSelf();
-    void setPos(const Position& pos);
-    void renderSelf(int x, int y, int w, int h);
-
-	void flushTiles();
-
+    void renderSelf(int x, int y, int w, int h, const Position& pos);
     void setTileColor(int x, int y, int z, uint8_t color,uint8_t speedindex);
-    void getTileColor(int x, int y, int z, uint8_t &color,uint8_t &speedindex);
 
 private:
-	std::map<uint32_t, MiniMapArea*> m_areas;
-	Position m_pos;
-	Sprite* m_bitmap;
+	MiniMapArea* getArea(int x, int y, int z);
 
-	int m_mapw, m_maph;
+	std::map<uint32_t, MiniMapArea*> m_areas;
 };
 
 #endif

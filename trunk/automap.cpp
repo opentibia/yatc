@@ -27,6 +27,22 @@
 #include "util.h"
 #include "gamecontent/globalvars.h"
 
+MiniMapArea::MiniMapArea(int x, int y, int z)
+{
+	m_basepos.x = x & 0xFF00;
+	m_basepos.y = y & 0xFF00;
+	m_basepos.z = z & 0xFF;
+	oRGBA color; //default color
+	m_bitmap = g_engine->createSprite(256, 256, color);
+	load();
+}
+
+MiniMapArea::~MiniMapArea()
+{
+	save();
+	delete m_bitmap;
+}
+
 
 bool MiniMapArea::save()
 {
@@ -70,138 +86,168 @@ bool MiniMapArea::load()
     if(!f){
     	memset(m_color, 0, 256*256);
     	memset(m_speed, 255, 256*256);
-    	return false;
+    }
+    else{
+
+		fread(m_color, 1, 256*256, f);
+		fread(m_speed, 1, 256*256, f);
+
+		if(!feof(f)){ //there are map marks
+			int32_t marksCount = 0;
+			fread(&marksCount, 4, 1, f);
+			if(marksCount > 100) marksCount = 100;
+			for(int i = 0; i < marksCount; ++i){
+				uint32_t x, y, type;
+				uint16_t length;
+				char *text;
+
+				fread(&x, 4, 1, f);
+				fread(&y, 4, 1, f);
+				fread(&type, 4, 1, f);
+				fread(&length, 2, 1, f);
+				text = new char[length + 1];
+				fread(text, length, 1, f);
+				text[length] = 0;
+
+				MapMark* mark = new MapMark(x, y, type, text);
+				m_marks.push_back(mark);
+
+				delete[] text;
+			}
+		}
+		fclose(f);
     }
 
-    fread(m_color, 1, 256*256, f);
-    fread(m_speed, 1, 256*256, f);
-
-	if(!feof(f)){ //there are map marks
-		int32_t marksCount = 0;
-		fread(&marksCount, 4, 1, f);
-		if(marksCount > 100) marksCount = 100;
-		for(int i = 0; i < marksCount; ++i){
-			uint32_t x, y, type;
-			uint16_t length;
-			char *text;
-
-			fread(&x, 4, 1, f);
-			fread(&y, 4, 1, f);
-			fread(&type, 4, 1, f);
-			fread(&length, 2, 1, f);
-			text = new char[length + 1];
-			fread(text, length, 1, f);
-			text[length] = 0;
-
-			MapMark* mark = new MapMark(x, y, type, text);
-			m_marks.push_back(mark);
-
-			delete[] text;
+    //Create the sprite
+	SDL_Surface* s = m_bitmap->lockSurface();
+	for(int i = 0; i < 256; i++){
+		for(int j = 0; j < 256; j++){
+			uint8_t r, g, b;
+			getRGB(m_color[i][j], r, g, b);
+			m_bitmap->putPixel(i, j, SDL_MapRGB(s->format, r, g, b) ,s);
 		}
 	}
-    fclose(f);
+	m_bitmap->unlockSurface();
 
     return true;
 }
 
+void MiniMapArea::setTileColor(uint16_t x, uint16_t y, uint8_t color, uint8_t speedindex)
+{
+	//update arrays
+	x &= 0xFF; y &= 0xFF;
+	m_color[x][y] = color;
+	m_speed[x][y] = speedindex;
+	//update the srpite
+	SDL_Surface* s = m_bitmap->lockSurface();
+	uint8_t r, g, b;
+	getRGB(color, r, g, b);
+	m_bitmap->putPixel(x, y, SDL_MapRGB(s->format, r, g, b) ,s);
+	m_bitmap->unlockSurface();
+}
+
+void MiniMapArea::getRGB(uint8_t color, uint8_t& r, uint8_t& g, uint8_t& b)
+{
+	b = uint8_t((color % 6) / 5. * 255);
+	g = uint8_t(((color / 6) % 6) / 5. * 255);
+	r = uint8_t((color / 36.) / 6. * 255);
+}
+
+///////////////////////////////////////////////
+
 Automap::Automap()
 {
-	m_mapw = 256;
-	m_maph = 256;
-	oRGBA color; //default color
-	m_bitmap = g_engine->createSprite(m_mapw, m_maph, color);
+	//
 }
 
 Automap::~Automap()
 {
-	delete m_bitmap;
 	for(std::map<uint32_t, MiniMapArea*>::iterator it = m_areas.begin(); it != m_areas.end(); ++it){
 		delete it->second;
 	}
 }
 
+MiniMapArea* Automap::getArea(int x, int y, int z)
+{
+	uint32_t posindex = (z & 0xFF) | ((y & 0xFF00) << 8) | ((x & 0xFF00) << 16);
+	std::map<uint32_t, MiniMapArea*>::iterator it = m_areas.find(posindex);
+	if(it != m_areas.end()){
+		return it->second;
+	}
+	else{
+		MiniMapArea* area = new MiniMapArea(x, y, z);
+		uint32_t posindex = (z & 0xFF) | ((y & 0xFF00) << 8) | ((x & 0xFF00) << 16);
+		m_areas[posindex] = area;
+		return area;
+	}
+}
+
 void Automap::setTileColor(int x, int y, int z, uint8_t color, uint8_t speedindex)
 {
-	uint32_t posindex = (z & 0xFF) | ((y & 0xFF00) << 8) | ((x & 0xFF00) << 16);
-	std::map<uint32_t, MiniMapArea*>::iterator it = m_areas.find(posindex);
-	if(it != m_areas.end()){
-		it->second->setTileColor(x & 0xFF, y & 0xFF, color, speedindex);
-	}
-	else{
-		MiniMapArea* area = new MiniMapArea(x, y, z);
+	MiniMapArea* area = getArea(x, y, z);
+	if(area){
 		area->setTileColor(x & 0xFF, y & 0xFF, color, speedindex);
-		m_areas[posindex] = area;
 	}
 }
 
-void Automap::getTileColor(int x, int y, int z, uint8_t &color, uint8_t &speedindex)
+void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos)
+// parameters specify where on the screen it should be painted
 {
-	uint32_t posindex = (z & 0xFF) | ((y & 0xFF00) << 8) | ((x & 0xFF00) << 16);
-	std::map<uint32_t, MiniMapArea*>::iterator it = m_areas.find(posindex);
-	if(it != m_areas.end()){
-		it->second->getTileColor(x & 0xFF, y & 0xFF, color, speedindex);
-	}
-	else{
-		MiniMapArea* area = new MiniMapArea(x, y, z);
-		area->getTileColor(x & 0xFF, y & 0xFF, color, speedindex);
-		m_areas[posindex] = area;
-	}
-}
+	//FIXME. zoom is not working because Blit doesnt scale properly the image
+	int zoom = 1;
 
-void Automap::updateSelf()
-{
-	//TODO: optimize how is generated the sprite
-	// now it is completly rebuilt for every step
-    int x1 = m_pos.x - m_mapw/2;
-    int y1 = m_pos.y - m_maph/2;
+	//draw the minimap
+	int x1 = centerPos.x - (w/2)/zoom;
+	int y1 = centerPos.y - (h/2)/zoom;
 
-	SDL_Surface* s = m_bitmap->lockSurface();
-	for(int i = 0; i < m_mapw; i++){
-		for(int j = 0; j < m_maph; j++){
+	//background
+	g_engine->drawRectangle(x, y, w, h, oRGBA(0,0,0,1));
 
-			int tmpx = x1 + i;
-			int tmpy = y1 + j;
-			if(tmpx < 0 || tmpy < 0 || tmpx > 0xFFFF || tmpy > 0xFFFF){
-				m_bitmap->putPixel(i, j, SDL_MapRGB(s->format, 0, 0, 0) ,s);
+	int i, j;
+	//Decide which areas and where should be drawn
+	if(x1 < 0) i = -x1*zoom;
+	else i = -(x1 & 0xFF)*zoom;
+	for(;i < w; i += 256*zoom){
+		int current_x = x1 + i/zoom;
+		int destx = i, srcx = 0;
+		int srcw = 256, destw = 256*zoom;
+		if(destx < 0){
+			srcx = -destx/zoom;
+			srcw -= srcx;
+			destx = 0;
+			destw = srcw*zoom;
+		}
+		if(destx + destw > w){
+			destw = w - destx;
+			srcw = destw/zoom;
+		}
+
+		if(y1 < 0) j = -y1*zoom;
+		else j = -(y1 & 0xFF)*zoom;
+		for(;j < h; j += 256*zoom){
+			int current_y = y1 + j/zoom;
+			int desty = j, srcy = 0;
+			int srch = 256, desth = 256*zoom;
+
+			if(desty < 0){
+				srcy = -desty/zoom;
+				srch -= srcy;
+				desty = 0;
+				desth = srch*zoom;
 			}
-			else{
-				uint8_t color, speedIndex;
-				getTileColor(tmpx, tmpy, m_pos.z, color, speedIndex);
+			if(desty + desth > h){
+				desth = h - desty;
+				srch = desth/zoom;
+			}
 
-				uint8_t b = uint8_t((color % 6) / 5. * 255);
-				uint8_t g = uint8_t(((color / 6) % 6) / 5. * 255);
-				uint8_t r = uint8_t((color / 36.) / 6. * 255);
-
-				m_bitmap->putPixel(i, j, SDL_MapRGB(s->format, r, g, b) ,s);
+			MiniMapArea* area = getArea(current_x, current_y, centerPos.z);
+			if(area){
+				area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch);
+				//area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch, destw, desth); //<-- Does not work!
 			}
 		}
 	}
-	m_bitmap->unlockSurface();
-}
-
-void Automap::setPos(const Position& pos)
-{
-    m_pos = pos;
-    updateSelf();
-}
-
-void Automap::renderSelf(int x, int y, int w, int h) // parameters specify where on the screen it should be painted
-{
-    // FIXME (ivucica#1#): fix use of w and h;
-    //currently they need to be default values 256x256
-
-    if(GlobalVariables::getPlayerPosition() != m_pos){
-    	setPos(GlobalVariables::getPlayerPosition());
-    }
-
-	//draw the minimap
-    m_bitmap->Blit(x, y);
 
     //mark where is the player
-    g_engine->drawRectangle(x + w/2, y + h/2, 3, 3, oRGBA(1,1,1,1));
-}
-
-void Automap::flushTiles()
-{
-	//
+    g_engine->drawRectangle(x + w/2 -1, y + h/2-1, 3, 3, oRGBA(1,1,1,1));
 }

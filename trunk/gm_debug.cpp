@@ -161,9 +161,6 @@ void GM_Debug::UpdateMapOnClick(glictPos* relmousepos, glictContainer* callercla
             }
 
         }
-
-
-    gd->a.setPos(gd->px,gd->py,gd->pz);
 }
 
 GM_Debug::GM_Debug()
@@ -316,13 +313,14 @@ void GM_Debug::renderScene()
     int xe = px + mapw/2;
     int ye = py + maph/2;
 
-
+/*
     if (map[0]) map[0]->Blit(0,0, xs%256, ys%256, 256-(xs%256), 256-(ys%256));
     if (map[1]) map[1]->Blit(256-(xs%256),0, 0, ys%256, mapw-(256-(xs%256)), 256-(ys%256));
     if (map[2]) map[2]->Blit(0,256-(ys%256), xs%256, 0, 256-(xs%256), maph-(256-(ys%256)));
     if (map[3]) map[3]->Blit(256-(xs%256),256-(ys%256), 0, 0, mapw-(256-(xs%256)), maph-(256-(ys%256)));
-
-    a.renderSelf(400,0,256,256);
+*/
+	GM_Debug *gd = (GM_Debug*)g_game;
+    a.renderSelf(700,0,256,256,Position(gd->px, gd->py, gd->pz));
 
 /*
     std::stringstream testchar;
