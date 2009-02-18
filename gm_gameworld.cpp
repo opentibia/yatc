@@ -182,13 +182,11 @@ GM_Gameworld::GM_Gameworld()
 	doResize(glictGlobals.w, glictGlobals.h);
 
     SDL_SetCursor(g_engine->m_cursorBasic);
-
-    m_automap.setPos(GlobalVariables::getPlayerPosition().x,GlobalVariables::getPlayerPosition().y,GlobalVariables::getPlayerPosition().z);
 }
 
 GM_Gameworld::~GM_Gameworld ()
 {
-    m_automap.flushTiles();
+    //m_automap.flushTiles();
     DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Terminating protocol connection from gameworld...\n");
 	delete g_connection;
 	g_connection = NULL;
@@ -283,9 +281,7 @@ void GM_Gameworld::updateScene()
 	#endif
 
 	m_mapui.renderMap();
-	if (m_automap.tileCount() > 250)
-        m_automap.flushTiles();
-	m_automap.renderSelf(options.w-256 -170, 0, 256,256);
+	m_automap.renderSelf(options.w-256 -170, 0, 256,256, GlobalVariables::getPlayerPosition());
 
 	if (time(NULL)-m_startTime) {
 		double txbph, rxbph, trbph;
@@ -327,8 +323,6 @@ void GM_Gameworld::updateScene()
 
 
 	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-170, glictGlobals.h-12);
-
-
 }
 
 
@@ -812,10 +806,6 @@ void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Pos
 		c->startWalk();
 	c->confirmWalk();
 
-	if (id == GlobalVariables::getPlayerID())
-	{
-	    m_automap.setPos(newPos.x, newPos.y, newPos.z);
-	}
 //	printf("Moving %d\n", id);
 
 }
