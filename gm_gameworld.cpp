@@ -37,6 +37,7 @@
 #include "gamecontent/inventory.h"
 #include "util.h"
 #include "popup.h"
+#include "objects.h"
 
 #include "ui/tutorialhints.h"
 
@@ -170,14 +171,14 @@ GM_Gameworld::GM_Gameworld()
 
 	m_startTime = time(NULL);
 
-	m_extendedthing = NULL;
-    m_dragging = false;
     m_draggingPrep = false;
-    m_draggingInv = SLOT_NONE;
-    m_draggingCtrId = m_draggingCtrSlot = -1;
-    m_dragThing = false;
+    m_dragging = false;
+    m_dragThingId = 0;
+    m_dragThingCount = 0;
+    m_dragStackPos = 0;
 
     m_popup = NULL;
+    m_showPopup = true;
 
 	doResize(glictGlobals.w, glictGlobals.h);
 
@@ -204,14 +205,9 @@ GM_Gameworld::~GM_Gameworld ()
 	Objects::destroyInstance();
 
 
-
-
-
     if(!Objects::getInstance()->loadDat("Tibia.dat")){
         NativeGUIError("Tibia.dat suddenly disappeared during client's runtime.", "What?!");
     }
-
-
 
 }
 
@@ -521,6 +517,89 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 	return ret;
 }
 
+void GM_Gameworld::actionLook(const glictPos& pos)
+{
+	printf("It's a look\n");
+	const Thing* thing;
+	uint32_t x,y,z;
+	int stackpos;
+
+	m_mapui.lookAtItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos);
+	if(stackpos != -1){
+		m_protocol->sendLookItem(Position(x,y,z), thing->getID(), stackpos);
+	}
+}
+
+void GM_Gameworld::actionUse(const glictPos& pos)
+{
+	const Thing* thing;
+	uint32_t x,y,z;
+	int stackpos;
+	bool isextended;
+
+	m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
+
+	if(stackpos != -1){
+		if(!isextended){
+			m_protocol->sendUseItem(Position(x,y,z), thing->getID(), stackpos );
+		}
+		else{
+			beginExtendedUse(thing, stackpos, Position(x,y,z));
+		}
+	}
+}
+
+void GM_Gameworld::beginExtendedUse(const Thing* thing, int stackpos, const Position& pos)
+{
+	m_extendedthing = thing;
+	m_extendedstackpos = stackpos;
+	m_extendedpos = pos;
+	SDL_SetCursor(g_engine->m_cursorUse);
+}
+
+void GM_Gameworld::performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos)
+{
+	if(deststackpos != -1)
+		m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
+				destpos, destthing->getID(), deststackpos);
+
+	SDL_SetCursor(g_engine->m_cursorBasic);
+	m_extendedthing = NULL;
+}
+
+void GM_Gameworld::actionAttack(const glictPos& pos)
+{
+	const Creature* creature = NULL;
+	m_mapui.attackCreature((int)pos.x, (int)pos.y, creature);
+	if(creature != NULL) {
+		if(creature->getID() != GlobalVariables::getPlayerID()) {
+			if(creature->getID() == GlobalVariables::getAttackID()){
+				m_protocol->sendAttackCreature(0);
+			}
+			else{
+				m_protocol->sendAttackCreature(creature->getID());
+				GlobalVariables::setAttackID(creature->getID());
+			}
+		}
+	}
+}
+
+void GM_Gameworld::actionUseWith(const glictPos& pos)
+{
+	const Thing* thing;
+	uint32_t x,y,z;
+	int stackpos;
+	bool isextended;
+
+	m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
+	performExtendedUse(Position(x,y,z), thing, stackpos);
+}
+
+void GM_Gameworld::actionWalk(const glictPos& pos)
+{
+	//
+}
+
 void GM_Gameworld::mouseEvent(SDL_Event& event)
 {
 	glictPos pos;
@@ -531,178 +610,147 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 
 	desktop.TransformScreenCoords(&pos);
 
-
-
     if (event.type == SDL_MOUSEMOTION) {
         #if (GLICT_APIREV >= 67)
-        //printf("Casting mousemove\n");
         desktop.CastEvent(GLICT_MOUSEMOVE, &pos, 0);
         #else
         #warning We need GLICT apirev 67 or greater to support basic movable windows.
         #endif
-        if (m_draggingPrep && !m_dragging) {
-            //printf("Move %g %g compared to %g %g\n", pos.x, pos.y, m_dragBegin.x, m_dragBegin.y);
-            if (abs(int(pos.x - m_dragBegin.x)) > 2 || abs(int(pos.y - m_dragBegin.y)) > 2) {
-                uint32_t x,y,z;
-                m_dragging = true; // TODO (ivucica#5#) kick out m_dragging; m_dragThing can be NULL when we're not draggging
+        if(m_draggingPrep && !m_dragging){
+            if(abs(int(pos.x - m_dragBegin.x)) > 2 || abs(int(pos.y - m_dragBegin.y)) > 2) {
+                uint32_t x, y, z;
+                m_dragging = true;
                 SDL_SetCursor(g_engine->m_cursorUse);
-
-                if (m_draggingInv == SLOT_NONE && (int)m_draggingCtrId == -1){ // not throwing from inventory nor from a container?
-                    m_mapui.dragThing((int)m_dragBegin.x, (int)m_dragBegin.y, m_dragThing, x,y,z, m_dragStackPos);
-                    m_dragPos = Position(x,y,z);
-                }
-                else if (m_draggingInv != SLOT_NONE){ // throwing from inventory
-                    m_dragPos = Position(0xFFFF, m_draggingInv, 0);
-                } else {
-                    m_dragPos = Position(0xFFFF, m_draggingCtrId | 0x40, m_draggingCtrSlot);
-                }
-
             }
         }
-        if (m_popup) {
+        if(m_popup){
             m_popup->mouseOver(pos.x,pos.y);
         }
-    } else if (event.button.button == SDL_BUTTON_LEFT) {
+    }
+    else if(event.button.button == SDL_BUTTON_LEFT) {
         g_lastmousebutton = event.button.button;
-        if (m_popup && !m_popup->wantsDeath()) { // handle popup menu before attempting anything else
+        if(m_popup && !m_popup->wantsDeath()) { // handle popup menu before attempting anything else
             printf("Handling left mousedn on popup\n");
 
-            if (event.button.state == SDL_RELEASED)
+            if(event.button.state == SDL_RELEASED)
                 m_popup->mouseClick(pos.x, pos.y);
-        } else
-        if (event.button.state == SDL_PRESSED){
-            if (desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
+        }
+        else if(event.button.state == SDL_PRESSED){
+            if(desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
                 // just ignore
-
-            } else if (isExtendedUsing()){ // otherwise handle as appropriate
-                printf("Performing extended use\n");
-                const Thing* thing;
-                uint32_t x,y,z;
-                int stackpos;
-                bool isextended;
-
-                m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
-                performExtendedUse(Position(x,y,z), thing, stackpos);
-
-            } else if (SDL_GetModState() & KMOD_ALT) {
-                printf("Attacking!\n");
-                const Creature* creature = NULL;
-                m_mapui.attackCreature((int)pos.x, (int)pos.y, creature);
-                if(creature != NULL) {
-                    if(creature->getID() != GlobalVariables::getPlayerID()) {
-                        m_protocol->sendAttackCreature(creature->getID());
-                        GlobalVariables::setAttackID(creature->getID());
-                    }
-                }
-            } else if (SDL_GetModState() & KMOD_CTRL) {
-                printf("It's a use\n");
-                const Thing* thing;
-                uint32_t x,y,z;
-                int stackpos;
-                bool isextended;
-
-                m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
-
-                if(stackpos != -1){
-                    if(!isextended){
-                        printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
-                        m_protocol->sendUseItem(Position(x,y,z), thing->getID(), stackpos );
-                    } else {
-                        beginExtendedUse(thing,stackpos,Position(x,y,z));
-                    }
-                }
-            } else if (SDL_GetModState() & KMOD_SHIFT) {
-                printf("It's a look\n");
-                const Thing* thing;
-                uint32_t x,y,z;
-                int stackpos;
-
-                m_mapui.lookAtItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos);
-                if (stackpos != -1) {
-                    printf("Click on %d %d %d, on stackpos %d, on id %d\n", x, y, z, stackpos, thing->getID());
-                    m_protocol->sendLookItem(Position(x,y,z), thing->getID(), stackpos );
-                }
-            } else {
-                // just remember where we began the drag, for later comparison
-                m_dragBegin = pos;
-                m_draggingPrep = true;
-                m_draggingInv = SLOT_NONE; // we're NOT dragging from inventory
-                m_draggingCtrId = m_draggingCtrSlot = -1;
             }
-        } else if (event.button.state == SDL_RELEASED) {
+            else{
+                // just remember where we began the drag, for later comparison
+                uint32_t x, y, z;
+                int stackpos;
+                const Thing* thing;
+                m_mapui.dragThing(pos.x, pos.y, thing, x, y, z, stackpos);
+
+                if(thing && thing->getItem()){
+                	const Item* item = thing->getItem();
+					startDrag(Position(x, y, z), stackpos, item->getID(), item->getCount());
+                }
+            }
+        }
+        else if(event.button.state == SDL_RELEASED){
             if (desktop.CastEvent(GLICT_MOUSEUP, &pos, 0)){
                 // ignore if it was handled by glict
-                dismissDrag();
-            } else {
-                // TODO (nfries88): drag items
-                // TODO (nfries88): walk by clicking
-                if (m_dragging){
-
-                    uint32_t dx,dy,dz;
-                    m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz);
-                    Position dest(dx, dy, dz);
-					dragComplete(dest);
-                    dismissDrag();
-                }
-                dismissDrag();
-                m_draggingPrep = false;
             }
-        } else {
+            else if(m_dragging){
+				uint32_t dx, dy, dz;
+				m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz);
+				Position dest(dx, dy, dz);
+				dragComplete(dest);
+			}
+			else if(isExtendedUsing()){ // otherwise handle as appropriate
+				actionUseWith(pos);
+            }
+            else if(options.classiccontrol == 0 && SDL_GetModState() & KMOD_ALT){
+				actionAttack(pos);
+            }
+			else if(options.classiccontrol == 0 && SDL_GetModState() & KMOD_CTRL){
+				actionUse(pos);
+            }
+            else if(options.classiccontrol == 1 && SDL_GetModState() & KMOD_CTRL){
+				m_mapui.handlePopup((int)pos.x, (int)pos.y);
+            }
+            else if (SDL_GetModState() & KMOD_SHIFT){
+                actionLook(pos);
+            }
+            else{
+				actionWalk(pos);
+            }
+            dismissDrag();
+        }
+        else{
             printf("unknown event - %d\n", event.button.state);
         }
-
-    } else if (event.button.button == SDL_BUTTON_RIGHT) {
+    }
+    else if (event.button.button == SDL_BUTTON_RIGHT) {
         g_lastmousebutton = event.button.button;
-        if (event.button.state == SDL_PRESSED){
-
-            // just ignore
-
-        } else
-        if (event.button.state == SDL_RELEASED) {
+        if(event.button.state == SDL_PRESSED){
+			if(desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){
+                // just ignore
+            }
+            else if(options.classiccontrol == 1 &&
+				!((SDL_GetModState() & KMOD_CTRL) || (SDL_GetModState() & KMOD_SHIFT))){
+            	uint32_t retx, rety, retz;
+				Tile* tile = m_mapui.translateClickToTile(pos.x, pos.y, retx, rety, retz);
+				if(tile){
+					if(tile->getTopCreature()){
+						actionAttack(pos);
+					}
+					else{
+						actionUse(pos);
+					}
+					m_showPopup = false;
+				}
+            }
+        }
+        else if (event.button.state == SDL_RELEASED) {
             bool hadpopup = (m_popup && !m_popup->wantsDeath());
-            if (!desktop.CastEvent(GLICT_MOUSECLICK, &pos, 0)) {
+            if(desktop.CastEvent(GLICT_MOUSECLICK, &pos, 0)){
+            	//ignore
+			}
+			else if(options.classiccontrol == 0 && SDL_GetModState() & KMOD_ALT){
+				actionAttack(pos);
+			}
+			else if(options.classiccontrol == 0 && SDL_GetModState() & KMOD_CTRL){
+				actionUse(pos);
+            }
+            else if(SDL_GetModState() & KMOD_SHIFT){
+                actionLook(pos);
+            }
+			else{
                 m_mapui.handlePopup((int)pos.x, (int)pos.y);
             }
 
-            if (hadpopup) { // if we have a popup AND it existed even before casting of click
-                performPopup(NULL,NULL,NULL); // destroy it please
+            if(hadpopup){ // if we have a popup AND it existed even before casting of click
+                performPopup(NULL, NULL, NULL); // destroy it please
             }
-
         }
     }
-
 	// Scene();
-
 }
-void GM_Gameworld::performPopup(PopupProducerCallback cb,void*owner,void*arg) {
-    if (!m_popup) {
-        if (!cb)
+
+void GM_Gameworld::performPopup(PopupProducerCallback cb, void*owner, void*arg) {
+    if(!m_popup){
+        if(!cb)
             return;
+		if(!m_showPopup){
+			m_showPopup = true;
+			return;
+		}
         m_popup = new Popup();
         desktop.AddObject(m_popup->getGlictList());
-        if (cb)
+        if(cb)
             cb(m_popup,owner,arg);
-        /*m_popup->addItem("Test", tmp);
-        m_popup->addItem("Test 123", tmp);*/
+
         m_popup->getGlictList()->SetPos(ptrx,ptry);
-    } else {
+    }
+    else{
         m_popup->prepareToDie();
     }
-}
-
-void GM_Gameworld::beginExtendedUse(const Thing* thing, int stackpos, const Position& pos) {
-    m_extendedthing = thing;
-    m_extendedstackpos = stackpos;
-    m_extendedpos = pos;
-    SDL_SetCursor(g_engine->m_cursorUse);
-}
-
-void GM_Gameworld::performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos) {
-    if (deststackpos != -1)
-        m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
-                                    destpos, destthing->getID(), deststackpos);
-    SDL_SetCursor(g_engine->m_cursorBasic);
-    m_extendedthing = NULL;
 }
 
 ////////////// CONNECTION EVENTS //////////////////////
@@ -980,63 +1028,32 @@ void GM_Gameworld::onUpdatePlayerCash(uint32_t newcash) {
     winShop.setCash(newcash);
 }
 
-void GM_Gameworld::setDragInv(slots_t slotid) {
-    m_draggingInv = slotid;
-    Item* item = Inventory::getInstance().getItem(slotid);
-    if(item != NULL) {
-        printf("Dragging inv begins here %d %d\n", ptrx, ptry);
-        m_dragging = false;
-        m_draggingPrep = true;
-        m_draggingCtrId = m_draggingCtrSlot = -1;
-        m_dragBegin.x = ptrx;
-        m_dragBegin.y = ptry;
-        m_dragThing = item;
-        m_dragPos = Position(0xFFFF, slotid, 0);
-        m_dragStackPos = 0;
-    }
-}
 
-void GM_Gameworld::setDragCtr(uint32_t containerid, uint32_t slotid) {
-
-    m_draggingCtrId = containerid;
-    m_draggingCtrSlot = slotid;
-    Item* item = Containers::getInstance().getContainer(containerid)->getItem(slotid);
-    if(item != NULL) {
-        printf("Dragging ctr begins here %d %d\n", ptrx, ptry);
-        m_dragging = false;
-        m_draggingPrep = true;
-        m_draggingInv = SLOT_NONE;
-        m_dragBegin.x = ptrx;
-        m_dragBegin.y = ptry;
-        m_dragThing = item;
-        m_dragPos = Position(0xFFFF, containerid | 0x40, slotid);
-        m_dragStackPos = slotid;
-    }
-}
-
-void GM_Gameworld::dragComplete(Position& toPos)
+void GM_Gameworld::startDrag(const Position& pos, int stackPos, uint32_t itemid, uint32_t count)
 {
-	if (m_dragThing)
-	{
-		const Item* dragItem = m_dragThing->getItem();
-		uint8_t count = 1;
-		bool throwDialog = false;
+	m_dragging = false;
+	m_draggingPrep = true;
+	m_dragBegin.x = ptrx;
+	m_dragBegin.y = ptry;
+	//
+	m_dragPos = pos;
+	m_dragStackPos = stackPos;
+	m_dragThingId = itemid;
+	m_dragThingCount = count;
+}
 
-		if(dragItem && dragItem->isStackable())
-		{
-			if(SDL_GetModState() & KMOD_CTRL)
-				count = dragItem->getCount();
-			else if(dragItem->getCount() > 1)
-				throwDialog = true;
+void GM_Gameworld::dragComplete(const Position& toPos)
+{
+	const ObjectType* type = Objects::getInstance()->getItemType(m_dragThingId);
+	if(type){
+		if(type->stackable && !(SDL_GetModState() & KMOD_CTRL)){
+			winMove.open(m_dragThingId, m_dragThingCount, m_dragPos, toPos, m_dragStackPos);
 		}
-		if(!throwDialog) {
-			m_protocol->sendThrow(m_dragPos, m_dragThing->getID(), m_dragStackPos, toPos, count);
-		}
-		else {
-			winMove.open(dragItem->getID(), dragItem->getCount(), m_dragPos, toPos, m_dragStackPos);
+		else{
+			m_protocol->sendThrow(m_dragPos, m_dragThingId, m_dragStackPos, toPos, m_dragThingCount);
 		}
 	}
-
+	dismissDrag();
 }
 
 void GM_Gameworld::showTutorial(uint8_t id) {
@@ -1045,7 +1062,7 @@ void GM_Gameworld::showTutorial(uint8_t id) {
 }
 
 
-void GM_Gameworld::msgBox (const char* mbox, const char* title, glictContainer* focusondismiss)
+void GM_Gameworld::msgBox(const char* mbox, const char* title, glictContainer* focusondismiss)
 {
 	glictSize s;
 	glictMessageBox *mb;
@@ -1072,7 +1089,6 @@ void GM_Gameworld::msgBox (const char* mbox, const char* title, glictContainer* 
 	mb->SetOnDismiss(GM_Gameworld::MBOnDismiss);
 
 	mb->SetCustomData(focusondismiss);
-
 }
 
 void GM_Gameworld::MBOnDismiss(glictPos* pos, glictContainer* caller)

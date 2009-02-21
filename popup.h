@@ -46,8 +46,6 @@
 #include <GLICT/list.h>
 
 
-
-
 typedef glictPanel popupItemGUIType;
 class Popup {
 

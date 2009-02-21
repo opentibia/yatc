@@ -35,19 +35,7 @@ public:
 
 	~winContainer_t();
 
-	inline uint32_t getSlotId(glictContainer* pnl)
-	{
-		uint32_t slot_id = 0;
-		for(PanelList::iterator it = pnlItems.begin(); it != pnlItems.end(); ++it,
-			++slot_id)
-		{
-			if((*it) == pnl) break;
-		}
-		return slot_id;
-	}
-
     static void OnClose(glictPos* pos, glictContainer *caller);
-
 
 	glictWindow window;
 	glictPanel winpanel;
@@ -59,12 +47,6 @@ public:
 	Container* container;
 	uint32_t containerId;
 
-	static void containerItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
-	static void containerItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
-    static void containerItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
-	static void containerItemOnMouseUp(glictPos *relmousepos, glictContainer* callerclass);
-    static void containerItemMakePopup(Popup*popup,void*owner,void*arg);
-
     glictButton closebtn;
     glictButton btnCollapse;
     glictPanel pnlIcon;
@@ -73,10 +55,6 @@ public:
 
     static void containerIconOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
 
-
-    static void onLookAt(Popup::Item*);
-    static void onUse(Popup::Item*);
-    static void onTrade(Popup::Item*);
 };
 
 #endif

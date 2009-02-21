@@ -19,36 +19,51 @@
 //////////////////////////////////////////////////////////////////////
 
 
-#ifndef __YATC_INVENTORY_H__
-#define __YATC_INVENTORY_H__
+#ifndef __UI_ITEM_PANEL_H
+#define __UI_ITEM_PANEL_H
 
-#include "../stdinttypes.h"
-#include "enums.h"
-#include "itemcontainer.h"
 
+#include <GLICT/panel.h>
+#include "../gamecontent/position.h"
+#include "../popup.h"
+
+class ItemContainer;
 class Item;
 
-class Inventory : public ItemContainer
+class ItemPanel : public glictPanel
 {
 public:
-	~Inventory();
+	ItemPanel(ItemContainer* container, uint32_t slot, const Position& pos);
+	virtual ~ItemPanel();
 
-	static Inventory& getInstance() {
-		static Inventory instance;
-		return instance;
+	void setUIBackground(int x, int y)
+	{
+		m_uiBackx = x;
+		m_uiBacky = y;
+		m_uiBack = true;
 	}
 
-	void clear();
-
-	virtual Item* getItem(uint32_t slot);
-	bool addItem(uint32_t slot, Item* item);
-	bool removeItem(uint32_t slot);
-
-
 protected:
-	Inventory();
 
-	Item* m_inventory[SLOT_LAST];
+	static void itemPanelOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
+	static void itemPanelOnClick(glictPos* relmousepos, glictContainer* callerclass);
+    static void itemPanelOnMouseDown(glictPos* relmousepos, glictContainer* callerclass);
+	static void itemPanelOnMouseUp(glictPos* relmousepos, glictContainer* callerclass);
+    static void itemPanelMakePopup(Popup* popup, void* owner, void* arg);
+
+    static void onLookAt(Popup::Item*);
+    static void onUse(Popup::Item*);
+    static void onTrade(Popup::Item*);
+
+	Item* getItem();
+
+private:
+	int m_uiBackx, m_uiBacky;
+	bool m_uiBack;
+
+	ItemContainer* m_container;
+	uint32_t m_slot;
+	Position m_pos;
 };
 
 

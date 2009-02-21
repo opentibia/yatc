@@ -21,6 +21,7 @@
 #include "uicontainer.h"
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
+#include "itempanel.h"
 
 
 extern int g_lastmousebutton;
@@ -82,20 +83,10 @@ winContainer_t::winContainer_t(Container* _container, uint32_t cid) {
 
     for(uint32_t i = 0; i != container->getCapacity(); ++i)
     {
-        glictPanel* panel = new glictPanel;
+        glictPanel* panel = new ItemPanel(container, i, Position(0xFFFF, containerId | 0x40, i));
         panel->SetPos(5 + ((i % 4) * 36), 4 + (std::floor(i / 4) * 36));
-        panel->SetWidth(32);
-        panel->SetHeight(32);
-        panel->SetBGColor(.1,.1,.1,1);
-        panel->SetCaption("");
-        panel->SetCustomData(this);
-        panel->SetOnPaint(winContainer_t::containerItemOnPaint);
-        panel->SetOnClick(winContainer_t::containerItemOnClick);
-        panel->SetOnMouseDown(winContainer_t::containerItemOnMouseDown);
-        panel->SetOnMouseUp(winContainer_t::containerItemOnMouseUp);
 
         panel->SetSkin(&g_skin.inv);
-
         winpanel.AddObject(panel);
         pnlItems.push_back(panel);
     }
@@ -121,96 +112,6 @@ void winContainer_t::OnClose(glictPos* pos, glictContainer *caller) {
     gw->m_protocol->sendCloseContainer(window->containerId);
 }
 
-void winContainer_t::containerItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
-{
-    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-	winContainer_t* window = (winContainer_t*)caller->GetCustomData();
-	uint32_t slot_id = window->getSlotId(caller);
-	Item* item = window->container->getItem(slot_id);
-
-    if(ptrx > clipped->left && ptrx < clipped->right && ptry > clipped->top && ptry < clipped->bottom && gw->isDragging())
-        g_engine->drawRectangleLines(clipped->left, clipped->top, clipped->right-clipped->left, clipped->bottom-clipped->top, oRGBA(255,255,255,255));
-
-	if(item != NULL)
-	{
-		item->Blit((int)real->left, (int)real->top, 1.f);
-		if (item->getCount()>1) {
-            std::stringstream s;
-            s << (int)item->getCount();
-            g_engine->drawText(s.str().c_str(), "gamefont", (int)real->right - g_engine->sizeText(s.str().c_str(), "gamefont") - 2, (int)real->bottom - 12, TEXTCOLOR_WHITE);
-        }
-	}
-}
-
-void winContainer_t::containerItemOnClick(glictPos *relmousepos, glictContainer* callerclass)
-{
-	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
-	uint32_t slot_id = window->getSlotId(callerclass);
-	Item* item = window->container->getItem(slot_id);
-    Position p(0xFFFF, window->containerId | 0x40, slot_id);
-    GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-
-
-    if (g_lastmousebutton == SDL_BUTTON_RIGHT) {
-        gameclass->performPopup(winContainer_t::containerItemMakePopup,window,(void*)slot_id);
-        return;
-    }
-
-
-    if (gameclass->isExtendedUsing()) {
-        gameclass->performExtendedUse(p, item, 0);
-    } else
-	if(SDL_GetModState() & KMOD_CTRL && item) {
-
-	    if (!item->isExtendedUseable()) {
-            gameclass->m_protocol->sendUseItem (p, item->getID(), slot_id);
-        } else {
-            gameclass->beginExtendedUse(item, slot_id, p);
-        }
-	}
-	else if(SDL_GetModState() & KMOD_SHIFT && item) {
-		GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-		gameclass->m_protocol->sendLookItem(p, item->getID(), slot_id);
-	}
-}
-
-
-void winContainer_t::containerItemOnMouseUp(glictPos *relmousepos,
-	glictContainer* callerclass)
-{
-    if (g_lastmousebutton != SDL_BUTTON_LEFT)
-        return;
-
-    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-
-	winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
-    uint32_t slot_id = window->getSlotId(callerclass);
-//	Item* item = window->container->getItem(slot_id);
-	uint32_t id = window->container->getId();
-
-	if (gw->isDragging())
-	{
-		Position dest(0xFFFF, id | 0x40, slot_id);
-	    gw->dragComplete(dest);
-        gw->dismissDrag();
-	}
-}
-
-void winContainer_t::containerItemOnMouseDown(glictPos *relmousepos,
-	glictContainer* callerclass)
-{
-    if (g_lastmousebutton != SDL_BUTTON_LEFT)
-        return;
-    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-
-    winContainer_t* window = (winContainer_t*)callerclass->GetCustomData();
-    uint32_t slot_id = window->getSlotId(callerclass);
-	uint32_t id = window->container->getId();
-
-    gw->setDragCtr(id, slot_id);
-
-}
-
 void winContainer_t::containerIconOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
 	Item* item = (Item*)caller->GetCustomData();
@@ -218,62 +119,3 @@ void winContainer_t::containerIconOnPaint(glictRect *real, glictRect *clipped, g
 	ObjectType* t = Objects::getInstance()->getItemType(item->getID());
 	item->Blit((int)real->left, (int)real->top, 12./(32.f * MAX(t->height, t->width)));
 }
-
-
-void winContainer_t::containerItemMakePopup(Popup*popup,void*owner,void*arg){
-    winContainer_t* p = (winContainer_t*)owner;
-    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-    slots_t slotid = ((slots_t)(VOIDP2INT(arg)));
-    Item* item = p->container->getItem(slotid);
-
-    if (!item) {
-        popup->prepareToDie();
-        return;
-    }
-
-    std::stringstream look,use,trade;
-    look << gettext("Look") << " (Shift)";
-    if (item->isExtendedUseable())
-        use << gettext("Use with...") << " (Ctrl)";
-    else
-        if (Objects::getInstance()->getItemType(item->getID())->container)
-            use << gettext("Open") << " (Ctrl)";
-        else
-            use << gettext("Use") << " (Ctrl)";
-
-
-    trade << gettext("Trade with") << " ...";
-    popup->setOwner(p);
-    popup->addItem(look.str(),onLookAt,(void*)slotid);
-    popup->addItem(use.str(),onUse,(void*)slotid);
-    popup->addItem("-",NULL,NULL);
-    popup->addItem(trade.str(),onTrade,(void*)slotid);
-}
-
-void winContainer_t::onLookAt(Popup::Item* pi){
-    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-    winContainer_t *c = (winContainer_t *)pi->parent->getOwner();
-    slots_t slotid = ((slots_t)(VOIDP2INT(pi->data)));
-    Position p(0xFFFF, c->containerId | 0x40, slotid);
-    Item* item = c->container->getItem(slotid);
-
-    gw->m_protocol->sendLookItem(p,item->getID(), 0);
-}
-void winContainer_t::onUse(Popup::Item* pi){
-    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-    winContainer_t *c = (winContainer_t *)pi->parent->getOwner();
-    slots_t slotid = ((slots_t)(VOIDP2INT(pi->data)));
-    Position p(0xFFFF, c->containerId | 0x40, slotid);
-    Item* item = c->container->getItem(slotid);
-
-    if (!item->isExtendedUseable()) {
-        gw->m_protocol->sendUseItem (p, item->getID(), 0);
-    } else {
-        gw->beginExtendedUse(item, 0, p);
-    }
-}
-void winContainer_t::onTrade(Popup::Item*){
-    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
-}
-

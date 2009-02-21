@@ -37,58 +37,12 @@
 #endif
 
 #include "popup.h"
+#include "itempanel.h"
+
 class pnlInventory_t {
 public:
-	pnlInventory_t() {
-		static int posInvSlots[] = {
-            45, 3,  // helmet
-            8, 17,  // necklace
-            83, 17, // backpack
-            45, 40, // armor
-            83, 54, // right weapon
-            8, 54,  // left weapon
-            45, 77, // legs
-            45, 115,// feet
-            8, 91,  // ring
-            83, 91};// hand
-
-		panel.SetHeight(150);
-		panel.SetWidth(150);
-        #if (GLICT_APIREV >= 98)
-		panel.SetDraggable(true);
-		panel.SetSkin(&g_skin.background);
-		panel.SetFocusable(true);
-		#else
-		#warning Inventory is not properly drawn until you upgrade to GLICT 98+
-        panel.SetCaption(gettext("Inventory"));
-		#endif
-
-		for (int i = 0; i < 10; i++) {
-			panel.AddObject(pnlItem+i);
-			pnlItem[i].SetPos(posInvSlots[i*2], posInvSlots[i*2+1]);
-			pnlItem[i].SetHeight(32);
-			pnlItem[i].SetWidth(32);
-			pnlItem[i].SetBGColor(.1,.1,.1,1);
-			pnlItem[i].SetCaption("");
-			pnlItem[i].SetCustomData(pnlItem);
-			pnlItem[i].SetOnPaint(pnlInventory_t::inventoryItemOnPaint);
-//			pnlItem[i].SetBGActiveness(true);
-			pnlItem[i].SetOnClick(pnlInventory_t::inventoryItemOnClick);
-			pnlItem[i].SetOnMouseUp(pnlInventory_t::inventoryItemOnMouseUp);
-			pnlItem[i].SetOnMouseDown(pnlInventory_t::inventoryItemOnMouseDown);
-			pnlItem[i].SetSkin(&g_skin.inv);
-		}
-	}
-
-	static void inventoryItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
-	static void inventoryItemOnClick(glictPos *relmousepos, glictContainer* callerclass);
-	static void inventoryItemOnMouseUp(glictPos *relmousepos, glictContainer* callerclass);
-	static void inventoryItemOnMouseDown(glictPos *relmousepos, glictContainer* callerclass);
-    static void inventoryItemMakePopup(Popup*popup,void*owner,void*arg);
-
-    static void onLookAt(Popup::Item*);
-    static void onUse(Popup::Item*);
-    static void onTrade(Popup::Item*);
+	pnlInventory_t();
+	~pnlInventory_t();
 
 #if (GLICT_APIREV >= 98)
     glictPanel panel; // 170x34
@@ -96,8 +50,7 @@ public:
 	glictWindow panel __attribute__((deprecated));
 #endif
 
-	glictPanel pnlItem[10];
-
+	ItemPanel* pnlItem[10];
 };
 
 
