@@ -19,37 +19,18 @@
 //////////////////////////////////////////////////////////////////////
 
 
-#ifndef __YATC_INVENTORY_H__
-#define __YATC_INVENTORY_H__
-
-#include "../stdinttypes.h"
-#include "enums.h"
-#include "itemcontainer.h"
+#ifndef __YATC_ITEMCONTAINER_H__
+#define __YATC_ITEMCONTAINER_H__
 
 class Item;
 
-class Inventory : public ItemContainer
-{
-public:
-	~Inventory();
-
-	static Inventory& getInstance() {
-		static Inventory instance;
-		return instance;
-	}
-
-	void clear();
-
-	virtual Item* getItem(uint32_t slot);
-	bool addItem(uint32_t slot, Item* item);
-	bool removeItem(uint32_t slot);
-
-
+class ItemContainer{
 protected:
-	Inventory();
+	ItemContainer(){};
+public:
+	virtual ~ItemContainer(){};
 
-	Item* m_inventory[SLOT_LAST];
+	virtual Item* getItem(uint32_t slot) = 0;
 };
-
 
 #endif

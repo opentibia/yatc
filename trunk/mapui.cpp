@@ -476,8 +476,7 @@ void MapUI::lookAtItem(Tile* tile, const Thing* &thing, int &stackpos)
 
 }
 
-
-void MapUI::dragThing(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos)
+void MapUI::dragThing(int x, int y, const Thing*& thing, uint32_t& retx, uint32_t& rety, uint32_t& retz, int& stackpos)
 {
     Position p;
 	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
@@ -491,7 +490,6 @@ void MapUI::dragThing(int x, int y, const Thing* &thing, uint32_t &retx, uint32_
 	stackpos = tile->getUseStackpos();
 	// get thing that we clicked on
     thing = tile->getThingByStackPos(stackpos);
-
 }
 
 Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, uint32_t &retz)

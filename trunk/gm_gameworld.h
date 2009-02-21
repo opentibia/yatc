@@ -84,28 +84,22 @@ public:
 	void openTradeWindow(bool ack);
 	void closeTradeWindow();
 
-    void beginExtendedUse(const Thing* thing, int stackpos, const Position& pos);
-    void performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos);
     bool isExtendedUsing() const { return (m_extendedthing != NULL); }
 
 	bool isDragging() const {return m_dragging;}
 	void dismissDrag() {
-	    if (m_dragging)
+	    if(m_dragging){
             SDL_SetCursor(g_engine->m_cursorBasic);
+	    }
         m_dragging = false;
         m_draggingPrep = false;
     }
-	void getDragData(const Thing*& dragThing, Position& dragPos, int& dragStackPos) const {
-	    dragThing = m_dragThing;
-	    dragPos = m_dragPos;
-	    dragStackPos = m_dragStackPos;
-	}
-	void setDragInv(slots_t slot);
-	void setDragCtr(uint32_t containerid, uint32_t slotid);
-	void dragComplete(Position& toPos);
+
+	void startDrag(const Position& pos, int stackPos, uint32_t itemid, uint32_t count);
+	void dragComplete(const Position& toPos);
 
     void performPopup(PopupProducerCallback cb,void*owner,void*arg);
-
+    void doNotShowPopup(){m_showPopup = false;}
 
     Console* getDefaultConsole() { return *getDefaultConsole_it(); }
     Console* findConsole(uint32_t channelid) { return *findConsole_it(channelid); }
@@ -113,7 +107,16 @@ public:
     Console* getActiveConsole() const {return m_activeconsole;}
     void setActiveConsole(Console* i);
 
+	void beginExtendedUse(const Thing* thing, int stackpos, const Position& pos);
+	void performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos);
+
 protected:
+
+	void actionLook(const glictPos& pos);
+	void actionUse(const glictPos& pos);
+	void actionAttack(const glictPos& pos);
+	void actionUseWith(const glictPos& pos);
+	void actionWalk(const glictPos& pos);
 
 private:
     std::vector<Console*>::iterator getDefaultConsole_it() { return m_consoles.begin(); }
@@ -165,30 +168,26 @@ private:
     glictPos m_dragBegin;
     bool m_draggingPrep;
     bool m_dragging;
-
-
-    const Thing* m_dragThing;
+    uint32_t m_dragThingId;
+    uint32_t m_dragThingCount;
     Position m_dragPos;
     int m_dragStackPos;
-
-    slots_t m_draggingInv;
-    int m_draggingCtrId, m_draggingCtrSlot;
 
     Automap m_automap;
 
 	ProtocolGame* m_protocol;
-	friend class pnlInventory_t;
-	friend class winContainer_t;
 	friend class winItemMove_t;
 	friend class winShop_t;
 	friend class winTrade_t;
 	friend class winOutfit_t;
 	friend class MapUI;
+	friend class winContainer_t;
+	friend class ItemPanel;
 
 	MapUI m_mapui;
 
     Popup* m_popup;
-
+    bool m_showPopup;
 };
 
 #endif

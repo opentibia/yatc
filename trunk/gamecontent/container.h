@@ -24,15 +24,16 @@
 #include "../objects.h"
 #include <string>
 #include <list>
+#include "itemcontainer.h"
 
 class Item;
 
-class Container
+class Container : public ItemContainer
 {
 public:
 	~Container();
 
-	Item* getItem(uint32_t slot);
+	virtual Item* getItem(uint32_t slot);
 	bool addItem(Item* item);
     bool addItemInitial(Item* item);
 	bool removeItem(uint32_t slot);

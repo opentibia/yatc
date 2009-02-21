@@ -51,8 +51,6 @@ void Popup::addItem(const std::string &txt, Callback_t cb, void* data) {
 
 }
 
-
-
 void Popup::mouseOver(float x, float y) {
     for (std::vector<Popup::Item*>::iterator it = items.begin(); it != items.end(); it++) {
         Popup::Item* pi = *it;
