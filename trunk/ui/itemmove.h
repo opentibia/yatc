@@ -150,11 +150,6 @@ public:
 	{
 		winItemMove_t* witm = (winItemMove_t*)(caller->GetCustomData());
 		witm->dispItem->Blit((int)real->left, (int)real->top);
-        if(witm->dispItem->getCount() > 1) {
-            std::stringstream s;
-            s << (int)witm->dispItem->getCount();
-            g_engine->drawText(s.str().c_str(), "gamefont", (int)real->right - g_engine->sizeText(s.str().c_str(), "gamefont") - 2, (int)real->bottom - 12, TEXTCOLOR_WHITE);
-        }
 	}
 
 	static void moveItem(glictPos* pos, glictContainer *caller);

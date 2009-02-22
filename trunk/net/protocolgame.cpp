@@ -685,10 +685,10 @@ bool ProtocolGame::parseSafeTradeRequest(NetworkMessage& msg, bool ack)
 
     Container* container = NULL;
     if(ack){
-        Containers::getInstance().newTradeContainerAck();
+        container = Containers::getInstance().newTradeContainerAck();
     }
     else{
-        Containers::getInstance().newTradeContainer();
+        container = Containers::getInstance().newTradeContainer();
     }
 
     if(!container){
@@ -704,7 +704,7 @@ bool ProtocolGame::parseSafeTradeRequest(NetworkMessage& msg, bool ack)
             RAISE_PROTOCOL_ERROR("Trade open - !item");
         }
 
-        if(!container->addItem(item)){
+        if(!container->addItemInitial(item)){
             RAISE_PROTOCOL_ERROR("Container add - addItem");
         }
     }
@@ -987,6 +987,7 @@ bool ProtocolGame::parseCreatureSpeak(NetworkMessage& msg)
 		case SPEAK_CHANNEL_R2:
 		case SPEAK_CHANNEL_O:
 		case SPEAK_CHANNEL_Y:
+		case SPEAK_CHANNEL_W:
 		{
 			MSG_READ_U16(channelID);
 			MSG_READ_STRING(text);

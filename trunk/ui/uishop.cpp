@@ -165,11 +165,6 @@ void winShop_t::drawObject(glictRect *real, glictRect *clipped, glictContainer *
     winShop_t* ws = (winShop_t*)(caller->GetCustomData());
     if (ws->dispItem) {
         ws->dispItem->Blit((int)real->left, (int)real->top);
-        if (ws->dispItem->getCount()>1) {
-            std::stringstream s;
-            s << (int)ws->dispItem->getCount();
-            g_engine->drawText(s.str().c_str(), "gamefont", (int)real->right - g_engine->sizeText(s.str().c_str(), "gamefont") - 2, (int)real->bottom - 12, TEXTCOLOR_WHITE);
-        }
     }
 }
 
@@ -213,8 +208,6 @@ void winShop_t::destroyList()
 
     currentpnl = NULL;
 }
-
-
 
 void winShop_t::generateList(const std::list<ShopItem>& list)
 {
@@ -395,6 +388,7 @@ void winShop_t::OnBuyClick(glictPos* pos, glictContainer *caller)
     if (wst->lsiBuy.size())
         OnListbox(NULL, *wst->lsiBuy.begin());
 }
+
 void winShop_t::OnSellClick(glictPos* pos, glictContainer *caller)
 {
     winShop_t *wst = (winShop_t*)caller->GetCustomData();
@@ -451,6 +445,7 @@ void winShop_t::OnClose(glictPos* pos, glictContainer *caller)
     gw->m_protocol->sendShopClose();
     window->window.SetVisible(false);
 }
+
 void winShop_t::setCash(uint32_t newcash)
 {
     cash = newcash;

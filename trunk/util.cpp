@@ -167,16 +167,16 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 	#ifndef WIN32 // if these aren't windows, it's probably a unioxid; if not, we'll port later
 	if (mode[0] == 'w' || mode[0] == 'a') {// if we're trying to access for writing
 		std::string outfn = (std::string(getenv("HOME")) + "/.yatc/" + filename);
-		FILE *f = fopen(outfn.c_str(), mode);
-		if (f)
+		FILE* f = fopen(outfn.c_str(), mode);
+		if(f)
 			return f;
 		printf("Trying to make cfg dir in home, fopen(...,w) was failing: %s\n", strerror(errno));
-		int i;
-		if (i=mkdir((std::string(getenv("HOME")) + "/.yatc/").c_str(), 0700))
+		if(mkdir((std::string(getenv("HOME")) + "/.yatc/").c_str(), 0700)){
 			printf("Failed to make cfg dir: %s\n", strerror(errno));
-		else {
+		}
+		else{
 			f = fopen(outfn.c_str(), mode);
-			if (f)
+			if(f)
 				return f;
 		}
 		printf("Still failed to write in home: %s\n", strerror(errno));
@@ -205,7 +205,7 @@ void yatc_fopen_init(char *cmdline) {
 	printf("Getenv() not supported; leaving searchpath empty. (Perhaps HAVE_GETENV isn't defined)\n");
 	const char *searchpath = NULL;
 #endif
-	char temp[250];
+	//char temp[250];
 	const char *lp;
 	if (!searchpath)
 	searchpath =

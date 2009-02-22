@@ -66,11 +66,6 @@ void ItemPanel::itemPanelOnPaint(glictRect *real, glictRect *clipped, glictConta
 	Item* item = _this->getItem();
 	if(item){
 		item->Blit((int)real->left, (int)real->top, 1.f);
-		if(item->getCount() > 1){
-            std::stringstream s;
-            s << (int)item->getCount();
-            g_engine->drawText(s.str().c_str(), "gamefont", (int)real->right - g_engine->sizeText(s.str().c_str(), "gamefont") - 2, (int)real->bottom - 12, TEXTCOLOR_WHITE);
-        }
 	}
 	else if(_this->m_uiBack){
 		g_engine->getUISprite()->Blit((int)real->left, (int)real->top, _this->m_uiBackx, _this->m_uiBacky, 32, 32);
@@ -158,7 +153,7 @@ void ItemPanel::itemPanelOnMouseUp(glictPos* relmousepos, glictContainer* caller
 void ItemPanel::itemPanelMakePopup(Popup* popup, void* owner, void* arg)
 {
 	ItemPanel* _this = (ItemPanel*)owner;
-    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    //GM_Gameworld *gw = (GM_Gameworld*)g_game;
     Item* item = _this->getItem();
 
     if(!item){
@@ -217,5 +212,10 @@ void ItemPanel::onUse(Popup::Item* menuentry)
 void ItemPanel::onTrade(Popup::Item* menuentry)
 {
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
-    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
+    ItemPanel* _this = (ItemPanel*)menuentry->data;
+
+    Item* item = _this->getItem();
+    if(item){
+		gw->beginTrade(item, 0, _this->m_pos);
+    }
 }

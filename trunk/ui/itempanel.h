@@ -57,6 +57,8 @@ protected:
 
 	Item* getItem();
 
+friend class winTrade_t;
+
 private:
 	int m_uiBackx, m_uiBacky;
 	bool m_uiBack;

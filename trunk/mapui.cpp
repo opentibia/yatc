@@ -536,13 +536,12 @@ bool MapUI::handlePopup(int x, int y)
 	return true;
 }
 
-void MapUI::makePopup(Popup*popup,void*owner,void*arg)
+void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 {
     MapUI *m = (MapUI*)(owner);
     glictPos &pos = *((glictPos*)(arg));
     uint32_t retx, rety, retz;
 	Position playerpos = GlobalVariables::getPlayerPosition();
-
 
     Tile* t = m->translateClickToTile(pos.x, pos.y, retx, rety, retz);
     m->m_lastRightclickTilePos.x = retx;
@@ -642,12 +641,12 @@ void MapUI::onLookAt(Popup::Item *parent)
 
     const Thing* thing;
     int stackpos;
-    bool isextended;
 
     m->lookAtItem(t, thing, stackpos);
 
     gw->m_protocol->sendLookItem(t->getPos(), thing->getID(), stackpos );
 }
+
 void MapUI::onUse(Popup::Item *parent)
 {
     MapUI *m = (MapUI*)(parent->data);
@@ -707,7 +706,7 @@ void MapUI::onMessageTo(Popup::Item *parent)
 
 void MapUI::onUnimplemented(Popup::Item *parent)
 {
-    MapUI *m = (MapUI*)(parent->data);
+    //MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
     gw->msgBox(gettext("This functionality is not yet finished"),"TODO");

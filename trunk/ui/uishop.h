@@ -64,9 +64,7 @@ public:
     uint32_t cash;
 
 	winShop_t();
-
 	~winShop_t();
-
 
 
 	void generateList(const std::list<ShopItem>& list);
@@ -87,9 +85,7 @@ public:
 
     static void drawObject(glictRect *real, glictRect *clipped, glictContainer *caller);
 
-
     bool selling;
-
     Item* dispItem;
 };
 

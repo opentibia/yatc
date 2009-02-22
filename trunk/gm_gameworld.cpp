@@ -96,10 +96,6 @@ GM_Gameworld::GM_Gameworld()
 	#warning You are using too old GLICT; right side bar will be messed up.
 	#endif
 
-
-
-
-
     // objects which didnt get set up in constructors and require initial setup...
     pnlTraffic.SetWidth(170);
 	pnlTraffic.SetHeight(40);
@@ -129,20 +125,12 @@ GM_Gameworld::GM_Gameworld()
 	#endif
 
 
-
-
 	desktop.AddObject(&winShop.window);
 	winShop.window.SetPos(600,450);
 	winShop.window.SetVisible(false);
 	desktop.AddObject(&winTrade.window);
-	winTrade.window.SetPos(600, 450);
+	winTrade.window.SetPos(600, 150);
 	winTrade.window.SetVisible(false);
-
-
-
-
-
-
 
 
 	desktop.AddObject(&winOutfit.window);
@@ -179,6 +167,13 @@ GM_Gameworld::GM_Gameworld()
 
     m_popup = NULL;
     m_showPopup = true;
+
+
+	m_extendedThingId = 0;
+    m_extendedstackpos = 0;
+
+    m_tradeItemId = 0;
+    m_tradestackpos = 0;
 
 	doResize(glictGlobals.w, glictGlobals.h);
 
@@ -551,7 +546,7 @@ void GM_Gameworld::actionUse(const glictPos& pos)
 
 void GM_Gameworld::beginExtendedUse(const Thing* thing, int stackpos, const Position& pos)
 {
-	m_extendedthing = thing;
+	m_extendedThingId = thing->getID();
 	m_extendedstackpos = stackpos;
 	m_extendedpos = pos;
 	SDL_SetCursor(g_engine->m_cursorUse);
@@ -560,11 +555,23 @@ void GM_Gameworld::beginExtendedUse(const Thing* thing, int stackpos, const Posi
 void GM_Gameworld::performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos)
 {
 	if(deststackpos != -1)
-		m_protocol->sendUseItemWith(m_extendedpos, m_extendedthing->getID(), m_extendedstackpos,
+		m_protocol->sendUseItemWith(m_extendedpos, m_extendedThingId, m_extendedstackpos,
 				destpos, destthing->getID(), deststackpos);
 
 	SDL_SetCursor(g_engine->m_cursorBasic);
-	m_extendedthing = NULL;
+	m_extendedThingId = 0;
+}
+
+
+void GM_Gameworld::actionUseWith(const glictPos& pos)
+{
+	const Thing* thing;
+	uint32_t x,y,z;
+	int stackpos;
+	bool isextended;
+
+	m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
+	performExtendedUse(Position(x,y,z), thing, stackpos);
 }
 
 void GM_Gameworld::actionAttack(const glictPos& pos)
@@ -584,15 +591,27 @@ void GM_Gameworld::actionAttack(const glictPos& pos)
 	}
 }
 
-void GM_Gameworld::actionUseWith(const glictPos& pos)
+void GM_Gameworld::beginTrade(const Item* item, int stackpos, const Position& pos)
 {
-	const Thing* thing;
-	uint32_t x,y,z;
-	int stackpos;
-	bool isextended;
+	m_tradeItemId = item->getID();
+	m_tradestackpos = stackpos;
+	m_tradepos = pos;
+	SDL_SetCursor(g_engine->m_cursorUse);
+}
 
-	m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
-	performExtendedUse(Position(x,y,z), thing, stackpos);
+void GM_Gameworld::actionTrade(const glictPos& pos)
+{
+	const Creature* creature = NULL;
+	m_mapui.attackCreature((int)pos.x, (int)pos.y, creature);
+	if(creature != NULL) {
+		if(creature->getID() != GlobalVariables::getPlayerID()) {
+			m_protocol->sendRequestTrade(m_tradepos, m_tradeItemId, m_tradestackpos,
+				creature->getID());
+		}
+	}
+
+	SDL_SetCursor(g_engine->m_cursorBasic);
+	m_tradeItemId = 0;
 }
 
 void GM_Gameworld::actionWalk(const glictPos& pos)
@@ -618,7 +637,6 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
         #endif
         if(m_draggingPrep && !m_dragging){
             if(abs(int(pos.x - m_dragBegin.x)) > 2 || abs(int(pos.y - m_dragBegin.y)) > 2) {
-                uint32_t x, y, z;
                 m_dragging = true;
                 SDL_SetCursor(g_engine->m_cursorUse);
             }
@@ -664,6 +682,9 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
 			}
 			else if(isExtendedUsing()){ // otherwise handle as appropriate
 				actionUseWith(pos);
+            }
+			else if(isTrade()){ // otherwise handle as appropriate
+				actionTrade(pos);
             }
             else if(options.classiccontrol == 0 && SDL_GetModState() & KMOD_ALT){
 				actionAttack(pos);
@@ -814,6 +835,9 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
         case SPEAK_CHANNEL_R2:
             col = TEXTCOLOR_RED;
             break;
+		case SPEAK_CHANNEL_W:
+			col = TEXTCOLOR_WHITE;
+			break;
         default:
             col = TEXTCOLOR_YELLOW;
     }
@@ -997,31 +1021,27 @@ void GM_Gameworld::closeContainer(uint32_t cid)
 	}
 }
 
+void GM_Gameworld::openShopWindow(const std::list<ShopItem>& itemlist)
+{
+	winShop.generateList(itemlist);
+    winShop.window.SetVisible(true);
+}
+
+void GM_Gameworld::closeShopWindow() {
+    winShop.window.SetVisible(false);
+    winShop.destroyList();
+}
+
 void GM_Gameworld::openTradeWindow(bool ack)
 {
-	// TODO (nfries88): write function
+	winTrade.onTradeUpdate(ack);
 	winTrade.window.SetVisible(true);
-	if(ack){
-		winTrade.onTradeAccepted(Containers::getInstance().getTradeContainerAck());
-	}
-	else{
-		winTrade.onTradeStarted(Containers::getInstance().getTradeContainer());
-	}
 }
 
 void GM_Gameworld::closeTradeWindow()
 {
 	winTrade.window.SetVisible(false);
 	winTrade.onTradeCompleted();
-}
-
-void GM_Gameworld::openShopWindow(const std::list<ShopItem>& itemlist) {
-    winShop.window.SetVisible(true);
-    winShop.generateList(itemlist);
-}
-void GM_Gameworld::closeShopWindow() {
-    winShop.window.SetVisible(false);
-    winShop.destroyList();
 }
 
 void GM_Gameworld::onUpdatePlayerCash(uint32_t newcash) {
