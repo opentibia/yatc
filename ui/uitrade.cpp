@@ -17,7 +17,7 @@ winTrade_t::winTrade_t()
 	btnClose.SetHeight(12);
 	btnClose.SetPos(160 - 12, 0);
 	btnClose.SetCustomData(this);
-	btnClose.SetOnClick(onClose);
+	btnClose.SetOnClick(tradeOnReject);
 
 	window.AddTitlebarObject(&btnCollapse);
 	btnCollapse.SetCaption("-");
@@ -30,7 +30,6 @@ winTrade_t::winTrade_t()
 	pnlIcon.SetWidth(12);
 	pnlIcon.SetHeight(12);
 	pnlIcon.SetPos(2, 2);
-	//pnlIcon.SetCustomData(?);
 	pnlIcon.SetOnPaint(iconOnPaint);
 	#endif
 
@@ -54,16 +53,23 @@ winTrade_t::winTrade_t()
 	pnlSepTop.SetHeight(2);
 	pnlSepTop.SetBGColor(.2,.2,.2,1.);
 
-	window.AddObject(&pnlContainer);
-	pnlContainer.SetBGActiveness(false);
-	pnlContainer.SetPos(0, 12);
-	pnlContainer.SetWidth(160);
-	pnlContainer.SetHeight(75);
-	pnlContainer.SetVirtualSize(160, 75);
+	window.AddObject(&pnlContainerLeft);
+	pnlContainerLeft.SetBGActiveness(false);
+	pnlContainerLeft.SetPos(0, 12);
+	pnlContainerLeft.SetWidth(80);
+	pnlContainerLeft.SetHeight(75);
+	pnlContainerLeft.SetVirtualSize(80, 75);
+
+	window.AddObject(&pnlContainerRight);
+	pnlContainerRight.SetBGActiveness(false);
+	pnlContainerRight.SetPos(80, 12);
+	pnlContainerRight.SetWidth(80);
+	pnlContainerRight.SetHeight(75);
+	pnlContainerRight.SetVirtualSize(80, 75);
 
 	// TODO (nfries88): add middle seperator to pnlContainer
-	pnlContainer.AddObject(&pnlSepMiddle);
-	pnlSepMiddle.SetPos(78, 0);
+	window.AddObject(&pnlSepMiddle);
+	pnlSepMiddle.SetPos(80, 0);
 	pnlSepMiddle.SetWidth(2);
 	pnlSepMiddle.SetHeight(75);
 	pnlSepMiddle.SetBGColor(.2,.2,.2,1.);
@@ -75,149 +81,154 @@ winTrade_t::winTrade_t()
 	pnlSepBottom.SetBGColor(.2,.2,.2,1.);
 
 	window.AddObject(&lblWait);
-	lblWait.SetFont("aafont");
-	lblWait.SetCaption("Wait for a counter offer.");
-	lblWait.SetPos(12, 92);
-	lblWait.SetWidth(60);
+	lblWait.SetFont("minifont");
+	lblWait.SetPos(10, 92);
+	lblWait.SetWidth(100);
 	lblWait.SetHeight(20);
 	lblWait.SetBGActiveness(false);
-	lblWait.SetVisible(true);
 
 	window.AddObject(&btnAccept);
 	btnAccept.SetFont("minifont",8);
 	btnAccept.SetCaption("Accept");
-	btnAccept.SetPos(75, 92);
+	btnAccept.SetPos(67, 92);
 	btnAccept.SetWidth(43);
 	btnAccept.SetHeight(20);
-	btnAccept.SetVisible(false);
+	btnAccept.SetOnClick(tradeOnAccept);
 
 	window.AddObject(&btnReject);
 	btnReject.SetFont("minifont",8);
 	btnReject.SetCaption("Reject");
-	btnReject.SetPos(122, 92);
+	btnReject.SetPos(115, 92);
 	btnReject.SetWidth(43);
 	btnReject.SetHeight(20);
-	//TODO (nfries88): finish constructor
+	btnReject.SetOnClick(tradeOnReject);
 
-	initiator = NULL;
-	acceptor = NULL;
+	m_rightSideSet = false;
+	m_leftSideSet = false;
 }
 
 winTrade_t::~winTrade_t()
 {
-	//TODO (nfries88): write destructor
+	//
 }
 
-void winTrade_t::onTradeStarted(Container* _initiatior)
+void winTrade_t::onTradeUpdate(bool ack)
 {
-	initiator = _initiatior;
-
-	lblNameLeft.SetCaption(initiator->getName());
-	float height = 4 + (36*ceil(initiator->getCapacity()/2.));
-	pnlContainer.SetVirtualSize(160, height);
-	pnlSepMiddle.SetHeight(height);
-
-	for(uint32_t i = 0; i != initiator->getCapacity(); ++i)
-    {
-        glictPanel* panel = new glictPanel;
-        panel->SetPos(5 + ((i % 2) * 36), 4 + (std::floor(i / 2) * 36));
-        panel->SetWidth(32);
-        panel->SetHeight(32);
-        panel->SetBGColor(.1,.1,.1,1);
-        panel->SetCaption("");
-        panel->SetCustomData(this);
-        panel->SetOnPaint(winTrade_t::tradeItemOnPaint);
-        panel->SetOnClick(winTrade_t::tradeItemOnClick);
-
-        panel->SetSkin(&g_skin.inv);
-
-        pnlContainer.AddObject(panel);
-        pnlItemsLeft.push_back(panel);
-    }
-}
-
-void winTrade_t::onTradeAccepted(Container* _acceptor)
-{
-	acceptor = _acceptor;
-
-	lblNameLeft.SetCaption(acceptor->getName());
-	lblWait.SetVisible(false);
-	if(!initiator || acceptor->getCapacity() > initiator->getCapacity()){
-		float height = 4 + (36*ceil(initiator->getCapacity()/2.));
-		pnlContainer.SetVirtualSize(160, height);
-		pnlSepMiddle.SetHeight(height);
+	Container* container;
+	glictContainer* pnlContainer;
+	PanelList* pnlList;
+	uint32_t flag;
+	if(ack){ //left side
+		container = Containers::getInstance().getTradeContainerAck();
+		lblNameLeft.SetCaption(container->getName());
+		pnlContainer = &pnlContainerLeft;
+		pnlList = &pnlItemsLeft;
+		m_leftSideSet = true;
+		flag = 1;
+	}
+	else{ //right side
+		container = Containers::getInstance().getTradeContainer();
+		lblNameRight.SetCaption(container->getName());
+		pnlContainer = &pnlContainerRight;
+		pnlList = &pnlItemsRight;
+		m_rightSideSet = true;
+		flag = 0;
 	}
 
-	for(uint32_t i = 0; i != acceptor->getCapacity(); ++i)
+	float height = 4 + (36*ceil(container->getCapacity()/2.));
+	pnlContainer->SetVirtualSize(80, height);
+	pnlContainer->SetHeight(72);
+
+	for(uint32_t i = 0; i != container->getCapacity(); ++i)
     {
-        glictPanel* panel = new glictPanel;
+        ItemPanel* panel = new ItemPanel(container, i, Position(0,0,0));
         panel->SetPos(5 + ((i % 2) * 36), 4 + (std::floor(i / 2) * 36));
-        panel->SetWidth(32);
-        panel->SetHeight(32);
-        panel->SetBGColor(.1,.1,.1,1);
-        panel->SetCaption("");
-        panel->SetCustomData(this);
-        panel->SetOnPaint(winTrade_t::tradeItemOnPaint);
-        panel->SetOnClick(winTrade_t::tradeItemOnClick);
+        panel->SetOnClick(tradeItemOnClick);
+        //panel->SetOnPaint(tradeItemOnPaint);
+		panel->SetOnMouseUp(NULL);
+		panel->SetOnMouseDown(NULL);
+        panel->SetCustomData((void*)(i*2 | flag));
 
-        panel->SetSkin(&g_skin.inv);
-
-        pnlContainer.AddObject(panel);
-        pnlItemsRight.push_back(panel);
+        pnlContainer->AddObject(panel);
+        pnlList->push_back(panel);
     }
+
+    //update buttons
+	if(m_leftSideSet && !m_rightSideSet){
+		btnReject.SetVisible(true);
+		btnReject.SetCaption("Cancel");
+		btnAccept.SetVisible(false);
+		lblWait.SetCaption("Wait for a counter offer.");
+		lblWait.SetVisible(true);
+	}
+	else if(m_rightSideSet){
+		btnReject.SetVisible(true);
+		btnReject.SetCaption("Reject");
+		btnAccept.SetVisible(true);
+		lblWait.SetVisible(false);
+	}
 }
 
 void winTrade_t::onTradeCompleted()
 {
-	initiator = NULL;
-	acceptor = NULL;
-
-	lblWait.SetVisible(true);
-	btnAccept.SetVisible(false);
-
 	PanelList::iterator it = pnlItemsLeft.begin();
 	for(;it != pnlItemsLeft.end(); ++it)
 	{
-		pnlContainer.RemoveObject((*it));
+		pnlContainerLeft.RemoveObject((*it));
 		delete (*it);
 	}
 	pnlItemsLeft.clear();
 
 	for(it = pnlItemsRight.begin(); it != pnlItemsRight.end(); ++it)
 	{
-		pnlContainer.RemoveObject((*it));
+		pnlContainerRight.RemoveObject((*it));
 		delete (*it);
 	}
 	pnlItemsRight.clear();
+
+	m_rightSideSet = false;
+	m_leftSideSet = false;
 }
 
-void winTrade_t::tradeItemOnPaint(glictRect* real, glictRect* clipped, glictContainer* caller)
-{
-	//TODO (nfries88): write function
-}
 void winTrade_t::tradeItemOnClick(glictPos* relmousepos, glictContainer* caller)
 {
-	//TODO (nfries88): finish function
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+	void* data = caller->GetCustomData();
+	bool flag = (long)data & 1;
+	int slot = (long)data >> 1;
+	gw->m_protocol->sendLookInTrade(flag, slot);
 }
+
+/*
+void winTrade_t::tradeItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
+	printf("Item trade paint\n");
+	ItemPanel::itemPanelOnPaint(real, clipped, caller);
+}
+*/
 
 void winTrade_t::tradeOnAccept(glictPos* relmousepos, glictContainer* caller)
 {
-	//TODO (nfries88): finish function
-}
-void winTrade_t::tradeOnReject(glictPos* relmousepos, glictContainer* caller)
-{
-	//TODO (nfries88): write function
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+	winTrade_t& window = gw->winTrade;
+	window.btnAccept.SetVisible(false);
+	window.lblWait.SetCaption("Please wait for your \npartner to accept.");
+	window.lblWait.SetVisible(true);
+	gw->m_protocol->sendAcceptTrade();
 }
 
-void winTrade_t::onClose(glictPos* relmousepos, glictContainer* caller)
+void winTrade_t::tradeOnReject(glictPos* relmousepos, glictContainer* caller)
 {
-	//TODO (nfries88): write function
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+	gw->m_protocol->sendRejectTrade();
 }
+
 void winTrade_t::onCollapse(glictPos* relmousepos, glictContainer* caller)
 {
-	//TODO (nfries88): write function
+	//
 }
+
 void winTrade_t::iconOnPaint(glictRect* real, glictRect* clipped, glictContainer* caller)
 {
-	//TODO (nfries88): write function
+	g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 325, 60, 12, 12);
 }

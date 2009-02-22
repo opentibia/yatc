@@ -70,7 +70,7 @@ void yatcStackPanel::_updateDraggedChildPos(const glictPos &eventmousepos)
 
     int totaldcheight = draggedchild->GetHeight() +draggedchild->GetTopSize()+draggedchild->GetBottomSize();
 
-    int oldy = draggedchild->GetY();
+    //int oldy = draggedchild->GetY();
     int newy = MIN(MAX(eventmousepos.y - draggedchild->_GetDragRelMouse().y, 0), totalheight-totaldcheight);
 
     draggedchild->Focus(NULL);

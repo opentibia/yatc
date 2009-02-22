@@ -457,7 +457,7 @@ ClientVersion_t GM_MainMenu::getActiveProtocol(){
 	if (!proto) {
 
 		std::string t;
-		unsigned char c[2] = { 149, 0} ; // bullet
+		//unsigned char c[2] = { 149, 0} ; // bullet
 		t = gettext("Data files in the directory either:\n"
 		"* do not belong to same protocol version, or\n"
 		"* are modified and with unknown signatures.\n"

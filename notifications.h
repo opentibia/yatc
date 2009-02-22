@@ -81,8 +81,8 @@ class Notifications{
 			const std::string& lastChangeDate){}
 
 		//open trade window
-		static void openTradeWindow(bool ack){}
-		static void closeTradeWindow(){}
+		static void openTradeWindow(bool ack);
+		static void closeTradeWindow();
 
 		//open shop window
 		static void openShopWindow(const std::list<ShopItem>& itemlist);

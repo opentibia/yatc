@@ -30,14 +30,31 @@
 
 class winTrade_t {
 public:
+	winTrade_t();
+	~winTrade_t();
+
+	void onTradeUpdate(bool ack);
+	void onTradeCompleted();
+
 	glictWindow window; // Width: 160 Height: 115 Caption: "Trade"
+
+protected:
+
 	#if (GLICT_APIREV >= 76)
 	glictPanel pnlIcon; // Width: 12 Height: 12 SpriteID: ? (Bag)
 	glictButton btnClose; // Width: 12 Height: 12 Caption: "x"
 	glictButton btnCollapse; // Width: 12 Height: 12 Caption: "-"
 	#endif
 
-	glictPanel pnlContainer; // Pos: 0, 12 Width: 150 Height: 75 Virtual Height: as necessary
+	bool m_rightSideSet;
+	bool m_leftSideSet;
+
+	typedef std::list<glictPanel*> PanelList;
+	PanelList pnlItemsLeft;
+	PanelList pnlItemsRight;
+
+	glictPanel pnlContainerLeft;
+	glictPanel pnlContainerRight;
 
 	glictPanel lblNameLeft; // Pos: 3, 2 Width: 70 Height: 8 Caption: Name of initator
 	glictPanel lblNameRight; // Pos: 82, 2 Width: 70 Height: 8 Caption: Name of other trader
@@ -50,25 +67,12 @@ public:
 	glictButton btnAccept; // Pos: 75, 92 Width: 43 Height: 20 Caption: "Accept"
 	glictButton btnReject; // Pos: 122, 92 Width: 43 Height: 20 Caption: "Reject"
 
-	typedef std::list<glictPanel*> PanelList;
-	PanelList pnlItemsLeft;
-	PanelList pnlItemsRight;
-
-	Container* initiator;
-	Container* acceptor;
-
-	winTrade_t();
-	~winTrade_t();
-
-	void onTradeStarted(Container* _initatior);
-	void onTradeAccepted(Container* _acceptor);
-	void onTradeCompleted();
-
-	static void tradeItemOnPaint(glictRect* real, glictRect* clipped, glictContainer* caller);
-	static void tradeItemOnClick(glictPos* relmousepos, glictContainer* caller);
 
 	static void tradeOnAccept(glictPos* relmousepos, glictContainer* caller);
 	static void tradeOnReject(glictPos* relmousepos, glictContainer* caller);
+
+	static void tradeItemOnClick(glictPos* relmousepos, glictContainer* callerclass);
+	//static void tradeItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
 
 	static void onClose(glictPos* relmousepos, glictContainer* caller);
 	static void onCollapse(glictPos* relmousepos, glictContainer* caller);

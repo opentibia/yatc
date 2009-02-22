@@ -76,15 +76,15 @@ public:
     void closeContainer(uint32_t cid);
     void openShopWindow(const std::list<ShopItem>& itemlist);
     void closeShopWindow();
+    void openTradeWindow(bool ack);
+    void closeTradeWindow();
     void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
     void onTileUpdate(const Position& pos);
 
     void showTutorial(uint8_t id);
 
-	void openTradeWindow(bool ack);
-	void closeTradeWindow();
-
-    bool isExtendedUsing() const { return (m_extendedthing != NULL); }
+    bool isExtendedUsing() const { return (m_extendedThingId != 0); }
+    bool isTrade() const { return (m_tradeItemId != 0); }
 
 	bool isDragging() const {return m_dragging;}
 	void dismissDrag() {
@@ -110,11 +110,14 @@ public:
 	void beginExtendedUse(const Thing* thing, int stackpos, const Position& pos);
 	void performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos);
 
+	void beginTrade(const Item* item, int stackpos, const Position& pos);
+
 protected:
 
 	void actionLook(const glictPos& pos);
 	void actionUse(const glictPos& pos);
 	void actionAttack(const glictPos& pos);
+	void actionTrade(const glictPos& pos);
 	void actionUseWith(const glictPos& pos);
 	void actionWalk(const glictPos& pos);
 
@@ -130,7 +133,6 @@ private:
 
     void createConsole(uint32_t channelid=0, const std::string& speaker="");
     void createConsole(const std::string& speaker) { createConsole(0,speaker); }
-
 
 
     /* PRIMARY GUI */
@@ -161,9 +163,13 @@ private:
 	uint32_t m_startTime;
 
 
-	const Thing* m_extendedthing; // when this is not NULL, we're in extended use mode
+	uint16_t m_extendedThingId; // when this is not NULL, we're in extended use mode
     Position m_extendedpos;
     int m_extendedstackpos;
+
+    uint16_t m_tradeItemId;
+    Position m_tradepos;
+    int m_tradestackpos;
 
     glictPos m_dragBegin;
     bool m_draggingPrep;

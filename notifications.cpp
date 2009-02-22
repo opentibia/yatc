@@ -237,6 +237,17 @@ void Notifications::closeShopWindow()
 	g_game->closeShopWindow();
 }
 
+//safe trade
+void Notifications::openTradeWindow(bool ack)
+{
+	g_game->openTradeWindow(ack);
+}
+
+void Notifications::closeTradeWindow()
+{
+	g_game->closeTradeWindow();
+}
+
 // when we receive player cash, we may need to update shop window
 void Notifications::onUpdatePlayerCash(uint32_t newcash) {
     g_game->onUpdatePlayerCash(newcash);
