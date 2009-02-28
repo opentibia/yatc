@@ -27,7 +27,8 @@ xgettext -d yatc -s -o yatc.pot \
 	../ui/skills.h \
 	../ui/itemmove.h \
 	../ui/health.h \
-	../ui/tutorialhints.cpp
+	../ui/tutorialhints.cpp \
+	../ui/uitrade.cpp
 echo "Done."
 
 # above list all files with extractable gettext() strings

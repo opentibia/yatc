@@ -30,7 +30,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		\
 		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp \
 		ui/uiinventory.cpp ui/uishop.cpp ui/uitrade.cpp \
-		ui/mainmenu.cpp ui/uioutfit.cpp \
+		ui/mainmenu.cpp ui/uioutfit.cpp ui/itempanel.cpp \
 		\
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
 		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
@@ -52,6 +52,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \
 		gamecontent/inventory.h gamecontent/item.h gamecontent/map.h \
 		gamecontent/position.h gamecontent/shop.h \
+		gamecontent/itemcontainer.h \
 		\
 		defines.h gamecontent/enums.h fassert.h \
 		gamecontent/thing.h \
@@ -61,6 +62,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/uiinventory.h ui/skills.h ui/uicontainer.h ui/uishop.h \
 		ui/uitrade.h ui/checkbox.h ui/uioutfit.h \
 		ui/optionsgfxadv.h ui/optionshotkeys.h ui/health.h \
+		ui/itempanel.h \
 		\
 		product.h \
 		\

@@ -1,12 +1,35 @@
+//////////////////////////////////////////////////////////////////////
+// Yet Another Tibia Client
+//////////////////////////////////////////////////////////////////////
+//
+//////////////////////////////////////////////////////////////////////
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software Foundation,
+// Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+//////////////////////////////////////////////////////////////////////
 
 #include "uitrade.h"
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
 #include "../skin.h"
-
+#if defined(HAVE_LIBINTL_H)
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 winTrade_t::winTrade_t()
 {
-	window.SetCaption("Trade");
+	window.SetCaption(gettext("Trade"));
 	window.SetWidth(160);
 	window.SetHeight(115);
 
@@ -89,7 +112,7 @@ winTrade_t::winTrade_t()
 
 	window.AddObject(&btnAccept);
 	btnAccept.SetFont("minifont",8);
-	btnAccept.SetCaption("Accept");
+	btnAccept.SetCaption(gettext("Accept"));
 	btnAccept.SetPos(67, 92);
 	btnAccept.SetWidth(43);
 	btnAccept.SetHeight(20);
@@ -97,7 +120,7 @@ winTrade_t::winTrade_t()
 
 	window.AddObject(&btnReject);
 	btnReject.SetFont("minifont",8);
-	btnReject.SetCaption("Reject");
+	btnReject.SetCaption(gettext("Reject"));
 	btnReject.SetPos(115, 92);
 	btnReject.SetWidth(43);
 	btnReject.SetHeight(20);
@@ -156,9 +179,9 @@ void winTrade_t::onTradeUpdate(bool ack)
     //update buttons
 	if(m_leftSideSet && !m_rightSideSet){
 		btnReject.SetVisible(true);
-		btnReject.SetCaption("Cancel");
+		btnReject.SetCaption(gettext("Cancel"));
 		btnAccept.SetVisible(false);
-		lblWait.SetCaption("Wait for a counter offer.");
+		lblWait.SetCaption(gettext("Wait for a counter offer."));
 		lblWait.SetVisible(true);
 	}
 	else if(m_rightSideSet){
@@ -212,7 +235,7 @@ void winTrade_t::tradeOnAccept(glictPos* relmousepos, glictContainer* caller)
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
 	winTrade_t& window = gw->winTrade;
 	window.btnAccept.SetVisible(false);
-	window.lblWait.SetCaption("Please wait for your \npartner to accept.");
+	window.lblWait.SetCaption(gettext("Please wait for your \npartner to accept."));
 	window.lblWait.SetVisible(true);
 	gw->m_protocol->sendAcceptTrade();
 }

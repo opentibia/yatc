@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-03 17:17+0100\n"
+"POT-Creation-Date: 2009-02-28 22:35+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: kupi <kupi.ots@gmail.com>\n"
 "Language-Team: kupi <kupi.ots@gmail.com>, <kupi_ots@hotmail.com>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-Country: España, México, Chile, Colombia\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../gm_mainmenu.cpp:350
+#: ../gm_mainmenu.cpp:391
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in file COPYING.\n"
@@ -33,15 +33,15 @@ msgstr ""
 "redistribuir bajo ciertas condiciones;\n"
 "vea el archivo COPYING para obtener más detalles."
 
-#: ../ui/uishop.cpp:237 ../ui/uishop.cpp:273
+#: ../ui/uishop.cpp:230 ../ui/uishop.cpp:266
 msgid " gold"
 msgstr " oro"
 
-#: ../gm_mainmenu.cpp:338
+#: ../gm_mainmenu.cpp:379
 msgid "(in no particular order)"
 msgstr "(en ningún orden particular)"
 
-#: ../gm_mainmenu.cpp:340
+#: ../gm_mainmenu.cpp:381
 msgid "(in the navy)"
 msgstr "(En la marina)"
 
@@ -65,7 +65,11 @@ msgstr "<Observe el boton de quest>"
 msgid "<The outfit window should be opened now>"
 msgstr "<La ventana de Outfits debe abrirse ahora."
 
-#: ../ui/charlist.h:84
+#: ../ui/uitrade.cpp:115
+msgid "Accept"
+msgstr ""
+
+#: ../ui/charlist.h:86
 msgid "Account Status:"
 msgstr "Estado de la cuenta:"
 
@@ -77,7 +81,7 @@ msgstr "Nombre de la cuenta:"
 msgid "Account number:"
 msgstr "Número de la cuenta:"
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:611
 msgid "Add to VIP list"
 msgstr "Añadir a la lista de VIP"
 
@@ -101,7 +105,7 @@ msgstr "Ah, ventana de comercio. Aun no escrita."
 msgid "Amount:"
 msgstr "Cantidad:"
 
-#: ../mapui.cpp:598
+#: ../mapui.cpp:594
 msgid "Attack"
 msgstr "Atacar"
 
@@ -127,11 +131,12 @@ msgstr "Comprar"
 
 #: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:155
 #: ../ui/optionsgraphics.h:141 ../ui/optionsconsole.h:136 ../ui/login.h:123
-#: ../ui/uioutfit.cpp:155 ../ui/charlist.h:113 ../ui/itemmove.h:109
+#: ../ui/uioutfit.cpp:155 ../ui/charlist.h:115 ../ui/itemmove.h:109
+#: ../ui/uitrade.cpp:182
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../gm_mainmenu.cpp:543
+#: ../gm_mainmenu.cpp:584
 msgid "Cannot connect to a login server."
 msgstr "No se puede conectar al servidor de acceso."
 
@@ -163,15 +168,15 @@ msgstr "Control Clásico"
 msgid "Club Fighting"
 msgstr "Lucha con Puños"
 
-#: ../gm_mainmenu.cpp:393 ../gm_mainmenu.cpp:480
+#: ../gm_mainmenu.cpp:434 ../gm_mainmenu.cpp:521
 msgid "Connecting"
 msgstr "Conectando"
 
-#: ../gm_mainmenu.cpp:481
+#: ../gm_mainmenu.cpp:522
 msgid "Connecting to the game world. Please wait."
 msgstr "Conectando al mundo del juego. Por favor espere."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:897
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:959
 msgid "Console"
 msgstr "Consola"
 
@@ -179,11 +184,11 @@ msgstr "Consola"
 msgid "Console Options"
 msgstr "Opciones de la Consola"
 
-#: ../gm_mainmenu.cpp:345
+#: ../gm_mainmenu.cpp:386
 msgid "Contributors"
 msgstr "Contribuidores"
 
-#: ../mapui.cpp:630
+#: ../mapui.cpp:626
 msgid "Copy Name"
 msgstr "Copiar el Nombre"
 
@@ -191,7 +196,7 @@ msgstr "Copiar el Nombre"
 msgid "Create Account"
 msgstr "Crear Cuenta"
 
-#: ../gm_mainmenu.cpp:326
+#: ../gm_mainmenu.cpp:367
 msgid "Current engine"
 msgstr "Motor gráfico actual"
 
@@ -199,7 +204,7 @@ msgstr "Motor gráfico actual"
 msgid "Customise the console"
 msgstr "Personalizar la consola"
 
-#: ../gm_mainmenu.cpp:420
+#: ../gm_mainmenu.cpp:461
 msgid ""
 "Data files in the directory either:\n"
 "* do not belong to same protocol version, or\n"
@@ -229,7 +234,7 @@ msgstr "Detalles"
 msgid "Distance Fighting"
 msgstr "Lucha a Distancia"
 
-#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:580
+#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:621
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
@@ -249,7 +254,7 @@ msgstr "Modificar motor gráfico"
 msgid "Enter Game"
 msgstr "Entrar al Juego"
 
-#: ../gm_mainmenu.cpp:545 ../gm_mainmenu.cpp:552 ../gm_mainmenu.cpp:604
+#: ../gm_mainmenu.cpp:586 ../gm_mainmenu.cpp:593 ../gm_mainmenu.cpp:645
 msgid "Error"
 msgstr "Error"
 
@@ -269,17 +274,17 @@ msgstr "Pesca"
 msgid "Fist Fighting"
 msgstr "Lucha de Puño"
 
-#: ../mapui.cpp:603
+#: ../mapui.cpp:599
 msgid "Follow"
 msgstr "Seguir"
 
-#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:583
+#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:624
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
 msgstr "Para más información sobre Tibia visite nuestro siti web en"
 
-#: ../gm_mainmenu.cpp:547
+#: ../gm_mainmenu.cpp:588
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -287,7 +292,7 @@ msgstr ""
 "Para obtener más información, eche un vistazo al\n"
 "foro otfans.net(en inglés), o eotfans.net."
 
-#: ../ui/charlist.h:149
+#: ../ui/charlist.h:151
 msgid "Free Account"
 msgstr "Cuenta Grátis"
 
@@ -326,15 +331,15 @@ msgstr "Gráficos"
 msgid "Graphics Options"
 msgstr "Opciones Gráficas"
 
-#: ../ui/charlist.h:151
+#: ../ui/charlist.h:153
 msgid "Gratis Premium Account"
 msgstr "Cuenta Premium Grátis"
 
-#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:586
+#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:627
 msgid "Have fun in"
 msgstr "Diviértete en"
 
-#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:584
+#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:625
 msgid "Have fun in Tibia!"
 msgstr "¡Diviértete en Tibia!"
 
@@ -347,7 +352,7 @@ msgid "Health"
 msgstr "Salud"
 
 #: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:141
-#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:367
+#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:408
 #: ../ui/optionsconsole.h:122
 msgid "Help"
 msgstr "Ayuda"
@@ -372,23 +377,23 @@ msgstr ""
 "Si aun no\n"
 "tiene una cuenta:"
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:615
 msgid "Ignore"
 msgstr "Ignorar"
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:356
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:397
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:606
+#: ../gm_mainmenu.cpp:647
 msgid "Information"
 msgstr "Información"
 
-#: ../ui/uiinventory.h:62
+#: ../ui/uiinventory.cpp:58
 msgid "Inventory"
 msgstr "Inventario"
 
-#: ../mapui.cpp:623
+#: ../mapui.cpp:619
 msgid "Invite to Party"
 msgstr "Invitar al grupo"
 
@@ -396,7 +401,7 @@ msgstr "Invitar al grupo"
 msgid "Level"
 msgstr "Nivel"
 
-#: ../mapui.cpp:563 ../ui/uiinventory.cpp:182
+#: ../mapui.cpp:559
 msgid "Look"
 msgstr "Mirar"
 
@@ -421,11 +426,11 @@ msgstr "Nivel Mágico"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:589
+#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:630
 msgid "Message of the Day"
 msgstr "Mensaje del Dia"
 
-#: ../mapui.cpp:611
+#: ../mapui.cpp:607
 msgid "Message to"
 msgstr "Mensaje para"
 
@@ -469,7 +474,7 @@ msgstr "LLave de Encriptación del OT"
 
 #: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:148
 #: ../ui/optionsgraphics.h:134 ../ui/optionsconsole.h:129 ../ui/login.h:114
-#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:146 ../ui/charlist.h:105
+#: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:146 ../ui/charlist.h:107
 #: ../ui/itemmove.h:100
 msgid "Ok"
 msgstr "Ok"
@@ -483,7 +488,7 @@ msgstr ""
 "ejemplo \n"
 "Hay una {marca} en el minimapa ahora, trate de pasar por allí."
 
-#: ../mapui.cpp:575 ../ui/uiinventory.cpp:187
+#: ../mapui.cpp:571
 msgid "Open"
 msgstr "Abrir"
 
@@ -527,7 +532,13 @@ msgstr ""
 "Para activar un addon particular, los jugadores premium\n"
 "pueden resolver diversas misiones."
 
-#: ../ui/charlist.h:154
+#: ../ui/uitrade.cpp:238
+msgid ""
+"Please wait for your \n"
+"partner to accept."
+msgstr ""
+
+#: ../ui/charlist.h:156
 msgid "Premium Account"
 msgstr "Cuenta Premium"
 
@@ -539,7 +550,7 @@ msgstr "Precio:"
 msgid "Primary"
 msgstr "Primario"
 
-#: ../gm_mainmenu.cpp:338
+#: ../gm_mainmenu.cpp:379
 msgid "Programmed by"
 msgstr "Programado por"
 
@@ -550,7 +561,7 @@ msgstr "Programado por"
 msgid "Protocol"
 msgstr "Protocolo"
 
-#: ../gm_mainmenu.cpp:430
+#: ../gm_mainmenu.cpp:471
 msgid "Protocol detection failed"
 msgstr "La detección del protocolo falló"
 
@@ -560,9 +571,14 @@ msgid ""
 "\n"
 "To apply graphical engine change, you need to restart\n"
 msgstr ""
-"RECOMENDADO: Elegir SDL. Sin embargo, pruebe cual funciona mejor para usted.\n"
+"RECOMENDADO: Elegir SDL. Sin embargo, pruebe cual funciona mejor para "
+"usted.\n"
 "\n"
 "Para aplicar el cambio del motor gráfico, es necesario reiniciar\n"
+
+#: ../ui/uitrade.cpp:123
+msgid "Reject"
+msgstr ""
 
 #: ../ui/optionsui.cpp:340
 msgid "Restart is required to apply engine change."
@@ -585,11 +601,11 @@ msgstr ""
 msgid "Secondary"
 msgstr "Secundario"
 
-#: ../ui/charlist.h:57
+#: ../ui/charlist.h:58
 msgid "Select Character"
 msgstr "Selecionar Personaje"
 
-#: ../ui/charlist.h:71
+#: ../ui/charlist.h:72
 msgid "Select character:"
 msgstr "Selecionar personaje:"
 
@@ -626,7 +642,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Puerto del servidor:"
 
-#: ../mapui.cpp:588 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:584 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Colocar Traje"
 
@@ -708,8 +724,8 @@ msgid ""
 "to \n"
 "take it with you. You need to collect three cockroach legs for the NPC!"
 msgstr ""
-"Por lo tanto, la {ventana del contenedor} esta abierta. {Arrastre}, cualquier "
-"objeto en su (mochila) \n"
+"Por lo tanto, la {ventana del contenedor} esta abierta. {Arrastre}, "
+"cualquier objeto en su (mochila) \n"
 "Usted necesita reunir tres patas de cucaracha para el NPC!"
 
 #: ../ui/skills.h:149
@@ -736,9 +752,9 @@ msgid ""
 msgstr ""
 "La {pala}, que se encuentra ahora en su inventario, se utiliza para cavar "
 "hasta cuevas. Es \n"
-"muy útil para explorar nuevas áreas. Así que vaya hacia el este, y usted debe "
-"encontrar {pilas de piedras sueltas}, pulsa {ctrl + clic} sobre la {pala} "
-"y luego en las {piedras}. \n"
+"muy útil para explorar nuevas áreas. Así que vaya hacia el este, y usted "
+"debe encontrar {pilas de piedras sueltas}, pulsa {ctrl + clic} sobre la "
+"{pala} y luego en las {piedras}. \n"
 "Cuando se utiliza un objeto sobre otro objeto, se llama uso extendido."
 
 #: ../ui/tutorialhints.cpp:80
@@ -750,7 +766,7 @@ msgstr ""
 "llamado \n"
 "'Usar') sobre él para abrirlo."
 
-#: ../mapui.cpp:716 ../ui/uiinventory.cpp:221
+#: ../mapui.cpp:712
 msgid "This functionality is not yet finished"
 msgstr "Esta función aun no esta disponible"
 
@@ -779,39 +795,44 @@ msgstr ""
 "lo necesiten. Muchas cosas pueden ser usadas mediante ctrl + clic en este "
 "juego, por tanto miren a su alrededor."
 
-#: ../ui/uiinventory.cpp:192
-msgid "Trade with"
-msgstr "Comerciar con"
+#: ../ui/uitrade.cpp:32
+#, fuzzy
+msgid "Trade"
+msgstr "Comerciar con NPC"
 
-#: ../gm_gameworld.cpp:1054
+#: ../gm_gameworld.cpp:1081
 msgid "Tutorial Hint"
 msgstr "Sugerencia"
 
-#: ../ui/charlist.h:91
+#: ../ui/charlist.h:93
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../mapui.cpp:577 ../ui/uiinventory.cpp:189
+#: ../mapui.cpp:573
 msgid "Use"
 msgstr "Usar"
 
-#: ../mapui.cpp:572 ../ui/uiinventory.cpp:184
+#: ../mapui.cpp:568
 msgid "Use with..."
 msgstr "Usar con..."
 
-#: ../gm_mainmenu.cpp:328
+#: ../gm_mainmenu.cpp:369
 msgid "Uses GLICT"
 msgstr "Usa GLICT"
 
-#: ../gm_mainmenu.cpp:330
+#: ../gm_mainmenu.cpp:371
 msgid "Uses OpenGL"
 msgstr "Usa OpenGL"
 
-#: ../gm_mainmenu.cpp:327
+#: ../gm_mainmenu.cpp:368
 msgid "Uses SDL"
 msgstr "Usa SDL"
 
-#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:582
+#: ../ui/uitrade.cpp:184
+msgid "Wait for a counter offer."
+msgstr ""
+
+#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:623
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
@@ -823,11 +844,11 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr "Ofrecemos dos motores gráficos:\n"
 
-#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:585
+#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:626
 msgid "Welcome to"
 msgstr "Bienvenido a"
 
-#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:579
+#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:620
 msgid "Welcome to Tibia!"
 msgstr "Bienvenido a Tibia!"
 
@@ -870,29 +891,32 @@ msgstr ""
 "pulsa {ctrl + clic} sobre la {cuerda} y, a continuación, sobre la {marca de "
 "cuerda}."
 
-#: ../gm_mainmenu.cpp:394
+#: ../gm_mainmenu.cpp:435
 msgid "Your character list is being loaded. Please wait."
 msgstr "La lista de tus personajes se esta cargando. Por favor, espere."
 
-#: ../gm_mainmenu.cpp:334
+#: ../gm_mainmenu.cpp:375
 msgid "[for info run with GL engine]\n"
 msgstr "[información para ejecutar el motor gráfico con GL]\n"
 
-#: ../gm_mainmenu.cpp:327
+#: ../gm_mainmenu.cpp:368
 msgid "compiled with"
 msgstr "compilado con"
 
-#: ../ui/charlist.h:154
+#: ../ui/charlist.h:156
 msgid "days left"
 msgstr "dias restantes"
 
-#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:581
+#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:622
 msgid "to the state of"
 msgstr "al estado de"
 
-#: ../gm_mainmenu.cpp:341
+#: ../gm_mainmenu.cpp:382
 msgid "with inactive developers"
 msgstr "con los desarrolladores inactivos"
 
 #~ msgid "Connecting to the server..."
 #~ msgstr "Conectando al servidor..."
+
+#~ msgid "Trade with"
+#~ msgstr "Comerciar con"
