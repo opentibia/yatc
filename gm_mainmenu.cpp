@@ -246,14 +246,14 @@ bool GM_MainMenu::specKeyPress (const SDL_keysym& key)
     // login assistance for charlist
 	if (glictGlobals.topFocused == &winCharlist.lstChars) {
 	    if (key.sym == SDLK_DOWN) {
-            int newchar = winCharlist.currentCharId+1;
+            uint32_t newchar = winCharlist.currentCharId+1;
             if (newchar >= winCharlist.lsiChars.size()) newchar = 0;
 	        winCharlist_t::OnListbox(NULL, winCharlist.lsiChars[newchar]);
 	        renderUI();
 	        return true;
 	    }
 	    if (key.sym == SDLK_UP) {
-            int newchar = winCharlist.currentCharId-1;
+            uint32_t newchar = winCharlist.currentCharId-1;
             if (newchar < 0) newchar = winCharlist.lsiChars.size()-1;
 	        winCharlist_t::OnListbox(NULL, winCharlist.lsiChars[newchar]);
 	        renderUI();

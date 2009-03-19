@@ -308,12 +308,12 @@ void GM_Debug::renderScene()
 		thing->Blit(100,50);
 
 
+/*
     int xs = px - mapw/2;
     int ys = py - maph/2;
     int xe = px + mapw/2;
     int ye = py + maph/2;
 
-/*
     if (map[0]) map[0]->Blit(0,0, xs%256, ys%256, 256-(xs%256), 256-(ys%256));
     if (map[1]) map[1]->Blit(256-(xs%256),0, 0, ys%256, mapw-(256-(xs%256)), 256-(ys%256));
     if (map[2]) map[2]->Blit(0,256-(ys%256), xs%256, 0, 256-(xs%256), maph-(256-(ys%256)));
@@ -326,7 +326,7 @@ void GM_Debug::renderScene()
     std::stringstream testchar;
     testchar << (char)('u'+32);
 
-    for (int i = 0; i < 255; i++) {
+    for(int i = 0; i < 255; i++) {
         g_engine->drawText(testchar.str().c_str(), "system", 0+(i%8)*12,300+(i/8)*12, i);
     }
 */
@@ -443,7 +443,7 @@ void GM_Debug::msgBox (const char* mbox, const char* title, glictContainer* focu
 
 void GM_Debug::MBOnDismiss(glictPos* pos, glictContainer* caller)
 {
-	GM_Debug* m = (GM_Debug*)g_game;
+	//GM_Debug* m = (GM_Debug*)g_game;
 	if (caller->GetCustomData()) {
 		glictContainer* focusOnDismiss = (glictContainer*)caller->GetCustomData();
 		focusOnDismiss->SetVisible(true);

@@ -446,7 +446,7 @@ BigInt &BigInt::operator-=( int n )
     if( sign == nsign )
     {
         BigInt bin = n;
-        if( sign >= 0 && *this < bin || sign < 0 && *this > bin )
+        if( ( sign >= 0 && *this < bin ) || ( sign < 0 && *this > bin ) )
         {
             // Subtracting a bigger number
             operator=( toInt() - n );
@@ -480,7 +480,7 @@ BigInt &BigInt::operator-=( BigInt n )
     if( !sign ) sign = 1;
     if( sign == n.sign )
     {
-        if( sign >= 0 && *this < n || sign < 0 && *this > n )
+        if( ( sign >= 0 && *this < n ) || ( sign < 0 && *this > n ) )
         {
             // Subtracting a bigger number
             BigInt tmp = n;

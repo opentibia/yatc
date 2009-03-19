@@ -40,6 +40,7 @@
 #include "protocolgame83.h"
 #include "protocolgame831.h"
 #include "protocolgame84.h"
+#include "protocolgame841.h"
 #include "../debugprint.h"
 #include "../util.h" // yatc_fopen
 
@@ -61,7 +62,7 @@ uint32_t ProtocolConfig::readSignature(const char* fn) {
 	uint32_t sig;
 	FILE*f=yatc_fopen(fn,"rb");
 	ASSERTFRIENDLY(f,"Could not find a data file although we found it in the past.");
-	fread(&sig, 4, 1, f);
+	yatc_fread(&sig, 4, 1, f);
 	fclose(f);
 	return sig;
 }
@@ -96,6 +97,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 		break;
 	case CLIENT_VERSION_840:
 		m_clientVersion = CLIENT_VERSION_840;
+		break;
+	case CLIENT_VERSION_841:
+		m_clientVersion = CLIENT_VERSION_841;
 		break;
 	default:
 		ASSERT(0);
@@ -153,6 +157,10 @@ ClientVersion_t ProtocolConfig::detectVersion()
         picSignature == 0x49144178)
         return CLIENT_VERSION_840;
 
+    if (datSignature == 0x49b7cc19 &&
+        sprSignature == 0x49b140ea &&
+        picSignature == 0x49144178)
+        return CLIENT_VERSION_841;
 
 	return CLIENT_VERSION_AUTO; // failure
 }
@@ -224,6 +232,9 @@ ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountnam
 		break;
 	case CLIENT_VERSION_840:
 		protocol = new ProtocolGame84(accountname, password, name, isGM);
+		break;
+	case CLIENT_VERSION_841:
+		protocol = new ProtocolGame841(accountname, password, name, isGM);
 		break;
 	default:
 		return NULL;

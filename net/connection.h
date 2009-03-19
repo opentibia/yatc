@@ -80,7 +80,8 @@ enum ClientVersion_t{
 	CLIENT_VERSION_822 = 822,
 	CLIENT_VERSION_830 = 830,
 	CLIENT_VERSION_831 = 831,
-	CLIENT_VERSION_840 = 840
+	CLIENT_VERSION_840 = 840,
+	CLIENT_VERSION_841 = 841
 };
 
 enum ClientOS_t{
@@ -208,12 +209,12 @@ class Protocol
 		void usesAccountName(bool doUseAccName) { m_usesaccountname = doUseAccName; }
 		bool doesUseAccountName() const { return m_usesaccountname; }
 
+		virtual const char* getProtocolName() = 0;
+
 	protected:
 		void setErrorDesc(const std::string& message){ setErrorDesc(message.c_str());}
 		void setErrorDesc(const char* message){ m_errorMessage = message;}
 		void addServerCmd(uint8_t type);
-
-		virtual const char* getProtocolName() = 0;
 
 		Connection* m_connection;
 		NetworkMessage* m_currentMsg;

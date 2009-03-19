@@ -61,7 +61,7 @@ bool ConfigHandler::loadConfig(const char* filename)
 	fseek(f, 0, SEEK_SET);
 
 	char* content = new char[size];
-	fread(content, 1, size, f);
+	yatc_fread(content, 1, size, f);
 
 	//bool sector = false;
 	int currentSection = 0;
