@@ -245,22 +245,22 @@ bool Objects::loadDat(const char* filename)
 	//get max id
 	fseek(fp, 0x04, SEEK_SET);
 	//Items
-	fread(&read_short, 2, 1, fp);
+	yatc_fread(&read_short, 2, 1, fp);
 	ObjectType::minItemId = 100;
 	ObjectType::maxItemId = read_short;
 	maxObjects += ObjectType::maxItemId;
 	//Outfits
-	fread(&read_short, 2, 1, fp);
+	yatc_fread(&read_short, 2, 1, fp);
 	ObjectType::minOutfitId = 0;
 	ObjectType::maxOutfitId = read_short;
 	maxObjects += ObjectType::maxOutfitId;
 	//Effects
-	fread(&read_short, 2, 1, fp);
+	yatc_fread(&read_short, 2, 1, fp);
 	ObjectType::minEffectId = 0;
 	ObjectType::maxEffectId = read_short;
 	maxObjects += ObjectType::maxEffectId;
 	//Distance
-	fread(&read_short, 2, 1, fp);
+	yatc_fread(&read_short, 2, 1, fp);
 	ObjectType::minDistanceId = 0;
 	ObjectType::maxDistanceId = read_short;
 	maxObjects += ObjectType::maxDistanceId;
@@ -282,7 +282,7 @@ bool Objects::loadDat(const char* filename)
 		while(((optbyte = fgetc(fp)) >= 0) && (optbyte != 0xFF)){
 			switch(optbyte){
 				case 0x00: //Ground tile
-						fread(&read_short, 2, 1, fp);
+						yatc_fread(&read_short, 2, 1, fp);
 						oType->speed = read_short;
 						oType->ground = true;
 						oType->alwaysOnTopOrder = 0;
@@ -317,11 +317,11 @@ bool Objects::loadDat(const char* filename)
 					break;
 				case 0x09: //Writtable/Readable Objectss
 						oType->readable = true;
-						fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+						yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
 						break;
 				case 0x0A: //Writtable Objectss that can't be edited
 						oType->readable = true;
-						fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+						yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
 					break;
 				case 0x0B: //Fluid containers
 						oType->fluidContainer = true;
@@ -357,9 +357,9 @@ bool Objects::loadDat(const char* filename)
 						oType->rotatable = true;
 					break;
 				case 0x16: //Light info
-						fread(&read_short, sizeof(read_short), 1, fp);
+						yatc_fread(&read_short, sizeof(read_short), 1, fp);
 						oType->lightLevel = read_short;
-						fread(&read_short, sizeof(read_short), 1, fp);
+						yatc_fread(&read_short, sizeof(read_short), 1, fp);
 						oType->lightColor = read_short;
 					break;
 				case 0x17:  //Floor change?
@@ -369,15 +369,15 @@ bool Objects::loadDat(const char* filename)
 						optbyte = optbyte;
 					break;
 				case 0x19: //Offset?
-						fread(&read_short, sizeof(read_short), 1, fp);
+						yatc_fread(&read_short, sizeof(read_short), 1, fp);
 						oType->xOffset = read_short;
-						fread(&read_short, sizeof(read_short), 1, fp);
+						yatc_fread(&read_short, sizeof(read_short), 1, fp);
 						oType->yOffset = read_short;
 					break;
 				case 0x1A:
 						oType->hasHeight = true;
 						// (should be) the height change in px; Tibia always uses 8
-						fread(&read_short, sizeof(read_short), 1, fp); // ?
+						yatc_fread(&read_short, sizeof(read_short), 1, fp); // ?
 					break;
 				case 0x1B://draw with height offset for all parts (2x2) of the sprite
 
@@ -386,7 +386,7 @@ bool Objects::loadDat(const char* filename)
 
 					break;
 				case 0x1D:
-						fread(&read_short, sizeof(read_short), 1, fp);
+						yatc_fread(&read_short, sizeof(read_short), 1, fp);
 						oType->mapColor = read_short;
 					break;
 				case 0x1E:  //line spot
@@ -427,7 +427,7 @@ bool Objects::loadDat(const char* filename)
         ASSERT(oType->imageData);
 
 		for(unsigned int i = 0; i < oType->numsprites; i++) {
-			fread(&oType->imageData[i], sizeof(uint16_t), 1, fp);
+			yatc_fread(&oType->imageData[i], sizeof(uint16_t), 1, fp);
 		}
 
 		if(id <= ObjectType::maxItemId){

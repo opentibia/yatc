@@ -236,8 +236,8 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			goto loadFail;
 		}
 
-		fread(&signature, sizeof(signature), 1, f);
-		fread(&sprcount, sizeof(sprcount), 1, f);
+		yatc_fread(&signature, sizeof(signature), 1, f);
+		yatc_fread(&sprcount, sizeof(sprcount), 1, f);
 		if(index >= sprcount){// i can't do this, captain, there's not enough power
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Loading spr index %d while we have %d sprites in file.\n", index, sprcount);
 			goto loadFail; // she won't hold it much longer
@@ -245,7 +245,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 		// read the pointer to the real SPR data
 		fseek(f, (index-1)*4, SEEK_CUR);
-		fread(&where, sizeof(where), 1, f);
+		yatc_fread(&where, sizeof(where), 1, f);
 
 		// create surface where we'll store data, and fill it with transparency
 		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, rmask, gmask, bmask, amask);
@@ -298,10 +298,10 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			goto loadFail;
 		}
 
-		fread(&fh, sizeof(fh), 1, f);
+		yatc_fread(&fh, sizeof(fh), 1, f);
 
 		for(int i = 0; i < fh.imgcount && i <= index ; i++) {
-			fread(&ph, sizeof(ph), 1, f);
+			yatc_fread(&ph, sizeof(ph), 1, f);
 
 			if(i == index){
 				s = SDL_CreateRGBSurface(SDL_SWSURFACE, ph.width*32, ph.height*32, 32, rmask, gmask, bmask, amask);
@@ -316,7 +316,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 				for(int j = 0; j < ph.height; j++){
 					for(int k = 0; k < ph.width; k++){
-						fread(&sprloc, sizeof(sprloc), 1, f);
+						yatc_fread(&sprloc, sizeof(sprloc), 1, f);
 
 						int oldloc = ftell(f);
 						int r;

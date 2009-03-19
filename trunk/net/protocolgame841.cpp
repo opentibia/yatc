@@ -18,32 +18,25 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include "../fassert.h"
+#include "protocolgame841.h"
 
-#ifndef __UTIL_H
-#define __UTIL_H
-
-#include <string>
-#include <sstream>
-#if defined(WIN64) || __WORDSIZE == 64
-    #define VOIDP2INT(x) (   static_cast<int>(reinterpret_cast<long long>(x)) )
-#else
-    #define VOIDP2INT(x) ((int)(x))
-#endif
-void str_replace(std::string &s, const std::string& what, const std::string& with);
-void NativeGUIError(const char* text, const char *title);
-bool fileexists(const char* filename);
-void yatc_fread(void* ptr, size_t size, size_t count, FILE *stream);
-void yatc_fwrite(void* ptr, size_t size, size_t count, FILE *stream);
-FILE *yatc_fopen(const char* filename, const char* mode);
-void yatc_fopen_init(char* cmdline);
-std::string yatc_findfile(const char* filename);
-#define nextpow(n) (n <= 2 ? 2 : (n <= 4 ? 4 : (n <= 8 ? 8 : (n <= 16 ? 16 : (n <= 32 ? 32 : (n <= 64 ? 64 : (n <= 128 ? 128 : (n <= 256 ? 256 : (n <= 512 ? 512 : 1024)))))))))
-
-inline std::string yatc_itoa(int val)
+ProtocolGame841::ProtocolGame841(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
+ProtocolGame84(accountname, password, name, isGM)
 {
-	std::stringstream b;
-	b << val;
-	return b.str();
+	//
 }
 
-#endif
+ProtocolGame841::~ProtocolGame841()
+{
+	//
+}
+
+void ProtocolGame841::checkVersion()
+{
+	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_841);
+}
+
+
+
+//////

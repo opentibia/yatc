@@ -75,7 +75,8 @@ void NativeGUIError(const char* text, const char *title) {
 		std::stringstream cmd;
 		cmd << "xmessage -title \"" << title << "\" -center \"" << texts << "\"";
 
-		system(cmd.str().c_str());
+		int dummy = system(cmd.str().c_str());
+		dummy = 0;
 	#endif
 }
 
@@ -126,6 +127,24 @@ std::string yatc_findfile(const char* filename){
 	    return filename;
 	}
 	return "";
+}
+
+void yatc_fread(void* ptr, size_t size, size_t count, FILE *stream) {
+	/*
+	 * "warning: ignoring return value of ‘size_t fread(void*, size_t, size_t, FILE*)’, declared with attribute warn_unused_result"
+	 */
+
+	size_t dummy = fread(ptr, size, count, stream);
+	dummy = 0;
+}
+
+void yatc_fwrite(void* ptr, size_t size, size_t count, FILE *stream) {
+	/*
+	 * "warning: ignoring return value of ‘fwrite’, declared with attribute warn_unused_result"
+	 */
+
+	size_t dummy = fwrite(ptr, size, count, stream);
+	dummy = 0;
 }
 
 FILE *yatc_fopen(const char* filename, const char* mode) {
@@ -310,7 +329,8 @@ openurl(const char *url)
         snprintf(buffer, sizeof(buffer), "which %s >/dev/null", apps[i]);
         if (system(buffer) == 0) {
             snprintf(buffer, sizeof(buffer), "%s %s", apps[i], url);
-            system(buffer);
+            int dummy = system(buffer);
+            dummy = 0;
             return;
         }
         i++;

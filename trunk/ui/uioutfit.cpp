@@ -227,7 +227,7 @@ void winOutfit_t::openSelf(const Outfit_t& current, const std::list<AvailOutfit_
     m_availableOutfits = available;
     m_currentOutfit = m_availableOutfits.begin();
     for(std::list<AvailOutfit_t>::iterator it = m_availableOutfits.begin(); it!=m_availableOutfits.end();it++)
-        if(current.m_looktype == it->id)
+        if(current.m_looktype == (unsigned)it->id)
             m_currentOutfit = it;
     rebuildGfx();
 

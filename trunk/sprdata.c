@@ -35,11 +35,11 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 {
     uint16_t size;
 	register uint16_t destination=0;
-	size_t i=0;
+	size_t i=0, dummy=0;
 	register uint16_t j=0;
 	register char transparent = 1;
 
-	fread(&size, 2, 1, f);
+	dummy = fread(&size, 2, 1, f);
 	if (size > 3444) {
 		SDL_UnlockSurface(surface);
 		SDL_FreeSurface(surface);
@@ -52,7 +52,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 		uint16_t pixelchunksize;
 		register uint32_t color=0;
 		unsigned char rgba[3];
-		fread(&pixelchunksize, 2, 1, f);
+		dummy = fread(&pixelchunksize, 2, 1, f);
 		if(pixelchunksize > 3076){
 			/* captain, the warp core breach has happened! what shall we do?! */
 			SDL_UnlockSurface(surface);
@@ -64,7 +64,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 
 		if(!transparent){
 			for(j = 0; j < pixelchunksize; j++){
-				fread(&rgba, 3, 1, f);
+				dummy = fread(&rgba, 3, 1, f);
 				color = SDL_MapRGB(surface->format, rgba[0], rgba[1], rgba[2]);
 				putPixel(surface, offx+(destination+j) % 32, offy+(destination+j) / 32, color);
 			}
@@ -82,7 +82,7 @@ int prob;
 int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *datasize)
 {
     /* adaptation of algorithm from Trooper's editor */
-	int sizepos;
+	int sizepos, dummy;
 	unsigned long i;
 	uint16_t chunksize;
 	unsigned long chunksizepos;
@@ -116,7 +116,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 			i++;
 			chunksize++;
 		}
-		fwrite(&chunksize, 2, 1, f);
+		dummy = fwrite(&chunksize, 2, 1, f);
 
 		if (i >= 1024) break;
 		if (transparent) break;
@@ -140,14 +140,14 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 
 /*			debugprintf("%c%c", ((color/256) % 200 + 32), ((i%32 == 31) ? '\n' : 0));*/
 
-			fwrite(rgba, 3, 1, f);
+			dummy = fwrite(rgba, 3, 1, f);
 
 			i++;
 			chunksize++;
 		}
 
 		fseek(f, chunksizepos, SEEK_SET);
-		fwrite(&chunksize, 2, 1, f);
+		dummy = fwrite(&chunksize, 2, 1, f);
 
 		fseek(f, chunksize*3, SEEK_CUR);
 
@@ -157,7 +157,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 	if (transparent) i-=2;
 
 	fseek(f, sizepos, SEEK_SET);
-	fwrite(&i, 2, 1, f);
+	dummy = fwrite(&i, 2, 1, f);
 	*datasize = i;
 
 	SDL_UnlockSurface(surface);
@@ -170,7 +170,7 @@ int writeSprData__old(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_
 	int transparent = 1;
 	int sizepos, chunksizepos, continuationpos;
 	uint16_t size = 0, chunksize = 0;
-	int done = 0;
+	int done = 0, dummy = 0;
 
 	sizepos = ftell(f);
 	fseek(f, 2, SEEK_CUR);
@@ -188,7 +188,7 @@ int writeSprData__old(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_
 		/* if we're drawing transparency, and we encountered a nontransparent pixel or we're done */
 		if(transparent && ((color != SDL_MapRGB(surface->format, 255, 0, 255) && color != SDL_MapRGB(surface->format, 254, 0, 254)) || done)){
 			transparent = 0; /* then we're no longer encountering transparency */
-			fwrite(&chunksize, 2, 1, f); /* we should write down the chunk size (since we have not written any other byte in meantime, we can directly write it down) */
+			dummy = fwrite(&chunksize, 2, 1, f); /* we should write down the chunk size (since we have not written any other byte in meantime, we can directly write it down) */
 			chunksize = 0;
 			size += 2;
 			chunksizepos = ftell(f); /* next time we write down chunksize, we'll put it straight after this chunksize */
@@ -200,7 +200,7 @@ int writeSprData__old(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_
 
 			continuationpos = ftell(f);
 			fseek(f, chunksizepos, SEEK_SET);
-			fwrite(&chunksize, 2, 1, f);
+			dummy = fwrite(&chunksize, 2, 1, f);
 			fseek(f, continuationpos, SEEK_SET);
 			size += 2;
 			chunksize = 0;
@@ -209,7 +209,7 @@ int writeSprData__old(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_
 		if (!transparent && !done) { /* if we're getting solid stuff draw em */
 			unsigned char rgb[3];
 			SDL_GetRGB(color, surface->format, rgb, rgb+1, rgb+2);
-			fwrite(rgb, 3, 1, f);
+			dummy = fwrite(rgb, 3, 1, f);
 			size += 3;
 		}
 		chunksize += 1;
@@ -218,7 +218,7 @@ int writeSprData__old(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_
 
 	size += 2;
 	fseek(f, sizepos, SEEK_SET);
-	fwrite(&size, 2, 1, f);
+	dummy = fwrite(&size, 2, 1, f);
 	*datasize = size;
 	SDL_LockSurface(surface);
 	return 0;

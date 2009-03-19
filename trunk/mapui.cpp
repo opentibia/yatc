@@ -503,10 +503,10 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 	printf("Limitx: 0 - %d\n", m_vpw);
 	printf("Limity: 0 - %d\n", m_vph);
 
-	if (x < 0 || x > m_vpw) {
+	if (x < 0 || (unsigned)x > m_vpw) {
 		return NULL;
 	}
-	if (y < 0 || y > m_vph) {
+	if (y < 0 || (unsigned)y > m_vph) {
 		return NULL;
 	}
 

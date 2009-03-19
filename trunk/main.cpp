@@ -203,7 +203,8 @@ void checkFile(const char *filename)
         // hack to make the cmdline box disappear
         if (fetcherfn == "tdffetcher.exe") fetcherfn = "start tdffetcher.exe";
 
-        system(fetcherfn.c_str());
+        int dummy = system(fetcherfn.c_str());
+        dummy = 0;
 
 
 		exit(1);
@@ -486,7 +487,7 @@ int main(int argc, char *argv[])
 
             //g_engine->fpsMutexLock();
 
-            int beginticks = SDL_GetTicks();
+            //int beginticks = SDL_GetTicks();
             g_engine->performFpsCalc();
 
 			//first process sdl events

@@ -79,7 +79,7 @@ void DEBUGPRINTx (char msgdebuglevel, char type, const char* txt, ...)
 
 		switch (type) {
 			default:
-				printf(tx);
+				printf("%s", tx);
 				#ifdef WINCE
 				fprintf(lf, "%s", tx);
 				#endif

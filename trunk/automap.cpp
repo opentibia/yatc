@@ -56,17 +56,17 @@ bool MiniMapArea::save()
     if(!f){
     	return false;
     }
-    fwrite(m_color, 1, 256*256, f);
-    fwrite(m_speed, 1, 256*256, f);
+    yatc_fwrite(m_color, 1, 256*256, f);
+    yatc_fwrite(m_speed, 1, 256*256, f);
 
     //save map marks if any
     for(std::list<MapMark*>::iterator it = m_marks.begin(); it != m_marks.end(); ++it){
-    	fwrite(&((*it)->x), 1, 4, f);
-    	fwrite(&((*it)->y), 1, 4, f);
-    	fwrite(&((*it)->type), 1, 4, f);
+    	yatc_fwrite(&((*it)->x), 1, 4, f);
+    	yatc_fwrite(&((*it)->y), 1, 4, f);
+    	yatc_fwrite(&((*it)->type), 1, 4, f);
 		uint16_t length = (*it)->text.size();
-    	fwrite(&length, 1, 2, f);
-    	fwrite((*it)->text.c_str(), 1, length, f);
+    	yatc_fwrite(&length, 1, 2, f);
+    	yatc_fwrite(const_cast<char*>((*it)->text.c_str()), 1, length, f);
     }
 
 
@@ -89,24 +89,24 @@ bool MiniMapArea::load()
     }
     else{
 
-		fread(m_color, 1, 256*256, f);
-		fread(m_speed, 1, 256*256, f);
+		yatc_fread(m_color, 1, 256*256, f);
+		yatc_fread(m_speed, 1, 256*256, f);
 
 		if(!feof(f)){ //there are map marks
 			int32_t marksCount = 0;
-			fread(&marksCount, 4, 1, f);
+			yatc_fread(&marksCount, 4, 1, f);
 			if(marksCount > 100) marksCount = 100;
 			for(int i = 0; i < marksCount; ++i){
 				uint32_t x, y, type;
 				uint16_t length;
 				char *text;
 
-				fread(&x, 4, 1, f);
-				fread(&y, 4, 1, f);
-				fread(&type, 4, 1, f);
-				fread(&length, 2, 1, f);
+				yatc_fread(&x, 4, 1, f);
+				yatc_fread(&y, 4, 1, f);
+				yatc_fread(&type, 4, 1, f);
+				yatc_fread(&length, 2, 1, f);
 				text = new char[length + 1];
-				fread(text, length, 1, f);
+				yatc_fread(text, length, 1, f);
 				text[length] = 0;
 
 				MapMark* mark = new MapMark(x, y, type, text);
