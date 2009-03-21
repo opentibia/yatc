@@ -35,7 +35,8 @@ class ProtocolGame : public Protocol
 	public:
 		virtual ~ProtocolGame();
 
-		virtual void onConnect();
+        virtual void onConnect();
+        virtual void sendLogin(NetworkMessage*msg=NULL);
 		virtual bool onRecv(NetworkMessage& msg) = 0;
 
         //receive functions
