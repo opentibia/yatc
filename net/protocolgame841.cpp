@@ -20,7 +20,8 @@
 
 #include "../fassert.h"
 #include "protocolgame841.h"
-
+#include "gamecontent/position.h"
+#include "gamecontent/map.h"
 ProtocolGame841::ProtocolGame841(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame84(accountname, password, name, isGM)
 {
@@ -40,3 +41,47 @@ void ProtocolGame841::checkVersion()
 
 
 //////
+
+
+bool ProtocolGame841::parsePacket(uint8_t cmd, NetworkMessage& msg)
+{
+    // example for overrides
+    printf("%s\n", __PRETTY_FUNCTION__);
+    printf("Packet %02x\n", cmd);
+    switch(cmd){
+    case 0x1F:
+        //m_connection->setChecksumState(false);
+        sendLogin(&msg);
+        return true;
+    }
+    return ProtocolGame::parsePacket(cmd,msg);
+}
+
+void ProtocolGame841::onConnect()
+{
+    // we do logging in by handling 0x1F
+    // here we only tell "skip checksum in unencypted packet"
+    printf("%s\n", __PRETTY_FUNCTION__);
+    m_connection->setChecksumState(true);
+}
+
+bool ProtocolGame841::parseTileAddThing(NetworkMessage& msg)
+{
+    MSG_READ_POSITION(tilePos);
+    MSG_READ_U8(stackPos); // thomac says it behaves weird and is most probably some kind of check ... we can probably ignore it
+    Thing* thing = internalGetThing(msg);
+    if(!thing){
+        RAISE_PROTOCOL_ERROR("Tile Add - getThing");
+    }
+
+    Tile* tile = Map::getInstance().getTile(tilePos);
+    if(!tile){
+        RAISE_PROTOCOL_ERROR("Tile Add - !tile");
+    }
+
+    if(!tile->addThing(thing, true)){
+        RAISE_PROTOCOL_ERROR("Tile Add - addThing");
+    }
+    Notifications::onTileUpdate(tilePos);
+    return true;
+}

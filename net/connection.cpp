@@ -473,7 +473,7 @@ void Connection::executeNetwork()
 				m_state = STATE_CONNECTED;
 
 				//raise onConnect event
-				m_protocol->onConnect();
+                m_protocol->onConnect();
 			}
 			else if(ret != SOCKET_ERROR && optError != 0){
 				//connection failed
@@ -564,6 +564,13 @@ void Connection::executeNetwork()
 							closeConnectionError(ERROR_DECRYPT_FAIL);
 							return;
 						}
+					} else {
+                        // this is 8.41 specific
+                        // data in unencrypted packets is now including unencrypted length,
+                        // + encrypted length ... although packet is not encrypted
+                        // let's just cut the cr/\p
+                        uint16_t size = m_inputMessage.getU16();
+                        //m_inputMessage.setSize(size);
 					}
 					//raise onRecv event
 					if(!m_protocol->onRecv(m_inputMessage)){

@@ -51,8 +51,17 @@ ProtocolGame::~ProtocolGame()
 
 void ProtocolGame::onConnect()
 {
-	printf("Connected!\n");
+    sendLogin();
+}
+
+void ProtocolGame::sendLogin(NetworkMessage* msg)
+// *msg passed so we can get the garbage servers send, and include it in our response
+// if null, we dont need to respond (8.40 or earlier)
+{
+	printf("Logging into gameworld server\n");
 	ProtocolConfig& config = ProtocolConfig::getInstance();
+
+
 	NetworkMessage output(NetworkMessage::CAN_WRITE);
 	output.addU8(0x0A); //Game world Protocol
 	output.addU16(config.getOS());
@@ -81,6 +90,18 @@ void ProtocolGame::onConnect()
 	}
 	output.addString(m_name);
 	output.addString(m_password);
+
+	if (msg)
+	{
+	    // we got the garbage
+        // packets of form 0x1F <garbage 5 bytes>
+        // doc by thomac
+	    output.addU16(msg->getU16()); // random 2 bytes
+	    output.addU16(msg->getU16()); // 00 00
+	    output.addU8(msg->getU8()); // random 1 byte
+	    // also skip 3 more "encryption alignment" bytes
+	    //msg->getU8(); msg->getU8(); msg->getU8();
+	}
 
 	//RSA size has to be 128
 	int rsaSize = output.getSize() - sizeBefore;
