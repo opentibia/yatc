@@ -25,6 +25,7 @@
 #include <list>
 #include <map>
 #include "gamecontent/position.h"
+#include "stdinttypes.h"
 class Sprite;
 
 class MiniMapArea{

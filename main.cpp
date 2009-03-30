@@ -169,13 +169,15 @@ void checkFile(const char *filename)
         if ((fetcherfn=yatc_findfile("tdffetcher"))=="") {
 		    if ((fetcherfn=yatc_findfile("tdffetcher.exe"))=="") {
                 std::string forreplace;
+#ifdef _LINUX
                 forreplace = gettext("Loading the data file 'FILENAMEHERE' has failed.\n"
                         "Please place 'FILENAMEHERE' in the same folder as " PRODUCTSHORT ".\n"
-                        #if !defined(WIN32) && !defined(__APPLE__)
                         "If you are a Debian user, you may have forgotten to install\n"
-                        "the 'tibia-data' or 'yatc-data' package."
-                        #endif
-                        );
+                        "the 'tibia-data' or 'yatc-data' package.");
+#else
+				                forreplace = gettext("Loading the data file 'FILENAMEHERE' has failed.\n"
+                        "Please place 'FILENAMEHERE' in the same folder as " PRODUCTSHORT ".\n");
+#endif
 
                 str_replace(forreplace, "FILENAMEHERE", filename);
                 NativeGUIError(forreplace.c_str(), gettext(PRODUCTSHORT " Fatal Error"));
@@ -185,17 +187,23 @@ void checkFile(const char *filename)
 
         std::string forreplace;
 
+#ifdef _LINUX
         forreplace = gettext("You are missing 'FILENAMEHERE'.\n"
                 "We will launch Tibia Data File Fetcher which should automatically install\n"
                 "data files required for " PRODUCTSHORT ".\n"
                 "\n"
                 "You will have to manually restart YATC afterwards.\n"
                 "\n"
-                #if !defined(WIN32) && !defined(__APPLE__)
                 "If you are a Debian user, you may have forgotten to install\n"
-                "the 'tibia-data' or 'yatc-data' package."
-                #endif
-                );
+                "the 'tibia-data' or 'yatc-data' package.");
+#else
+		        forreplace = gettext("You are missing 'FILENAMEHERE'.\n"
+                "We will launch Tibia Data File Fetcher which should automatically install\n"
+                "data files required for " PRODUCTSHORT ".\n"
+                "\n"
+                "You will have to manually restart YATC afterwards.\n"
+                "\n");
+#endif
         str_replace(forreplace, "FILENAMEHERE", filename);
 
         NativeGUIError(forreplace.c_str(), gettext(PRODUCTSHORT " Missing Files"));

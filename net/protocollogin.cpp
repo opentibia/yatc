@@ -19,6 +19,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <stdlib.h> // srand, rand
+#include <time.h> // time
+
 #include "../fassert.h"
 #include "protocollogin.h"
 #include "networkmessage.h"

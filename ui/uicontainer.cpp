@@ -84,7 +84,7 @@ winContainer_t::winContainer_t(Container* _container, uint32_t cid) {
     for(uint32_t i = 0; i != container->getCapacity(); ++i)
     {
         glictPanel* panel = new ItemPanel(container, i, Position(0xFFFF, containerId | 0x40, i));
-        panel->SetPos(5 + ((i % 4) * 36), 4 + (std::floor(i / 4) * 36));
+        panel->SetPos(5 + ((i % 4) * 36), 4 + (std::floor(i / 4.0f) * 36));
 
         panel->SetSkin(&g_skin.inv);
         winpanel.AddObject(panel);

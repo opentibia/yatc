@@ -165,7 +165,7 @@ void winTrade_t::onTradeUpdate(bool ack)
 	for(uint32_t i = 0; i != container->getCapacity(); ++i)
     {
         ItemPanel* panel = new ItemPanel(container, i, Position(0,0,0));
-        panel->SetPos(5 + ((i % 2) * 36), 4 + (std::floor(i / 2) * 36));
+        panel->SetPos(5 + ((i % 2) * 36), 4 + (std::floor(i / 2.0f) * 36));
         panel->SetOnClick(tradeItemOnClick);
         //panel->SetOnPaint(tradeItemOnPaint);
 		panel->SetOnMouseUp(NULL);

@@ -46,7 +46,11 @@
 #endif
 
 #ifndef DEBUGLEVEL_BUILDTIME
-	#warning You should define DEBUGLEVEL_BUILDTIME in compiler options.
+	#ifndef _MSC_VER
+		#warning You should define DEBUGLEVEL_BUILDTIME in compiler options.
+	#else
+		#pragma warning(You should define DEBUGLEVEL_BUILDTIME in compiler options.)
+	#endif
 	#define DEBUGLEVEL_BUILDTIME 0
 #endif
 char debuglevel=DEBUGLEVEL_BUILDTIME;

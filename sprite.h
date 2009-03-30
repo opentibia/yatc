@@ -25,6 +25,10 @@
 #ifdef __APPLE__
 	#include <OpenGL/glu.h>
 #else
+	#ifdef _WIN32
+		#define WIN32_LEAN_AND_MEAN
+		#include <windows.h>
+	#endif	
 	#include <GL/glu.h>
 #endif
 #endif
@@ -33,7 +37,7 @@
 #include <SDL/SDL.h>
 #include "stdinttypes.h"
 
-class SDL_Surface;
+struct SDL_Surface;
 class oRGBA;
 class Sprite
 {

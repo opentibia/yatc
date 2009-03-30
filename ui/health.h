@@ -41,6 +41,8 @@ class pnlHealth_t {
 public:
 #if (GLICT_APIREV >= 98)
     glictPanel panel; // 170x34
+#elif _MSC_VER
+	 __declspec(deprecated) glictWindow panel;
 #else
     glictWindow panel __attribute__ ((deprecated));
 #endif
@@ -65,7 +67,11 @@ public:
 		panel.SetSkin(&g_skin.background);
 		panel.SetFocusable(true);
 		#else
-		#warning Health is not properly drawn until you upgrade to GLICT 98+
+			#ifdef _MSC_VER
+				#pragma warning(Health is not properly drawn until you upgrade to GLICT 98+)
+			#else
+				#warning Health is not properly drawn until you upgrade to GLICT 98+
+			#endif	
 		panel.SetCaption(gettext("Health"));
 		#endif
 

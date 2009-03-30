@@ -33,6 +33,11 @@
 #include "../gamecontent/inventory.h"
 #include "../gamecontent/shop.h" // 8.2+
 
+#ifndef min
+#include <algorithm> // std::min
+#define min std::min
+#endif
+
 ProtocolGame::ProtocolGame(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 m_outputMessage(NetworkMessage::CAN_WRITE)
 {
@@ -1796,7 +1801,7 @@ bool ProtocolGame::setMapDescription(NetworkMessage& msg, int x, int y, int z, i
 	//calculate map limits
 	if(z > 7){
 		startz = z - 2;
-		endz = std::min(MAP_LAYER - 1, z + 2);
+		endz = min(MAP_LAYER - 1, z + 2);
 		zstep = 1;
 	}
 	else{

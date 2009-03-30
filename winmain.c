@@ -8,6 +8,7 @@
  * any output in the console (for me) when building with DevCpp's MinGW.
  * They probably messed up stdout.
  */
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <stdlib.h>
 #define MAX_EXE_NAME_LEN	256
