@@ -26,6 +26,7 @@
 
 #if defined(WIN32) || defined(_MSC_VER)
 
+#define WIN32_LEAN_AND_MEAN
 #include <winsock2.h>
 #include <windows.h>
 

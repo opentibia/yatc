@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <SDL/SDL.h>
-#include <algorithm> // std::min
+
 #ifdef WINCE
 #include <windows.h>
 #include "../util.h"
@@ -43,6 +43,11 @@
 #include "protocolgame841.h"
 #include "../debugprint.h"
 #include "../util.h" // yatc_fopen
+
+#ifndef min
+#include <algorithm> // std::min
+#define min std::min
+#endif
 
 const char RSAKey_otserv[] = "109120132967399429278860960508995541528237502902798129123468757937266291492576446330739696001110603907230888610072655818825358503429057592827629436413108566029093628212635953836686562675849720620786279431090218017681061521755056710823876476444260558147179707119674283982419152118103759076030616683978566631413";
 const char RSAKey_cip[]    = "124710459426827943004376449897985582167801707960697037164044904862948569380850421396904597686953877022394604239428185498284169068581802277612081027966724336319448537811441719076484340922854929273517308661370727105382899118999403808045846444647284499123164879035103627004668521005328367415259939915284902061793";
@@ -705,7 +710,7 @@ void Connection::sendMessage(NetworkMessage& msg)
 	//wait until all bytes are sent
 	int sendBytes = 0;
 	do{
-		socketret_t b = send(m_socket, msg.getBuffer() + sendBytes, std::min(msg.getSize() - sendBytes, 1000), 0);
+		socketret_t b = send(m_socket, msg.getBuffer() + sendBytes, min(msg.getSize() - sendBytes, 1000), 0);
 		if(b <= 0){
 			closeConnectionError(ERROR_SEND_FAIL);
 			return;

@@ -70,7 +70,7 @@ DistanceUI::DistanceUI(const Position& from, const Position& to, uint32_t type) 
 			m_direction = 7;//DIR_S;
 	}
 	//Distance effect speed = 10 tile/s
-	m_flightTime = sqrt(dx*dx + dy*dy)/10.f;
+	m_flightTime = sqrt((float)dx*dx + dy*dy)/10.f;
 
 	if(!m_obj){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[DistanceUI::DistanceUI] Invalid distance effect %d\n", type);

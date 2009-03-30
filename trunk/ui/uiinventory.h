@@ -36,7 +36,7 @@
     #define gettext(x) (x)
 #endif
 
-#include "popup.h"
+#include "../popup.h"
 #include "itempanel.h"
 
 class pnlInventory_t {
@@ -46,6 +46,8 @@ public:
 
 #if (GLICT_APIREV >= 98)
     glictPanel panel; // 170x34
+#elif _MSC_VER
+	__declspec(deprecated) glictWindow panel;
 #else
 	glictWindow panel __attribute__((deprecated));
 #endif
