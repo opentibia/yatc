@@ -20,7 +20,7 @@ y
 ./autorelease.patchchangelog.sh
 EOF
 
-sed s/YATCVERS/0.2.4~nightly-`date +%Y%m%d`/g autorelease.tmp > autorelease.tmp.new
+sed s/YATCVERS/0.3.1~nightly-`date +%Y%m%d`/g autorelease.tmp > autorelease.tmp.new
 mv autorelease.tmp.new autorelease.tmp
 
 cat - > autorelease.patchchangelog.sh << EOF
