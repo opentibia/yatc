@@ -894,8 +894,6 @@ void GM_Gameworld::onChangeStats()
 void GM_Gameworld::onTileUpdate(const Position& pos)
 {
     Tile* t = Map::getInstance().getTile(pos);
-    t->getMinimapColor();
-    t->getSpeedIndex();
     m_automap.setTileColor(pos.x,pos.y,pos.z, t->getMinimapColor(), t->getSpeedIndex());
 }
 
@@ -920,7 +918,6 @@ std::vector<Console*>::iterator GM_Gameworld::findConsole_it(const std::string& 
     }
     printf("Creating console for speaker\n");
     createConsole(speaker);
-    printf("Success\n");
     return m_consoles.end()-1;
 }
 
