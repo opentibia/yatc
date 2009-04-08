@@ -32,6 +32,7 @@
 #include "ui/uishop.h"
 #include "ui/uitrade.h"
 #include "ui/uioutfit.h"
+#include "ui/minimap.h"
 #include "stackpanel.h"
 #include "automap.h"
 
@@ -142,6 +143,7 @@ private:
 
 	pnlInventory_t pnlInventory;
 	pnlHealth_t pnlHealth;
+	pnlMap_t pnlMap;
 	winSkills_t winSkills;
 	winShop_t winShop;
 	winTrade_t winTrade;

@@ -67,7 +67,7 @@ void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
 	}
 }
 
-GM_Gameworld::GM_Gameworld()
+GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 {
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting gameworld...\n");
 
@@ -111,12 +111,15 @@ GM_Gameworld::GM_Gameworld()
 
     RIGHTSIDE.AddObject(&pnlTraffic);
 	if (!AUTOSETPOS) pnlTraffic.SetPos(0,0);
+	RIGHTSIDE.AddObject(&pnlMap.panel);
+	if (!AUTOSETPOS) pnlMap.panel.SetPos(600, 20);
 	RIGHTSIDE.AddObject(&pnlInventory.panel);
-	if (!AUTOSETPOS) pnlInventory.panel.SetPos(600, 20);
+	if (!AUTOSETPOS) pnlInventory.panel.SetPos(600, 148);
 	RIGHTSIDE.AddObject(&pnlHealth.panel);
-	if (!AUTOSETPOS) pnlHealth.panel.SetPos(600, 350);
+	if (!AUTOSETPOS) pnlHealth.panel.SetPos(600, 478);
 	RIGHTSIDE.AddObject(&winSkills.window);
-	if (!AUTOSETPOS) winSkills.window.SetPos(600, 180);
+	if (!AUTOSETPOS) winSkills.window.SetPos(600, 308);
+
 
 	#if (GLICT_APIREV>=95)
     yspRightSide.RebuildList();
@@ -200,7 +203,8 @@ GM_Gameworld::~GM_Gameworld ()
 	Objects::destroyInstance();
 
 
-    if(!Objects::getInstance()->loadDat("Tibia.dat")){
+	if(!Objects::getInstance()->loadDat("Tibia.dat")){
+	//if(!fileexists("Tibia.dat")){
         NativeGUIError("Tibia.dat suddenly disappeared during client's runtime.", "What?!");
     }
 
@@ -272,7 +276,7 @@ void GM_Gameworld::updateScene()
 	#endif
 
 	m_mapui.renderMap();
-	m_automap.renderSelf(options.w-256 -170, 0, 256,256, GlobalVariables::getPlayerPosition());
+	//m_automap.renderSelf(options.w-128 -170, 0, 128,128, GlobalVariables::getPlayerPosition());
 
 	if (time(NULL)-m_startTime) {
 		double txbph, rxbph, trbph;
