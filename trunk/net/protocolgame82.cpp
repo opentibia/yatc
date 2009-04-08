@@ -31,12 +31,17 @@
 #include "../gamecontent/creature.h"
 #include "../gamecontent/container.h"
 #include "../gamecontent/inventory.h"
+#include "../util.h"
 
 ProtocolGame82::ProtocolGame82(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame(accountname, password, name, isGM)
 {
 	m_skipTiles = 0;
 
+	//if(!Objects::getInstance()->loadDat("Tibia.dat"))
+	//{
+	//	NativeGUIError("Loading of Tibia.dat failed.", "Error");
+	//}
 }
 
 void ProtocolGame82::checkVersion()
