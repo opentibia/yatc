@@ -65,7 +65,7 @@ public:
 	winOptionsNetwork_t () {
 
 		window.SetVisible(false);
-		window.SetHeight(248);
+		window.SetHeight(324);
 		window.SetWidth(225);
 		window.SetCaption(gettext("Network Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
@@ -117,6 +117,15 @@ public:
 		btnProtocol.setOnClick(OnProtocol);
 		btnProtocol.setData(this);
 		btnProtocol.setFont("system");
+		// implementation is just cut-and-paste, may need work.
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.8", NULL, (void*)CLIENT_VERSION_780));
+// not yet implemented
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.81", NULL, (void*)CLIENT_VERSION_781));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.82", NULL, (void*)CLIENT_VERSION_782));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.9", NULL, (void*)CLIENT_VERSION_790));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.91", NULL, (void*)CLIENT_VERSION_791));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.92", NULL, (void*)CLIENT_VERSION_780));
+// end of not yet implemented
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.0", NULL, (void*)CLIENT_VERSION_800));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.1", NULL, (void*)CLIENT_VERSION_810));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.11", NULL, (void*)CLIENT_VERSION_820));
@@ -188,7 +197,7 @@ public:
 
 		winOptionsNetwork_t* won = (winOptionsNetwork_t*)parent->getData();
 		won->currentversion = (ClientVersion_t)((long)item->data);
-
+		ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, (ClientVersion_t)((long)item->data));
 	}
 
 };

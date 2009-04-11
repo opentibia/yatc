@@ -32,7 +32,6 @@
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
-#include "net/protocolgame80.h"
 
 extern Connection* g_connection;
 

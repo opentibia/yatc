@@ -204,7 +204,6 @@ GM_Gameworld::~GM_Gameworld ()
 
 
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){
-	//if(!fileexists("Tibia.dat")){
         NativeGUIError("Tibia.dat suddenly disappeared during client's runtime.", "What?!");
     }
 

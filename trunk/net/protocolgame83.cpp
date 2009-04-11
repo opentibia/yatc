@@ -38,11 +38,6 @@ ProtocolGame(accountname, password, name, isGM)
 {
 	m_skipTiles = 0;
 	this->usesAccountName(true);
-
-	//if(!Objects::getInstance()->loadDat("Tibia.dat"))
-	//{
-	//	NativeGUIError("Loading of Tibia.dat failed.", "Error");
-	//}
 }
 
 void ProtocolGame83::checkVersion()

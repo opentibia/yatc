@@ -31,6 +31,7 @@
 
 #include "rsa.h"
 #include "protocollogin.h"
+#include "protocolgame78.h"
 #include "protocolgame80.h"
 #include "protocolgame81.h"
 #include "protocolgame811.h"
@@ -76,6 +77,10 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 {
 	m_os = os;
 	switch(version){
+	case CLIENT_VERSION_780:
+		NativeGUIError("Support for this client version is only experimental.", "Warning");
+		m_clientVersion = CLIENT_VERSION_780;
+		break;
 	case CLIENT_VERSION_800:
 		m_clientVersion = CLIENT_VERSION_800;
 		break;
@@ -107,7 +112,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 		m_clientVersion = CLIENT_VERSION_841;
 		break;
 	default:
-		ASSERT(0);
+		//ASSERT(0);
+		NativeGUIError("This client version is not currently supported.", "Sorry");
+		return;
 		break;
 	}
 	m_datSignature = this->readSignature("Tibia.dat");
@@ -121,6 +128,18 @@ ClientVersion_t ProtocolConfig::detectVersion()
 	uint32_t picSignature = ProtocolConfig::readSignature("Tibia.pic");
 
 	printf("Data file signatures: %08x %08x %08x\n", datSignature, sprSignature, picSignature);
+	//todo (nfries88): Client version 76 and 77 series autodetect
+	//todo (nfries88): Client version 78 series autodetect
+	if (datSignature == 0x439D5A33 &&
+		sprSignature == 0x439852BE &&
+		picSignature == 0x4450C8D8)
+			return CLIENT_VERSION_790;
+	//todo (nfries88): Client version 791 autodetect
+	if (datSignature == 0x459E7B73 &&
+		sprSignature == 0x45880FE8 &&
+		picSignature == 0x45670923)
+			return CLIENT_VERSION_792;
+
 	if (datSignature == 0x467FD7E6 &&
 		sprSignature == 0x467F9E74 &&
 		picSignature == 0x45670923)
@@ -211,6 +230,10 @@ ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountnam
 
 	ProtocolGame* protocol;
 	switch(getInstance().m_clientVersion){
+	case CLIENT_VERSION_780:
+		protocol = new ProtocolGame78(accountname, password, name, isGM);
+		break;
+	// todo (nfries88): more client version protocols.
 	case CLIENT_VERSION_800:
 		protocol = new ProtocolGame80(accountname, password, name, isGM);
 		break;
