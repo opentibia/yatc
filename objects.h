@@ -22,6 +22,7 @@
 #define __OBJECTS_H
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "stdinttypes.h"
 #include <string.h>
 #include <vector>
@@ -154,6 +155,8 @@ public:
 
     bool isLoaded() { return m_datLoaded; }
 protected:
+	bool load780plus(const char* filename);
+	bool load76_77series(const char* filename);
 	bool m_datLoaded;
 	static Objects* m_instance;
 

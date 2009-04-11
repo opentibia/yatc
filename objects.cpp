@@ -22,6 +22,8 @@
 #include "objects.h"
 #include "engine.h" // used to create engine specific sprites
 #include "util.h"
+#include "options.h"
+#include "net\connection.h"
 
 uint16_t ObjectType::minItemId = 0;
 uint16_t ObjectType::maxItemId = 0;
@@ -229,6 +231,27 @@ bool Objects::loadDat(const char* filename)
 		return false;
 	}
 
+	ClientVersion_t ver = options.protocol;
+	if(ver == CLIENT_VERSION_AUTO) {
+		ver = ProtocolConfig::detectVersion();
+	}
+
+	/* 7.80 - 8.41 use same .dat format to the best of my knowledge */
+	if(ver >= CLIENT_VERSION_780) {
+		return load780plus(filename);
+	}
+	/* 7.60 - 7.72 use same .dat format to the best of my knowledge */
+	else if(ver >= CLIENT_VERSION_760) {
+		return load76_77series(filename);
+	}
+
+	return false;
+}
+
+
+
+bool Objects::load780plus(const char* filename)
+{
 	uint16_t id = 100;
 	int32_t size;
 	uint16_t read_short, read_short2;
@@ -405,6 +428,226 @@ bool Objects::loadDat(const char* filename)
 						//std::cout << "unknown byte: " << (uint16_t)optbyte << std::endl;
 						return false;
 					break;
+			}
+		}
+
+		oType->width  = fgetc(fp);
+		oType->height = fgetc(fp);
+		if((oType->width > 1) || (oType->height > 1)){
+			fgetc(fp);
+		}
+
+		oType->blendframes = fgetc(fp);
+		oType->xdiv        = fgetc(fp);
+		oType->ydiv        = fgetc(fp);
+		oType->unk1        = fgetc(fp);
+		oType->animcount   = fgetc(fp);
+
+		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->unk1;
+
+		oType->imageData = new uint16_t[oType->numsprites];
+
+        ASSERT(oType->imageData);
+
+		for(unsigned int i = 0; i < oType->numsprites; i++) {
+			yatc_fread(&oType->imageData[i], sizeof(uint16_t), 1, fp);
+		}
+
+		if(id <= ObjectType::maxItemId){
+			m_item.addElement(oType, id);
+		}
+		else if(id <= (ObjectType::maxItemId + ObjectType::maxOutfitId)){
+			m_outfit.addElement(oType, id - ObjectType::maxItemId);
+		}
+		else if(id <= (ObjectType::maxItemId + ObjectType::maxOutfitId + ObjectType::maxEffectId)){
+			m_effect.addElement(oType, id - ObjectType::maxItemId - ObjectType::maxOutfitId);
+		}
+		else if(id <= (ObjectType::maxItemId + ObjectType::maxOutfitId + ObjectType::maxEffectId + ObjectType::maxDistanceId)){
+			m_distance.addElement(oType, id - ObjectType::maxItemId - ObjectType::maxOutfitId - ObjectType::maxEffectId);
+		}
+
+		id++;
+	}
+
+	fclose(fp);
+	m_datLoaded = true;
+
+	return true;
+}
+
+bool Objects::load76_77series(const char* filename)
+{
+	uint16_t id = 100;
+	int32_t size;
+	uint16_t read_short, read_short2;
+	uint32_t maxObjects = 0;
+
+	FILE *fp = yatc_fopen(filename, "rb");
+	if(!fp){
+		return false;
+	}
+
+	fseek(fp,0,SEEK_END);
+	size = ftell(fp);
+
+	//get max id
+	fseek(fp, 0x04, SEEK_SET);
+	//Items
+	yatc_fread(&read_short, 2, 1, fp);
+	ObjectType::minItemId = 100;
+	ObjectType::maxItemId = read_short;
+	maxObjects += ObjectType::maxItemId;
+	//Outfits
+	yatc_fread(&read_short, 2, 1, fp);
+	ObjectType::minOutfitId = 0;
+	ObjectType::maxOutfitId = read_short;
+	maxObjects += ObjectType::maxOutfitId;
+	//Effects
+	yatc_fread(&read_short, 2, 1, fp);
+	ObjectType::minEffectId = 0;
+	ObjectType::maxEffectId = read_short;
+	maxObjects += ObjectType::maxEffectId;
+	//Distance
+	yatc_fread(&read_short, 2, 1, fp);
+	ObjectType::minDistanceId = 0;
+	ObjectType::maxDistanceId = read_short;
+	maxObjects += ObjectType::maxDistanceId;
+
+	/*
+	 * A T T E N T I O N ! ! !
+	 *
+	 * Do not update the reader to 8.1 without first making it possible
+	 * to choose between 8.1 and 8.0 reader. We want to be able to load
+	 * older formats as well.
+	 */
+
+
+	while(ftell(fp) < size && id <= maxObjects){
+		ObjectType* oType = new ObjectType(id);
+
+		int optbyte;
+		//bool colorTemplate = false;
+		while(((optbyte = fgetc(fp)) >= 0) && (optbyte != 0xFF)){
+			switch(optbyte){
+			case 0x00: //is groundtile
+				yatc_fread(&read_short, 2, 1, fp);
+				oType->speed = read_short;
+				oType->ground = true;
+				break;
+			case 0x01: //all OnTop
+				oType->alwaysOnTop = 1;
+				break;
+			case 0x02: //can walk trough (open doors, arces, bug pen fence ??)
+				oType->alwaysOnTop = 2;
+				break;
+			case 0x03: //can walk trough (arces)
+				oType->alwaysOnTop = 3;
+				break;
+			case 0x04: //is a container
+				oType->useable = true;
+				oType->container = true;
+				//oType->stackable = true;
+				break;
+			case 0x05: //is stackable
+				oType->stackable = true;
+				break;
+			case 0x06: //ladders
+			    oType->useable = true;
+				break;
+			case 0x07: //is useable
+				oType->useable = true;
+				//
+				break;
+			case 0x08: //writtable objects
+				oType->readable = true;
+				yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //unknown, values like 80, 200, 512, 1024, 2000
+				break;
+			case 0x09: //writtable objects that can't be edited
+				oType->readable = true;
+				yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //unknown, all have the value 1024
+				break;
+			case 0x0A: //can contain fluids
+				oType->fluidContainer = true;
+
+				break;
+			case 0x0B: //liquid with states
+				oType->splash = true;
+				break;
+			case 0x0C: //is blocking
+				oType->blockSolid = true;
+				break;
+			case 0x0D: //is no moveable
+				oType->moveable = false;
+				break;
+			case 0x0E: //blocks missiles (walls, magic wall etc)
+				oType->blockProjectile = true;
+				break;
+			case 0x0F: //blocks monster movement (flowers, parcels etc)
+				oType->blockPathFind = true;
+				break;
+			case 0x10: //can be equipped
+				oType->pickupable = true;
+				break;
+			case 0x11: //wall items
+				oType->isHangable = true;
+				break;
+			case 0x12:
+				oType->isHorizontal = true;
+				break;
+			case 0x13:
+				oType->isVertical = true;
+				break;
+			case 0x14: //rotable items
+				oType->rotatable = true;
+				break;
+			case 0x15: //light info .. //sprite-drawing related
+				unsigned short lightlevel;
+				yatc_fread(&lightlevel, sizeof(lightlevel), 1, fp);
+				oType->lightLevel = lightlevel;
+				unsigned short lightcolor;
+				yatc_fread(&lightcolor, sizeof(lightcolor), 1, fp);
+				oType->lightColor = lightcolor;
+				break;
+			case 0x17:  //floor change
+				break;
+			case 0x18: //offset
+				yatc_fread(&read_short, sizeof(read_short), 1, fp);
+				oType->xOffset = read_short;
+				yatc_fread(&read_short, sizeof(read_short), 1, fp);
+				oType->yOffset = read_short;
+				break;
+			case 0x19: //height
+				oType->hasHeight = true;
+				// (should be) the height change in px; Tibia always uses 8
+				yatc_fread(&read_short, sizeof(read_short), 1, fp); // ?
+				break;
+			case 0x1A://draw with height offset for all parts (2x2) of the sprite
+				break;
+			case 0x1B: //some monsters
+			    break;
+			case 0x1C:
+				unsigned short color;
+				yatc_fread(&color, sizeof(color), 1, fp);
+				oType->mapColor = color;
+				break;
+			case 0x1D:  //line spot
+				int tmp;
+				tmp = fgetc(fp); // 86 -> openable holes, 77-> can be used to go down, 76 can be used to go up, 82 -> stairs up, 79 switch,
+				oType->useable=true;
+				if(tmp == 0x58)
+					oType->readable = true;
+				fgetc(fp); // always 4
+				break;
+			case 0x1E: //ground items
+				break;
+
+
+			default:
+				//optbyte = optbyte;
+				//std::cout << "unknown byte: " << (unsigned short)optbyte << std::endl;
+				//DEBUGPRINT("DATLOADER: Unknown byte %.02x, item %d, at offset %d; lastok was = %.02x\n", optbyte, id, ftell(fp), lastokbyte);
+				return false;
+				break;
 			}
 		}
 

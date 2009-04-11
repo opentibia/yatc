@@ -210,6 +210,8 @@
 		<Unit filename="net\networkmessage.h" />
 		<Unit filename="net\protocolgame.cpp" />
 		<Unit filename="net\protocolgame.h" />
+		<Unit filename="net\protocolgame78.cpp" />
+		<Unit filename="net\protocolgame78.h" />
 		<Unit filename="net\protocolgame80.cpp" />
 		<Unit filename="net\protocolgame80.h" />
 		<Unit filename="net\protocolgame81.cpp" />
