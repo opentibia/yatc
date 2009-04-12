@@ -67,6 +67,18 @@ void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
 	}
 }
 
+void pnlInventory_t::onClick_Logout(glictPos* relmousepos, glictContainer* callerclass)
+{
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+	gameclass->m_protocol->sendLogout();
+}
+
+void pnlInventory_t::onClick_Options(glictPos* relmousepos, glictContainer* callerclass)
+{
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+	gameclass->winOptions.window.SetVisible(true);
+}
+
 GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 {
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting gameworld...\n");
@@ -127,7 +139,11 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
 	#endif
 
+	desktop.AddObject(&winOptions.window);
+	winOptions.window.SetPos(600, 450);
+	winOptions.window.SetVisible(false);
 
+//TODO (nfries88): Move shop and trade window to right side as in the official client
 	desktop.AddObject(&winShop.window);
 	winShop.window.SetPos(600,450);
 	winShop.window.SetVisible(false);

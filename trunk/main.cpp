@@ -508,6 +508,8 @@ int main(int argc, char *argv[])
 						break;
 
 					case SDL_QUIT:
+						//TODO (nfries88): Tell the gamemode this happens and let it decide how to handle it.
+						//IE, g_running = g_game->onExitAttempt();
 						g_running = false;
 						break;
 
@@ -580,14 +582,6 @@ int main(int argc, char *argv[])
 
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Game over\n");
 
-
-	// FIXME (nfries88) it seems to crash here if the connection is still open.
-	// something in Connection::closeConnection maybe?
-	// ivucica's comment: I think it was in the ordering; previously we first unloaded .dat,
-	//                    and then we destroyed items attempting to unload graphics in the process
-	//                    But, object data including graphics and info on usage on map was already
-	//                    destroyed during .dat unload!
-	//                    I changed order, perhaps this'll fix it
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Terminating protocol connection from main...\n");
 	delete g_connection;
 	g_connection = NULL;
