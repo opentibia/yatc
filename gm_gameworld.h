@@ -36,10 +36,14 @@
 #include "stackpanel.h"
 #include "automap.h"
 
+#include "options.h"
+#include "ui/optionsui.h"
+
 class Console;
 class Tile;
 class ProtocolGame;
 class Popup;
+class winOptions_t;
 
 typedef void(*PopupProducerCallback)(Popup*popup,void*owner,void*arg);
 
@@ -156,6 +160,8 @@ private:
     std::vector<winContainer_t*> containers;
 
     winItemMove_t winMove;
+
+    winOptions_t winOptions;
     /* END PRIMARY GUI */
 
 
@@ -184,6 +190,7 @@ private:
     Automap m_automap;
 
 	ProtocolGame* m_protocol;
+	friend class pnlInventory_t;
 	friend class winItemMove_t;
 	friend class winShop_t;
 	friend class winTrade_t;

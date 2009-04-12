@@ -111,6 +111,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	case CLIENT_VERSION_841:
 		m_clientVersion = CLIENT_VERSION_841;
 		break;
+	case CLIENT_VERSION_AUTO:
+		m_clientVersion = detectVersion();
+		break;
 	default:
 		//ASSERT(0);
 		NativeGUIError("This client version is not currently supported.", "Sorry");

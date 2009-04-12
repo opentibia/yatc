@@ -197,7 +197,7 @@ public:
 
 		winOptionsNetwork_t* won = (winOptionsNetwork_t*)parent->getData();
 		won->currentversion = (ClientVersion_t)((long)item->data);
-		ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, (ClientVersion_t)((long)item->data));
+		//ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, (ClientVersion_t)((long)item->data));
 	}
 
 };
