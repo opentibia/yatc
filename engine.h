@@ -113,6 +113,7 @@ class Engine
 		Sprite* m_ui;
 
 		friend class winOptionsGraphics_t;
+		friend class GM_Debug;
 };
 
 extern int ptrx, ptry;

@@ -150,10 +150,6 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-    /*#ifndef WIN32
-	SDL_DestroyMutex(m_fpsmutex);
-	#endif
-	SDL_RemoveTimer(m_fpstimer);*/
 	glictDeleteFont("system");
 	glictDeleteFont("minifont");
 	glictDeleteFont("aafont");

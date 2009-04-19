@@ -53,6 +53,16 @@ extern bool g_running;
 static yatcStackPanel yatcstackpanel;
 static glictWindow yspwTest[YSPWINDOWS];
 
+#ifdef SDLTTF_EXPERIMENT
+#warning Compiling with SDL_ttf test. If you dont have SDL_ttf library, undefine SDLTTF_EXPERIMENT.
+#warning This is only temporary experiment for generating Tibia fonts from ttf files
+#warning (bold Arial is source for most Tibias fonts, as demonstrable with GIMP)
+
+#include <SDL/SDL_ttf.h>
+
+static TTF_Font* font;
+#endif
+
 void cb1(Popup::Item*) {
     ((GM_Debug*)g_game)->msgBox("You have clicked on the \"Hello world\" menu item", "Yipee");
 }
@@ -276,6 +286,28 @@ GM_Debug::GM_Debug()
 		exit(1);
 	}
 	printf("2\n");
+
+	#ifdef SDLTTF_EXPERIMENT
+	{
+	    int ptsize=11;
+        char fontname[]="arial.ttf";
+
+        TTF_Init();
+
+        font = TTF_OpenFont(fontname,ptsize);
+        if ( font == NULL ) {
+            fprintf(stderr, "Couldn't load %d pt font from %s: %s\n",
+                                    ptsize, fontname, SDL_GetError());
+
+        }
+
+        int renderstyle=0;
+        renderstyle |= TTF_STYLE_BOLD;
+        TTF_SetFontStyle(font, renderstyle);
+
+	}
+
+	#endif
 }
 
 GM_Debug::~GM_Debug()
@@ -333,6 +365,56 @@ void GM_Debug::renderScene()
 
 	desktop.RememberTransformations();
 	desktop.Paint();
+
+#ifdef SDLTTF_EXPERIMENT
+    if (font) {
+
+        SDL_Surface* glyph = NULL;
+        SDL_Color forecol, backcol;
+
+        forecol.r = 255;
+        forecol.g = 255;
+        forecol.b = 255;
+
+        backcol.r = 0;
+        backcol.g = 0;
+        backcol.b = 0;
+
+
+        SDL_SetClipRect(g_engine->m_screen, NULL);
+
+        int YOffset = TTF_FontAscent(font);  // Actually a baseline
+
+
+        for (int i = 32; i < 256; i++)
+        {
+
+            int minx, maxx, miny, maxy, advance;
+
+
+            glyph = TTF_RenderGlyph_Solid( font, i, forecol);//backcol ); // solid or shaded; shaded uses backcol, solid doesnt
+
+
+            TTF_GlyphMetrics(font, i, &minx, &maxx, &miny, &maxy, &advance);
+
+
+            SDL_Rect src = {0, 0, glyph->w, glyph->h};
+            SDL_Rect dest = {((i - 32) % 32)*8 + minx,
+                             ((i - 32) / 32)*16 + YOffset-maxy,
+                             glyph->w,
+                             glyph->h};
+
+
+
+
+
+            SDL_BlitSurface(glyph, &src, g_engine->m_screen, &dest);
+
+
+            SDL_FreeSurface(glyph);
+        }
+    }
+#endif
 
 }
 

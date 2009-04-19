@@ -33,6 +33,8 @@ class Font{
 			m_currentcolorized->Blit(x1, y1, charx[(unsigned char)t], chary[(unsigned char)t], charw[(unsigned char)t], charh[(unsigned char)t]);
 		}
 
+        void analyzeFont(int hchars, int vchars, int charblockw, int charblockh);
+
 		int getWidth(char t) { return charw[(unsigned char)t]; }
 		int getHeight(char t) { return charh[(unsigned char)t]; }
 		int getSpacing();
