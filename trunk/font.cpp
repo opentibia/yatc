@@ -40,180 +40,136 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 	// we'll also hardcode char offsets
 	switch(index){
-		case 2: // outline-less font
-		case 4: // outlined font
-		case 7: // antialiased outlineless font
-			for(int i = 0; i < 255; i++){
-				if(i >= 32 && i < 255){
-					charx[i] = ((i-32) % 32) * 8;
-					chary[i] = ((i-32) / 32) * 16;
-					charw[i] = 8;
-					charh[i] = 8;
-				}
-				else{
-					charx[i] = 0; chary[i] = 0; charw[i] = 0; charh[i] = 0;
-				}
-			}
+        case 2: // non-outlined font
+        case 7: // antialiased non-outlined font
+        {
+            int hchars = 256 / 8;               /* horizontal character count -- chars per row */
+            int vchars = spr->getHeight() / 16; /* vertical character count -- chars per column */
+            int charblockw = 8;
+            int charblockh = 16;
 
-			charh[(unsigned char)'\n'] = 12;
-
-			charw[(unsigned char)' '] = 2;
-			charw[(unsigned char)'.'] = 2;
-			charw[(unsigned char)','] = 2; charh[(unsigned char)','] = 10;
-			charw[(unsigned char)'!'] = 2;
-			charw[(unsigned char)':'] = 2;
-			charw[(unsigned char)';'] = 2; charh[(unsigned char)';'] = 10;
-			charw[(unsigned char)'\''] = 2; charh[(unsigned char)'\''] = 3;
-			charw[(unsigned char)'_'] = 7; charh[(unsigned char)'_'] = 10;
-			charw[(unsigned char)'('] = 4; charh[(unsigned char)'('] = 10;
-			charw[(unsigned char)')'] = 4; charh[(unsigned char)')'] = 10;
-			charw[(unsigned char)'['] = 4; charh[(unsigned char)'['] = 10;
-			charw[(unsigned char)']'] = 4; charh[(unsigned char)']'] = 10;
-			charw[(unsigned char)'{'] = 4; charh[(unsigned char)'{'] = 10;
-			charw[(unsigned char)'}'] = 4; charh[(unsigned char)'}'] = 10;
-
-			charw[(unsigned char)'0'] = 6;
-			charw[(unsigned char)'1'] = 4;
-			charw[(unsigned char)'2'] = 6;
+            memset(charx, 0, sizeof(*charx)*256);
+            memset(chary, 0, sizeof(*chary)*256);
+            memset(charw, 0, sizeof(*charw)*256);
+            memset(charh, 0, sizeof(*charh)*256);
 
 
-			charw[(unsigned char)'A'] = 7;
-			charw[(unsigned char)'B'] = 6;
-			charw[(unsigned char)'C'] = 6;
-			charw[(unsigned char)'E'] = 6;
-			charw[(unsigned char)'F'] = 6;
-			charw[(unsigned char)'H'] = 7;
-			charw[(unsigned char)'I'] = 4;
-			charw[(unsigned char)'J'] = 5;
-			charw[(unsigned char)'K'] = 6;
-			charw[(unsigned char)'L'] = 6;
-			charw[(unsigned char)'N'] = 7;
-			charw[(unsigned char)'P'] = 6;
-			charw[(unsigned char)'R'] = 6;
-			charw[(unsigned char)'Q'] = 7; charh[(unsigned char)'Q'] = 10;
-			charw[(unsigned char)'S'] = 6;
-			charw[(unsigned char)'V'] = 6;
-			charw[(unsigned char)'X'] = 6;
-			charw[(unsigned char)'Y'] = 6;
-			charw[(unsigned char)'Z'] = 6;
+            analyzeFont(hchars,vchars,charblockw,charblockh);
+            break;
+        }
 
-			charw[(unsigned char)'a'] = 6;
-			charw[(unsigned char)'b'] = 6;
-			charw[(unsigned char)'c'] = 5;
-			charw[(unsigned char)'d'] = 6;
-			charw[(unsigned char)'e'] = 6;
-			charw[(unsigned char)'f'] = 5;
-			charw[(unsigned char)'g'] = 6; charh[(unsigned char)'g'] = 10;
-			charw[(unsigned char)'h'] = 6;
-			charw[(unsigned char)'i'] = 2;
-			charw[(unsigned char)'j'] = 4; charh[(unsigned char)'j'] = 10;
-			charw[(unsigned char)'k'] = 6;
-			charw[(unsigned char)'l'] = 3;
-			charw[(unsigned char)'o'] = 6;
-			charw[(unsigned char)'m'] = 8;
-			charw[(unsigned char)'n'] = 6;
-			charw[(unsigned char)'p'] = 6; charh[(unsigned char)'p'] = 10;
-			charw[(unsigned char)'r'] = 5;
-			charw[(unsigned char)'s'] = 5;
-			charw[(unsigned char)'t'] = 5;
-			charw[(unsigned char)'u'] = 6;
-			charw[(unsigned char)'v'] = 7;
-			charw[(unsigned char)'x'] = 6;
-			charw[(unsigned char)'y'] = 6; charh[(unsigned char)'y'] = 10;
-			charw[(unsigned char)'q'] = 6; charh[(unsigned char)'q'] = 10;
-			charw[(unsigned char)'z'] = 5;
+		case 4: // outlinefont
+        {
+            int hchars = 512 / 16;                  /* horizontal character count -- chars per row */
+            int vchars = spr->getHeight() / 16;     /* vertical character count -- chars per column */
+            int charblockw = 16;
+            int charblockh = 16;
+
+            memset(charx, 0, sizeof(*charx)*256);
+            memset(chary, 0, sizeof(*chary)*256);
+            memset(charw, 0, sizeof(*charw)*256);
+            memset(charh, 0, sizeof(*charh)*256);
 
 
-			charw[(unsigned char)169] = 8; charh[(unsigned char)169] = 10;  // copyright symbol
-
-/*                        for(int i = 0; i < 255; i++){
-				if(i >= 32 && i < 255){
-					charw[i]+=1;
-				}
-			}*/
-
-
-			if (index == 4) { // outlined font
-				for(int i = 0;i < 255; i++){
-					if(i >= 32 && i < 255){
-						charx[i] = ((i-32) % 32) * 16;
-						chary[i] = ((i-32) / 32) * 16;
-						charw[i] += 1;
-						charh[i] += 2;
-					}
-					else{
-						charx[i] = 0; chary[i] = 0; charw[i] = 0; charh[i] = 0;
-					}
-				}
-				charh[(unsigned char)'\n'] = 14;
-			}
-			break;
+            analyzeFont(hchars,vchars,charblockw,charblockh);
+            break;
+        }
 
 		case 5: // minifont
-			charh[(unsigned char)'\n'] = 8;
-			for(int i = 0;i < 255;i++){
-				if(i >= 32 && i < 255){
-					charx[i] = ((i-32) % 32) * 8;
-					chary[i] = ((i-32) / 32) * 8;
-					charw[i] = 7;
-					charh[i] = 7;
-				}
-				else{
-					charx[i] = 0; chary[i] = 0; charw[i] = 0;
-				}
-			}
+        {
+            int hchars = 256 / 8;                  /* horizontal character count -- chars per row */
+            int vchars = spr->getHeight() / 8;     /* vertical character count -- chars per column */
+            int charblockw = 8;
+            int charblockh = 8;
 
-			charw[(unsigned char)' '] = 1; charh[(unsigned char)' '] = 1;
-			charw[(unsigned char)'!'] = 2; charh[(unsigned char)'!'] = 6;
-			charw[(unsigned char)'"'] = 3; charh[(unsigned char)'"'] = 3;
-			charw[(unsigned char)'#'] = 6; charh[(unsigned char)'#'] = 6;
-
-			charw[(unsigned char)'1'] = 3; charh[(unsigned char)'1'] = 6;
-
-			charw[(unsigned char)'A'] = 6; charh[(unsigned char)'A'] = 6;
-			charw[(unsigned char)'C'] = 5; charh[(unsigned char)'C'] = 6;
-			charw[(unsigned char)'E'] = 5; charh[(unsigned char)'E'] = 6;
-			charw[(unsigned char)'G'] = 6; charh[(unsigned char)'G'] = 6;
-			charw[(unsigned char)'H'] = 6; charh[(unsigned char)'H'] = 6;
-			charw[(unsigned char)'I'] = 4; charh[(unsigned char)'I'] = 6;
-			charw[(unsigned char)'O'] = 6; charh[(unsigned char)'O'] = 6;
-			charw[(unsigned char)'S'] = 5; charh[(unsigned char)'S'] = 6;
-
-			charw[(unsigned char)'a'] = 5; charh[(unsigned char)'a'] = 6;
-			charw[(unsigned char)'c'] = 4; charh[(unsigned char)'c'] = 6;
-			charw[(unsigned char)'d'] = 5; charh[(unsigned char)'d'] = 6;
-			charw[(unsigned char)'e'] = 5; charh[(unsigned char)'e'] = 7;
-			charw[(unsigned char)'f'] = 3; charh[(unsigned char)'f'] = 6;
-			charw[(unsigned char)'g'] = 4; charh[(unsigned char)'g'] = 8;
-			charw[(unsigned char)'h'] = 5; charh[(unsigned char)'h'] = 6;
-			charw[(unsigned char)'i'] = 2; charh[(unsigned char)'i'] = 6;
-			charw[(unsigned char)'j'] = 4; charh[(unsigned char)'j'] = 8;
-			charw[(unsigned char)'k'] = 5; charh[(unsigned char)'k'] = 6;
-			charw[(unsigned char)'l'] = 2; charh[(unsigned char)'l'] = 6;
-			charw[(unsigned char)'m'] = 8; charh[(unsigned char)'m'] = 6;
-			charw[(unsigned char)'n'] = 5; charh[(unsigned char)'n'] = 6;
-			charw[(unsigned char)'o'] = 5; charh[(unsigned char)'o'] = 6;
-			charw[(unsigned char)'p'] = 5; charh[(unsigned char)'p'] = 8;
-			charw[(unsigned char)'r'] = 4; charh[(unsigned char)'r'] = 6;
-			charw[(unsigned char)'s'] = 4; charh[(unsigned char)'s'] = 6;
-			charw[(unsigned char)'t'] = 3; charh[(unsigned char)'t'] = 6;
-			charw[(unsigned char)'u'] = 5; charh[(unsigned char)'u'] = 6;
-			charw[(unsigned char)'x'] = 5; charh[(unsigned char)'x'] = 6;
-			charw[(unsigned char)'y'] = 5; charh[(unsigned char)'y'] = 8;
+            memset(charx, 0, sizeof(*charx)*256);
+            memset(chary, 0, sizeof(*chary)*256);
+            memset(charw, 0, sizeof(*charw)*256);
+            memset(charh, 0, sizeof(*charh)*256);
 
 
-			break;
+            analyzeFont(hchars,vchars,charblockw,charblockh);
+            break;
+        }
 
 		default:
 			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Font::Font] index = %d.\n", index);
 			break;
 	}
+
+
+
+
 }
 Font::~Font() {
     delete pic;
     for(FontColorizedsMap::iterator it = m_colorized.begin(); it != m_colorized.end(); it++) {
         delete it->second;
     }
+}
+
+
+void Font::analyzeFont(int hchars, int vchars, int charblockw, int charblockh)
+{
+    // calculates char widths and heights
+    SDL_Surface * sfc = pic->lockSurface();
+
+    for (int j = 0; j < vchars; j++) // 16 == height of individual char
+    {
+        for (int i = 0; i < hchars; i++)
+        {
+            int c = 32 + (j * hchars) + i;
+
+            if (c > 255)
+                continue;
+            charx[c] = i*charblockw;
+            chary[c] = j*charblockh;
+
+
+            // lets check where within certain char (backward looking)
+            // there's last pixel appearing
+            int width=0;
+            int height=0;
+
+            for (int k = i*charblockw + 7; k >= i*charblockw; k--)
+            {
+
+                // is in this column there a pixel present?
+                for (int l = j * charblockh; l < (j+1) * charblockh; l++)
+                {
+                    uint8_t r,g,b,a;
+                    int pixel = pic->getPixel(k,l);
+
+                    SDL_GetRGBA(pixel, sfc->format, &r, &g, &b, &a);
+                    if (a && !width)
+                        width=k-i*charblockw + 1;
+                    if (a && l-j*charblockh + 1 > height)
+                            height=l-j*charblockh + 1;
+
+
+                }
+
+            }
+
+            if (width>1)
+                charw[c] = width;
+            else
+                charw[c] = 3; // let it be space char w
+
+            if (height)
+                charh[c] = height;
+            else
+                charh[c] = 8; // let it be height of "regular" char
+        }
+    }
+
+    charw[32] = 3; // space size
+    charh['\n'] = 12; // height of a line, including spacing between lines
+
+    pic->unlockSurface();
+
+
+
 }
 
 void Font::addColor(float r, float g, float b)
@@ -252,7 +208,7 @@ void Font::resetColor()
 
 int Font::getSpacing() {
 // spacing between characters
-// only minifont has none
-	if (m_index==5) return 0;
+// minifont and outlinefont have none
+	if (m_index==5 || m_index==4) return 0;
 	return 1;
 }

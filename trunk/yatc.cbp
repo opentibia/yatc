@@ -22,6 +22,7 @@
 					<Add option="-D_GLIBCXX_DEBUG_PEDANTIC" />
 					<Add option="-DDEBUG_BUILD" />
 					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-DSDLTTF_EXPERIMENT" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg" />
@@ -30,6 +31,7 @@
 					<Add library="SDL" />
 					<Add library="SDL_gfx" />
 					<Add library="GLICTd" />
+					<Add library="SDL_ttf" />
 				</Linker>
 			</Target>
 			<Target title="Release Unix">

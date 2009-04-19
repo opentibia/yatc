@@ -1,14 +1,19 @@
-# YATC Translation to Croatian# Copyright (C) 2008 OpenTibia Team# This file is distributed under the same license as the YATC package.# Ivan Vucica <ivucica@gmail.com>, 2008.# # 
+# YATC Translation to Croatian
+# Copyright (C) 2008-2009 OpenTibia Team
+# This file is distributed under the same license as the YATC package.
+# Ivan Vucica <ivucica@gmail.com>, 2008.
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: YATC 0.2.3SVN\n"
+"Project-Id-Version: YATC 0.3.1SVN\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-28 22:35+0100\n"
 "PO-Revision-Date: 2009-02-28 22:36+0100\n"
-"Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
-"Language-Team: Ivan Vucica <ivucica@gmail.com>\n"
+"Last-Translator: Ivan VuÄica <ivucica@gmail.com>\n"
+"Language-Team: Ivan VuÄica <ivucica@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=cp1250\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit"
 
 #: ../gm_mainmenu.cpp:391
@@ -22,7 +27,7 @@ msgstr ""
 " dolazi bez IKAKVOG JAMSTVA; \n"
 "za detalje pogledajte dijelove 11 i 12 u datoteci COPYING.\n"
 "Ovo je slobodan softver, i slobodno ga\n"
-"kopirajte pod odreğenim uvjetima; pogledajte\n"
+"kopirajte pod odreÄ‘enim uvjetima; pogledajte\n"
 "datoteku COPYING za detalje."
 
 #: ../ui/uishop.cpp:230 ../ui/uishop.cpp:266
@@ -67,11 +72,11 @@ msgstr "Stanje racuna:"
 
 #: ../ui/login.h:134
 msgid "Account name:"
-msgstr "Ime raèuna:"
+msgstr "Ime raÄuna:"
 
 #: ../ui/login.h:61 ../ui/login.h:137
 msgid "Account number:"
-msgstr "Broj raèuna:"
+msgstr "Broj raÄuna:"
 
 #: ../mapui.cpp:611
 msgid "Add to VIP list"
@@ -91,11 +96,11 @@ msgstr "Napredne postavke"
 
 #: ../ui/tutorialhints.cpp:117
 msgid "Ah, the all-mighty trade window. This hint is not written yet."
-msgstr "Ah, prozor za trgovanje. Ovaj savjet još nije napisan."
+msgstr "Ah, prozor za trgovanje. Ovaj savjet joÅ¡ nije napisan."
 
 #: ../ui/uishop.cpp:100
 msgid "Amount:"
-msgstr "Kolièina:"
+msgstr "KoliÄina:"
 
 #: ../mapui.cpp:594
 msgid "Attack"
@@ -103,7 +108,7 @@ msgstr "Napadni"
 
 #: ../ui/optionsgeneral.h:78
 msgid "Auto Chase Off"
-msgstr "Iskljuèi auto-proganjanje"
+msgstr "IskljuÄi auto-proganjanje"
 
 #: ../ui/optionsnetwork.h:128
 msgid "Autodetect"
@@ -141,7 +146,7 @@ msgid ""
 "Change general\n"
 "game options"
 msgstr ""
-"Uredi opæe\n"
+"Uredi opÄ‡e\n"
 "opcije igre"
 
 #: ../ui/optionsui.h:126
@@ -154,7 +159,7 @@ msgstr ""
 
 #: ../ui/optionsgeneral.h:71
 msgid "Classic Control"
-msgstr "Klasièno upravljanje"
+msgstr "KlasiÄno upravljanje"
 
 #: ../ui/skills.h:254
 msgid "Club Fighting"
@@ -166,7 +171,7 @@ msgstr "Spajanje"
 
 #: ../gm_mainmenu.cpp:522
 msgid "Connecting to the game world. Please wait."
-msgstr "Spajam se u igru. Molimo prièekajte."
+msgstr "Spajam se u igru. Molimo priÄekajte."
 
 #: ../ui/optionsui.h:97 ../gm_gameworld.cpp:959
 msgid "Console"
@@ -186,7 +191,7 @@ msgstr "Kopiraj ime"
 
 #: ../ui/login.h:99
 msgid "Create Account"
-msgstr "Stvori raèun"
+msgstr "Stvori raÄun"
 
 #: ../gm_mainmenu.cpp:367
 msgid "Current engine"
@@ -214,7 +219,7 @@ msgstr ""
 "\n"
 "Ili nabavite valjane datoteke iz jedne poznate\n"
 "verzije klijenta, ili osigurajte da imate ispravne\n"
-"potpise u datotekama, ili odite na Opcije->Mrea i\n"
+"potpise u datotekama, ili odite na Opcije->MreÅ¾a i\n"
 "odaberite ispravan protokol."
 
 #: ../ui/uioutfit.cpp:83
@@ -230,8 +235,8 @@ msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
 msgstr ""
-"Zbog tehnièkog problema morali smo resetirati\n"
-"igraæi svijet"
+"Zbog tehniÄkog problema morali smo resetirati\n"
+"igraÄ‡i svijet"
 
 #: ../ui/optionsui.h:142
 msgid "Edit your hotkey texts"
@@ -247,7 +252,7 @@ msgstr "Ulaz u igru"
 
 #: ../gm_mainmenu.cpp:586 ../gm_mainmenu.cpp:593 ../gm_mainmenu.cpp:645
 msgid "Error"
-msgstr "Greška"
+msgstr "GreÅ¡ka"
 
 #: ../ui/mainmenu.cpp:89
 msgid "Exit Game"
@@ -263,7 +268,7 @@ msgstr "Ribarstvo"
 
 #: ../ui/skills.h:253
 msgid "Fist Fighting"
-msgstr "Borba šakama"
+msgstr "Borba Å¡akama"
 
 #: ../mapui.cpp:599
 msgid "Follow"
@@ -274,7 +279,7 @@ msgid ""
 "For more information about Tibia visit our\n"
 "website at"
 msgstr ""
-"Za više informacija o Tibiji posjetite našu\n"
+"Za viÅ¡e informacija o Tibiji posjetite naÅ¡u\n"
 "web stranicu na "
 
 #: ../gm_mainmenu.cpp:588
@@ -282,12 +287,12 @@ msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
 msgstr ""
-"Za više informacija, pogledajte teme u forumima na\n"
+"Za viÅ¡e informacija, pogledajte teme u forumima na\n"
 "otfans.net"
 
 #: ../ui/charlist.h:151
 msgid "Free Account"
-msgstr "Besplatni raèun"
+msgstr "Besplatni raÄun"
 
 #: ../ui/optionsgraphics.h:80
 msgid "Fullscreen"
@@ -301,20 +306,20 @@ msgid ""
 "Available resolutions shows detected resolutions on\n"
 "your computer that the client can use while in fullscreen."
 msgstr ""
-"Puni ekran odluèuje da li æe ili neæe klijent\n"
+"Puni ekran odluÄuje da li Ä‡e ili neÄ‡e klijent\n"
 "zauzimati cijeli ekran.\n"
 "\n"
 "Dostupne rezolucije pokazuje otkrivene rezolucije\n"
-"na vašem raèunalu koje klijent moe koristiti dok\n"
+"na vaÅ¡em raÄunalu koje klijent moÅ¾e koristiti dok\n"
 "je u punom ekranu."
 
 #: ../ui/optionsui.h:83
 msgid "General"
-msgstr "Opæe"
+msgstr "OpÄ‡e"
 
 #: ../ui/optionsgeneral.h:64
 msgid "General Options"
-msgstr "Opæe opcije"
+msgstr "OpÄ‡e opcije"
 
 #: ../ui/optionsui.h:90
 msgid "Graphics"
@@ -322,11 +327,11 @@ msgstr "Grafika"
 
 #: ../ui/optionsgraphics.h:73
 msgid "Graphics Options"
-msgstr "Grafièke opcije"
+msgstr "GrafiÄke opcije"
 
 #: ../ui/charlist.h:153
 msgid "Gratis Premium Account"
-msgstr "Gratis Premium Raèun"
+msgstr "Gratis Premium RaÄun"
 
 #: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:627
 msgid "Have fun in"
@@ -348,11 +353,11 @@ msgstr "Zdravlje"
 #: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:408
 #: ../ui/optionsconsole.h:122
 msgid "Help"
-msgstr "Pomoæ"
+msgstr "PomoÄ‡"
 
 #: ../ui/optionsui.cpp:89
 msgid "Help not done."
-msgstr "Pomoæ nije napravljena."
+msgstr "PomoÄ‡ nije napravljena."
 
 #: ../ui/skills.h:119
 msgid "Hit Points"
@@ -368,7 +373,7 @@ msgid ""
 "an account yet:"
 msgstr ""
 "Ako jos nemate\n"
-"svoj raèun:"
+"svoj raÄun:"
 
 #: ../mapui.cpp:615
 msgid "Ignore"
@@ -406,11 +411,11 @@ msgid ""
 "few \n"
 "minutes ago, and {red skull} means he killed several people."
 msgstr ""
-"Èini se da ste sreli oznaèenog igraèa. Vidite lubanju? To znaèi da se tip  "
+"ÄŒini se da ste sreli oznaÄenog igraÄa. Vidite lubanju? To znaÄi da se tip  "
 "borio \n"
-"s nekime. Primjerice, {bijela lubanja} znaèi da se pokušao boriti s nekime "
+"s nekime. Primjerice, {bijela lubanja} znaÄi da se pokuÅ¡ao boriti s nekime "
 "pred \n"
-"par minuta, a {crvena lubanja} znaèi da je ubio više ljudi."
+"par minuta, a {crvena lubanja} znaÄi da je ubio viÅ¡e ljudi."
 
 #: ../ui/skills.h:202
 msgid "Magic Level"
@@ -446,19 +451,19 @@ msgstr "Trgovina s NPCem"
 
 #: ../ui/optionsui.h:111
 msgid "Network"
-msgstr "Mrea"
+msgstr "MreÅ¾a"
 
 #: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:70
 msgid "Network Options"
-msgstr "Mrene opcije"
+msgstr "MreÅ¾ne opcije"
 
 #: ../ui/tutorialhints.cpp:84
 msgid ""
 "Now you've got a {bag} to carry stuff in and there's already a {coat}\n"
 "in there. {Drag} the coat from the {bag} to the {armor slot} to wear it."
 msgstr ""
-"Sada imate {vreæu} u kojoj moete nositi stvari, i u njoj je veæ\n"
-"{odijelo}. Sada, {odvucite} odijelo iz {vreæe} u {mjesto za oklop} da "
+"Sada imate {vreÄ‡u} u kojoj moÅ¾ete nositi stvari, i u njoj je veÄ‡\n"
+"{odijelo}. Sada, {odvucite} odijelo iz {vreÄ‡e} u {mjesto za oklop} da "
 "bistega obukli."
 
 #: ../ui/optionsnetwork.h:108
@@ -477,8 +482,8 @@ msgid ""
 "Ok; you can also try {clicking} on the {minimap}. For example \n"
 "there's a {marker} on the minimap now, try moving there."
 msgstr ""
-"U redu; takoğer moete pokušati {kliknuti} na {minimapu}. Primjerice,\n"
-"sada postoji {oznaka} na karti, pokušajte se tamo pomaknuti."
+"U redu; takoÄ‘er moÅ¾ete pokuÅ¡ati {kliknuti} na {minimapu}. Primjerice,\n"
+"sada postoji {oznaka} na karti, pokuÅ¡ajte se tamo pomaknuti."
 
 #: ../mapui.cpp:571
 msgid "Open"
@@ -493,12 +498,12 @@ msgid ""
 "  and is currently not recommended since it will be much slower\n"
 "  on most laptops and perhaps on many desktops.\n"
 msgstr ""
-"OpenGL je 3D hardverski ubrzana grafièka biblioteka.\n"
+"OpenGL je 3D hardverski ubrzana grafiÄka biblioteka.\n"
 "  Da biste je koristili, osigurajte da imate najnovije drivere\n"
-"  za grafièku karticu. Oni koje daje Microsoft su nedovoljni.\n"
-"  Zbog SDL-centriènog dizajna, OpenGLu nismo davali previše\n"
-"  panje i stoga nije preporuèen jer æe biti mnogo sporiji na\n"
-"  veæini laptopa, a moda i mnogim desktopima.\n"
+"  za grafiÄku karticu. Oni koje daje Microsoft su nedovoljni.\n"
+"  Zbog SDL-centriÄnog dizajna, OpenGLu nismo davali previÅ¡e\n"
+"  paÅ¾nje i stoga nije preporuÄen jer Ä‡e biti mnogo sporiji na\n"
+"  veÄ‡ini laptopa, a moÅ¾da i mnogim desktopima.\n"
 
 #: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76
 msgid "Options"
@@ -518,20 +523,20 @@ msgid ""
 msgstr ""
 "Odaberite odijelo i odaberite boje za dijelove\n"
 "avatara vaseg lika.\n"
-"Dodaci se aktiviraju tako da upalite odgovarajuæu\n"
-"kuæicu. Da aktiviraju pojedini dodatak, premium\n"
-"igraèi mogu rješavati razne potrage."
+"Dodaci se aktiviraju tako da upalite odgovarajuÄ‡u\n"
+"kuÄ‡icu. Da aktiviraju pojedini dodatak, premium\n"
+"igraÄi mogu rjeÅ¡avati razne potrage."
 
 #: ../ui/uitrade.cpp:238
 msgid ""
 "Please wait for your \n"
 "partner to accept."
-msgstr "Prièekajte da vaš\n"
+msgstr "PriÄekajte da vaÅ¡\n"
 "partner prihvati"
 
 #: ../ui/charlist.h:156
 msgid "Premium Account"
-msgstr "Premium raèun"
+msgstr "Premium raÄun"
 
 #: ../ui/uishop.cpp:112
 msgid "Price:"
@@ -562,9 +567,9 @@ msgid ""
 "\n"
 "To apply graphical engine change, you need to restart\n"
 msgstr ""
-"PREPORUKA: Odaberite SDL. Ali, probajte što je bolje za vas.\n"
+"PREPORUKA: Odaberite SDL. Ali, probajte Å¡to je bolje za vas.\n"
 "\n"
-"Da primijenite promjenu enginea, trebate izaæi i ponovno\n"
+"Da primijenite promjenu enginea, trebate izaÄ‡i i ponovno\n"
 "pokrenuti igru.\n"
 
 #: ../ui/uitrade.cpp:123
@@ -583,9 +588,9 @@ msgid ""
 "  fewer glitches. That can, of course, change anytime.\n"
 msgstr ""
 "SDL 1.2 je 2D biblioteka za softversko crtanje. Trebala bi\n"
-"  biti najsporija, ali buduæi da je to najodravaniji engine\n"
-"  vrti se na pristojnoj brzini i èak ponekad bre od OpenGL\n"
-"  enginea, s manje grešaka. To se dakako bilo kada moe\n"
+"  biti najsporija, ali buduÄ‡i da je to najodrÅ¾avaniji engine\n"
+"  vrti se na pristojnoj brzini i Äak ponekad brÅ¾e od OpenGL\n"
+"  enginea, s manje greÅ¡aka. To se dakako bilo kada moÅ¾e\n"
 "  promijeniti.\n"
 
 #: ../ui/uioutfit.cpp:74
@@ -624,10 +629,10 @@ msgstr ""
 "\n"
 "Port je TCP port servera za prijavu.\n"
 "\n"
-"Takoğer moete odabrati da li elite pristupiti\n"
-"OpenTibia serverima ili vlasnièkom serveru. Da\n"
+"TakoÄ‘er moÅ¾ete odabrati da li Å¾elite pristupiti\n"
+"OpenTibia serverima ili vlasniÄkom serveru. Da\n"
 "pristupite OpenTibia serverima, upalite opciju\n"
-"OT Enkripcijski kljuè."
+"OT Enkripcijski kljuÄ."
 
 #: ../ui/optionsnetwork.h:89
 msgid "Server port:"
@@ -642,7 +647,7 @@ msgid ""
 "Set network options,\n"
 "such as server."
 msgstr ""
-"Postavi mrene opcije\n"
+"Postavi mreÅ¾ne opcije\n"
 "poput servera."
 
 #: ../ui/itemmove.h:74
@@ -651,7 +656,7 @@ msgid ""
 "items you want to move:"
 msgstr ""
 "Odaberite broj\n"
-"stvari koje elite seliti"
+"stvari koje Å¾elite seliti"
 
 #: ../ui/skills.h:258
 msgid "Shielding"
@@ -659,55 +664,55 @@ msgstr "Obrana"
 
 #: ../ui/optionsconsole.h:85
 msgid "Show Event Messages in Console"
-msgstr "Prikai dogağaje u konzoli"
+msgstr "PrikaÅ¾i dogaÄ‘aje u konzoli"
 
 #: ../ui/optionsgeneral.h:84
 msgid "Show Hints"
-msgstr "Prikai savjete"
+msgstr "PrikaÅ¾i savjete"
 
 #: ../ui/optionsconsole.h:79
 msgid "Show Info Messages in Console"
-msgstr "Prikai info poruke u konzoli"
+msgstr "PrikaÅ¾i info poruke u konzoli"
 
 #: ../ui/optionsconsole.h:103
 msgid "Show Levels in Console"
-msgstr "Prikai levele u konzoli"
+msgstr "PrikaÅ¾i levele u konzoli"
 
 #: ../ui/optionsgeneral.h:90
 msgid "Show Names of Creatures"
-msgstr "Prikai nazive stvorova"
+msgstr "PrikaÅ¾i nazive stvorova"
 
 #: ../ui/optionsconsole.h:109
 msgid "Show Private Messages in Game Window"
-msgstr "Prikai privatne poruke u prozoru igre"
+msgstr "PrikaÅ¾i privatne poruke u prozoru igre"
 
 #: ../ui/optionsconsole.h:91
 msgid "Show Status Messages in Console"
-msgstr "Prikai statusne poruke u konzoli"
+msgstr "PrikaÅ¾i statusne poruke u konzoli"
 
 #: ../ui/optionsgeneral.h:96
 msgid "Show Textual Effects"
-msgstr "Prikai tekstualne efekte"
+msgstr "PrikaÅ¾i tekstualne efekte"
 
 #: ../ui/optionsconsole.h:97
 msgid "Show Timestamps in Console"
-msgstr "Prikai vrijeme u konzoli"
+msgstr "PrikaÅ¾i vrijeme u konzoli"
 
 #: ../ui/optionsui.h:172
 msgid ""
 "Show the most recent\n"
 "Message of the Day"
 msgstr ""
-"Prikai najnoviju\n"
+"PrikaÅ¾i najnoviju\n"
 "poruku dana"
 
 #: ../ui/skills.h:237
 msgid "Skill "
-msgstr "Vještina "
+msgstr "VjeÅ¡tina "
 
 #: ../ui/skills.h:64
 msgid "Skills"
-msgstr "Vještine"
+msgstr "VjeÅ¡tine"
 
 #: ../ui/tutorialhints.cpp:100
 msgid ""
@@ -715,20 +720,20 @@ msgid ""
 "to \n"
 "take it with you. You need to collect three cockroach legs for the NPC!"
 msgstr ""
-"Sad se otvorio {prozor spremnika}. {Odvucite} štogod je u njemu u {vreæu} \n"
-"da biste to ponijeli sa sobom. Trebate skupiti tri noge ohara sa NPCa!"
+"Sad se otvorio {prozor spremnika}. {Odvucite} Å¡togod je u njemu u {vreÄ‡u} \n"
+"da biste to ponijeli sa sobom. Trebate skupiti tri noge Å¾ohara sa NPCa!"
 
 #: ../ui/skills.h:149
 msgid "Soul Points"
-msgstr "Bodovi duše"
+msgstr "Bodovi duÅ¡e"
 
 #: ../ui/skills.h:179
 msgid "Stamina"
-msgstr "Izdrljivost"
+msgstr "IzdrÅ¾ljivost"
 
 #: ../ui/skills.h:255
 msgid "Sword Fighting"
-msgstr "Borba maèevima"
+msgstr "Borba maÄevima"
 
 #: ../ui/tutorialhints.cpp:104
 msgid ""
@@ -740,11 +745,11 @@ msgid ""
 "{stones}.\n"
 "When you use an item on another item, it's called extended using."
 msgstr ""
-"Ova {lopata}, koja je sad u vašem inventaru, koristi se za iskopavanje. "
+"Ova {lopata}, koja je sad u vaÅ¡em inventaru, koristi se za iskopavanje. "
 "Vrlo\n"
-"je korisna za istraivanje novih podruèja. Pa odite na istog i trebali "
+"je korisna za istraÅ¾ivanje novih podruÄja. Pa odite na istog i trebali "
 "biste\n"
-"pronaæi {labavu nakupinu kamenja}, pokušajte {ctrl+kliknuti} na {lopatu} i "
+"pronaÄ‡i {labavu nakupinu kamenja}, pokuÅ¡ajte {ctrl+kliknuti} na {lopatu} i "
 "zatim\n"
 "na {kamenje}."
 
@@ -753,13 +758,13 @@ msgid ""
 "There's a {chest} in here. So try {ctrl+clicking} (commonly called \n"
 "'Use') on it to open it."
 msgstr ""
-"Ovdje je {škrinja}. Pokušajte {ctrl+kliknuti} (takoğer se zove "
-"'Korištenje')\n"
+"Ovdje je {Å¡krinja}. PokuÅ¡ajte {ctrl+kliknuti} (takoÄ‘er se zove "
+"'KoriÅ¡tenje')\n"
 "da biste je otvorili."
 
 #: ../mapui.cpp:712
 msgid "This functionality is not yet finished"
-msgstr "Ova funkcionalnost još nije gotova"
+msgstr "Ova funkcionalnost joÅ¡ nije gotova"
 
 #: ../ui/optionsui.cpp:130
 msgid ""
@@ -769,9 +774,9 @@ msgid ""
 "limiting is only approximate."
 msgstr ""
 "Da biste odabrali maksimalni FPS (za smanjenu uporabu CPUa i\n"
-"grafièke kartice, èime se smanjuje potrošnja struje, stišava\n"
-"rad i smanjuje temperatura CPUa) koristite traku za povlaèenje\n"
-"koja je ovdje dolje. No, FPS ogranièenje je samo otprilike."
+"grafiÄke kartice, Äime se smanjuje potroÅ¡nja struje, stiÅ¡ava\n"
+"rad i smanjuje temperatura CPUa) koristite traku za povlaÄenje\n"
+"koja je ovdje dolje. No, FPS ograniÄenje je samo otprilike."
 
 #: ../ui/tutorialhints.cpp:88
 msgid ""
@@ -779,7 +784,7 @@ msgid ""
 "while they're on, so don't forget to {ctrl+click} (use) it when you don't\n"
 "need it. Many things can be ctrl+clicked in this game, so try looking around."
 msgstr ""
-"Da biste upalili {baklju}, pokušajte {ctrl+kliknuti} na nju. Baklje lagano\n"
+"Da biste upalili {baklju}, pokuÅ¡ajte {ctrl+kliknuti} na nju. Baklje lagano\n"
 "izgaraju dok su upaljene, stoga ne zaboravite {ctrl+kliknuti} (iskoristiti) "
 "je\n"
 "kada je ne koristiti. Mnoge stvari se mogu ctrl+kliknuti u ovoj igri, pa "
@@ -820,32 +825,32 @@ msgstr "Koristi SDL"
 
 #: ../ui/uitrade.cpp:184
 msgid "Wait for a counter offer."
-msgstr "Èekanje na protuponudu."
+msgstr "ÄŒekanje na protuponudu."
 
 #: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:623
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
 msgstr ""
-"ao nam je zbog moguæih problema. Naravno da\n"
-"puno radimo na spreèavanju takvih problema u\n"
-"buduænosti."
+"Å½ao nam je zbog moguÄ‡ih problema. Naravno da\n"
+"puno radimo na spreÄavanju takvih problema u\n"
+"buduÄ‡nosti."
 
 #: ../ui/optionsui.cpp:114
 msgid "We offer two graphical engines:\n"
-msgstr "Nudimo dva grafièka enginea:\n"
+msgstr "Nudimo dva grafiÄka enginea:\n"
 
 #: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:626
 msgid "Welcome to"
-msgstr "Dobrodošli u "
+msgstr "DobrodoÅ¡li u "
 
 #: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:620
 msgid "Welcome to Tibia!"
-msgstr "Dobrodošli u Tibiju!"
+msgstr "DobrodoÅ¡li u Tibiju!"
 
 #: ../ui/tutorialhints.cpp:70
 msgid "Welcome to YATC! Use {arrows} or {mouse} to move around."
-msgstr "Dobrodošli u YATC! Koristite {strelice} ili {miša} da se kreæete."
+msgstr "DobrodoÅ¡li u YATC! Koristite {strelice} ili {miÅ¡a} da se kreÄ‡ete."
 
 #: ../ui/tutorialhints.cpp:120
 msgid ""
@@ -855,9 +860,9 @@ msgid ""
 "can \n"
 "choose a vocation and go to the mainland."
 msgstr ""
-"Dobrodošli u selo! Sada ima još par oznaka na vašoj karti s vanim mjestima\n"
-"i NPCovima. Sada biste se trebali boriti do razine 8, kada moete izabrati\n"
-"zvanje i otiæi u glavnu zemlju."
+"DobrodoÅ¡li u selo! Sada ima joÅ¡ par oznaka na vaÅ¡oj karti s vaÅ¾nim mjestima\n"
+"i NPCovima. Sada biste se trebali boriti do razine 8, kada moÅ¾ete izabrati\n"
+"zvanje i otiÄ‡i u glavnu zemlju."
 
 #: ../ui/tutorialhints.cpp:96
 msgid ""
@@ -865,7 +870,7 @@ msgid ""
 "loot \n"
 "its {body}. Just do a {ctrl+click} on it."
 msgstr ""
-"Zašto se boriti ako ne moete profitirati? Stoga kad nešto ubijete, samo "
+"ZaÅ¡to se boriti ako ne moÅ¾ete profitirati? Stoga kad neÅ¡to ubijete, samo "
 "prekopajte\n"
 "{tijelo}. Samo {ctrl+kliknete} na njega."
 
@@ -875,13 +880,13 @@ msgid ""
 "spot}, \n"
 "{ctrl+click} on the {rope}, and then on the {rope spot}."
 msgstr ""
-"S {uetom} se moete penjati iz tamnica i peæina. Pronağite {toèku za "
+"S {uÅ¾etom} se moÅ¾ete penjati iz tamnica i peÄ‡ina. PronaÄ‘ite {toÄku za "
 "penjanje\n"
-"{ctrl+kliknite} na {ue}, i zatim na {toèku za penjanje}."
+"{ctrl+kliknite} na {uÅ¾e}, i zatim na {toÄku za penjanje}."
 
 #: ../gm_mainmenu.cpp:435
 msgid "Your character list is being loaded. Please wait."
-msgstr "Popis Vaših likova se uèitava. Molimo prièekajte."
+msgstr "Popis VaÅ¡ih likova se uÄitava. Molimo priÄekajte."
 
 #: ../gm_mainmenu.cpp:375
 msgid "[for info run with GL engine]\n"
