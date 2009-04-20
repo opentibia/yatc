@@ -190,11 +190,10 @@ void Automap::setTileColor(int x, int y, int z, uint8_t color, uint8_t speedinde
 	}
 }
 
-void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos)
+void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos, int zoom)
 // parameters specify where on the screen it should be painted
 {
 	//FIXME. zoom is not working because Blit doesnt scale properly the image
-	int zoom = 1;
 
 	//draw the minimap
 	int x1 = centerPos.x - (w/2)/zoom;
@@ -242,8 +241,8 @@ void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos)
 
 			MiniMapArea* area = getArea(current_x, current_y, centerPos.z);
 			if(area){
-				area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch);
-				//area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch, destw, desth); //<-- Does not work!
+				//area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch);
+				area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch, destw, desth); //<-- Does not work!
 			}
 		}
 	}
