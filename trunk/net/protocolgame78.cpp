@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "../fassert.h"
-#include "ProtocolGame78.h"
+#include "protocolgame78.h"
 
 #include "../objects.h"
 #include "../debugprint.h"

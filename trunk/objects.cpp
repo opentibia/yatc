@@ -23,7 +23,7 @@
 #include "engine.h" // used to create engine specific sprites
 #include "util.h"
 #include "options.h"
-#include "net\connection.h"
+#include "net/connection.h"
 
 uint16_t ObjectType::minItemId = 0;
 uint16_t ObjectType::maxItemId = 0;
