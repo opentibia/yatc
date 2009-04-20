@@ -48,6 +48,7 @@
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
 int g_lastmousebutton=SDL_BUTTON_LEFT;
+double g_temp_minimapzoom=1;
 
 void resetDefaultCursor();
 
@@ -349,8 +350,19 @@ void GM_Gameworld::keyPress (char key)
 		        printf("Local client command\n");
 		        int i = msg.find(' ',1);
 		        std::string command = msg.substr(1,i-1);
+                std::string params = "";
+                if (i < msg.size())
+                    params = msg.substr(i+1);
 
-		        if (command == "reloadgfx" && !sent) {
+		        if (command == "help" && !sent)
+		        {
+                    getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Supported commands:", TEXTCOLOR_WHITE));
+                    getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": @reloadgfx - reloads graphics", TEXTCOLOR_WHITE));
+                    getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": @mmzoom FACTOR - ", TEXTCOLOR_WHITE));
+                    sent=true;
+                }
+                else if (command == "reloadgfx" && !sent)
+		        {
                     getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Unloading graphics", TEXTCOLOR_WHITE));
                     printf("Unloading graphics\n");
                     Objects::getInstance()->unloadGfx();
@@ -360,6 +372,25 @@ void GM_Gameworld::keyPress (char key)
                     Creatures::getInstance().loadGfx();
                     g_engine->reloadGlobalGfx();
                     sent = true;
+		        }
+		        else if (command == "mmzoom" && !sent)
+		        {
+		            if (!params.size())
+                    {
+                        getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": @mmzoom needs parameter", TEXTCOLOR_WHITE));
+                        sent=true;
+                    }
+                    else
+                    {
+                        std::stringstream s;
+                        g_temp_minimapzoom = atof(params.c_str());
+                        s <<  PRODUCTSHORT ": Set minimap zoom to ";
+                        s << g_temp_minimapzoom;
+                        s << "x";
+
+                        getActiveConsole()->insertEntry(ConsoleEntry(s.str(), TEXTCOLOR_WHITE));
+                        sent=true;
+                    }
 		        }
 		        if (!sent)
                     getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT": Unknown command", TEXTCOLOR_RED));

@@ -685,6 +685,6 @@ SDL_Surface* Sprite::lockSurface()
 void Sprite::unlockSurface()
 {
     SDL_UnlockSurface(m_image);
-    Stretch(getWidth(), getHeight());
+    Stretch(getWidth(), getHeight(),m_smoothstretch,1); // when unlocking
     rebuildSelf();
 }

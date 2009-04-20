@@ -12,6 +12,8 @@
 #include "../automap.h"
 #include "../gamecontent/globalvars.h"
 
+extern double g_temp_minimapzoom;
+
 class pnlMap_t{
 public:
 #if (GLICT_APIREV >= 98)
@@ -38,8 +40,7 @@ public:
 			#else
 				#warning Minimap is not properly drawn until you upgrade to GLICT 98+
 			#endif
-		//panel.SetCaption(gettext("Map"));
-		panel.SetCaption("Map");
+
 		#endif
 
 		panel.AddObject(&pnlMap);
@@ -59,7 +60,7 @@ public:
 	static void paintMap(glictRect *real, glictRect *clipped, glictContainer *caller){
 		Automap* map = (Automap*)caller->GetCustomData();
 		//g_engine->drawRectangleLines(clipped->left, clipped->top, clipped->right-clipped->left, clipped->bottom-clipped->top, oRGBA(255,255,255,255));
-		map->renderSelf((int)real->left+1, (int)real->top+1, 128, 128, GlobalVariables::getPlayerPosition());
+		map->renderSelf((int)real->left+1, (int)real->top+1, 128, 128, GlobalVariables::getPlayerPosition(), g_temp_minimapzoom);
 	}
 };
 
