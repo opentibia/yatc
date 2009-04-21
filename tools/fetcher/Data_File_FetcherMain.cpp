@@ -325,7 +325,7 @@ Data_File_FetcherDialog::Data_File_FetcherDialog(wxWindow* parent,wxWindowID id)
     wxFlexGridSizer* FlexGridSizer2;
     wxFlexGridSizer* FlexGridSizer1;
     wxBoxSizer* BoxSizer3;
-
+    
     Create(parent, wxID_ANY, _("Tibia Data File Fetcher"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
     SetClientSize(wxSize(599,86));
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
@@ -356,7 +356,7 @@ Data_File_FetcherDialog::Data_File_FetcherDialog(wxWindow* parent,wxWindowID id)
     TxtVerMajor = new wxTextCtrl(this, ID_TEXTCTRL1, _("8"), wxDefaultPosition, wxSize(18,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
     TxtVerMajor->SetMaxLength(1);
     FlexGridSizer2->Add(TxtVerMajor, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    TxtVerMinor = new wxTextCtrl(this, ID_TEXTCTRL2, _("40"), wxDefaultPosition, wxSize(29,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    TxtVerMinor = new wxTextCtrl(this, ID_TEXTCTRL2, _("41"), wxDefaultPosition, wxSize(29,23), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
     TxtVerMinor->SetMaxLength(2);
     FlexGridSizer2->Add(TxtVerMinor, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BtnDownload = new wxButton(this, ID_BTNDOWNLOAD, _("Download"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BTNDOWNLOAD"));
@@ -365,7 +365,7 @@ Data_File_FetcherDialog::Data_File_FetcherDialog(wxWindow* parent,wxWindowID id)
     BoxSizer1->Add(FlexGridSizer1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     SetSizer(BoxSizer1);
     BoxSizer1->SetSizeHints(this);
-
+    
     Connect(ID_BTNABOUT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnAbout);
     Connect(ID_BTNQUIT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnQuit);
     Connect(ID_BTNDOWNLOAD,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Data_File_FetcherDialog::OnBtnDownloadClick);

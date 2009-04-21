@@ -35,6 +35,10 @@ public:
 
 	virtual void Blit(float dx, float dy, float sx, float sy, float w, float h);
 	virtual void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
+private:
+    void _BlitInternal(float dx, float dy, float sx, float sy, float w, float h);
+    friend class Engine;
+
 };
 
 #endif

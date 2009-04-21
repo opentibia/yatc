@@ -39,6 +39,17 @@ SpriteSDL::~SpriteSDL()
 
 void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h)
 {
+    if(!getImage()) {
+		return;
+	}
+    unStretch();
+
+    _BlitInternal(dx,dy,sx,sy,w,h);
+
+}
+
+void SpriteSDL::_BlitInternal(float dx, float dy, float sx, float sy, float w, float h)
+{
 	if(!getImage()) {
 		return;
 	}
@@ -62,6 +73,12 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, f
 	if(!getImage())
 		return;
 
-	Stretch(destw, desth, 0);
-	Blit(dx,dy,sx,sy,destw,desth);
+    double lambdaw = destw / w;
+    double lambdah = desth / h;
+
+    double neww = getBasicImage()->w * lambdaw;
+    double newh = getBasicImage()->h * lambdah;
+	Stretch(neww, newh, 0);
+
+	_BlitInternal(dx,dy,sx*lambdaw,sy*lambdah,destw,desth);
 }

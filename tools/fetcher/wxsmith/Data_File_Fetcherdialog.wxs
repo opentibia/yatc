@@ -101,7 +101,7 @@
 							</object>
 							<object class="sizeritem">
 								<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="TxtVerMinor" member="yes">
-									<value>31</value>
+									<value>41</value>
 									<maxlength>2</maxlength>
 									<size>29,23</size>
 								</object>

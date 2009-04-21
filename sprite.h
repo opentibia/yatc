@@ -28,7 +28,7 @@
 	#ifdef _WIN32
 		#define WIN32_LEAN_AND_MEAN
 		#include <windows.h>
-	#endif	
+	#endif
 	#include <GL/glu.h>
 #endif
 #endif
@@ -49,12 +49,14 @@ class Sprite
 
 		virtual float getWidth() const { return m_stretchimage ? m_stretchimage->w : m_image->w; }
 		virtual float getHeight() const { return m_stretchimage ? m_stretchimage->h : m_image->h; }
+		float getBasicWidth() const { return m_image->w; }
+		float getBasicHeight() const { return m_image->h; }
 
 		bool isLoaded() { return m_loaded;}
 
 		void Blit(float destx, float desty){
 			if(m_image){
-				Blit(destx, desty, 0, 0, getWidth(), getHeight());
+				Blit(destx, desty, 0, 0, getBasicWidth(), getBasicHeight());
 			}
 		}
 

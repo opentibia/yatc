@@ -48,6 +48,7 @@
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
 int g_lastmousebutton=SDL_BUTTON_LEFT;
+#warning g_temp_minimapzoom is a very dirty and temporary variable. Somebody, anybody, should make a proper api for zooming in/out on the map. --ivucica
 double g_temp_minimapzoom=1;
 
 void resetDefaultCursor();
@@ -71,13 +72,15 @@ void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
 void pnlInventory_t::onClick_Logout(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+    gameclass->getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Logging out...", TEXTCOLOR_WHITE));
 	gameclass->m_protocol->sendLogout();
 }
 
 void pnlInventory_t::onClick_Options(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-	gameclass->winOptions.window.SetVisible(true);
+	/*gameclass->winOptions.window.SetVisible(true);*/
+    gameclass->msgBox(gettext("This functionality is not yet finished"),"TODO");
 }
 
 GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
@@ -377,19 +380,28 @@ void GM_Gameworld::keyPress (char key)
 		        {
 		            if (!params.size())
                     {
-                        getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": @mmzoom needs parameter", TEXTCOLOR_WHITE));
+                        getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": @mmzoom needs parameter", TEXTCOLOR_RED));
                         sent=true;
                     }
                     else
                     {
                         std::stringstream s;
                         g_temp_minimapzoom = atof(params.c_str());
-                        s <<  PRODUCTSHORT ": Set minimap zoom to ";
-                        s << g_temp_minimapzoom;
-                        s << "x";
+                        if (fabs(g_temp_minimapzoom)==0)
+                        {
+                            getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": You passed 0 to @mmzoom, which is very naughty of you", TEXTCOLOR_RED));
+                            getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Known bug: on some locales, you should enter 0,5 with a decimal comma, \ninstead of 0.5 with a decimal point", TEXTCOLOR_RED));
+                            sent=true;
+                        } else
+                        {
+                            s <<  PRODUCTSHORT ": Set minimap zoom to ";
+                            s << g_temp_minimapzoom;
+                            s << "x";
+                            printf("%s\n", s.str().c_str());
 
-                        getActiveConsole()->insertEntry(ConsoleEntry(s.str(), TEXTCOLOR_WHITE));
-                        sent=true;
+                            getActiveConsole()->insertEntry(ConsoleEntry(s.str(), TEXTCOLOR_WHITE));
+                            sent=true;
+                        }
                     }
 		        }
 		        if (!sent)

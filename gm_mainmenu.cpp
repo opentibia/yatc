@@ -151,7 +151,7 @@ void GM_MainMenu::renderScene()
 {
     g_engine->resetClipping();
 	if(background)
-		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
+		background->Blit(0,0,0,0,background->getBasicWidth(),background->getBasicHeight(),glictGlobals.w, glictGlobals.h);
 
 	renderUI();
 }

@@ -1,7 +1,7 @@
 #!/bin/sh
 @echo off
 set PATH=%PATH%;lib\
-echo "This will download data files from Tibia 8.31"
+echo "This will download data files from Tibia 8.41"
 echo "_______________________"
 echo "If you use windows and you got this file using svn you"
 echo "need to get:"
@@ -14,13 +14,13 @@ echo "Now press enter to continue."
 pause
 read
 
-lib/wget http://download.tibia.com/tibia831.tgz -c
-lib/gzip -d tibia831.tgz
-lib/tar -xf tibia831.tar Tibia/Tibia.spr Tibia/Tibia.dat Tibia/Tibia.pic
+lib/wget http://download.tibia.com/tibia841.tgz -c
+lib/gzip -d tibia841.tgz
+lib/tar -xf tibia841.tar Tibia/Tibia.spr Tibia/Tibia.dat Tibia/Tibia.pic
 
-wget http://download.tibia.com/tibia831.tgz -c
-gzip -d tibia831.tgz
-tar -xf tibia831.tar Tibia/Tibia.spr Tibia/Tibia.dat Tibia/Tibia.pic
+wget http://download.tibia.com/tibia841.tgz -c
+gzip -d tibia841.tgz
+tar -xf tibia841.tar Tibia/Tibia.spr Tibia/Tibia.dat Tibia/Tibia.pic
 
 move Tibia/Tibia.spr Tibia.spr
 move Tibia/Tibia.dat Tibia.dat

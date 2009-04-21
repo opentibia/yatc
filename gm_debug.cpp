@@ -332,12 +332,14 @@ void GM_Debug::updateScene()
 void GM_Debug::renderScene()
 {
 	if(background)
-		background->Blit(0,0,0,0,background->getWidth(),background->getHeight(),glictGlobals.w, glictGlobals.h);
+		background->Blit(0,0,0,0,background->getBasicWidth(),background->getBasicHeight(),glictGlobals.w, glictGlobals.h);
 	if(spr)
 		spr->Blit(50,50);
  	if(thing)
 		thing->Blit(100,50);
 
+	if(background)
+		background->Blit(150,50,125,51,85,136,32,48);
 
 /*
     int xs = px - mapw/2;

@@ -65,7 +65,7 @@ public:
     Automap();
     ~Automap();
 
-    void renderSelf(int x, int y, int w, int h, const Position& pos, int zoom=1);
+    void renderSelf(int x, int y, int w, int h, const Position& pos, double zoom=1);
     void setTileColor(int x, int y, int z, uint8_t color,uint8_t speedindex);
 
 private:
