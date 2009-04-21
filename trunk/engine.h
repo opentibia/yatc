@@ -81,7 +81,7 @@ class Engine
 		Engine();
 		void initFont(glictFont** fnt, const char* fontname);
 
-		friend void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h);
+		friend void SpriteSDL::_BlitInternal(float dx, float dy, float sx, float sy, float w, float h);
 
 
 #if (GLICT_APIREV < 69)
