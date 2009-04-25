@@ -193,60 +193,60 @@ void Automap::setTileColor(int x, int y, int z, uint8_t color, uint8_t speedinde
 void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos, double zoom)
 // parameters specify where on the screen it should be painted
 {
-	//FIXME. zoom is not working because Blit doesnt scale properly the image
-
-	//draw the minimap
-	int x1 = centerPos.x - (w/2)/zoom;
-	int y1 = centerPos.y - (h/2)/zoom;
+	if(zoom < 1.) zoom = 1.;
 
 	//background
 	g_engine->drawRectangle(x, y, w, h, oRGBA(0,0,0,1));
 
+	//Coordinates of the top-left minimap corner
+	int x1 = centerPos.x - int((w/2)/zoom);
+	int y1 = centerPos.y - int((h/2)/zoom);
+
 	int i, j;
-	//Decide which areas and where should be drawn
-	if(x1 < 0) i = -x1*zoom;
-	else i = -(x1 & 0xFF)*zoom;
-	for(;i < w; i += 256*zoom){
-		int current_x = x1 + i/zoom;
+
+	if(x1 < 0) i = int(-x1*zoom);
+	else i = int(-(x1 & 0xFF)*zoom);
+	// (i,j) is the pixel position where we will draw the area
+	for(;i < w; i += int(256*zoom)){
+		int current_x = x1 + int(i/zoom);
 		int destx = i, srcx = 0;
-		int srcw = 256, destw = 256*zoom;
+		int srcw = 256, destw = int(256*zoom);
 		if(destx < 0){
-			srcx = -destx/zoom;
+			srcx = int(-destx/zoom);
 			srcw -= srcx;
 			destx = 0;
-			destw = srcw*zoom;
+			destw = int(srcw*zoom);
 		}
 		if(destx + destw > w){
 			destw = w - destx;
-			srcw = destw/zoom;
+			srcw = int(destw/zoom);
 		}
 
-		if(y1 < 0) j = -y1*zoom;
-		else j = -(y1 & 0xFF)*zoom;
-		for(;j < h; j += 256*zoom){
-			int current_y = y1 + j/zoom;
+		if(y1 < 0) j = int(-y1*zoom);
+		else j = int(-(y1 & 0xFF)*zoom);
+		for(;j < h; j += int(256*zoom)){
+			int current_y = y1 + int(j/zoom);
 			int desty = j, srcy = 0;
-			int srch = 256, desth = 256*zoom;
+			int srch = 256, desth = int(256*zoom);
 
 			if(desty < 0){
-				srcy = -desty/zoom;
+				srcy = int(-desty/zoom);
 				srch -= srcy;
 				desty = 0;
-				desth = srch*zoom;
+				desth = int(srch*zoom);
 			}
 			if(desty + desth > h){
 				desth = h - desty;
-				srch = desth/zoom;
+				srch = int(desth/zoom);
 			}
 
 			MiniMapArea* area = getArea(current_x, current_y, centerPos.z);
 			if(area){
-				//area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch);
-				area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch, destw, desth); //<-- Does not work!
+				area->getSprite()->Blit(x + destx, y + desty, srcx, srcy, srcw, srch, destw, desth);
 			}
 		}
 	}
 
     //mark where is the player
-    g_engine->drawRectangle(x + w/2 -1, y + h/2-1, 3, 3, oRGBA(1,1,1,1));
+    g_engine->drawRectangle(x + w/2 -1, y + h/2-1, 3, 3, oRGBA(255,255,255,1));
 }
