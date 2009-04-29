@@ -23,11 +23,15 @@
 #include <vector>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #ifndef WIN32
 	#include <sys/stat.h> // mkdir
 	#include <errno.h>
 #endif
-#include "config.h"
 #include "util.h"
 
 #ifdef WIN32
