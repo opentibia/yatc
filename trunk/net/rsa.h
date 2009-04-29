@@ -20,7 +20,10 @@
 #ifndef __RSA_H__
 #define __RSA_H__
 
+#ifdef HAVE_CONFIG_H
 #include "../config.h"
+#endif
+
 #if HAVE_GMP_H
 	#ifndef __APPLE__
 		#include <gmp.h>

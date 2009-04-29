@@ -50,6 +50,11 @@ unsigned int MAXFPS=50;
 	#define gettext(x) (x)
 #endif
 #include <locale.h>
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "debugprint.h"
 #include "options.h"
 #include "engine.h"
@@ -59,7 +64,6 @@ unsigned int MAXFPS=50;
 #include "gm_debug.h"
 #include "util.h"
 #include "skin.h"
-#include "config.h"
 #include "spritesdl.h" // to load icon
 #include "product.h"
 

@@ -612,8 +612,7 @@ void Connection::executeNetwork()
                         // data in unencrypted packets is now including unencrypted length,
                         // + encrypted length ... although packet is not encrypted
                         // let's just cut the cr/\p
-                        uint16_t size = m_inputMessage.getU16();
-                        //m_inputMessage.setSize(size);
+                        /*uint16_t size = */m_inputMessage.getU16();
 					}
 					//raise onRecv event
 					if(!m_protocol->onRecv(m_inputMessage)){
