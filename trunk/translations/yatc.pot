@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-28 22:35+0100\n"
+"POT-Creation-Date: 2009-04-25 12:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../gm_mainmenu.cpp:391
+#: ../gm_mainmenu.cpp:392
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in file COPYING.\n"
@@ -31,10 +31,6 @@ msgstr ""
 
 #: ../gm_mainmenu.cpp:379
 msgid "(in no particular order)"
-msgstr ""
-
-#: ../gm_mainmenu.cpp:381
-msgid "(in the navy)"
 msgstr ""
 
 #: ../ui/tutorialhints.cpp:93
@@ -105,7 +101,7 @@ msgstr ""
 msgid "Auto Chase Off"
 msgstr ""
 
-#: ../ui/optionsnetwork.h:128
+#: ../ui/optionsnetwork.h:138
 msgid "Autodetect"
 msgstr ""
 
@@ -121,14 +117,14 @@ msgstr ""
 msgid "Buy"
 msgstr ""
 
-#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:155
+#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:165
 #: ../ui/optionsgraphics.h:141 ../ui/optionsconsole.h:136 ../ui/login.h:123
 #: ../ui/uioutfit.cpp:155 ../ui/charlist.h:115 ../ui/itemmove.h:109
 #: ../ui/uitrade.cpp:182
 msgid "Cancel"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:584
+#: ../gm_mainmenu.cpp:585
 msgid "Cannot connect to a login server."
 msgstr ""
 
@@ -156,15 +152,15 @@ msgstr ""
 msgid "Club Fighting"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:434 ../gm_mainmenu.cpp:521
+#: ../gm_mainmenu.cpp:435 ../gm_mainmenu.cpp:522
 msgid "Connecting"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:522
+#: ../gm_mainmenu.cpp:523
 msgid "Connecting to the game world. Please wait."
 msgstr ""
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:959
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1018
 msgid "Console"
 msgstr ""
 
@@ -192,7 +188,7 @@ msgstr ""
 msgid "Customise the console"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:461
+#: ../gm_mainmenu.cpp:462
 msgid ""
 "Data files in the directory either:\n"
 "* do not belong to same protocol version, or\n"
@@ -213,7 +209,7 @@ msgstr ""
 msgid "Distance Fighting"
 msgstr ""
 
-#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:621
+#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:622
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
@@ -231,7 +227,7 @@ msgstr ""
 msgid "Enter Game"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:586 ../gm_mainmenu.cpp:593 ../gm_mainmenu.cpp:645
+#: ../gm_mainmenu.cpp:587 ../gm_mainmenu.cpp:594 ../gm_mainmenu.cpp:646
 msgid "Error"
 msgstr ""
 
@@ -255,13 +251,13 @@ msgstr ""
 msgid "Follow"
 msgstr ""
 
-#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:624
+#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:625
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:588
+#: ../gm_mainmenu.cpp:589
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -304,11 +300,11 @@ msgstr ""
 msgid "Gratis Premium Account"
 msgstr ""
 
-#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:627
+#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:628
 msgid "Have fun in"
 msgstr ""
 
-#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:625
+#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:626
 msgid "Have fun in Tibia!"
 msgstr ""
 
@@ -316,12 +312,12 @@ msgstr ""
 msgid "Head"
 msgstr ""
 
-#: ../ui/health.h:69
+#: ../ui/health.h:75
 msgid "Health"
 msgstr ""
 
-#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:141
-#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:408
+#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:151
+#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:409
 #: ../ui/optionsconsole.h:122
 msgid "Help"
 msgstr ""
@@ -348,11 +344,11 @@ msgstr ""
 msgid "Ignore"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:397
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:398
 msgid "Info"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:647
+#: ../gm_mainmenu.cpp:648
 msgid "Information"
 msgstr ""
 
@@ -366,6 +362,10 @@ msgstr ""
 
 #: ../ui/skills.h:93
 msgid "Level"
+msgstr ""
+
+#: ../ui/uiinventory.cpp:71
+msgid "Logout"
 msgstr ""
 
 #: ../mapui.cpp:559
@@ -389,7 +389,7 @@ msgstr ""
 msgid "Mana"
 msgstr ""
 
-#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:630
+#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:631
 msgid "Message of the Day"
 msgstr ""
 
@@ -431,7 +431,7 @@ msgstr ""
 msgid "OT Encryption Key"
 msgstr ""
 
-#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:148
+#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:158
 #: ../ui/optionsgraphics.h:134 ../ui/optionsconsole.h:129 ../ui/login.h:114
 #: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:146 ../ui/charlist.h:107
 #: ../ui/itemmove.h:100
@@ -458,7 +458,7 @@ msgid ""
 "  on most laptops and perhaps on many desktops.\n"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76
+#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76 ../ui/uiinventory.cpp:63
 msgid "Options"
 msgstr ""
 
@@ -497,14 +497,18 @@ msgstr ""
 msgid "Programmed by"
 msgstr ""
 
-#: ../ui/optionsnetwork.h:120 ../ui/optionsnetwork.h:121
-#: ../ui/optionsnetwork.h:122 ../ui/optionsnetwork.h:123
+#: ../ui/optionsnetwork.h:121 ../ui/optionsnetwork.h:123
 #: ../ui/optionsnetwork.h:124 ../ui/optionsnetwork.h:125
 #: ../ui/optionsnetwork.h:126 ../ui/optionsnetwork.h:127
+#: ../ui/optionsnetwork.h:129 ../ui/optionsnetwork.h:130
+#: ../ui/optionsnetwork.h:131 ../ui/optionsnetwork.h:132
+#: ../ui/optionsnetwork.h:133 ../ui/optionsnetwork.h:134
+#: ../ui/optionsnetwork.h:135 ../ui/optionsnetwork.h:136
+#: ../ui/optionsnetwork.h:137
 msgid "Protocol"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:471
+#: ../gm_mainmenu.cpp:472
 msgid "Protocol detection failed"
 msgstr ""
 
@@ -673,7 +677,7 @@ msgid ""
 "'Use') on it to open it."
 msgstr ""
 
-#: ../mapui.cpp:712
+#: ../gm_gameworld.cpp:83 ../mapui.cpp:712
 msgid "This functionality is not yet finished"
 msgstr ""
 
@@ -696,7 +700,7 @@ msgstr ""
 msgid "Trade"
 msgstr ""
 
-#: ../gm_gameworld.cpp:1081
+#: ../gm_gameworld.cpp:1141
 msgid "Tutorial Hint"
 msgstr ""
 
@@ -728,7 +732,7 @@ msgstr ""
 msgid "Wait for a counter offer."
 msgstr ""
 
-#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:623
+#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:624
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
@@ -738,11 +742,11 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr ""
 
-#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:626
+#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:627
 msgid "Welcome to"
 msgstr ""
 
-#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:620
+#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:621
 msgid "Welcome to Tibia!"
 msgstr ""
 
@@ -773,7 +777,7 @@ msgid ""
 "{ctrl+click} on the {rope}, and then on the {rope spot}."
 msgstr ""
 
-#: ../gm_mainmenu.cpp:435
+#: ../gm_mainmenu.cpp:436
 msgid "Your character list is being loaded. Please wait."
 msgstr ""
 
@@ -789,7 +793,7 @@ msgstr ""
 msgid "days left"
 msgstr ""
 
-#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:622
+#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:623
 msgid "to the state of"
 msgstr ""
 

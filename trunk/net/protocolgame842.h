@@ -19,28 +19,28 @@
 //////////////////////////////////////////////////////////////////////
 
 
-#ifndef __PROTOCOLGAME841_H
-#define __PROTOCOLGAME841_H
+#ifndef __PROTOCOLGAME842_H
+#define __PROTOCOLGAME842_H
 
 #include "protocolgame84.h"
 
 class Thing;
 class Item;
 
-class ProtocolGame841 : public ProtocolGame84
+class ProtocolGame842 : public ProtocolGame84
 {
 	public:
-		virtual ~ProtocolGame841();
+		virtual ~ProtocolGame842();
 
-		virtual const char* getProtocolName() { return "Protocol841";}
-		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_841; }
+		virtual const char* getProtocolName() { return "Protocol842";}
+		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_842; }
 
         virtual void onConnect();
         virtual bool parseTileAddThing(NetworkMessage& msg);
         virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
 
 	protected:
-		ProtocolGame841(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
+		ProtocolGame842(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
 		virtual void checkVersion();
 		friend class ProtocolConfig;

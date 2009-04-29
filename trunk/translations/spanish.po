@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-28 22:35+0100\n"
+"POT-Creation-Date: 2009-04-25 12:47+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: kupi <kupi.ots@gmail.com>\n"
 "Language-Team: kupi <kupi.ots@gmail.com>, <kupi_ots@hotmail.com>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-Country: España, México, Chile, Colombia\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../gm_mainmenu.cpp:391
+#: ../gm_mainmenu.cpp:392
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in file COPYING.\n"
@@ -40,10 +40,6 @@ msgstr " oro"
 #: ../gm_mainmenu.cpp:379
 msgid "(in no particular order)"
 msgstr "(en ningún orden particular)"
-
-#: ../gm_mainmenu.cpp:381
-msgid "(in the navy)"
-msgstr "(En la marina)"
 
 #: ../ui/tutorialhints.cpp:93
 msgid "<Observe the battle window>"
@@ -113,7 +109,7 @@ msgstr "Atacar"
 msgid "Auto Chase Off"
 msgstr "Persecución Automática Apagada"
 
-#: ../ui/optionsnetwork.h:128
+#: ../ui/optionsnetwork.h:138
 msgid "Autodetect"
 msgstr "Auto-detectar"
 
@@ -129,14 +125,14 @@ msgstr "Lucha con Hacha"
 msgid "Buy"
 msgstr "Comprar"
 
-#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:155
+#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:165
 #: ../ui/optionsgraphics.h:141 ../ui/optionsconsole.h:136 ../ui/login.h:123
 #: ../ui/uioutfit.cpp:155 ../ui/charlist.h:115 ../ui/itemmove.h:109
 #: ../ui/uitrade.cpp:182
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../gm_mainmenu.cpp:584
+#: ../gm_mainmenu.cpp:585
 msgid "Cannot connect to a login server."
 msgstr "No se puede conectar al servidor de acceso."
 
@@ -168,15 +164,15 @@ msgstr "Control Clásico"
 msgid "Club Fighting"
 msgstr "Lucha con Puños"
 
-#: ../gm_mainmenu.cpp:434 ../gm_mainmenu.cpp:521
+#: ../gm_mainmenu.cpp:435 ../gm_mainmenu.cpp:522
 msgid "Connecting"
 msgstr "Conectando"
 
-#: ../gm_mainmenu.cpp:522
+#: ../gm_mainmenu.cpp:523
 msgid "Connecting to the game world. Please wait."
 msgstr "Conectando al mundo del juego. Por favor espere."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:959
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1018
 msgid "Console"
 msgstr "Consola"
 
@@ -204,7 +200,7 @@ msgstr "Motor gráfico actual"
 msgid "Customise the console"
 msgstr "Personalizar la consola"
 
-#: ../gm_mainmenu.cpp:461
+#: ../gm_mainmenu.cpp:462
 msgid ""
 "Data files in the directory either:\n"
 "* do not belong to same protocol version, or\n"
@@ -234,7 +230,7 @@ msgstr "Detalles"
 msgid "Distance Fighting"
 msgstr "Lucha a Distancia"
 
-#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:621
+#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:622
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
@@ -254,7 +250,7 @@ msgstr "Modificar motor gráfico"
 msgid "Enter Game"
 msgstr "Entrar al Juego"
 
-#: ../gm_mainmenu.cpp:586 ../gm_mainmenu.cpp:593 ../gm_mainmenu.cpp:645
+#: ../gm_mainmenu.cpp:587 ../gm_mainmenu.cpp:594 ../gm_mainmenu.cpp:646
 msgid "Error"
 msgstr "Error"
 
@@ -278,13 +274,13 @@ msgstr "Lucha de Puño"
 msgid "Follow"
 msgstr "Seguir"
 
-#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:624
+#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:625
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
 msgstr "Para más información sobre Tibia visite nuestro siti web en"
 
-#: ../gm_mainmenu.cpp:588
+#: ../gm_mainmenu.cpp:589
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -335,11 +331,11 @@ msgstr "Opciones Gráficas"
 msgid "Gratis Premium Account"
 msgstr "Cuenta Premium Grátis"
 
-#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:627
+#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:628
 msgid "Have fun in"
 msgstr "Diviértete en"
 
-#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:625
+#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:626
 msgid "Have fun in Tibia!"
 msgstr "¡Diviértete en Tibia!"
 
@@ -347,12 +343,12 @@ msgstr "¡Diviértete en Tibia!"
 msgid "Head"
 msgstr "Cabeza"
 
-#: ../ui/health.h:69
+#: ../ui/health.h:75
 msgid "Health"
 msgstr "Salud"
 
-#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:141
-#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:408
+#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:151
+#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:409
 #: ../ui/optionsconsole.h:122
 msgid "Help"
 msgstr "Ayuda"
@@ -381,11 +377,11 @@ msgstr ""
 msgid "Ignore"
 msgstr "Ignorar"
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:397
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:398
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:647
+#: ../gm_mainmenu.cpp:648
 msgid "Information"
 msgstr "Información"
 
@@ -400,6 +396,11 @@ msgstr "Invitar al grupo"
 #: ../ui/skills.h:93
 msgid "Level"
 msgstr "Nivel"
+
+#: ../ui/uiinventory.cpp:71
+#, fuzzy
+msgid "Logout"
+msgstr "Mirar"
 
 #: ../mapui.cpp:559
 msgid "Look"
@@ -426,7 +427,7 @@ msgstr "Nivel Mágico"
 msgid "Mana"
 msgstr "Mana"
 
-#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:630
+#: ../ui/optionsui.cpp:233 ../gm_mainmenu.cpp:631
 msgid "Message of the Day"
 msgstr "Mensaje del Dia"
 
@@ -472,7 +473,7 @@ msgstr ""
 msgid "OT Encryption Key"
 msgstr "LLave de Encriptación del OT"
 
-#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:148
+#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:158
 #: ../ui/optionsgraphics.h:134 ../ui/optionsconsole.h:129 ../ui/login.h:114
 #: ../ui/uishop.cpp:145 ../ui/uioutfit.cpp:146 ../ui/charlist.h:107
 #: ../ui/itemmove.h:100
@@ -510,7 +511,7 @@ msgstr ""
 " que sea más lento en la mayoría de ordenadores portatiles\n"
 " y tal vez también en muchos ordenadores de sobremesa.\n"
 
-#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76
+#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76 ../ui/uiinventory.cpp:63
 msgid "Options"
 msgstr "Opciones"
 
@@ -554,14 +555,18 @@ msgstr "Primario"
 msgid "Programmed by"
 msgstr "Programado por"
 
-#: ../ui/optionsnetwork.h:120 ../ui/optionsnetwork.h:121
-#: ../ui/optionsnetwork.h:122 ../ui/optionsnetwork.h:123
+#: ../ui/optionsnetwork.h:121 ../ui/optionsnetwork.h:123
 #: ../ui/optionsnetwork.h:124 ../ui/optionsnetwork.h:125
 #: ../ui/optionsnetwork.h:126 ../ui/optionsnetwork.h:127
+#: ../ui/optionsnetwork.h:129 ../ui/optionsnetwork.h:130
+#: ../ui/optionsnetwork.h:131 ../ui/optionsnetwork.h:132
+#: ../ui/optionsnetwork.h:133 ../ui/optionsnetwork.h:134
+#: ../ui/optionsnetwork.h:135 ../ui/optionsnetwork.h:136
+#: ../ui/optionsnetwork.h:137
 msgid "Protocol"
 msgstr "Protocolo"
 
-#: ../gm_mainmenu.cpp:471
+#: ../gm_mainmenu.cpp:472
 msgid "Protocol detection failed"
 msgstr "La detección del protocolo falló"
 
@@ -766,7 +771,7 @@ msgstr ""
 "llamado \n"
 "'Usar') sobre él para abrirlo."
 
-#: ../mapui.cpp:712
+#: ../gm_gameworld.cpp:83 ../mapui.cpp:712
 msgid "This functionality is not yet finished"
 msgstr "Esta función aun no esta disponible"
 
@@ -800,7 +805,7 @@ msgstr ""
 msgid "Trade"
 msgstr "Comerciar con NPC"
 
-#: ../gm_gameworld.cpp:1081
+#: ../gm_gameworld.cpp:1141
 msgid "Tutorial Hint"
 msgstr "Sugerencia"
 
@@ -832,7 +837,7 @@ msgstr "Usa SDL"
 msgid "Wait for a counter offer."
 msgstr ""
 
-#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:623
+#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:624
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
@@ -844,11 +849,11 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr "Ofrecemos dos motores gráficos:\n"
 
-#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:626
+#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:627
 msgid "Welcome to"
 msgstr "Bienvenido a"
 
-#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:620
+#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:621
 msgid "Welcome to Tibia!"
 msgstr "Bienvenido a Tibia!"
 
@@ -891,7 +896,7 @@ msgstr ""
 "pulsa {ctrl + clic} sobre la {cuerda} y, a continuación, sobre la {marca de "
 "cuerda}."
 
-#: ../gm_mainmenu.cpp:435
+#: ../gm_mainmenu.cpp:436
 msgid "Your character list is being loaded. Please wait."
 msgstr "La lista de tus personajes se esta cargando. Por favor, espere."
 
@@ -907,13 +912,16 @@ msgstr "compilado con"
 msgid "days left"
 msgstr "dias restantes"
 
-#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:622
+#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:623
 msgid "to the state of"
 msgstr "al estado de"
 
 #: ../gm_mainmenu.cpp:382
 msgid "with inactive developers"
 msgstr "con los desarrolladores inactivos"
+
+#~ msgid "(in the navy)"
+#~ msgstr "(En la marina)"
 
 #~ msgid "Connecting to the server..."
 #~ msgstr "Conectando al servidor..."

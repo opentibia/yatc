@@ -135,6 +135,7 @@ public:
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.31", NULL, (void*)CLIENT_VERSION_831));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.4", NULL, (void*)CLIENT_VERSION_840));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.41", NULL, (void*)CLIENT_VERSION_841));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.42", NULL, (void*)CLIENT_VERSION_842));
 		protocols.push_back(btnProtocol.addItem(gettext("Autodetect"), NULL, (void*)CLIENT_VERSION_AUTO));
 
 		window.AddObject(&pnlSeparator);
@@ -164,6 +165,9 @@ public:
 		btnCancel.SetHeight(19);
 		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont",8);
+
+
+		window.SetHeight(210-102 + ((btnProtocol.getCount()-1)/2+1)*24 + 25);
 	}
 
 	void Init() {
