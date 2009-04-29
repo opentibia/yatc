@@ -241,7 +241,6 @@ void GM_Gameworld::doResize(float w, float h)
 
 	pnlRightSide.SetHeight(h);
 	yspRightSide.SetHeight(h);
-	printf("Height: %g\n", h);
 	pnlRightSide.SetPos(w-170,0); // ysp is always on 0,0
 
 	txtConsoleEntry.SetWidth(w-170);
@@ -1129,6 +1128,7 @@ void GM_Gameworld::dragComplete(const Position& toPos)
 			winMove.open(m_dragThingId, m_dragThingCount, m_dragPos, toPos, m_dragStackPos);
 		}
 		else{
+		    printf("m_dragPos: %d %d %d\n", m_dragPos.x, m_dragPos.y, m_dragPos.z);
 			m_protocol->sendThrow(m_dragPos, m_dragThingId, m_dragStackPos, toPos, m_dragThingCount);
 		}
 	}

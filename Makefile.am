@@ -26,6 +26,10 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		net/protocolgame81.cpp net/protocolgame811.cpp net/protocolgame82.cpp \
 		net/protocolgame821.cpp net/protocolgame822.cpp net/protocolgame83.cpp \
 		net/protocolgame831.cpp net/protocolgame84.cpp net/protocolgame841.cpp \
+		net/protocolgame842.cpp \
+		\
+		net/protocolgame78.cpp \
+		\
 		net/rsa.cpp net/encryption.cpp net/protocolgame.cpp net/protocollogin.cpp \
 		\
 		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp \
@@ -48,6 +52,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		net/protocolgame81.h net/protocolgame811.h net/protocolgame82.h \
 		net/protocolgame821.h net/protocolgame822.h net/protocolgame83.h \
 		net/protocolgame831.h net/protocolgame84.h net/protocolgame841.h \
+		net/protocolgame842.h \
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \
 		gamecontent/inventory.h gamecontent/item.h gamecontent/map.h \

@@ -19,23 +19,23 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "../fassert.h"
-#include "protocolgame841.h"
+#include "protocolgame842.h"
 #include "gamecontent/position.h"
 #include "gamecontent/map.h"
-ProtocolGame841::ProtocolGame841(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
+ProtocolGame842::ProtocolGame842(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame84(accountname, password, name, isGM)
 {
 	//
 }
 
-ProtocolGame841::~ProtocolGame841()
+ProtocolGame842::~ProtocolGame842()
 {
 	//
 }
 
-void ProtocolGame841::checkVersion()
+void ProtocolGame842::checkVersion()
 {
-	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_841);
+	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_842);
 }
 
 
@@ -43,7 +43,7 @@ void ProtocolGame841::checkVersion()
 //////
 
 
-bool ProtocolGame841::parsePacket(uint8_t cmd, NetworkMessage& msg)
+bool ProtocolGame842::parsePacket(uint8_t cmd, NetworkMessage& msg)
 {
     // example for overrides
     printf("%s\n", __PRETTY_FUNCTION__);
@@ -57,7 +57,7 @@ bool ProtocolGame841::parsePacket(uint8_t cmd, NetworkMessage& msg)
     return ProtocolGame::parsePacket(cmd,msg);
 }
 
-void ProtocolGame841::onConnect()
+void ProtocolGame842::onConnect()
 {
     // we do logging in by handling 0x1F
     // here we only tell "skip checksum in unencypted packet"
@@ -65,7 +65,7 @@ void ProtocolGame841::onConnect()
     m_connection->setChecksumState(true);
 }
 
-bool ProtocolGame841::parseTileAddThing(NetworkMessage& msg)
+bool ProtocolGame842::parseTileAddThing(NetworkMessage& msg)
 {
     MSG_READ_POSITION(tilePos);
     MSG_READ_U8(stackPos); // thomac says it behaves weird and is most probably some kind of check ... we can probably ignore it

@@ -43,7 +43,7 @@ public:
 
     ChoiceGrid();
     ~ChoiceGrid();
-    ChoiceGrid::Item* addItem(const std::string &txt, ItemCallback_t cb, void* data=NULL);
+    ChoiceGrid::Item* addItem(const std::string &txt, ItemCallback_t cb, void* data=NULL, bool enabled=true);
     void setRows(int rows);
     void setPadding(int w, int h);
     void setItemSize(int w, int h);

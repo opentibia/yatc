@@ -33,7 +33,7 @@ ChoiceGrid::~ChoiceGrid()
 {
 }
 
-ChoiceGrid::Item* ChoiceGrid::addItem(const std::string &txt, ChoiceGrid::ItemCallback_t cb, void* data)
+ChoiceGrid::Item* ChoiceGrid::addItem(const std::string &txt, ChoiceGrid::ItemCallback_t cb, void* data, bool enabled)
 {
     ChoiceGrid::Item* pi = new ChoiceGrid::Item;
     pi->btn.SetCustomData(pi);
@@ -48,6 +48,7 @@ ChoiceGrid::Item* ChoiceGrid::addItem(const std::string &txt, ChoiceGrid::ItemCa
     pi->btn.SetBGColor(.4, .4, .4, 1.);
     pi->btn.SetOnClick(ChoiceGrid::onClick);
     pi->btn.SetCustomData(pi);
+    pi->btn.SetEnabled(enabled);
     pi->parent = this;
 
     pi->btn.SetPos((items.size()%rows)*(w+paddingw) + paddingw, (items.size()/rows)*(h+paddingh) + paddingh);
