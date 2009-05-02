@@ -193,7 +193,10 @@ void Automap::setTileColor(int x, int y, int z, uint8_t color, uint8_t speedinde
 void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos, double zoom)
 // parameters specify where on the screen it should be painted
 {
-
+    if (zoom == 0)
+    {
+        zoom = 1;
+    }
 	//background
 	g_engine->drawRectangle(x, y, w, h, oRGBA(0,0,0,1));
 

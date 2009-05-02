@@ -391,7 +391,6 @@ void GM_Gameworld::keyPress (char key)
                         if (fabs(g_temp_minimapzoom)==0)
                         {
                             getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": You passed 0 to @mmzoom, which is very naughty of you", TEXTCOLOR_RED));
-                            getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Known bug: on some locales, you should enter 0,5 with a decimal comma, \ninstead of 0.5 with a decimal point", TEXTCOLOR_RED));
                             sent=true;
                         } else
                         {
