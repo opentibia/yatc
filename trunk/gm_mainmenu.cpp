@@ -69,9 +69,6 @@ GM_MainMenu::GM_MainMenu()
 	winCharlist.btnOk.SetOnClick(GM_MainMenu::winCharlist_btnOk_OnClick);
 	winCharlist.btnCancel.SetOnClick(GM_MainMenu::winCharlist_btnCancel_OnClick);
 
-	/* ********************** OPTIONS *************************** */
-    winOptions.initiateAll(&desktop);
-
     /* ********************** OTHERS ***************************** */
     #ifdef DEBUG_BUILD
     desktop.AddObject(&btnGoToDebug);
@@ -129,19 +126,13 @@ void GM_MainMenu::updateScene()
 
 void GM_MainMenu::doResize(float w, float h)
 {
+    GameModeOptions::doResize(w,h);
 	pnlMainMenu.mainmenu.SetPos(60, glictGlobals.h - 240);
 	desktop.SetWidth(glictGlobals.w);
 	desktop.SetHeight(glictGlobals.h);
 	desktop.ResetTransformations();
 	centerWindow(&winLogin.window);
 	centerWindow(&winCharlist.window);
-	centerWindow(&winOptions.window);
-	centerWindow(&winOptions.winOptionsGeneral.window);
-	centerWindow(&winOptions.winOptionsConsole.window);
-	centerWindow(&winOptions.winOptionsGraphics.window);
-	centerWindow(&winOptions.winOptionsGraphicsAdvanced.window);
-	centerWindow(&winOptions.winOptionsHotkeys.window);
-	centerWindow(&winOptions.winOptionsNetwork.window);
 	centerWindow(&winStatus);
 
 	renderScene();
@@ -263,54 +254,16 @@ bool GM_MainMenu::specKeyPress (const SDL_keysym& key)
 	return false;
 }
 
-void GM_MainMenu::centerWindow (glictWindow *win)
-{
-	glictSize s;
-	win->GetSize(&s);
-	win->SetPos(glictGlobals.w / 2 - s.w / 2, glictGlobals.h/2 - s.h / 2);
-}
-
-void GM_MainMenu::msgBox (const char* mbox, const char* title, glictContainer* focusondismiss)
-{
-	glictSize s;
-	glictMessageBox *mb;
-	desktop.AddObject(mb = new glictMessageBox);
-
-	mb->SetCaption(title);
-	mb->SetMessage(mbox);
-
-	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35 + 10 + 10);
-	int size1 = (int)glictFontSize(title, "system");
-	int size2 = (int)glictFontSize(mbox, "system");
-	mb->SetWidth(MAX(size1, size2) + 10 + 10);
-	mb->Focus(NULL);
-    #if (GLICT_APIREV >= 85)
-	mb->SetTextOffset(10,10);
-	#else
-	#warning For nicer msgboxes get GLICT APIREV 85+.
-	#endif
-
-	mb->GetSize(&s);
-
-	mb->SetPos(glictGlobals.w / 2 - s.w / 2, glictGlobals.h/ 2 - s.h / 2);
-
-	mb->SetOnDismiss(GM_MainMenu::MBOnDismiss);
-
-	mb->SetCustomData(focusondismiss);
-
-}
 
 void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller)
 {
-	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	if (caller->GetCustomData()) {
 		glictContainer* focusOnDismiss = (glictContainer*)caller->GetCustomData();
 		focusOnDismiss->SetVisible(true);
 		focusOnDismiss->Focus(NULL);
 	}
 
-	m->renderScene();
-	//delete caller;
+	g_game->renderScene();
 }
 
 //static bool s_alreadyloggedinonce = false; //  REMOVEME this serves only to prevent people from logging in twice in same session since this crashes the game
@@ -533,27 +486,6 @@ void GM_MainMenu::winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictCont
 	m->winCharlist.window.SetVisible(false);
 }
 
-/* ************NETWORK*************** */
-void GM_MainMenu::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass)
-{
-	winOptions_t* winOptions = g_game->getOptionsWindow();
-	winOptions->winOptionsNetwork.Init();
-	winOptions->winOptionsNetwork.window.SetVisible(true);
-	winOptions->winOptionsNetwork.window.Focus(NULL);
-}
-void GM_MainMenu::winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
-{
-	winOptions_t* winOptions = g_game->getOptionsWindow();
-	winOptions->winOptionsNetwork.Store();
-	//((*GM_MainMenu)g_game)->desktop.SetFocus(NULL);
-	winOptions->winOptionsNetwork.window.SetVisible(false);
-}
-void GM_MainMenu::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
-{
-	winOptions_t* winOptions = g_game->getOptionsWindow();
-	//((*GM_MainMenu)g_game)->desktop.SetFocus(NULL);
-	winOptions->winOptionsNetwork.window.SetVisible(false);
-}
 
 /* ************* OTHER **************** */
 void GM_MainMenu::winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass)

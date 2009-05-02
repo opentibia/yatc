@@ -37,17 +37,15 @@
 #include "automap.h"
 
 #include "options.h"
-#include "ui/optionsui.h"
 
 class Console;
 class Tile;
 class ProtocolGame;
 class Popup;
-class winOptions_t;
 
 typedef void(*PopupProducerCallback)(Popup*popup,void*owner,void*arg);
 
-class GM_Gameworld : public GameMode {
+class GM_Gameworld : public GameModeOptions {
 public:
 	GM_Gameworld();
 	~GM_Gameworld();
@@ -57,9 +55,6 @@ public:
 	bool specKeyPress (const SDL_keysym& key);
 	void doResize(float w, float h);
 	void mouseEvent(SDL_Event& event);
-
-    void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);
-    static void MBOnDismiss(glictPos* pos, glictContainer* caller);
 
     // user interface reactions
     static void onSetOutfit(struct Popup::Item *parent);
@@ -141,7 +136,6 @@ private:
 
 
     /* PRIMARY GUI */
-	glictContainer desktop;
 	glictPanel pnlRightSide;
 	yatcStackPanel yspRightSide;
 
@@ -161,7 +155,6 @@ private:
 
     winItemMove_t winMove;
 
-    winOptions_t winOptions;
     /* END PRIMARY GUI */
 
 

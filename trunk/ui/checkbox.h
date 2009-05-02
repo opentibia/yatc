@@ -21,6 +21,7 @@
 #ifndef __UI_CHECKBOX_H
 #define __UI_CHECKBOX_H
 
+#include <GLICT/panel.h>
 #include "../skin.h"
 class uiCheckbox {
 public:

@@ -27,7 +27,10 @@
     #define gettext(x) (x)
 #endif
 
+#include <GLICT/window.h>
+#include <GLICT/button.h>
 #include "../skin.h"
+#include "../options.h"
 #include "checkbox.h"
 
 class winOptionsConsole_t {

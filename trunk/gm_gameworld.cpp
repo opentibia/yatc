@@ -79,8 +79,8 @@ void pnlInventory_t::onClick_Logout(glictPos* relmousepos, glictContainer* calle
 void pnlInventory_t::onClick_Options(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-	/*gameclass->winOptions.window.SetVisible(true);*/
-    gameclass->msgBox(gettext("This functionality is not yet finished"),"TODO");
+	gameclass->winOptions.window.SetVisible(true);
+    /*gameclass->msgBox(gettext("This functionality is not yet finished"),"TODO");*/
 }
 
 GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
@@ -232,6 +232,8 @@ GM_Gameworld::~GM_Gameworld ()
 
 void GM_Gameworld::doResize(float w, float h)
 {
+    GameModeOptions::doResize(w,h);
+
     int wi=(int)w, hi=(int)h; // just to avoid warnings
 	desktop.SetWidth(w);
 	desktop.SetHeight(h);
@@ -723,7 +725,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
                 uint32_t x, y, z;
                 int stackpos;
                 const Thing* thing;
-                m_mapui.dragThing(pos.x, pos.y, thing, x, y, z, stackpos);
+                m_mapui.dragThing((int)pos.x, (int)pos.y, thing, x, y, z, stackpos);
 
                 if(thing && thing->getItem()){
                 	const Item* item = thing->getItem();
@@ -777,7 +779,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             else if(options.classiccontrol == 1 &&
 				!((SDL_GetModState() & KMOD_CTRL) || (SDL_GetModState() & KMOD_SHIFT))){
             	uint32_t retx, rety, retz;
-				Tile* tile = m_mapui.translateClickToTile(pos.x, pos.y, retx, rety, retz);
+				Tile* tile = m_mapui.translateClickToTile((int)pos.x, (int)pos.y, retx, rety, retz);
 				if(tile){
 					if(tile->getTopCreature()){
 						actionAttack(pos);
@@ -1141,46 +1143,7 @@ void GM_Gameworld::showTutorial(uint8_t id) {
 }
 
 
-void GM_Gameworld::msgBox(const char* mbox, const char* title, glictContainer* focusondismiss)
-{
-	glictSize s;
-	glictMessageBox *mb;
-	desktop.AddObject(mb = new glictMessageBox);
 
-	mb->SetCaption(title);
-	mb->SetMessage(mbox);
-
-	mb->SetHeight(glictFontNumberOfLines(mbox)*12 + 35 + 10 + 10);
-	int size1 = (int)glictFontSize(title, "system");
-	int size2 = (int)glictFontSize(mbox, "system");
-	mb->SetWidth(MAX(size1, size2) + 10 + 10);
-	mb->Focus(NULL);
-    #if (GLICT_APIREV >= 85)
-	mb->SetTextOffset(10,10);
-	#else
-	#warning For nicer msgboxes get GLICT APIREV 85+.
-	#endif
-
-	mb->GetSize(&s);
-
-	mb->SetPos(glictGlobals.w / 2 - s.w / 2, glictGlobals.h/ 2 - s.h / 2);
-
-	mb->SetOnDismiss(GM_Gameworld::MBOnDismiss);
-
-	mb->SetCustomData(focusondismiss);
-}
-
-void GM_Gameworld::MBOnDismiss(glictPos* pos, glictContainer* caller)
-{
-	//GM_Gameworld* m = (GM_Gameworld*)g_game;
-	if (caller->GetCustomData()) {
-		glictContainer* focusOnDismiss = (glictContainer*)caller->GetCustomData();
-		focusOnDismiss->SetVisible(true);
-		focusOnDismiss->Focus(NULL);
-	}
-
-	//delete caller;
-}
 
 void GM_Gameworld::onSetOutfit(Popup::Item *parent) {
     // happens when user clicks on "Set Outfit" in right click popup menu
