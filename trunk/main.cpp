@@ -415,6 +415,7 @@ int main(int argc, char *argv[])
         putenv((char*)l.c_str());
     }
     setlocale( LC_ALL, "");//options.lang.c_str() );
+    setlocale( LC_NUMERIC, "C");
     bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );
     textdomain( "yatc" );
     bind_textdomain_codeset("yatc","windows-1252");
