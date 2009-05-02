@@ -21,6 +21,7 @@
 #ifndef __UI_OPTIONSHOTKEYS_H
 #define __UI_OPTIONSHOTKEYS_H
 
+#include <GLICT/textbox.h>
 #include "../util.h"
 #include "checkbox.h"
 class winOptionsHotkeys_t {

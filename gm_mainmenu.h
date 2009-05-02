@@ -35,13 +35,8 @@
 #include "ui/mainmenu.h"
 #include "ui/login.h"
 #include "ui/charlist.h"
-#include "ui/optionsui.h"
-#include "ui/optionsgeneral.h"
-#include "ui/optionsconsole.h"
-#include "ui/optionsgraphics.h"
-#include "ui/optionsnetwork.h"
 
-class GM_MainMenu : public GameMode
+class GM_MainMenu : public GameModeOptions
 {
 public:
 	GM_MainMenu();
@@ -56,11 +51,6 @@ public:
 
 	void doResize(float w, float h);
 
-	virtual winOptions_t* getOptionsWindow() { return &winOptions; }
-
-	void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);
-	void centerWindow (glictWindow *win);
-
 	void onConnectionError(int message, const char* text);
 	void openMessageWindow(WindowMessage_t type, const std::string& message);
 	void openMOTD(int motdnum, const std::string& message);
@@ -70,11 +60,9 @@ public:
 
 	ClientVersion_t getActiveProtocol();
 private:
-	glictContainer desktop;
 	pnlMainMenu_t pnlMainMenu;
 	winLogin_t winLogin;
 	winCharlist_t winCharlist;
-	winOptions_t winOptions;
 	//winOptionsGeneral_t winOptionsGeneral;
 	//winOptionsConsole_t winOptionsConsole;
 	//winOptionsGraphics_t winOptionsGraphics;
@@ -98,12 +86,8 @@ protected:
 
 	static void winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void winCharlist_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+    static void winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass);
 
-	static void winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass);
-	static void winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
-	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
-
-	static void winMotd_OnDismiss(glictPos* relmousepos, glictContainer* callerclass);
 	static void winStatus_ErrorOnDismiss(glictPos* relmousepos, glictContainer* callerclass);
 
 	static void btnGoToDebug_OnClick(glictPos* relmousepos, glictContainer* callerclass);

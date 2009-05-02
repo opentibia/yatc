@@ -26,6 +26,12 @@
 #include <string>
 #include <list>
 #include "gamecontent/enums.h"
+#include "ui/optionsui.h"
+#include "ui/optionsgeneral.h"
+#include "ui/optionsconsole.h"
+#include "ui/optionsgraphics.h"
+#include "ui/optionsnetwork.h"
+
 
 #if defined(_MSC_VER) && !defined(__PRETTY_FUNCTION__)
 #define __PRETTY_FUNCTION__ "(msvc)"
@@ -40,16 +46,25 @@ class GameMode
 {
 protected:
     GameMode() {}
+    glictContainer desktop;
 public:
 	virtual ~GameMode() {}
 
-	virtual void updateScene() {}
+    /* real functions utilized by all children */
+
+    void centerWindow (glictWindow *win);
+    virtual void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);
+    static void MBOnDismiss(glictPos* pos, glictContainer* caller);
+
+    /* various functions to be implemented by children, if needed*/
+	virtual void updateScene() {} // can be used for both updating and painting
+	virtual void renderScene() {} // should only paint the scene. optional
 	virtual void mouseEvent (SDL_Event&) {}
 	virtual void keyPress (char key) {}
 	virtual bool specKeyPress (const SDL_keysym&) { return false;}
 	virtual void doResize(float w, float h) {}
 
-	virtual void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL) {printf("Warning: %s not redefined\n",__PRETTY_FUNCTION__ ); }
+
 	virtual winOptions_t* getOptionsWindow() { return NULL; }
 
 	virtual void onConnectionError(int message, const char* errortext) {}
@@ -95,6 +110,26 @@ public:
     virtual void onTileUpdate(const Position& pos) {}
 
 };
+
+class GameModeOptions : public GameMode
+{
+    // class used to extend a gamemode with proper Options functionality
+public:
+    GameModeOptions();
+	virtual winOptions_t* getOptionsWindow() { return &winOptions; }
+	virtual void doResize(float w, float h);
+
+    virtual ~GameModeOptions() {}
+protected:
+    static void winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+	static void winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass);
+
+
+
+    winOptions_t winOptions;
+};
+
 
 extern GameMode* g_game;
 
