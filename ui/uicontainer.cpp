@@ -31,30 +31,12 @@ winContainer_t::winContainer_t(Container* _container, uint32_t cid) {
     containerId = cid;
 
     window.SetCaption(container->getName());
-    // wide enough to display 4 items per row, tall enough to display all rows or three rows, whichever is smalle
-    window.SetWidth(150 + 10); // 10 == for scrollbar
-    window.SetHeight(MIN(4+36*3, 4 + (36*ceil(container->getCapacity()/4.))));
+    window.SetHeight(GetDefaultHeight());
 
-    // close button on titlebar
+    // icon on titlebar
     // support added to glict svn 76+
-    // this button needs to be relocated manually
+    // this needs to be relocated manually
     #if (GLICT_APIREV >= 76)
-	window.AddTitlebarObject(&closebtn);
-	closebtn.SetCaption("x");
-	closebtn.SetWidth(12);
-	closebtn.SetHeight(12);
-	closebtn.SetPos(150 + 10 - 12, 2);
-	closebtn.SetCustomData(this);
-	closebtn.SetOnClick(OnClose);
-
-	window.AddTitlebarObject(&btnCollapse);
-	btnCollapse.SetCaption("-");
-	btnCollapse.SetWidth(12);
-	btnCollapse.SetHeight(12);
-	btnCollapse.SetPos(150 + 10 - 24, 2);
-	btnCollapse.SetCustomData(this);
-	//btnCollapse.SetOnClick(OnCollapse);
-
 	itemIcon = Item::CreateItem(container->getItemId(), 1);
 
 	window.AddTitlebarObject(&pnlIcon);
@@ -77,7 +59,7 @@ winContainer_t::winContainer_t(Container* _container, uint32_t cid) {
     winpanel.SetBGActiveness(false);
     winpanel.SetPos(0,0);
     winpanel.SetWidth(150 + 10); // same size as for window
-    winpanel.SetHeight(MIN(4+36*3, 4 + (36*ceil(container->getCapacity()/4.))));
+    winpanel.SetHeight(GetDefaultHeight());
     // virtual size is always to display all rows
     winpanel.SetVirtualSize(160, 4 + (36*ceil(container->getCapacity()/4.)));
 
@@ -105,11 +87,15 @@ winContainer_t::~winContainer_t()
 	#endif
 }
 
-void winContainer_t::OnClose(glictPos* pos, glictContainer *caller) {
-    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-	winContainer_t* window = (winContainer_t*)caller->GetCustomData();
+float winContainer_t::GetDefaultHeight()
+{
+	return (MIN(4+36*3, 4 + (36*ceil(container->getCapacity()/4.))));
+}
 
-    gw->m_protocol->sendCloseContainer(window->containerId);
+void winContainer_t::OnClose()
+{
+    GM_Gameworld *gw = ((GM_Gameworld*)g_game);
+    gw->m_protocol->sendCloseContainer(containerId);
 }
 
 void winContainer_t::containerIconOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)

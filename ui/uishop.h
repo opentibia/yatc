@@ -31,13 +31,12 @@
 #include "../gamecontent/item.h"
 #include "../gamecontent/shop.h"
 #include "../skin.h"
+#include "stackpanel.h"
 
 #include <sstream>
 
-class winShop_t {
+class winShop_t: public yatcStackPanelWindow {
 public:
-	glictWindow window;
-
 	glictScrollbar sbCt;
 
 	glictList lstSell;
@@ -49,9 +48,9 @@ public:
 
 	glictPanel pnlItem;
 
+	glictButton btnOk;
 	glictButton btnBuy;
 	glictButton btnSell;
-    glictButton btnOk;
 
 	std::list<glictPanel*> lsiBuy;
 	std::list<glictPanel*> lsiSell;
@@ -59,12 +58,11 @@ public:
 	ShopItem currentBuyItem;
 	ShopItem currentSellItem;
 
-    glictButton closebtn;
     glictPanel *currentpnl;
     uint32_t cash;
 
 	winShop_t();
-	~winShop_t();
+	virtual ~winShop_t();
 
 
 	void generateList(const std::list<ShopItem>& list);
@@ -75,13 +73,15 @@ public:
 
     void rebuildImage();
 
+	void OnClose();
+
+	float GetDefaultHeight(){ return 141; };
+
 	static void OnListbox(glictPos* pos, glictContainer *caller);
     static void OnChangeCount(glictPos* pos, glictContainer *caller);
     static void OnBuyClick(glictPos* pos, glictContainer *caller);
     static void OnSellClick(glictPos* pos, glictContainer *caller);
     static void OnOkClick(glictPos* pos, glictContainer *caller);
-    static void OnClose(glictPos* pos, glictContainer *caller);
-
 
     static void drawObject(glictRect *real, glictRect *clipped, glictContainer *caller);
 

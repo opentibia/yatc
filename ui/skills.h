@@ -34,10 +34,11 @@
     #define gettext(x) (x)
 #endif
 
-class winSkills_t {
+#include "stackpanel.h"
+
+class winSkills_t : public yatcStackPanelWindow {
 public:
 	// FIXME (ivucica#4#) This window is not a 1:1 match, and among other things, we need to modify GLICT's window to make it such (no icon support, no left alignment support, no minimize and close support ...)
-	glictWindow window;
 	glictPanel container;
 
 	glictPanel lblExperienceLeft, lblExperienceRight;
@@ -60,11 +61,11 @@ public:
 
 	winSkills_t() {
 		window.SetWidth(150);
-		window.SetHeight(270);
+		window.SetHeight(GetDefaultHeight());
 		window.SetCaption(gettext("Skills"));
 		window.AddObject(&container);
 		container.SetWidth(150);
-		container.SetHeight(270);
+		container.SetHeight(GetDefaultHeight());
 		container.SetVirtualSize(150, 270);
 		container.SetBGActiveness(false);
 
@@ -332,9 +333,9 @@ public:
 		}
 
 
-
-
 	}
+
+	virtual float GetDefaultHeight(){ return 270.F; }
 
 };
 #endif

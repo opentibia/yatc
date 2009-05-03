@@ -27,23 +27,22 @@
 #include "../gamecontent/container.h"
 #include <cmath>
 #include "../defines.h"
+#include "stackpanel.h"
 
-class winTrade_t {
+class winTrade_t: public yatcStackPanelWindow {
 public:
 	winTrade_t();
-	~winTrade_t();
+	virtual ~winTrade_t();
 
 	void onTradeUpdate(bool ack);
 	void onTradeCompleted();
 
-	glictWindow window; // Width: 160 Height: 115 Caption: "Trade"
+	float GetDefaultHeight(){ return 115; };
 
 protected:
 
 	#if (GLICT_APIREV >= 76)
 	glictPanel pnlIcon; // Width: 12 Height: 12 SpriteID: ? (Bag)
-	glictButton btnClose; // Width: 12 Height: 12 Caption: "x"
-	glictButton btnCollapse; // Width: 12 Height: 12 Caption: "-"
 	#endif
 
 	bool m_rightSideSet;
@@ -74,8 +73,7 @@ protected:
 	static void tradeItemOnClick(glictPos* relmousepos, glictContainer* callerclass);
 	//static void tradeItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller);
 
-	static void onClose(glictPos* relmousepos, glictContainer* caller);
-	static void onCollapse(glictPos* relmousepos, glictContainer* caller);
+	static void onClose();
 	static void iconOnPaint(glictRect* real, glictRect* clipped, glictContainer* caller);
 };
 

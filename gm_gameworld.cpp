@@ -136,6 +136,11 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	RIGHTSIDE.AddObject(&winSkills.window);
 	if (!AUTOSETPOS) winSkills.window.SetPos(600, 308);
 
+	//TODO (nfries88): AUTOSETPOS crap?
+	RIGHTSIDE.AddObject(&winShop.window);
+	winShop.window.SetVisible(false);
+	RIGHTSIDE.AddObject(&winTrade.window);
+	winTrade.window.SetVisible(false);
 
 	#if (GLICT_APIREV>=95)
     yspRightSide.RebuildList();
@@ -146,15 +151,6 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	desktop.AddObject(&winOptions.window);
 	winOptions.window.SetPos(600, 450);
 	winOptions.window.SetVisible(false);
-
-//TODO (nfries88): Move shop and trade window to right side as in the official client
-	desktop.AddObject(&winShop.window);
-	winShop.window.SetPos(600,450);
-	winShop.window.SetVisible(false);
-	desktop.AddObject(&winTrade.window);
-	winTrade.window.SetPos(600, 150);
-	winTrade.window.SetVisible(false);
-
 
 	desktop.AddObject(&winOutfit.window);
 	winOutfit.window.SetPos(200,200);

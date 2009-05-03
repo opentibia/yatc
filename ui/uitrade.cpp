@@ -30,25 +30,9 @@
 winTrade_t::winTrade_t()
 {
 	window.SetCaption(gettext("Trade"));
-	window.SetWidth(160);
-	window.SetHeight(115);
+	window.SetHeight(GetDefaultHeight());
 
 	#if (GLICT_APIREV >= 76)
-	window.AddTitlebarObject(&btnClose);
-	btnClose.SetCaption("x");
-	btnClose.SetWidth(12);
-	btnClose.SetHeight(12);
-	btnClose.SetPos(160 - 12, 0);
-	btnClose.SetCustomData(this);
-	btnClose.SetOnClick(tradeOnReject);
-
-	window.AddTitlebarObject(&btnCollapse);
-	btnCollapse.SetCaption("-");
-	btnCollapse.SetWidth(12);
-	btnCollapse.SetHeight(12);
-	btnCollapse.SetPos(160 - 24, 0);
-	btnCollapse.SetOnClick(onCollapse);
-
 	window.AddTitlebarObject(&pnlIcon);
 	pnlIcon.SetWidth(12);
 	pnlIcon.SetHeight(12);
@@ -230,6 +214,12 @@ void winTrade_t::tradeItemOnPaint(glictRect *real, glictRect *clipped, glictCont
 }
 */
 
+void winTrade_t::onClose()
+{
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+	gw->m_protocol->sendRejectTrade();
+}
+
 void winTrade_t::tradeOnAccept(glictPos* relmousepos, glictContainer* caller)
 {
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
@@ -244,11 +234,6 @@ void winTrade_t::tradeOnReject(glictPos* relmousepos, glictContainer* caller)
 {
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
 	gw->m_protocol->sendRejectTrade();
-}
-
-void winTrade_t::onCollapse(glictPos* relmousepos, glictContainer* caller)
-{
-	//
 }
 
 void winTrade_t::iconOnPaint(glictRect* real, glictRect* clipped, glictContainer* caller)

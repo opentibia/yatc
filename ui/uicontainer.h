@@ -28,17 +28,17 @@
 #include <cmath>
 #include "../defines.h"
 #include "../popup.h"
+#include "stackpanel.h"
 
-class winContainer_t {
+class winContainer_t : public yatcStackPanelWindow {
 public:
 	winContainer_t(Container* _container, uint32_t cid);
 
-	~winContainer_t();
+	virtual ~winContainer_t();
 
-    static void OnClose(glictPos* pos, glictContainer *caller);
+	float GetDefaultHeight();
+	virtual void OnClose();
 
-	glictWindow window;
-	glictPanel winpanel;
 	// we use a list of items in the container class, so I'm doing it here too
 	typedef std::list<glictPanel*> PanelList;
 	PanelList pnlItems;
@@ -47,8 +47,6 @@ public:
 	Container* container;
 	uint32_t containerId;
 
-    glictButton closebtn;
-    glictButton btnCollapse;
     glictPanel pnlIcon;
 
     Item* itemIcon;
