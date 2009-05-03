@@ -30,6 +30,7 @@ class yatcStackPanelWindow
 {
 public:
 	yatcStackPanelWindow();
+    virtual ~yatcStackPanelWindow() {}
 
 	static void OnClose(glictPos* pos, glictContainer *caller);
 	static void OnCollapse(glictPos* pos, glictContainer *caller);
