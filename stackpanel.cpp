@@ -30,6 +30,7 @@ yatcStackPanel::~yatcStackPanel()
 {
 }
 
+
 bool yatcStackPanel::CastEvent(glictEvents evt, void* wparam, long lparam, void* returnvalue)
 {
 #if (GLICT_APIREV>=95)
@@ -79,6 +80,7 @@ void yatcStackPanel::_updateDraggedChildPos(const glictPos &eventmousepos)
     bool met = false;
 
     for (std::list<glictContainer*>::iterator it = listlist.begin() ; it != listlist.end() ; it++) {
+        if (!(*it)->GetVisible()) continue;
         if (*it == draggedchild) {
             std::list<glictContainer*>::iterator oldit = it;
             it++;
@@ -162,6 +164,10 @@ void yatcStackPanelWindow::OnCollapse(glictPos* pos, glictContainer *caller) {
     window->window.SetHeight(0);
     window->btnCollapse.SetCaption("+");
     window->btnCollapse.SetOnClick(OnExpand);
+
+    glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
+    if (parentlist)
+        parentlist->RebuildList();
 }
 
 void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
@@ -170,4 +176,8 @@ void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
     window->window.SetHeight(window->GetDefaultHeight());
     window->btnCollapse.SetCaption("-");
     window->btnCollapse.SetOnClick(OnCollapse);
+
+    glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
+    if (parentlist)
+        parentlist->RebuildList();
 }
