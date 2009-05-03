@@ -9,6 +9,9 @@
 // element it produces is YATC-specific.
 
 #include <GLICT/list.h>
+#include <GLICT/window.h>
+#include <GLICT/button.h>
+
 class yatcStackPanel : public glictList
 {
 public:
@@ -21,6 +24,26 @@ public:
     void Paint();
 private:
     void _updateDraggedChildPos(const glictPos &eventmousepos);
+};
+
+class yatcStackPanelWindow
+{
+public:
+	yatcStackPanelWindow();
+
+	static void OnClose(glictPos* pos, glictContainer *caller);
+	static void OnCollapse(glictPos* pos, glictContainer *caller);
+	static void OnExpand(glictPos* pos, glictContainer *caller);
+
+	virtual float GetDefaultHeight(){ return 0.F; };
+	virtual void OnClose(){ };
+
+	glictWindow window;
+	glictPanel winpanel;
+
+    glictButton closebtn;
+    glictButton btnCollapse;
+    //glictPanel pnlIcon;
 };
 
 #endif

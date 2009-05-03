@@ -120,3 +120,54 @@ void yatcStackPanel::Paint()
 #endif
     glictList::Paint();
 }
+
+yatcStackPanelWindow::yatcStackPanelWindow()
+{
+	// wide enough to display 4 items per row, tall enough to display all rows or three rows, whichever is smalle
+    window.SetWidth(150 + 10); // 10 == for scrollbar
+    window.SetHeight(0);
+
+	// close button on titlebar
+    // support added to glict svn 76+
+    // this button needs to be relocated manually
+    #if (GLICT_APIREV >= 76)
+    window.AddTitlebarObject(&closebtn);
+	closebtn.SetCaption("x");
+	closebtn.SetWidth(12);
+	closebtn.SetHeight(12);
+	closebtn.SetPos(150 + 10 - 12, 2);
+	closebtn.SetCustomData(this);
+	closebtn.SetOnClick(OnClose);
+
+	window.AddTitlebarObject(&btnCollapse);
+	btnCollapse.SetCaption("-");
+	btnCollapse.SetWidth(12);
+	btnCollapse.SetHeight(12);
+	btnCollapse.SetPos(150 + 10 - 24, 2);
+	btnCollapse.SetCustomData(this);
+	btnCollapse.SetOnClick(OnCollapse);
+    #else
+    #warning For titlebar objects (such as close buttons) to work properly, you need GLICT APIREV 76+
+    #endif
+}
+
+void yatcStackPanelWindow::OnClose(glictPos* pos, glictContainer *caller) {
+	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
+	window->OnClose();
+}
+
+void yatcStackPanelWindow::OnCollapse(glictPos* pos, glictContainer *caller) {
+	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
+
+    window->window.SetHeight(0);
+    window->btnCollapse.SetCaption("+");
+    window->btnCollapse.SetOnClick(OnExpand);
+}
+
+void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
+	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
+
+    window->window.SetHeight(window->GetDefaultHeight());
+    window->btnCollapse.SetCaption("-");
+    window->btnCollapse.SetOnClick(OnCollapse);
+}

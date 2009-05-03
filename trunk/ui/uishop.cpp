@@ -29,21 +29,7 @@
 winShop_t::winShop_t()
 {
     window.SetCaption(gettext("NPC Trade"));
-    window.SetWidth(168);
-    window.SetHeight(141);
-
-    #if (GLICT_APIREV >= 76)
-	window.AddTitlebarObject(&closebtn);
-	closebtn.SetCaption("x");
-	closebtn.SetWidth(12);
-	closebtn.SetHeight(12);
-	closebtn.SetPos(150 + 10 - 12, 2);
-	closebtn.SetCustomData(this);
-	closebtn.SetOnClick(OnClose);
-
-    #else
-    #warning For titlebar objects (such as close buttons) to work properly, you need GLICT APIREV 76+
-    #endif
+    window.SetHeight(GetDefaultHeight());
 
 
 
@@ -437,13 +423,11 @@ void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller)
     printf("Done\n");
 }
 
-void winShop_t::OnClose(glictPos* pos, glictContainer *caller)
+void winShop_t::OnClose()
 {
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
-	winShop_t* window = (winShop_t*)caller->GetCustomData();
-
     gw->m_protocol->sendShopClose();
-    window->window.SetVisible(false);
+    window.SetVisible(false);
 }
 
 void winShop_t::setCash(uint32_t newcash)
