@@ -267,6 +267,8 @@
 		<Unit filename="spritesdl.h" />
 		<Unit filename="stackpanel.cpp" />
 		<Unit filename="stackpanel.h" />
+		<Unit filename="statusmsg.cpp" />
+		<Unit filename="statusmsg.h" />
 		<Unit filename="thingui.cpp" />
 		<Unit filename="thingui.h" />
 		<Unit filename="ui/charlist.h" />

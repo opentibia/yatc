@@ -21,6 +21,12 @@
 #ifndef __UI_OPTIONSGFXADV_H
 #define __UI_OPTIONSGFXADV_H
 
+#if defined(HAVE_LIBINTL_H)
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
+
 #include "../engine.h"
 
 #include <sstream>
@@ -53,7 +59,7 @@ public:
 		window.SetVisible(false);
 		window.SetHeight(317);
 		window.SetWidth(263);
-		window.SetCaption("Advanced Graphics Options");
+		window.SetCaption(gettext("Advanced Graphics Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
 
 		// Select Graphics Engine
@@ -61,7 +67,7 @@ public:
 		lblEngine.SetPos(14, 17);
 		lblEngine.SetWidth(135 + 15); // 15 is just a failsafe
 		lblEngine.SetHeight(14);
-		lblEngine.SetCaption("Select graphics engine:");
+		lblEngine.SetCaption(std::string() + gettext("Select graphics engine") + ":");
 		lblEngine.SetFont("aafont");
 		lblEngine.SetBGActiveness(false);
 
@@ -113,9 +119,9 @@ public:
 		lblMaxFPS.SetWidth(230);
 		lblMaxFPS.SetHeight(12);
 		//lblMaxFPS.SetCaption("Adjust framerate limit: XX");
-		ss << "Adjust framerate limit: ";
+		ss << gettext("Adjust framerate limit") << ": ";
 		if(options.maxfps == 0) {
-			ss << "Unlimited";
+			ss << gettext("Unlimited");
 		} else {
 			ss << options.maxfps;
 		}
@@ -136,21 +142,21 @@ public:
 		btnHelp.SetPos(100, 286);
 		btnHelp.SetWidth(41);
 		btnHelp.SetHeight(17);
-		btnHelp.SetCaption("Help");
+		btnHelp.SetCaption(gettext("Help"));
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(153, 286);
 		btnOk.SetWidth(41);
 		btnOk.SetHeight(17);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(206, 286);
 		btnCancel.SetWidth(41);
 		btnCancel.SetHeight(17);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont",8);
 	}
 
@@ -217,9 +223,9 @@ public:
 		options.maxfps = sb->GetValue();
 		DEBUGPRINT(0, 0, "New FPS: %d\n", options.maxfps);
 
-		ss << "Adjust framerate limit: ";
+		ss << gettext("Adjust framerate limit") << ": ";
 		if(options.maxfps == 0) {
-			ss << "Unlimited";
+			ss << gettext("Unlimited");
 		} else {
 			ss << options.maxfps;
 		}
