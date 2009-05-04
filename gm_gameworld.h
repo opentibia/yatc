@@ -35,6 +35,7 @@
 #include "ui/minimap.h"
 #include "stackpanel.h"
 #include "automap.h"
+#include "statusmsg.h"
 
 #include "options.h"
 
@@ -196,6 +197,8 @@ private:
 
     Popup* m_popup;
     bool m_showPopup;
+
+    StatusMsg m_statusStatMsg, m_lookatStatMsg, m_pmStatMsg, m_broadcastStatMsg;
 };
 
 #endif
