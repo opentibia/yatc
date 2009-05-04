@@ -50,6 +50,7 @@ extern uint32_t g_frameTime;
 int g_lastmousebutton=SDL_BUTTON_LEFT;
 #warning g_temp_minimapzoom is a very dirty and temporary variable. Somebody, anybody, should make a proper api for zooming in/out on the map. --ivucica
 double g_temp_minimapzoom=1;
+extern uint32_t g_frameDiff;
 
 void resetDefaultCursor();
 
@@ -320,7 +321,9 @@ void GM_Gameworld::updateScene()
 	}
 
     if (m_popup)
-        if (m_popup->wantsDeath()) {
+    {
+        if (m_popup->wantsDeath())
+        {
             printf("Removing popup\n");
             desktop.RemoveObject(m_popup->getGlictList());
             desktop.DelayedRemove();
@@ -328,12 +331,23 @@ void GM_Gameworld::updateScene()
             m_popup = NULL;
 
         }
+    }
+
+
+
+
+    // status messages
+    m_statusStatMsg.paintSelf(0,0,glictGlobals.w-170, glictGlobals.h - 150 - 20);
+    m_statusStatMsg.updateSelf(g_frameDiff / 1000.);
+    m_lookatStatMsg.paintSelf(0,0,glictGlobals.w-170, glictGlobals.h - 150 - 20);
+    m_lookatStatMsg.updateSelf(g_frameDiff / 1000.);
 
 	desktop.Paint();
 	g_engine->resetClipping();
 
 
 	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-170, glictGlobals.h-12);
+
 }
 
 
@@ -855,9 +869,19 @@ void GM_Gameworld::onCancelWalk()
 void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
 {
 	switch (type){
+
 	case MSG_INFO_DESCR:
 		getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_LIGHTGREEN));
+		m_lookatStatMsg = StatusMsg(TEXTCOLOR_LIGHTGREEN, message, 3, 0, -30);
 		break;
+    case MSG_EVENT_ADVANCE:
+    case MSG_EVENT_DEFAULT:
+    case MSG_STATUS_DEFAULT:
+    case MSG_STATUS_SMALL:
+        if (type != MSG_STATUS_SMALL)
+            getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_WHITE));
+        m_statusStatMsg = StatusMsg(TEXTCOLOR_WHITE, message, 3);
+        break;
 	default:
 		getDefaultConsole()->insertEntry(ConsoleEntry(message));
 	}
@@ -935,8 +959,6 @@ void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Pos
 	if (id != GlobalVariables::getPlayerID() || !Creatures::getInstance().getPlayer()->isPreWalking() )
 		c->startWalk();
 	c->confirmWalk();
-
-//	printf("Moving %d\n", id);
 
 }
 

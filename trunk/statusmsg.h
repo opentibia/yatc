@@ -30,20 +30,28 @@
 
 enum VAlignment
 {
-    TOP, MIDDLE, BOTTOM
+    ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM
 };
 enum HAlignment
 {
-    LEFT, CENTER, RIGHT
+    ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT
 };
 
 class StatusMsg
 {
     public:
-        StatusMsg(TextColor_t color, const std::string& message, double timeout, double xoffset=0, double yoffset=0, HAlignment halign=CENTER, VAlignment valign=BOTTOM);
+        StatusMsg();
+        StatusMsg(TextColor_t color, const std::string& message, double timeout, double xoffset=0, double yoffset=0, HAlignment halign=ALIGN_CENTER, VAlignment valign=ALIGN_BOTTOM);
 
+        void paintSelf(int windowX, int windowY, int windowW, int windowH);
+        void updateSelf(double k);
     private:
         double m_timeRemaining;
+        TextColor_t m_textColor;
+        std::string m_messageText;
+
+        double m_xOffset, m_yOffset;
+        HAlignment m_hAlign; VAlignment m_vAlign;
 };
 
 #endif
