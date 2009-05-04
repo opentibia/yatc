@@ -54,6 +54,8 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		net/protocolgame821.h net/protocolgame822.h net/protocolgame83.h \
 		net/protocolgame831.h net/protocolgame84.h net/protocolgame841.h \
 		net/protocolgame842.h \
+		net/protocolgame78.h \
+		\
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \
 		gamecontent/inventory.h gamecontent/item.h gamecontent/map.h \
@@ -68,7 +70,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/uiinventory.h ui/skills.h ui/uicontainer.h ui/uishop.h \
 		ui/uitrade.h ui/checkbox.h ui/uioutfit.h \
 		ui/optionsgfxadv.h ui/optionshotkeys.h ui/health.h \
-		ui/itempanel.h \
+		ui/itempanel.h ui/minimap.h \
 		\
 		product.h \
 		\
