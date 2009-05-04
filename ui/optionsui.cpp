@@ -122,10 +122,10 @@ void winOptions_t::initiateAll(glictContainer* desktop)
         "  Due to SDL-centric design, OpenGL was not given much thought\n"
         "  and is currently not recommended since it will be much slower\n"
         "  on most laptops and perhaps on many desktops.\n") <<
-        gettext("RECOMMENDED: Choose SDL. But, try what works better for you.\n"
+        str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext("RECOMMENDED: Choose SDL. But, try what works better for you.\n"
         "\n"
         "To apply graphical engine change, you need to restart\n"
-        PRODUCTSHORT ".") << "\n"
+        "$$PRODUCTSHORT$$.")) << "\n"
         "\n" <<
         gettext("To choose maximum FPS (reducing the CPU and graphics card usage\n"
         "resulting in less power usage, quieter operation and reduced\n"
@@ -220,14 +220,15 @@ void winOptions_t::winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContai
 	std::string displayText = options.motdtext;
     {
         // translating motd
-        str_replace(displayText, "Welcome to Tibia!", gettext("Welcome to Tibia!"));
-        str_replace(displayText, "Due to a technical problem we had to reset\nthe game world", gettext("Due to a technical problem we had to reset\nthe game world"));
-        str_replace(displayText, "to the state of", gettext("to the state of"));
-        str_replace(displayText, "We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future.", gettext("We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future."));
-        str_replace(displayText, "For more information about Tibia visit our\nwebsite at", gettext("For more information about Tibia visit our\nwebsite at"));
-        str_replace(displayText, "Have fun in Tibia!", gettext("Have fun in Tibia!"));
-        str_replace(displayText, "Welcome to", gettext("Welcome to"));
-        str_replace(displayText, "Have fun in", gettext("Have fun in"));
+        displayText = str_replace("Welcome to Tibia!", gettext("Welcome to Tibia!"), displayText);
+        displayText = str_replace("Due to a technical problem we had to reset\nthe game world", gettext("Due to a technical problem we had to reset\nthe game world"), displayText);
+        displayText = str_replace("to the state of", gettext("to the state of"), displayText);
+        displayText = str_replace("We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future.", gettext("We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future."), displayText);
+        displayText = str_replace("For more information about Tibia visit our\nwebsite at", gettext("For more information about Tibia visit our\nwebsite at"), displayText);
+        displayText = str_replace("Have fun in Tibia!", gettext("Have fun in Tibia!"), displayText);
+        displayText = str_replace("Welcome to", gettext("Welcome to"), displayText);
+        displayText = str_replace("Have fun in", gettext("Have fun in"), displayText);
+        displayText = str_replace("Important Reminder", gettext("Important Reminder"), displayText);
     }
 
 	g_game->msgBox(displayText.c_str(), gettext("Message of the Day"), &winOptions->window);

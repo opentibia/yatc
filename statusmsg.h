@@ -19,31 +19,31 @@
 //////////////////////////////////////////////////////////////////////
 
 
-#ifndef __UTIL_H
-#define __UTIL_H
+// This file implements status message displayed temporarily on bottom
+// of the screen.
+
+#ifndef __STATUSMSG_H
+#define __STATUSMSG_H
 
 #include <string>
-#include <sstream>
-#if defined(WIN64) || __WORDSIZE == 64
-    #define VOIDP2INT(x) (   static_cast<int>(reinterpret_cast<long long>(x)) )
-#else
-    #define VOIDP2INT(x) ((int)(x))
-#endif
-std::string str_replace(const std::string& what, const std::string& with, const std::string &s);
-void NativeGUIError(const char* text, const char *title);
-bool fileexists(const char* filename);
-void yatc_fread(void* ptr, size_t size, size_t count, FILE *stream);
-void yatc_fwrite(void* ptr, size_t size, size_t count, FILE *stream);
-FILE *yatc_fopen(const char* filename, const char* mode);
-void yatc_fopen_init(char* cmdline);
-std::string yatc_findfile(const char* filename);
-#define nextpow(n) (n <= 2 ? 2 : (n <= 4 ? 4 : (n <= 8 ? 8 : (n <= 16 ? 16 : (n <= 32 ? 32 : (n <= 64 ? 64 : (n <= 128 ? 128 : (n <= 256 ? 256 : (n <= 512 ? 512 : 1024)))))))))
+#include "gamecontent/enums.h"
 
-inline std::string yatc_itoa(int val)
+enum VAlignment
 {
-	std::stringstream b;
-	b << val;
-	return b.str();
-}
+    TOP, MIDDLE, BOTTOM
+};
+enum HAlignment
+{
+    LEFT, CENTER, RIGHT
+};
+
+class StatusMsg
+{
+    public:
+        StatusMsg(TextColor_t color, const std::string& message, double timeout, double xoffset=0, double yoffset=0, HAlignment halign=CENTER, VAlignment valign=BOTTOM);
+
+    private:
+        double m_timeRemaining;
+};
 
 #endif

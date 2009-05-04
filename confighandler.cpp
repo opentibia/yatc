@@ -107,7 +107,7 @@ bool ConfigHandler::saveConfig(const char* filename)
 		fprintf(f, "[%s]\r\n", (*it)->name.c_str());
 		for(KeyVector::iterator cit = (*it)->keys.begin(); cit != (*it)->keys.end(); cit++){
 		    std::string val = (*cit)->value;
-		    str_replace(val, "\n", "<br>");
+		    val = str_replace("\n", "<br>", val);
 			fprintf(f, "%s=\"%s\"\r\n", (*cit)->name.c_str(), val.c_str());
 		}
 
@@ -153,7 +153,7 @@ void ConfigHandler::readKey(const char* buffer, int currentSection)
 		int len = str.size() - eq - 2;
 		std::string value = str.substr(eq + 2, len-1);
 
-        str_replace(value, "<br>", "\n");
+        value = str_replace("<br>", "\n", value);
 
 		Key* key = new Key(keyname, value);
 		section->keys.push_back(key);

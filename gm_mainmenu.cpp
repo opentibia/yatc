@@ -421,7 +421,7 @@ ClientVersion_t GM_MainMenu::getActiveProtocol(){
 		"correct signatures in the files, or go to\n"
 		"Options->Network and choose the correct\n"
 		"protocol.");
-		str_replace(t, "*", "\x95");
+		t = str_replace("*", "\x95", t);
 		msgBox(t.c_str(),gettext("Protocol detection failed"));
 
 	}
@@ -550,14 +550,15 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
     std::string displayText = text;
     {
         // translating motd
-        str_replace(displayText, "Welcome to Tibia!", gettext("Welcome to Tibia!"));
-        str_replace(displayText, "Due to a technical problem we had to reset\nthe game world", gettext("Due to a technical problem we had to reset\nthe game world"));
-        str_replace(displayText, "to the state of", gettext("to the state of"));
-        str_replace(displayText, "We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future.", gettext("We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future."));
-        str_replace(displayText, "For more information about Tibia visit our\nwebsite at", gettext("For more information about Tibia visit our\nwebsite at"));
-        str_replace(displayText, "Have fun in Tibia!", gettext("Have fun in Tibia!"));
-        str_replace(displayText, "Welcome to", gettext("Welcome to"));
-        str_replace(displayText, "Have fun in", gettext("Have fun in"));
+        displayText = str_replace("Welcome to Tibia!", gettext("Welcome to Tibia!"), displayText);
+        displayText = str_replace("Due to a technical problem we had to reset\nthe game world", gettext("Due to a technical problem we had to reset\nthe game world"), displayText);
+        displayText = str_replace("to the state of", gettext("to the state of"), displayText);
+        displayText = str_replace("We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future.", gettext("We are sorry for any inconvenience. Of course we\nwork hard to prevent such problems in the future."), displayText);
+        displayText = str_replace("For more information about Tibia visit our\nwebsite at", gettext("For more information about Tibia visit our\nwebsite at"), displayText);
+        displayText = str_replace("Have fun in Tibia!", gettext("Have fun in Tibia!"), displayText);
+        displayText = str_replace("Welcome to", gettext("Welcome to"), displayText);
+        displayText = str_replace("Have fun in", gettext("Have fun in"), displayText);
+        displayText = str_replace("Important Reminder", gettext("Important Reminder"), displayText);
     }
 
 	winStatus.SetCaption(gettext("Message of the Day"));

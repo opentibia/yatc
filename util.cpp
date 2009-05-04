@@ -43,11 +43,13 @@
 
 #define WINCE_INSTALLDIR "/Storage Card/YATC/"
 
-void str_replace(std::string &s, const std::string& what, const std::string& with) {
+std::string str_replace(const std::string& what, const std::string& with, const std::string &src) {
 	std::string::size_type p, l;
+	std::string s = src;
 	for (l = 0; (p = s.find(what, l)) != std::string::npos; l = p + with.size()) {
 		s.replace(p, what.size(), with);
 	}
+	return s;
 }
 
 
@@ -75,8 +77,8 @@ void NativeGUIError(const char* text, const char *title) {
 		#endif
 	#else
 		std::string texts=text, titles=title;
-		str_replace(texts, "\\", "\\\\");
-		str_replace(texts, "\"", "\\\"");
+		texts = str_replace("\\", "\\\\",texts);
+		texts = str_replace("\"", "\\\"",texts);
 
 		std::stringstream cmd;
 		cmd << "xmessage -title \"" << title << "\" -center \"" << texts << "\"";

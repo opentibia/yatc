@@ -117,14 +117,17 @@ public:
 		btnProtocol.setOnClick(OnProtocol);
 		btnProtocol.setData(this);
 		btnProtocol.setFont("system");
+		/*
 		// implementation is just cut-and-paste, may need work.
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.8", NULL, (void*)CLIENT_VERSION_780));
 // not yet implemented
+
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.81", NULL, (void*)CLIENT_VERSION_781));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.82", NULL, (void*)CLIENT_VERSION_782));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.9", NULL, (void*)CLIENT_VERSION_790));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.91", NULL, (void*)CLIENT_VERSION_791));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 7.92", NULL, (void*)CLIENT_VERSION_780));
+		*/
 // end of not yet implemented
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.0", NULL, (void*)CLIENT_VERSION_800));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.1", NULL, (void*)CLIENT_VERSION_810));

@@ -174,43 +174,38 @@ void checkFile(const char *filename)
 		    if ((fetcherfn=yatc_findfile("tdffetcher.exe"))=="") {
                 std::string forreplace;
 #ifdef _LINUX
-                forreplace = gettext("Loading the data file 'FILENAMEHERE' has failed.\n"
-                        "Please place 'FILENAMEHERE' in the same folder as " PRODUCTSHORT ".\n"
+                forreplace = gettext("Loading the data file '$$FILENAME$$' has failed.\n"
+                        "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
                         "If you are a Debian user, you may have forgotten to install\n"
                         "the 'tibia-data' or 'yatc-data' package.");
 #else
-				                forreplace = gettext("Loading the data file 'FILENAMEHERE' has failed.\n"
-                        "Please place 'FILENAMEHERE' in the same folder as " PRODUCTSHORT ".\n");
+				                forreplace = gettext("Loading the data file '$$FILENAME$$' has failed.\n"
+                        "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n");
 #endif
 
-                str_replace(forreplace, "FILENAMEHERE", filename);
-                NativeGUIError(forreplace.c_str(), gettext(PRODUCTSHORT " Fatal Error"));
+                forreplace = str_replace("$$FILENAME$$", filename, forreplace);
+                forreplace = str_replace("$$PRODUCTSHORT", PRODUCTSHORT, forreplace);
+                NativeGUIError(forreplace.c_str(), str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext("$$PRODUCTSHORT$$ Fatal Error")).c_str());
                 exit(1);
 		    }
         }
 
         std::string forreplace;
 
-#ifdef _LINUX
-        forreplace = gettext("You are missing 'FILENAMEHERE'.\n"
+        forreplace = gettext("You are missing '$$FILENAME$$'.\n"
                 "We will launch Tibia Data File Fetcher which should automatically install\n"
-                "data files required for " PRODUCTSHORT ".\n"
+                "data files required for $$PRODUCTSHORT$$.\n"
                 "\n"
-                "You will have to manually restart YATC afterwards.\n"
-                "\n"
-                "If you are a Debian user, you may have forgotten to install\n"
-                "the 'tibia-data' or 'yatc-data' package.");
-#else
-		        forreplace = gettext("You are missing 'FILENAMEHERE'.\n"
-                "We will launch Tibia Data File Fetcher which should automatically install\n"
-                "data files required for " PRODUCTSHORT ".\n"
-                "\n"
-                "You will have to manually restart YATC afterwards.\n"
+                "You will have to manually restart $$PRODUCTSHORT$$ afterwards.\n"
                 "\n");
+#ifdef _LINUX
+        forreplace += gettext("If you are a Debian user, you may have forgotten to install\n"
+                              "the 'tibia-data' or 'yatc-data' package.");
 #endif
-        str_replace(forreplace, "FILENAMEHERE", filename);
+        forreplace = str_replace("$$FILENAME$$", filename, forreplace);
+        forreplace = str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, forreplace);
 
-        NativeGUIError(forreplace.c_str(), gettext(PRODUCTSHORT " Missing Files"));
+        NativeGUIError(forreplace.c_str(), str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext("$$PRODUCTSHORT$$ Fatal Error")).c_str());
 
         // hack to make the cmdline box disappear
         if (fetcherfn == "tdffetcher.exe") fetcherfn = "start tdffetcher.exe";
