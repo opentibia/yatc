@@ -33,7 +33,7 @@ class Item;
 class ItemPanel : public glictPanel
 {
 public:
-	ItemPanel(ItemContainer* container, uint32_t slot, const Position& pos);
+	ItemPanel(ItemContainer* container, uint32_t slot, const Position& pos, uint8_t stackpos); // containers send stackpos == slot, inventory sends stackpos == 0
 	virtual ~ItemPanel();
 
 	void setUIBackground(int x, int y)
@@ -66,6 +66,7 @@ private:
 	ItemContainer* m_container;
 	uint32_t m_slot;
 	Position m_pos;
+	uint8_t m_stackpos;
 };
 
 

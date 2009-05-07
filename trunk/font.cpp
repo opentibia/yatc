@@ -208,7 +208,9 @@ void Font::resetColor()
 
 int Font::getSpacing() {
 // spacing between characters
-// minifont and outlinefont have none
-	if (m_index==5 || m_index==4) return 0;
+// minifont has none
+// outlinefont has negative
+	if (m_index==5) return 0;
+	if (m_index==4) return -1;
 	return 1;
 }

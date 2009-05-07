@@ -27,7 +27,7 @@
 
 extern int g_lastmousebutton;
 
-ItemPanel::ItemPanel(ItemContainer* container, uint32_t slot, const Position& pos)
+ItemPanel::ItemPanel(ItemContainer* container, uint32_t slot, const Position& pos, uint8_t stackpos)
 {
 	SetHeight(32);
 	SetWidth(32);
@@ -43,6 +43,7 @@ ItemPanel::ItemPanel(ItemContainer* container, uint32_t slot, const Position& po
 	m_container = container;
 	m_slot = slot;
 	m_pos = pos;
+	m_stackpos = stackpos;
 }
 
 ItemPanel::~ItemPanel()
@@ -124,7 +125,7 @@ void ItemPanel::itemPanelOnMouseDown(glictPos* relmousepos, glictContainer* call
 	}
 
 	if(g_lastmousebutton == SDL_BUTTON_LEFT){
-		gw->startDrag(_this->m_pos, 0, item->getID(), item->getCount());
+		gw->startDrag(_this->m_pos, _this->m_stackpos, item->getID(), item->getCount());
     }
     else if(g_lastmousebutton == SDL_BUTTON_RIGHT && options.classiccontrol == 1 &&
 			!((SDL_GetModState() & KMOD_CTRL) || (SDL_GetModState() & KMOD_SHIFT))){

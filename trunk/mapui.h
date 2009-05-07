@@ -59,6 +59,8 @@ class MapUI {
 		uint32_t m_vpw;
 		uint32_t m_vph;
 
+		float m_scale;
+
 		Position m_lastRightclickTilePos;
 		uint32_t m_popupCreatureID;
 

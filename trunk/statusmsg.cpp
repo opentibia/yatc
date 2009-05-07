@@ -58,7 +58,6 @@ void StatusMsg::paintSelf(int windowX, int windowY, int windowW, int windowH)
     }
     y += m_yOffset;
 
-    printf("Painting on %g %g\n", x, y);
     g_engine->drawText(m_messageText.c_str(),"gamefont",x,y,m_textColor);
 }
 
