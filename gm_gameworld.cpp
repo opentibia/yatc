@@ -418,14 +418,19 @@ void GM_Gameworld::keyPress (char key)
                     getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT": Unknown command", TEXTCOLOR_RED));
 		        sent = true;
 		    } else
-		    if (getActiveConsole() == getDefaultConsole()) {
+		    if (msg[0] == '#')
+		    {
+		        if (tolower(msg[1]) == 'y' and msg[2] == ' ')
+		        {
+                    m_protocol->sendSay(SPEAK_YELL, msg.substr(3));
+                    sent = true;
+		        }
+		    } else {
 		        if (msg[0] == '*') {
                     int i = msg.find('*',1);
-                    printf("second * found at %d\n", i);
                     if (i!=-1) {
                         std::string recipient = msg.substr(1,i-1);
                         std::string newmsg = msg.substr(i+1);
-                        printf("recipient: %s\n", recipient.c_str());
                         m_protocol->sendSay(SPEAK_PRIVATE, recipient,newmsg);
                         Console*c = findConsole(recipient);
                         if (c) {
@@ -434,21 +439,28 @@ void GM_Gameworld::keyPress (char key)
                         sent = true;
                     }
 		        }
-
-		    } else {
-		        if (getActiveConsole()->getSpeakerName() == "NPCs") { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
-		            getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
-		            m_protocol->sendSay(SPEAK_PRIVATE_PN, msg);
-		            sent = true;
-		        } else
-		        if (getActiveConsole()->getSpeakerName().size()) {
-		            getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
-		            m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
-		            sent = true;
-		        }
 		    }
-		    if (!sent) // if we havent sent yet then use the default ...
-                m_protocol->sendSay(SPEAK_SAY, msg);
+
+
+            if (!sent)
+            {
+                if (getActiveConsole() == getDefaultConsole()) {
+                    // currently nothing happens ONLY on default console
+                } else {
+                    if (getActiveConsole()->getSpeakerName() == "NPCs") { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
+                        getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
+                        m_protocol->sendSay(SPEAK_PRIVATE_PN, msg);
+                        sent = true;
+                    } else
+                    if (getActiveConsole()->getSpeakerName().size()) {
+                        getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
+                        m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
+                        sent = true;
+                    }
+                }
+                if (!sent) // if we havent sent yet then use the default ...
+                    m_protocol->sendSay(SPEAK_SAY, msg);
+            }
 		}
 
 		txtConsoleEntry.SetCaption("");
