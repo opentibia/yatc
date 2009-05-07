@@ -46,7 +46,6 @@ MapUI::MapUI()
 	m_x = 0;
 	m_y = 0;
 
-
 	// tilecount: width and height to render  -- "viewport" width and height
 	#ifndef WINCE
 	m_vpw=18, m_vph=14;
@@ -55,9 +54,10 @@ MapUI::MapUI()
 	#endif
 
 
-	m_w = m_vpw*32;
+	m_w = m_vpw*32; // just defaults
 	m_h = m_vph*32;
 
+    m_scale = 1;
 }
 
 MapUI::~MapUI()
@@ -69,11 +69,14 @@ void MapUI::renderMap()
 
 	// FIXME (ivucica#2#) make renderMap use m_x,m_y and m_w,m_h
 
-    g_engine->setClipping(64,64,15*32,11*32);
 
 	// set up scale
-	float scale = 1.f;
-	float scaledSize = 32*scale;
+	m_scale = MIN(m_w/(15.*32), m_h/(11.*32));
+//	printf("m_w: %d, m_h: %d, m_scale: %g\n", m_w, m_h, m_scale);
+	float scaledSize = 32*m_scale;
+
+    m_x = -scaledSize*2; m_y = -scaledSize*2;
+	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/0,0,15*scaledSize,11*scaledSize);
 
 	// get player position
 	Position pos = GlobalVariables::getPlayerPosition();
@@ -92,7 +95,7 @@ void MapUI::renderMap()
 	float walkoffx = 0.f, walkoffy = 0.f;
 	Creature* player = Creatures::getInstance().getPlayer();
 	if(player){
-		player->getWalkOffset(walkoffx, walkoffy, scale);
+		player->getWalkOffset(walkoffx, walkoffy, m_scale);
 	}
 	walkoffx *= -1; walkoffy *= -1;
 
@@ -116,12 +119,12 @@ void MapUI::renderMap()
 					continue;
 				}
 
-				int screenx = (int)(i*scaledSize + walkoffx);
-				int screeny = (int)(j*scaledSize + walkoffy);
+				int screenx = (i*scaledSize + walkoffx) + m_x;
+				int screeny = (j*scaledSize + walkoffy) + m_y;
 
 				const Item* ground = tile->getGround();
 				if(ground){
-					ground->Blit(screenx, screeny, scale, tile_x, tile_y);
+					ground->Blit(screenx, screeny, m_scale, tile_x, tile_y);
 					if(ground->hasHeight())
 						tile_height++;
 				}
@@ -166,8 +169,8 @@ void MapUI::renderMap()
 						case DRAW_CREATURE: //creatures
 							if(thingOrder != 4){
 							    //Draw ghosting and effects
-							    drawTileGhosts(tile_x, tile_y, z, screenx, screeny, scale, tile_height);
-								drawTileEffects(const_cast<Tile*>(tile), screenx, screeny, scale, tile_height);
+							    drawTileGhosts(tile_x, tile_y, z, screenx, screeny, m_scale, tile_height);
+								drawTileEffects(const_cast<Tile*>(tile), screenx, screeny, m_scale, tile_height);
 								drawnEffectsGhosts = true;
 								//
 								drawState = DRAW_ITEMTOP3;
@@ -196,9 +199,9 @@ void MapUI::renderMap()
                         }
 
 						if (performPaint)
-						    thing->Blit(screenx - (int)(tile_height*8.*scale),
-							    		screeny - (int)(tile_height*8.*scale),
-								    	scale, tile_x, tile_y);
+						    thing->Blit(screenx - (int)(tile_height*8.*m_scale),
+							    		screeny - (int)(tile_height*8.*m_scale),
+								    	m_scale, tile_x, tile_y);
 
 						if(const Item* item = thing->getItem()){
 							if(item->hasHeight())
@@ -226,8 +229,8 @@ void MapUI::renderMap()
 					}
 				}
 				if(!drawnEffectsGhosts){
-				    drawTileGhosts(tile_x, tile_y, z, screenx, screeny, scale, tile_height);
-					drawTileEffects(const_cast<Tile*>(tile), screenx, screeny, scale, tile_height);
+				    drawTileGhosts(tile_x, tile_y, z, screenx, screeny, m_scale, tile_height);
+					drawTileEffects(const_cast<Tile*>(tile), screenx, screeny, m_scale, tile_height);
 				}
 			}
 		}
@@ -277,7 +280,7 @@ void MapUI::renderMap()
 				int screenx = (int)(screenxFrom + (screenxTo - screenxFrom)*flightProgress);
 				int screeny = (int)(screenyFrom + (screenyTo - screenyFrom)*flightProgress);
 
-				(*it)->Blit(screenx, screeny, scale);
+				(*it)->Blit(screenx, screeny, m_scale);
 				++it;
 			}
 		}
@@ -295,8 +298,8 @@ void MapUI::renderMap()
 				continue;
 			}
 
-			int screenx = (int)(i*scaledSize + walkoffx);
-			int screeny = (int)(j*scaledSize + walkoffy);
+			int screenx = (int)(i*scaledSize + walkoffx) + m_x;
+			int screeny = (int)(j*scaledSize + walkoffy) + m_y;
 			int groundspeed = tile->getSpeedIndex();
 
 			int32_t thingsCount = tile->getThingCount() - 1;
@@ -307,8 +310,8 @@ void MapUI::renderMap()
 				if(thing){
 					if(thing->getCreature()){
 
-						thing->getCreature()->drawName(screenx, screeny, scale);
-						thing->getCreature()->drawSkullsShields(screenx, screeny, scale);
+						thing->getCreature()->drawName(screenx, screeny, m_scale);
+						thing->getCreature()->drawSkullsShields(screenx, screeny, m_scale);
 						if(!player || thing->getCreature()->getId() != player->getId())
 							thing->getCreature()->advanceWalk(groundspeed);
 						else
@@ -346,6 +349,7 @@ int MapUI::getMinZ() { // find out how far can we render... if anything is direc
 
 void MapUI::drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height)
 {
+    float scaledSize = 32*scale;
     // go through all tiles around it and see if any of the creatures is moving in direction of this tile
     for (int i = -1; i <= 1; i++)
         for (int j = -1; j <= 1; j++) {
@@ -371,21 +375,21 @@ void MapUI::drawTileGhosts(int x, int y, int z, int screenx, int screeny, float 
                         case DIRECTION_SOUTH:
                             if (j != -1 || i != 0) continue;
                             tile_y -= 1;
-                            screeny2 -= 32;
+                            screeny2 -= scaledSize;
                             break;
                         case DIRECTION_WEST:
                         case DIRECTION_EAST:
                             if (i != -1 || j != 0) continue;
                             tile_x -= 1;
-                            screenx2 -= 32;
+                            screenx2 -= scaledSize;
                             break;
 
 
                         default:
                             continue;
                     }
-                    c->Blit(screenx2 - (int)(tile_height*8.*scale),
-                            screeny2 - (int)(tile_height*8.*scale),
+                    c->Blit(screenx2 - (int)(tile_height*8.*m_scale),
+                            screeny2 - (int)(tile_height*8.*m_scale),
                             scale, tile_x, tile_y);
                 }
             }
@@ -403,8 +407,8 @@ void MapUI::drawTileEffects(Tile* tile, int screenx, int screeny, float scale, u
 			effects.erase(it++);
 		}
 		else{
-			(*it)->Blit(screenx - (int)(tile_height*8.*scale),
-					screeny - (int)(tile_height*8.*scale),
+			(*it)->Blit(screenx - (int)(tile_height*8.*m_scale),
+					screeny - (int)(tile_height*8.*m_scale),
 					scale, 0, 0);
 			++it;
 		}
@@ -494,10 +498,10 @@ void MapUI::dragThing(int x, int y, const Thing*& thing, uint32_t& retx, uint32_
 
 Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, uint32_t &retz)
 {
-    // FIXME (ivucica#1#) make this use m_x,m_y and m_w,m_h
-
-	x /= 32; // divide by tile size
-	y /= 32; // we need the tile coordinates, not the mouse coordinates
+    float scaledSize = 32*m_scale;
+    x-=m_x; y-=m_y;
+	x /= scaledSize; // divide by tile size
+	y /= scaledSize; // we need the tile coordinates, not the mouse coordinates
 
 	printf("Click on %d %d\n", x, y);
 	printf("Limitx: 0 - %d\n", m_vpw);
@@ -528,7 +532,8 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 
 bool MapUI::handlePopup(int x, int y)
 {
-    if (x > 64 && y > 64 && x < 64+15*32 && y < 64+11*32) { // click within visible area of map?
+    float scaledSize = 32*m_scale;
+    if (x > 2*scaledSize && y > 2*scaledSize && x < 2*scaledSize+15*scaledSize && y < 2*scaledSize+11*scaledSize) { // click within visible area of map?
         glictPos p;
         p.x = x; p.y = y;
         ((GM_Gameworld*)g_game)->performPopup(MapUI::makePopup,this,&p);

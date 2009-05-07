@@ -77,7 +77,7 @@ pnlInventory_t::pnlInventory_t()
 
 
 	for (int i = 0; i < 10; i++) {
-		pnlItem[i] = new ItemPanel(&Inventory::getInstance(), i+1, Position(0xFFFF, i+1, 0));
+		pnlItem[i] = new ItemPanel(&Inventory::getInstance(), i+1, Position(0xFFFF, i+1, 0), 0);
 		panel.AddObject(pnlItem[i]);
 		pnlItem[i]->SetPos(posInvSlots[i].x, posInvSlots[i].y);
 		pnlItem[i]->setUIBackground(96 + 32 * (posInvSlots[i].uisprite % 5), 32 * (posInvSlots[i].uisprite / 5));

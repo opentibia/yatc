@@ -236,7 +236,7 @@ void GM_Gameworld::doResize(float w, float h)
 	desktop.SetHeight(h);
 	desktop.ResetTransformations();
 
-	m_mapui.setSize(wi,hi);
+	m_mapui.setSize(wi-170,hi-150-18);
 
 	pnlRightSide.SetHeight(h);
 	yspRightSide.SetHeight(h);
