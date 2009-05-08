@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.3.1SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-04 11:04+0200\n"
+"POT-Creation-Date: 2009-05-08 21:23+0200\n"
 "PO-Revision-Date: 2009-05-04 11:15+0200\n"
 "Last-Translator: Ivan Vučica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vučica <ivucica@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../gm_mainmenu.cpp:345
 msgid ""
@@ -78,7 +78,7 @@ msgstr "Ime računa:"
 msgid "Account number:"
 msgstr "Broj računa:"
 
-#: ../mapui.cpp:611
+#: ../mapui.cpp:616
 msgid "Add to VIP list"
 msgstr "Dodaj u kontakte"
 
@@ -110,7 +110,7 @@ msgstr "Ah, prozor za trgovanje. Ovaj savjet još nije napisan."
 msgid "Amount:"
 msgstr "Količina:"
 
-#: ../mapui.cpp:594
+#: ../mapui.cpp:599
 msgid "Attack"
 msgstr "Napadni"
 
@@ -149,6 +149,10 @@ msgstr "Ne mogu se spojiti na server za prijavu."
 msgid "Cap"
 msgstr "Kap"
 
+#: ../ui/minimap.h:120
+msgid "Centre"
+msgstr "Centriraj"
+
 #: ../ui/optionsui.h:118
 msgid ""
 "Change general\n"
@@ -181,7 +185,7 @@ msgstr "Spajanje"
 msgid "Connecting to the game world. Please wait."
 msgstr "Spajam se u igru. Molimo pričekajte."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1014
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1019
 msgid "Console"
 msgstr "Konzola"
 
@@ -193,7 +197,7 @@ msgstr "Opcije konzole"
 msgid "Contributors"
 msgstr "Pridonositelji"
 
-#: ../mapui.cpp:626
+#: ../mapui.cpp:631
 msgid "Copy Name"
 msgstr "Kopiraj ime"
 
@@ -278,7 +282,7 @@ msgstr "Ribarstvo"
 msgid "Fist Fighting"
 msgstr "Borba šakama"
 
-#: ../mapui.cpp:599
+#: ../mapui.cpp:604
 msgid "Follow"
 msgstr "Slijedi"
 
@@ -391,7 +395,7 @@ msgstr ""
 "Ako jos nemate\n"
 "svoj račun:"
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:620
 msgid "Ignore"
 msgstr "Ignoriraj"
 
@@ -411,7 +415,7 @@ msgstr "Obavijest"
 msgid "Inventory"
 msgstr "Inventar"
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:624
 msgid "Invite to Party"
 msgstr "Pozovi u grupu"
 
@@ -443,7 +447,7 @@ msgstr ""
 msgid "Logout"
 msgstr "Odjava"
 
-#: ../mapui.cpp:559
+#: ../mapui.cpp:564
 msgid "Look"
 msgstr "Pogledaj"
 
@@ -473,7 +477,7 @@ msgstr "Mana"
 msgid "Message of the Day"
 msgstr "Poruka dana"
 
-#: ../mapui.cpp:607
+#: ../mapui.cpp:612
 msgid "Message to"
 msgstr "Poruka za"
 
@@ -529,7 +533,7 @@ msgstr ""
 "U redu; također možete pokušati {kliknuti} na {minimapu}. Primjerice,\n"
 "sada postoji {oznaka} na karti, pokušajte se tamo pomaknuti."
 
-#: ../mapui.cpp:571
+#: ../mapui.cpp:576
 msgid "Open"
 msgstr "Otvori"
 
@@ -689,7 +693,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Port servera:"
 
-#: ../mapui.cpp:584 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:589 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Postavi odijelo"
 
@@ -813,7 +817,7 @@ msgstr ""
 "'Korištenje')\n"
 "da biste je otvorili."
 
-#: ../mapui.cpp:712
+#: ../mapui.cpp:717
 msgid "This functionality is not yet finished"
 msgstr "Ova funkcionalnost još nije gotova"
 
@@ -846,7 +850,7 @@ msgstr ""
 msgid "Trade"
 msgstr "Trgovina"
 
-#: ../gm_gameworld.cpp:1137
+#: ../gm_gameworld.cpp:1142
 msgid "Tutorial Hint"
 msgstr "Savjet za prohod"
 
@@ -858,11 +862,11 @@ msgstr "Nepoznato"
 msgid "Unlimited"
 msgstr "Neograničeno"
 
-#: ../mapui.cpp:573
+#: ../mapui.cpp:578
 msgid "Use"
 msgstr "Koristi"
 
-#: ../mapui.cpp:568
+#: ../mapui.cpp:573
 msgid "Use with..."
 msgstr "Koristi s..."
 

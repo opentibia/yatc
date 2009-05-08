@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-04 11:04+0200\n"
+"POT-Creation-Date: 2009-05-08 21:23+0200\n"
 "PO-Revision-Date: 2008-11-30 01:44+0100\n"
 "Last-Translator: Rasmus Karlsson <qwerty@wuut.se>\n"
 "Language-Team: Rasmus Karlsson <qwerty@wuut.se>\n"
@@ -78,7 +78,7 @@ msgstr "Kontonamn:"
 msgid "Account number:"
 msgstr "Kontonummer:"
 
-#: ../mapui.cpp:611
+#: ../mapui.cpp:616
 msgid "Add to VIP list"
 msgstr "Lägg till i VIP-listan"
 
@@ -111,7 +111,7 @@ msgstr "Ah, det mäktige handelsfönstret. Detta hint är inte skrivet än."
 msgid "Amount:"
 msgstr "Mängd:"
 
-#: ../mapui.cpp:594
+#: ../mapui.cpp:599
 msgid "Attack"
 msgstr "Attackera"
 
@@ -150,6 +150,10 @@ msgstr "Kan inte ansluta till en loginserver."
 msgid "Cap"
 msgstr "Kapacitet"
 
+#: ../ui/minimap.h:120
+msgid "Centre"
+msgstr ""
+
 #: ../ui/optionsui.h:118
 msgid ""
 "Change general\n"
@@ -183,7 +187,7 @@ msgstr ""
 msgid "Connecting to the game world. Please wait."
 msgstr "Ansluter till servern..."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1014
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1019
 msgid "Console"
 msgstr "Konsoll"
 
@@ -195,7 +199,7 @@ msgstr "Konsollinställningar"
 msgid "Contributors"
 msgstr "Medhjälpare"
 
-#: ../mapui.cpp:626
+#: ../mapui.cpp:631
 msgid "Copy Name"
 msgstr "Kopiera namn"
 
@@ -270,7 +274,7 @@ msgstr "Fiske"
 msgid "Fist Fighting"
 msgstr "Knytnävesskicklighet"
 
-#: ../mapui.cpp:599
+#: ../mapui.cpp:604
 msgid "Follow"
 msgstr "Följ"
 
@@ -378,7 +382,7 @@ msgstr ""
 "Om du inte har\n"
 "ett konto än:"
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:620
 msgid "Ignore"
 msgstr "Ignorera"
 
@@ -398,7 +402,7 @@ msgstr "Information"
 msgid "Inventory"
 msgstr "Inventarie"
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:624
 msgid "Invite to Party"
 msgstr "Bjud in till Grupp"
 
@@ -425,7 +429,7 @@ msgstr ""
 msgid "Logout"
 msgstr "Titta"
 
-#: ../mapui.cpp:559
+#: ../mapui.cpp:564
 msgid "Look"
 msgstr "Titta"
 
@@ -455,7 +459,7 @@ msgstr "Mana"
 msgid "Message of the Day"
 msgstr "Dagens Meddelande"
 
-#: ../mapui.cpp:607
+#: ../mapui.cpp:612
 msgid "Message to"
 msgstr "Meddelande till"
 
@@ -510,7 +514,7 @@ msgstr ""
 "Ok; Du kan också testa {clicking} på miniatyrkartan. Till exempel \n"
 "så finns det en {marker} på miniatyrkartan nu, försök gå dit."
 
-#: ../mapui.cpp:571
+#: ../mapui.cpp:576
 msgid "Open"
 msgstr "Öppna"
 
@@ -667,7 +671,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Server port:"
 
-#: ../mapui.cpp:584 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:589 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Bestäm utseende"
 
@@ -789,7 +793,7 @@ msgstr ""
 "Det finns en {chest} här inne. Försök {ctrl+clicking} (kallas även \n"
 "'Använd') på den för att öppna den."
 
-#: ../mapui.cpp:712
+#: ../mapui.cpp:717
 msgid "This functionality is not yet finished"
 msgstr "Denna funktionalitet är inte klar än"
 
@@ -822,7 +826,7 @@ msgstr ""
 msgid "Trade"
 msgstr "NPC Handel"
 
-#: ../gm_gameworld.cpp:1137
+#: ../gm_gameworld.cpp:1142
 msgid "Tutorial Hint"
 msgstr "Handledning Tips"
 
@@ -834,11 +838,11 @@ msgstr "Okänd"
 msgid "Unlimited"
 msgstr ""
 
-#: ../mapui.cpp:573
+#: ../mapui.cpp:578
 msgid "Use"
 msgstr "Använd"
 
-#: ../mapui.cpp:568
+#: ../mapui.cpp:573
 msgid "Use with..."
 msgstr "Använd med..."
 

@@ -48,8 +48,6 @@
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
 int g_lastmousebutton=SDL_BUTTON_LEFT;
-#warning g_temp_minimapzoom is a very dirty and temporary variable. Somebody, anybody, should make a proper api for zooming in/out on the map. --ivucica
-double g_temp_minimapzoom=1;
 extern uint32_t g_frameDiff;
 
 void resetDefaultCursor();
@@ -126,14 +124,14 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
     // now let's get crackin
 
-    RIGHTSIDE.AddObject(&pnlTraffic);
-	if (!AUTOSETPOS) pnlTraffic.SetPos(0,0);
+    /*RIGHTSIDE.AddObject(&pnlTraffic);
+	if (!AUTOSETPOS) pnlTraffic.SetPos(0,0);*/
 	RIGHTSIDE.AddObject(&pnlMap.panel);
 	if (!AUTOSETPOS) pnlMap.panel.SetPos(600, 20);
-	RIGHTSIDE.AddObject(&pnlInventory.panel);
-	if (!AUTOSETPOS) pnlInventory.panel.SetPos(600, 148);
 	RIGHTSIDE.AddObject(&pnlHealth.panel);
 	if (!AUTOSETPOS) pnlHealth.panel.SetPos(600, 478);
+	RIGHTSIDE.AddObject(&pnlInventory.panel);
+	if (!AUTOSETPOS) pnlInventory.panel.SetPos(600, 148);
 	RIGHTSIDE.AddObject(&winSkills.window);
 	if (!AUTOSETPOS) winSkills.window.SetPos(600, 308);
 
@@ -386,33 +384,6 @@ void GM_Gameworld::keyPress (char key)
                     Creatures::getInstance().loadGfx();
                     g_engine->reloadGlobalGfx();
                     sent = true;
-		        }
-		        else if (command == "mmzoom" && !sent)
-		        {
-		            if (!params.size())
-                    {
-                        getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": @mmzoom needs parameter", TEXTCOLOR_RED));
-                        sent=true;
-                    }
-                    else
-                    {
-                        std::stringstream s;
-                        g_temp_minimapzoom = atof(params.c_str());
-                        if (fabs(g_temp_minimapzoom)==0)
-                        {
-                            getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": You passed 0 to @mmzoom, which is very naughty of you", TEXTCOLOR_RED));
-                            sent=true;
-                        } else
-                        {
-                            s <<  PRODUCTSHORT ": Set minimap zoom to ";
-                            s << g_temp_minimapzoom;
-                            s << "x";
-                            printf("%s\n", s.str().c_str());
-
-                            getActiveConsole()->insertEntry(ConsoleEntry(s.str(), TEXTCOLOR_WHITE));
-                            sent=true;
-                        }
-                    }
 		        }
 		        if (!sent)
                     getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT": Unknown command", TEXTCOLOR_RED));

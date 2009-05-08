@@ -67,14 +67,32 @@ private:
 	skinImage *consoletabactivetl, *consoletabactivet, *consoletabactivetr, *consoletabactivel, *consoletabactivec, *consoletabactiver, *consoletabactivebl, *consoletabactiveb, *consoletabactivebr; // console button active bg
 	skinImage *consoletabpassivetl, *consoletabpassivet, *consoletabpassivetr, *consoletabpassivel, *consoletabpassivec, *consoletabpassiver, *consoletabpassivebl, *consoletabpassiveb, *consoletabpassivebr; // console button passive bg
 	skinImage *compasstl, *compasst, *compasstr, *compassl, *compassc, *compassr, *compassbl, *compassb, *compassbr; // minimap compass
+	skinImage *graphicbtntl[11], *graphicbtnt[11], *graphicbtntr[11], *graphicbtnl[11], *graphicbtnc[11], *graphicbtnr[11], *graphicbtnbl[11], *graphicbtnb[11], *graphicbtnbr[11]; // various graphic buttons
+	skinImage *graphicbthtl[11], *graphicbtht[11], *graphicbthtr[11], *graphicbthl[11], *graphicbthc[11], *graphicbthr[11], *graphicbthbl[11], *graphicbthb[11], *graphicbthbr[11]; // various graphic buttons, highlighted
 
 	skinImage *backgroundtl, *backgroundt, *backgroundtr, *backgroundl, *backgroundc, *backgroundr, *backgroundbl, *backgroundb, *backgroundbr; // general background
 
 public:
-	glictSkinner chk, tmm, inv, consoletabbg, consoletabactive, consoletabpassive, compass, background;
+	glictSkinner chk, tmm, inv, consoletabbg, consoletabactive, consoletabpassive, compass, background, graphicbtn[11], graphicbth[11];
 	glictSkinner txt;
 
 	friend class skinImage;
+};
+
+
+enum skinGraphicButtons_t
+{
+    SKINGB_ZOOMIN,
+    SKINGB_ZOOMOUT,
+    SKINGB_LEVELUP,
+    SKINGB_LEVELDOWN,
+    SKINGB_AGRESSIVE,
+    SKINGB_NEUTRAL,
+    SKINGB_DEFENSIVE,
+    SKINGB_NOFOLLOWING,
+    SKINGB_FOLLOWING,
+    SKINGB_ATTACKUNMARKED,
+    SKINGB_QUESTIONMARK
 };
 
 extern Skin g_skin;

@@ -65,11 +65,13 @@ public:
     Automap();
     ~Automap();
 
-    void renderSelf(int x, int y, int w, int h, const Position& pos, double zoom=1);
+    void renderSelf(int x, int y, int w, int h, const Position& pos);
     void setTileColor(int x, int y, int z, uint8_t color,uint8_t speedindex);
-
+    void zoomOut();
+    void zoomIn();
 private:
 	MiniMapArea* getArea(int x, int y, int z);
+	float m_zoom;
 
 	std::map<uint32_t, MiniMapArea*> m_areas;
 };

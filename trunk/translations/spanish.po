@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-04 11:04+0200\n"
+"POT-Creation-Date: 2009-05-08 21:23+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: kupi <kupi.ots@gmail.com>\n"
 "Language-Team: kupi <kupi.ots@gmail.com>, <kupi_ots@hotmail.com>\n"
@@ -81,7 +81,7 @@ msgstr "Nombre de la cuenta:"
 msgid "Account number:"
 msgstr "Número de la cuenta:"
 
-#: ../mapui.cpp:611
+#: ../mapui.cpp:616
 msgid "Add to VIP list"
 msgstr "Añadir a la lista de VIP"
 
@@ -114,7 +114,7 @@ msgstr "Ah, ventana de comercio. Aun no escrita."
 msgid "Amount:"
 msgstr "Cantidad:"
 
-#: ../mapui.cpp:594
+#: ../mapui.cpp:599
 msgid "Attack"
 msgstr "Atacar"
 
@@ -153,6 +153,10 @@ msgstr "No se puede conectar al servidor de acceso."
 msgid "Cap"
 msgstr "Cap"
 
+#: ../ui/minimap.h:120
+msgid "Centre"
+msgstr ""
+
 #: ../ui/optionsui.h:118
 msgid ""
 "Change general\n"
@@ -185,7 +189,7 @@ msgstr "Conectando"
 msgid "Connecting to the game world. Please wait."
 msgstr "Conectando al mundo del juego. Por favor espere."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1014
+#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1019
 msgid "Console"
 msgstr "Consola"
 
@@ -197,7 +201,7 @@ msgstr "Opciones de la Consola"
 msgid "Contributors"
 msgstr "Contribuidores"
 
-#: ../mapui.cpp:626
+#: ../mapui.cpp:631
 msgid "Copy Name"
 msgstr "Copiar el Nombre"
 
@@ -283,7 +287,7 @@ msgstr "Pesca"
 msgid "Fist Fighting"
 msgstr "Lucha de Puño"
 
-#: ../mapui.cpp:599
+#: ../mapui.cpp:604
 msgid "Follow"
 msgstr "Seguir"
 
@@ -392,7 +396,7 @@ msgstr ""
 "Si aun no\n"
 "tiene una cuenta:"
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:620
 msgid "Ignore"
 msgstr "Ignorar"
 
@@ -412,7 +416,7 @@ msgstr "Información"
 msgid "Inventory"
 msgstr "Inventario"
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:624
 msgid "Invite to Party"
 msgstr "Invitar al grupo"
 
@@ -439,7 +443,7 @@ msgstr ""
 msgid "Logout"
 msgstr "Mirar"
 
-#: ../mapui.cpp:559
+#: ../mapui.cpp:564
 msgid "Look"
 msgstr "Mirar"
 
@@ -468,7 +472,7 @@ msgstr "Mana"
 msgid "Message of the Day"
 msgstr "Mensaje del Dia"
 
-#: ../mapui.cpp:607
+#: ../mapui.cpp:612
 msgid "Message to"
 msgstr "Mensaje para"
 
@@ -526,7 +530,7 @@ msgstr ""
 "ejemplo \n"
 "Hay una {marca} en el minimapa ahora, trate de pasar por allí."
 
-#: ../mapui.cpp:571
+#: ../mapui.cpp:576
 msgid "Open"
 msgstr "Abrir"
 
@@ -688,7 +692,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Puerto del servidor:"
 
-#: ../mapui.cpp:584 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:589 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Colocar Traje"
 
@@ -812,7 +816,7 @@ msgstr ""
 "llamado \n"
 "'Usar') sobre él para abrirlo."
 
-#: ../mapui.cpp:712
+#: ../mapui.cpp:717
 msgid "This functionality is not yet finished"
 msgstr "Esta función aun no esta disponible"
 
@@ -846,7 +850,7 @@ msgstr ""
 msgid "Trade"
 msgstr "Comerciar con NPC"
 
-#: ../gm_gameworld.cpp:1137
+#: ../gm_gameworld.cpp:1142
 msgid "Tutorial Hint"
 msgstr "Sugerencia"
 
@@ -858,11 +862,11 @@ msgstr "Desconocido"
 msgid "Unlimited"
 msgstr ""
 
-#: ../mapui.cpp:573
+#: ../mapui.cpp:578
 msgid "Use"
 msgstr "Usar"
 
-#: ../mapui.cpp:568
+#: ../mapui.cpp:573
 msgid "Use with..."
 msgstr "Usar con..."
 
