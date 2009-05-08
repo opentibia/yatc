@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.3.1SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-08 21:23+0200\n"
+"POT-Creation-Date: 2009-05-08 22:48+0200\n"
 "PO-Revision-Date: 2009-05-04 11:15+0200\n"
 "Last-Translator: Ivan Vučica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vučica <ivucica@gmail.com>\n"
@@ -42,23 +42,23 @@ msgstr "$$PRODUCTSHORT$$ fatalna greška"
 msgid "(in no particular order)"
 msgstr "(bez posebnog redoslijeda)"
 
-#: ../ui/tutorialhints.cpp:93
+#: ../ui/tutorialhints.cpp:95
 msgid "<Observe the battle window>"
 msgstr "<Pogledajte prozor Bitka>"
 
-#: ../ui/tutorialhints.cpp:134
+#: ../ui/tutorialhints.cpp:136
 msgid "<Observe the follow button>"
 msgstr "<Pogledajte tipku za slijediti>"
 
-#: ../ui/tutorialhints.cpp:137
+#: ../ui/tutorialhints.cpp:139
 msgid "<Observe the health bar>"
 msgstr "<Pogledajte traku zdravlja>"
 
-#: ../ui/tutorialhints.cpp:77
+#: ../ui/tutorialhints.cpp:79
 msgid "<Observe the quest button>"
 msgstr "<Pogledajte tipku Potrage>"
 
-#: ../ui/tutorialhints.cpp:114
+#: ../ui/tutorialhints.cpp:116
 msgid "<The outfit window should be opened now>"
 msgstr "<Sada bi se trebao otvoriti prozor s odijelom>"
 
@@ -102,7 +102,7 @@ msgstr "Napredne grafičke opcije"
 msgid "Advanced settings:"
 msgstr "Napredne postavke"
 
-#: ../ui/tutorialhints.cpp:117
+#: ../ui/tutorialhints.cpp:119
 msgid "Ah, the all-mighty trade window. This hint is not written yet."
 msgstr "Ah, prozor za trgovanje. Ovaj savjet još nije napisan."
 
@@ -451,7 +451,7 @@ msgstr "Odjava"
 msgid "Look"
 msgstr "Pogledaj"
 
-#: ../ui/tutorialhints.cpp:127
+#: ../ui/tutorialhints.cpp:129
 msgid ""
 "Looks like you've met a marked player. See the skull? That means that guy "
 "fought \n"
@@ -505,7 +505,7 @@ msgstr "Mreža"
 msgid "Network Options"
 msgstr "Mrežne opcije"
 
-#: ../ui/tutorialhints.cpp:84
+#: ../ui/tutorialhints.cpp:86
 msgid ""
 "Now you've got a {bag} to carry stuff in and there's already a {coat}\n"
 "in there. {Drag} the coat from the {bag} to the {armor slot} to wear it."
@@ -525,7 +525,7 @@ msgstr "OT enkripcijski kljuc"
 msgid "Ok"
 msgstr "U redu"
 
-#: ../ui/tutorialhints.cpp:73
+#: ../ui/tutorialhints.cpp:75
 msgid ""
 "Ok; you can also try {clicking} on the {minimap}. For example \n"
 "there's a {marker} on the minimap now, try moving there."
@@ -769,7 +769,7 @@ msgstr "Vještina "
 msgid "Skills"
 msgstr "Vještine"
 
-#: ../ui/tutorialhints.cpp:100
+#: ../ui/tutorialhints.cpp:102
 msgid ""
 "So the {container window} opened. {Drag} whatever's in it into your {bag} "
 "to \n"
@@ -790,7 +790,7 @@ msgstr "Izdržljivost"
 msgid "Sword Fighting"
 msgstr "Borba mačevima"
 
-#: ../ui/tutorialhints.cpp:104
+#: ../ui/tutorialhints.cpp:106
 msgid ""
 "The {shovel}, which is now in your inventory, is used to dig stuff up. "
 "It's \n"
@@ -808,7 +808,7 @@ msgstr ""
 "zatim\n"
 "na {kamenje}."
 
-#: ../ui/tutorialhints.cpp:80
+#: ../ui/tutorialhints.cpp:82
 msgid ""
 "There's a {chest} in here. So try {ctrl+clicking} (commonly called \n"
 "'Use') on it to open it."
@@ -833,7 +833,7 @@ msgstr ""
 "rad i smanjuje temperatura CPUa) koristite traku za povlačenje\n"
 "koja je ovdje dolje. No, FPS ograničenje je samo otprilike."
 
-#: ../ui/tutorialhints.cpp:88
+#: ../ui/tutorialhints.cpp:90
 msgid ""
 "To lit the {torch}, try {ctrl+clicking} on it. Torches burn out slowly \n"
 "while they're on, so don't forget to {ctrl+click} (use) it when you don't\n"
@@ -903,15 +903,15 @@ msgstr "Nudimo dva grafička enginea:\n"
 msgid "Welcome to"
 msgstr "Dobrodošli u "
 
+#: ../ui/tutorialhints.cpp:72
+msgid "Welcome to $$PRODUCTSHORT$$! Use {arrows} or {mouse} to move around."
+msgstr "Dobrodošli u $$PRODUCTSHORT$$! Koristite {strelice} ili {miša} da se krećete."
+
 #: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:553
 msgid "Welcome to Tibia!"
 msgstr "Dobrodošli u Tibiju!"
 
-#: ../ui/tutorialhints.cpp:70
-msgid "Welcome to YATC! Use {arrows} or {mouse} to move around."
-msgstr "Dobrodošli u YATC! Koristite {strelice} ili {miša} da se krećete."
-
-#: ../ui/tutorialhints.cpp:120
+#: ../ui/tutorialhints.cpp:122
 msgid ""
 "Welcome to the village! There are a few more marks on your map now with "
 "important\n"
@@ -923,7 +923,7 @@ msgstr ""
 "i NPCovima. Sada biste se trebali boriti do razine 8, kada možete izabrati\n"
 "zvanje i otići u glavnu zemlju."
 
-#: ../ui/tutorialhints.cpp:96
+#: ../ui/tutorialhints.cpp:98
 msgid ""
 "Why fight if you can't profit, right? So when you kill something, just "
 "loot \n"
@@ -933,7 +933,7 @@ msgstr ""
 "prekopajte\n"
 "{tijelo}. Samo {ctrl+kliknete} na njega."
 
-#: ../ui/tutorialhints.cpp:110
+#: ../ui/tutorialhints.cpp:112
 msgid ""
 "With the {rope} you can climb up from dungeons and caves. Find a {rope "
 "spot}, \n"

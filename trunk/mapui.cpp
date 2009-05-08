@@ -248,8 +248,8 @@ void MapUI::renderMap()
 
 				float textYOffset = (g_frameTime - (*it).getStartTime())/1000.f*0.75f;
 
-				int screenx = (int)((txtpos.x - pos.x + m_vpw/2 + offset + 0.4)*scaledSize + walkoffx);
-				int screeny = (int)((txtpos.y - pos.y + m_vph/2 + offset - textYOffset)*scaledSize + walkoffy);
+				int screenx = (int)((txtpos.x - pos.x + m_vpw/2 + offset + 0.4)*scaledSize + walkoffx) + m_x;
+				int screeny = (int)((txtpos.y - pos.y + m_vph/2 + offset - textYOffset)*scaledSize + walkoffy) + m_y;
 
 				g_engine->drawText((*it).getText().c_str() , "gamefont", screenx, screeny, (*it).getColor());
 				++it;
@@ -271,11 +271,11 @@ void MapUI::renderMap()
 				const Position& fromPos = (*it)->getFromPos();
 				const Position& toPos = (*it)->getToPos();
 
-				float screenxFrom = ((fromPos.x - pos.x + m_vpw/2 + offset)*scaledSize + walkoffx);
-				float screenyFrom = ((fromPos.y - pos.y + m_vph/2 + offset)*scaledSize + walkoffy);
+				float screenxFrom = ((fromPos.x - pos.x + m_vpw/2 + offset)*scaledSize + walkoffx) + m_x;
+				float screenyFrom = ((fromPos.y - pos.y + m_vph/2 + offset)*scaledSize + walkoffy) + m_y;
 
-				float screenxTo = ((toPos.x - pos.x + m_vpw/2 + offset)*scaledSize + walkoffx);
-				float screenyTo = ((toPos.y - pos.y + m_vph/2 + offset)*scaledSize + walkoffy);
+				float screenxTo = ((toPos.x - pos.x + m_vpw/2 + offset)*scaledSize + walkoffx) + m_x;
+				float screenyTo = ((toPos.y - pos.y + m_vph/2 + offset)*scaledSize + walkoffy) + m_y;
 
 				int screenx = (int)(screenxFrom + (screenxTo - screenxFrom)*flightProgress);
 				int screeny = (int)(screenyFrom + (screenyTo - screenyFrom)*flightProgress);

@@ -24,6 +24,8 @@
 	#define gettext(x) (x)
 #endif
 #include "tutorialhints.h"
+#include "product.h"
+#include "util.h"
 UITutorialHints::UITutorialHints() {
 
     // The following text titled "Tutorial Hints" is written by Ivan Vucica.
@@ -66,9 +68,9 @@ UITutorialHints::UITutorialHints() {
     // is selected, e.g. GFDL.
 
 
-    m_tutorialhints[1] = gettext(
-        "Welcome to YATC! Use {arrows} or {mouse} to move around."
-        );
+    m_tutorialhints[1] = str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext(
+        "Welcome to $$PRODUCTSHORT$$! Use {arrows} or {mouse} to move around."
+        ));
     m_tutorialhints[2] = gettext(
         "Ok; you can also try {clicking} on the {minimap}. For example \n"
         "there's a {marker} on the minimap now, try moving there."
@@ -146,3 +148,61 @@ const std::string& UITutorialHints::getTutorialHint(uint8_t id) {
     else
         return notfound;
 }
+
+// To look at objects such as this sign, right-click on them and select 'Look'. Sometimes you have to walk a bit closer to signs.
+
+// You see a sign.
+// You read: To the village
+
+// Now continue to the next mark on your automap to the east. You can point your mouse cursor on a mark to read its name.
+
+// To go up stairs or ramps like this one, simply walk on them.
+
+// This is Santiago, a Non-Player Character. You can chat with NPCs by typing 'Hi' or 'Hello'. Walk to Santiago and try it!
+
+// Santiago: Don't be shy, can't hurt to greet me with 'hello' or 'hi'!
+// Santiago: Hey! You over there, could you help me with a little quest? Just say 'hi' or 'hello' to talk to me!
+// Santiago: Nasty creepy crawlies!
+
+// Santiago: Hello $$CHARNAME$$, nice to see you on Rookgaard! I saw you walking by and wondered if you could help me. Could you? Please, say {yes}!
+
+// Santiago: Ah, thank you so much. To keep talking to me, either use the {dark} {blue} keywords or answer with '{yes}' or '{no}'. Listen, I have a little cockroach problem, but ... SOMETHING SOMETHING (didnt fit in yatc screen)
+
+// etc...
+
+// Santiago: Good bye traveller, and enjoy your stay on Rookgaard.
+
+// This is Santiago's cellar. You have no business there yet.
+// This is Santiago's room. Maybe you should talk to him before sniffing around in his house.
+
+// You have found a bag.
+
+// Santiago: Evil little beasts... I hope someone helps me fight them.
+
+// You can't see any cockroaches here. 'Open' this chest and see if you can find something to light the room better.
+
+// You have found a torch.
+
+// Look at the metallic object on the floor - this is a sewer gate. Right-click on it and select 'Use' to climb down.
+
+// You smell stinky cockroaches around here. When you see one, walk to it and attack it by left-clicking it in your battle list!
+
+// You can also automatically chase after selected creatures by clicking the 'chase opponent' button near your inventory.
+
+// Well done, you have enough cockroach legs! You should head back to Santiago with them. Climb the ladder to the north to exit.
+
+// Have you already climbed up a ladder? Right-click on its lower right end and select 'Use'.
+
+// Well done, and don't forget - you can 'Use' and 'Look' at many objects in Tibia.
+
+// If your torch is still lit when you leave the cellar, you can turn it off again to save its power for darker regions.
+
+// You advanced from Level 1 to Level 2!
+
+// Good job! For that, I'll grant you 100 experience points! Oh - what was that? I think you advanced a level, {right}?
+
+// This is not the way to the forest. You should head southwest first.
+
+// etc .... sigh there's loads of it.
+
+// You are not ready to enter the village of Rookgaard  yet. You should talk to Carlos some more.
