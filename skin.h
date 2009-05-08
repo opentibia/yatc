@@ -66,11 +66,12 @@ private:
 	skinImage *consoletabbgtl, *consoletabbgt, *consoletabbgtr, *consoletabbgl, *consoletabbgc, *consoletabbgr, *consoletabbgbl, *consoletabbgb, *consoletabbgbr; // console button container bg
 	skinImage *consoletabactivetl, *consoletabactivet, *consoletabactivetr, *consoletabactivel, *consoletabactivec, *consoletabactiver, *consoletabactivebl, *consoletabactiveb, *consoletabactivebr; // console button active bg
 	skinImage *consoletabpassivetl, *consoletabpassivet, *consoletabpassivetr, *consoletabpassivel, *consoletabpassivec, *consoletabpassiver, *consoletabpassivebl, *consoletabpassiveb, *consoletabpassivebr; // console button passive bg
+	skinImage *compasstl, *compasst, *compasstr, *compassl, *compassc, *compassr, *compassbl, *compassb, *compassbr; // minimap compass
 
 	skinImage *backgroundtl, *backgroundt, *backgroundtr, *backgroundl, *backgroundc, *backgroundr, *backgroundbl, *backgroundb, *backgroundbr; // general background
 
 public:
-	glictSkinner chk, tmm, inv, consoletabbg, consoletabactive, consoletabpassive, background;
+	glictSkinner chk, tmm, inv, consoletabbg, consoletabactive, consoletabpassive, compass, background;
 	glictSkinner txt;
 
 	friend class skinImage;
