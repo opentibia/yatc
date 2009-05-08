@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-08 21:23+0200\n"
+"POT-Creation-Date: 2009-05-08 22:48+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: kupi <kupi.ots@gmail.com>\n"
 "Language-Team: kupi <kupi.ots@gmail.com>, <kupi_ots@hotmail.com>\n"
@@ -45,23 +45,23 @@ msgstr ""
 msgid "(in no particular order)"
 msgstr "(en ningún orden particular)"
 
-#: ../ui/tutorialhints.cpp:93
+#: ../ui/tutorialhints.cpp:95
 msgid "<Observe the battle window>"
 msgstr "<Observe la ventana de batalla>"
 
-#: ../ui/tutorialhints.cpp:134
+#: ../ui/tutorialhints.cpp:136
 msgid "<Observe the follow button>"
 msgstr "<Observe el boton de seguimiento>"
 
-#: ../ui/tutorialhints.cpp:137
+#: ../ui/tutorialhints.cpp:139
 msgid "<Observe the health bar>"
 msgstr "<Observe la barra de salud>"
 
-#: ../ui/tutorialhints.cpp:77
+#: ../ui/tutorialhints.cpp:79
 msgid "<Observe the quest button>"
 msgstr "<Observe el boton de quest>"
 
-#: ../ui/tutorialhints.cpp:114
+#: ../ui/tutorialhints.cpp:116
 msgid "<The outfit window should be opened now>"
 msgstr "<La ventana de Outfits debe abrirse ahora."
 
@@ -106,7 +106,7 @@ msgstr "Opciones Gráficas"
 msgid "Advanced settings:"
 msgstr "Configuraciones avanzadas:"
 
-#: ../ui/tutorialhints.cpp:117
+#: ../ui/tutorialhints.cpp:119
 msgid "Ah, the all-mighty trade window. This hint is not written yet."
 msgstr "Ah, ventana de comercio. Aun no escrita."
 
@@ -447,7 +447,7 @@ msgstr "Mirar"
 msgid "Look"
 msgstr "Mirar"
 
-#: ../ui/tutorialhints.cpp:127
+#: ../ui/tutorialhints.cpp:129
 msgid ""
 "Looks like you've met a marked player. See the skull? That means that guy "
 "fought \n"
@@ -500,7 +500,7 @@ msgstr "Red"
 msgid "Network Options"
 msgstr "Opciones de Red"
 
-#: ../ui/tutorialhints.cpp:84
+#: ../ui/tutorialhints.cpp:86
 msgid ""
 "Now you've got a {bag} to carry stuff in and there's already a {coat}\n"
 "in there. {Drag} the coat from the {bag} to the {armor slot} to wear it."
@@ -521,7 +521,7 @@ msgstr "LLave de Encriptación del OT"
 msgid "Ok"
 msgstr "Ok"
 
-#: ../ui/tutorialhints.cpp:73
+#: ../ui/tutorialhints.cpp:75
 msgid ""
 "Ok; you can also try {clicking} on the {minimap}. For example \n"
 "there's a {marker} on the minimap now, try moving there."
@@ -768,7 +768,7 @@ msgstr "Habilidad"
 msgid "Skills"
 msgstr "Habilidades"
 
-#: ../ui/tutorialhints.cpp:100
+#: ../ui/tutorialhints.cpp:102
 msgid ""
 "So the {container window} opened. {Drag} whatever's in it into your {bag} "
 "to \n"
@@ -790,7 +790,7 @@ msgstr "Resistencia"
 msgid "Sword Fighting"
 msgstr "Lucha con Espada"
 
-#: ../ui/tutorialhints.cpp:104
+#: ../ui/tutorialhints.cpp:106
 msgid ""
 "The {shovel}, which is now in your inventory, is used to dig stuff up. "
 "It's \n"
@@ -807,7 +807,7 @@ msgstr ""
 "{pala} y luego en las {piedras}. \n"
 "Cuando se utiliza un objeto sobre otro objeto, se llama uso extendido."
 
-#: ../ui/tutorialhints.cpp:80
+#: ../ui/tutorialhints.cpp:82
 msgid ""
 "There's a {chest} in here. So try {ctrl+clicking} (commonly called \n"
 "'Use') on it to open it."
@@ -832,7 +832,7 @@ msgstr ""
 "de reducción de Temperatura de CPU) el uso por debajo de la barra de\n"
 "desplazamiento. Nota, sin embargo, la limitación de FPS es sólo aproximada."
 
-#: ../ui/tutorialhints.cpp:88
+#: ../ui/tutorialhints.cpp:90
 msgid ""
 "To lit the {torch}, try {ctrl+clicking} on it. Torches burn out slowly \n"
 "while they're on, so don't forget to {ctrl+click} (use) it when you don't\n"
@@ -902,15 +902,16 @@ msgstr "Ofrecemos dos motores gráficos:\n"
 msgid "Welcome to"
 msgstr "Bienvenido a"
 
+#: ../ui/tutorialhints.cpp:72
+#, fuzzy
+msgid "Welcome to $$PRODUCTSHORT$$! Use {arrows} or {mouse} to move around."
+msgstr "Bienvenido a YATC! Utilice las {flechas} o el {ratón} para moverse."
+
 #: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:553
 msgid "Welcome to Tibia!"
 msgstr "Bienvenido a Tibia!"
 
-#: ../ui/tutorialhints.cpp:70
-msgid "Welcome to YATC! Use {arrows} or {mouse} to move around."
-msgstr "Bienvenido a YATC! Utilice las {flechas} o el {ratón} para moverse."
-
-#: ../ui/tutorialhints.cpp:120
+#: ../ui/tutorialhints.cpp:122
 msgid ""
 "Welcome to the village! There are a few more marks on your map now with "
 "important\n"
@@ -924,7 +925,7 @@ msgstr ""
 "usted puede \n"
 "elegir una vocación y vaya a la parte continental (mainland)."
 
-#: ../ui/tutorialhints.cpp:96
+#: ../ui/tutorialhints.cpp:98
 msgid ""
 "Why fight if you can't profit, right? So when you kill something, just "
 "loot \n"
@@ -934,7 +935,7 @@ msgstr ""
 "mata a algo, simplemente tome el botín de \n"
 "su {cuerpo}. Pulsa {ctrl + clic} sobre el mismo cuerpo."
 
-#: ../ui/tutorialhints.cpp:110
+#: ../ui/tutorialhints.cpp:112
 msgid ""
 "With the {rope} you can climb up from dungeons and caves. Find a {rope "
 "spot}, \n"
