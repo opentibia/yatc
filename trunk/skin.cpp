@@ -264,6 +264,16 @@ Skin::Skin() {
     consoletabpassiveb  = NULL;
     consoletabpassivebr = NULL;
 
+    compasstl = NULL;
+    compasst  = NULL;
+    compasstr = NULL;
+    compassl  = NULL;
+    compassc  = NULL;
+    compassr  = NULL;
+    compassbl = NULL;
+    compassb  = NULL;
+    compassbr = NULL;
+
     backgroundtl = NULL;
     backgroundt  = NULL;
     backgroundtr = NULL;
@@ -515,6 +525,16 @@ void Skin::loadSkin() {
     consoletabpassive.SetBL		(consoletabpassivebl = new skinImage(114+96,  216,    2,      2));
     consoletabpassive.SetBottom	(consoletabpassiveb  = new skinImage(116+96,  216,    92,     2));
     consoletabpassive.SetBR		(consoletabpassivebr = new skinImage(208+96,  216,    2,      2));
+
+    compass.SetTL		(compasstl = NULL);
+    compass.SetTop	    (compasst  = NULL);
+    compass.SetTR		(compasstr = NULL);
+    compass.SetLeft	    (compassl  = NULL);
+    compass.SetCenter	(compassc  = new skinImage(131, 138, 43, 43));
+    compass.SetRight	(compassr  = NULL);
+    compass.SetBL		(compassbl = NULL);
+    compass.SetBottom	(compassb  = NULL);
+    compass.SetBR		(compassbr = NULL);
 
     background.SetTL		(backgroundtl = NULL);
     background.SetTop	    (backgroundt  = NULL);
@@ -985,6 +1005,26 @@ void Skin::unloadSkin() {
     consoletabpassive.SetBL(NULL);
     consoletabpassive.SetBottom(NULL);
     consoletabpassive.SetBR(NULL);
+
+    if (compasstl) delete compasstl; compasstl = NULL;
+    if (compasst)  delete compasst;  compasst  = NULL;
+    if (compasstr) delete compasstr; compasstr = NULL;
+    if (compassl)  delete compassl;  compassl  = NULL;
+    if (compassc)  delete compassc;  compassc  = NULL;
+    if (compassr)  delete compassr;  compassr  = NULL;
+    if (compassbl) delete compassbl; compassbl = NULL;
+    if (compassb)  delete compassb;  compassb  = NULL;
+    if (compassbr) delete compassbr; compassbr = NULL;
+
+    compass.SetTL(NULL);
+    compass.SetTop(NULL);
+    compass.SetTR(NULL);
+    compass.SetLeft(NULL);
+    compass.SetCenter(NULL);
+    compass.SetRight(NULL);
+    compass.SetBL(NULL);
+    compass.SetBottom(NULL);
+    compass.SetBR(NULL);
 
 
 

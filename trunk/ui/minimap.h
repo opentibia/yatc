@@ -25,9 +25,10 @@ public:
 #endif
 
 	glictPanel pnlMap;
+	glictPanel pnlCompass;
 
 	pnlMap_t(Automap* map) {
-		panel.SetWidth(150);
+		panel.SetWidth(172);
 		panel.SetHeight(150);
 
 		#if (GLICT_APIREV >= 98)
@@ -45,14 +46,23 @@ public:
 
 		panel.AddObject(&pnlMap);
 
-		pnlMap.SetPos(2,2);
-		pnlMap.SetWidth(130);
-		pnlMap.SetHeight(130);
+		pnlMap.SetPos(9, 5);
+		pnlMap.SetWidth(108);
+		pnlMap.SetHeight(108);
 		pnlMap.SetCaption("");
 		pnlMap.SetBGColor(.1,.1,.1,1);
 		pnlMap.SetSkin(&g_skin.inv);
 		pnlMap.SetCustomData(map);
 		pnlMap.SetOnPaint(&pnlMap_t::paintMap);
+
+		panel.AddObject(&pnlCompass);
+
+		pnlCompass.SetPos(125,6);
+		pnlCompass.SetWidth(43);
+		pnlCompass.SetHeight(43);
+		pnlCompass.SetCaption("");
+		pnlCompass.SetBGColor(.1,.1,.1,1.);
+		pnlCompass.SetSkin(&g_skin.compass);
 	}
 
 	~pnlMap_t() {}
@@ -60,7 +70,7 @@ public:
 	static void paintMap(glictRect *real, glictRect *clipped, glictContainer *caller){
 		Automap* map = (Automap*)caller->GetCustomData();
 		//g_engine->drawRectangleLines(clipped->left, clipped->top, clipped->right-clipped->left, clipped->bottom-clipped->top, oRGBA(255,255,255,255));
-		map->renderSelf((int)real->left+1, (int)real->top+1, 128, 128, GlobalVariables::getPlayerPosition(), g_temp_minimapzoom);
+		map->renderSelf((int)real->left+1, (int)real->top+1, 106, 106, GlobalVariables::getPlayerPosition(), g_temp_minimapzoom);
 	}
 };
 

@@ -93,15 +93,15 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	#ifndef WINCE
 	// first, let's construct right side panel
 	desktop.AddObject(&pnlRightSide);
-	pnlRightSide.SetPos(750 - (170 + 4), 0 );
-	pnlRightSide.SetWidth(170 + 4); // 4 is for border
+	pnlRightSide.SetPos(750 - (172 + 4), 0 );
+	pnlRightSide.SetWidth(172 + 4); // 4 is for border
 	pnlRightSide.SetHeight(600); // dynamic and updated later
 	pnlRightSide.SetSkin(&g_skin.consoletabpassive);
 
 	pnlRightSide.AddObject(&yspRightSide);
 	yspRightSide.SetPos(0,0);
 	yspRightSide.SetBGActiveness(false);
-	yspRightSide.SetWidth(170);
+	yspRightSide.SetWidth(172);
 	yspRightSide.SetHeight(600); // dynamic and updated later
 
 	#if (GLICT_APIREV>=95)
@@ -114,7 +114,7 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	#endif
 
     // objects which didnt get set up in constructors and require initial setup...
-    pnlTraffic.SetWidth(170);
+    pnlTraffic.SetWidth(172);
 	pnlTraffic.SetHeight(40);
     pnlTraffic.SetSkin(&g_skin.inv);
 	pnlTraffic.SetFont("gamefont", 10);
@@ -236,19 +236,19 @@ void GM_Gameworld::doResize(float w, float h)
 	desktop.SetHeight(h);
 	desktop.ResetTransformations();
 
-	m_mapui.setSize(wi-170,hi-150-18);
+	m_mapui.setSize(wi-172-4,hi-150-18);
 
 	pnlRightSide.SetHeight(h);
 	yspRightSide.SetHeight(h);
-	pnlRightSide.SetPos(w-170,0); // ysp is always on 0,0
+	pnlRightSide.SetPos(w-172-4,0); // ysp is always on 0,0
 
-	txtConsoleEntry.SetWidth(w-170);
+	txtConsoleEntry.SetWidth(w-172-4);
 	txtConsoleEntry.SetPos(0,h-12);
 
 	pnlTraffic.SetPos(w-200, 0);
 
     pnlConsoleButtonContainer.SetPos(0,glictGlobals.h-150-18);
-    pnlConsoleButtonContainer.SetWidth(glictGlobals.w-170);
+    pnlConsoleButtonContainer.SetWidth(glictGlobals.w-172-4);
     pnlConsoleButtonContainer.SetHeight(18);
 
 	DEBUGPRINT(0,0,"Updating scene\n");
@@ -337,16 +337,16 @@ void GM_Gameworld::updateScene()
 
 
     // status messages
-    m_statusStatMsg.paintSelf(0,0,glictGlobals.w-170, glictGlobals.h - 150 - 20);
+    m_statusStatMsg.paintSelf(0,0,glictGlobals.w-172-4, glictGlobals.h - 150 - 20);
     m_statusStatMsg.updateSelf(g_frameDiff / 1000.);
-    m_lookatStatMsg.paintSelf(0,0,glictGlobals.w-170, glictGlobals.h - 150 - 20);
+    m_lookatStatMsg.paintSelf(0,0,glictGlobals.w-172-4, glictGlobals.h - 150 - 20);
     m_lookatStatMsg.updateSelf(g_frameDiff / 1000.);
 
 	desktop.Paint();
 	g_engine->resetClipping();
 
 
-	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-170, glictGlobals.h-12);
+	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-172-4, glictGlobals.h-12);
 
 }
 
