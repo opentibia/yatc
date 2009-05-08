@@ -274,6 +274,31 @@ Skin::Skin() {
     compassb  = NULL;
     compassbr = NULL;
 
+    for (int i = 0; i < 11; i++)
+    {
+        graphicbtntl[i] = NULL;
+        graphicbtnt[i]  = NULL;
+        graphicbtntr[i] = NULL;
+        graphicbtnl[i]  = NULL;
+        graphicbtnc[i]  = NULL;
+        graphicbtnr[i]  = NULL;
+        graphicbtnbl[i] = NULL;
+        graphicbtnb[i]  = NULL;
+        graphicbtnbr[i] = NULL;
+
+        graphicbthtl[i] = NULL;
+        graphicbtht[i]  = NULL;
+        graphicbthtr[i] = NULL;
+        graphicbthl[i]  = NULL;
+        graphicbthc[i]  = NULL;
+        graphicbthr[i]  = NULL;
+        graphicbthbl[i] = NULL;
+        graphicbthb[i]  = NULL;
+        graphicbthbr[i] = NULL;
+
+
+    }
+
     backgroundtl = NULL;
     backgroundt  = NULL;
     backgroundtr = NULL;
@@ -535,6 +560,29 @@ void Skin::loadSkin() {
     compass.SetBL		(compassbl = NULL);
     compass.SetBottom	(compassb  = NULL);
     compass.SetBR		(compassbr = NULL);
+
+    for (int i = 0; i < 11; i++)
+    {
+        graphicbtn[i].SetTL		    (graphicbtntl[i] = NULL);
+        graphicbtn[i].SetTop	    (graphicbtnt [i] = NULL);
+        graphicbtn[i].SetTR		    (graphicbtntr[i] = NULL);
+        graphicbtn[i].SetLeft	    (graphicbtnl [i] = NULL);
+        graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(2 + 20*i, 98, 20, 20));
+        graphicbtn[i].SetRight	    (graphicbtnr [i] = NULL);
+        graphicbtn[i].SetBL		    (graphicbtnbl[i] = NULL);
+        graphicbtn[i].SetBottom	    (graphicbtnb [i] = NULL);
+        graphicbtn[i].SetBR		    (graphicbtnbr[i] = NULL);
+
+        graphicbth[i].SetTL		    (graphicbthtl[i] = NULL);
+        graphicbth[i].SetTop	    (graphicbtht [i] = NULL);
+        graphicbth[i].SetTR		    (graphicbthtr[i] = NULL);
+        graphicbth[i].SetLeft	    (graphicbthl [i] = NULL);
+        graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(2 + 20*i, 98+20, 20, 20));
+        graphicbth[i].SetRight	    (graphicbthr [i] = NULL);
+        graphicbth[i].SetBL		    (graphicbthbl[i] = NULL);
+        graphicbth[i].SetBottom	    (graphicbthb [i] = NULL);
+        graphicbth[i].SetBR		    (graphicbthbr[i] = NULL);
+    }
 
     background.SetTL		(backgroundtl = NULL);
     background.SetTop	    (backgroundt  = NULL);
@@ -1026,6 +1074,51 @@ void Skin::unloadSkin() {
     compass.SetBottom(NULL);
     compass.SetBR(NULL);
 
+    for (int i = 0; i < 11; i++)
+    {
+        if (graphicbtntl[i] )delete graphicbtntl[i]; graphicbtntl[i] = NULL;
+        if (graphicbtnt[i] ) delete graphicbtnt[i];  graphicbtnt [i] = NULL;
+        if (graphicbtntr[i] )delete graphicbtntr[i]; graphicbtntr[i] = NULL;
+        if (graphicbtnl[i] ) delete graphicbtnl[i];  graphicbtnl [i] = NULL;
+        if (graphicbtnc[i] ) delete graphicbtnc[i];  graphicbtnc [i] = NULL;
+        if (graphicbtnr[i] ) delete graphicbtnr[i];  graphicbtnr [i] = NULL;
+        if (graphicbtnbl[i] )delete graphicbtnbl[i]; graphicbtnbl[i] = NULL;
+        if (graphicbtnb[i] ) delete graphicbtnb[i];  graphicbtnb [i] = NULL;
+        if (graphicbtnbr[i] )delete graphicbtnbr[i]; graphicbtnbr[i] = NULL;
+
+        graphicbtn[i].SetTL(NULL);
+        graphicbtn[i].SetTop(NULL);
+        graphicbtn[i].SetTR(NULL);
+        graphicbtn[i].SetLeft(NULL);
+        graphicbtn[i].SetCenter(NULL);
+        graphicbtn[i].SetRight(NULL);
+        graphicbtn[i].SetBL(NULL);
+        graphicbtn[i].SetBottom(NULL);
+        graphicbtn[i].SetBR(NULL);
+
+        if (graphicbthtl[i] )delete graphicbthtl[i]; graphicbthtl[i] = NULL;
+        if (graphicbtht[i] ) delete graphicbtht[i];  graphicbtht [i] = NULL;
+        if (graphicbthtr[i] )delete graphicbthtr[i]; graphicbthtr[i] = NULL;
+        if (graphicbthl[i] ) delete graphicbthl[i];  graphicbthl [i] = NULL;
+        if (graphicbthc[i] ) delete graphicbthc[i];  graphicbthc [i] = NULL;
+        if (graphicbthr[i] ) delete graphicbthr[i];  graphicbthr [i] = NULL;
+        if (graphicbthbl[i] )delete graphicbthbl[i]; graphicbthbl[i] = NULL;
+        if (graphicbthb[i] ) delete graphicbthb[i];  graphicbthb [i] = NULL;
+        if (graphicbthbr[i] )delete graphicbthbr[i]; graphicbthbr[i] = NULL;
+
+        graphicbth[i].SetTL(NULL);
+        graphicbth[i].SetTop(NULL);
+        graphicbth[i].SetTR(NULL);
+        graphicbth[i].SetLeft(NULL);
+        graphicbth[i].SetCenter(NULL);
+        graphicbth[i].SetRight(NULL);
+        graphicbth[i].SetBL(NULL);
+        graphicbth[i].SetBottom(NULL);
+        graphicbth[i].SetBR(NULL);
+
+
+
+    }
 
 
     if (backgroundtl) delete backgroundtl; backgroundtl = NULL;

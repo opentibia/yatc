@@ -157,7 +157,7 @@ void MiniMapArea::getRGB(uint8_t color, uint8_t& r, uint8_t& g, uint8_t& b)
 
 Automap::Automap()
 {
-	//
+	m_zoom = 1.;
 }
 
 Automap::~Automap()
@@ -190,13 +190,10 @@ void Automap::setTileColor(int x, int y, int z, uint8_t color, uint8_t speedinde
 	}
 }
 
-void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos, double zoom)
+void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos)
 // parameters specify where on the screen it should be painted
 {
-    if (zoom == 0)
-    {
-        zoom = 1;
-    }
+    float zoom = m_zoom;
 	//background
 	g_engine->drawRectangle(x, y, w, h, oRGBA(0,0,0,1));
 
@@ -251,4 +248,16 @@ void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos, 
 
     //mark where is the player
     g_engine->drawRectangle(x + w/2 -1, y + h/2-1, 3, 3, oRGBA(255,255,255,1));
+}
+
+void Automap::zoomIn()
+{
+    if (m_zoom < 8)
+        m_zoom *= 2;
+}
+
+void Automap::zoomOut()
+{
+    if (m_zoom > 0.5)
+    m_zoom /= 2;
 }
