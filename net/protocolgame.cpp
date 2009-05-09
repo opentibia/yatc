@@ -967,6 +967,8 @@ bool ProtocolGame::parsePlayerSkills(NetworkMessage& msg)
 	GlobalVariables::setPlayerSkill(SKILL_AXE, SKILL_ATTR_PERCENT, axePercent);
 	GlobalVariables::setPlayerSkill(SKILL_DISTANCE, SKILL_ATTR_LEVEL, distance);
 	GlobalVariables::setPlayerSkill(SKILL_DISTANCE, SKILL_ATTR_PERCENT, distancePercent);
+	GlobalVariables::setPlayerSkill(SKILL_SHIELD, SKILL_ATTR_LEVEL, shield);
+	GlobalVariables::setPlayerSkill(SKILL_SHIELD, SKILL_ATTR_PERCENT, shieldPercent);
 	GlobalVariables::setPlayerSkill(SKILL_FISH, SKILL_ATTR_LEVEL, fish);
 	GlobalVariables::setPlayerSkill(SKILL_FISH, SKILL_ATTR_PERCENT, fishPercent);
 
