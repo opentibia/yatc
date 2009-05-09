@@ -71,10 +71,12 @@ void MapUI::renderMap()
 
 
 	// set up scale
-	m_scale = MIN(m_w/(15.*32), m_h/(11.*32));
+	if(!options.stretchGameWindow)
+		m_scale = MIN(m_w/(15.*32), m_h/(11.*32));
+	else
+		m_scale = 1.f;
 //	printf("m_w: %d, m_h: %d, m_scale: %g\n", m_w, m_h, m_scale);
-	int scaledSize = std::floor(32*m_scale);
-	//printf("Scaled Size: %f %d\n", scaledSize, (int)std::ceil(scaledSize));
+	float scaledSize = 32*m_scale;
 
     m_x = -scaledSize*2; m_y = -scaledSize*2;
 	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/0,0,15*scaledSize,11*scaledSize);

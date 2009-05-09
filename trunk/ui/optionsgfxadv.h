@@ -41,8 +41,16 @@ public:
 	glictButton btnEngineOGL;       // 84 30
 	//glictButton btnEngineDX9;     // 154 30
 
+	glictPanel lblAmbLight; // 13 62, 230 12
+	glictScrollbar scbAmbLight; // 13 80, 230 12
+
+	uiCheckbox chkLightEffects;	// 4 16, 12 12
+	uiCheckbox chkStrShrGWind;	// 4 16, 12 12
+	uiCheckbox chkWinMouse;	// 4 16, 12 12
+
     glictPanel lblMaxFPS; // 13 213 , 230 12
 	glictScrollbar scbMaxFPS; // 13 229, 230 12
+	glictPanel lblFPS;
 
     glictButton *activeEngine;
     glictButton *activeEngineOriginal;
@@ -101,63 +109,130 @@ public:
 		//btnEngineDX.SetCustomData((void*)2);
 		//btnEngineDX.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeEngine);
 
+		// "Set Ambient Light"
+		{
+			window.AddObject(&lblAmbLight);
+			lblAmbLight.SetPos(13, 62);
+			lblAmbLight.SetWidth(230);
+			lblAmbLight.SetHeight(12);
+			/*
+			ss << gettext("Set Ambient Light") << ": " << options.ambientlight << "%";
+			lblAmbLight.SetCaption(ss.str());
+			ss.str("");
+			*/
+			lblAmbLight.SetCaption("Ambient Light Not Implemented");
+			lblAmbLight.SetFont("aafont");
+			lblAmbLight.SetBGActiveness(false);
+			lblAmbLight.SetCustomData(this);
+
+			window.AddObject(&scbAmbLight);
+			scbAmbLight.SetPos(13,80);
+			scbAmbLight.SetWidth(230);
+			scbAmbLight.SetHeight(12);
+			scbAmbLight.SetMin(0);
+			scbAmbLight.SetMax(/*10*/0);
+			scbAmbLight.SetStep(5);
+			scbAmbLight.SetValue(0/*options.ambientlight*/);
+			scbAmbLight.SetCustomData(this);
+			//scbMaxFPS.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeAmbLight);
+		}
+
+		// "Show Light Effects"
+		{
+			window.AddObject(&chkLightEffects.pnlPanel);
+			chkLightEffects.SetPos(13, 108);
+			chkLightEffects.SetWidth(230);
+			chkLightEffects.SetHeight(22);
+			chkLightEffects.SetCaption("Show Light Effects [Not implemented]");
+			chkLightEffects.SetValue(false);
+		}
+
+		// "Don't Stretch/Shrink Game Window"
+		{
+			window.AddObject(&chkStrShrGWind.pnlPanel);
+			chkStrShrGWind.SetPos(13, 144);
+			chkStrShrGWind.SetWidth(230);
+			chkStrShrGWind.SetHeight(22);
+			chkStrShrGWind.SetCaption("Don't Stretch/Shrink Game Window");
+			chkStrShrGWind.SetValue(options.stretchGameWindow);
+		}
+
+		// "Windows Mouse Pointer"
+		{
+			window.AddObject(&chkWinMouse.pnlPanel);
+			chkWinMouse.SetPos(13, 178);
+			chkWinMouse.SetWidth(230);
+			chkWinMouse.SetHeight(22);
+			chkWinMouse.SetCaption("Windows Mouse Pointer [Not Implemented]");
+			chkWinMouse.SetValue(false);
+		}
 
         // scrollbar for fps
-		window.AddObject(&scbMaxFPS);
-		scbMaxFPS.SetPos(13,229);
-		scbMaxFPS.SetWidth(230);
-		scbMaxFPS.SetHeight(12);
-		scbMaxFPS.SetMin(0);
-		scbMaxFPS.SetMax(80);
-		scbMaxFPS.SetStep(5);
-		scbMaxFPS.SetValue(options.maxfps);
-		scbMaxFPS.SetCustomData(this);
-		scbMaxFPS.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeFPS);
+		{
+			window.AddObject(&lblMaxFPS);
+			lblMaxFPS.SetPos(13, 213);
+			lblMaxFPS.SetWidth(230);
+			lblMaxFPS.SetHeight(12);
+			ss << gettext("Adjust framerate limit") << ": ";
+			if(options.maxfps == 0) {
+				ss << gettext("Unlimited");
+			} else {
+				ss << options.maxfps;
+			}
+			lblMaxFPS.SetCaption(ss.str());
+			lblMaxFPS.SetBGActiveness(false);
+			lblMaxFPS.SetCustomData(this);
 
-		window.AddObject(&lblMaxFPS);
-		lblMaxFPS.SetPos(13, 213);
-		lblMaxFPS.SetWidth(230);
-		lblMaxFPS.SetHeight(12);
-		//lblMaxFPS.SetCaption("Adjust framerate limit: XX");
-		ss << gettext("Adjust framerate limit") << ": ";
-		if(options.maxfps == 0) {
-			ss << gettext("Unlimited");
-		} else {
-			ss << options.maxfps;
+			window.AddObject(&scbMaxFPS);
+			scbMaxFPS.SetPos(13,229);
+			scbMaxFPS.SetWidth(230);
+			scbMaxFPS.SetHeight(12);
+			scbMaxFPS.SetMin(0);
+			scbMaxFPS.SetMax(80);
+			scbMaxFPS.SetStep(5);
+			scbMaxFPS.SetValue(options.maxfps);
+			scbMaxFPS.SetCustomData(this);
+			scbMaxFPS.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeFPS);
+
+			window.AddObject(&lblFPS);
+			lblFPS.SetPos(13, 254);
+			lblFPS.SetWidth(230);
+			lblFPS.SetHeight(12);
+			lblFPS.SetBGActiveness(false);
+			lblFPS.SetCustomData(this);
+			lblFPS.SetOnPaint(lblFPSOnPaint);
 		}
-		lblMaxFPS.SetCaption(ss.str());
-		lblMaxFPS.SetBGActiveness(false);
-		lblMaxFPS.SetCustomData(this);
-
 
 		// Bottom stuff, every window has 'em.
-		window.AddObject(&pnlSeparator);
-		pnlSeparator.SetPos(9, 277);
-		pnlSeparator.SetWidth(241);
-		pnlSeparator.SetHeight(2);
-		pnlSeparator.SetBGColor(.2,.2,.2,1.);
-		pnlSeparator.SetSkin(&g_skin.chk);
+		{
+			window.AddObject(&pnlSeparator);
+			pnlSeparator.SetPos(9, 277);
+			pnlSeparator.SetWidth(241);
+			pnlSeparator.SetHeight(2);
+			pnlSeparator.SetBGColor(.2,.2,.2,1.);
+			pnlSeparator.SetSkin(&g_skin.chk);
 
-		window.AddObject(&btnHelp);
-		btnHelp.SetPos(100, 286);
-		btnHelp.SetWidth(41);
-		btnHelp.SetHeight(17);
-		btnHelp.SetCaption(gettext("Help"));
-		btnHelp.SetFont("minifont",8);
+			window.AddObject(&btnHelp);
+			btnHelp.SetPos(100, 286);
+			btnHelp.SetWidth(41);
+			btnHelp.SetHeight(17);
+			btnHelp.SetCaption(gettext("Help"));
+			btnHelp.SetFont("minifont",8);
 
-		window.AddObject(&btnOk);
-		btnOk.SetPos(153, 286);
-		btnOk.SetWidth(41);
-		btnOk.SetHeight(17);
-		btnOk.SetCaption(gettext("Ok"));
-		btnOk.SetFont("minifont",8);
+			window.AddObject(&btnOk);
+			btnOk.SetPos(153, 286);
+			btnOk.SetWidth(41);
+			btnOk.SetHeight(17);
+			btnOk.SetCaption(gettext("Ok"));
+			btnOk.SetFont("minifont",8);
 
-		window.AddObject(&btnCancel);
-		btnCancel.SetPos(206, 286);
-		btnCancel.SetWidth(41);
-		btnCancel.SetHeight(17);
-		btnCancel.SetCaption(gettext("Cancel"));
-		btnCancel.SetFont("minifont",8);
+			window.AddObject(&btnCancel);
+			btnCancel.SetPos(206, 286);
+			btnCancel.SetWidth(41);
+			btnCancel.SetHeight(17);
+			btnCancel.SetCaption(gettext("Cancel"));
+			btnCancel.SetFont("minifont",8);
+		}
 	}
 
 
@@ -180,6 +255,7 @@ public:
 
 	void Store() {
 		//
+		options.stretchGameWindow = chkStrShrGWind.GetValue();
 		options.Save();
 	}
 
@@ -230,6 +306,13 @@ public:
 			ss << options.maxfps;
 		}
 		win->lblMaxFPS.SetCaption(ss.str());
+	}
+
+	static void lblFPSOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
+	{
+		std::stringstream ss;
+		ss << gettext("Current framerate: ") << g_engine->getFPS();
+		caller->SetCaption(ss.str());
 	}
 
 };
