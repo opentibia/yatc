@@ -101,20 +101,28 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 
 		//Square around the creature
 		if(g_frameTime - n->getSquareStart() < 1000){
-			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 32, 32, oRGBA(0,0,0,0));
+			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 32*scale, 32*scale, oRGBA(0,0,0,0));
 		}
 
-		// FIXME: (nfries88) RGBA colors aren't as expected for me.
-		// note: lines are only 1 pixel thick. they're thicker in CIP's client.
+		// FIXME (nfries88): RGBA colors aren't as expected for me.
 		//Pink square around the attacked creature
 		if(n->getID() == GlobalVariables::getAttackID()) {
 			// "Deep Pink" - may not be the right color
-			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 30, 30, oRGBA(255, 140, 7, 255));
+			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 32*scale, 32*scale, oRGBA(255, 140, 7, 255), 2*scale);
 		}
 		//Green square around the followed creature
 		else if(n->getID() == GlobalVariables::getFollowID()) {
 			// "Lime Green" - may not be the right color
-			g_engine->drawRectangleLines((x+2) + walkoffx, (y+2) + walkoffy, 28, 28, oRGBA(50, 205, 50, 255));
+			g_engine->drawRectangleLines((x+2) + walkoffx, (y+2) + walkoffy, 32*scale, 32*scale, oRGBA(50, 205, 50, 255), 2*scale);
+		}
+
+		// "Creature Squares" sent by the server
+		// NOTE (nfries88): I have no idea if this will render the proper colors at all.
+		// It does send black square correctly, though.
+		// Also not sure how long the square is supposed to be shown... 1s? 500ms?
+		if((n->getSquareStart() + 1000) >= g_frameTime)
+		{
+			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 34*scale, 34*scale, n->getSquareColor(), 2*scale);
 		}
 
 		for(uint32_t i = 0; i < m_obj->height; ++i){

@@ -45,7 +45,7 @@ class Engine
 
 		virtual void doResize(int w, int h);
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
-		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color) {}
+		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness = 1.f) {}
 		virtual void drawText(const char* text, const char* font, int x, int y, uint8_t color=215); // 215 == TEXTCOLOR_WHITE
 		virtual void drawText(const char* text, const char* font, int x, int y, oRGBA color);
 		virtual float sizeText(const char* text, const char* font) { float a = glictFontSize(text, font, 10); ASSERTFRIENDLY(a<20000, "Looks like text width is enormous."); return a; }

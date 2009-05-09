@@ -91,27 +91,27 @@ void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA
 	SDL_FillRect(m_screen, &r, SDL_MapRGBA(vi->vfmt, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)color.a));
 }
 
-void EngineSDL::drawRectangleLines(float x, float y, float width, float height, oRGBA color)
+void EngineSDL::drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness /*= 1.f*/)
 {
 	const SDL_VideoInfo* vi = SDL_GetVideoInfo();
 	int col = SDL_MapRGBA(vi->vfmt, (int)(color.r), (int)(color.g), (int)(color.b), (int)(color.a));
 	{
-		SDL_Rect rect = {(int)x, (int)y, 1, (int)height};
+		SDL_Rect rect = {(int)x, (int)y, (int)thickness, (int)height};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 
 	{
-		SDL_Rect rect = {(int)(x+width-1.f), (int)y, 1, (int)height};
+		SDL_Rect rect = {(int)(x+width-thickness), (int)y, (int)thickness, (int)height};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 
 	{
-		SDL_Rect rect = {(int)x, (int)y, (int)width, 1};
+		SDL_Rect rect = {(int)x, (int)y, (int)width, (int)thickness};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 
 	{
-		SDL_Rect rect = {(int)x, (int)(y+height-1.f), (int)width, 1};
+		SDL_Rect rect = {(int)x, (int)(y+height-thickness), (int)width, (int)thickness};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 }
