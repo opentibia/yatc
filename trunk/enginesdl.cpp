@@ -37,6 +37,13 @@ EngineSDL::EngineSDL()
     SDL_ShowCursor(0);
 	doResize(m_width, m_height);
 
+	// note (nfries88): On Windows, if you maximize yatc and leave it maximized when it closes, it'll restart
+	// at maximized size but at a random position in the on the screen, which is unsightly and annoying.
+	// This should be fixed in a better way (perhaps before saving window dimensions to yatc.cfg) later on.
+	#ifdef WIN32
+	MoveWindow(GetActiveWindow(), 0, 0, m_width, m_height, true);
+	#endif
+
 	//glictGlobals.drawPartialOut = false;
 #if (GLICT_APIREV >= 79)
 	glictGlobals.mayUseGL = false;
