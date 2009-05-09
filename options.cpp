@@ -59,6 +59,7 @@ Options::Options()
 	h = 480;
 	bpp = 32;
 	maxfps = 0;
+	stretchGameWindow = false;
 
 	// [console]
 	infomsgs = true;
@@ -164,6 +165,9 @@ void Options::Save()
 	ss << maxfps;
 	section->addKey("maxfps", ss.str());
 	ss.str("");
+	ss << stretchGameWindow;
+	section->addKey("stretchgame", ss.str());
+	ss.str("");
 
 
 	section = configHandler->newSection("console");
@@ -256,6 +260,7 @@ void Options::Load()
 	h = atoi(configHandler->getKeyValue("graphics", "height").c_str());
 	bpp = atoi(configHandler->getKeyValue("graphics", "bpp").c_str());
 	maxfps = atoi(configHandler->getKeyValue("graphics", "maxfps").c_str());
+	stretchGameWindow = (atoi(configHandler->getKeyValue("graphics", "stretchgame").c_str()) == 1);
 
 	// [console]
     infomsgs = (atoi(configHandler->getKeyValue("console", "infomsgs").c_str()) == 1);

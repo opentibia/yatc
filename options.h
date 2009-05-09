@@ -64,6 +64,7 @@ public:
 	int w, h, bpp;
 	bool fullscreen;
 	int maxfps;
+	bool stretchGameWindow;
 
 	// [console]
 	bool infomsgs;

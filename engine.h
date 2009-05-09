@@ -60,6 +60,8 @@ class Engine
 
         void performFpsCalc();
 
+        float getFPS(){ return m_fps; }
+
 		uint32_t m_creationTimestamp; // some engines, like GL, need this in order to know when to re-create their sprite memories
 
         virtual void resetClipping() {
