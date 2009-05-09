@@ -911,9 +911,10 @@ bool ProtocolGame::parsePlayerStats(NetworkMessage& msg)
 	MSG_READ_U8(magicLevelPercent);
 	MSG_READ_U8(soul);
 	MSG_READ_U16(stamina);
+
 	//some validations
-	if(health > healthMax || levelPercent > 100 || mana > manaMax ||
-	   magicLevelPercent > 100){
+	// NOTE (nfries88): sometimes, upon death, your mana will be greater than your maximum mana (due to level loss)
+	if(health > healthMax || levelPercent > 100 || magicLevelPercent > 100){
 		RAISE_PROTOCOL_ERROR("Player stats - values");
 	}
 

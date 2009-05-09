@@ -57,7 +57,7 @@ MapUI::MapUI()
 	m_w = m_vpw*32; // just defaults
 	m_h = m_vph*32;
 
-    m_scale = 1;
+    m_scale = 1.F;
 }
 
 MapUI::~MapUI()
@@ -73,7 +73,8 @@ void MapUI::renderMap()
 	// set up scale
 	m_scale = MIN(m_w/(15.*32), m_h/(11.*32));
 //	printf("m_w: %d, m_h: %d, m_scale: %g\n", m_w, m_h, m_scale);
-	float scaledSize = 32*m_scale;
+	int scaledSize = std::floor(32*m_scale);
+	//printf("Scaled Size: %f %d\n", scaledSize, (int)std::ceil(scaledSize));
 
     m_x = -scaledSize*2; m_y = -scaledSize*2;
 	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/0,0,15*scaledSize,11*scaledSize);
