@@ -86,7 +86,7 @@ void GameModeOptions::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glict
 	winOptions_t* winOptions = g_game->getOptionsWindow();
 	winOptions->winOptionsNetwork.Init();
 	winOptions->winOptionsNetwork.window.SetVisible(true);
-	winOptions->winOptionsNetwork.window.Focus(NULL);
+	winOptions->winOptionsNetwork.btnOk.Focus(NULL);
 }
 void GameModeOptions::winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
@@ -94,12 +94,14 @@ void GameModeOptions::winOptionsNetwork_btnOk_OnClick(glictPos* relmousepos, gli
 	winOptions->winOptionsNetwork.Store();
 	//((*GM_MainMenu)g_game)->desktop.SetFocus(NULL);
 	winOptions->winOptionsNetwork.window.SetVisible(false);
+	winOptions->btnOk.Focus(NULL);
 }
 void GameModeOptions::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	winOptions_t* winOptions = g_game->getOptionsWindow();
 	//((*GM_MainMenu)g_game)->desktop.SetFocus(NULL);
 	winOptions->winOptionsNetwork.window.SetVisible(false);
+	winOptions->btnOk.Focus(NULL);
 }
 
 void GameModeOptions::doResize(float w, float h)

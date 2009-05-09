@@ -1126,8 +1126,9 @@ void GM_Gameworld::dragComplete(const Position& toPos)
 {
 	const ObjectType* type = Objects::getInstance()->getItemType(m_dragThingId);
 	if(type){
-		if(type->stackable && !(SDL_GetModState() & KMOD_CTRL)){
+		if(type->stackable && !(SDL_GetModState() & KMOD_CTRL) && (m_dragThingCount > 1)){
 			winMove.open(m_dragThingId, m_dragThingCount, m_dragPos, toPos, m_dragStackPos);
+			centerWindow(&winMove.window);
 		}
 		else{
 		    printf("m_dragPos: %d %d %d\n", m_dragPos.x, m_dragPos.y, m_dragPos.z);

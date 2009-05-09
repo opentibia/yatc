@@ -300,7 +300,7 @@ void GM_MainMenu::pnlMainMenu_btnOptions_OnClick(glictPos* relmousepos, glictCon
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winOptions.window.SetVisible(true);
-	m->winOptions.window.Focus(NULL);
+	m->winOptions.btnOk.Focus(NULL);
 }
 
 void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictContainer* callerclass)
