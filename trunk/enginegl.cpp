@@ -134,12 +134,12 @@ void EngineGL::drawRectangle(float x, float y, float width, float height, oRGBA 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-void EngineGL::drawRectangleLines(float x, float y, float width, float height, oRGBA color)
+void EngineGL::drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness /*= 1.f*/)
 {
     glDisable(GL_TEXTURE_2D);
 
 	glColor4f(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f);
-
+	//TODO (nfries88): implement thickness
 	glBegin(GL_LINE_LOOP);
 	glVertex2f(x,y);
 	glVertex2f(x+width,y);

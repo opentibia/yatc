@@ -38,7 +38,7 @@ class EngineGL : public Engine
 		void Flip(){SDL_GL_SwapBuffers();};
 		void doResize(int h, int w);
 		void drawRectangle(float x, float y, float width, float height, oRGBA color);
-		void drawRectangleLines(float x, float y, float width, float height, oRGBA color);
+		void drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness = 1.f);
 
 		virtual Sprite* createSprite(const std::string& filename, int index = 0)
 		{
