@@ -548,7 +548,14 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		break;
 	case 1: // do move or turn
 		if (!Creatures::getInstance().getPlayer()->isPreWalking()) {
-			Creatures::getInstance().getPlayer()->setLookDir(dir);
+			Direction lookdir = dir;
+			if(lookdir == DIRECTION_NW || lookdir == DIRECTION_SW) {
+				lookdir = DIRECTION_WEST;
+			}
+			if(lookdir == DIRECTION_NE || lookdir == DIRECTION_SE) {
+				lookdir = DIRECTION_EAST;
+			}
+			Creatures::getInstance().getPlayer()->setLookDir(lookdir);
 
 			if (key.mod & KMOD_CTRL)
 				m_protocol->sendTurn(dir);
