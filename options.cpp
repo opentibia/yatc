@@ -29,10 +29,10 @@ Options options;
 std::string hotkeystrs[36] =
 {
 	"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
-	"SHIFT + F1", "SHIFT + F2", "SHIFT + F3", "SHIFT + F4", "SHIFT + F5", "SHIFT + F6",
-		"SHIFT + F7", "SHIFT + F8", "SHIFT + F9", "SHIFT + F10", "SHIFT + F11", "SHIFT + F12",
-	"CTRL + F1", "CTRL + F2", "CTRL + F3", "CTRL + F4", "CTRL + F5", "CTRL + F6",
-		"CTRL + F7", "CTRL + F8", "CTRL + F9", "CTRL + F10", "CTRL + F11", "CTRL + F12"
+	"Shift+F1", "Shift+F2", "Shift+F3", "Shift+F4", "Shift+F5", "Shift+F6",
+		"Shift+F7", "Shift+F8", "Shift+F9", "Shift+F10", "Shift+F11", "Shift+F12",
+	"Control+F1", "Control+F2", "Control+F3", "Control+F4", "Control+F5", "Control+F6",
+		"Control+F7", "Control+F8", "Control+F9", "Control+F10", "Control+F11", "Control+F12"
 };
 
 Options::Options()
@@ -88,6 +88,12 @@ Options::Options()
 	for(int i = 0; i != 36; ++i)
 	{
 		hotkeys[i].isText = true;
+		hotkeys[i].text = "";
+		hotkeys[i].item.itemid = 0;
+		hotkeys[i].item.type = 0;
+		hotkeys[i].item.useOnSelf = false;
+		hotkeys[i].item.useOnTarget = false;
+		hotkeys[i].item.useXHairs = false;
 	}
 
 
@@ -229,20 +235,28 @@ void Options::Save()
 		if(i >= 12 && i < 24) hk << "_shift";
 		else if(i >= 24) hk << "_ctrl";
 
-		if(hotkeys[i].isText)
+		if(hotkeys[i].isText && hotkeys[i].text.length() != 0)
 		{
+			ss.str("");
 			ss << hotkeys[i].sendAuto << " " << hotkeys[i].text;
 			section->addKey(hk.str(), ss.str());
+
+			hk << "_istext";
+			ss.str("");
+			ss << hotkeys[i].isText;
+			section->addKey(hk.str(), ss.str());
 		}
-		else
-		{
-			ss << hotkeys[i].item.itemid << " " << hotkeys[i].item.type << " "
+		else if(hotkeys[i].item.itemid != 0) {
+			ss.str("");
+			ss << hotkeys[i].item.itemid << " " //<< hotkeys[i].item.type << " "
 				<< hotkeys[i].item.useOnSelf << " " << hotkeys[i].item.useOnTarget << " " << hotkeys[i].item.useXHairs;
+			section->addKey(hk.str(), ss.str());
+
+			hk << "_istext";
+			ss.str("");
+			ss << hotkeys[i].isText;
+			section->addKey(hk.str(), ss.str());
 		}
-		hk << "_istext";
-		ss.str("");
-		ss << hotkeys[i].isText;
-		section->addKey(hk.str(), ss.str());
 	}
 	ss.str("");
 
@@ -340,7 +354,7 @@ void Options::Load()
 			}
 			else
 			{
-				ss >> hotkeys[i].item.itemid >> hotkeys[i].item.type
+				ss >> hotkeys[i].item.itemid //>> hotkeys[i].item.type
 					>> hotkeys[i].item.useOnSelf >> hotkeys[i].item.useOnTarget >> hotkeys[i].item.useXHairs;
 			}
 		}

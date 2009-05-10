@@ -33,6 +33,8 @@
 #include "ui/uitrade.h"
 #include "ui/uioutfit.h"
 #include "ui/minimap.h"
+#include "ui/exitwarning.h"
+#include "ui/deathnotification.h"
 #include "stackpanel.h"
 #include "automap.h"
 #include "statusmsg.h"
@@ -56,6 +58,10 @@ public:
 	bool specKeyPress (const SDL_keysym& key);
 	void doResize(float w, float h);
 	void mouseEvent(SDL_Event& event);
+
+	void onExitAttempt();
+	void selectHotkeyObj();
+	void selectHotkeyObject(Item* item);
 
     // user interface reactions
     static void onSetOutfit(struct Popup::Item *parent);
@@ -81,11 +87,13 @@ public:
     void closeTradeWindow();
     void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
     void onTileUpdate(const Position& pos);
+    void openDeathWindow();
 
     void showTutorial(uint8_t id);
 
     bool isExtendedUsing() const { return (m_extendedThingId != 0); }
     bool isTrade() const { return (m_tradeItemId != 0); }
+    bool isSelectingHotkeyObject() const { return m_selectingHotkeyObject; }
 
 	bool isDragging() const {return m_dragging;}
 	void dismissDrag() {
@@ -156,6 +164,9 @@ private:
 
     winItemMove_t winMove;
 
+    exitWarning_t m_exitWarningWindow;
+    deathNotice_t m_deathNotice;
+
     /* END PRIMARY GUI */
 
 
@@ -181,6 +192,8 @@ private:
     Position m_dragPos;
     int m_dragStackPos;
 
+    bool m_selectingHotkeyObject;
+
     Automap m_automap;
 
 	ProtocolGame* m_protocol;
@@ -192,6 +205,7 @@ private:
 	friend class MapUI;
 	friend class winContainer_t;
 	friend class ItemPanel;
+	friend class exitWarning_t;
 
 	MapUI m_mapui;
 

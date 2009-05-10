@@ -254,6 +254,12 @@ bool GM_MainMenu::specKeyPress (const SDL_keysym& key)
 	return false;
 }
 
+void GM_MainMenu::onExitAttempt()
+{
+	// let our main loop handle this.
+	g_running = false;
+}
+
 
 void GM_MainMenu::MBOnDismiss(glictPos* pos, glictContainer* caller)
 {

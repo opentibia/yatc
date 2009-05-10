@@ -398,14 +398,13 @@ void winOptionsHotkeys_t::drawObject(glictRect *real, glictRect *clipped, glictC
 	winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
 	if(winHK->item)
 	{
-		winHK->item->Blit((int)real->left, (int)real->top);
+		winHK->item->Blit((int)real->left+6, (int)real->top+6);
 	}
 }
 
 void winOptionsHotkeys_t::onSelectObj(glictPos* pos, glictContainer *caller)
 {
-	// TODO(nfries88)
-	// implementation requires adding functions to GM_Gameworld
+	g_game->selectHotkeyObj();
 }
 
 void winOptionsHotkeys_t::onClearObj(glictPos* pos, glictContainer *caller)
@@ -415,21 +414,33 @@ void winOptionsHotkeys_t::onClearObj(glictPos* pos, glictContainer *caller)
 	if(!hk.isText)
 	{
 		hk.isText = true;
+		hk.text = "";
+		hk.item.itemid = 0;
+		hk.item.useOnSelf = false;
+		hk.item.useXHairs = false;
+		hk.item.useOnTarget = true;
+		winHK->btnUseSelf.SetHold(false);
+		winHK->btnUseCrosshair.SetHold(false);
+		winHK->btnUseTarget.SetHold(false);
+		winHK->UpdateHotkey();
+		winHK->CreateHotkey(winHK->currenthotkey);
 	}
 }
 
 void winOptionsHotkeys_t::onObjUse_Self(glictPos* pos, glictContainer *caller)
 {
-	// TODO(nfries88)
 	winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
 	Hotkey& hk = options.hotkeys[winHK->currenthotkey];
 	if(!hk.isText)
 	{
 		hk.item.useOnSelf = true;
-		winHK->btnUseSelf.SetHold(false);
+		hk.item.useXHairs = false;
+		hk.item.useOnTarget = false;
+		winHK->btnUseSelf.SetHold(true);
 		winHK->btnUseCrosshair.SetHold(false);
 		winHK->btnUseTarget.SetHold(false);
-		((glictButton*)caller)->SetHold(true);
+		winHK->UpdateHotkey();
+		winHK->CreateHotkey(winHK->currenthotkey);
 	}
 }
 
@@ -439,11 +450,14 @@ void winOptionsHotkeys_t::onObjUse_Target(glictPos* pos, glictContainer *caller)
 	Hotkey& hk = options.hotkeys[winHK->currenthotkey];
 	if(!hk.isText)
 	{
+		hk.item.useOnSelf = false;
+		hk.item.useXHairs = false;
 		hk.item.useOnTarget = true;
 		winHK->btnUseSelf.SetHold(false);
 		winHK->btnUseCrosshair.SetHold(false);
-		winHK->btnUseTarget.SetHold(false);
-		((glictButton*)caller)->SetHold(true);
+		winHK->btnUseTarget.SetHold(true);
+		winHK->UpdateHotkey();
+		winHK->CreateHotkey(winHK->currenthotkey);
 	}
 }
 
@@ -453,10 +467,13 @@ void winOptionsHotkeys_t::onObjUse_Crosshair(glictPos* pos, glictContainer *call
 	Hotkey& hk = options.hotkeys[winHK->currenthotkey];
 	if(!hk.isText)
 	{
+		hk.item.useOnSelf = false;
 		hk.item.useXHairs = true;
+		hk.item.useOnTarget = false;
 		winHK->btnUseSelf.SetHold(false);
-		winHK->btnUseCrosshair.SetHold(false);
+		winHK->btnUseCrosshair.SetHold(true);
 		winHK->btnUseTarget.SetHold(false);
-		((glictButton*)caller)->SetHold(true);
+		winHK->UpdateHotkey();
+		winHK->CreateHotkey(winHK->currenthotkey);
 	}
 }

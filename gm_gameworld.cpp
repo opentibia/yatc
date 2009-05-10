@@ -45,6 +45,8 @@
 #define time _time64
 #endif
 
+extern bool g_running;
+
 extern Connection* g_connection;
 extern uint32_t g_frameTime;
 int g_lastmousebutton=SDL_BUTTON_LEFT;
@@ -54,6 +56,28 @@ void resetDefaultCursor();
 
 //void tmp(){((GM_Gameworld*)g_game)->msgBox("You made a choice", "Wat?");}
 
+void exitWarning_t::btnLogout_onClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
+	exitWarning_t* exitwarn = ((exitWarning_t*)callerclass->GetCustomData());
+	exitwarn->window.SetVisible(false);
+
+    gameclass->getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Logging out...", TEXTCOLOR_WHITE));
+	gameclass->m_protocol->sendLogout();
+}
+
+void exitWarning_t::btnExit_onClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	g_running = false;
+}
+
+void deathNotice_t::btnOk_onClick(glictPos* relmousepos, glictContainer* callerclass)
+{
+	// todo (nfries88): return to GM_MainMenu with charlist up
+	deathNotice_t* deathnote = ((deathNotice_t*)callerclass->GetCustomData());
+	deathnote->window.SetVisible(false);
+}
 
 void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
 {
@@ -121,6 +145,11 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	pnlTraffic.SetDraggable(true);
     pnlTraffic.SetFocusable(true);
     #endif
+
+    desktop.AddObject(&m_exitWarningWindow.window);
+    m_exitWarningWindow.window.SetVisible(false);
+    desktop.AddObject(&m_deathNotice.window);
+    m_deathNotice.window.SetVisible(false);
 
     // now let's get crackin
 
@@ -291,7 +320,6 @@ void GM_Gameworld::updateScene()
 	#endif
 
 	m_mapui.renderMap();
-	//m_automap.renderSelf(options.w-128 -170, 0, 128,128, GlobalVariables::getPlayerPosition());
 
 	if (time(NULL)-m_startTime) {
 		double txbph, rxbph, trbph;
@@ -586,9 +614,30 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 			else
 				txtConsoleEntry.SetCaption("");
 		}
-		else
+		else if(hk.item.itemid >= 100)
 		{
-			// TODO (nfries88): item hotkeys
+			// NOTE (nfries88): Not sure whether or not a stackpos is needed.
+			Position hotkeyPos(0xFFFF, 0, 0);
+			Item* item = Item::CreateItem(hk.item.itemid, 1);
+			if(item->isExtendedUseable() && hk.item.useXHairs)
+			{
+				beginExtendedUse(item, 0, hotkeyPos);
+			}
+			else if(item->isExtendedUseable())
+			{
+				if(hk.item.useOnSelf)
+				{
+					m_protocol->sendUseBattleWindow(hotkeyPos, hk.item.itemid, GlobalVariables::getPlayerID(), 0);
+				}
+				else if(hk.item.useOnTarget)
+				{
+					m_protocol->sendUseBattleWindow(hotkeyPos, hk.item.itemid, GlobalVariables::getAttackID(), 0);
+				}
+			}
+			else
+			{
+				m_protocol->sendUseItem(hotkeyPos, hk.item.itemid, 0);
+			}
 		}
 		break;
 	}
@@ -597,6 +646,43 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		getDefaultConsole()->insertEntry(std::string("No debugging action"));
 	}
 	return ret;
+}
+
+void GM_Gameworld::onExitAttempt()
+{
+	m_exitWarningWindow.window.SetVisible(true);
+	centerWindow(&m_exitWarningWindow.window);
+}
+
+void GM_Gameworld::selectHotkeyObj()
+{
+	m_selectingHotkeyObject = true;
+	SDL_SetCursor(g_engine->m_cursorUse);
+}
+
+void GM_Gameworld::selectHotkeyObject(Item* item)
+{
+	if(true)//item->getObjectType()->pickupable)
+	{
+		int hkid = winOptions.winOptionsHotkeys.currenthotkey;
+		Hotkey& hk = options.hotkeys[hkid];
+		if(hkid >= 0 && hkid < 36)
+		{
+			hk.isText = false;
+			hk.item.itemid = item->getID();
+			if(item->isFluidContainer())
+				hk.item.type = item->getCount();
+			// set default operation if necessary
+			if(!hk.item.useXHairs && !hk.item.useOnSelf && !hk.item.useOnTarget)
+				hk.item.useXHairs = true;
+			winOptions.winOptionsHotkeys.CreateHotkey(hkid);
+			winOptions.winOptionsHotkeys.UpdateHotkey();
+		}
+	}
+	else
+	{
+	}
+	SDL_SetCursor(g_engine->m_cursorBasic);
 }
 
 void GM_Gameworld::actionLook(const glictPos& pos)
@@ -887,7 +973,7 @@ void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
 
 	case MSG_INFO_DESCR:
 		getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_LIGHTGREEN));
-		m_lookatStatMsg = StatusMsg(TEXTCOLOR_LIGHTGREEN, message, 3, 0, -30);
+		m_lookatStatMsg = StatusMsg(TEXTCOLOR_LIGHTGREEN, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
 		break;
     case MSG_EVENT_ADVANCE:
     case MSG_EVENT_DEFAULT:
@@ -1175,8 +1261,11 @@ void GM_Gameworld::showTutorial(uint8_t id) {
         this->msgBox(UITutorialHints::getInstance().getTutorialHint(id).c_str(), gettext("Tutorial Hint"));
 }
 
-
-
+void GM_Gameworld::openDeathWindow()
+{
+	m_deathNotice.window.SetVisible(true);
+	centerWindow(&m_deathNotice.window);
+}
 
 void GM_Gameworld::onSetOutfit(Popup::Item *parent) {
     // happens when user clicks on "Set Outfit" in right click popup menu

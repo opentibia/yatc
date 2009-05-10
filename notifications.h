@@ -78,7 +78,7 @@ class Notifications{
 		//open item text window
 		static void openItemText(int windowId, int itemid, int maxTextLenght,
 			const std::string& text, const std::string& lastChange,
-			const std::string& lastChangeDate){}
+			const std::string& lastChangeDate);
 
 		//open trade window
 		static void openTradeWindow(bool ack);
@@ -95,7 +95,7 @@ class Notifications{
 		static void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
 
 		//open relogin window
-		static void openRelogin(){}
+		static void openRelogin();
 
 		//open/close container
 		static void openContainer(int cid);

@@ -66,7 +66,7 @@ MapUI::~MapUI()
 
 void MapUI::renderMap()
 {
-
+	//TODO: center game area horizontally (cipsoft's client does this)
 	// FIXME (ivucica#2#) make renderMap use m_x,m_y and m_w,m_h
 
 
