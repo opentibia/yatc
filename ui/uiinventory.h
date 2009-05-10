@@ -51,12 +51,10 @@ public:
 #else
 	glictWindow panel __attribute__((deprecated));
 #endif
-	glictButton btnLogout;
 	glictButton btnOptions;
 
 	ItemPanel* pnlItem[10];
 
-	static void onClick_Logout(glictPos* relmousepos, glictContainer* callerclass);
 	static void onClick_Options(glictPos* relmousepos, glictContainer* callerclass);
 };
 

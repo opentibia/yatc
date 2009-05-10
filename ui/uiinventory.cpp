@@ -58,22 +58,13 @@ pnlInventory_t::pnlInventory_t()
 		panel.SetCaption(gettext("Inventory"));
 	#endif
 
-	// FIXME (nfries88): Pressing buttons in the options window has no effect.
 	panel.AddObject(&btnOptions);
 	btnOptions.SetCaption(gettext("Options"));
 	btnOptions.SetWidth(50);
 	btnOptions.SetHeight(20);
-	btnOptions.SetPos(120, 102);
+	btnOptions.SetPos(120, 126);
 	btnOptions.SetFont("minifont");
 	btnOptions.SetOnClick(&pnlInventory_t::onClick_Options);
-
-	panel.AddObject(&btnLogout);
-	btnLogout.SetCaption(gettext("Logout"));
-	btnLogout.SetWidth(50);
-	btnLogout.SetHeight(20);
-	btnLogout.SetPos(120, 126);
-	btnLogout.SetFont("minifont");
-	btnLogout.SetOnClick(&pnlInventory_t::onClick_Logout);
 
 
 	for (int i = 0; i < 10; i++) {
