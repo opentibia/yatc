@@ -129,7 +129,7 @@ public:
 		pnlObjView.SetOnPaint(&winOptionsHotkeys_t::drawObject);
 		//pnlObjView.SetBGActiveness(false);
 		pnlObjView.SetBGColor(.1,.1,.1,1);
-		pnlObjView.SetSkin(&g_skin.inv);
+		pnlObjView.SetSkin(&g_skin.txt);
 
 		window.AddObject(&btnSelectObj);
 		btnSelectObj.SetPos(82, 258);
@@ -256,18 +256,18 @@ public:
 		}
 		else if(options.hotkeys[hkid].item.useOnSelf)
 		{
-			lsiHotkeys[hkid].SetCaptionColor(0.4f, 0.95f, 0.f);
+			lsiHotkeys[hkid].SetCaptionColor(0.0f, 0.95f, 0.4f);
 			ss << "(use object on yourself)";
 		}
 		else if(options.hotkeys[hkid].item.useOnTarget)
 		{
-			lsiHotkeys[hkid].SetCaptionColor(0.9f, 0.1f, 0.2f);
+			lsiHotkeys[hkid].SetCaptionColor(0.1f, 0.2f, 0.9f);
 			ss << "(use object on target)";
 		}
 		else if(options.hotkeys[hkid].item.useXHairs)
 		{
-			lsiHotkeys[hkid].SetCaptionColor(0.7f, 0.2f, 0.2f);
-			ss << "(use object on target)";
+			lsiHotkeys[hkid].SetCaptionColor(0.2f, 0.2f, 0.7f);
+			ss << "(use object with crosshairs)";
 		}
 		lsiHotkeys[hkid].SetCaption(ss.str());
 	}
@@ -282,6 +282,49 @@ public:
 		options.Save();
 	}
 
+	void UpdateHotkey()
+	{
+		Hotkey& hotkey = options.hotkeys[currenthotkey];
+		if(!hotkey.isText)
+		{
+			hotkey.text = "";
+
+			item = Item::CreateItem(hotkey.item.itemid, hotkey.item.type);
+			txtText.SetCaption("");
+			chkSendAuto.SetValue(false);
+
+			btnUseSelf.SetHold(false);
+			btnUseTarget.SetHold(false);
+			btnUseCrosshair.SetHold(false);
+
+			if(hotkey.item.useOnSelf)
+			{
+				btnUseSelf.SetHold(true);
+			}
+			if(hotkey.item.useOnTarget)
+			{
+				btnUseTarget.SetHold(true);
+			}
+			if(hotkey.item.useXHairs)
+			{
+				btnUseCrosshair.SetHold(true);
+			}
+		}
+		else
+		{
+			if(hotkey.text.length()) {
+				txtText.SetCaption(hotkey.text);
+				chkSendAuto.SetValue(hotkey.sendAuto);
+			}
+			else
+			{
+				txtText.SetCaption("");
+				chkSendAuto.SetValue(false);
+			}
+			hotkey.item.itemid = 0;
+		}
+	}
+
 	static void onHotkey(glictPos* pos, glictContainer *caller)
 	{
 		winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
@@ -294,27 +337,10 @@ public:
 				winHK->item = NULL;
 			}
 		}
-		else if(winHK->currenthotkey >= 36)
-			NativeGUIError("INVALID HOTKEY", "WTF");
+
 		// set hotkey data to this hotkey
 		winHK->currenthotkey = (glictPanel*)caller - winHK->lsiHotkeys;
-		Hotkey& hotkey = options.hotkeys[winHK->currenthotkey];
-		if(!hotkey.isText)
-		{
-			winHK->item = Item::CreateItem(hotkey.item.itemid, hotkey.item.type);
-		}
-		else
-		{
-			if(hotkey.text.length()) {
-				winHK->txtText.SetCaption(hotkey.text);
-				winHK->chkSendAuto.SetValue(hotkey.sendAuto);
-			}
-			else
-			{
-				winHK->txtText.SetCaption("");
-				winHK->chkSendAuto.SetValue(false);
-			}
-		}
+		winHK->UpdateHotkey();
 		((glictPanel*)caller)->SetBGActiveness(true);
 	}
 

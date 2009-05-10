@@ -63,6 +63,8 @@ public:
 	virtual void keyPress (char key) {}
 	virtual bool specKeyPress (const SDL_keysym&) { return false;}
 	virtual void doResize(float w, float h) {}
+	virtual void onExitAttempt() {}
+	virtual void selectHotkeyObj() {}
 
 
 	virtual winOptions_t* getOptionsWindow() { return NULL; }
@@ -102,10 +104,16 @@ public:
     virtual void openTradeWindow(bool ack){};
     virtual void closeTradeWindow(){};
 
+    virtual void onOpenItemText(int windowId, int itemid, int maxTextLenght,
+		const std::string& text, const std::string& lastChange,
+		const std::string& lastChangeDate){}
+
     virtual void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available) {}
 
 
     virtual void showTutorial(uint8_t id) {}
+
+    virtual void openDeathWindow() {}
 
     virtual void onTileUpdate(const Position& pos) {}
 

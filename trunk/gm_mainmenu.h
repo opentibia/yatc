@@ -48,6 +48,7 @@ public:
 	void mouseEvent (SDL_Event&);
 	void keyPress (char key);
 	bool specKeyPress (const SDL_keysym& key);
+	void onExitAttempt();
 
 	void doResize(float w, float h);
 
@@ -55,6 +56,7 @@ public:
 	void openMessageWindow(WindowMessage_t type, const std::string& message);
 	void openMOTD(int motdnum, const std::string& message);
 	void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
+
 
 	void onEnterGame();
 

@@ -92,6 +92,7 @@ public:
 		pnlSep.SetPos(10, 80);
 		pnlSep.SetWidth(210);
 		pnlSep.SetHeight(2);
+		pnlSep.SetSkin(&g_skin.txt);
 
 		window.AddObject(&btnOk);
 		btnOk.SetPos(123, 89);

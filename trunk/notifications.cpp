@@ -274,3 +274,16 @@ void Notifications::onTileUpdate(const Position& pos)
 {
     g_game->onTileUpdate(pos);
 }
+
+void Notifications::openItemText(int windowId, int itemid, int maxTextLenght,
+	const std::string& text, const std::string& lastChange,
+	const std::string& lastChangeDate)
+{
+	// TODO
+	g_game->onOpenItemText(windowId, itemid, maxTextLenght, text, lastChange, lastChangeDate);
+}
+
+void Notifications::openRelogin()
+{
+	g_game->openDeathWindow();
+}

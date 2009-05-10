@@ -508,9 +508,7 @@ int main(int argc, char *argv[])
 						break;
 
 					case SDL_QUIT:
-						//TODO (nfries88): Tell the gamemode this happens and let it decide how to handle it.
-						//IE, g_running = g_game->onExitAttempt();
-						g_running = false;
+						g_game->onExitAttempt();
 						break;
 
 					case SDL_KEYUP:

@@ -57,7 +57,7 @@ public:
 		pnlMap.SetHeight(108);
 		pnlMap.SetCaption("");
 		pnlMap.SetBGColor(.1,.1,.1,1);
-		pnlMap.SetSkin(&g_skin.inv);
+		pnlMap.SetSkin(&g_skin.txt);
 		pnlMap.SetCustomData(map);
 		pnlMap.SetOnPaint(&pnlMap_t::paintMap);
 

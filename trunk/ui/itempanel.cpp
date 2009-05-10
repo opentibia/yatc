@@ -85,6 +85,10 @@ void ItemPanel::itemPanelOnClick(glictPos* relmousepos, glictContainer* callercl
 		if(gameclass->isExtendedUsing()){
 			gameclass->performExtendedUse(_this->m_pos, item, 0);
 		}
+		else if(gameclass->isSelectingHotkeyObject())
+		{
+			gameclass->selectHotkeyObject(item);
+		}
 		else{
 			if(SDL_GetModState() & KMOD_SHIFT){
 				gameclass->m_protocol->sendLookItem(_this->m_pos, item->getID(), 0);
