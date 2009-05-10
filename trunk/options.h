@@ -30,6 +30,22 @@ enum enginelist_t {
 	ENGINE_DIRECTX = 2
 };
 
+extern std::string hotkeystrs[36];
+
+struct Hotkey
+{
+	bool isText;
+	bool sendAuto;
+	std::string text;
+	struct {
+		uint16_t itemid;
+		uint8_t type;
+		bool useOnSelf;
+		bool useOnTarget;
+		bool useXHairs;
+	} item;
+};
+
 class Options
 {
 public:
@@ -82,9 +98,8 @@ public:
 
     int overrideversion;
 
-
-
-
+	// [hotkeys]
+	Hotkey hotkeys[36];
 };
 
 

@@ -160,6 +160,21 @@ void ConfigHandler::readKey(const char* buffer, int currentSection)
 	}
 }
 
+bool ConfigHandler::keyExists(const std::string section, const std::string keyname)
+{
+	for(SectionVector::iterator it = sections.begin(); it != sections.end(); it++){
+		if((*it)->name == section){
+			for(KeyVector::iterator cit = (*it)->keys.begin(); cit != (*it)->keys.end(); cit++){
+				if((*cit)->name == keyname)
+					return true;
+			}
+		}
+	}
+
+
+	return false;
+}
+
 std::string ConfigHandler::getKeyValue(const std::string section, const std::string keyname)
 {
 	for(SectionVector::iterator it = sections.begin(); it != sections.end(); it++){

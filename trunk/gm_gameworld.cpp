@@ -533,8 +533,9 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
         g_game = new GM_MainMenu;
         ret = true;
 		break;
-	case SDLK_F11:
-		action = 255;
+	case SDLK_F1: case SDLK_F2: case SDLK_F3: case SDLK_F4: case SDLK_F5: case SDLK_F6:
+	case SDLK_F7: case SDLK_F8: case SDLK_F9: case SDLK_F10: case SDLK_F11: case SDLK_F12:
+		action = 2;
 		ret = true;
 		break;
 	default:
@@ -566,7 +567,31 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 
 		}
 		break;
+	case 2: // hotkeys
+	{
+		//NOTE (nfries88) IDK if key-SDLK_F1 works like i think it will in all cases... hoping it will :P
+		int hkkey = key.sym - SDLK_F1;
+		if(key.mod & KMOD_SHIFT) hkkey += 12;
+		else if(key.mod & KMOD_CTRL) hkkey += 24;
+		Hotkey hk = options.hotkeys[hkkey];
 
+		if(hk.isText)
+		{
+			if(hk.text.length())
+			{
+				txtConsoleEntry.SetCaption(hk.text);
+				if(hk.sendAuto)
+					keyPress(13); // let keypress() take care of all the dirty work ;)
+			}
+			else
+				txtConsoleEntry.SetCaption("");
+		}
+		else
+		{
+			// TODO (nfries88): item hotkeys
+		}
+		break;
+	}
 	case 255: // debugging action
 		// FIXME (ivucica#1#) debugging action, just for testing (ctrl+a)
 		getDefaultConsole()->insertEntry(std::string("No debugging action"));

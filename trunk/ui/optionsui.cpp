@@ -395,29 +395,68 @@ void winOptions_t::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, gl
 void winOptionsHotkeys_t::drawObject(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
 	// TODO(nfries88)
+	winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
+	if(winHK->item)
+	{
+		winHK->item->Blit((int)real->left, (int)real->top);
+	}
 }
 
 void winOptionsHotkeys_t::onSelectObj(glictPos* pos, glictContainer *caller)
 {
 	// TODO(nfries88)
+	// implementation requires adding functions to GM_Gameworld
 }
 
 void winOptionsHotkeys_t::onClearObj(glictPos* pos, glictContainer *caller)
 {
-	// TODO(nfries88)
+	winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
+	Hotkey& hk = options.hotkeys[winHK->currenthotkey];
+	if(!hk.isText)
+	{
+		hk.isText = true;
+	}
 }
 
 void winOptionsHotkeys_t::onObjUse_Self(glictPos* pos, glictContainer *caller)
 {
 	// TODO(nfries88)
+	winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
+	Hotkey& hk = options.hotkeys[winHK->currenthotkey];
+	if(!hk.isText)
+	{
+		hk.item.useOnSelf = true;
+		winHK->btnUseSelf.SetHold(false);
+		winHK->btnUseCrosshair.SetHold(false);
+		winHK->btnUseTarget.SetHold(false);
+		((glictButton*)caller)->SetHold(true);
+	}
 }
 
 void winOptionsHotkeys_t::onObjUse_Target(glictPos* pos, glictContainer *caller)
 {
-	// TODO(nfries88)
+	winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
+	Hotkey& hk = options.hotkeys[winHK->currenthotkey];
+	if(!hk.isText)
+	{
+		hk.item.useOnTarget = true;
+		winHK->btnUseSelf.SetHold(false);
+		winHK->btnUseCrosshair.SetHold(false);
+		winHK->btnUseTarget.SetHold(false);
+		((glictButton*)caller)->SetHold(true);
+	}
 }
 
 void winOptionsHotkeys_t::onObjUse_Crosshair(glictPos* pos, glictContainer *caller)
 {
-	// TODO(nfries88)
+	winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
+	Hotkey& hk = options.hotkeys[winHK->currenthotkey];
+	if(!hk.isText)
+	{
+		hk.item.useXHairs = true;
+		winHK->btnUseSelf.SetHold(false);
+		winHK->btnUseCrosshair.SetHold(false);
+		winHK->btnUseTarget.SetHold(false);
+		((glictButton*)caller)->SetHold(true);
+	}
 }
