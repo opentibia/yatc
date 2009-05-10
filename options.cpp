@@ -26,6 +26,15 @@
 #include "util.h"
 Options options;
 
+std::string hotkeystrs[36] =
+{
+	"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
+	"SHIFT + F1", "SHIFT + F2", "SHIFT + F3", "SHIFT + F4", "SHIFT + F5", "SHIFT + F6",
+		"SHIFT + F7", "SHIFT + F8", "SHIFT + F9", "SHIFT + F10", "SHIFT + F11", "SHIFT + F12",
+	"CTRL + F1", "CTRL + F2", "CTRL + F3", "CTRL + F4", "CTRL + F5", "CTRL + F6",
+		"CTRL + F7", "CTRL + F8", "CTRL + F9", "CTRL + F10", "CTRL + F11", "CTRL + F12"
+};
+
 Options::Options()
 {
 	configHandler = new ConfigHandler();
@@ -76,6 +85,10 @@ Options::Options()
 	protocol = CLIENT_VERSION_AUTO;
 	overrideversion = 0;
 
+	for(int i = 0; i != 36; ++i)
+	{
+		hotkeys[i].isText = true;
+	}
 
 
 #ifdef WINCE
@@ -207,6 +220,32 @@ void Options::Save()
 	section->addKey("overrideversion", ss.str());
 	ss.str("");
 
+	// [hotkeys]
+	section = configHandler->newSection("hotkeys");
+	for(int i = 0; i != 36; ++i)
+	{
+		std::stringstream hk;
+		hk << "f" << (i % 12)+1;
+		if(i >= 12 && i < 24) hk << "_shift";
+		else if(i >= 24) hk << "_ctrl";
+
+		if(hotkeys[i].isText)
+		{
+			ss << hotkeys[i].sendAuto << " " << hotkeys[i].text;
+			section->addKey(hk.str(), ss.str());
+		}
+		else
+		{
+			ss << hotkeys[i].item.itemid << " " << hotkeys[i].item.type << " "
+				<< hotkeys[i].item.useOnSelf << " " << hotkeys[i].item.useOnTarget << " " << hotkeys[i].item.useXHairs;
+		}
+		hk << "_istext";
+		ss.str("");
+		ss << hotkeys[i].isText;
+		section->addKey(hk.str(), ss.str());
+	}
+	ss.str("");
+
 	configHandler->saveConfig("yatc.cfg");
 }
 
@@ -277,6 +316,35 @@ void Options::Load()
     protocol_int = atoi(configHandler->getKeyValue("network", "protocol").c_str());
     overrideversion = atoi(configHandler->getKeyValue("network", "overrideversion").c_str());
 
+    // [hotkeys]
+	for(int i = 0; i != 36; ++i)
+	{
+		std::stringstream hk;
+		hk << "f" << (i % 12)+1;
+		if(i >= 12 && i < 24) hk << "_shift";
+		else if(i >= 24) hk << "_ctrl";
+
+		std::stringstream hk2;
+		hk2 << hk.str() << "_istext";
+		if(configHandler->keyExists("hotkeys", hk2.str()))
+			hotkeys[i].isText = (atoi(configHandler->getKeyValue("hotkeys", hk2.str()).c_str()) == 1);
+
+		if(configHandler->keyExists("hotkeys", hk.str()))
+		{
+			std::stringstream ss;
+			ss.str(configHandler->getKeyValue("hotkeys", hk.str()));
+			if(hotkeys[i].isText)
+			{
+				ss >> hotkeys[i].sendAuto;
+				hotkeys[i].text = ss.str().substr(2);
+			}
+			else
+			{
+				ss >> hotkeys[i].item.itemid >> hotkeys[i].item.type
+					>> hotkeys[i].item.useOnSelf >> hotkeys[i].item.useOnTarget >> hotkeys[i].item.useXHairs;
+			}
+		}
+	}
 
     // further parsing of some options
     // [network]
