@@ -100,6 +100,11 @@ public:
 
 	// [hotkeys]
 	Hotkey hotkeys[36];
+
+	// [game]
+	int battlemode;
+	int chasemode;
+	bool safemode;
 };
 
 

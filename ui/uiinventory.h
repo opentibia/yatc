@@ -38,6 +38,7 @@
 
 #include "../popup.h"
 #include "itempanel.h"
+#include "../choicegrid.h"
 
 class pnlInventory_t {
 public:
@@ -57,12 +58,23 @@ public:
 	glictPanel pnlCap;
 	glictPanel pnlIcons;
 
+	ChoiceGrid::Item* battleModes[3];
+	ChoiceGrid::Item* chaseModes[2];
+
+	ChoiceGrid chcBattleMode;
+	ChoiceGrid chcChase;
+	glictButton btnSafeMode;
+
 	ItemPanel* pnlItem[10];
 
 	static void onClick_Options(glictPos* relmousepos, glictContainer* callerclass);
 	static void paintCap(glictRect *real, glictRect *clipped, glictContainer *caller);
 	static void paintSoul(glictRect *real, glictRect *clipped, glictContainer *caller);
 	static void paintIcons(glictRect *real, glictRect *clipped, glictContainer *caller);
+
+	static void onSetFightModes(ChoiceGrid::Item *parent, ChoiceGrid::Item *olditem);
+	static void onSetChase(ChoiceGrid::Item *parent, ChoiceGrid::Item *olditem);
+	static void onSetSafeMode(glictPos* relmousepos, glictContainer* callerclass);
 };
 
 

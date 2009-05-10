@@ -96,6 +96,10 @@ Options::Options()
 		hotkeys[i].item.useXHairs = false;
 	}
 
+	battlemode = 1;
+	chasemode = 0;
+	safemode = 0;
+
 
 #ifdef WINCE
 	w = 240;
@@ -260,6 +264,18 @@ void Options::Save()
 	}
 	ss.str("");
 
+	section = configHandler->newSection("game");
+	ss << battlemode;
+	section->addKey("battlemode", ss.str());
+	ss.str("");
+	ss << chasemode;
+	section->addKey("chasemode", ss.str());
+	ss.str("");
+	ss << safemode;
+	section->addKey("safemode", ss.str());
+	ss.str("");
+
+
 	configHandler->saveConfig("yatc.cfg");
 }
 
@@ -401,6 +417,12 @@ void Options::Load()
             protocol = CLIENT_VERSION_842;
             break;
     }
+
+	battlemode = atoi(configHandler->getKeyValue("game", "battlemode").c_str());
+	chasemode = atoi(configHandler->getKeyValue("game", "chasemode").c_str());
+	safemode = (atoi(configHandler->getKeyValue("safemode", "chasemode").c_str()) != 0);
+	if(battlemode > 3 || battlemode <= 0) battlemode = 1;
+	if(chasemode > 1 || chasemode < 0) chasemode = 0;
 
 	configHandler->clear();
 }

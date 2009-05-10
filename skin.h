@@ -6,7 +6,40 @@
 #include "sprite.h"
 #include "engine.h"
 
+// NOTE (nfries88): Since khaos is loading all buttons into an array, let's give those buttons an ID.
+#define BUTTON_IND_INV 0
 
+#define BUTTON_IND_CONSOLE BUTTON_OPTIONSMINI
+enum button_id_t
+{
+// 20x20 buttons
+	BUTTON_ZOOMIN = BUTTON_IND_INV+0,
+	BUTTON_ZOOMOUT = BUTTON_IND_INV+1,
+	BUTTON_ARROWUP = BUTTON_IND_INV+2,
+	BUTTON_ARROWDOWN = BUTTON_IND_INV+3,
+	BUTTON_FULLATK = BUTTON_IND_INV+4,
+	BUTTON_BALANCED = BUTTON_IND_INV+5,
+	BUTTON_FULLDEF = BUTTON_IND_INV+6,
+	BUTTON_NOCHASE = BUTTON_IND_INV+7,
+	BUTTON_CHASE = BUTTON_IND_INV+8,
+	BUTTON_SAFEMODE = BUTTON_IND_INV+9,
+	BUTTON_HELPMINI = BUTTON_IND_INV+10,
+	BUTTON_OPTIONSMINI = BUTTON_IND_INV+11,
+// 16x16 buttons
+	BUTTON_CONSOLE_CLOSE = BUTTON_IND_CONSOLE+0,
+	BUTTON_CONSOLE_CHANNELS = BUTTON_IND_CONSOLE+1,
+	BUTTON_QUESTIONMARK = BUTTON_IND_CONSOLE+2,
+	BUTTON_CONSOLE_M = BUTTON_IND_CONSOLE+3, // note(nfries88): no clue what this does. :|
+	BUTTON_BLANK = BUTTON_IND_CONSOLE+4,
+	BUTTON_CONSOLE_IGNORELIST = BUTTON_IND_CONSOLE+5,
+	BUTTON_CONSOLE_YELL = BUTTON_IND_CONSOLE+6,
+	BUTTON_CONSOLE_SPEAK = BUTTON_IND_CONSOLE+7,
+	BUTTON_CONSOLE_WHISPER = BUTTON_IND_CONSOLE+8,
+
+
+	// last button, must always be last
+	BUTTON_LASTID
+};
 
 class skinImage : public glictImage {
 public:
@@ -67,13 +100,13 @@ private:
 	skinImage *consoletabactivetl, *consoletabactivet, *consoletabactivetr, *consoletabactivel, *consoletabactivec, *consoletabactiver, *consoletabactivebl, *consoletabactiveb, *consoletabactivebr; // console button active bg
 	skinImage *consoletabpassivetl, *consoletabpassivet, *consoletabpassivetr, *consoletabpassivel, *consoletabpassivec, *consoletabpassiver, *consoletabpassivebl, *consoletabpassiveb, *consoletabpassivebr; // console button passive bg
 	skinImage *compasstl, *compasst, *compasstr, *compassl, *compassc, *compassr, *compassbl, *compassb, *compassbr; // minimap compass
-	skinImage *graphicbtntl[11], *graphicbtnt[11], *graphicbtntr[11], *graphicbtnl[11], *graphicbtnc[11], *graphicbtnr[11], *graphicbtnbl[11], *graphicbtnb[11], *graphicbtnbr[11]; // various graphic buttons
-	skinImage *graphicbthtl[11], *graphicbtht[11], *graphicbthtr[11], *graphicbthl[11], *graphicbthc[11], *graphicbthr[11], *graphicbthbl[11], *graphicbthb[11], *graphicbthbr[11]; // various graphic buttons, highlighted
+	skinImage *graphicbtntl[BUTTON_LASTID], *graphicbtnt[BUTTON_LASTID], *graphicbtntr[BUTTON_LASTID], *graphicbtnl[BUTTON_LASTID], *graphicbtnc[BUTTON_LASTID], *graphicbtnr[BUTTON_LASTID], *graphicbtnbl[BUTTON_LASTID], *graphicbtnb[BUTTON_LASTID], *graphicbtnbr[BUTTON_LASTID]; // various graphic buttons
+	skinImage *graphicbthtl[BUTTON_LASTID], *graphicbtht[BUTTON_LASTID], *graphicbthtr[BUTTON_LASTID], *graphicbthl[BUTTON_LASTID], *graphicbthc[BUTTON_LASTID], *graphicbthr[BUTTON_LASTID], *graphicbthbl[BUTTON_LASTID], *graphicbthb[BUTTON_LASTID], *graphicbthbr[BUTTON_LASTID]; // various graphic buttons, highlighted
 
 	skinImage *backgroundtl, *backgroundt, *backgroundtr, *backgroundl, *backgroundc, *backgroundr, *backgroundbl, *backgroundb, *backgroundbr; // general background
 
 public:
-	glictSkinner chk, tmm, inv, consoletabbg, consoletabactive, consoletabpassive, compass, background, graphicbtn[11], graphicbth[11];
+	glictSkinner chk, tmm, inv, consoletabbg, consoletabactive, consoletabpassive, compass, background, graphicbtn[BUTTON_LASTID], graphicbth[BUTTON_LASTID];
 	glictSkinner txt;
 
 	friend class skinImage;

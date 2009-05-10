@@ -147,6 +147,9 @@ private:
     /* PRIMARY GUI */
 	glictPanel pnlRightSide;
 	yatcStackPanel yspRightSide;
+	// note(nfries88): The official client doesn't allow dragging right-side windows over the moveable panels.
+	// we're replicating that behavior.
+	yatcStackPanel yspRightSideWindows;
 
 	pnlInventory_t pnlInventory;
 	pnlHealth_t pnlHealth;

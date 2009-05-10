@@ -561,13 +561,49 @@ void Skin::loadSkin() {
     compass.SetBottom	(compassb  = NULL);
     compass.SetBR		(compassbr = NULL);
 
-    for (int i = 0; i < 11; i++)
+	// some random buttons, many of them go on the inventory panel in-game
+    for (int i = BUTTON_ZOOMIN; i <= BUTTON_HELPMINI; i++)
+    {
+        graphicbtn[i].SetTL			(graphicbtntl[i] = NULL);
+        graphicbtn[i].SetTop		(graphicbtnt [i] = NULL);
+        graphicbtn[i].SetTR			(graphicbtntr[i] = NULL);
+        graphicbtn[i].SetLeft		(graphicbtnl [i] = NULL);
+        graphicbtn[i].SetCenter		(graphicbtnc [i] = new skinImage(2 + 20*i, 98, 20, 20));
+        graphicbtn[i].SetRight		(graphicbtnr [i] = NULL);
+        graphicbtn[i].SetBL			(graphicbtnbl[i] = NULL);
+        graphicbtn[i].SetBottom		(graphicbtnb [i] = NULL);
+        graphicbtn[i].SetBR			(graphicbtnbr[i] = NULL);
+
+        graphicbth[i].SetTL			(graphicbthtl[i] = NULL);
+        graphicbth[i].SetTop		(graphicbtht [i] = NULL);
+        graphicbth[i].SetTR			(graphicbthtr[i] = NULL);
+        graphicbth[i].SetLeft		(graphicbthl [i] = NULL);
+        graphicbth[i].SetCenter		(graphicbthc [i] = new skinImage(2 + 20*i, 98+20, 20, 20));
+        graphicbth[i].SetRight		(graphicbthr [i] = NULL);
+        graphicbth[i].SetBL			(graphicbthbl[i] = NULL);
+        graphicbth[i].SetBottom		(graphicbthb [i] = NULL);
+        graphicbth[i].SetBR			(graphicbthbr[i] = NULL);
+    }
+    // options button when inventory is collapsed
+    {
+		graphicbtn[BUTTON_OPTIONSMINI].SetTL		(graphicbtntl[BUTTON_OPTIONSMINI] = NULL);
+		graphicbtn[BUTTON_OPTIONSMINI].SetTop		(graphicbtnt [BUTTON_OPTIONSMINI] = NULL);
+		graphicbtn[BUTTON_OPTIONSMINI].SetTR		(graphicbtntr[BUTTON_OPTIONSMINI] = NULL);
+		graphicbtn[BUTTON_OPTIONSMINI].SetLeft		(graphicbtnl [BUTTON_OPTIONSMINI] = NULL);
+		graphicbtn[BUTTON_OPTIONSMINI].SetCenter	(graphicbtnc [BUTTON_OPTIONSMINI] = new skinImage(312, 128, 20, 20));
+		graphicbtn[BUTTON_OPTIONSMINI].SetRight		(graphicbtnr [BUTTON_OPTIONSMINI] = NULL);
+		graphicbtn[BUTTON_OPTIONSMINI].SetBL		(graphicbtnbl[BUTTON_OPTIONSMINI] = NULL);
+		graphicbtn[BUTTON_OPTIONSMINI].SetBottom	(graphicbtnb [BUTTON_OPTIONSMINI] = NULL);
+		graphicbtn[BUTTON_OPTIONSMINI].SetBR		(graphicbtnbr[BUTTON_OPTIONSMINI] = NULL);
+    }
+    // buttons that go above the console
+    for (int i = BUTTON_CONSOLE_CLOSE; i <= BUTTON_CONSOLE_IGNORELIST; i++)
     {
         graphicbtn[i].SetTL		    (graphicbtntl[i] = NULL);
         graphicbtn[i].SetTop	    (graphicbtnt [i] = NULL);
         graphicbtn[i].SetTR		    (graphicbtntr[i] = NULL);
         graphicbtn[i].SetLeft	    (graphicbtnl [i] = NULL);
-        graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(2 + 20*i, 98, 20, 20));
+        graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(208 + 16*(i-BUTTON_IND_CONSOLE), 146, 16, 16));
         graphicbtn[i].SetRight	    (graphicbtnr [i] = NULL);
         graphicbtn[i].SetBL		    (graphicbtnbl[i] = NULL);
         graphicbtn[i].SetBottom	    (graphicbtnb [i] = NULL);
@@ -577,7 +613,29 @@ void Skin::loadSkin() {
         graphicbth[i].SetTop	    (graphicbtht [i] = NULL);
         graphicbth[i].SetTR		    (graphicbthtr[i] = NULL);
         graphicbth[i].SetLeft	    (graphicbthl [i] = NULL);
-        graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(2 + 20*i, 98+20, 20, 20));
+        graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(208 + 16*(i-BUTTON_IND_CONSOLE), 146+16, 16, 16));
+        graphicbth[i].SetRight	    (graphicbthr [i] = NULL);
+        graphicbth[i].SetBL		    (graphicbthbl[i] = NULL);
+        graphicbth[i].SetBottom	    (graphicbthb [i] = NULL);
+        graphicbth[i].SetBR		    (graphicbthbr[i] = NULL);
+    }// buttons that go next to the console entry
+    for (int i = BUTTON_CONSOLE_YELL; i <= BUTTON_CONSOLE_WHISPER; i++)
+    {
+        graphicbtn[i].SetTL		    (graphicbtntl[i] = NULL);
+        graphicbtn[i].SetTop	    (graphicbtnt [i] = NULL);
+        graphicbtn[i].SetTR		    (graphicbtntr[i] = NULL);
+        graphicbtn[i].SetLeft	    (graphicbtnl [i] = NULL);
+        graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(258 + 16*(i-BUTTON_CONSOLE_IGNORELIST), 144, 16, 16));
+        graphicbtn[i].SetRight	    (graphicbtnr [i] = NULL);
+        graphicbtn[i].SetBL		    (graphicbtnbl[i] = NULL);
+        graphicbtn[i].SetBottom	    (graphicbtnb [i] = NULL);
+        graphicbtn[i].SetBR		    (graphicbtnbr[i] = NULL);
+
+        graphicbth[i].SetTL		    (graphicbthtl[i] = NULL);
+        graphicbth[i].SetTop	    (graphicbtht [i] = NULL);
+        graphicbth[i].SetTR		    (graphicbthtr[i] = NULL);
+        graphicbth[i].SetLeft	    (graphicbthl [i] = NULL);
+        graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(258 + 16*(i-BUTTON_CONSOLE_IGNORELIST), 144+16, 16, 16));
         graphicbth[i].SetRight	    (graphicbthr [i] = NULL);
         graphicbth[i].SetBL		    (graphicbthbl[i] = NULL);
         graphicbth[i].SetBottom	    (graphicbthb [i] = NULL);

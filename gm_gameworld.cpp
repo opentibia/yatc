@@ -157,24 +157,42 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
 	RIGHTSIDE.AddObject(&sbvlPanel.panel);
 	if (!AUTOSETPOS) sbvlPanel.panel.SetPos(600, 308);
-	RIGHTSIDE.AddObject(&sbvlPanel.winSkills.window);
-	if (!AUTOSETPOS) sbvlPanel.winSkills.window.SetPos(600, 338);
-	/*
-	RIGHTSIDE.AddObject(&sbvlPanel.winBattle.window);
-	if (!AUTOSETPOS) sbvlPanel.winBattle.window.SetPos(600, 338);
-	RIGHTSIDE.AddObject(&sbvlPanel.winVIP.window);
-	if (!AUTOSETPOS) sbvlPanel.winVIP.window.SetPos(600, 338);
-	*/
-
-	//TODO (nfries88): AUTOSETPOS crap?
-	RIGHTSIDE.AddObject(&winShop.window);
-	winShop.window.SetVisible(false);
-	RIGHTSIDE.AddObject(&winTrade.window);
-	winTrade.window.SetVisible(false);
 
 	#if (GLICT_APIREV>=95)
     yspRightSide.RebuildList();
     #endif
+
+	pnlRightSide.AddObject(&yspRightSideWindows);
+	yspRightSideWindows.SetPos(0,0);
+	yspRightSideWindows.SetBGActiveness(false);
+	yspRightSideWindows.SetWidth(172);
+	yspRightSideWindows.SetHeight(600); // dynamic and updated later
+	yspRightSideWindows.SetPos(0, yspRightSide.GetTotalHeight());
+
+//TODO (nfries88): AUTOSETPOS crap?
+	yspRightSideWindows.AddObject(&sbvlPanel.winSkills.window);
+	sbvlPanel.winSkills.window.SetPos(0, 0);
+	sbvlPanel.winSkills.window.SetVisible(false);
+	/*
+	yspRightSideWindows.AddObject(&sbvlPanel.winBattle.window);
+	sbvlPanel.winBattle.window.SetPos(0, 0);
+	sbvlPanel.winBattle.window.SetVisible(false);
+	yspRightSideWindows.AddObject(&sbvlPanel.winVIP.window);
+	sbvlPanel.winVIP.window.SetPos(0, 0);
+	sbvlPanel.winVIP.window.SetVisible(false);
+	*/
+	yspRightSideWindows.AddObject(&winShop.window);
+	winShop.window.SetPos(0, 0);
+	winShop.window.SetVisible(false);
+	yspRightSideWindows.AddObject(&winTrade.window);
+	winShop.window.SetPos(0, 0);
+	winTrade.window.SetVisible(false);
+
+
+	#if (GLICT_APIREV>=95)
+    yspRightSideWindows.RebuildList();
+    #endif
+
 
 	#endif
 
@@ -227,6 +245,8 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	doResize(glictGlobals.w, glictGlobals.h);
 
     SDL_SetCursor(g_engine->m_cursorBasic);
+
+	m_protocol->sendFightModes(options.battlemode, options.chasemode, options.safemode);
 }
 
 GM_Gameworld::~GM_Gameworld ()
@@ -268,7 +288,7 @@ void GM_Gameworld::doResize(float w, float h)
 	m_mapui.setSize(wi-172-4,hi-150-18);
 
 	pnlRightSide.SetHeight(h);
-	yspRightSide.SetHeight(h);
+	yspRightSideWindows.SetHeight(MAX(h-yspRightSide.GetTotalHeight(), 0));
 	pnlRightSide.SetPos(w-172-4,0); // ysp is always on 0,0
 
 	txtConsoleEntry.SetWidth(w-172-4);
@@ -447,6 +467,7 @@ void GM_Gameworld::keyPress (char key)
             {
                 if (getActiveConsole() == getDefaultConsole()) {
                     // currently nothing happens ONLY on default console
+                    // TODO (nfries88): implement yelling and whispering via the button near the console entry
                 } else {
                     if (getActiveConsole()->getSpeakerName() == "NPCs") { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
                         getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
@@ -1158,7 +1179,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
         (*it)->SetPos(sum,0);
         sum += (int)(*it)->GetWidth();
     }
-    p->SetPos(sum,0);
+    p->SetPos(sum+20,0);
     p->SetOnClick(pnlConsoleButton_OnClick);
     p->SetSkin(&g_skin.consoletabpassive);
     p->SetFont("gamefont");
@@ -1173,7 +1194,7 @@ void GM_Gameworld::openContainer(uint32_t cid)
 	Container* container = Containers::getInstance().getContainer(cid);
 	winContainer_t* window = new winContainer_t(container, cid);
 
-	yspRightSide.AddObject(&window->window);
+	yspRightSideWindows.AddObject(&window->window);
 	containers.push_back(window);
 }
 
@@ -1193,9 +1214,9 @@ void GM_Gameworld::closeContainer(uint32_t cid)
 
 	if(window)
 	{
-		yspRightSide.RemoveObject(&window->window);
-		yspRightSide.DelayedRemove();
-		yspRightSide.RebuildList();
+		yspRightSideWindows.RemoveObject(&window->window);
+		yspRightSideWindows.DelayedRemove();
+		yspRightSideWindows.RebuildList();
 		containers.erase(it);
 		delete window;
 	}
@@ -1294,4 +1315,17 @@ void GM_Gameworld::setActiveConsole(Console* i){
     #else
 	#warning No support for setcaptioncolor before glict apirev 85
 	#endif
+	// TODO (nfries88): buttons for yelling, closing channel, etc.
+	/*if(i == getDefaultConsole())
+	{
+		m_btnConsoleSpeakLevel.SetVisible(true);
+		m_btnConsoleClose.SetVisible(false);
+		m_btnConsoleM.SetVisible(false);
+	}
+	else
+	{
+		m_btnConsoleSpeakLevel.SetVisible(false);
+		m_btnConsoleClose.SetVisible(true);
+		m_btnConsoleM.SetVisible(true);
+	}*/
 }
