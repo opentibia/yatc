@@ -22,6 +22,7 @@ public:
     void StartDraggingChild(glictContainer* draggedChild, const glictPos &relmousepos);
     void StopDraggingChild(const glictPos &eventmousepos);
     void Paint();
+    int GetTotalHeight() { return totalheight; }
 private:
     void _updateDraggedChildPos(const glictPos &eventmousepos);
 };

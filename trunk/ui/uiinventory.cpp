@@ -86,9 +86,9 @@ pnlInventory_t::pnlInventory_t()
 	// TODO: fix this to the proper skin (background should match capacity and soul)
 	panel.AddObject(&pnlIcons);
 	pnlIcons.SetPos(8, 152);
-	pnlIcons.SetHeight(20);
-	pnlIcons.SetWidth(105);
-	pnlIcons.SetSkin(&g_skin.txt);
+	pnlIcons.SetHeight(13);
+	pnlIcons.SetWidth(108);
+	//pnlIcons.SetSkin(&g_skin.txt);
 	pnlIcons.SetOnPaint(pnlInventory_t::paintIcons);
 	//pnlIcons.SetBGActiveness(false);
 
@@ -99,6 +99,45 @@ pnlInventory_t::pnlInventory_t()
 		pnlItem[i]->SetPos(posInvSlots[i].x, posInvSlots[i].y);
 		pnlItem[i]->setUIBackground(96 + 32 * (posInvSlots[i].uisprite % 5), 32 * (posInvSlots[i].uisprite / 5));
 	}
+
+	// battlemode
+	glictPanel* bGrid = chcBattleMode.getGrid();
+	panel.AddObject(bGrid);
+	bGrid->SetPos(124, 17);
+	chcBattleMode.setItemSize(20, 20);
+	chcBattleMode.setPadding(0, 0);
+	chcBattleMode.setRows(1);
+	for(int i = 0; i != 3; ++i)
+	{
+		battleModes[i] = chcBattleMode.addItem("", onSetFightModes, (void*)(i+1));
+		battleModes[i]->btn.SetSkin(&g_skin.graphicbtn[BUTTON_FULLATK+i]);
+		battleModes[i]->btn.SetHighlightSkin(&g_skin.graphicbth[BUTTON_FULLATK+i]);
+	}
+	chcBattleMode.setSelected(battleModes[options.battlemode-1]);
+
+	glictPanel* cGrid = chcChase.getGrid();
+	panel.AddObject(cGrid);
+	cGrid->SetPos(147, 17);
+	chcChase.setItemSize(20, 20);
+	chcChase.setPadding(0,0);
+	chcChase.setRows(1);
+	for(int i = 0; i != 2; ++i)
+	{
+		chaseModes[i] = chcChase.addItem("", onSetChase, (void*)(i));
+		chaseModes[i]->btn.SetSkin(&g_skin.graphicbtn[BUTTON_NOCHASE+i]);
+		chaseModes[i]->btn.SetHighlightSkin(&g_skin.graphicbth[BUTTON_NOCHASE+i]);
+	}
+	chcChase.setSelected(chaseModes[options.chasemode]);
+
+	panel.AddObject(&btnSafeMode);
+	btnSafeMode.SetCaption("");
+	btnSafeMode.SetPos(147, 57);
+	btnSafeMode.SetWidth(20);
+	btnSafeMode.SetHeight(20);
+	btnSafeMode.SetOnClick(onSetSafeMode);
+	btnSafeMode.SetSkin(&g_skin.graphicbtn[BUTTON_SAFEMODE]);
+	btnSafeMode.SetHighlightSkin(&g_skin.graphicbth[BUTTON_SAFEMODE]);
+	btnSafeMode.SetHold(options.safemode);
 }
 
 pnlInventory_t::~pnlInventory_t()
@@ -133,4 +172,96 @@ void pnlInventory_t::paintSoul(glictRect *real, glictRect *clipped, glictContain
 }
 void pnlInventory_t::paintIcons(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
+	// FIXME: this probably isn't the best way to do the background, but it's a good temporary solution.
+	g_engine->getUISprite()->Blit((int)real->left, (int)real->top, 98, 240, caller->GetWidth(), caller->GetHeight());
+	uint32_t icons = GlobalVariables::getPlayerIcons();
+	// TODO (nfries88): make sure these are ordered and separated as they would be in CipSoft's client
+	uint32_t posx = 2;
+
+	if(icons & ICON_POISON)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 32, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_BURN)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 288, 32, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_ENERGY)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 297, 32, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_SWORDS)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 306, 32, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_DRUNK)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 41, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_MANASHIELD)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 288, 41, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_HASTE)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 297, 41, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_PARALYZE)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 306, 41, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_DROWNING)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 59, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_FREEZING)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 68, 9, 9);
+		posx += 10;
+	}
+
+	if(icons & ICON_DAZZLED)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 77, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_CURSED)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 86, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_PARTY_BUFF)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 307, 148, 9, 9);
+		posx += 10;
+	}
+}
+
+void pnlInventory_t::onSetFightModes(ChoiceGrid::Item *parent, ChoiceGrid::Item *olditem)
+{
+	options.battlemode = (int)parent->data;
+	((GM_Gameworld*)g_game)->m_protocol->sendFightModes(options.battlemode, options.chasemode, options.safemode);
+	options.Save();
+}
+void pnlInventory_t::onSetChase(ChoiceGrid::Item *parent, ChoiceGrid::Item *olditem)
+{
+	options.chasemode = (int)parent->data;
+	((GM_Gameworld*)g_game)->m_protocol->sendFightModes(options.battlemode, options.chasemode, options.safemode);
+	options.Save();
+}
+void pnlInventory_t::onSetSafeMode(glictPos* relmousepos, glictContainer* callerclass)
+{
+	options.safemode = !options.safemode;
+	((GM_Gameworld*)g_game)->m_protocol->sendFightModes(options.battlemode, options.chasemode, options.safemode);
+	options.Save();
+	((glictButton*)callerclass)->SetHold(options.safemode);
 }
