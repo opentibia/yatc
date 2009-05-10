@@ -36,9 +36,11 @@
 
 #include "stackpanel.h"
 
+class sbvlPanel_t;
+
 class winSkills_t : public yatcStackPanelWindow {
 public:
-	// FIXME (ivucica#4#) This window is not a 1:1 match, and among other things, we need to modify GLICT's window to make it such (no icon support, no left alignment support, no minimize and close support ...)
+	// FIXME (ivucica#4#) This window is not a 1:1 match, and among other things, we need to modify GLICT's window to make it such (no icon support, no left alignment support)
 	glictPanel container;
 
 	glictPanel lblExperienceLeft, lblExperienceRight;
@@ -59,26 +61,30 @@ public:
 	glictPanel lblSkillLeft[7], lblSkillRight[7];
 	glictProgressBar pbSkill[7];
 
+	sbvlPanel_t* controller;
+
 	winSkills_t() {
-		window.SetWidth(150);
+		controller = NULL;
+
+		window.SetWidth(160);
 		window.SetHeight(GetDefaultHeight());
 		window.SetCaption(gettext("Skills"));
 		window.AddObject(&container);
-		container.SetWidth(150);
+		container.SetWidth(160);
 		container.SetHeight(GetDefaultHeight());
-		container.SetVirtualSize(150, 270);
+		container.SetVirtualSize(160, 270);
 		container.SetBGActiveness(false);
 
 
 		container.AddObject(&lblExperienceLeft);
 		container.AddObject(&lblExperienceRight);
 		lblExperienceLeft.SetPos(5, 5);
-		lblExperienceLeft.SetWidth(150);
+		lblExperienceLeft.SetWidth(160);
 		lblExperienceLeft.SetHeight(12);
 		lblExperienceLeft.SetBGActiveness(false);
 		lblExperienceLeft.SetCaption(gettext("Experience"));
 
-		lblExperienceRight.SetPos(150-20, 5);
+		lblExperienceRight.SetPos(160-20, 5);
 		lblExperienceRight.SetWidth(10);
 		lblExperienceRight.SetHeight(12);
 		lblExperienceRight.SetBGActiveness(false);
@@ -88,12 +94,12 @@ public:
 		container.AddObject(&lblLevelLeft);
 		container.AddObject(&lblLevelRight);
 		lblLevelLeft.SetPos(5, 15);
-		lblLevelLeft.SetWidth(150);
+		lblLevelLeft.SetWidth(160);
 		lblLevelLeft.SetHeight(12);
 		lblLevelLeft.SetBGActiveness(false);
 		lblLevelLeft.SetCaption(gettext("Level"));
 
-		lblLevelRight.SetPos(150 - 20, 15);
+		lblLevelRight.SetPos(160 - 20, 15);
 		lblLevelRight.SetWidth(10);
 		lblLevelRight.SetHeight(12);
 		lblLevelRight.SetBGActiveness(false);
@@ -103,9 +109,16 @@ public:
 		container.AddObject(&pbExperience);
 
 		pbExperience.SetPos(5, 25);
-		pbExperience.SetWidth(130);
+		pbExperience.SetWidth(140);
 		pbExperience.SetHeight(5);
 		pbExperience.SetValue(40);
+		#if GLICT_APIREV >= 105
+		pbExperience.SetBGActiveness(false);
+		pbExperience.SetBorderColor(glictColor(0, 0, 0, 1));
+		pbExperience.SetFGColor(glictColor(.9,.2,.1,1.));
+		#else
+		#warning For visual improvements to skill bars, update to glict rev 105 or higher
+		#endif
 
 
 
@@ -114,12 +127,12 @@ public:
 		container.AddObject(&lblHPLeft);
 		container.AddObject(&lblHPRight);
 		lblHPLeft.SetPos(5, 35);
-		lblHPLeft.SetWidth(150);
+		lblHPLeft.SetWidth(160);
 		lblHPLeft.SetHeight(12);
 		lblHPLeft.SetBGActiveness(false);
 		lblHPLeft.SetCaption(gettext("Hit Points"));
 
-		lblHPRight.SetPos(150 - 20, 35);
+		lblHPRight.SetPos(160 - 20, 35);
 		lblHPRight.SetWidth(10);
 		lblHPRight.SetHeight(12);
 		lblHPRight.SetBGActiveness(false);
@@ -129,12 +142,12 @@ public:
 		container.AddObject(&lblMPLeft);
 		container.AddObject(&lblMPRight);
 		lblMPLeft.SetPos(5, 45);
-		lblMPLeft.SetWidth(150);
+		lblMPLeft.SetWidth(160);
 		lblMPLeft.SetHeight(12);
 		lblMPLeft.SetBGActiveness(false);
 		lblMPLeft.SetCaption(gettext("Mana"));
 
-		lblMPRight.SetPos(150 - 20, 45);
+		lblMPRight.SetPos(160 - 20, 45);
 		lblMPRight.SetWidth(10);
 		lblMPRight.SetHeight(12);
 		lblMPRight.SetBGActiveness(false);
@@ -144,12 +157,12 @@ public:
 		container.AddObject(&lblSPLeft);
 		container.AddObject(&lblSPRight);
 		lblSPLeft.SetPos(5, 55);
-		lblSPLeft.SetWidth(150);
+		lblSPLeft.SetWidth(160);
 		lblSPLeft.SetHeight(12);
 		lblSPLeft.SetBGActiveness(false);
 		lblSPLeft.SetCaption(gettext("Soul Points"));
 
-		lblSPRight.SetPos(150 - 20, 55);
+		lblSPRight.SetPos(160 - 20, 55);
 		lblSPRight.SetWidth(10);
 		lblSPRight.SetHeight(12);
 		lblSPRight.SetBGActiveness(false);
@@ -159,12 +172,12 @@ public:
 		container.AddObject(&lblCapLeft);
 		container.AddObject(&lblCapRight);
 		lblCapLeft.SetPos(5, 65);
-		lblCapLeft.SetWidth(150);
+		lblCapLeft.SetWidth(160);
 		lblCapLeft.SetHeight(12);
 		lblCapLeft.SetBGActiveness(false);
 		lblCapLeft.SetCaption(gettext("Cap"));
 
-		lblCapRight.SetPos(150 - 20, 65);
+		lblCapRight.SetPos(160 - 20, 65);
 		lblCapRight.SetWidth(10);
 		lblCapRight.SetHeight(12);
 		lblCapRight.SetBGActiveness(false);
@@ -174,12 +187,12 @@ public:
 		container.AddObject(&lblStaLeft);
 		container.AddObject(&lblStaRight);
 		lblStaLeft.SetPos(5, 75);
-		lblStaLeft.SetWidth(150);
+		lblStaLeft.SetWidth(160);
 		lblStaLeft.SetHeight(12);
 		lblStaLeft.SetBGActiveness(false);
 		lblStaLeft.SetCaption(gettext("Stamina"));
 
-		lblStaRight.SetPos(150 - 20, 75);
+		lblStaRight.SetPos(160 - 20, 75);
 		lblStaRight.SetWidth(10);
 		lblStaRight.SetHeight(12);
 		lblStaRight.SetBGActiveness(false);
@@ -189,20 +202,26 @@ public:
 		container.AddObject(&pbStamina);
 
 		pbStamina.SetPos(5, 85);
-		pbStamina.SetWidth(130);
+		pbStamina.SetWidth(140);
 		pbStamina.SetHeight(5);
 		pbStamina.SetValue(40);
+		#if GLICT_APIREV >= 105
+		pbStamina.SetBGActiveness(false);
+		pbStamina.SetBorderColor(glictColor(0, 0, 0, 1));
+		#else
+		#warning For visual improvements to skill bars, update to glict rev 105 or higher
+		#endif
 
 
 		container.AddObject(&lblMagicLevelLeft);
 		container.AddObject(&lblMagicLevelRight);
 		lblMagicLevelLeft.SetPos(5, 95);
-		lblMagicLevelLeft.SetWidth(150);
+		lblMagicLevelLeft.SetWidth(160);
 		lblMagicLevelLeft.SetHeight(12);
 		lblMagicLevelLeft.SetBGActiveness(false);
 		lblMagicLevelLeft.SetCaption(gettext("Magic Level"));
 
-		lblMagicLevelRight.SetPos(150 - 20, 95);
+		lblMagicLevelRight.SetPos(160 - 20, 95);
 		lblMagicLevelRight.SetWidth(10);
 		lblMagicLevelRight.SetHeight(12);
 		lblMagicLevelRight.SetBGActiveness(false);
@@ -212,15 +231,23 @@ public:
 		container.AddObject(&pbMagicLevel);
 
 		pbMagicLevel.SetPos(5, 105);
-		pbMagicLevel.SetWidth(130);
+		pbMagicLevel.SetWidth(140);
 		pbMagicLevel.SetHeight(5);
 		pbMagicLevel.SetValue(40);
+		#if GLICT_APIREV >= 105
+		pbMagicLevel.SetBGActiveness(false);
+		pbMagicLevel.SetBorderColor(glictColor(0, 0, 0, 1));
+		pbMagicLevel.SetFGColor(glictColor(.9,.2,.1,1.));
+		#else
+		#warning For visual improvements to skill bars, update to glict rev 105 or higher
+		#endif
+
 
 
 
 		container.AddObject(&pnlSeparator);
 		pnlSeparator.SetPos(5,115);
-		pnlSeparator.SetWidth(130);
+		pnlSeparator.SetWidth(140);
 		pnlSeparator.SetHeight(2);
 		pnlSeparator.SetBGColor(.7, .7, .7, 1.);
         pnlSeparator.SetSkin(&g_skin.chk);
@@ -232,12 +259,12 @@ public:
 			container.AddObject(&lblSkillLeft[i]);
 			container.AddObject(&lblSkillRight[i]);
 			lblSkillLeft[i].SetPos(5, 125 + i * 20);
-			lblSkillLeft[i].SetWidth(150);
+			lblSkillLeft[i].SetWidth(160);
 			lblSkillLeft[i].SetHeight(12);
 			lblSkillLeft[i].SetBGActiveness(false);
 			lblSkillLeft[i].SetCaption(std::string(gettext("Skill ")) + yatc_itoa(i) );
 
-			lblSkillRight[i].SetPos(150 - 20, 125 + i*20);
+			lblSkillRight[i].SetPos(160 - 20, 125 + i*20);
 			lblSkillRight[i].SetWidth(10);
 			lblSkillRight[i].SetHeight(12);
 			lblSkillRight[i].SetBGActiveness(false);
@@ -247,9 +274,15 @@ public:
 			container.AddObject(&pbSkill[i]);
 
 			pbSkill[i].SetPos(5, 135 + i*20);
-			pbSkill[i].SetWidth(130);
+			pbSkill[i].SetWidth(140);
 			pbSkill[i].SetHeight(5);
 			pbSkill[i].SetValue(40);
+			#if GLICT_APIREV >= 105
+			pbSkill[i].SetBGActiveness(false);
+			pbSkill[i].SetBorderColor(glictColor(0, 0, 0, 1));
+			#else
+			#warning For visual improvements to skill bars, update to glict rev 105 or higher
+			#endif
 		}
 		lblSkillLeft[0].SetCaption(gettext("Fist Fighting"));
 		lblSkillLeft[1].SetCaption(gettext("Club Fighting"));
@@ -267,13 +300,13 @@ public:
 
 		// FIXME (ivucica#4#) insert comma after every three characters
 		s << GlobalVariables::getPlayerStat(STAT_EXPERIENCE);
-		lblExperienceRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 5);
+		lblExperienceRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 5);
 		lblExperienceRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblExperienceRight.SetCaption(s.str());
 
 		s.str("");
 		s << GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_LEVEL);
-		lblLevelRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 15);
+		lblLevelRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 15);
 		lblLevelRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblLevelRight.SetCaption(s.str());
 
@@ -283,31 +316,31 @@ public:
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_HEALTH_MAX); // TODO (ivucica#1#) check if this should be CURRENT or MAX hp
-		lblHPRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 35);
+		lblHPRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 35);
 		lblHPRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblHPRight.SetCaption(s.str());
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_MANA_MAX); // TODO (ivucica#1#) check if this should be CURRENT or MAX mp
-		lblMPRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 45);
+		lblMPRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 45);
 		lblMPRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblMPRight.SetCaption(s.str());
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_SOUL);
-		lblSPRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 55);
+		lblSPRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 55);
 		lblSPRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblSPRight.SetCaption(s.str());
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_CAPACITY);
-		lblCapRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 65);
+		lblCapRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 65);
 		lblCapRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblCapRight.SetCaption(s.str());
 
 		s.str("");
 		s << int(GlobalVariables::getPlayerStat(STAT_STAMINA) / 60) << ":" <<  std::setw(2) << std::setfill('0') << GlobalVariables::getPlayerStat(STAT_STAMINA) % 60;
-		lblStaRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 75);
+		lblStaRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 75);
 		lblStaRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblStaRight.SetCaption(s.str());
 
@@ -315,7 +348,7 @@ public:
 
 		s.str("");
 		s << GlobalVariables::getPlayerSkill(SKILL_MAGIC, SKILL_ATTR_LEVEL);
-		lblMagicLevelRight.SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 95);
+		lblMagicLevelRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 95);
 		lblMagicLevelRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 		lblMagicLevelRight.SetCaption(s.str());
 
@@ -325,7 +358,7 @@ public:
 		for (int i = 0; i < 7; i++) {
 			s.str("");
 			s << GlobalVariables::getPlayerSkill((SkillList_t)(SKILL_FIST + i), SKILL_ATTR_LEVEL);
-			lblSkillRight[i].SetPos(150 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 125 + i*20);
+			lblSkillRight[i].SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 125 + i*20);
 			lblSkillRight[i].SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
 			lblSkillRight[i].SetCaption(s.str());
 
@@ -334,6 +367,8 @@ public:
 
 
 	}
+
+	virtual void OnClose();
 
 	virtual float GetDefaultHeight(){ return 270.F; }
 

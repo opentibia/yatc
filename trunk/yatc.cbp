@@ -294,6 +294,8 @@
 		<Unit filename="ui/optionsui.cpp" />
 		<Unit filename="ui/optionsui.h" />
 		<Unit filename="ui/skills.h" />
+		<Unit filename="ui/sbvlpanel.cpp" />
+		<Unit filename="ui/sbvlpanel.h" />
 		<Unit filename="ui/tutorialhints.cpp" />
 		<Unit filename="ui/tutorialhints.h" />
 		<Unit filename="ui/uicontainer.cpp" />

@@ -25,7 +25,7 @@
 #include "sprite.h"
 #include "mapui.h"
 #include "ui/uiinventory.h"
-#include "ui/skills.h"
+#include "ui/sbvlpanel.h"
 #include "ui/health.h"
 #include "ui/uicontainer.h"
 #include "ui/itemmove.h"
@@ -151,7 +151,8 @@ private:
 	pnlInventory_t pnlInventory;
 	pnlHealth_t pnlHealth;
 	pnlMap_t pnlMap;
-	winSkills_t winSkills;
+	//winSkills_t winSkills;
+	sbvlPanel_t sbvlPanel;
 	winShop_t winShop;
 	winTrade_t winTrade;
 	winOutfit_t winOutfit;
@@ -206,6 +207,7 @@ private:
 	friend class winContainer_t;
 	friend class ItemPanel;
 	friend class exitWarning_t;
+	friend class sbvlPanel_t;
 
 	MapUI m_mapui;
 

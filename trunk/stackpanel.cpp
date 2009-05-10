@@ -156,6 +156,11 @@ yatcStackPanelWindow::yatcStackPanelWindow()
 void yatcStackPanelWindow::OnClose(glictPos* pos, glictContainer *caller) {
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
 	window->OnClose();
+
+	/* since typically this will have closed our window, rebuild list automatically here */
+	glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
+    if (parentlist)
+        parentlist->RebuildList();
 }
 
 void yatcStackPanelWindow::OnCollapse(glictPos* pos, glictContainer *caller) {

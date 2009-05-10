@@ -92,13 +92,6 @@ void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
 	}
 }
 
-void pnlInventory_t::onClick_Logout(glictPos* relmousepos, glictContainer* callerclass)
-{
-	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-    gameclass->getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Logging out...", TEXTCOLOR_WHITE));
-	gameclass->m_protocol->sendLogout();
-}
-
 void pnlInventory_t::onClick_Options(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
@@ -161,8 +154,17 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	if (!AUTOSETPOS) pnlHealth.panel.SetPos(600, 478);
 	RIGHTSIDE.AddObject(&pnlInventory.panel);
 	if (!AUTOSETPOS) pnlInventory.panel.SetPos(600, 148);
-	RIGHTSIDE.AddObject(&winSkills.window);
-	if (!AUTOSETPOS) winSkills.window.SetPos(600, 308);
+
+	RIGHTSIDE.AddObject(&sbvlPanel.panel);
+	if (!AUTOSETPOS) sbvlPanel.panel.SetPos(600, 308);
+	RIGHTSIDE.AddObject(&sbvlPanel.winSkills.window);
+	if (!AUTOSETPOS) sbvlPanel.winSkills.window.SetPos(600, 338);
+	/*
+	RIGHTSIDE.AddObject(&sbvlPanel.winBattle.window);
+	if (!AUTOSETPOS) sbvlPanel.winBattle.window.SetPos(600, 338);
+	RIGHTSIDE.AddObject(&sbvlPanel.winVIP.window);
+	if (!AUTOSETPOS) sbvlPanel.winVIP.window.SetPos(600, 338);
+	*/
 
 	//TODO (nfries88): AUTOSETPOS crap?
 	RIGHTSIDE.AddObject(&winShop.window);
@@ -1065,12 +1067,12 @@ void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Pos
 
 void GM_Gameworld::onChangeSkills()
 {
-	winSkills.updateSelf();
+	sbvlPanel.winSkills.updateSelf();
 }
 void GM_Gameworld::onChangeStats()
 {
     pnlHealth.updateSelf();
-	winSkills.updateSelf();
+	sbvlPanel.winSkills.updateSelf();
 }
 void GM_Gameworld::onTileUpdate(const Position& pos)
 {
