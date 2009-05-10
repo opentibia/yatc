@@ -27,6 +27,7 @@
 #include "../net/protocolgame.h"
 #include "../popup.h"
 #include "../options.h"
+#include "../engine.h"
 
 extern int g_lastmousebutton;
 
@@ -47,7 +48,7 @@ pnlInventory_t::pnlInventory_t()
 		{83, 91, 8} // ammo
 	};
 
-	panel.SetHeight(150);
+	panel.SetHeight(170);
 	panel.SetWidth(150);
 	#if (GLICT_APIREV >= 98)
 		panel.SetDraggable(true);
@@ -66,6 +67,31 @@ pnlInventory_t::pnlInventory_t()
 	btnOptions.SetFont("minifont");
 	btnOptions.SetOnClick(&pnlInventory_t::onClick_Options);
 
+	panel.AddObject(&pnlSoul);
+	pnlSoul.SetPos(8, 128);
+	pnlSoul.SetHeight(19);
+	pnlSoul.SetWidth(32);
+	pnlSoul.SetSkin(&g_skin.inv);
+	pnlSoul.SetOnPaint(pnlInventory_t::paintSoul);
+	//pnlSoul.SetBGActiveness(false);
+
+	panel.AddObject(&pnlCap);
+	pnlCap.SetPos(83, 128);
+	pnlCap.SetHeight(20);
+	pnlCap.SetWidth(32);
+	pnlCap.SetSkin(&g_skin.inv);
+	pnlCap.SetOnPaint(pnlInventory_t::paintCap);
+	//pnlCap.SetBGActiveness(false);
+
+	// TODO: fix this to the proper skin (background should match capacity and soul)
+	panel.AddObject(&pnlIcons);
+	pnlIcons.SetPos(8, 152);
+	pnlIcons.SetHeight(20);
+	pnlIcons.SetWidth(105);
+	pnlIcons.SetSkin(&g_skin.txt);
+	pnlIcons.SetOnPaint(pnlInventory_t::paintIcons);
+	//pnlIcons.SetBGActiveness(false);
+
 
 	for (int i = 0; i < 10; i++) {
 		pnlItem[i] = new ItemPanel(&Inventory::getInstance(), i+1, Position(0xFFFF, i+1, 0), 0);
@@ -81,4 +107,30 @@ pnlInventory_t::~pnlInventory_t()
 		delete pnlItem[i];
 		pnlItem[i] = NULL;
 	}
+}
+
+void pnlInventory_t::paintCap(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
+	std::string text = yatc_itoa(GlobalVariables::getPlayerStat(STAT_CAPACITY));
+	g_engine->drawText("Cap:", "minifont", (int)real->left + 6, (int)real->top);
+	float len = g_engine->sizeText(text.c_str(), "aafont");
+	float width = real->right - real->left;
+	if(len > width)
+		len = width;
+	int diff = std::floor((width - len) / 2.f);
+	g_engine->drawText(text.c_str(), "aafont", (int)real->left + diff, (int)real->top + 10);
+}
+void pnlInventory_t::paintSoul(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
+	std::string text = yatc_itoa(GlobalVariables::getPlayerStat(STAT_SOUL));
+	g_engine->drawText("Soul:", "minifont", (int)real->left + 6, (int)real->top);
+	float len = g_engine->sizeText(text.c_str(), "aafont");
+	float width = real->right - real->left;
+	if(len > width)
+		len = width;
+	int diff = std::floor((width - len) / 2.f);
+	g_engine->drawText(text.c_str(), "aafont", (int)real->left + diff, (int)real->top + 10);
+}
+void pnlInventory_t::paintIcons(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
 }

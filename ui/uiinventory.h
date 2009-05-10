@@ -53,9 +53,16 @@ public:
 #endif
 	glictButton btnOptions;
 
+	glictPanel pnlSoul;
+	glictPanel pnlCap;
+	glictPanel pnlIcons;
+
 	ItemPanel* pnlItem[10];
 
 	static void onClick_Options(glictPos* relmousepos, glictContainer* callerclass);
+	static void paintCap(glictRect *real, glictRect *clipped, glictContainer *caller);
+	static void paintSoul(glictRect *real, glictRect *clipped, glictContainer *caller);
+	static void paintIcons(glictRect *real, glictRect *clipped, glictContainer *caller);
 };
 
 
