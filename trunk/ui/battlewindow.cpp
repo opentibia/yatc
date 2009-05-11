@@ -43,8 +43,12 @@ void winBattle_t::add(uint32_t id)
 	entry->pbHealth.SetPos(23, 14);
 	entry->pbHealth.SetWidth(122);
 	entry->pbHealth.SetHeight(5);
+	#if (GLICT_APIREV < 105)
+	#warning GLICT too old, get 105 or newer for visual improvement on some progressbars
+	#else
 	entry->pbHealth.SetBGActiveness(false);
 	entry->pbHealth.SetBorderColor(glictColor(0,0,0,1));
+	#endif
 	entry->pbHealth.SetValue(Creatures::getInstance().getCreature(id)->getHealth());
 	entry->pbHealth.SetVisible(true);
 	entries.push_back(entry);
@@ -63,7 +67,11 @@ void winBattle_t::update(uint32_t id)
 			int hp = Creatures::getInstance().getCreature(id)->getHealth();
 			oRGBA col = CreatureUI::getHealthColor(hp);
 			(*it)->pbHealth.SetValue(hp);
+			#if (GLICT_APIREV < 105)
+            #warning GLICT too old, get 105 or newer for visual improvement on some progressbars
+            #else
 			(*it)->pbHealth.SetFGColor(glictColor(col.r/255., col.g/255., col.b/255., col.a/255.));
+			#endif
 		}
 	}
 }
