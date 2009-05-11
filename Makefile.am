@@ -36,6 +36,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp \
 		ui/uiinventory.cpp ui/uishop.cpp ui/uitrade.cpp \
 		ui/mainmenu.cpp ui/uioutfit.cpp ui/itempanel.cpp \
+		ui/battlewindow.cpp ui/sbvlpanel.cpp ui/vipwindow.cpp \
 		\
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
 		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
@@ -70,7 +71,9 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/uiinventory.h ui/skills.h ui/uicontainer.h ui/uishop.h \
 		ui/uitrade.h ui/checkbox.h ui/uioutfit.h \
 		ui/optionsgfxadv.h ui/optionshotkeys.h ui/health.h \
-		ui/itempanel.h ui/minimap.h \
+		ui/itempanel.h ui/minimap.h ui/deathnotification.h \
+		ui/vipwindow.h ui/sbvlpanel.h ui/exitwarning.h \
+		ui/battlewindow.h \
 		\
 		product.h \
 		\
