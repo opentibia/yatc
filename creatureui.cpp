@@ -65,8 +65,14 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
     if (!m_obj)
 		return;
 
-	x = x - m_obj->xOffset;
-	y = y - m_obj->yOffset;
+	if(map_x != 0 && map_y != 0) {
+		x = x - m_obj->xOffset;
+		y = y - m_obj->yOffset;
+	}
+	else {
+		// shrink larger creatures to be 32x32
+		scale /= MAX(m_obj->width, m_obj->height);
+	}
 
     Creature* n = (Creature*)this;
 
@@ -84,7 +90,10 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	aniSize = partSize * m_obj->ydiv;
 
     if(n->getOutfit().m_looktype != 0){
-        activeframe = ((m_walkState == 1. && !isPreWalking()) ? n->getTurnDir() :  n->getLookDir()) * spriteSize; // creature must have different turning direction and looking (moving) direction... if moving, moving direction takes precendence, if standing, turning direction takes precendence
+    	if(map_x != 0 && map_y != 0)
+			activeframe = ((m_walkState == 1. && !isPreWalking()) ? n->getTurnDir() :  n->getLookDir()) * spriteSize; // creature must have different turning direction and looking (moving) direction... if moving, moving direction takes precendence, if standing, turning direction takes precendence
+		else
+			activeframe = DIRECTION_SOUTH * spriteSize;
     }
 
 
@@ -176,7 +185,28 @@ void CreatureUI::drawName(int x, int y, float scale) const
 	getWalkOffset(walkoffx, walkoffy, scale);
 
     int hp = n->getHealth();
-    oRGBA col;
+    oRGBA col = getHealthColor(hp);/*
+    if (hp >= 50.0) {
+        col.r = (1. - (hp/200.))*255.;
+        col.g = (0.75 + hp/400.)*255.;
+        col.b = 0.;
+        col.a = 255.;
+    } else {
+        col.r = 255.;
+        col.g = (hp / 50.) * 255.;
+        col.b = 0.;
+        col.a = 1.;
+    }*/
+
+	g_engine->drawText(name.c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
+
+	g_engine->drawRectangle(x + walkoffx + centralizationoffset, y - 14 + walkoffy, (g_engine->sizeText( name.c_str(), "gamefont" )), 6, oRGBA(0,0,0,1));
+	g_engine->drawRectangle(x + walkoffx + centralizationoffset+1, y - 13 + walkoffy, ((g_engine->sizeText( name.c_str(), "gamefont" ))-2)*(hp/100.), 4, col);
+}
+
+oRGBA CreatureUI::getHealthColor(int hp)
+{
+	oRGBA col;
     if (hp >= 50.0) {
         col.r = (1. - (hp/200.))*255.;
         col.g = (0.75 + hp/400.)*255.;
@@ -188,11 +218,7 @@ void CreatureUI::drawName(int x, int y, float scale) const
         col.b = 0.;
         col.a = 1.;
     }
-
-	g_engine->drawText(name.c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
-
-	g_engine->drawRectangle(x + walkoffx + centralizationoffset, y - 14 + walkoffy, (g_engine->sizeText( name.c_str(), "gamefont" )), 6, oRGBA(0,0,0,1));
-	g_engine->drawRectangle(x + walkoffx + centralizationoffset+1, y - 13 + walkoffy, ((g_engine->sizeText( name.c_str(), "gamefont" ))-2)*(hp/100.), 4, col);
+    return col;
 }
 
 void CreatureUI::drawSkullsShields(int x, int y, float scale) const

@@ -271,6 +271,8 @@
 		<Unit filename="statusmsg.h" />
 		<Unit filename="thingui.cpp" />
 		<Unit filename="thingui.h" />
+		<Unit filename="ui/battlewindow.cpp" />
+		<Unit filename="ui/battlewindow.h" />
 		<Unit filename="ui/charlist.h" />
 		<Unit filename="ui/checkbox.h" />
 		<Unit filename="ui/deathnotification.h" />
@@ -310,6 +312,8 @@
 		<Unit filename="ui/uitrade.h" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
+		<Unit filename="ui/vipwindow.cpp" />
+		<Unit filename="ui/vipwindow.h" />
 		<Unit filename="yatc.cfg" />
 		<Extensions>
 			<code_completion />

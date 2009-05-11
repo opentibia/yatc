@@ -22,6 +22,7 @@
 #include "notifications.h"
 #include "net/connection.h"
 #include "gamemode.h"
+#include "gm_gameworld.h"
 extern Connection* g_connection;
 
 std::list<std::string> g_recFiles;
@@ -286,4 +287,23 @@ void Notifications::openItemText(int windowId, int itemid, int maxTextLenght,
 void Notifications::openRelogin()
 {
 	g_game->openDeathWindow();
+}
+
+void Notifications::onChangeIcons()
+{
+
+}
+void Notifications::onAddCreature(uint32_t id)
+{
+	if(id != GlobalVariables::getPlayerID()) {
+		((GM_Gameworld*)g_game)->sbvlPanel.winBattle.add(id);
+	}
+}
+void Notifications::onRemoveCreature(uint32_t id)
+{
+	((GM_Gameworld*)g_game)->sbvlPanel.winBattle.remove(id);
+}
+void Notifications::onCreatureChangeHealth(uint32_t id, uint32_t health)
+{
+	((GM_Gameworld*)g_game)->sbvlPanel.winBattle.update(id);
 }

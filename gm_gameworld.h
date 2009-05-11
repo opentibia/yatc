@@ -118,6 +118,7 @@ public:
 
 	void beginExtendedUse(const Thing* thing, int stackpos, const Position& pos);
 	void performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos);
+	void performExtendedUseBattleWindow(uint32_t creatureid);
 
 	void beginTrade(const Item* item, int stackpos, const Position& pos);
 
@@ -211,6 +212,8 @@ private:
 	friend class ItemPanel;
 	friend class exitWarning_t;
 	friend class sbvlPanel_t;
+	friend class Notifications;
+	friend class winBattle_t;
 
 	MapUI m_mapui;
 

@@ -39,6 +39,8 @@
 #include "popup.h"
 #include "objects.h"
 
+#include "notifications.h"
+
 #include "ui/tutorialhints.h"
 
 #ifdef _MSC_VER
@@ -173,14 +175,13 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	yspRightSideWindows.AddObject(&sbvlPanel.winSkills.window);
 	sbvlPanel.winSkills.window.SetPos(0, 0);
 	sbvlPanel.winSkills.window.SetVisible(false);
-	/*
 	yspRightSideWindows.AddObject(&sbvlPanel.winBattle.window);
 	sbvlPanel.winBattle.window.SetPos(0, 0);
 	sbvlPanel.winBattle.window.SetVisible(false);
 	yspRightSideWindows.AddObject(&sbvlPanel.winVIP.window);
 	sbvlPanel.winVIP.window.SetPos(0, 0);
 	sbvlPanel.winVIP.window.SetVisible(false);
-	*/
+
 	yspRightSideWindows.AddObject(&winShop.window);
 	winShop.window.SetPos(0, 0);
 	winShop.window.SetVisible(false);
@@ -758,6 +759,15 @@ void GM_Gameworld::performExtendedUse(const Position& destpos, const Thing* dest
 	m_extendedThingId = 0;
 }
 
+void GM_Gameworld::performExtendedUseBattleWindow(uint32_t creatureid)
+{
+	if(isExtendedUsing())
+	{
+		m_protocol->sendUseBattleWindow(m_extendedpos, m_extendedThingId, m_extendedstackpos, creatureid);
+		SDL_SetCursor(g_engine->m_cursorBasic);
+		m_extendedThingId = 0;
+	}
+}
 
 void GM_Gameworld::actionUseWith(const glictPos& pos)
 {
@@ -1084,6 +1094,11 @@ void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Pos
 		c->startWalk();
 	c->confirmWalk();
 
+	if(!(Map::getInstance().playerCanSee(newPos.x, newPos.y, newPos.z)))
+	{
+		Notifications::onRemoveCreature(id);
+		Creatures::getInstance().removeCreature(id);
+	}
 }
 
 void GM_Gameworld::onChangeSkills()

@@ -96,12 +96,14 @@ Thing* ProtocolGame82::internalGetThing(NetworkMessage& msg)
 			//perhaps we have to remove a known creature
 			uint32_t removeID = msg.getU32();
 			Creatures::getInstance().removeCreature(removeID);
+			Notifications::onRemoveCreature(removeID);
 			//add a new creature
 			uint32_t creatureID = msg.getU32();
 			creature = Creatures::getInstance().addCreature(creatureID);
 			if(!creature){
 				return NULL;
 			}
+			Notifications::onAddCreature(creatureID);
 
 			creature->setName(msg.getString());
 		}
@@ -110,10 +112,12 @@ Thing* ProtocolGame82::internalGetThing(NetworkMessage& msg)
 		}
 
 		//read creature properties
-		creature->setHealth(msg.getU8());
+		uint8_t hp = msg.getU8();
+		creature->setHealth(hp);
 		if(creature->getHealth() > 100){
 			return NULL;
 		}
+		Notifications::onCreatureChangeHealth(creature->getID(), hp);
 		//
 		uint8_t direction;
 		if(!msg.getU8(direction) || direction > 3){

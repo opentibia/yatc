@@ -809,6 +809,7 @@ bool ProtocolGame::parseCreatureHealth(NetworkMessage& msg)
             RAISE_PROTOCOL_ERROR("Creature health - percent > 100");
         }
         creature->setHealth(percent);
+        Notifications::onCreatureChangeHealth(creatureID, percent);
     }
     return true;
 }
