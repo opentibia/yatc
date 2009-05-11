@@ -22,8 +22,8 @@
 #define __UI_SBVLPANEL_H
 
 #include "skills.h"
-//#include "vip.h"
-//#include "battlewindow.h"
+#include "vipwindow.h"
+#include "battlewindow.h"
 #include <GLICT/panel.h>
 #include <GLICT/button.h>
 
@@ -38,8 +38,8 @@ public:
 	glictButton btnLogout;	//124, 6; 44x20
 
 	winSkills_t winSkills;
-	//winBattle_t winBattle;
-	//winVIP_t winVIP;
+	winBattle_t winBattle;
+	winVIP_t winVIP;
 
 	sbvlPanel_t()
 	{
@@ -62,7 +62,6 @@ public:
 		btnSkills.SetOnClick(btnSkills_onClick);
 		btnSkills.SetFont("minifont");
 
-		/*
 		panel.AddObject(&btnBattle);
 		btnBattle.SetCaption("Battle");
 		btnBattle.SetCustomData(this);
@@ -80,7 +79,6 @@ public:
 		btnVIP.SetPos(82, 6);
 		btnVIP.SetOnClick(btnVIP_onClick);
 		btnVIP.SetFont("minifont");
-		*/
 
 
 		panel.AddObject(&btnLogout);
@@ -94,27 +92,23 @@ public:
 
 		winSkills.window.SetVisible(false);
 		winSkills.controller = this;
-		//winBattle.window.SetVisible(false);
-		//winBattle.controller = this;
-		//winVIP.window.SetVisible(false);
-		//winVIP.controller = this;
+		winBattle.window.SetVisible(false);
+		winBattle.controller = this;
+		winVIP.window.SetVisible(false);
+		winVIP.controller = this;
 	}
 
 	void openSkills();
 	void closeSkills();
-	/*
 	void openBattle();
 	void closeBattle();
 	void openVIP();
 	void closeVIP();
-	*/
 
 	static void onClick_Logout(glictPos* relmousepos, glictContainer* callerclass);
 	static void btnSkills_onClick(glictPos* relmousepos, glictContainer* callerclass);
-	/*
 	static void btnBattle_onClick(glictPos* relmousepos, glictContainer* callerclass);
 	static void btnVIP_onClick(glictPos* relmousepos, glictContainer* callerclass);
-	*/
 };
 
 #endif //__UI_SBVLPANEL_H

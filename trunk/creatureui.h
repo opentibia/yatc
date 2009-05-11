@@ -29,6 +29,7 @@ public:
 	CreatureUI();
 	~CreatureUI();
 	virtual void Blit(int x, int y, float scale = 1., int map_x = 0, int map_y = 0) const;
+
 	void loadOutfit();
 	void drawName(int x, int y, float scale) const;
 	void drawSkullsShields(int x, int y, float scale) const;
@@ -43,6 +44,8 @@ public:
 	void resetSelf();
 
 	void unloadGfx();
+
+	static oRGBA getHealthColor(int hp);
 protected:
 	void setupObject();
 

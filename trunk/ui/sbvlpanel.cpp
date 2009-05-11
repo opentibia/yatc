@@ -27,7 +27,6 @@
 void sbvlPanel_t::onClick_Logout(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-    //gameclass->getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Logging out...", TEXTCOLOR_WHITE));
 	gameclass->m_protocol->sendLogout();
 }
 
@@ -43,11 +42,11 @@ void sbvlPanel_t::btnSkills_onClick(glictPos* relmousepos, glictContainer* calle
 		panel->openSkills();
 	}
 }
-/*
+
 void sbvlPanel_t::btnBattle_onClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	glictButton* btn = (glictButton*)callerclass;
-	sbvlPanel_t* panel = (sbvlPanel_t*)btn->getCustomData();
+	sbvlPanel_t* panel = (sbvlPanel_t*)btn->GetCustomData();
 	if(panel->winBattle.window.GetVisible()) {
 		panel->closeBattle();
 	}
@@ -55,10 +54,11 @@ void sbvlPanel_t::btnBattle_onClick(glictPos* relmousepos, glictContainer* calle
 		panel->openBattle();
 	}
 }
+
 void sbvlPanel_t::btnVIP_onClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	glictButton* btn = (glictButton*)callerclass;
-	sbvlPanel_t* panel = (sbvlPanel_t*)btn->getCustomData();
+	sbvlPanel_t* panel = (sbvlPanel_t*)btn->GetCustomData();
 	if(panel->winVIP.window.GetVisible()) {
 		panel->closeVIP();
 	}
@@ -66,7 +66,7 @@ void sbvlPanel_t::btnVIP_onClick(glictPos* relmousepos, glictContainer* callercl
 		panel->openVIP();
 	}
 }
-*/
+
 
 void sbvlPanel_t::openSkills()
 {
@@ -86,7 +86,6 @@ void sbvlPanel_t::closeSkills()
     if (parentlist)
         parentlist->RebuildList();
 }
-/*
 void sbvlPanel_t::openBattle()
 {
 	winBattle.window.SetVisible(true);
@@ -123,25 +122,16 @@ void sbvlPanel_t::closeVIP()
     if (parentlist)
         parentlist->RebuildList();
 }
-*/
-
-
 
 void winSkills_t::OnClose()
 {
 	controller->closeSkills();
 }
-/*
-void winBattle_t::onClose()
+void winBattle_t::OnClose()
 {
-	if(controller) {
-		controller->closeBattle();
-	}
+	controller->closeBattle();
 }
-void winVIP_t::onClose()
+void winVIP_t::OnClose()
 {
-	if(controller) {
-		controller->closeVIP();
-	}
+	controller->closeVIP();
 }
-*/
