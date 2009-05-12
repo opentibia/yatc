@@ -130,7 +130,8 @@ public:
 
 	void permitAccountName(bool yes) {
 		if(yes){
-			txtUsername.SetAllowedChars("");
+			// we can't have weird-ass symbols in account names either. ;)
+			txtUsername.SetAllowedChars(" !\"#$%/()=?*'+<>[]{}`~\\|;:_,.-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 			pnlUsername.SetCaption(gettext("Account name:"));
 		} else {
 			txtUsername.SetAllowedChars("0123456789");

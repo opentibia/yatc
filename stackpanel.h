@@ -27,6 +27,17 @@ private:
     void _updateDraggedChildPos(const glictPos &eventmousepos);
 };
 
+
+// note (nfries88): leaving this note here in case I don't manage
+//					to add resizable windows to GLICT before my next
+//					commit (seems likely I won't)
+//	OnResized(glictSize*, glictContainer*) is a callback given to glict
+//					and called when a glictContainer is resized.
+//	OnResize(float w) allows a yatcStackPanel to determine its own behavior
+//					after resizing
+//					example: a container window in CipSoft's client always
+//						displays one full row so this would allow a container
+//						window to resize itself if necessary.
 class yatcStackPanelWindow
 {
 public:
@@ -36,9 +47,11 @@ public:
 	static void OnClose(glictPos* pos, glictContainer *caller);
 	static void OnCollapse(glictPos* pos, glictContainer *caller);
 	static void OnExpand(glictPos* pos, glictContainer *caller);
+	static void OnResized(glictSize* size, glictContainer* caller);
 
 	virtual float GetDefaultHeight(){ return 0.F; };
 	virtual void OnClose(){ };
+	virtual void OnResize(float h){ };
 
 	glictWindow window;
 	glictPanel winpanel;

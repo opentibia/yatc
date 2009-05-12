@@ -138,6 +138,8 @@
 		<Unit filename="bigint.h" />
 		<Unit filename="choicegrid.cpp" />
 		<Unit filename="choicegrid.h" />
+		<Unit filename="clipboard.cpp" />
+		<Unit filename="clipboard.h" />
 		<Unit filename="codeguide.txt" />
 		<Unit filename="confighandler.cpp" />
 		<Unit filename="confighandler.h" />

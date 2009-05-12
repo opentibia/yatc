@@ -34,10 +34,13 @@
 #include "sprite.h"
 #include "options.h"
 #include "product.h"
+#include "clipboard.h"
 
 #include "net/connection.h"
 #include "net/protocollogin.h"
 #include "net/protocolgame80.h"
+
+extern yatcClipboard g_clipboard;
 
 extern Connection* g_connection;
 extern bool g_running;
@@ -193,8 +196,21 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 
 void GM_MainMenu::keyPress (char key)
 {
+	// NOTE (nfries88): I have no clue why, but I get 22 and 3 when pressing CTRL+V and CTRL+C respectively.
+	if(key == 22)
+	{
+		std::string text = g_clipboard.getText();
+		glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
+		if(textbox) textbox->SetCaption(textbox->GetCaption()+text);
+		return;
+	}
+	else if(key == 3)
+	{
+		// we can't currently select anything, so how could we copy?
+		return;
+	}
     // login assistance for login box
-	if (!options.ui_compat) {
+	else if (!options.ui_compat) {
 		if (glictGlobals.topFocused == &winLogin.txtUsername && key == 13)
 			winLogin.btnOk.Focus(NULL);
 		else if (glictGlobals.topFocused == &winLogin.txtPassword && key == 13)
@@ -225,7 +241,6 @@ void GM_MainMenu::keyPress (char key)
         }
 
     }
-
 
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 
