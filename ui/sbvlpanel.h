@@ -26,7 +26,11 @@
 #include "battlewindow.h"
 #include <GLICT/panel.h>
 #include <GLICT/button.h>
-
+#if defined(HAVE_LIBINTL_H)
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 class sbvlPanel_t
 {
 public:
@@ -54,7 +58,7 @@ public:
 		#endif
 
 		panel.AddObject(&btnSkills);
-		btnSkills.SetCaption("Skills");
+		btnSkills.SetCaption(gettext("Skills"));
 		btnSkills.SetCustomData(this);
 		btnSkills.SetWidth(35);
 		btnSkills.SetHeight(20);
@@ -63,7 +67,7 @@ public:
 		btnSkills.SetFont("minifont");
 
 		panel.AddObject(&btnBattle);
-		btnBattle.SetCaption("Battle");
+		btnBattle.SetCaption(gettext("Battle"));
 		btnBattle.SetCustomData(this);
 		btnBattle.SetWidth(35);
 		btnBattle.SetHeight(20);
@@ -72,7 +76,7 @@ public:
 		btnBattle.SetFont("minifont");
 
 		panel.AddObject(&btnVIP);
-		btnVIP.SetCaption("VIP");
+		btnVIP.SetCaption(gettext("VIP"));
 		btnVIP.SetCustomData(this);
 		btnVIP.SetWidth(35);
 		btnVIP.SetHeight(20);
@@ -82,7 +86,7 @@ public:
 
 
 		panel.AddObject(&btnLogout);
-		btnLogout.SetCaption("Logout");
+		btnLogout.SetCaption(gettext("Logout"));
 		btnLogout.SetCustomData(this);
 		btnLogout.SetWidth(45);
 		btnLogout.SetHeight(20);

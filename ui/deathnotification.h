@@ -24,7 +24,13 @@
 #include <GLICT/window.h>
 #include <GLICT/panel.h>
 #include <GLICT/button.h>
-
+#if defined(HAVE_LIBINTL_H)
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
+#include "../util.h"
+#include "../product.h"
 class deathNotice_t
 {
 public:
@@ -39,7 +45,7 @@ public:
 
 	deathNotice_t()
 	{
-		window.SetCaption("You are dead");
+		window.SetCaption(gettext("You are dead"));
 		window.SetWidth(340);
 		window.SetHeight(140);
 
@@ -48,11 +54,17 @@ public:
 		lblText.SetWidth(315);
 		lblText.SetHeight(70);
 		lblText.SetBGActiveness(false);
-		lblText.SetCaption("Alas! Brave adventurer, you have met a sad fate.\n"
-			"But do not despair, for the gods will bring you back\n"
-			"into the world in exhchange for a small sacrifice.\n"
-			"\nSimply click on 'Ok' to resume your journeys in Tibia!");
-		lblText.SetFont("aafont");
+		lblText.SetCaption(
+            str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT,
+                gettext(    "OMG! Some creep just killed ya, you noob.\n"
+                            "But don't be sad, you crying baby. You can just respawn if\n"
+                            "you give up some of your stuff. \n"
+                            "\n"
+                            "Go click that 'Ok' button if you dare and resume your journeys in $$PRODUCTSHORT$$!"
+                )
+            )
+        );
+        lblText.SetFont("aafont");
 
 		window.AddObject(&pnlSep);
 		pnlSep.SetPos(9, 100);
@@ -61,7 +73,7 @@ public:
 		pnlSep.SetSkin(&g_skin.chk);
 
 		window.AddObject(&btnOk);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont");
 		btnOk.SetPos(225, 110);
 		btnOk.SetWidth(44);
@@ -69,7 +81,7 @@ public:
 		btnOk.SetOnClick(&btnOk_onClick);
 
 		window.AddObject(&btnCancel);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont");
 		btnCancel.SetPos(280, 110);
 		btnCancel.SetWidth(44);

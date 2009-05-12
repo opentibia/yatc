@@ -24,7 +24,11 @@
 #include <GLICT/window.h>
 #include <GLICT/panel.h>
 #include <GLICT/button.h>
-
+#if defined(HAVE_LIBINTL_H)
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 class exitWarning_t
 {
 public:
@@ -40,7 +44,7 @@ public:
 
 	exitWarning_t()
 	{
-		window.SetCaption("Warning");
+		window.SetCaption(gettext("Warning"));
 		window.SetWidth(520);
 		window.SetHeight(100);
 
@@ -49,9 +53,9 @@ public:
 		lblText.SetWidth(500);
 		lblText.SetHeight(44);
 		lblText.SetBGActiveness(false);
-		lblText.SetCaption("If you shut down the program, your character might stay in the game.\n"
+		lblText.SetCaption(gettext("If you shut down the program, your character might stay in the game.\n"
 			"Click on \"Logout\" to ensure that your character leaves the game properly.\n"
-			"Click on \"Exit\" if you want to exit the program without logging out your character.");
+			"Click on \"Exit\" if you want to exit the program without logging out your character."));
 		lblText.SetFont("aafont");
 
 		window.AddObject(&pnlSep);
@@ -61,7 +65,7 @@ public:
 		pnlSep.SetSkin(&g_skin.chk);
 
 		window.AddObject(&btnLogout);
-		btnLogout.SetCaption("Logout");
+		btnLogout.SetCaption(gettext("Logout"));
 		btnLogout.SetFont("minifont");
 		btnLogout.SetPos(405, 70);
 		btnLogout.SetWidth(44);
@@ -70,7 +74,7 @@ public:
 		btnLogout.SetCustomData(this);
 
 		window.AddObject(&btnExit);
-		btnExit.SetCaption("Exit");
+		btnExit.SetCaption(gettext("Exit"));
 		btnExit.SetFont("minifont");
 		btnExit.SetPos(350, 70);
 		btnExit.SetWidth(44);
@@ -78,7 +82,7 @@ public:
 		btnExit.SetOnClick(&btnExit_onClick);
 
 		window.AddObject(&btnCancel);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont");
 		btnCancel.SetPos(460, 70);
 		btnCancel.SetWidth(44);

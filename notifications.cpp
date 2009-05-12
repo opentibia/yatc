@@ -295,15 +295,18 @@ void Notifications::onChangeIcons()
 }
 void Notifications::onAddCreature(uint32_t id)
 {
+    // FIXME (ivucica#1#): this is wrong. just notify the g_game, and let it handle it correctly. don't directly mess with g_game's structures
 	if(id != GlobalVariables::getPlayerID()) {
 		((GM_Gameworld*)g_game)->sbvlPanel.winBattle.add(id);
 	}
 }
 void Notifications::onRemoveCreature(uint32_t id)
 {
+    // FIXME (ivucica#1#): this is wrong. just notify the g_game, and let it handle it correctly. don't directly mess with g_game's structures
 	((GM_Gameworld*)g_game)->sbvlPanel.winBattle.remove(id);
 }
 void Notifications::onCreatureChangeHealth(uint32_t id, uint32_t health)
 {
+    // FIXME (ivucica#1#): this is wrong. just notify the g_game, and let it handle it correctly. don't directly mess with g_game's structures
 	((GM_Gameworld*)g_game)->sbvlPanel.winBattle.update(id);
 }
