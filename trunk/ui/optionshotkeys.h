@@ -76,59 +76,59 @@ public:
 		item = NULL;
 
 		window.SetVisible(false);
-		window.SetHeight(404);
+		window.SetHeight(389);
 		window.SetWidth(286);
 		window.SetCaption(gettext("Hotkey Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
 
 		window.AddObject(&lblHotkeys);
 		lblHotkeys.SetCaption(gettext("Available hotkeys:"));
-		lblHotkeys.SetPos(18, 33);
-		lblHotkeys.SetWidth(268-18);
-		lblHotkeys.SetHeight(43-33);
+		lblHotkeys.SetPos(18, 18);
+		lblHotkeys.SetWidth(250);
+		lblHotkeys.SetHeight(15);
 		lblHotkeys.SetBGActiveness(false);
 		lblHotkeys.SetFont("aafont");
 
 		window.AddObject(&lstHotkeys);
-		lstHotkeys.SetPos(18, 47);
-		lstHotkeys.SetWidth(268-18);
-		lstHotkeys.SetHeight(152-47);
+		lstHotkeys.SetPos(18, 32);
+		lstHotkeys.SetWidth(250);
+		lstHotkeys.SetHeight(105);
 		lstHotkeys.SetBGColor(.2, .2, .2, 1.);
 		lstHotkeys.SetFocusable(true);
 
 		window.AddObject(&lblText);
 		lblText.SetCaption(gettext("Edit hotkey text:"));
-		lblText.SetPos(18, 166);
-		lblText.SetWidth(268-18);
-		lblText.SetHeight(195-180);
+		lblText.SetPos(18, 150);
+		lblText.SetWidth(250);
+		lblText.SetHeight(15);
 		lblText.SetBGActiveness(false);
 		lblText.SetFont("aafont");
 
 		window.AddObject(&txtText);
-		txtText.SetPos(18, 180);
-		txtText.SetWidth(268-18);
-		txtText.SetHeight(195-180);
+		txtText.SetPos(18, 165);
+		txtText.SetWidth(250);
+		txtText.SetHeight(15);
 		txtText.SetFont("aafont");
 
 		// 18 209 268 230
 		window.AddObject(&chkSendAuto.pnlPanel);
-		chkSendAuto.SetPos(18,209);
-		chkSendAuto.SetWidth(268-18);
-		chkSendAuto.SetHeight(230-209);
+		chkSendAuto.SetPos(18,194);
+		chkSendAuto.SetWidth(250);
+		chkSendAuto.SetHeight(21);
 		chkSendAuto.SetCaption(gettext("Send automatically"));
 		chkSendAuto.lblLabel.SetCaptionColor(glictColor(.5f, .5f, .5f, .5f));
 
 		// Item Hotkeys
 		window.AddObject(&lblObjText);
-		lblObjText.SetPos(18, 244);
-		lblObjText.SetHeight(10);
+		lblObjText.SetPos(18, 229);
+		lblObjText.SetHeight(15);
 		lblObjText.SetWidth(120);
 		lblObjText.SetCaption(gettext("Edit Hotkey Object: "));
 		lblObjText.SetBGActiveness(false);
 		lblObjText.SetFont("aafont");
 		// Display Items Here
 		window.AddObject(&pnlObjView);
-		pnlObjView.SetPos(18, 258);
+		pnlObjView.SetPos(18, 243);
 		pnlObjView.SetHeight(53);
 		pnlObjView.SetWidth(53);
 		pnlObjView.SetCustomData(this);
@@ -138,7 +138,7 @@ public:
 		pnlObjView.SetSkin(&g_skin.txt);
 
 		window.AddObject(&btnSelectObj);
-		btnSelectObj.SetPos(82, 258);
+		btnSelectObj.SetPos(82, 243);
 		btnSelectObj.SetHeight(20);
 		btnSelectObj.SetWidth(86);
 		btnSelectObj.SetCaption(gettext("Select Object"));
@@ -147,7 +147,7 @@ public:
 		btnSelectObj.SetCustomData(this);
 
 		window.AddObject(&btnClearObj);
-		btnClearObj.SetPos(82, 290);
+		btnClearObj.SetPos(82, 275);
 		btnClearObj.SetHeight(20);
 		btnClearObj.SetWidth(86);
 		btnClearObj.SetCaption(gettext("Clear Object"));
@@ -156,7 +156,7 @@ public:
 		btnClearObj.SetCustomData(this);
 
 		window.AddObject(&btnUseSelf);
-		btnUseSelf.SetPos(181, 257);
+		btnUseSelf.SetPos(181, 243);
 		btnUseSelf.SetHeight(20);
 		btnUseSelf.SetWidth(86);
 		btnUseSelf.SetCaption(gettext("Use on yourself"));
@@ -165,7 +165,7 @@ public:
 		btnUseSelf.SetCustomData(this);
 
 		window.AddObject(&btnUseTarget);
-		btnUseTarget.SetPos(181, 290);
+		btnUseTarget.SetPos(181, 275);
 		btnUseTarget.SetHeight(20);
 		btnUseTarget.SetWidth(86);
 		btnUseTarget.SetCaption(gettext("Use on target"));
@@ -174,7 +174,7 @@ public:
 		btnUseTarget.SetCustomData(this);
 
 		window.AddObject(&btnUseCrosshair);
-		btnUseCrosshair.SetPos(181, 324);
+		btnUseCrosshair.SetPos(181, 309);
 		btnUseCrosshair.SetHeight(20);
 		btnUseCrosshair.SetWidth(86);
 		btnUseCrosshair.SetCaption(gettext("Use on crosshair"));
@@ -183,21 +183,21 @@ public:
 		btnUseCrosshair.SetCustomData(this);
 
 		window.AddObject(&pnlSeparator);
-		pnlSeparator.SetPos(12, 366);
+		pnlSeparator.SetPos(12, 351);
 		pnlSeparator.SetWidth(275-12);
 		pnlSeparator.SetHeight(368-366);
 		pnlSeparator.SetBGColor(.2,.2,.2,1.);
 		pnlSeparator.SetSkin(&g_skin.chk);
 
 		window.AddObject(&btnOk);
-		btnOk.SetPos(178, 376);
+		btnOk.SetPos(178, 361);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(19);
 		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
-		btnCancel.SetPos(230, 376);
+		btnCancel.SetPos(230, 361);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(19);
 		btnCancel.SetCaption(gettext("Cancel"));
