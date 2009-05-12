@@ -111,6 +111,7 @@ public:
 		chkSendAuto.SetWidth(268-18);
 		chkSendAuto.SetHeight(230-209);
 		chkSendAuto.SetCaption("Send automatically");
+		chkSendAuto.lblLabel.SetCaptionColor(glictColor(.5f, .5f, .5f, .5f));
 
 		// Item Hotkeys
 		window.AddObject(&lblObjText);
@@ -276,26 +277,36 @@ public:
 		if(currenthotkey >= 0)
 		{
 			SaveHotkeyText(currenthotkey);
+			lsiHotkeys[currenthotkey].SetBGActiveness(false);
 			txtText.SetCaption("");
 			chkSendAuto.SetValue(false);
+			chkSendAuto.lblLabel.SetCaptionColor(glictColor(.5f, .5f, .5f, .5f));
+			btnUseCrosshair.SetHold(false);
+			btnUseSelf.SetHold(false);
+			btnUseTarget.SetHold(false);
+			if(item) {
+				delete item;
+			}
 		}
+		currenthotkey = -1;
 		options.Save();
 	}
 
 	void UpdateHotkey()
 	{
 		Hotkey& hotkey = options.hotkeys[currenthotkey];
+
+		chkSendAuto.SetValue(false);
+
+		btnUseSelf.SetHold(false);
+		btnUseTarget.SetHold(false);
+		btnUseCrosshair.SetHold(false);
 		if(!hotkey.isText)
 		{
 			hotkey.text = "";
 
 			item = Item::CreateItem(hotkey.item.itemid, hotkey.item.type);
 			txtText.SetCaption("");
-			chkSendAuto.SetValue(false);
-
-			btnUseSelf.SetHold(false);
-			btnUseTarget.SetHold(false);
-			btnUseCrosshair.SetHold(false);
 
 			if(hotkey.item.useOnSelf)
 			{
@@ -309,17 +320,21 @@ public:
 			{
 				btnUseCrosshair.SetHold(true);
 			}
+
+			chkSendAuto.lblLabel.SetCaptionColor(glictColor(.5f, .5f, .5f, .5f));
 		}
 		else
 		{
-			if(hotkey.text.length()) {
+			if(!hotkey.text.empty()) {
 				txtText.SetCaption(hotkey.text);
 				chkSendAuto.SetValue(hotkey.sendAuto);
+				chkSendAuto.lblLabel.SetCaptionColor(glictColor(.7f, .7f, .7f, .7f));
 			}
 			else
 			{
 				txtText.SetCaption("");
 				chkSendAuto.SetValue(false);
+				chkSendAuto.lblLabel.SetCaptionColor(glictColor(.5f, .5f, .5f, .5f));
 			}
 			hotkey.item.itemid = 0;
 		}
