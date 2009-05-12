@@ -26,6 +26,11 @@
 #include "../options.h"
 #include "checkbox.h"
 #include "../gamecontent/item.h"
+#if defined(HAVE_LIBINTL_H)
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
 
 class winOptionsHotkeys_t {
 public:
@@ -73,11 +78,11 @@ public:
 		window.SetVisible(false);
 		window.SetHeight(404);
 		window.SetWidth(286);
-		window.SetCaption("Hotkey Options");
+		window.SetCaption(gettext("Hotkey Options"));
 		window.SetBGColor(.4, .4, .4, 1.);
 
 		window.AddObject(&lblHotkeys);
-		lblHotkeys.SetCaption("Available hotkeys:");
+		lblHotkeys.SetCaption(gettext("Available hotkeys:"));
 		lblHotkeys.SetPos(18, 33);
 		lblHotkeys.SetWidth(268-18);
 		lblHotkeys.SetHeight(43-33);
@@ -92,7 +97,7 @@ public:
 		lstHotkeys.SetFocusable(true);
 
 		window.AddObject(&lblText);
-		lblText.SetCaption("Edit hotkey text:");
+		lblText.SetCaption(gettext("Edit hotkey text:"));
 		lblText.SetPos(18, 166);
 		lblText.SetWidth(268-18);
 		lblText.SetHeight(195-180);
@@ -110,7 +115,7 @@ public:
 		chkSendAuto.SetPos(18,209);
 		chkSendAuto.SetWidth(268-18);
 		chkSendAuto.SetHeight(230-209);
-		chkSendAuto.SetCaption("Send automatically");
+		chkSendAuto.SetCaption(gettext("Send automatically"));
 		chkSendAuto.lblLabel.SetCaptionColor(glictColor(.5f, .5f, .5f, .5f));
 
 		// Item Hotkeys
@@ -118,7 +123,7 @@ public:
 		lblObjText.SetPos(18, 244);
 		lblObjText.SetHeight(10);
 		lblObjText.SetWidth(120);
-		lblObjText.SetCaption("Edit Hotkey Object: ");
+		lblObjText.SetCaption(gettext("Edit Hotkey Object: "));
 		lblObjText.SetBGActiveness(false);
 		lblObjText.SetFont("aafont");
 		// Display Items Here
@@ -136,7 +141,7 @@ public:
 		btnSelectObj.SetPos(82, 258);
 		btnSelectObj.SetHeight(20);
 		btnSelectObj.SetWidth(86);
-		btnSelectObj.SetCaption("Select Object");
+		btnSelectObj.SetCaption(gettext("Select Object"));
 		btnSelectObj.SetOnClick(&winOptionsHotkeys_t::onSelectObj);
 		btnSelectObj.SetFont("minifont", 8);
 		btnSelectObj.SetCustomData(this);
@@ -145,7 +150,7 @@ public:
 		btnClearObj.SetPos(82, 290);
 		btnClearObj.SetHeight(20);
 		btnClearObj.SetWidth(86);
-		btnClearObj.SetCaption("Clear Object");
+		btnClearObj.SetCaption(gettext("Clear Object"));
 		btnClearObj.SetOnClick(&winOptionsHotkeys_t::onClearObj);
 		btnClearObj.SetFont("minifont", 8);
 		btnClearObj.SetCustomData(this);
@@ -154,7 +159,7 @@ public:
 		btnUseSelf.SetPos(181, 257);
 		btnUseSelf.SetHeight(20);
 		btnUseSelf.SetWidth(86);
-		btnUseSelf.SetCaption("Use on yourself");
+		btnUseSelf.SetCaption(gettext("Use on yourself"));
 		btnUseSelf.SetOnClick(&winOptionsHotkeys_t::onObjUse_Self);
 		btnUseSelf.SetFont("minifont", 8);
 		btnUseSelf.SetCustomData(this);
@@ -163,7 +168,7 @@ public:
 		btnUseTarget.SetPos(181, 290);
 		btnUseTarget.SetHeight(20);
 		btnUseTarget.SetWidth(86);
-		btnUseTarget.SetCaption("Use on target");
+		btnUseTarget.SetCaption(gettext("Use on target"));
 		btnUseTarget.SetOnClick(&winOptionsHotkeys_t::onObjUse_Target);
 		btnUseTarget.SetFont("minifont", 8);
 		btnUseTarget.SetCustomData(this);
@@ -172,7 +177,7 @@ public:
 		btnUseCrosshair.SetPos(181, 324);
 		btnUseCrosshair.SetHeight(20);
 		btnUseCrosshair.SetWidth(86);
-		btnUseCrosshair.SetCaption("Use on crosshair");
+		btnUseCrosshair.SetCaption(gettext("Use on crosshair"));
 		btnUseCrosshair.SetOnClick(&winOptionsHotkeys_t::onObjUse_Crosshair);
 		btnUseCrosshair.SetFont("minifont", 8);
 		btnUseCrosshair.SetCustomData(this);
@@ -188,14 +193,14 @@ public:
 		btnOk.SetPos(178, 376);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(19);
-		btnOk.SetCaption("Ok");
+		btnOk.SetCaption(gettext("Ok"));
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetPos(230, 376);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(19);
-		btnCancel.SetCaption("Cancel");
+		btnCancel.SetCaption(gettext("Cancel"));
 		btnCancel.SetFont("minifont",8);
 
 		for(int i = 0; i != 36; ++i)
@@ -258,17 +263,17 @@ public:
 		else if(options.hotkeys[hkid].item.useOnSelf)
 		{
 			lsiHotkeys[hkid].SetCaptionColor(0.0f, 0.95f, 0.4f);
-			ss << "(use object on yourself)";
+			ss << gettext("(use object on yourself)");
 		}
 		else if(options.hotkeys[hkid].item.useOnTarget)
 		{
 			lsiHotkeys[hkid].SetCaptionColor(0.1f, 0.2f, 0.9f);
-			ss << "(use object on target)";
+			ss << gettext("(use object on target)");
 		}
 		else if(options.hotkeys[hkid].item.useXHairs)
 		{
 			lsiHotkeys[hkid].SetCaptionColor(0.2f, 0.2f, 0.7f);
-			ss << "(use object with crosshairs)";
+			ss << gettext("(use object with crosshairs)");
 		}
 		lsiHotkeys[hkid].SetCaption(ss.str());
 	}

@@ -31,7 +31,12 @@ xgettext -d yatc -s -o yatc.pot \
 	../ui/uitrade.cpp \
 	../ui/optionsgfxadv.h \
 	../main.cpp \
-	../ui/minimap.h
+	../ui/minimap.h \
+	../ui/optionshotkeys.h \
+	../ui/sbvlpanel.h \
+	../ui/battlewindow.h \
+	../ui/exitwarning.h \
+	../ui/deathnotification.h
 echo "Done."
 
 # above list all files with extractable gettext() strings
