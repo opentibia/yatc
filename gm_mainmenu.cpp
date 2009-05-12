@@ -196,6 +196,7 @@ void GM_MainMenu::mouseEvent(SDL_Event& event)
 
 void GM_MainMenu::keyPress (char key)
 {
+	if(key == 0 || key == SDLK_LCTRL || key == SDLK_RCTRL) return; // don't pass these values to glict
 	// NOTE (nfries88): I have no clue why, but I get 22 and 3 when pressing CTRL+V and CTRL+C respectively.
 	if(key == 22)
 	{

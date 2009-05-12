@@ -200,7 +200,7 @@ void winOptions_t::winOptions_btnHotkeys_OnClick(glictPos* relmousepos, glictCon
 	winOptions->window.SetVisible(false);
 	winOptions->winOptionsHotkeys.Init();
 	winOptions->winOptionsHotkeys.window.SetVisible(true);
-	winOptions->winOptionsHotkeys.btnOk.Focus(NULL);
+	winOptions->winOptionsHotkeys.txtText.Focus(NULL);
 }
 
 void winOptions_t::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -209,7 +209,7 @@ void winOptions_t::winOptions_btnNetwork_OnClick(glictPos* relmousepos, glictCon
 	winOptions->window.SetVisible(false);
 	winOptions->winOptionsNetwork.Init();
 	winOptions->winOptionsNetwork.window.SetVisible(true);
-	winOptions->winOptionsNetwork.btnOk.Focus(NULL);
+	winOptions->winOptionsNetwork.txtServer.Focus(NULL);
 }
 
 void winOptions_t::winOptions_btnMotd_OnClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -354,7 +354,7 @@ void winOptions_t::winOptionsGraphicsAdvanced_btnCancel_OnClick(glictPos* relmou
 	options.Save();
 	winOptions->winOptionsGraphicsAdvanced.window.SetVisible(false);
 	winOptions->winOptionsGraphics.window.SetVisible(true);
-	winOptions->winOptionsGraphics.window.Focus(NULL);
+	winOptions->btnOk.Focus(NULL);
 }
 
 /* *********HOTKEYS********** */

@@ -84,6 +84,7 @@ public:
 		txtServer.SetWidth(200);
 		txtServer.SetHeight(13);
 		txtServer.SetFont("aafont");
+		txtServer.SetNext(&txtPort);
 
 		window.AddObject(&lblPort);
 		lblPort.SetCaption(gettext("Server port:"));
@@ -99,6 +100,7 @@ public:
 		txtPort.SetWidth(200);
 		txtPort.SetHeight(13);
 		txtPort.SetFont("aafont");
+		txtPort.SetPrevious(&txtServer);
 
 
         window.AddObject(&chkOTKey.pnlPanel);

@@ -406,8 +406,10 @@ void GM_Gameworld::updateScene()
 
 void GM_Gameworld::keyPress (char key)
 {
-
-	txtConsoleEntry.Focus(NULL);
+	// NOTE (nfries88): You can't add text hotkeys (among other things) in-game if console always has focus.
+	// TODO (nfries88): make a proper method of doing this. The gamemode should be notified of a focus change maybe?
+	if(dynamic_cast<glictTextbox*>(glictGlobals.topFocused) == NULL)
+		txtConsoleEntry.Focus(NULL);
 	if (key==13) {
 		if (txtConsoleEntry.GetCaption().size()) {
 		    bool sent = false;

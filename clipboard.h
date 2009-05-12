@@ -20,6 +20,10 @@
 
 #include <string>
 
+#ifdef __APPLE__
+#include <Carbon/Carbon.h>
+#endif
+
 // NOTE (nfries88): we'll only bother supporting text for the clipboard,
 //		since that's all the official client uses it for.
 class yatcClipboard
@@ -38,4 +42,7 @@ private:
 		char* data;
 	} strMem;
 	#endif*/
+	#ifdef __APPLE__
+	PasteboardRef m_clipboard;
+	#endif
 };
