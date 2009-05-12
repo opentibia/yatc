@@ -38,6 +38,7 @@
 #include "util.h"
 #include "popup.h"
 #include "objects.h"
+#include "clipboard.h"
 
 #include "notifications.h"
 
@@ -46,6 +47,8 @@
 #ifdef _MSC_VER
 #define time _time64
 #endif
+
+extern yatcClipboard g_clipboard;
 
 extern bool g_running;
 
@@ -488,6 +491,19 @@ void GM_Gameworld::keyPress (char key)
 
 		txtConsoleEntry.SetCaption("");
 	} else if(key != 0) {
+		// NOTE (nfries88): I have no clue why, but I get 22 and 3 when pressing CTRL+V and CTRL+C respectively.
+		if(key == 22)
+		{
+			std::string text = g_clipboard.getText();
+			glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
+			if(textbox) textbox->SetCaption(textbox->GetCaption()+text);
+			return;
+		}
+		if(key == 3)
+		{
+			// we can't currently select anything, so how could we copy?
+			return;
+		}
 		// ALT and CTRL are 0.
 		// pressing ALT or CTRL will otherwise cause the text console to lose append with (char)0
 		// which is bad because it causes the string to terminate the console textbox to lose focus.

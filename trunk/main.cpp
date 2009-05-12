@@ -67,6 +67,8 @@ unsigned int MAXFPS=50;
 #include "spritesdl.h" // to load icon
 #include "product.h"
 
+#include "clipboard.h"
+
 #include "net/connection.h"
 #include "net/protocollogin.h"
 #include "net/protocolgame.h"
@@ -83,6 +85,8 @@ uint32_t g_frameDiff = 0;
 int g_frames;
 
 FPSmanager g_fpsmgr; // for sdl_gfx's fps management functions
+
+yatcClipboard g_clipboard;
 
 void onKeyDown(const SDL_Event& event)
 {

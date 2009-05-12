@@ -8,6 +8,7 @@
 
 
 #include "stackpanel.h"
+#include "util.h"
 #include <GLICT/globals.h>
 #include <string.h>
 #ifndef MIN
@@ -181,6 +182,21 @@ void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
     window->window.SetHeight(window->GetDefaultHeight());
     window->btnCollapse.SetCaption("-");
     window->btnCollapse.SetOnClick(OnCollapse);
+
+    glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
+    if (parentlist)
+        parentlist->RebuildList();
+}
+
+void yatcStackPanelWindow::OnResized(glictSize* size, glictContainer* caller)
+{
+	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
+
+	//NativeGUIError("Holy Crap", "This works");
+
+	// in case of horizontal resize
+    window->window.SetWidth(150+10);
+	window->OnResize(size->h);
 
     glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
     if (parentlist)
