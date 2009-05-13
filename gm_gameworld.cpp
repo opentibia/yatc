@@ -127,11 +127,17 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	#if (GLICT_APIREV>=95)
 	#define RIGHTSIDE yspRightSide
 	#define AUTOSETPOS true
+
+	#define WINDOWREGION yspRightSideWindows
 	#else
 	#define RIGHTSIDE pnlRightSide
 	#define AUTOSETPOS false
+
+	#define WINDOWREGION desktop
+
 	#warning You are using too old GLICT; right side bar will be messed up.
 	#endif
+
 
     // objects which didnt get set up in constructors and require initial setup...
     pnlTraffic.SetWidth(172);
@@ -165,7 +171,7 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
 	#if (GLICT_APIREV>=95)
     yspRightSide.RebuildList();
-    #endif
+
 
 	pnlRightSide.AddObject(&yspRightSideWindows);
 	yspRightSideWindows.SetPos(0,0);
@@ -173,22 +179,23 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	yspRightSideWindows.SetWidth(172);
 	yspRightSideWindows.SetHeight(600); // dynamic and updated later
 	yspRightSideWindows.SetPos(0, yspRightSide.GetTotalHeight());
+	#endif
 
 //TODO (nfries88): AUTOSETPOS crap?
-	yspRightSideWindows.AddObject(&sbvlPanel.winSkills.window);
+	WINDOWREGION.AddObject(&sbvlPanel.winSkills.window);
 	sbvlPanel.winSkills.window.SetPos(0, 0);
 	sbvlPanel.winSkills.window.SetVisible(false);
-	yspRightSideWindows.AddObject(&sbvlPanel.winBattle.window);
+	WINDOWREGION.AddObject(&sbvlPanel.winBattle.window);
 	sbvlPanel.winBattle.window.SetPos(0, 0);
 	sbvlPanel.winBattle.window.SetVisible(false);
-	yspRightSideWindows.AddObject(&sbvlPanel.winVIP.window);
+	WINDOWREGION.AddObject(&sbvlPanel.winVIP.window);
 	sbvlPanel.winVIP.window.SetPos(0, 0);
 	sbvlPanel.winVIP.window.SetVisible(false);
 
-	yspRightSideWindows.AddObject(&winShop.window);
+	WINDOWREGION.AddObject(&winShop.window);
 	winShop.window.SetPos(0, 0);
 	winShop.window.SetVisible(false);
-	yspRightSideWindows.AddObject(&winTrade.window);
+	WINDOWREGION.AddObject(&winTrade.window);
 	winShop.window.SetPos(0, 0);
 	winTrade.window.SetVisible(false);
 
@@ -1227,8 +1234,11 @@ void GM_Gameworld::openContainer(uint32_t cid)
 	Container* container = Containers::getInstance().getContainer(cid);
 	winContainer_t* window = new winContainer_t(container, cid);
 
-	yspRightSideWindows.AddObject(&window->window);
+	WINDOWREGION.AddObject(&window->window);
 	containers.push_back(window);
+	#if (GLICT_APIREV>=95)
+    yspRightSideWindows.RebuildList();
+    #endif
 }
 
 void GM_Gameworld::closeContainer(uint32_t cid)
@@ -1253,29 +1263,44 @@ void GM_Gameworld::closeContainer(uint32_t cid)
 		containers.erase(it);
 		delete window;
 	}
+	#if (GLICT_APIREV>=95)
+    yspRightSideWindows.RebuildList();
+    #endif
 }
 
 void GM_Gameworld::openShopWindow(const std::list<ShopItem>& itemlist)
 {
 	winShop.generateList(itemlist);
     winShop.window.SetVisible(true);
+	#if (GLICT_APIREV>=95)
+    yspRightSideWindows.RebuildList();
+    #endif
 }
 
 void GM_Gameworld::closeShopWindow() {
     winShop.window.SetVisible(false);
     winShop.destroyList();
+	#if (GLICT_APIREV>=95)
+    yspRightSideWindows.RebuildList();
+    #endif
 }
 
 void GM_Gameworld::openTradeWindow(bool ack)
 {
 	winTrade.onTradeUpdate(ack);
 	winTrade.window.SetVisible(true);
+	#if (GLICT_APIREV>=95)
+    yspRightSideWindows.RebuildList();
+    #endif
 }
 
 void GM_Gameworld::closeTradeWindow()
 {
 	winTrade.window.SetVisible(false);
 	winTrade.onTradeCompleted();
+	#if (GLICT_APIREV>=95)
+    yspRightSideWindows.RebuildList();
+    #endif
 }
 
 void GM_Gameworld::onUpdatePlayerCash(uint32_t newcash) {
