@@ -838,6 +838,8 @@ void GM_Gameworld::actionTrade(const glictPos& pos)
 		if(creature->getID() != GlobalVariables::getPlayerID()) {
 			m_protocol->sendRequestTrade(m_tradepos, m_tradeItemId, m_tradestackpos,
 				creature->getID());
+
+			openTradeWindow(false);
 		}
 	}
 
