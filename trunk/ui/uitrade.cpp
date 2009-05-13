@@ -59,6 +59,7 @@ winTrade_t::winTrade_t()
 	pnlSepTop.SetWidth(160);
 	pnlSepTop.SetHeight(2);
 	pnlSepTop.SetBGColor(.2,.2,.2,1.);
+	pnlSepTop.SetSkin(&g_skin.chk);
 
 	window.AddObject(&pnlContainerLeft);
 	pnlContainerLeft.SetBGActiveness(false);
@@ -76,16 +77,18 @@ winTrade_t::winTrade_t()
 
 	// TODO (nfries88): add middle seperator to pnlContainer
 	window.AddObject(&pnlSepMiddle);
-	pnlSepMiddle.SetPos(80, 0);
+	pnlSepMiddle.SetPos(80, 13);
 	pnlSepMiddle.SetWidth(2);
 	pnlSepMiddle.SetHeight(75);
 	pnlSepMiddle.SetBGColor(.2,.2,.2,1.);
+	pnlSepMiddle.SetSkin(&g_skin.chk);
 
 	window.AddObject(&pnlSepBottom);
 	pnlSepBottom.SetPos(0, 88);
 	pnlSepBottom.SetWidth(160);
 	pnlSepBottom.SetHeight(2);
 	pnlSepBottom.SetBGColor(.2,.2,.2,1.);
+	pnlSepBottom.SetSkin(&g_skin.chk);
 
 	window.AddObject(&lblWait);
 	lblWait.SetFont("minifont");
