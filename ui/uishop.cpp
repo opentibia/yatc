@@ -246,7 +246,7 @@ void winShop_t::addItemBuy (const ShopItem& itm)
 
 void winShop_t::addItemSell (const ShopItem& itm)
 {
-    if (!itm.getSellPrice()) return;
+    if (itm.getSellPrice() <= 0) return;
     std::stringstream s;
 
     s << itm.getName() << ": " << itm.getSellPrice() << gettext(" gold");
