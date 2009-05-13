@@ -33,8 +33,8 @@ public:
 	std::string getName() const { return name; }
 	uint16_t getItemId() const { return itemid; }
 	uint8_t getSubType() const { return subtype; }
-	uint32_t getBuyPrice() const { return buyprice; }
-	uint32_t getSellPrice() const { return sellprice; }
+	int32_t getBuyPrice() const { return buyprice; }
+	int32_t getSellPrice() const { return sellprice; }
 
 	void setExtraData(void* _extra) { extra = _extra; }
 	void*getExtraData() const { return extra; }
@@ -43,8 +43,8 @@ private:
 	std::string name;
 	uint16_t itemid;
 	uint8_t subtype;
-	uint32_t buyprice;
-	uint32_t sellprice;
+	int32_t buyprice;
+	int32_t sellprice;
 	void* extra;
 };
 

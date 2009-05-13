@@ -1214,12 +1214,13 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     #else
 	#warning No support for setcaptioncolor before glict apirev 85
 	#endif
-    int sum=0;
+	// note (nfries88): Start at 20px offset to make appearance more like official client.
+    int sum=20;
     for (std::vector<glictPanel*>::iterator it = pnlConsoleButtons.begin(); it != pnlConsoleButtons.end(); it++) {
         (*it)->SetPos(sum,0);
         sum += (int)(*it)->GetWidth();
     }
-    p->SetPos(sum+20,0);
+    p->SetPos(sum,0);
     p->SetOnClick(pnlConsoleButton_OnClick);
     p->SetSkin(&g_skin.consoletabpassive);
     p->SetFont("gamefont");
