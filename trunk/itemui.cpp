@@ -185,7 +185,7 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, ObjectType* obj, float scale,
 							(animationTime % obj->animcount)*obj->xdiv*obj->ydiv),
 							spriteSize
 							 );
-                        printf("Sizeof fluidcolormap: %ld\n", sizeof(fluidColorMap));
+                        printf("Sizeof fluidcolormap: %d\n", sizeof(fluidColorMap));
                         printf("Count: %d\n", count);
                         continue;
                     }
