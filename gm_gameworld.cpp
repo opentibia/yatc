@@ -116,10 +116,16 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	pnlRightSide.SetPos(750 - (172 + 2), 0 );
 	pnlRightSide.SetWidth(176); // 4 is for border
 	pnlRightSide.SetHeight(600); // dynamic and updated later
-	pnlRightSide.SetSkin(&g_skin.rsp);
+	pnlRightSide.SetSkin(&g_skin.background);
+
+	pnlRightSide.AddObject(&pnlRightSidePanels);
+	pnlRightSidePanels.SetPos(0, 0);
+	pnlRightSidePanels.SetWidth(176);
+	pnlRightSidePanels.SetHeight(600);
+	pnlRightSidePanels.SetSkin(&g_skin.rsp);
 
 
-	pnlRightSide.AddObject(&yspRightSide);
+	pnlRightSidePanels.AddObject(&yspRightSide);
 	yspRightSide.SetPos(2,2);
 	yspRightSide.SetWidth(172);
 	yspRightSide.SetBGActiveness(false);
@@ -173,14 +179,16 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
 	#if (GLICT_APIREV>=95)
     yspRightSide.RebuildList();
+    yspRightSide.SetHeight(yspRightSide.GetTotalHeight());
+    pnlRightSidePanels.SetHeight(yspRightSide.GetTotalHeight()+4);
 
 
 	pnlRightSide.AddObject(&yspRightSideWindows);
-	yspRightSideWindows.SetPos(2,2);
+	yspRightSideWindows.SetPos(0,0);
 	yspRightSideWindows.SetBGActiveness(false);
-	yspRightSideWindows.SetWidth(172);
+	yspRightSideWindows.SetWidth(176);
 	yspRightSideWindows.SetHeight(600); // dynamic and updated later
-	yspRightSideWindows.SetPos(2, yspRightSide.GetTotalHeight()+2);
+	yspRightSideWindows.SetPos(0, pnlRightSidePanels.GetHeight());
 	yspRightSideWindows.SetBGActiveness(false);
 	#endif
 
@@ -205,6 +213,13 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
 	#if (GLICT_APIREV>=95)
     yspRightSideWindows.RebuildList();
+    yspRightSideWindows.SetHeight(yspRightSideWindows.GetTotalHeight());
+
+    pnlRightSide.AddObject(&pnlRightSideFiller);
+	pnlRightSideFiller.SetPos(0, yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight());
+	pnlRightSideFiller.SetWidth(176);
+	pnlRightSideFiller.SetHeight(MAX(0, options.h-(yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight())));
+	pnlRightSideFiller.SetSkin(&g_skin.rsp);
     #endif
 
 
@@ -292,6 +307,31 @@ GM_Gameworld::~GM_Gameworld ()
 
 void GM_Gameworld::doResize(float w, float h)
 {
+	#if (GLICT_APIREV>=95)
+	// just to make sure right-side is as expected.
+	updateRightSide();
+
+	// NOTE (nfries88): This is to improve visual quality when resizing
+	float neww = w, newh = h;
+
+
+    // NOTE (nfries88): set minimum height and width
+	float minw = ((32 * 15) /* minimum acceptable map width */ + 176 /* right-side panel width */);
+	if(w < minw)
+		neww = minw;
+
+    float minh = MAX(((32*11)/* minimum acceptable map height */ + 168/* consoleheight */), pnlRightSidePanels.GetHeight());
+    if(h < minh)
+		newh = minh;
+
+	if(h != newh || w != neww)
+    {
+    	h = newh;
+    	w = neww;
+    	g_engine->doResize(w, h);
+    }
+    #endif
+
     GameModeOptions::doResize(w,h);
 
     int wi=(int)w, hi=(int)h; // just to avoid warnings
@@ -314,11 +354,14 @@ void GM_Gameworld::doResize(float w, float h)
     pnlConsoleButtonContainer.SetWidth(glictGlobals.w-172-4);
     pnlConsoleButtonContainer.SetHeight(18);
 
+	#if (GLICT_APIREV>=95)
+	// update right side with changes
+	updateRightSide();
+	#endif
+
 	DEBUGPRINT(0,0,"Updating scene\n");
 	updateScene(); // FIXME (ivucica#2#) potentially dangerous during call inside constructor (map possibly not loaded yet) -- gotta check with mips if we may draw map while it still isn't received from server via initial 0x64 packet
 	DEBUGPRINT(0,0,"Scene updated\n");
-
-
 }
 
 
@@ -1243,8 +1286,9 @@ void GM_Gameworld::openContainer(uint32_t cid)
 	WINDOWREGION.AddObject(&window->window);
 	containers.push_back(window);
 	#if (GLICT_APIREV>=95)
-    yspRightSideWindows.RebuildList();
-    #endif
+	// update right side with changes
+	updateRightSide();
+	#endif
 }
 
 void GM_Gameworld::closeContainer(uint32_t cid)
@@ -1270,8 +1314,9 @@ void GM_Gameworld::closeContainer(uint32_t cid)
 		delete window;
 	}
 	#if (GLICT_APIREV>=95)
-    yspRightSideWindows.RebuildList();
-    #endif
+	// update right side with changes
+	updateRightSide();
+	#endif
 }
 
 void GM_Gameworld::openShopWindow(const std::list<ShopItem>& itemlist)
@@ -1279,16 +1324,18 @@ void GM_Gameworld::openShopWindow(const std::list<ShopItem>& itemlist)
 	winShop.generateList(itemlist);
     winShop.window.SetVisible(true);
 	#if (GLICT_APIREV>=95)
-    yspRightSideWindows.RebuildList();
-    #endif
+	// update right side with changes
+	updateRightSide();
+	#endif
 }
 
 void GM_Gameworld::closeShopWindow() {
     winShop.window.SetVisible(false);
     winShop.destroyList();
 	#if (GLICT_APIREV>=95)
-    yspRightSideWindows.RebuildList();
-    #endif
+	// update right side with changes
+	updateRightSide();
+	#endif
 }
 
 void GM_Gameworld::openTradeWindow(bool ack)
@@ -1296,8 +1343,9 @@ void GM_Gameworld::openTradeWindow(bool ack)
 	winTrade.onTradeUpdate(ack);
 	winTrade.window.SetVisible(true);
 	#if (GLICT_APIREV>=95)
-    yspRightSideWindows.RebuildList();
-    #endif
+	// update right side with changes
+	updateRightSide();
+	#endif
 }
 
 void GM_Gameworld::closeTradeWindow()
@@ -1305,8 +1353,9 @@ void GM_Gameworld::closeTradeWindow()
 	winTrade.window.SetVisible(false);
 	winTrade.onTradeCompleted();
 	#if (GLICT_APIREV>=95)
-    yspRightSideWindows.RebuildList();
-    #endif
+	// update right side with changes
+	updateRightSide();
+	#endif
 }
 
 void GM_Gameworld::onUpdatePlayerCash(uint32_t newcash) {
@@ -1392,4 +1441,18 @@ void GM_Gameworld::setActiveConsole(Console* i){
 		m_btnConsoleClose.SetVisible(true);
 		m_btnConsoleM.SetVisible(true);
 	}*/
+}
+
+void GM_Gameworld::updateRightSide()
+{
+    yspRightSide.RebuildList();
+    yspRightSide.SetHeight(yspRightSide.GetTotalHeight());
+    pnlRightSidePanels.SetHeight(yspRightSide.GetTotalHeight()+4);
+	yspRightSideWindows.SetPos(0, pnlRightSidePanels.GetHeight());
+	// TODO (nfries88): close panels no longer needed.
+    yspRightSideWindows.RebuildList();
+    yspRightSideWindows.SetHeight(yspRightSideWindows.GetTotalHeight());
+
+	pnlRightSideFiller.SetPos(0, yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight());
+	pnlRightSideFiller.SetHeight(MAX(0, options.h-(yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight())));
 }

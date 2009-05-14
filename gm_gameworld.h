@@ -122,6 +122,8 @@ public:
 
 	void beginTrade(const Item* item, int stackpos, const Position& pos);
 
+	void updateRightSide();
+
 protected:
 
 	void actionLook(const glictPos& pos);
@@ -171,6 +173,9 @@ private:
 
     exitWarning_t m_exitWarningWindow;
     deathNotice_t m_deathNotice;
+
+    glictPanel pnlRightSideFiller;
+    glictPanel pnlRightSidePanels;
 
     /* END PRIMARY GUI */
 

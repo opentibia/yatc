@@ -9,6 +9,7 @@
 
 #include "stackpanel.h"
 #include "util.h"
+#include "gm_gameworld.h"
 #include <GLICT/globals.h>
 #include <string.h>
 #ifndef MIN
@@ -155,6 +156,8 @@ yatcStackPanelWindow::yatcStackPanelWindow()
 }
 
 void yatcStackPanelWindow::OnClose(glictPos* pos, glictContainer *caller) {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
 	window->OnClose();
 
@@ -162,9 +165,13 @@ void yatcStackPanelWindow::OnClose(glictPos* pos, glictContainer *caller) {
 	glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 
 void yatcStackPanelWindow::OnCollapse(glictPos* pos, glictContainer *caller) {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
 
     window->window.SetHeight(0);
@@ -174,9 +181,13 @@ void yatcStackPanelWindow::OnCollapse(glictPos* pos, glictContainer *caller) {
     glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 
 void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
 
     window->window.SetHeight(window->GetDefaultHeight());
@@ -186,10 +197,14 @@ void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
     glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 
 void yatcStackPanelWindow::OnResized(glictSize* size, glictContainer* caller)
 {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
 
 	//NativeGUIError("Holy Crap", "This works");
@@ -201,4 +216,6 @@ void yatcStackPanelWindow::OnResized(glictSize* size, glictContainer* caller)
     glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
