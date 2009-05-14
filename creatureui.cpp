@@ -182,23 +182,10 @@ void CreatureUI::drawName(int x, int y, float scale) const
     name[0] = toupper(name[0]);
 
 	volatile float centralizationoffset = -(g_engine->sizeText( name.c_str(), "gamefont" ) / 2) + 16 - 8;
-	//float centralizationoffset = 0;
-	//printf("%g\n", centralizationoffset); // FIXME (ivucica#1#) if this is removed, centralizationoffset doesn't have proper value. remove this and investigate!
 	getWalkOffset(walkoffx, walkoffy, scale);
 
     int hp = n->getHealth();
-    oRGBA col = getHealthColor(hp);/*
-    if (hp >= 50.0) {
-        col.r = (1. - (hp/200.))*255.;
-        col.g = (0.75 + hp/400.)*255.;
-        col.b = 0.;
-        col.a = 255.;
-    } else {
-        col.r = 255.;
-        col.g = (hp / 50.) * 255.;
-        col.b = 0.;
-        col.a = 1.;
-    }*/
+    oRGBA col = getHealthColor(hp);
 
 	g_engine->drawText(name.c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
 

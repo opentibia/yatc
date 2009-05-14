@@ -25,7 +25,12 @@ Popup::Popup() {
     wantdeath = false;
     // NOTE (nfries88): This isn't the right skin. The right skin is like the windows, but without the header.
     //	good enough as a temporary fix though.
-    list.SetSkin(&g_skin.background);
+    m_pnl.SetSkin(&g_skin.ptb);
+    m_pnl.SetWidth(120);
+    m_pnl.SetHeight(10);
+    m_pnl.AddObject(&list);
+    list.SetPos(3, 5);
+    list.SetBGActiveness(false);
 }
 Popup::~Popup() {
     for (std::vector<Popup::Item*>::iterator it = items.begin(); it != items.end(); it++) {
@@ -48,23 +53,23 @@ void Popup::addItem(const std::string &txt, Callback_t cb, void* data) {
     	pi->pnl.AddObject(pi->pnlSep);
     	pi->pnlSep->SetPos(0, 6);
     	pi->pnlSep->SetHeight(2);
-    	pi->pnlSep->SetWidth(150);
+    	pi->pnlSep->SetWidth(114);
     	pi->pnlSep->SetSkin(&g_skin.chk);
     	pi->pnlSep->SetFocusable(false);
     }
     pi->pnl.SetBGActiveness(false);
     pi->pnl.SetHeight(14);
-    pi->pnl.SetWidth(150);
+    pi->pnl.SetWidth(114);
     pi->pnl.SetFont("gamefont");
     pi->pnl.SetFocusable(false);
-    pi->pnl.SetBGColor(.4, .4, .4, 1.);
+    pi->pnl.SetBGColor(.7, .7, .7, 1.);
     pi->parent = this;
     items.push_back(pi);
     list.AddObject(&pi->pnl);
 
     list.SetHeight(14*items.size());
-    list.SetWidth(150);
-    list.SetBGColor(.1, .1, .1,1);
+    m_pnl.SetHeight(list.GetHeight() + 10);
+    list.SetWidth(114);
 
 }
 
@@ -75,7 +80,7 @@ void Popup::mouseOver(float x, float y) {
         pi->pnl.SetBGActiveness(false);
     }
     if (cursorInside(x,y)) {
-        y -= list.GetY();
+        y -= (m_pnl.GetY() + list.GetY());
         y /= 14;
         if (y < items.size() && items[y]->txt != "-")
             items[y]->pnl.SetBGActiveness(true);
@@ -87,7 +92,7 @@ void Popup::mouseOver(float x, float y) {
 
 void Popup::mouseClick(float x, float y) {
     if (cursorInside(x,y)) {
-        y -= list.GetY();
+        y -= (m_pnl.GetY() + list.GetY());
         y /= 14;
         if (y < items.size())
             if (items[y]->cb)
@@ -97,6 +102,6 @@ void Popup::mouseClick(float x, float y) {
 }
 
 bool Popup::cursorInside(float x, float y) {
-    return (x >= list.GetX() && x < list.GetX() + list.GetWidth() && y >= list.GetY() && y < list.GetY() + list.GetHeight());
+    return (x >= (m_pnl.GetX() + list.GetX()) && x < (m_pnl.GetX() + list.GetX()) + list.GetWidth() && y >= (m_pnl.GetY() + list.GetY()) && y < (m_pnl.GetY() + list.GetY()) + list.GetHeight());
 
 }

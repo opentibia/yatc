@@ -105,9 +105,16 @@ public:
 
 	skinImage *backgroundtl, *backgroundt, *backgroundtr, *backgroundl, *backgroundc, *backgroundr, *backgroundbl, *backgroundb, *backgroundbr; // general background
 
+	skinImage *ptbtl, *ptbt, *ptbtr, *ptbl, *ptbc, *ptbr, *ptbbl, *ptbb, *ptbbr; // console messages panel and popup
+	glictSkinner ptb;
+
+	skinImage *rstl, *rst, *rstr, *rsl, *rsc, *rsr, *rsbl, *rsb, *rsbr;
+	glictSkinner rsp;
+
 public:
 	glictSkinner chk, tmm, inv, consoletabbg, consoletabactive, consoletabpassive, compass, background, graphicbtn[BUTTON_LASTID], graphicbth[BUTTON_LASTID];
 	glictSkinner txt;
+
 
 	friend class skinImage;
 };

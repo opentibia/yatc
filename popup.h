@@ -71,8 +71,7 @@ public:
     //static void onClick(glictPos* pos, glictContainer *caller);
     void mouseClick(float x, float y);
 
-
-    glictList* getGlictList() { return &list; }
+	glictPanel* getPanel() { return &m_pnl; }
 
     void prepareToDie() { wantdeath = true; }
     bool wantsDeath() const { return wantdeath; }
@@ -83,6 +82,7 @@ public:
 
 private:
     glictList list;
+    glictPanel m_pnl;
     std::vector<Item*> items;
     bool wantdeath;
     void* owner;

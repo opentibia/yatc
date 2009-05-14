@@ -131,6 +131,8 @@ void Font::analyzeFont(int hchars, int vchars, int charblockw, int charblockh)
             int width=0;
             int height=0;
 
+			// FIXME (nfries88): This doesn't seem to work properly for all characters for "gamefont"
+			//	"w" and "s" are the ones I've noticed so far.
             for (int k = i*charblockw + 7; k >= i*charblockw; k--)
             {
 

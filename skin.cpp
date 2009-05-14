@@ -321,9 +321,9 @@ void Skin::loadSkin() {
     window.SetLeft		(windowl  = new skinImage(256,	0,		4,		96));
     window.SetCenter	(windowc  = new skinImage(0,	0,		96,		96));
     window.SetRight	(windowr  = new skinImage(260,	0,		4,		96));
-    window.SetBL		(windowbl = new skinImage(2,	193,	4,		4)); // FIXME
+    window.SetBL		(windowbl = new skinImage(98, 	193, 	4, 		4));
     window.SetBottom	(windowb  = new skinImage(2,	193,	96,		4));
-    window.SetBR		(windowbr = new skinImage(2,	193,	4,		4)); // FIXME
+    window.SetBR		(windowbr = new skinImage(102,	193,	4,		4));
 
 	glictGlobals.windowBodySkin = &window;
 
@@ -540,6 +540,8 @@ void Skin::loadSkin() {
     consoletabactive.SetBL		(consoletabactivebl = new skinImage(114,     216,    2,      2));
     consoletabactive.SetBottom	(consoletabactiveb  = new skinImage(116,     216,    92,     2));
     consoletabactive.SetBR		(consoletabactivebr = new skinImage(208,     216,    2,      2));
+    //consoletabactive.SetBR	(consoletabactivebr = new skinImage(98, 197, 4, 4));
+    //consoletabactive.SetBL
 
     consoletabpassive.SetTL		(consoletabpassivetl = new skinImage(114+96,  200,    2,      2));
     consoletabpassive.SetTop	(consoletabpassivet  = new skinImage(116+96,  200,    92,     2));
@@ -593,6 +595,26 @@ void Skin::loadSkin() {
     background.SetBL		(backgroundbl = NULL);
     background.SetBottom	(backgroundb  = NULL);
     background.SetBR		(backgroundbr = NULL);
+
+    ptb.SetTL		(ptbtl = new skinImage(98, 201, 3, 3));
+    ptb.SetTop		(ptbt = new skinImage(2, 211, 96, 3));
+    ptb.SetTR		(ptbtr = new skinImage(101, 201, 3, 3));
+    ptb.SetLeft		(ptbl = new skinImage(260, 0, 3, 96));
+    ptb.SetCenter	(ptbc = backgroundc);
+    ptb.SetRight	(ptbr = ptbl);
+    ptb.SetBL		(ptbbl = new skinImage(98, 204, 3, 3));
+    ptb.SetBottom	(ptbb = ptbt);
+    ptb.SetBR		(ptbbr = new skinImage(101, 204, 3, 3));
+
+    rsp.SetTL		(rstl = consoletabactivetl);
+    rsp.SetTop		(rst = consoletabactivet);
+    rsp.SetTR		(rstr = consoletabactivetr);
+    rsp.SetLeft		(rsl = consoletabactivel);
+    rsp.SetCenter	(rsc = backgroundc);
+    rsp.SetRight	(rsr = new skinImage(0, 98, 2, 96));
+    rsp.SetBL		(rsbl = new skinImage(98, 195, 2, 2));
+    rsp.SetBottom	(rsb = new skinImage(0, 96, 96, 2));
+    rsp.SetBR		(rsbr = new skinImage(104, 195, 2, 2));
 }
 
 void Skin::unloadSkin() {
