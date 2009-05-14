@@ -70,57 +70,81 @@ void sbvlPanel_t::btnVIP_onClick(glictPos* relmousepos, glictContainer* callercl
 
 void sbvlPanel_t::openSkills()
 {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	winSkills.window.SetVisible(true);
 	btnSkills.SetHold(true);
 
 	glictList* parentlist = dynamic_cast<glictList*>(winSkills.window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 void sbvlPanel_t::closeSkills()
 {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	winSkills.window.SetVisible(false);
 	btnSkills.SetHold(false);
 
 	glictList* parentlist = dynamic_cast<glictList*>(winSkills.window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 void sbvlPanel_t::openBattle()
 {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	winBattle.window.SetVisible(true);
 	btnBattle.SetHold(true);
 
 	glictList* parentlist = dynamic_cast<glictList*>(winBattle.window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 void sbvlPanel_t::closeBattle()
 {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	winBattle.window.SetVisible(false);
 	btnBattle.SetHold(false);
 
 	glictList* parentlist = dynamic_cast<glictList*>(winBattle.window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 void sbvlPanel_t::openVIP()
 {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	winVIP.window.SetVisible(true);
 	btnVIP.SetHold(true);
 
 	glictList* parentlist = dynamic_cast<glictList*>(winVIP.window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 void sbvlPanel_t::closeVIP()
 {
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
 	winVIP.window.SetVisible(false);
 	btnVIP.SetHold(false);
 
 	glictList* parentlist = dynamic_cast<glictList*>(winVIP.window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
+
+	gameclass->updateRightSide();
 }
 
 void winSkills_t::OnClose()
