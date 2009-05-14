@@ -116,7 +116,7 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	pnlRightSide.SetPos(750 - (172 + 2), 0 );
 	pnlRightSide.SetWidth(176); // 4 is for border
 	pnlRightSide.SetHeight(600); // dynamic and updated later
-	pnlRightSide.SetSkin(&g_skin.consoletabactive);
+	pnlRightSide.SetSkin(&g_skin.rsp);
 
 
 	pnlRightSide.AddObject(&yspRightSide);
@@ -387,7 +387,7 @@ void GM_Gameworld::updateScene()
         if (m_popup->wantsDeath())
         {
             printf("Removing popup\n");
-            desktop.RemoveObject(m_popup->getGlictList());
+            desktop.RemoveObject(m_popup->getPanel());
             desktop.DelayedRemove();
             delete m_popup;
             m_popup = NULL;
@@ -999,11 +999,11 @@ void GM_Gameworld::performPopup(PopupProducerCallback cb, void*owner, void*arg) 
 			return;
 		}
         m_popup = new Popup();
-        desktop.AddObject(m_popup->getGlictList());
+        desktop.AddObject(m_popup->getPanel());
         if(cb)
             cb(m_popup,owner,arg);
 
-        m_popup->getGlictList()->SetPos(ptrx,ptry);
+        m_popup->getPanel()->SetPos(ptrx,ptry);
     }
     else{
         m_popup->prepareToDie();

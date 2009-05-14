@@ -89,7 +89,7 @@ void GM_Debug::ButtonOnClick(glictPos* relmousepos, glictContainer* callerclass)
 
     if (!gd->popup) {
         gd->popup = new Popup;
-        glictList* gl = gd->popup->getGlictList();
+        glictPanel* gl = gd->popup->getPanel();
 
         gl->SetPos(callerclass->GetX() + relmousepos->x, callerclass->GetY() + relmousepos->y);
         gd->desktop.AddObject(gl);
@@ -432,7 +432,7 @@ void GM_Debug::mouseEvent(SDL_Event& event)
     bool hadpopup = false;
     if (popup) {
         hadpopup = true;
-        glictList *gl = popup->getGlictList();
+        glictPanel *gl = popup->getPanel();
         if (event.type == SDL_MOUSEMOTION) {
             popup->mouseOver(pos.x, pos.y);
             printf("Done mouseover\n");
@@ -450,7 +450,7 @@ void GM_Debug::mouseEvent(SDL_Event& event)
                 }
                 return;
         } else {
-            glictList *gl = popup->getGlictList();
+            glictPanel *gl = popup->getPanel();
 
             if (event.button.state == SDL_PRESSED)
                 gl->CastEvent(GLICT_MOUSEDOWN, &pos, 0, NULL);
@@ -460,7 +460,7 @@ void GM_Debug::mouseEvent(SDL_Event& event)
 
 
             if (!killpopup && event.type == SDL_MOUSEBUTTONUP) {
-                glictList *gl = popup->getGlictList();
+                glictPanel *gl = popup->getPanel();
 
                 desktop.RemoveObject(gl);
                 killpopup = true;
@@ -486,7 +486,7 @@ void GM_Debug::mouseEvent(SDL_Event& event)
 
     if (hadpopup) {
         if (!killpopup && event.type == SDL_MOUSEBUTTONUP) {
-            glictList *gl = popup->getGlictList();
+            glictPanel *gl = popup->getPanel();
 
             desktop.RemoveObject(gl);
             killpopup = true;
