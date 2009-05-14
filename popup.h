@@ -60,6 +60,7 @@ public:
         Callback_t cb;
         void* data;
         class Popup* parent;
+        glictPanel* pnlSep;
     };
 
     Popup();
