@@ -98,7 +98,9 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 
 
 	float walkoffx = 0.f, walkoffy = 0.f;
-	getWalkOffset(walkoffx, walkoffy, scale);
+	if(map_x != 0 && map_y != 0) {
+		getWalkOffset(walkoffx, walkoffy, scale);
+	}
 
 	//for(uint32_t k = 0; k < m_obj->blendframes; ++k){ // note: if it's anything except item, there won't be blendframes...
 	{
@@ -129,7 +131,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		// NOTE (nfries88): I have no idea if this will render the proper colors at all.
 		// It does send black square correctly, though.
 		// Also not sure how long the square is supposed to be shown... 1s? 500ms?
-		if((n->getSquareStart() + 1000) >= g_frameTime)
+		if((map_x != 0 && map_y != 0) && (n->getSquareStart() + 1000) >= g_frameTime)
 		{
 			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 34*scale, 34*scale, n->getSquareColor(), 2*scale);
 		}
@@ -200,8 +202,8 @@ void CreatureUI::drawName(int x, int y, float scale) const
 
 	g_engine->drawText(name.c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
 
-	g_engine->drawRectangle(x + walkoffx + centralizationoffset, y - 14 + walkoffy, (g_engine->sizeText( name.c_str(), "gamefont" )), 6, oRGBA(0,0,0,1));
-	g_engine->drawRectangle(x + walkoffx + centralizationoffset+1, y - 13 + walkoffy, ((g_engine->sizeText( name.c_str(), "gamefont" ))-2)*(hp/100.), 4, col);
+	g_engine->drawRectangle(x + walkoffx + centralizationoffset, y - 14 + walkoffy, 35, 4, oRGBA(0,0,0,1));
+	g_engine->drawRectangle(x + walkoffx + centralizationoffset+1, y - 13 + walkoffy, 33*(hp/100.), 2, col);
 }
 
 oRGBA CreatureUI::getHealthColor(int hp)

@@ -19,8 +19,13 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "popup.h"
+#include "skin.h"
+
 Popup::Popup() {
     wantdeath = false;
+    // NOTE (nfries88): This isn't the right skin. The right skin is like the windows, but without the header.
+    //	good enough as a temporary fix though.
+    list.SetSkin(&g_skin.background);
 }
 Popup::~Popup() {
     for (std::vector<Popup::Item*>::iterator it = items.begin(); it != items.end(); it++) {
@@ -34,7 +39,19 @@ void Popup::addItem(const std::string &txt, Callback_t cb, void* data) {
     pi->txt = txt;
     pi->cb = cb;
     pi->data = data;
-    pi->pnl.SetCaption(txt == "-" ? "____________" : txt);
+    if(txt != "-") {
+		pi->pnl.SetCaption(txt);
+		pi->pnlSep = NULL;
+    }
+    else {
+    	pi->pnlSep = new glictPanel;
+    	pi->pnl.AddObject(pi->pnlSep);
+    	pi->pnlSep->SetPos(0, 6);
+    	pi->pnlSep->SetHeight(2);
+    	pi->pnlSep->SetWidth(150);
+    	pi->pnlSep->SetSkin(&g_skin.chk);
+    	pi->pnlSep->SetFocusable(false);
+    }
     pi->pnl.SetBGActiveness(false);
     pi->pnl.SetHeight(14);
     pi->pnl.SetWidth(150);

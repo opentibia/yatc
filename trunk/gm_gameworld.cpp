@@ -113,16 +113,18 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	#ifndef WINCE
 	// first, let's construct right side panel
 	desktop.AddObject(&pnlRightSide);
-	pnlRightSide.SetPos(750 - (172 + 4), 0 );
-	pnlRightSide.SetWidth(172 + 4); // 4 is for border
+	pnlRightSide.SetPos(750 - (172 + 2), 0 );
+	pnlRightSide.SetWidth(176); // 4 is for border
 	pnlRightSide.SetHeight(600); // dynamic and updated later
-	pnlRightSide.SetSkin(&g_skin.consoletabpassive);
+	pnlRightSide.SetSkin(&g_skin.consoletabactive);
+
 
 	pnlRightSide.AddObject(&yspRightSide);
-	yspRightSide.SetPos(0,0);
-	yspRightSide.SetBGActiveness(false);
+	yspRightSide.SetPos(2,2);
 	yspRightSide.SetWidth(172);
+	yspRightSide.SetBGActiveness(false);
 	yspRightSide.SetHeight(600); // dynamic and updated later
+	// TODO (nfries88): skin yspRightSide and yspRightSideWindows
 
 	#if (GLICT_APIREV>=95)
 	#define RIGHTSIDE yspRightSide
@@ -174,11 +176,12 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
 
 	pnlRightSide.AddObject(&yspRightSideWindows);
-	yspRightSideWindows.SetPos(0,0);
+	yspRightSideWindows.SetPos(2,2);
 	yspRightSideWindows.SetBGActiveness(false);
 	yspRightSideWindows.SetWidth(172);
 	yspRightSideWindows.SetHeight(600); // dynamic and updated later
-	yspRightSideWindows.SetPos(0, yspRightSide.GetTotalHeight());
+	yspRightSideWindows.SetPos(2, yspRightSide.GetTotalHeight()+2);
+	yspRightSideWindows.SetBGActiveness(false);
 	#endif
 
 //TODO (nfries88): AUTOSETPOS crap?

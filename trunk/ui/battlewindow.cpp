@@ -92,7 +92,11 @@ void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer
 {
 	Creature* creature = Creatures::getInstance().getCreature((int)caller->GetCustomData());
 	int hp = creature->getHealth();
-	oRGBA col = CreatureUI::getHealthColor(hp);
+	oRGBA col;
+	if(creature->getID() == GlobalVariables::getAttackID())
+		col = oRGBA(180, 50, 20, 255);
+	else
+		col = oRGBA(.7*255, .7*255, .7*255, .7*255);
 	g_engine->drawText(creature->getName().c_str(), "aafont", (int)real->left+23, (int)real->top, col);
 	creature->Blit((int)real->left+4, (int)real->top+4, 20.f/32.f, 0, 0);
 }

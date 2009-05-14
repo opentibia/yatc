@@ -61,8 +61,8 @@ public:
 	void loadSkin();
 	void unloadSkin();
 
-
-private:
+// NOTE (nfries88): I don't see a point in making some private and some public, so let's just make them all public.
+//private:
 
 	skinImage *windowtl, *windowt, *windowtr, *windowl, *windowc, *windowr, *windowbl, *windowb, *windowbr; // window
 	glictSkinner window;

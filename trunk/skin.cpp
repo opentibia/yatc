@@ -593,7 +593,6 @@ void Skin::loadSkin() {
     background.SetBL		(backgroundbl = NULL);
     background.SetBottom	(backgroundb  = NULL);
     background.SetBR		(backgroundbr = NULL);
-
 }
 
 void Skin::unloadSkin() {
@@ -1074,7 +1073,7 @@ void Skin::unloadSkin() {
     compass.SetBottom(NULL);
     compass.SetBR(NULL);
 
-    for (int i = 0; i < 11; i++)
+    for (int i = 0; i < BUTTON_LASTID; i++)
     {
         if (graphicbtntl[i] )delete graphicbtntl[i]; graphicbtntl[i] = NULL;
         if (graphicbtnt[i] ) delete graphicbtnt[i];  graphicbtnt [i] = NULL;
