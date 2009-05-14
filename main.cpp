@@ -177,7 +177,7 @@ void checkFile(const char *filename)
         if ((fetcherfn=yatc_findfile("tdffetcher"))=="") {
 		    if ((fetcherfn=yatc_findfile("tdffetcher.exe"))=="") {
                 std::string forreplace;
-#ifdef _LINUX
+#ifndef WIN32
                 forreplace = gettext("Loading the data file '$$FILENAME$$' has failed.\n"
                         "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
                         "If you are a Debian user, you may have forgotten to install\n"
@@ -188,7 +188,7 @@ void checkFile(const char *filename)
 #endif
 
                 forreplace = str_replace("$$FILENAME$$", filename, forreplace);
-                forreplace = str_replace("$$PRODUCTSHORT", PRODUCTSHORT, forreplace);
+                forreplace = str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, forreplace);
                 NativeGUIError(forreplace.c_str(), str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext("$$PRODUCTSHORT$$ Fatal Error")).c_str());
                 exit(1);
 		    }
@@ -202,7 +202,7 @@ void checkFile(const char *filename)
                 "\n"
                 "You will have to manually restart $$PRODUCTSHORT$$ afterwards.\n"
                 "\n");
-#ifdef _LINUX
+#ifndef WIN32
         forreplace += gettext("If you are a Debian user, you may have forgotten to install\n"
                               "the 'tibia-data' or 'yatc-data' package.");
 #endif
