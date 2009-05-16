@@ -136,7 +136,9 @@ yatcStackPanelWindow::yatcStackPanelWindow()
     // this button needs to be relocated manually
     #if (GLICT_APIREV >= 76)
     window.AddTitlebarObject(&closebtn);
-	closebtn.SetCaption("x");
+	closebtn.SetSkin(&g_skin.graphicbtn[BUTTON_CLOSE_WINDOW]);
+	closebtn.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CLOSE_WINDOW]);
+	closebtn.SetCaption("");
 	closebtn.SetWidth(12);
 	closebtn.SetHeight(12);
 	closebtn.SetPos(150 + 10 - 12, 2);
@@ -144,7 +146,9 @@ yatcStackPanelWindow::yatcStackPanelWindow()
 	closebtn.SetOnClick(OnClose);
 
 	window.AddTitlebarObject(&btnCollapse);
-	btnCollapse.SetCaption("-");
+	btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_COLLAPSE_WINDOW]);
+	btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_COLLAPSE_WINDOW]);
+	btnCollapse.SetCaption("");
 	btnCollapse.SetWidth(12);
 	btnCollapse.SetHeight(12);
 	btnCollapse.SetPos(150 + 10 - 24, 2);
@@ -175,7 +179,8 @@ void yatcStackPanelWindow::OnCollapse(glictPos* pos, glictContainer *caller) {
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
 
     window->window.SetHeight(0);
-    window->btnCollapse.SetCaption("+");
+	window->btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_EXPAND_WINDOW]);
+	window->btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_EXPAND_WINDOW]);
     window->btnCollapse.SetOnClick(OnExpand);
 
     glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
@@ -191,7 +196,8 @@ void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
 
     window->window.SetHeight(window->GetDefaultHeight());
-    window->btnCollapse.SetCaption("-");
+	window->btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_COLLAPSE_WINDOW]);
+	window->btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_COLLAPSE_WINDOW]);
     window->btnCollapse.SetOnClick(OnCollapse);
 
     glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());

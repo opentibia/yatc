@@ -67,14 +67,29 @@ ChoiceGrid::Item* ChoiceGrid::addItem(const std::string &txt, ChoiceGrid::ItemCa
 void ChoiceGrid::setRows(int rows)
 {
     this->rows = rows;
+    rebuildGrid();
 }
 void ChoiceGrid::setPadding(int w, int h)
 {
     paddingw = w; paddingh = h;
+    rebuildGrid();
 }
 void ChoiceGrid::setItemSize(int w, int h)
 {
     this->w = w; this->h = h;
+    rebuildGrid();
+}
+void ChoiceGrid::rebuildGrid()
+{
+	std::vector<ChoiceGrid::Item*>::iterator it;
+    int i = 0;
+    for(it = items.begin(); it != items.end(); ++it, ++i)
+    {
+    	(*it)->btn.SetPos((i%rows)*(this->w+paddingw) + paddingw, (i/rows)*(this->h+paddingh) + paddingh);
+
+    }
+    grid.SetWidth((w+paddingw)*rows + paddingw);
+    grid.SetHeight((h+paddingh)*(items.size()/rows + 1) + paddingh);
 }
 void ChoiceGrid::onClick(glictPos* relmousepos, glictContainer* caller)
 {

@@ -96,7 +96,7 @@ void EngineGL::initEngine()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void EngineGL::doResize(int w, int h)
+void EngineGL::doResize(int& w, int& h)
 {
 	Engine::doResize(w, h);
 

@@ -236,8 +236,14 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
     }
 }
 
-void Engine::doResize(int w, int h)
+void Engine::doResize(int& w, int& h)
 {
+	if((w < 656) ||	/* horizontal resize */
+		(h < 520) /* vertical resize */)
+	{
+		w = 656;
+		h = 520;
+	}
 	m_width = w;
 	m_height = h;
 	glictGlobals.w = w;

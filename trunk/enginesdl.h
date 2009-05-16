@@ -30,7 +30,7 @@ class EngineSDL : public Engine
     	~EngineSDL();
 
     	bool isSupported() { return true; } ///< Since SDL is always supported, this function always returns true.
-		void doResize(int h, int w);
+		void doResize(int& h, int& w);
 
     	void drawRectangle(float x, float y, float width, float height, oRGBA color);
     	void drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness = 1.f);

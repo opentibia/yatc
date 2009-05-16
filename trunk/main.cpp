@@ -21,6 +21,7 @@
 /// \file main.cpp
 /// This file contains the main(int,char**) function.
 
+#include <SDL/SDL_syswm.h>
 
 unsigned int MAXFPS=50;
 
@@ -494,6 +495,10 @@ int main(int argc, char *argv[])
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Running\n");
         g_running = true;
+
+        #ifdef WIN32
+        SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
+        #endif
 
 		SDL_Event event;
 		while(g_running){
