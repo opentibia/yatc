@@ -167,6 +167,7 @@ private:
 
 	glictPanel pnlConsoleContainer;
 	glictPanel pnlConsoleEntryContainer;
+	glictPanel pnlConsoleEntryView;
 	glictTextbox txtConsoleEntry;
 	std::vector<glictPanel*> pnlConsoleButtons;
     glictPanel pnlConsoleButtonContainer;
