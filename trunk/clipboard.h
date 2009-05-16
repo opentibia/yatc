@@ -21,7 +21,7 @@
 #include <string>
 
 #ifdef __APPLE__
-#include <Carbon/Carbon.h>
+	#include <Carbon/Carbon.h>
 #endif
 
 // NOTE (nfries88): we'll only bother supporting text for the clipboard,
@@ -36,12 +36,6 @@ public:
 	void setText(const std::string& text);
 
 private:
-	/*#ifdef WIN32
-	struct {
-		int len;
-		char* data;
-	} strMem;
-	#endif*/
 	#ifdef __APPLE__
 	PasteboardRef m_clipboard;
 	#endif

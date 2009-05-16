@@ -20,6 +20,8 @@
 
 #ifdef WIN32
 #include <windows.h>
+
+#include "util.h"
 #endif
 
 #ifdef __APPLE__
@@ -30,10 +32,7 @@
 
 yatcClipboard::yatcClipboard()
 {
-	#ifdef WIN32
-	/*strMem.len = 0;
-	strMem.data = NULL;*/
-	#elif defined(__APPLE__)
+	#ifdef __APPLE__
 	OSStatus err = PasteboardCreate(kPasteboardClipboard, &m_clipboard);
 	// TODO: error handling?
 	#endif
@@ -45,7 +44,7 @@ yatcClipboard::~yatcClipboard()
 std::string yatcClipboard::getText()
 {
 	#ifdef WIN32
-	OpenClipboard(NULL);
+	OpenClipboard(GetActiveWindow());
 	std::string ret = (const char*)GetClipboardData(CF_TEXT);
 	CloseClipboard();
 	return ret;
@@ -92,14 +91,17 @@ std::string yatcClipboard::getText()
 void yatcClipboard::setText(const std::string& text)
 {
 	#ifdef WIN32
-	/*if(strMem.data) {
-		delete [] strMem.data;
-	}
-	strMem.len = text.length()+1;
-	strMem.data = new char[strMem.len];*/
+	OpenClipboard(GetActiveWindow());
+	EmptyClipboard();
 
-	OpenClipboard(NULL);
-	SetClipboardData(CF_TEXT, (HANDLE)text.c_str());
+	HGLOBAL m_hmem = GlobalAlloc(GMEM_MOVEABLE, (text.length()+1));
+	LPVOID mem = GlobalLock(m_hmem);
+
+	ZeroMemory(mem, (text.length()+1));
+	strncpy((char*)mem, text.c_str(), text.length());
+	GlobalUnlock(m_hmem);
+
+	SetClipboardData(CF_OEMTEXT, m_hmem);
 	CloseClipboard();
 	#elif defined(__APPLE__)
 	OSStatus err = noErr;

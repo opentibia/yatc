@@ -65,6 +65,7 @@ public:
 
     // user interface reactions
     static void onSetOutfit(struct Popup::Item *parent);
+    static void onCopyName(struct Popup::Item *parent);
 
     // net/gamecontent reactions
 	virtual void onConnectionClosed();
@@ -163,6 +164,9 @@ private:
 	winTrade_t winTrade;
 	winOutfit_t winOutfit;
 	glictPanel pnlTraffic;
+
+	glictPanel pnlConsoleContainer;
+	glictPanel pnlConsoleEntryContainer;
 	glictTextbox txtConsoleEntry;
 	std::vector<glictPanel*> pnlConsoleButtons;
     glictPanel pnlConsoleButtonContainer;
