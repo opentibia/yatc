@@ -85,9 +85,9 @@ GM_MainMenu::GM_MainMenu()
 
     #endif
 
-    Font* mf = (Font*)(glictFindFont("minifont")->GetFontParam());
+    YATCFont* mf = (YATCFont*)(glictFindFont("minifont")->GetFontParam());
     mf->resetColor();
-    mf = (Font*)(glictFindFont("system")->GetFontParam());
+    mf = (YATCFont*)(glictFindFont("system")->GetFontParam());
     mf->addColor(.75,.75,.75);
 
 	pnlMainMenu.btnLogIn.Focus(NULL);

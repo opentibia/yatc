@@ -25,10 +25,10 @@
 #include <map>
 #include "sprite.h"
 typedef std::map<uint32_t, Sprite*> FontColorizedsMap;
-class Font{
+class YATCFont{
 	public:
-		Font(std::string filename, int index, Sprite* spr);
-		virtual ~Font();
+		YATCFont(std::string filename, int index, Sprite* spr);
+		virtual ~YATCFont();
 		void Blit (char t, int x1, int y1) {
 			m_currentcolorized->Blit(x1, y1, charx[(unsigned char)t], chary[(unsigned char)t], charw[(unsigned char)t], charh[(unsigned char)t]);
 		}
