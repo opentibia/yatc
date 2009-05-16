@@ -238,8 +238,8 @@ void yatc_fopen_init(char *cmdline) {
 	searchpath =
 	#ifndef WIN32
 		"~/.yatc/:"
-		"/usr/games/share/yatc-data/:"
-		"/usr/games/share/tibia/:"
+		"/usr/share/games/yatc-data/:"
+		"/usr/share/games/tibia/:"
 	#endif
 		DESTDIRS;
 

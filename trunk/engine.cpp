@@ -53,7 +53,7 @@ void Engine::draw_rectangle_lines(float left, float right, float top, float bott
 
 void Engine::font_render(const char* txt, const void* font, float fontsize, float x, float y)
 {
-	Font* f = (Font*)font;
+	YATCFont* f = (YATCFont*)font;
 	float cx = x, cy = y ;
 	float sizesofar = 0.f;
 	float linessofar = 0.f;
@@ -86,7 +86,7 @@ void Engine::font_render(const char* txt, const void* font, float fontsize, floa
 
 float Engine::font_size(const char* txt, const void* font, float fontsize)
 {
-	Font* f = (Font*)font;
+	YATCFont* f = (YATCFont*)font;
 	int size = 0, len = strlen(txt);
 	int maxsize = 0;
 	for(int i = 0; i < len; i++) {
@@ -110,7 +110,7 @@ float Engine::font_size(const char* txt, const void* font, float fontsize)
 }
 
 void Engine::font_color(const void* font, glictColor &col){
-    Font* f = (Font*)font;
+    YATCFont* f = (YATCFont*)font;
     f->resetColor();
     f->addColor(col.r,col.g,col.b);
 
@@ -193,7 +193,7 @@ void Engine::initFont(glictFont **fnt, const char *fontname)
 
 void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t color)
 {
-	Font *f = (Font*)(glictFindFont(font)->GetFontParam());
+	YATCFont *f = (YATCFont*)(glictFindFont(font)->GetFontParam());
 	if (!f)
         glictFontRender(text, font, x, y);
     else
@@ -213,7 +213,7 @@ void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t 
 }
 void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA color)
 {
-    Font *f = (Font*)(glictFindFont(font)->GetFontParam());
+    YATCFont *f = (YATCFont*)(glictFindFont(font)->GetFontParam());
 	if (!f)
 	{
         glictFontRender(text, font, x, y);

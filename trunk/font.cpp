@@ -21,7 +21,7 @@
 #include "font.h"
 #include "engine.h"
 
-Font::Font(std::string fn, int index, Sprite *spr)
+YATCFont::YATCFont(std::string fn, int index, Sprite *spr)
 {
 	// we do not create sprite here because the g_engine is not initialized yet
 	// so we can't use g_engine->createSprite
@@ -93,7 +93,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
         }
 
 		default:
-			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[Font::Font] index = %d.\n", index);
+			DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "[YATCFont::YATCFont] index = %d.\n", index);
 			break;
 	}
 
@@ -101,7 +101,7 @@ Font::Font(std::string fn, int index, Sprite *spr)
 
 
 }
-Font::~Font() {
+YATCFont::~YATCFont() {
     delete pic;
     for(FontColorizedsMap::iterator it = m_colorized.begin(); it != m_colorized.end(); it++) {
         delete it->second;
@@ -109,7 +109,7 @@ Font::~Font() {
 }
 
 
-void Font::analyzeFont(int hchars, int vchars, int charblockw, int charblockh)
+void YATCFont::analyzeFont(int hchars, int vchars, int charblockw, int charblockh)
 {
     // calculates char widths and heights
     SDL_Surface * sfc = pic->lockSurface();
@@ -174,7 +174,7 @@ void Font::analyzeFont(int hchars, int vchars, int charblockw, int charblockh)
 
 }
 
-void Font::addColor(float r, float g, float b)
+void YATCFont::addColor(float r, float g, float b)
 {
     // THIS NEEDS TO BE CORRECTED!
     // This is only needed under SDL engine.
@@ -203,12 +203,12 @@ void Font::addColor(float r, float g, float b)
     }
 }
 
-void Font::resetColor()
+void YATCFont::resetColor()
 {
 	addColor(1,1,1); // setting it to white effectively resets the color
 }
 
-int Font::getSpacing() {
+int YATCFont::getSpacing() {
 // spacing between characters
 // minifont has none
 // outlinefont has negative

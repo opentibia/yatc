@@ -56,10 +56,10 @@ EngineGL::EngineGL()
 
     Sprite*a,*b;
 
-	m_sysfont->SetFontParam(new Font("Tibia.pic", 2, a=createSprite("Tibia.pic", 2)));
-	m_minifont->SetFontParam(new Font("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
-	m_aafont->SetFontParam(new Font("Tibia.pic", 7, b=createSprite("Tibia.pic", 7)));
-	m_gamefont->SetFontParam(new Font("Tibia.pic", 4, createSprite("Tibia.pic", 4)));
+	m_sysfont->SetFontParam(new YATCFont("Tibia.pic", 2, a=createSprite("Tibia.pic", 2)));
+	m_minifont->SetFontParam(new YATCFont("Tibia.pic", 5, createSprite("Tibia.pic", 5)));
+	m_aafont->SetFontParam(new YATCFont("Tibia.pic", 7, b=createSprite("Tibia.pic", 7)));
+	m_gamefont->SetFontParam(new YATCFont("Tibia.pic", 4, createSprite("Tibia.pic", 4)));
 
 	a->addColor(.75,.75,.75);
 	b->addColor(.75,.75,.75);
@@ -78,10 +78,10 @@ EngineGL::~EngineGL()
 {
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Closing OpenGL engine\n");
 	if (m_screen) {
-		delete (Font*)m_sysfont->GetFontParam();
-		delete (Font*)m_minifont->GetFontParam();
-		delete (Font*)m_aafont->GetFontParam();
-		delete (Font*)m_gamefont->GetFontParam();
+		delete (YATCFont*)m_sysfont->GetFontParam();
+		delete (YATCFont*)m_minifont->GetFontParam();
+		delete (YATCFont*)m_aafont->GetFontParam();
+		delete (YATCFont*)m_gamefont->GetFontParam();
 	}
 }
 
