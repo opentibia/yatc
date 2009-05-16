@@ -80,6 +80,9 @@ void sbvlPanel_t::openSkills()
         parentlist->RebuildList();
 
 	gameclass->updateRightSide();
+
+	options.skillsh = winSkills.window.GetHeight();
+	options.Save();
 }
 void sbvlPanel_t::closeSkills()
 {
@@ -93,6 +96,9 @@ void sbvlPanel_t::closeSkills()
         parentlist->RebuildList();
 
 	gameclass->updateRightSide();
+
+	options.skillsh = -1;
+	options.Save();
 }
 void sbvlPanel_t::openBattle()
 {
@@ -106,6 +112,9 @@ void sbvlPanel_t::openBattle()
         parentlist->RebuildList();
 
 	gameclass->updateRightSide();
+
+	options.battleh = winBattle.window.GetHeight();
+	options.Save();
 }
 void sbvlPanel_t::closeBattle()
 {
@@ -119,6 +128,9 @@ void sbvlPanel_t::closeBattle()
         parentlist->RebuildList();
 
 	gameclass->updateRightSide();
+
+	options.battleh = -1;
+	options.Save();
 }
 void sbvlPanel_t::openVIP()
 {
@@ -132,6 +144,9 @@ void sbvlPanel_t::openVIP()
         parentlist->RebuildList();
 
 	gameclass->updateRightSide();
+
+	options.viph = winVIP.window.GetHeight();
+	options.Save();
 }
 void sbvlPanel_t::closeVIP()
 {
@@ -145,6 +160,9 @@ void sbvlPanel_t::closeVIP()
         parentlist->RebuildList();
 
 	gameclass->updateRightSide();
+
+	options.viph = -1;
+	options.Save();
 }
 
 void winSkills_t::OnClose()

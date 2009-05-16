@@ -105,6 +105,13 @@ public:
 	int battlemode;
 	int chasemode;
 	bool safemode;
+
+	// [gui]
+	bool inventoryCollapsed;
+	int skillsh;	// -1 = closed, 0 = collapsed
+	int battleh;	// -1 = closed, 0 = collapsed
+	int viph;		// -1 = closed, 0 = collapsed
+	int consoleh;	// always 150 + 18 for now.
 };
 
 
