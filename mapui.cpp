@@ -591,6 +591,8 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
         s.str("");
         s << gettext("Set Outfit") << "...";
         popup->addItem(s.str(), GM_Gameworld::onSetOutfit);
+        popup->addItem("-",NULL,NULL);
+        popup->addItem(gettext("Copy Name"), GM_Gameworld::onCopyName, (void*)GlobalVariables::getPlayerID());
     } else
     // attack depends if there is a creature and we're NOT on player pos
     if (const Creature *c = t->getTopCreature())
@@ -632,7 +634,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
         popup->addItem("-",NULL,NULL);
         s.str("");
         s << gettext("Copy Name");
-        popup->addItem(s.str(),onUnimplemented);
+        popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
 
     }
 

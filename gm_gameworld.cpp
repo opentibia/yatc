@@ -233,16 +233,25 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	winOutfit.window.SetPos(200,200);
 	winOutfit.window.SetVisible(false);
 
-	desktop.AddObject(&txtConsoleEntry);
-	txtConsoleEntry.SetHeight(12);
-	txtConsoleEntry.SetCaption("");
-
 	desktop.AddObject(&winMove.window);
 	winMove.window.SetVisible(false);
 
-    desktop.AddObject(&pnlConsoleButtonContainer);
+    desktop.AddObject(&pnlConsoleContainer);
+    //pnlConsoleContainer.SetBGActiveness(false);
+
+    pnlConsoleContainer.AddObject(&pnlConsoleEntryContainer);
+    pnlConsoleEntryContainer.SetSkin(&g_skin.rsp);
+    pnlConsoleEntryContainer.SetPos(2, 18);
+
+    pnlConsoleContainer.AddObject(&pnlConsoleButtonContainer);
     pnlConsoleButtonContainer.SetSkin(&g_skin.consoletabbg);
+    pnlConsoleButtonContainer.SetPos(0,0);
+    pnlConsoleButtonContainer.SetHeight(18);
     //pnlConsoleButtonContainer.SetBGActiveness(false);
+
+    pnlConsoleEntryContainer.AddObject(&txtConsoleEntry);
+	txtConsoleEntry.SetHeight(12);
+	txtConsoleEntry.SetCaption("");
 
     createConsole(); // add default console
 	m_activeconsole = getDefaultConsole();
@@ -271,7 +280,7 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
     m_tradeItemId = 0;
     m_tradestackpos = 0;
 
-	doResize(glictGlobals.w, glictGlobals.h);
+	doResize(MAX(glictGlobals.w, 656), MAX(glictGlobals.h, 520));
 
     SDL_SetCursor(g_engine->m_cursorBasic);
 
@@ -325,14 +334,19 @@ void GM_Gameworld::doResize(float w, float h)
 	yspRightSideWindows.SetHeight(MAX(h-yspRightSide.GetTotalHeight(), 0));
 	pnlRightSide.SetPos(w-172-4,0); // ysp is always on 0,0
 
-	txtConsoleEntry.SetWidth(w-172-4);
-	txtConsoleEntry.SetPos(0,h-12);
-
 	pnlTraffic.SetPos(w-200, 0);
 
-    pnlConsoleButtonContainer.SetPos(0,glictGlobals.h-150-18);
-    pnlConsoleButtonContainer.SetWidth(glictGlobals.w-172-4);
-    pnlConsoleButtonContainer.SetHeight(18);
+	pnlConsoleContainer.SetPos(0,h-150-18);
+	pnlConsoleContainer.SetWidth(w-172-4);
+	pnlConsoleContainer.SetHeight(150+18);
+
+	pnlConsoleEntryContainer.SetWidth(w-172-4-2);
+	pnlConsoleEntryContainer.SetHeight(150+2);
+
+    pnlConsoleButtonContainer.SetWidth(w-172-2);
+
+    txtConsoleEntry.SetWidth(w-172-4-2);
+	txtConsoleEntry.SetPos(0,150-12);
 
 	#if (GLICT_APIREV>=95)
 	// update right side with changes
@@ -1387,6 +1401,11 @@ void GM_Gameworld::onSetOutfit(Popup::Item *parent) {
     // happens when user clicks on "Set Outfit" in right click popup menu
     GM_Gameworld *g = (GM_Gameworld*)g_game;
     g->m_protocol->sendRequestOutfit();
+}
+void GM_Gameworld::onCopyName(Popup::Item *parent) {
+    // happens when user clicks on "Copy Name" in right click popup menu
+    Creature* c = Creatures::getInstance().getCreature((int)parent->data);
+    g_clipboard.setText(c->getName());
 }
 void GM_Gameworld::openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available){
     GM_Gameworld *g = (GM_Gameworld*)g_game;
