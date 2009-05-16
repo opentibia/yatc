@@ -136,6 +136,8 @@ public:
 	Creature* addCreature(uint32_t id);
 	void removeCreature(uint32_t id);
 
+	Creature* lookup(const std::string& name);
+
 	static uint32_t OutfitLookupTable[];
 
 private:

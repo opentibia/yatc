@@ -121,6 +121,18 @@ Creature* Creatures::getCreature(uint32_t id)
 	}
 }
 
+Creature* Creatures::lookup(const std::string& name)
+{
+	for(int i = 0; i < CREATURES_ARRAY; ++i)
+	{
+		if(m_creaturesArray[i].getName() == name)
+		{
+			return &m_creaturesArray[i];
+		}
+	}
+	return NULL;
+}
+
 Creature* Creatures::addCreature(uint32_t id)
 {
 	int16_t i = reserveCreature(id);

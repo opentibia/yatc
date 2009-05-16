@@ -25,6 +25,7 @@
 #include <vector>
 #include <string>
 #include <SDL/SDL.h>
+#include <GLICT/panel.h>
 #include "stdinttypes.h"
 #include "gamecontent/enums.h"
 
@@ -47,6 +48,9 @@ class ConsoleEntry {
 			m_timestamp = time(NULL);
 		}
 		int paintEntry(float x, float y);
+		int getHeight();
+		const std::string& getSpeaker(){ return m_speaker; }
+		std::string getFullText();
 	private:
 		std::string m_text, m_speaker;
 		TextColor_t m_color;
@@ -68,6 +72,8 @@ class Console {
 
         void setAssignedButton(glictPanel *pnl) { m_assignedButton = pnl; }
         glictPanel *getAssignedButton() const { return m_assignedButton; }
+
+		ConsoleEntry* getConsoleEntryAt(float relx, float rely);
 	private:
 		std::vector <ConsoleEntry> m_content;
 		SDL_Surface *m_surface;

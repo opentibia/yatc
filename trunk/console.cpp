@@ -23,7 +23,19 @@
 int ConsoleEntry::paintEntry(float x, float y)
 {
 	// TODO (ivucica#3#) add word wrapping
-	g_engine->drawText( (m_speaker + (m_speaker.size() ? ": " : "") + m_text).c_str(), "aafont", (int)x, (int)(y - glictFontNumberOfLines(m_text.c_str())*12), m_color);
+	// TODO (nfries88): limit font width, start new line when exceeded.
+	std::string fulltext = getFullText();
+	g_engine->drawText(fulltext.c_str(), "aafont", (int)x, (int)(y - glictFontNumberOfLines(fulltext.c_str())*12), m_color);
+	return glictFontNumberOfLines(m_text.c_str())*12;
+}
+
+std::string ConsoleEntry::getFullText()
+{
+	return (m_speaker + (m_speaker.size() ? ": " : "") + m_text);
+}
+
+int ConsoleEntry::getHeight()
+{
 	return glictFontNumberOfLines(m_text.c_str())*12;
 }
 
@@ -52,11 +64,6 @@ Console::~Console()
 void Console::paintConsole(float left, float top, float right, float bottom)
 {
     g_engine->setClipping(left,top,right-left,bottom-top);
-    for(int i = left; i < right; i += 96){
-		for(int j = top; j < bottom; j += 96){
-			g_engine->getUISprite()->Blit(i, j, 0, 0, MIN(right-i, 96), MIN(bottom-j, 96));
-		}
-	}
 
 	float x, y;
 	x = left; y = bottom;
@@ -68,6 +75,17 @@ void Console::paintConsole(float left, float top, float right, float bottom)
 	}
 	g_engine->resetClipping();
 
+}
+ConsoleEntry* Console::getConsoleEntryAt(float relx, float rely)
+{
+	float y = 0;
+
+	for (std::vector<ConsoleEntry>::reverse_iterator it=m_content.rbegin(); it!=m_content.rend(); it++) {
+		if (rely > y && rely < y + it->getHeight())
+			return &(*it);
+		y += it->getHeight();
+	}
+	return NULL;
 }
 void Console::insertEntry(ConsoleEntry ce) {
 	m_content.insert(m_content.end(), ce);

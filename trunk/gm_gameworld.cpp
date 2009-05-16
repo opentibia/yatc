@@ -59,6 +59,11 @@ extern uint32_t g_frameDiff;
 
 void resetDefaultCursor();
 
+void onPaintConsole(glictRect* real, glictRect* clipped, glictContainer* callerclass);
+void onClickConsole(glictPos* relmousepos, glictContainer* callerclass);
+
+extern int g_lastmousebutton;
+
 //void tmp(){((GM_Gameworld*)g_game)->msgBox("You made a choice", "Wat?");}
 
 void exitWarning_t::btnLogout_onClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -241,7 +246,7 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
     pnlConsoleContainer.AddObject(&pnlConsoleEntryContainer);
     pnlConsoleEntryContainer.SetSkin(&g_skin.rsp);
-    pnlConsoleEntryContainer.SetPos(2, 18);
+    pnlConsoleEntryContainer.SetPos(0, 16);
 
     pnlConsoleContainer.AddObject(&pnlConsoleButtonContainer);
     pnlConsoleButtonContainer.SetSkin(&g_skin.consoletabbg);
@@ -249,12 +254,19 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
     pnlConsoleButtonContainer.SetHeight(18);
     //pnlConsoleButtonContainer.SetBGActiveness(false);
 
+    pnlConsoleEntryContainer.AddObject(&pnlConsoleEntryView);
+    pnlConsoleEntryView.SetSkin(&g_skin.ptb);
+    pnlConsoleEntryView.SetPos(5, 5);
+    pnlConsoleEntryView.SetOnPaint(onPaintConsole);
+    pnlConsoleEntryView.SetOnClick(onClickConsole);
+
     pnlConsoleEntryContainer.AddObject(&txtConsoleEntry);
 	txtConsoleEntry.SetHeight(12);
 	txtConsoleEntry.SetCaption("");
 
     createConsole(); // add default console
 	m_activeconsole = getDefaultConsole();
+	pnlConsoleEntryView.SetCustomData(m_activeconsole);
 	pnlConsoleButtons[0]->SetSkin(&g_skin.consoletabactive);
 	#if (GLICT_APIREV>=85)
 	pnlConsoleButtons[0]->SetCaptionColor(0.7,0.7,0.7,1.0);
@@ -340,13 +352,16 @@ void GM_Gameworld::doResize(float w, float h)
 	pnlConsoleContainer.SetWidth(w-172-4);
 	pnlConsoleContainer.SetHeight(150+18);
 
-	pnlConsoleEntryContainer.SetWidth(w-172-4-2);
+	pnlConsoleEntryContainer.SetWidth(w-172-4);
 	pnlConsoleEntryContainer.SetHeight(150+2);
 
     pnlConsoleButtonContainer.SetWidth(w-172-2);
 
-    txtConsoleEntry.SetWidth(w-172-4-2);
-	txtConsoleEntry.SetPos(0,150-12);
+	pnlConsoleEntryView.SetWidth(w-172-4-10);
+	pnlConsoleEntryView.SetHeight(150-12-2-5);
+
+    txtConsoleEntry.SetWidth(w-172-4-20);
+	txtConsoleEntry.SetPos(20,150-12);
 
 	#if (GLICT_APIREV>=95)
 	// update right side with changes
@@ -445,7 +460,7 @@ void GM_Gameworld::updateScene()
 	g_engine->resetClipping();
 
 
-	getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-172-4, glictGlobals.h-12);
+	//getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-172-4, glictGlobals.h-12);
 
 }
 
@@ -1440,6 +1455,7 @@ void GM_Gameworld::setActiveConsole(Console* i){
 		m_btnConsoleClose.SetVisible(true);
 		m_btnConsoleM.SetVisible(true);
 	}*/
+	pnlConsoleEntryView.SetCustomData(m_activeconsole);
 }
 
 void GM_Gameworld::updateRightSide()
@@ -1454,4 +1470,88 @@ void GM_Gameworld::updateRightSide()
 
 	pnlRightSideFiller.SetPos(0, yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight());
 	pnlRightSideFiller.SetHeight(MAX(0, options.h-(yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight())));
+}
+
+void onPaintConsole(glictRect* real, glictRect* clipped, glictContainer* callerclass)
+{
+	Console* console = (Console*)(callerclass->GetCustomData());
+	if(console)
+	{
+		console->paintConsole(real->left+4, real->top+2, real->right-4, real->bottom-2);
+	}
+}
+
+void onMessageTo(Popup::Item *parent)
+{
+	Creature* c = Creatures::getInstance().getCreature((uint32_t)parent->data);
+	if(c != NULL)
+	{
+		GM_Gameworld *gw = (GM_Gameworld*)g_game;
+		gw->setActiveConsole(gw->findConsole(c->getName()));
+	}
+}
+
+void onCopyMessage(Popup::Item *parent)
+{
+	ConsoleEntry* e = (ConsoleEntry*)parent->data;
+	g_clipboard.setText(e->getFullText());
+}
+
+void onUnimplemented(Popup::Item *parent)
+{
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
+}
+
+void makeConsolePopup(Popup* popup, void* owner, void* arg)
+{
+	ConsoleEntry* e = (ConsoleEntry*)arg;
+	std::string speaker = e->getSpeaker();
+
+	std::stringstream s;
+	if(speaker.length() != 0)
+	{
+		Creature* c = Creatures::getInstance().lookup(speaker);
+		if(c != NULL)
+		{
+			s.str("");
+			s << gettext("Message to") << " " << speaker;
+			popup->addItem(s.str(), onMessageTo, (void*)c->getID());
+
+			s.str("");
+			s << gettext("Add to VIP list");
+			popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
+
+			s.str("");
+			s << gettext("Ignore") << " " << speaker;
+			popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
+
+			popup->addItem("-",NULL,NULL);
+
+			s.str("");
+			s << gettext("Copy Name");
+			popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
+		}
+	}
+	s.str("");
+	s << gettext("Copy Message");
+	popup->addItem(s.str(), onCopyMessage, e);
+	popup->addItem("-",NULL,NULL);
+
+	s.str("");
+	s << gettext("Select all");
+	popup->addItem(s.str(), onUnimplemented /*onSelectAll*/);
+}
+
+void onClickConsole(glictPos* relmousepos, glictContainer* callerclass)
+{
+	if(g_lastmousebutton != SDL_BUTTON_RIGHT) return;
+
+	Console* console = (Console*)(callerclass->GetCustomData());
+	if(console != NULL)
+	{
+		ConsoleEntry* e = console->getConsoleEntryAt(relmousepos->x, callerclass->GetHeight() - relmousepos->y);
+		if(e != NULL)
+			((GM_Gameworld*)g_game)->performPopup(makeConsolePopup, NULL, (void*) e);
+	}
 }
