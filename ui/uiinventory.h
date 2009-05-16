@@ -52,10 +52,10 @@ public:
 #else
 	glictWindow panel __attribute__((deprecated));
 #endif
-	glictButton btnOptions;
 
 	glictPanel pnlSoul;
 	glictPanel pnlCap;
+	glictPanel pnlCapSoulCombo;
 	glictPanel pnlIcons;
 
 	ChoiceGrid::Item* battleModes[3];
@@ -67,7 +67,21 @@ public:
 
 	ItemPanel* pnlItem[10];
 
+	glictButton btnStop;
+	glictButton btnQuests;
+	glictButton btnOptions;
+	glictButton btnHelp;
+
+	glictButton btnCollapse;
+
+	void collapse();
+	void expand();
+
+
 	static void onClick_Options(glictPos* relmousepos, glictContainer* callerclass);
+	static void onClick_Collapse(glictPos* relmousepos, glictContainer* callerclass);
+	static void onClick_Expand(glictPos* relmousepos, glictContainer* callerclass);
+
 	static void paintCap(glictRect *real, glictRect *clipped, glictContainer *caller);
 	static void paintSoul(glictRect *real, glictRect *clipped, glictContainer *caller);
 	static void paintIcons(glictRect *real, glictRect *clipped, glictContainer *caller);

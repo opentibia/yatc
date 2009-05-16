@@ -116,7 +116,7 @@ void EngineSDL::drawRectangleLines(float x, float y, float width, float height, 
 	}
 }
 
-void EngineSDL::doResize(int w, int h)
+void EngineSDL::doResize(int& w, int& h)
 {
 	Engine::doResize(w, h);
 

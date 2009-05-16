@@ -43,7 +43,7 @@ class Engine
 
 		virtual bool isSupported() = 0;
 
-		virtual void doResize(int w, int h);
+		virtual void doResize(int& w, int& h);
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
 		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness = 1.f) {}
 		virtual void drawText(const char* text, const char* font, int x, int y, uint8_t color=215); // 215 == TEXTCOLOR_WHITE

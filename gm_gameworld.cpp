@@ -310,26 +310,6 @@ void GM_Gameworld::doResize(float w, float h)
 	#if (GLICT_APIREV>=95)
 	// just to make sure right-side is as expected.
 	updateRightSide();
-
-	// NOTE (nfries88): This is to improve visual quality when resizing
-	float neww = w, newh = h;
-
-
-    // NOTE (nfries88): set minimum height and width
-	float minw = ((32 * 15) /* minimum acceptable map width */ + 176 /* right-side panel width */);
-	if(w < minw)
-		neww = minw;
-
-    float minh = MAX(((32*11)/* minimum acceptable map height */ + 168/* consoleheight */), pnlRightSidePanels.GetHeight());
-    if(h < minh)
-		newh = minh;
-
-	if(h != newh || w != neww)
-    {
-    	h = newh;
-    	w = neww;
-    	g_engine->doResize(w, h);
-    }
     #endif
 
     GameModeOptions::doResize(w,h);

@@ -36,7 +36,7 @@ class EngineGL : public Engine
 		bool isSupported();
 
 		void Flip(){SDL_GL_SwapBuffers();};
-		void doResize(int h, int w);
+		void doResize(int& h, int& w);
 		void drawRectangle(float x, float y, float width, float height, oRGBA color);
 		void drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness = 1.f);
 

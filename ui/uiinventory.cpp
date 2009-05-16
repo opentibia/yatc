@@ -47,9 +47,6 @@ pnlInventory_t::pnlInventory_t()
 		{8, 91, 7},  // ring
 		{83, 91, 8} // ammo
 	};
-
-	panel.SetHeight(170);
-	panel.SetWidth(150);
 	#if (GLICT_APIREV >= 98)
 		panel.SetDraggable(true);
 		panel.SetSkin(&g_skin.background);
@@ -59,13 +56,32 @@ pnlInventory_t::pnlInventory_t()
 		panel.SetCaption(gettext("Inventory"));
 	#endif
 
+	panel.AddObject(&btnStop);
+	btnStop.SetCaption(gettext("Stop"));
+	btnStop.SetFont("minifont");
+	//btnStop.SetOnClick(&pnlInventory_t::onClick_Stop);
+
+	panel.AddObject(&btnCollapse);
+	btnCollapse.SetCaption("");
+	btnCollapse.SetWidth(12);
+	btnCollapse.SetHeight(12);
+	btnCollapse.SetPos(8, 3);
+	btnCollapse.SetCustomData(this);
+
+	panel.AddObject(&btnQuests);
+	btnQuests.SetCaption(gettext("Quests"));
+	btnQuests.SetWidth(50);
+	btnQuests.SetHeight(20);
+	btnQuests.SetPos(120, 104);
+	btnQuests.SetFont("minifont");
+	//btnQuests.SetOnClick(&pnlInventory_t::onClick_Quests);
+
 	panel.AddObject(&btnOptions);
-	btnOptions.SetCaption(gettext("Options"));
-	btnOptions.SetWidth(50);
-	btnOptions.SetHeight(20);
-	btnOptions.SetPos(120, 126);
 	btnOptions.SetFont("minifont");
 	btnOptions.SetOnClick(&pnlInventory_t::onClick_Options);
+
+	panel.AddObject(&btnHelp);
+	//btnHelp.SetOnClick(&pnlInventory_t::onClick_Help);
 
 	panel.AddObject(&pnlSoul);
 	pnlSoul.SetPos(8, 128);
@@ -73,7 +89,6 @@ pnlInventory_t::pnlInventory_t()
 	pnlSoul.SetWidth(32);
 	pnlSoul.SetSkin(&g_skin.inv);
 	pnlSoul.SetOnPaint(pnlInventory_t::paintSoul);
-	//pnlSoul.SetBGActiveness(false);
 
 	panel.AddObject(&pnlCap);
 	pnlCap.SetPos(83, 128);
@@ -81,11 +96,16 @@ pnlInventory_t::pnlInventory_t()
 	pnlCap.SetWidth(32);
 	pnlCap.SetSkin(&g_skin.inv);
 	pnlCap.SetOnPaint(pnlInventory_t::paintCap);
-	//pnlCap.SetBGActiveness(false);
+
+	panel.AddObject(&pnlCapSoulCombo);
+	pnlCapSoulCombo.SetPos(22, 3);
+	pnlCapSoulCombo.SetHeight(42);
+	pnlCapSoulCombo.SetWidth(32);
+	pnlCapSoulCombo.SetSkin(&g_skin.inv);
+	//pnlSoul.SetOnPaint(pnlInventory_t::paintCapSoulCombo);
 
 	// TODO: fix this to the proper skin (background should match capacity and soul)
 	panel.AddObject(&pnlIcons);
-	pnlIcons.SetPos(8, 152);
 	pnlIcons.SetHeight(13);
 	pnlIcons.SetWidth(108);
 	//pnlIcons.SetSkin(&g_skin.txt);
@@ -103,10 +123,8 @@ pnlInventory_t::pnlInventory_t()
 	// battlemode
 	glictPanel* bGrid = chcBattleMode.getGrid();
 	panel.AddObject(bGrid);
-	bGrid->SetPos(124, 17);
 	chcBattleMode.setItemSize(20, 20);
 	chcBattleMode.setPadding(0, 0);
-	chcBattleMode.setRows(1);
 	for(int i = 0; i != 3; ++i)
 	{
 		battleModes[i] = chcBattleMode.addItem("", onSetFightModes, (void*)(i+1));
@@ -117,10 +135,8 @@ pnlInventory_t::pnlInventory_t()
 
 	glictPanel* cGrid = chcChase.getGrid();
 	panel.AddObject(cGrid);
-	cGrid->SetPos(147, 17);
 	chcChase.setItemSize(20, 20);
 	chcChase.setPadding(0,0);
-	chcChase.setRows(1);
 	for(int i = 0; i != 2; ++i)
 	{
 		chaseModes[i] = chcChase.addItem("", onSetChase, (void*)(i));
@@ -131,13 +147,14 @@ pnlInventory_t::pnlInventory_t()
 
 	panel.AddObject(&btnSafeMode);
 	btnSafeMode.SetCaption("");
-	btnSafeMode.SetPos(147, 57);
 	btnSafeMode.SetWidth(20);
 	btnSafeMode.SetHeight(20);
 	btnSafeMode.SetOnClick(onSetSafeMode);
 	btnSafeMode.SetSkin(&g_skin.graphicbtn[BUTTON_SAFEMODE]);
 	btnSafeMode.SetHighlightSkin(&g_skin.graphicbth[BUTTON_SAFEMODE]);
 	btnSafeMode.SetHold(options.safemode);
+
+	expand();
 }
 
 pnlInventory_t::~pnlInventory_t()
@@ -148,27 +165,128 @@ pnlInventory_t::~pnlInventory_t()
 	}
 }
 
+void pnlInventory_t::collapse()
+{
+	// TODO (nfries88): implement this as cleanly as possible
+	panel.SetHeight(64);
+	panel.SetWidth(170);
+
+	btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_EXPAND_WINDOW]);
+	btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_EXPAND_WINDOW]);
+	btnCollapse.SetOnClick(&pnlInventory_t::onClick_Expand);
+
+	btnQuests.SetVisible(false);
+
+	btnOptions.SetSkin(&g_skin.graphicbtn[BUTTON_OPTIONSMINI]);
+	btnOptions.SetHighlightSkin(&g_skin.graphicbth[BUTTON_OPTIONSMINI]);
+	btnOptions.SetWidth(20);
+	btnOptions.SetHeight(20);
+	btnOptions.SetPos(125, 27);
+	btnOptions.SetCaption("");
+
+	btnStop.SetPos(125, 3);
+	btnStop.SetWidth(42);
+	btnStop.SetHeight(20);
+
+	btnHelp.SetSkin(&g_skin.graphicbtn[BUTTON_HELPMINI]);
+	btnHelp.SetHighlightSkin(&g_skin.graphicbth[BUTTON_HELPMINI]);
+	btnHelp.SetCaption("");
+	btnHelp.SetWidth(20);
+	btnHelp.SetHeight(20);
+	btnHelp.SetPos(147, 27);
+	btnHelp.SetFont("minifont");
+
+	glictPanel* bGrid = chcBattleMode.getGrid();
+	bGrid->SetPos(57, 3);
+	chcBattleMode.setRows(3);
+
+	glictPanel* cGrid = chcChase.getGrid();
+	cGrid->SetPos(57, 25);
+	chcChase.setRows(3);
+
+	pnlSoul.SetVisible(false);
+	pnlCap.SetVisible(false);
+	pnlCapSoulCombo.SetVisible(true);
+	pnlIcons.SetPos(8, 48);
+
+	btnSafeMode.SetPos(97, 27);
+
+	for (int i = 0; i < 10; i++) {
+		pnlItem[i]->SetVisible(false);
+	}
+}
+
+void pnlInventory_t::expand()
+{
+	panel.SetHeight(170);
+	panel.SetWidth(170);
+
+	btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_COLLAPSE_WINDOW]);
+	btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_COLLAPSE_WINDOW]);
+	btnCollapse.SetOnClick(&pnlInventory_t::onClick_Collapse);
+
+	btnQuests.SetVisible(true);
+
+	btnOptions.SetSkin(&g_skin.btnn);
+	btnOptions.SetHighlightSkin(&g_skin.btnh);
+	btnOptions.SetCaption(gettext("Options"));
+	btnOptions.SetWidth(50);
+	btnOptions.SetHeight(20);
+	btnOptions.SetPos(120, 126);
+
+	btnStop.SetPos(120, 82);
+	btnStop.SetWidth(50);
+	btnStop.SetHeight(20);
+
+	btnHelp.SetSkin(&g_skin.btnn);
+	btnHelp.SetHighlightSkin(&g_skin.btnh);
+	btnHelp.SetCaption(gettext("Help"));
+	btnHelp.SetWidth(50);
+	btnHelp.SetHeight(20);
+	btnHelp.SetPos(120, 148);
+	btnHelp.SetFont("minifont");
+
+	glictPanel* bGrid = chcBattleMode.getGrid();
+	bGrid->SetPos(124, 17);
+	chcBattleMode.setRows(1);
+
+	glictPanel* cGrid = chcChase.getGrid();
+	cGrid->SetPos(147, 17);
+	chcChase.setRows(1);
+
+	pnlSoul.SetVisible(true);
+	pnlCap.SetVisible(true);
+	pnlCapSoulCombo.SetVisible(false);
+	pnlIcons.SetPos(8, 152);
+
+	btnSafeMode.SetPos(147, 57);
+
+	for (int i = 0; i < 10; i++) {
+		pnlItem[i]->SetVisible(true);
+	}
+}
+
 void pnlInventory_t::paintCap(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
 	std::string text = yatc_itoa(GlobalVariables::getPlayerStat(STAT_CAPACITY));
-	g_engine->drawText("Cap:", "minifont", (int)real->left + 6, (int)real->top);
+	g_engine->drawText("Cap:", "minifont", (int)real->left + 6, (int)real->top + 1);
 	float len = g_engine->sizeText(text.c_str(), "aafont");
 	float width = real->right - real->left;
 	if(len > width)
 		len = width;
 	int diff = std::floor((width - len) / 2.f);
-	g_engine->drawText(text.c_str(), "aafont", (int)real->left + diff, (int)real->top + 10);
+	g_engine->drawText(text.c_str(), "aafont", (int)real->left + diff, (int)real->top + 9);
 }
 void pnlInventory_t::paintSoul(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
 	std::string text = yatc_itoa(GlobalVariables::getPlayerStat(STAT_SOUL));
-	g_engine->drawText("Soul:", "minifont", (int)real->left + 6, (int)real->top);
+	g_engine->drawText("Soul:", "minifont", (int)real->left + 6, (int)real->top + 1);
 	float len = g_engine->sizeText(text.c_str(), "aafont");
 	float width = real->right - real->left;
 	if(len > width)
 		len = width;
 	int diff = std::floor((width - len) / 2.f);
-	g_engine->drawText(text.c_str(), "aafont", (int)real->left + diff, (int)real->top + 10);
+	g_engine->drawText(text.c_str(), "aafont", (int)real->left + diff, (int)real->top + 9);
 }
 void pnlInventory_t::paintIcons(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
@@ -264,4 +382,18 @@ void pnlInventory_t::onSetSafeMode(glictPos* relmousepos, glictContainer* caller
 	((GM_Gameworld*)g_game)->m_protocol->sendFightModes(options.battlemode, options.chasemode, options.safemode);
 	options.Save();
 	((glictButton*)callerclass)->SetHold(options.safemode);
+}
+
+
+void pnlInventory_t::onClick_Collapse(glictPos* relmousepos, glictContainer* callerclass)
+{
+	pnlInventory_t* pnlInv = (pnlInventory_t*)callerclass->GetCustomData();
+	pnlInv->collapse();
+	((GM_Gameworld*)g_game)->updateRightSide();
+}
+void pnlInventory_t::onClick_Expand(glictPos* relmousepos, glictContainer* callerclass)
+{
+	pnlInventory_t* pnlInv = (pnlInventory_t*)callerclass->GetCustomData();
+	pnlInv->expand();
+	((GM_Gameworld*)g_game)->updateRightSide();
 }

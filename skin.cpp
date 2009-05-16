@@ -540,8 +540,6 @@ void Skin::loadSkin() {
     consoletabactive.SetBL		(consoletabactivebl = new skinImage(114,     216,    2,      2));
     consoletabactive.SetBottom	(consoletabactiveb  = new skinImage(116,     216,    92,     2));
     consoletabactive.SetBR		(consoletabactivebr = new skinImage(208,     216,    2,      2));
-    //consoletabactive.SetBR	(consoletabactivebr = new skinImage(98, 197, 4, 4));
-    //consoletabactive.SetBL
 
     consoletabpassive.SetTL		(consoletabpassivetl = new skinImage(114+96,  200,    2,      2));
     consoletabpassive.SetTop	(consoletabpassivet  = new skinImage(116+96,  200,    92,     2));
@@ -572,6 +570,7 @@ void Skin::loadSkin() {
     // options button when inventory is collapsed
     {
 		graphicbtn[BUTTON_OPTIONSMINI].SetCenter	(graphicbtnc [BUTTON_OPTIONSMINI] = new skinImage(312, 128, 20, 20));
+		graphicbth[BUTTON_OPTIONSMINI].SetCenter	(graphicbtnc [BUTTON_OPTIONSMINI] = new skinImage(332, 128, 20, 20));
     }
     // buttons that go above the console
     for (int i = BUTTON_CONSOLE_CLOSE; i <= BUTTON_CONSOLE_IGNORELIST; i++)
@@ -585,6 +584,15 @@ void Skin::loadSkin() {
         graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(258 + 16*(i-BUTTON_CONSOLE_IGNORELIST), 144, 16, 16));
         graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(258 + 16*(i-BUTTON_CONSOLE_IGNORELIST), 144+16, 16, 16));
     }
+    // buttons that go in window headers
+    for (int i = BUTTON_CLOSE_WINDOW; i <= BUTTON_CONTAINER_PARENT; i++)
+    {
+        graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(222 + 12*(i-BUTTON_IND_WINDOW), 98, 12, 12));
+        graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(222 + 12*(i-BUTTON_IND_WINDOW), 98+12, 12, 12));
+    }
+
+	graphicbtn[BUTTON_EXPAND_WINDOW].SetCenter(graphicbtnc [BUTTON_EXPAND_WINDOW] = new skinImage(308, 158, 12, 12));
+	graphicbth[BUTTON_EXPAND_WINDOW].SetCenter(graphicbthc [BUTTON_EXPAND_WINDOW] = new skinImage(308, 158+12, 12, 12));
 
     background.SetTL		(backgroundtl = NULL);
     background.SetTop	    (backgroundt  = NULL);

@@ -47,6 +47,7 @@ public:
     void setRows(int rows);
     void setPadding(int w, int h);
     void setItemSize(int w, int h);
+    void rebuildGrid();
     void setOnClick(Callback_t func) { cb=func; }
     void setSelected(ChoiceGrid::Item* newitem);
     void setData(void* data) { this->data = data; }
