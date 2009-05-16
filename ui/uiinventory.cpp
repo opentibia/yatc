@@ -154,7 +154,10 @@ pnlInventory_t::pnlInventory_t()
 	btnSafeMode.SetHighlightSkin(&g_skin.graphicbth[BUTTON_SAFEMODE]);
 	btnSafeMode.SetHold(options.safemode);
 
-	expand();
+	if(options.inventoryCollapsed)
+		collapse();
+	else
+		expand();
 }
 
 pnlInventory_t::~pnlInventory_t()
@@ -390,10 +393,16 @@ void pnlInventory_t::onClick_Collapse(glictPos* relmousepos, glictContainer* cal
 	pnlInventory_t* pnlInv = (pnlInventory_t*)callerclass->GetCustomData();
 	pnlInv->collapse();
 	((GM_Gameworld*)g_game)->updateRightSide();
+
+	options.inventoryCollapsed = true;
+	options.Save();
 }
 void pnlInventory_t::onClick_Expand(glictPos* relmousepos, glictContainer* callerclass)
 {
 	pnlInventory_t* pnlInv = (pnlInventory_t*)callerclass->GetCustomData();
 	pnlInv->expand();
 	((GM_Gameworld*)g_game)->updateRightSide();
+
+	options.inventoryCollapsed = false;
+	options.Save();
 }

@@ -292,6 +292,23 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
     m_tradeItemId = 0;
     m_tradestackpos = 0;
 
+    // gui options
+	if(options.skillsh != -1) {
+		sbvlPanel.winSkills.window.SetVisible(true);
+		sbvlPanel.btnSkills.SetHold(true);
+		sbvlPanel.winSkills.window.SetHeight(options.skillsh);
+	}
+	if(options.battleh != -1) {
+		sbvlPanel.winBattle.window.SetVisible(true);
+		sbvlPanel.btnBattle.SetHold(true);
+		sbvlPanel.winBattle.window.SetHeight(options.skillsh);
+	}
+	if(options.viph != -1) {
+		sbvlPanel.winVIP.window.SetVisible(true);
+		sbvlPanel.btnVIP.SetHold(true);
+		sbvlPanel.winVIP.window.SetHeight(options.skillsh);
+	}
+
 	doResize(MAX(glictGlobals.w, 656), MAX(glictGlobals.h, 520));
 
     SDL_SetCursor(g_engine->m_cursorBasic);

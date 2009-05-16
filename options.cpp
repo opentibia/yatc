@@ -105,6 +105,11 @@ Options::Options()
 	w = 240;
 	h = 320;
 #endif
+	inventoryCollapsed = false;
+	skillsh = -1;	// -1 = closed, 0 = collapsed
+	battleh = -1;	// -1 = closed, 0 = collapsed
+	viph = -1;		// -1 = closed, 0 = collapsed
+	consoleh = 150+18;	// always 150 + 18 for now.
 }
 
 Options::~Options()
@@ -275,6 +280,24 @@ void Options::Save()
 	section->addKey("safemode", ss.str());
 	ss.str("");
 
+	// [gui]
+	section = configHandler->newSection("gui");
+	ss << inventoryCollapsed;
+	section->addKey("inventory_collapsed", ss.str());
+	ss.str("");
+	ss << skillsh;
+	section->addKey("skillsh", ss.str());
+	ss.str("");
+	ss << battleh;
+	section->addKey("battleh", ss.str());
+	ss.str("");
+	ss << viph;
+	section->addKey("viph", ss.str());
+	ss.str("");
+	ss << consoleh;
+	section->addKey("consoleh", ss.str());
+	ss.str("");
+
 
 	configHandler->saveConfig("yatc.cfg");
 }
@@ -418,11 +441,23 @@ void Options::Load()
             break;
     }
 
+	// [game]
 	battlemode = atoi(configHandler->getKeyValue("game", "battlemode").c_str());
 	chasemode = atoi(configHandler->getKeyValue("game", "chasemode").c_str());
 	safemode = (atoi(configHandler->getKeyValue("safemode", "chasemode").c_str()) != 0);
 	if(battlemode > 3 || battlemode <= 0) battlemode = 1;
 	if(chasemode > 1 || chasemode < 0) chasemode = 0;
+
+	// [gui]
+	inventoryCollapsed = atoi(configHandler->getKeyValue("gui", "inventory_collapsed").c_str());
+	if(configHandler->keyExists("gui", "skillsh"))
+		skillsh = atoi(configHandler->getKeyValue("gui", "skillsh").c_str());
+	if(configHandler->keyExists("gui", "battleh"))
+		battleh = atoi(configHandler->getKeyValue("gui", "battleh").c_str());
+	if(configHandler->keyExists("gui", "viph"))
+		viph = atoi(configHandler->getKeyValue("gui", "viph").c_str());
+	if(configHandler->keyExists("gui", "consoleh"))
+		consoleh = atoi(configHandler->getKeyValue("gui", "consoleh").c_str());
 
 	configHandler->clear();
 }
