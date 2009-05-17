@@ -494,7 +494,7 @@ void GM_Debug::mouseEvent(SDL_Event& event)
     }
 }
 
-void GM_Debug::keyPress (char key)
+void GM_Debug::keyPress (int key)
 {
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 }

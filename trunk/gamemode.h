@@ -60,7 +60,7 @@ public:
 	virtual void updateScene() {} // can be used for both updating and painting
 	virtual void renderScene() {} // should only paint the scene. optional
 	virtual void mouseEvent (SDL_Event&) {}
-	virtual void keyPress (char key) {}
+	virtual void keyPress (int key) {}
 	virtual bool specKeyPress (const SDL_keysym&) { return false;}
 	virtual void doResize(float w, float h) {}
 	virtual void onExitAttempt() {}

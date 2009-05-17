@@ -43,7 +43,7 @@ public:
 	void updateScene();
 	void renderScene();
 	void mouseEvent (SDL_Event&);
-	void keyPress (char key);
+	void keyPress (int key);
 
 
     void msgBox (const char* mbox, const char* title, glictContainer *focusondismiss = NULL);

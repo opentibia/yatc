@@ -20,8 +20,8 @@
 
 #include "../fassert.h"
 #include "protocolgame842.h"
-#include "gamecontent/position.h"
-#include "gamecontent/map.h"
+#include "../gamecontent/position.h"
+#include "../gamecontent/map.h"
 ProtocolGame842::ProtocolGame842(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame84(accountname, password, name, isGM)
 {
