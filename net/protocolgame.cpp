@@ -1142,6 +1142,7 @@ bool ProtocolGame::parsePlayerCancelWalk(NetworkMessage& msg)
 bool ProtocolGame::parseFloorChangeUp(NetworkMessage& msg)
 {
 	Position& myPos = GlobalVariables::getPlayerPosition();
+	Position oldPos = myPos;
 	myPos.z--;
 	//going to surface
 	if(myPos.z == 7){
@@ -1160,11 +1161,13 @@ bool ProtocolGame::parseFloorChangeUp(NetworkMessage& msg)
 	}
 	myPos.x++;
 	myPos.y++;
+	Notifications::onCreatureMove(GlobalVariables::getPlayerID(), oldPos, myPos);
 	return true;
 }
 bool ProtocolGame::parseFloorChangeDown(NetworkMessage& msg)
 {
 	Position& myPos = GlobalVariables::getPlayerPosition();
+	Position oldPos = myPos;
 	myPos.z++;
 	//going from surface to underground
 	if(myPos.z == 8){
@@ -1183,7 +1186,7 @@ bool ProtocolGame::parseFloorChangeDown(NetworkMessage& msg)
 	}
 	myPos.x--;
 	myPos.y--;
-
+	Notifications::onCreatureMove(GlobalVariables::getPlayerID(), oldPos, myPos);
 	return true;
 }
 bool ProtocolGame::parseOutfitWindow(NetworkMessage& msg)
