@@ -50,7 +50,7 @@ public:
 	uint32_t getSquareColor() const { return m_squareColor;}
 	uint32_t getSquareStart() const { return m_squareStartTime;}
 
-	void setMoving(const Position& oldPos);
+	void setMoving(const Position& oldPos, const Position& newPos);
 
 	void setId(uint32_t id){ m_id = id;}
 	uint32_t getId() const { return m_id;}
@@ -85,6 +85,8 @@ public:
 	void setShield(uint32_t shield) { m_shield = shield;}
 	uint32_t getShield() const { return m_shield;}
 
+	const Position& getCurrentPos() const { return m_currentPos; } 
+	void setCurrentPos(const Position& pos) { m_currentPos = pos; }
 
 	void resetSelf() { CreatureUI::resetSelf(); m_id = 0; }
 protected:
@@ -109,6 +111,8 @@ protected:
 
 	uint32_t m_moveStartTime;
 	Position m_moveOldPos;
+	
+	Position m_currentPos;
 
 	friend class Creatures;
 };

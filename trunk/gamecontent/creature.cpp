@@ -55,10 +55,11 @@ void Creature::setSquare(uint32_t color)
 	m_squareStartTime = g_frameTime;
 }
 
-void Creature::setMoving(const Position& oldPos)
+void Creature::setMoving(const Position& oldPos, const Position& newPos)
 {
 	m_moveStartTime = g_frameTime;
 	m_moveOldPos = oldPos;
+	m_currentPos = newPos;
 }
 
 //*********** Creatures *************

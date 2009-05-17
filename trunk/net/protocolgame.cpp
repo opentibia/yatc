@@ -551,7 +551,7 @@ bool ProtocolGame::parseCreatureMove(NetworkMessage& msg)
 
     Notifications::onCreatureMove(creature->getId(),oldPos,newPos);
 
-    creature->setMoving(oldPos);
+    creature->setMoving(oldPos, newPos);
 
     //update creature direction
     if(oldPos.x > newPos.x){

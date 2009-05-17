@@ -87,6 +87,31 @@ void winBattle_t::remove(uint32_t id)
 		}
 	}
 }
+void winBattle_t::refreshVisibility()
+{
+	std::vector<BattleEntry*>::iterator it;
+	Position player = GlobalVariables::getPlayerPosition();
+
+	for(it = entries.begin(); it != entries.end(); ++it)
+	{
+		Creature *c = Creatures::getInstance().getCreature((*it)->creatureId);
+		if (!c) continue;
+		Position p = c->getCurrentPos();
+		
+		// FIXME (ivucica#5#): we should somehow query MapUI if the other creature is in visible area... concluding it ourselves is not a good way of handling stuff
+		if (abs(int(p.x - player.x)) < 9 &&
+			abs(int(p.y - player.y)) < 7 &&
+			p.z == player.z &&
+			c->getHealth() > 0) {
+			(*it)->pnl.SetVisible(true);
+		} else
+		{
+			(*it)->pnl.SetVisible(false);
+		}
+	}
+	list.RebuildList();
+	
+}
 
 void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
