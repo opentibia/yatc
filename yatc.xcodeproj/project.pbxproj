@@ -75,6 +75,16 @@
 		7FAA74E30E97C98C0033E348 /* Tibia.pic in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74E00E97C98C0033E348 /* Tibia.pic */; };
 		7FAA74E40E97C98C0033E348 /* Tibia.dat in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74E10E97C98C0033E348 /* Tibia.dat */; };
 		7FAA754D0E97CD8D0033E348 /* protocolgame831.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FAA754B0E97CD8D0033E348 /* protocolgame831.cpp */; };
+		7FB236490FC08B1600507FE1 /* clipboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236470FC08B1600507FE1 /* clipboard.cpp */; };
+		7FB2364C0FC08B1600507FE1 /* statusmsg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2364A0FC08B1600507FE1 /* statusmsg.cpp */; };
+		7FB236560FC08B1600507FE1 /* battlewindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2364E0FC08B1600507FE1 /* battlewindow.cpp */; };
+		7FB236570FC08B1600507FE1 /* gmactions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236520FC08B1600507FE1 /* gmactions.cpp */; };
+		7FB236580FC08B1600507FE1 /* itempanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236540FC08B1600507FE1 /* itempanel.cpp */; };
+		7FB2365F0FC08B1600507FE1 /* sbvlpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2365B0FC08B1600507FE1 /* sbvlpanel.cpp */; };
+		7FB236600FC08B1600507FE1 /* vipwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2365D0FC08B1600507FE1 /* vipwindow.cpp */; };
+		7FB236670FC08B1600507FE1 /* protocolgame78.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236610FC08B1600507FE1 /* protocolgame78.cpp */; };
+		7FB236680FC08B1600507FE1 /* protocolgame841.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236630FC08B1600507FE1 /* protocolgame841.cpp */; };
+		7FB236690FC08B1600507FE1 /* protocolgame842.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236650FC08B1600507FE1 /* protocolgame842.cpp */; };
 		7FD1F3930F1390F60061E357 /* choicegrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F38F0F1390F60061E357 /* choicegrid.cpp */; };
 		7FD1F3940F1390F60061E357 /* stackpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F3910F1390F60061E357 /* stackpanel.cpp */; };
 		7FD1F3B30F1390F60061E357 /* protocolgame84.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F3B10F1390F60061E357 /* protocolgame84.cpp */; };
@@ -159,7 +169,6 @@
 		7FA4FAFB0E93D5900089D560 /* distanceui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = distanceui.h; sourceTree = "<group>"; };
 		7FA4FAFC0E93D5900089D560 /* confighandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = confighandler.h; sourceTree = "<group>"; };
 		7FA4FAFD0E93D5900089D560 /* effectui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = effectui.h; sourceTree = "<group>"; };
-		7FA4FAFE0E93D5900089D560 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		7FA4FAFF0E93D5900089D560 /* fassert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fassert.h; sourceTree = "<group>"; };
 		7FA4FB000E93D5900089D560 /* gm_debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gm_debug.h; sourceTree = "<group>"; };
 		7FA4FB010E93D5900089D560 /* gm_gameworld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gm_gameworld.h; sourceTree = "<group>"; };
@@ -213,7 +222,6 @@
 		7FA4FB420E93D5AA0089D560 /* login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = login.h; sourceTree = "<group>"; };
 		7FA4FB430E93D5AA0089D560 /* mainmenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mainmenu.cpp; sourceTree = "<group>"; };
 		7FA4FB440E93D5AA0089D560 /* mainmenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mainmenu.h; sourceTree = "<group>"; };
-		7FA4FB460E93D5AA0089D560 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
 		7FA4FB470E93D5AA0089D560 /* optionsconsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = optionsconsole.h; sourceTree = "<group>"; };
 		7FA4FB480E93D5AA0089D560 /* optionsgeneral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = optionsgeneral.h; sourceTree = "<group>"; };
 		7FA4FB490E93D5AA0089D560 /* optionsgfxadv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = optionsgfxadv.h; sourceTree = "<group>"; };
@@ -255,6 +263,31 @@
 		7FAA74E10E97C98C0033E348 /* Tibia.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.dat; sourceTree = "<group>"; };
 		7FAA754B0E97CD8D0033E348 /* protocolgame831.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame831.cpp; sourceTree = "<group>"; };
 		7FAA754C0E97CD8D0033E348 /* protocolgame831.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame831.h; sourceTree = "<group>"; };
+		7FB236470FC08B1600507FE1 /* clipboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clipboard.cpp; sourceTree = "<group>"; };
+		7FB236480FC08B1600507FE1 /* clipboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clipboard.h; sourceTree = "<group>"; };
+		7FB2364A0FC08B1600507FE1 /* statusmsg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statusmsg.cpp; sourceTree = "<group>"; };
+		7FB2364B0FC08B1600507FE1 /* statusmsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statusmsg.h; sourceTree = "<group>"; };
+		7FB2364D0FC08B1600507FE1 /* itemcontainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itemcontainer.h; sourceTree = "<group>"; };
+		7FB2364E0FC08B1600507FE1 /* battlewindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = battlewindow.cpp; sourceTree = "<group>"; };
+		7FB2364F0FC08B1600507FE1 /* battlewindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = battlewindow.h; sourceTree = "<group>"; };
+		7FB236500FC08B1600507FE1 /* deathnotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deathnotification.h; sourceTree = "<group>"; };
+		7FB236510FC08B1600507FE1 /* exitwarning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exitwarning.h; sourceTree = "<group>"; };
+		7FB236520FC08B1600507FE1 /* gmactions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gmactions.cpp; sourceTree = "<group>"; };
+		7FB236530FC08B1600507FE1 /* gmactions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gmactions.h; sourceTree = "<group>"; };
+		7FB236540FC08B1600507FE1 /* itempanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = itempanel.cpp; sourceTree = "<group>"; };
+		7FB236550FC08B1600507FE1 /* itempanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itempanel.h; sourceTree = "<group>"; };
+		7FB236590FC08B1600507FE1 /* minimap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = minimap.h; sourceTree = "<group>"; };
+		7FB2365A0FC08B1600507FE1 /* optionsui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = optionsui.h; sourceTree = "<group>"; };
+		7FB2365B0FC08B1600507FE1 /* sbvlpanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sbvlpanel.cpp; sourceTree = "<group>"; };
+		7FB2365C0FC08B1600507FE1 /* sbvlpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sbvlpanel.h; sourceTree = "<group>"; };
+		7FB2365D0FC08B1600507FE1 /* vipwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vipwindow.cpp; sourceTree = "<group>"; };
+		7FB2365E0FC08B1600507FE1 /* vipwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vipwindow.h; sourceTree = "<group>"; };
+		7FB236610FC08B1600507FE1 /* protocolgame78.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame78.cpp; sourceTree = "<group>"; };
+		7FB236620FC08B1600507FE1 /* protocolgame78.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame78.h; sourceTree = "<group>"; };
+		7FB236630FC08B1600507FE1 /* protocolgame841.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame841.cpp; sourceTree = "<group>"; };
+		7FB236640FC08B1600507FE1 /* protocolgame841.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame841.h; sourceTree = "<group>"; };
+		7FB236650FC08B1600507FE1 /* protocolgame842.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame842.cpp; sourceTree = "<group>"; };
+		7FB236660FC08B1600507FE1 /* protocolgame842.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame842.h; sourceTree = "<group>"; };
 		7FD1F38F0F1390F60061E357 /* choicegrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = choicegrid.cpp; sourceTree = "<group>"; };
 		7FD1F3900F1390F60061E357 /* choicegrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = choicegrid.h; sourceTree = "<group>"; };
 		7FD1F3910F1390F60061E357 /* stackpanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stackpanel.cpp; sourceTree = "<group>"; };
@@ -374,6 +407,10 @@
 				7FA4FB140E93D5990089D560 /* sprdata.c */,
 				7FD1F38F0F1390F60061E357 /* choicegrid.cpp */,
 				7FD1F3900F1390F60061E357 /* choicegrid.h */,
+				7FB236470FC08B1600507FE1 /* clipboard.cpp */,
+				7FB236480FC08B1600507FE1 /* clipboard.h */,
+				7FB2364B0FC08B1600507FE1 /* statusmsg.h */,
+				7FB2364A0FC08B1600507FE1 /* statusmsg.cpp */,
 				7FD1F3920F1390F60061E357 /* stackpanel.h */,
 				7FD1F3910F1390F60061E357 /* stackpanel.cpp */,
 				7F39F8380EDEFB5400ED6F10 /* automap.cpp */,
@@ -389,7 +426,6 @@
 				7FA4FAFB0E93D5900089D560 /* distanceui.h */,
 				7FA4FAFC0E93D5900089D560 /* confighandler.h */,
 				7FA4FAFD0E93D5900089D560 /* effectui.h */,
-				7FA4FAFE0E93D5900089D560 /* config.h */,
 				7FA4FAFF0E93D5900089D560 /* fassert.h */,
 				7FA4FB000E93D5900089D560 /* gm_debug.h */,
 				7FA4FB010E93D5900089D560 /* gm_gameworld.h */,
@@ -446,6 +482,12 @@
 		7FA4FB160E93D5A10089D560 /* net */ = {
 			isa = PBXGroup;
 			children = (
+				7FB236610FC08B1600507FE1 /* protocolgame78.cpp */,
+				7FB236620FC08B1600507FE1 /* protocolgame78.h */,
+				7FB236630FC08B1600507FE1 /* protocolgame841.cpp */,
+				7FB236640FC08B1600507FE1 /* protocolgame841.h */,
+				7FB236650FC08B1600507FE1 /* protocolgame842.cpp */,
+				7FB236660FC08B1600507FE1 /* protocolgame842.h */,
 				7FD1F3B10F1390F60061E357 /* protocolgame84.cpp */,
 				7FD1F3B20F1390F60061E357 /* protocolgame84.h */,
 				7F23B2FD0E97A5770006C1FC /* protocolgame83.cpp */,
@@ -483,6 +525,20 @@
 		7FA4FB3D0E93D5AA0089D560 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				7FB236590FC08B1600507FE1 /* minimap.h */,
+				7FB2365A0FC08B1600507FE1 /* optionsui.h */,
+				7FB2365B0FC08B1600507FE1 /* sbvlpanel.cpp */,
+				7FB2365C0FC08B1600507FE1 /* sbvlpanel.h */,
+				7FB2365D0FC08B1600507FE1 /* vipwindow.cpp */,
+				7FB2365E0FC08B1600507FE1 /* vipwindow.h */,
+				7FB2364E0FC08B1600507FE1 /* battlewindow.cpp */,
+				7FB2364F0FC08B1600507FE1 /* battlewindow.h */,
+				7FB236500FC08B1600507FE1 /* deathnotification.h */,
+				7FB236510FC08B1600507FE1 /* exitwarning.h */,
+				7FB236520FC08B1600507FE1 /* gmactions.cpp */,
+				7FB236530FC08B1600507FE1 /* gmactions.h */,
+				7FB236540FC08B1600507FE1 /* itempanel.cpp */,
+				7FB236550FC08B1600507FE1 /* itempanel.h */,
 				7FA4FB3E0E93D5AA0089D560 /* charlist.h */,
 				7FA4FB3F0E93D5AA0089D560 /* checkbox.h */,
 				7FA4FB400E93D5AA0089D560 /* health.h */,
@@ -490,7 +546,6 @@
 				7FA4FB420E93D5AA0089D560 /* login.h */,
 				7FA4FB430E93D5AA0089D560 /* mainmenu.cpp */,
 				7FA4FB440E93D5AA0089D560 /* mainmenu.h */,
-				7FA4FB460E93D5AA0089D560 /* options.h */,
 				7FA4FB470E93D5AA0089D560 /* optionsconsole.h */,
 				7FA4FB480E93D5AA0089D560 /* optionsgeneral.h */,
 				7FA4FB490E93D5AA0089D560 /* optionsgfxadv.h */,
@@ -518,6 +573,7 @@
 		7FA4FB640E93D5B30089D560 /* gamecontent */ = {
 			isa = PBXGroup;
 			children = (
+				7FB2364D0FC08B1600507FE1 /* itemcontainer.h */,
 				7FA4FB650E93D5B30089D560 /* container.cpp */,
 				7FA4FB660E93D5B30089D560 /* container.h */,
 				7FA4FB670E93D5B30089D560 /* creature.cpp */,
@@ -677,6 +733,16 @@
 				7FD1F3930F1390F60061E357 /* choicegrid.cpp in Sources */,
 				7FD1F3940F1390F60061E357 /* stackpanel.cpp in Sources */,
 				7FD1F3B30F1390F60061E357 /* protocolgame84.cpp in Sources */,
+				7FB236490FC08B1600507FE1 /* clipboard.cpp in Sources */,
+				7FB2364C0FC08B1600507FE1 /* statusmsg.cpp in Sources */,
+				7FB236560FC08B1600507FE1 /* battlewindow.cpp in Sources */,
+				7FB236570FC08B1600507FE1 /* gmactions.cpp in Sources */,
+				7FB236580FC08B1600507FE1 /* itempanel.cpp in Sources */,
+				7FB2365F0FC08B1600507FE1 /* sbvlpanel.cpp in Sources */,
+				7FB236600FC08B1600507FE1 /* vipwindow.cpp in Sources */,
+				7FB236670FC08B1600507FE1 /* protocolgame78.cpp in Sources */,
+				7FB236680FC08B1600507FE1 /* protocolgame841.cpp in Sources */,
+				7FB236690FC08B1600507FE1 /* protocolgame842.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,7 +46,7 @@ public:
 	void renderScene();
 	void renderUI();
 	void mouseEvent (SDL_Event&);
-	void keyPress (char key);
+	void keyPress (int key);
 	bool specKeyPress (const SDL_keysym& key);
 	void onExitAttempt();
 

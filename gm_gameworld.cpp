@@ -482,7 +482,7 @@ void GM_Gameworld::updateScene()
 
 
 
-void GM_Gameworld::keyPress (char key)
+void GM_Gameworld::keyPress (int key)
 {
 	// NOTE (nfries88): You can't add text hotkeys (among other things) in-game if console always has focus.
 	// TODO (nfries88): make a proper method of doing this. The gamemode should be notified of a focus change maybe?

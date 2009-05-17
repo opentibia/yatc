@@ -54,7 +54,7 @@ public:
 	~GM_Gameworld();
 
 	void updateScene();
-	void keyPress (char key);
+	void keyPress (int key);
 	bool specKeyPress (const SDL_keysym& key);
 	void doResize(float w, float h);
 	void mouseEvent(SDL_Event& event);
