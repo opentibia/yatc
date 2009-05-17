@@ -292,6 +292,11 @@ bool Tile::addThing(Thing *thing, bool pushThing/* = false*/)
 	}
 
 	m_objects.insert(it, thing);
+
+	Creature *c = thing->getCreature();
+	if(c){
+		c->setCurrentPos(this->getPos());
+	}
 	return true;
 }
 

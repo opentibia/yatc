@@ -79,6 +79,7 @@ public:
 	void add(uint32_t id);
 	void update(uint32_t id);
 	void remove(uint32_t id);
+	void refreshVisibility();
 
 	virtual float GetDefaultHeight(){ return 40.F; }
 	virtual void OnClose();

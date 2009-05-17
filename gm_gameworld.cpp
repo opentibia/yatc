@@ -464,6 +464,10 @@ void GM_Gameworld::updateScene()
     }
 
 
+	// update battle window
+	// FIXME (ivucica#1#): someone should move refreshVisibility() into some notifications asap.
+#warning EXTREMELY EXTREMELY bad idea to update this every frame. It works but RebuildList()ing so often is bound to be very slow due to abudance of SetPos() calls inside GLICT (ivucica)
+	sbvlPanel.winBattle.refreshVisibility();
 
 
     // status messages
