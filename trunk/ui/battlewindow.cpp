@@ -62,15 +62,25 @@ void winBattle_t::update(uint32_t id)
 	std::vector<BattleEntry*>::iterator it;
 	for(it = entries.begin(); it != entries.end(); ++it)
 	{
-		if((*it)->creatureId == id)
+		BattleEntry* e = (*it);
+		if(e->creatureId == id)
 		{
 			int hp = Creatures::getInstance().getCreature(id)->getHealth();
+			if(hp == 0)
+			{
+				list.RemoveObject(&e->pnl);
+				list.RebuildList();
+
+				entries.erase(it);
+				delete e;
+				return;
+			}
 			oRGBA col = CreatureUI::getHealthColor(hp);
-			(*it)->pbHealth.SetValue(hp);
+			e->pbHealth.SetValue(hp);
 			#if (GLICT_APIREV < 105)
             #warning GLICT too old, get 105 or newer for visual improvement on some progressbars
             #else
-			(*it)->pbHealth.SetFGColor(glictColor(col.r/255., col.g/255., col.b/255., col.a/255.));
+			e->pbHealth.SetFGColor(glictColor(col.r/255., col.g/255., col.b/255., col.a/255.));
 			#endif
 		}
 	}
@@ -80,10 +90,14 @@ void winBattle_t::remove(uint32_t id)
 	std::vector<BattleEntry*>::iterator it;
 	for(it = entries.begin(); it != entries.end(); ++it)
 	{
-		if((*it)->creatureId == id)
+		BattleEntry* e = (*it);
+		if(e->creatureId == id)
 		{
-			delete (*it);
+			list.RemoveObject(&e->pnl);
+			list.RebuildList();
 			entries.erase(it);
+			delete e;
+			return;
 		}
 	}
 }
@@ -91,32 +105,31 @@ void winBattle_t::refreshVisibility()
 {
 	std::vector<BattleEntry*>::iterator it;
 	Position player = GlobalVariables::getPlayerPosition();
+	bool need_rebuild = false;
 
 	for(it = entries.begin(); it != entries.end(); ++it)
 	{
 		Creature *c = Creatures::getInstance().getCreature((*it)->creatureId);
 		if (!c) continue;
 		Position p = c->getCurrentPos();
-		
-		// FIXME (ivucica#5#): we should somehow query MapUI if the other creature is in visible area... concluding it ourselves is not a good way of handling stuff
-		if (abs(int(p.x - player.x)) < 9 &&
-			abs(int(p.y - player.y)) < 7 &&
-			p.z == player.z &&
-			c->getHealth() > 0) {
+		bool visibility = (*it)->pnl.GetVisible();
+
+		if (Map::getInstance().playerCanSee(p.x, p.y, p.z) && p.z == player.z && c->getHealth() > 0) {
 			(*it)->pnl.SetVisible(true);
 		} else
 		{
 			(*it)->pnl.SetVisible(false);
 		}
+		if(visibility != (*it)->pnl.GetVisible())
+			need_rebuild = true;
 	}
-	list.RebuildList();
-	
+	if(need_rebuild)
+		list.RebuildList();
 }
 
 void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
 	Creature* creature = Creatures::getInstance().getCreature((int)caller->GetCustomData());
-	int hp = creature->getHealth();
 	oRGBA col;
 	if(creature->getID() == GlobalVariables::getAttackID())
 		col = oRGBA(180, 50, 20, 255);

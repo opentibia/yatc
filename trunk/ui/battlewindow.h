@@ -81,7 +81,7 @@ public:
 	void remove(uint32_t id);
 	void refreshVisibility();
 
-	virtual float GetDefaultHeight(){ return 40.F; }
+	virtual float GetDefaultHeight(){ return 160.F; }
 	virtual void OnClose();
 
 	static void paintEntry(glictRect *real, glictRect *clipped, glictContainer *caller);
