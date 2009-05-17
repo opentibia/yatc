@@ -57,6 +57,7 @@ public:
 	void openMOTD(int motdnum, const std::string& message);
 	void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
 
+	void login(const std::string& username, const std::string& password);
 
 	void onEnterGame();
 

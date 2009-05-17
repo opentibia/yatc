@@ -79,6 +79,7 @@ public:
 		btnOk.SetWidth(44);
 		btnOk.SetHeight(20);
 		btnOk.SetOnClick(&btnOk_onClick);
+		btnOk.SetCustomData(this);
 
 		window.AddObject(&btnCancel);
 		btnCancel.SetCaption(gettext("Cancel"));
