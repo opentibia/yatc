@@ -221,6 +221,7 @@ private:
 	friend class winContainer_t;
 	friend class ItemPanel;
 	friend class exitWarning_t;
+	friend class deathNotice_t;
 	friend class sbvlPanel_t;
 	friend class Notifications;
 	friend class winBattle_t;

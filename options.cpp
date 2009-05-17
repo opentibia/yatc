@@ -47,6 +47,7 @@ Options::Options()
 	// [login]
 	account = "";
 	password = "";
+	saveAccount = false;
 
 	// [client]
 	skin = "default";
@@ -134,12 +135,16 @@ void Options::Save()
 
 
 	section = configHandler->newSection("login");
-	ss << account;
-	section->addKey("account", ss.str());
-	ss.str("");
-	ss << password;
-	section->addKey("password", ss.str());
-	ss.str("");
+	if(saveAccount) {
+		ss << account;
+		section->addKey("account", ss.str());
+		ss.str("");
+		ss << password;
+		section->addKey("password", ss.str());
+		ss.str("");
+	}
+	ss << saveAccount;
+	section->addKey("saveaccount", ss.str());
 
 	section = configHandler->newSection("client");
 	ss << skin;
@@ -331,6 +336,7 @@ void Options::Load()
 	// [login]
 	account = configHandler->getKeyValue("login", "account");
 	password = configHandler->getKeyValue("login", "password");
+	saveAccount = (atoi(configHandler->getKeyValue("saveaccount", "password").c_str()) == 1);
 
 	// [client]
 	skin = configHandler->getKeyValue("client", "skin");

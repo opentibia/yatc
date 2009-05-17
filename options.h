@@ -61,6 +61,7 @@ public:
 
 	// [login]
 	std::string account, password;
+	bool saveAccount;
 
 	// [client]
 	enginelist_t engine;

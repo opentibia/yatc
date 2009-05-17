@@ -64,8 +64,6 @@ void onClickConsole(glictPos* relmousepos, glictContainer* callerclass);
 
 extern int g_lastmousebutton;
 
-//void tmp(){((GM_Gameworld*)g_game)->msgBox("You made a choice", "Wat?");}
-
 void exitWarning_t::btnLogout_onClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
@@ -87,6 +85,7 @@ void deathNotice_t::btnOk_onClick(glictPos* relmousepos, glictContainer* callerc
 	// todo (nfries88): return to GM_MainMenu with charlist up
 	deathNotice_t* deathnote = ((deathNotice_t*)callerclass->GetCustomData());
 	deathnote->window.SetVisible(false);
+	((GM_Gameworld*)g_game)->m_protocol->sendLogout();
 }
 
 void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
@@ -1084,7 +1083,8 @@ void GM_Gameworld::onConnectionClosed()
 {
 	delete g_game;
 	g_game = new GM_MainMenu();
-	//todo: return to character list
+	// FIXME (nfries88): You can't get back into the game like this, for some reason.
+	((GM_MainMenu*)g_game)->login(options.account, options.password);
 }
 
 /////////////// PROTOCOL EVENTS ///////////////////////

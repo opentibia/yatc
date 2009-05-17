@@ -389,14 +389,20 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 {
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	m->winLogin.window.SetVisible(false);
+	options.account = m->winLogin.txtUsername.GetCaption();
+	options.password = m->winLogin.txtPassword.GetCaption();
+	m->login(options.account, options.password);
+}
 
+void GM_MainMenu::login(const std::string& username, const std::string& password)
+{
 	if(g_connection){
 	    printf("Destroying connection from mainmenu for login\n");
 		delete g_connection;
 		g_connection = NULL;
 	}
 
-	ClientVersion_t proto = m->getActiveProtocol();
+	ClientVersion_t proto = getActiveProtocol();
 	if(!proto)
 		return;
 
@@ -406,22 +412,22 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	ProtocolConfig::getInstance().setServer(options.server, options.port);
 
     std::string text;
-	ProtocolConfig::createLoginConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption());
-	m->winStatus.SetCaption(gettext("Connecting"));
-	m->winStatus.SetMessage(text=gettext("Your character list is being loaded. Please wait."));
+	ProtocolConfig::createLoginConnection(username, password);
+	winStatus.SetCaption(gettext("Connecting"));
+	winStatus.SetMessage(text=gettext("Your character list is being loaded. Please wait."));
 	#if (GLICT_APIREV >= 85)
-	m->winStatus.SetTextOffset(10,10);
+	winStatus.SetTextOffset(10,10);
 	#else
 	#warning For nicer msgboxes get GLICT APIREV 85+.
 	#endif
-    m->winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
-	m->winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
-	m->winStatus.SetEnabled(false);
-	m->centerWindow(&m->winStatus);
-	m->desktop.AddObject(&m->winStatus);
+    winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
+	winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
+	winStatus.SetEnabled(false);
+	centerWindow(&winStatus);
+	desktop.AddObject(&winStatus);
 
-    m->updateScene();
-    m->renderScene();
+    updateScene();
+    renderScene();
     g_engine->Flip();
     //DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "SetVisible...\n");
 }
