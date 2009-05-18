@@ -735,6 +735,7 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		{
 			// NOTE (nfries88): Not sure whether or not a stackpos is needed.
 			Position hotkeyPos(0xFFFF, 0, 0);
+			// FIXME (nfries88): This never gets deleted, but it's a pain to implement.
 			Item* item = Item::CreateItem(hk.item.itemid, 1);
 			if(item->isExtendedUseable() && hk.item.useXHairs)
 			{
@@ -1190,7 +1191,12 @@ void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Pos
 		c->startWalk();
 	c->confirmWalk();
 
-	sbvlPanel.winBattle.refreshVisibility();
+	if((id == GlobalVariables::getPlayerID()) ||
+		(!Map::getInstance().playerCanSee(newPos.x, newPos.y, newPos.z)) ||
+		(oldPos.z != newPos.z))
+	{
+		sbvlPanel.winBattle.refreshVisibility();
+	}
 }
 
 void GM_Gameworld::onChangeSkills()

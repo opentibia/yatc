@@ -236,8 +236,8 @@ void winBattle_t::clickEntry(glictPos* relmousepos, glictContainer* callerclass)
 		}
 		else if(SDL_GetModState() & KMOD_SHIFT)
 		{
-			// NOTE (nfries88): no idea how to get a creature's position on the map.
-			//gw->lookAtCreature(creature->getID());
+			// NOTE (nfries88): too lazy to implement this...
+			//gw->lookAtPos(creature->getCurrentPos());
 		}
 		else if(creature->getID() != GlobalVariables::getPlayerID())
 		{
