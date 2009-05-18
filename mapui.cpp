@@ -69,14 +69,15 @@ void MapUI::renderMap()
 	//TODO: center game area horizontally (cipsoft's client does this)
 	// FIXME (ivucica#2#) make renderMap use m_x,m_y and m_w,m_h
 
-
 	// set up scale
 	if(!options.stretchGameWindow)
 		m_scale = MIN(m_w/(15.*32), m_h/(11.*32));
 	else
 		m_scale = 1.f;
-//	printf("m_w: %d, m_h: %d, m_scale: %g\n", m_w, m_h, m_scale);
-	float scaledSize = 32*m_scale;
+	// NOTE (nfries88): By flooring scaledSize, we assure a full pixel value for scaledSize.
+	//	by then setting m_scale to this full pixel value / 32, we assure that all things are scaled equally.
+	float scaledSize = std::floor(32*m_scale);
+	m_scale = scaledSize/32;
 
     m_x = -scaledSize*2; m_y = -scaledSize*2;
 	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/0,0,15*scaledSize,11*scaledSize);

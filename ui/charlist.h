@@ -163,30 +163,29 @@ public:
 		std::stringstream s;
 
 		s << chr.name << " (" << chr.world << ")";
-		// FIXME (ivucica#5#) change "res" into "pnl"
-		glictPanel *res = new glictPanel;
+		glictPanel *pnl = new glictPanel;
 		CharacterList_t *data = new CharacterList_t;
 		*data = chr;
 		data->extra = this;
 
-		res->SetBGActiveness(false);
-		res->SetBGColor(.4,.4,.4,1.);
-		res->SetOnClick(winCharlist_t::OnListbox);
-		res->SetCustomData(data);
-		res->SetCaption(s.str());
-		res->SetFont("aafont");
-		res->SetFocusable(false);
+		pnl->SetBGActiveness(false);
+		pnl->SetBGColor(.4,.4,.4,1.);
+		pnl->SetOnClick(winCharlist_t::OnListbox);
+		pnl->SetCustomData(data);
+		pnl->SetCaption(s.str());
+		pnl->SetFont("aafont");
+		pnl->SetFocusable(false);
 		#if GLICT_APIREV < 68
 		#warning Aesthetic corrections on listboxes wont work without GLICT of apirev 68+
 		#else
-		res->SetTextOffset(4,2);
+		pnl->SetTextOffset(4,2);
 		#endif
 
-		lsiChars.push_back(res);
-		lstChars.AddObject(res);
+		lsiChars.push_back(pnl);
+		lstChars.AddObject(pnl);
 
 		if (lsiChars.size() == 1) {
-			OnListbox(NULL, res);
+			OnListbox(NULL, pnl);
 		}
 	}
 

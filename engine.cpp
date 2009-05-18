@@ -222,7 +222,6 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
     {
         if (color.r == color.g && color.g == color.b && color.b == 1.)
         {
-
             f->resetColor();
         }
         else
