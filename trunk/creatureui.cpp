@@ -115,7 +115,6 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 32*scale, 32*scale, oRGBA(0,0,0,0));
 		}
 
-		// FIXME (nfries88): RGBA colors aren't as expected for me.
 		//Pink square around the attacked creature
 		if(n->getID() == GlobalVariables::getAttackID()) {
 			// "Deep Pink" - may not be the right color
