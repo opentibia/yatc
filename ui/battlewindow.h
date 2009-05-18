@@ -24,7 +24,8 @@
 #include <GLICT/panel.h>
 #include <GLICT/progressbar.h>
 
-#include "stackpanel.h"
+#include "../stackpanel.h"
+#include "../popup.h"
 
 #include "../util.h"
 #if defined(HAVE_LIBINTL_H)
@@ -76,6 +77,7 @@ public:
 	}
 	~winBattle_t(){}
 
+	BattleEntry* get(uint32_t id);
 	void add(uint32_t id);
 	void update(uint32_t id);
 	void remove(uint32_t id);
@@ -83,6 +85,12 @@ public:
 
 	virtual float GetDefaultHeight(){ return 160.F; }
 	virtual void OnClose();
+
+	static void makeConsolePopup(Popup* popup, void* owner, void* arg);
+	static void onUnimplemented(Popup::Item *parent);
+	static void onMessageTo(Popup::Item *parent);
+	static void onFollow(Popup::Item* parent);
+	static void onAttack(Popup::Item* parent);
 
 	static void paintEntry(glictRect *real, glictRect *clipped, glictContainer *caller);
 	static void clickEntry(glictPos* relmousepos, glictContainer* callerclass);
