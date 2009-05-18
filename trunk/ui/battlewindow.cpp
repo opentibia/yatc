@@ -28,6 +28,19 @@
 #include "../net/protocolgame.h"
 extern int g_lastmousebutton;
 
+winBattle_t::BattleEntry* winBattle_t::get(uint32_t id)
+{
+	std::vector<BattleEntry*>::iterator it;
+	for(it = entries.begin(); it != entries.end(); ++it)
+	{
+		BattleEntry* e = (*it);
+		if(e->creatureId == id)
+		{
+			return e;
+		}
+	}
+}
+
 void winBattle_t::add(uint32_t id)
 {
 	BattleEntry* entry = new BattleEntry;
@@ -138,6 +151,79 @@ void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer
 	g_engine->drawText(creature->getName().c_str(), "aafont", (int)real->left+23, (int)real->top, col);
 	creature->Blit((int)real->left+4, (int)real->top+4, 20.f/32.f, 0, 0);
 }
+
+void winBattle_t::onAttack(Popup::Item* parent)
+{
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+	gw->m_protocol->sendAttackCreature((uint32_t)parent->data);
+	GlobalVariables::setAttackID((uint32_t)parent->data);
+}
+
+void winBattle_t::onFollow(Popup::Item* parent)
+{
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+	gw->m_protocol->sendFollowCreature((uint32_t)parent->data);
+	GlobalVariables::setFollowID((uint32_t)parent->data);
+}
+
+void winBattle_t::onMessageTo(Popup::Item *parent)
+{
+	Creature* c = Creatures::getInstance().getCreature((uint32_t)parent->data);
+	if(c != NULL)
+	{
+		GM_Gameworld *gw = (GM_Gameworld*)g_game;
+		gw->setActiveConsole(gw->findConsole(c->getName()));
+	}
+}
+
+void winBattle_t::onUnimplemented(Popup::Item *parent)
+{
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
+}
+
+void winBattle_t::makeConsolePopup(Popup* popup, void* owner, void* arg)
+{
+	BattleEntry* e = (BattleEntry*)arg;
+	Creature* c = Creatures::getInstance().getCreature(e->creatureId);
+
+	std::stringstream s;
+	s.str("");
+	s << gettext("Attack");
+	popup->addItem(s.str(), winBattle_t::onAttack, (void*)c->getID());
+
+	s.str("");
+	s << gettext("Follow");
+	popup->addItem(s.str(), winBattle_t::onFollow, (void*)c->getID());
+
+	popup->addItem("-",NULL,NULL);
+
+	if (!c->isMonster() && !c->isNpc())
+	{
+		s.str("");
+		s << gettext("Message to") << " " << c->getName();
+		popup->addItem(s.str(), winBattle_t::onMessageTo, (void*)c->getID());
+
+		s.str("");
+		s << gettext("Add to VIP list");
+		popup->addItem(s.str(), winBattle_t::onUnimplemented, (void*)c->getID());
+
+		s.str("");
+		s << gettext("Ignore") << " " << c->getName();
+		popup->addItem(s.str(), winBattle_t::onUnimplemented, (void*)c->getID());
+
+		s.str("");
+		s << gettext("Invite to Party");
+		popup->addItem(s.str(), winBattle_t::onUnimplemented, (void*)c->getID());
+
+		popup->addItem("-",NULL,NULL);
+
+		s.str("");
+		s << gettext("Copy Name");
+		popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
+	}
+}
+
 void winBattle_t::clickEntry(glictPos* relmousepos, glictContainer* callerclass)
 {
 	Creature* creature = Creatures::getInstance().getCreature((int)callerclass->GetCustomData());
@@ -166,6 +252,7 @@ void winBattle_t::clickEntry(glictPos* relmousepos, glictContainer* callerclass)
 	}
 	else
 	{
-		// TODO (nfries88): popup
+		winBattle_t::BattleEntry* e = gw->sbvlPanel.winBattle.get(creature->getID());
+		gw->performPopup(winBattle_t::makeConsolePopup, NULL, (void*) e);
 	}
 }
