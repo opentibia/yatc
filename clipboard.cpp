@@ -45,7 +45,10 @@ std::string yatcClipboard::getText()
 {
 	#ifdef WIN32
 	OpenClipboard(GetActiveWindow());
-	std::string ret = (const char*)GetClipboardData(CF_TEXT);
+	const char* str = (const char*)GetClipboardData(CF_TEXT);
+	if(str == NULL)
+		return "";
+	std::string ret = str;
 	CloseClipboard();
 	return ret;
 	#elif defined(__APPLE__)
