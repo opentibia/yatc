@@ -50,8 +50,9 @@ GLICT started using autotools recently.
 1. svn co https://glict.svn.sf.net/svnroot/glict/trunk/glict/
 2. cd glict/
 3. ./autogen.sh
-3. make
-4. sudo make install
+4. ./configure
+5. make
+6. sudo make install
 
 3. Building on Windows with Dev-Cpp
 ===================================
