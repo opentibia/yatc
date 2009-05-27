@@ -274,7 +274,7 @@ void crashhndl(int sig, siginfo_t *info,
     char **messages = (char **)NULL;
     int i, trace_size = 0;
     ucontext_t *uc = (ucontext_t *)secret;
-    char addr2line_buffer[32];
+    static char addr2line_buffer[32];
 
     printf("CRASH\n");
 
@@ -391,9 +391,9 @@ int main(int argc, char *argv[])
 
 #if HAVE_LIBINTL_H
     // set up i18n stuff
-    std::string l = "LANG=";
     if(options.lang.size())
     {
+        std::string l("LANG=");
         l+=options.lang;
         putenv((char*)l.c_str());
     }
@@ -404,8 +404,6 @@ int main(int argc, char *argv[])
     bind_textdomain_codeset("yatc","windows-1252");
 #endif
 
-    printf("Testing translation to %s:\n", getenv("LC_ALL"));
-    printf(" %s == Enter Game\n", gettext("Enter Game"));
 
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Checking graphics files existence...\n");
 	checkFiles();

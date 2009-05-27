@@ -39,20 +39,27 @@ Please understand that while we have produced builds that run on MacOS X platfor
 2. Building on Linux/Unix
 =========================
 
-1. Run "./autogen.sh".
-2. Run "./configure"
-3. Run "make"
+0. First follow section 4.2, to make sure you installed all required packages.
+   Also follow section 2.1, to make sure you installed GLICT.
+1. Make directory for yatc. For example "mkdir ~/yatc"
+2. Go to the new directory. For example "cd ~/yatc"
+3. Run "svn co https://opentibia.svn.sourceforge.net/svnroot/opentibia/yatc/trunk ."
+4. Run "./autogen.sh".
+5. Run "./configure"
+6. Run "make"
+7. Run "./yatc" to start the client.
 
 == 2.1. Compiling and installing GLICT ==
 
 GLICT started using autotools recently.
 
-1. svn co https://glict.svn.sf.net/svnroot/glict/trunk/glict/
-2. cd glict/
-3. ./autogen.sh
-4. ./configure
-5. make
-6. sudo make install
+1. Make directory for glict. For example "mkdir ~/glict"
+2. Go to the new directory. For example "cd ~/glict"
+3. Run "svn co https://glict.svn.sf.net/svnroot/glict/trunk/glict/ ."
+4. Run "./autogen.sh"
+5. Run "./configure"
+6. Run "make"
+7. Run "sudo make install"
 
 3. Building on Windows with Dev-Cpp
 ===================================
