@@ -1187,6 +1187,9 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
 void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos)
 {
     Creature* c = Creatures::getInstance().getCreature(id);
+    // NOTE (nfries88): If this is called after clearing creatures, or for an invalid creature, this will crash.
+    if(c == NULL) return;
+
 	if (id != GlobalVariables::getPlayerID() || !Creatures::getInstance().getPlayer()->isPreWalking() )
 		c->startWalk();
 	c->confirmWalk();

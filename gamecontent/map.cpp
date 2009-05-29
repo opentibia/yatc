@@ -25,6 +25,7 @@
 #include "creature.h"
 #include "globalvars.h"
 #include "../objects.h"
+#include "../notifications.h"
 
 extern uint32_t g_frameTime;
 
@@ -170,6 +171,12 @@ void Tile::clear()
 	m_ground = NULL;
 
 	for(ThingVector::iterator it = m_objects.begin(); it != m_objects.end(); ++it){
+		Creature* c = (*it)->getCreature();
+		if(c != NULL)
+		{
+			c->setCurrentPos(Position(0, 0, 0));
+			Notifications::onCreatureMove(c->getID(), getPos(), c->getCurrentPos());
+		}
 		Thing::deleteThing(*it);
 	}
 
