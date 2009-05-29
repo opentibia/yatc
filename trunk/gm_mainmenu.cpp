@@ -167,11 +167,10 @@ void GM_MainMenu::renderUI()
 void GM_MainMenu::mouseEvent(SDL_Event& event)
 {
 	glictPos pos;
-	// FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
-	// who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave!
-	// (above is because we handle mousedown and mouseup too, and not ust mousemove)
-	pos.x = ptrx;
-	pos.y = ptry;
+	int px, py;
+	SDL_GetMouseState(&px, &py);
+	pos.x = px;
+	pos.y = py;
 
 	desktop.TransformScreenCoords(&pos);
 

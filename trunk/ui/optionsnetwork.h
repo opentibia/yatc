@@ -21,7 +21,6 @@
 #ifndef __UI_OPTIONSNETWORK_H
 #define __UI_OPTIONSNETWORK_H
 
-//#include <sstream> // FIXME (ivucica#1#): remove me after cleaning up the int=>str conversion
 #include "../util.h"
 #include <map>
 #if defined(HAVE_LIBINTL_H)

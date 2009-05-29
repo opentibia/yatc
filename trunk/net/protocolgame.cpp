@@ -355,6 +355,8 @@ bool ProtocolGame::parseMapDescription(NetworkMessage& msg)
     if(!setMapDescription(msg, currentPos.x - 8, currentPos.y - 6, currentPos.z, 18, 14)){
         RAISE_PROTOCOL_ERROR("Map description 0x64");
     }
+    // NOTE (nfries88): Just to refresh GM_Gameworld's m_mapui.m_minz
+    Notifications::onAddCreature(GlobalVariables::getPlayerID());
     return true;
 }
 bool ProtocolGame::parseMoveNorth(NetworkMessage& msg)
@@ -757,10 +759,6 @@ bool ProtocolGame::parseMagicEffect(NetworkMessage& msg)
 {
     MSG_READ_POSITION(effectPos);
     MSG_READ_U8(effect);
-    // FIXME (ivucica#5#) should ask Objects class if its in range and not conclude on its own
-/*			if(effect == 0 || effect > 35){
-        RAISE_PROTOCOL_ERROR("Magic effect - out of range");
-    }*/
     Tile* tile = Map::getInstance().getTile(effectPos);
     if(!tile){
         RAISE_PROTOCOL_ERROR("Magic effect - !tile");
@@ -781,10 +779,6 @@ bool ProtocolGame::parseDistanceShot(NetworkMessage& msg)
     MSG_READ_POSITION(fromPos);
     MSG_READ_POSITION(toPos);
     MSG_READ_U8(effect);
-    // FIXME (ivucica#5#) should ask Objects class if it's out of range and not conclude on its own
-    /*			if(effect == 0 || effect > 28){
-        RAISE_PROTOCOL_ERROR("Distance shoot - out of range");
-    }*/
     Map::getInstance().addDistanceEffect(fromPos, toPos, effect);
     return true;
 }
@@ -837,7 +831,6 @@ bool ProtocolGame::parseCreatureOutfit(NetworkMessage& msg)
             creature->unloadGfx(); // FIXME (ivucica#2#): move this to notifications
             creature->loadOutfit();
             printf("===> Updated creature outfit\n");
-
         }
     }
     else{

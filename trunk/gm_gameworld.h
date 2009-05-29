@@ -76,6 +76,9 @@ public:
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const Position& pos, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, int channel, const std::string& message);
 	void onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message);
+	void onAddCreature(uint32_t id);
+	void onRemoveCreature(uint32_t id);
+	void onCreatureChangeHealth(uint32_t id, uint32_t health);
 	void onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos);
 	void onChangeSkills();
 	void onChangeStats();
