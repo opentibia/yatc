@@ -745,11 +745,11 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 			{
 				if(hk.item.useOnSelf)
 				{
-					m_protocol->sendUseBattleWindow(hotkeyPos, hk.item.itemid, GlobalVariables::getPlayerID(), 0);
+					m_protocol->sendUseBattleWindow(hotkeyPos, hk.item.itemid, 0, GlobalVariables::getPlayerID());
 				}
 				else if(hk.item.useOnTarget)
 				{
-					m_protocol->sendUseBattleWindow(hotkeyPos, hk.item.itemid, GlobalVariables::getAttackID(), 0);
+					m_protocol->sendUseBattleWindow(hotkeyPos, hk.item.itemid, 0, GlobalVariables::getAttackID());
 				}
 			}
 			else
@@ -759,9 +759,6 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		}
 		break;
 	}
-	case 255: // debugging action
-		// FIXME (ivucica#1#) debugging action, just for testing (ctrl+a)
-		getDefaultConsole()->insertEntry(std::string("No debugging action"));
 	}
 	return ret;
 }
@@ -924,10 +921,10 @@ void GM_Gameworld::actionWalk(const glictPos& pos)
 void GM_Gameworld::mouseEvent(SDL_Event& event)
 {
 	glictPos pos;
-	// FIXME (ivucica#3#) this is incorrect, we should be refreshing ptrx and ptry here as well, not just read the old versions ...
-	// who knows how the platforms with a different pointing device (e.g. touchscreen?) would behave!
-	pos.x = ptrx;
-	pos.y = ptry;
+	int px, py;
+	SDL_GetMouseState(&px, &py);
+	pos.x = px;
+	pos.y = py;
 
 	desktop.TransformScreenCoords(&pos);
 
@@ -1183,6 +1180,23 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     }
 
 }
+void GM_Gameworld::onAddCreature(uint32_t id)
+{
+	if(id != GlobalVariables::getPlayerID()) {
+		sbvlPanel.winBattle.add(id);
+	}
+	else {
+		m_mapui.getMinZ();
+	}
+}
+void GM_Gameworld::onRemoveCreature(uint32_t id)
+{
+	sbvlPanel.winBattle.remove(id);
+}
+void GM_Gameworld::onCreatureChangeHealth(uint32_t id, uint32_t health)
+{
+	sbvlPanel.winBattle.update(id);
+}
 
 void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos)
 {
@@ -1199,6 +1213,10 @@ void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Pos
 		(oldPos.z != newPos.z))
 	{
 		sbvlPanel.winBattle.refreshVisibility();
+	}
+	if(id == GlobalVariables::getPlayerID())
+	{
+		m_mapui.getMinZ();
 	}
 }
 

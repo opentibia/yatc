@@ -52,12 +52,17 @@ class MapUI {
         static void makePopup(Popup*popup,void*owner,void*arg);
 
 
+		int getMinZ();
+
+
 	private:
 		int m_x, m_y;
 		int m_w, m_h;
 
 		uint32_t m_vpw;
 		uint32_t m_vph;
+
+		int m_minz;
 
 		float m_scale;
 
@@ -75,9 +80,6 @@ class MapUI {
 	protected:
 		void drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height);
         void drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height);
-
-		int getMinZ();
-
 
 };
 

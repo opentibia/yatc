@@ -18,8 +18,6 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-// FIXME (ivucica#1#) any protocol changes 8.0 => 8.1 need to be applied here, this is a copypaste of 8.0
-
 #include "../fassert.h"
 #include "protocolgame81.h"
 #include "../gamecontent/globalvars.h"

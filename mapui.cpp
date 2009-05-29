@@ -58,6 +58,8 @@ MapUI::MapUI()
 	m_h = m_vph*32;
 
     m_scale = 1.F;
+
+    m_minz = -1;
 }
 
 MapUI::~MapUI()
@@ -89,7 +91,8 @@ void MapUI::renderMap()
 	Position pos = GlobalVariables::getPlayerPosition();
 
 	// find out how far above the player shall be visible
-	int m = getMinZ();
+	if(m_minz < 0) getMinZ();
+	int m = m_minz;
 	int sz;
 	if(pos.z > 7){ // underground
 		sz = pos.z + 3;
@@ -119,7 +122,7 @@ void MapUI::renderMap()
 				uint32_t tile_x = pos.x + i - m_vpw/2 - offset;
 				uint32_t tile_y = pos.y + j - m_vph/2 - offset;
 
-				const Tile* tile = Map::getInstance().getTile(tile_x, tile_y, z);
+				Tile* tile = Map::getInstance().getTile(tile_x, tile_y, z);
 
 				if(!tile){
 					//printf("No tile?\n");
@@ -300,7 +303,7 @@ void MapUI::renderMap()
 	int playerspeed = 0;
 	for(uint32_t i = 0; i < m_vpw; ++i){
 		for(uint32_t j = 0; j < m_vph; ++j){
-			const Tile* tile = Map::getInstance().getTile(pos.x + i - m_vpw/2, pos.y + j - m_vph/2, pos.z);
+			Tile* tile = Map::getInstance().getTile(pos.x + i - m_vpw/2, pos.y + j - m_vph/2, pos.z);
 			if(!tile){
 				continue;
 			}
@@ -313,7 +316,7 @@ void MapUI::renderMap()
 			int32_t drawIndex = 1;
 			while(drawIndex <= thingsCount){
 
-				Thing* thing = (Thing*)tile->getThingByStackPos(drawIndex); // FIXME (ivucica#3#) getThingByStackPos() should allow changing (should not be returning const)
+				Thing* thing = tile->getThingByStackPos(drawIndex);
 				if(thing){
 					if(thing->getCreature()){
 
@@ -338,7 +341,6 @@ void MapUI::renderMap()
 }
 
 int MapUI::getMinZ() { // find out how far can we render... if anything is directly above player, then don't render above that floor
-	// FIXME (ivucica#2#) minz should be m_minz and thus be cached. code below should be called only in onWalk()
 	Position pos = GlobalVariables::getPlayerPosition();
 	const Tile* tile = Map::getInstance().getTile(pos.x, pos.y, pos.z);
 
@@ -348,10 +350,10 @@ int MapUI::getMinZ() { // find out how far can we render... if anything is direc
 		if (tile && tile->getThingCount() ) {
 			minz = z+1;
 
-			return minz;
+			return (m_minz = minz);
 		}
 	}
-	return 0;
+	return (m_minz = 0);
 }
 
 void MapUI::drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height)

@@ -221,7 +221,6 @@ void winOutfit_t::onGfxPaint(glictRect *real, glictRect *clipped, glictContainer
 
 
 void winOutfit_t::openSelf(const Outfit_t& current, const std::list<AvailOutfit_t>& available){
-    // FIXME doesnt take argument "current" into consideration
     dispCreature->getOutfit() = current;
     window.SetVisible(true);
     m_availableOutfits = available;

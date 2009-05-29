@@ -90,6 +90,9 @@ public:
 		const std::string& message) {}
     virtual void onUpdatePlayerCash(uint32_t newcash) {}
 
+	virtual void onAddCreature(uint32_t id){}
+	virtual void onRemoveCreature(uint32_t id){}
+	virtual void onCreatureChangeHealth(uint32_t id, uint32_t health){}
 	virtual void onCreatureMove(uint32_t id, const Position& oldPos, const Position& newPos) {}
 
 	virtual void onChangeSkills() {}
