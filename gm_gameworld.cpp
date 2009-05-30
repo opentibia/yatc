@@ -975,9 +975,10 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             }
             else if(m_dragging){
 				uint32_t dx, dy, dz;
-				m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz);
-				Position dest(dx, dy, dz);
-				dragComplete(dest);
+				if(m_mapui.translateClickToTile((int)pos.x, (int)pos.y, dx, dy, dz)){
+					Position dest(dx, dy, dz);
+					dragComplete(dest);
+				}
 			}
 			else if(isExtendedUsing()){ // otherwise handle as appropriate
 				actionUseWith(pos);
