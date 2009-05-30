@@ -532,21 +532,16 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 	// get the tile we clicked on
 
 	// NOTE (nfries88): The official client recognizes the floor above you before the floor you're on
-	//	for a tile click if there's a tile there, and also floors below you after.
-	//	Implemented that here.
+	//	and also floors below you after.
 	Tile* tile = NULL;
 	int minz = 7;
 	int maxz = m_minz;
 	if(pos.z > 7){
 		minz = pos.z + 3;
 	}
-
-	for(z = maxz; z <= minz; z++)
-	{
+	for(z = maxz; z <= minz; z++){
 		tile = Map::getInstance().getTile(pos.x + x - (z-pos.z) - m_vpw/2, pos.y + y - (z-pos.z) - m_vph/2, z);
 		if(tile){ // found you
-			// test
-			tile->addEffect(1);
 			break;
 		}
 	}
