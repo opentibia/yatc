@@ -108,7 +108,6 @@ void SpriteGL::buildGLTexture() {
 
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &m_texture);
-	//printf("Putting %s[%d] into %d.\n", m_filename.c_str(), m_index, m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -152,8 +151,6 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 
 	glAlphaFunc(GL_GEQUAL, .80);
 	glEnable(GL_ALPHA_TEST);
-	//if (m_index==0)
-		//printf("File: %s Index: %d Multipliers: %g %g WxH: %gx%g\n", m_filename.c_str(), m_index, m_multiplierx, m_multipliery, spriteWidth, spriteHeight);
     if(m_r != 1. || m_g != 1. || m_b != 1.)
         glColor4f(m_r, m_g, m_b, 1.);
 
@@ -185,7 +182,6 @@ void SpriteGL::rebuildSelf()
 void SpriteGL::destroyGLTexture()
 {
     if(m_texture != GL_INVALID_VALUE){
-        //printf("Destroying texture %d.\n", m_texture);
 		glDeleteTextures(1, &m_texture);
 	}
 }

@@ -81,14 +81,11 @@ ItemUI::~ItemUI()
         return;
     }
     ObjectType* obj = Objects::getInstance()->getItemType(m_id);
-    //printf("Destroying an item of type %d\n", m_id);
     if (obj) {
 		if(obj->instancesOnMap){
 			obj->instancesOnMap--;
-			//printf("Remaining: %d\n", obj->instancesOnMap);
 			if (!obj->instancesOnMap) obj->unloadGfx();
 		} else {
-		    //printf("Already unloaded\n");
 		}
     }
 }

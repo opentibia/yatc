@@ -626,8 +626,6 @@ void Skin::loadSkin() {
 }
 
 void Skin::unloadSkin() {
-
-//    printf("[Skin::unloadSkin] Unloading window skin...\n");
     if (windowtl) delete windowtl; windowtl = NULL;
     if (windowt)  delete windowt;  windowt  = NULL;
     if (windowtr) delete windowtr; windowtr = NULL;
@@ -652,10 +650,6 @@ void Skin::unloadSkin() {
 
     glictGlobals.windowBodySkin = NULL;
 
-
-
-//    printf("[Skin::unloadSkin] Unloading button skin...\n");
-
     if (btnntl) delete btnntl; btnntl = NULL;
     if (btnnt)  delete btnnt;  btnnt  = NULL;
     if (btnntr) delete btnntr; btnntr = NULL;
@@ -678,9 +672,6 @@ void Skin::unloadSkin() {
 
     glictGlobals.buttonSkin = NULL;
 
-
-//    printf("[Skin::unloadSkin] Unloading highlighted button skin...\n");
-
     if (btnhtl) delete btnhtl; btnhtl = NULL;
     if (btnht)  delete btnht;  btnht  = NULL;
     if (btnhtr) delete btnhtr; btnhtr = NULL;
@@ -702,8 +693,6 @@ void Skin::unloadSkin() {
     btnh.SetBR(NULL);
 
     glictGlobals.buttonHighlightSkin = NULL;
-
-//    printf("[Skin::unloadSkin] Unloading textbox skin...\n");
 
     if (txttl) delete txttl; txttl = NULL;
     if (txtt)  delete txtt;  txtt  = NULL;
@@ -976,8 +965,6 @@ void Skin::unloadSkin() {
     chk.SetBottom(NULL);
     chk.SetBR(NULL);
 
-//    printf("[Skin::unloadSkin] Unloading panelmainmenu skin...\n");
-
     if (tmmtl) delete tmmtl; tmmtl = NULL;
     if (tmmt)  delete tmmt;  tmmt  = NULL;
     if (tmmtr) delete tmmtr; tmmtr = NULL;
@@ -997,8 +984,6 @@ void Skin::unloadSkin() {
     tmm.SetBL(NULL);
     tmm.SetBottom(NULL);
     tmm.SetBR(NULL);
-
-//    printf("[Skin::unloadSkin] Unloading inventory element skin...\n");
 
     if (invtl) delete invtl; invtl = NULL;
     if (invt)  delete invt;  invt  = NULL;

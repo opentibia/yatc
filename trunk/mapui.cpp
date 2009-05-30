@@ -125,7 +125,6 @@ void MapUI::renderMap()
 				Tile* tile = Map::getInstance().getTile(tile_x, tile_y, z);
 
 				if(!tile){
-					//printf("No tile?\n");
 					continue;
 				}
 
@@ -526,9 +525,6 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 	// get player position
 	Position pos = GlobalVariables::getPlayerPosition();
 	int z = pos.z;
-
-	printf("Click on %d %d\n", x,y);
-	printf("That translates into %d %d %d\n", pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
 	// get the tile we clicked on
 
 	// NOTE (nfries88): The official client recognizes the floor above you before the floor you're on
@@ -545,7 +541,10 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 			break;
 		}
 	}
-
+	#ifdef DEBUG
+	printf("Click on %d %d\n", x,y);
+	printf("That translates into %d %d %d\n", pos.x + x - (z-pos.z) - m_vpw/2, pos.y + y - (z-pos.z) - m_vph/2, z);
+	#endif
 
 	retx = pos.x + x - (z-pos.z) - m_vpw/2;
 	rety = pos.y + y - (z-pos.z) - m_vph/2;

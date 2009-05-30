@@ -144,15 +144,10 @@ int Tile::getUseStackpos() const
 			const Thing* lastThing = getThingByStackPos(lastPos);
 
 			if(item->isAlwaysUsed()) {
-				//printf("Using item of order %d and ID %d (Always used)\n", thing->getOrder(), thing->getID());
 				return pos;
 			}
 			if( (lastThing == NULL) || (thing->getOrder() > lastThing->getOrder()) ) {
-				//printf("Using item of order %d and ID %d\n", thing->getOrder(), thing->getID());
 				lastPos = pos;
-			}
-			else {
-				//printf("Overlooking item of order %d and ID %d\n", thing->getOrder(), thing->getID());
 			}
 		}
 	}

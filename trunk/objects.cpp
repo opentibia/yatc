@@ -329,7 +329,6 @@ bool Objects::load780plus(const char* filename)
 						oType->stackable = true;
 					break;
 				case 0x06: //Ladders?
-						//printf("Has 0x06 attribute: ID %d\n", id);
 						oType->alwaysUsed = true;
 					break;
 				case 0x07: //Useable

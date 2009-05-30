@@ -28,16 +28,6 @@
     #include <string.h> // strlen
     #include <stdlib.h> // abort
 
-	//#ifdef WIN32
-	//	#include <windows.h>
-	//	#include <assert.h>
-
-	//	#define ASSERTFRIENDLY(x, y) if (!(x)) { MessageBox(HWND_DESKTOP, y, "Something unpredicted happened! :(", MB_ICONSTOP); assert(x); }
-	//#else
-
-	//	#define ASSERTFRIENDLY(x, y) if (!(x)) { printf("Assertion failure, forcing crash. (Reason: %s)\n", y); fflush(stdout); exit(1);/*printf("%d", 43/0);*/ }
-	//#endif
-
 	#include "util.h"
 	#define ASSERTFRIENDLY(x,y) if (!(x)) { char *res = (char*)malloc(strlen(y) + 100); sprintf(res,"%s\n\nAt file: " __FILE__ "; in line: %d", (y), __LINE__); printf("Assertion failed!\n\n%s\n", res); NativeGUIError(res, "Assertion failed"); abort(); }
 	#define ASSERT(x) ASSERTFRIENDLY(x, "Assertion '" #x "' failed");

@@ -472,7 +472,6 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	std::string ip;
 
 	if(!m->winCharlist.lsiChars.size()) {
-		//printf("This account has no characters!\n");
 		m->winCharlist.window.SetVisible(false);
 		return;
 	}
