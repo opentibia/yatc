@@ -733,8 +733,6 @@ void MapUI::onMessageTo(Popup::Item *parent)
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
     gw->setActiveConsole(gw->findConsole(Creatures::getInstance().getCreature(m->m_popupCreatureID)->getName()));
-
-
 }
 
 
@@ -744,4 +742,14 @@ void MapUI::onUnimplemented(Popup::Item *parent)
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
     gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
+}
+
+std::vector<Direction> MapUI::getPathTo(int scrx, int scry)
+{
+	std::vector<Direction> path;
+	uint32_t x, y, z;
+	if(translateClickToTile(scrx, scry, x, y, z)) {
+		path = Map::getInstance().getPathTo(x, y, z);
+	}
+	return path;
 }

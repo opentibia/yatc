@@ -32,7 +32,9 @@
 
 yatcClipboard::yatcClipboard()
 {
-	#ifdef __APPLE__
+	#ifdef __USE_INTERNAL_CLIPBOARD
+	m_text = "";
+	#elif defined(__APPLE__)
 	OSStatus err = PasteboardCreate(kPasteboardClipboard, &m_clipboard);
 	// TODO: error handling?
 	#endif
@@ -51,6 +53,8 @@ std::string yatcClipboard::getText()
 	std::string ret = str;
 	CloseClipboard();
 	return ret;
+	#elif defined (__USE_INTERNAL_CLIPBOARD)
+	return m_text;
 	#elif defined(__APPLE__)
 	OSStatus err = noErr;
 	ItemCount count;
@@ -106,6 +110,8 @@ void yatcClipboard::setText(const std::string& text)
 
 	SetClipboardData(CF_OEMTEXT, m_hmem);
 	CloseClipboard();
+	#elif defined (__USE_INTERNAL_CLIPBOARD)
+	m_text = text;
 	#elif defined(__APPLE__)
 	OSStatus err = noErr;
 	// synchronize pasteboard

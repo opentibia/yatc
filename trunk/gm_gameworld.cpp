@@ -568,15 +568,14 @@ void GM_Gameworld::keyPress (int key)
 
 		txtConsoleEntry.SetCaption("");
 	} else if(key != 0) {
-		// NOTE (nfries88): I have no clue why, but I get 22 and 3 when pressing CTRL+V and CTRL+C respectively.
-		if(key == 22)
+		if(key == 22) // CTRL+C
 		{
 			std::string text = g_clipboard.getText();
 			glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
 			if(textbox) textbox->SetCaption(textbox->GetCaption()+text);
 			return;
 		}
-		if(key == 3)
+		if(key == 3) // CTRL+V
 		{
 			// we can't currently select anything, so how could we copy?
 			return;
@@ -735,13 +734,18 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		{
 			// NOTE (nfries88): Not sure whether or not a stackpos is needed.
 			Position hotkeyPos(0xFFFF, 0, 0);
-			// FIXME (nfries88): This never gets deleted, but it's a pain to implement.
-			Item* item = Item::CreateItem(hk.item.itemid, 1);
-			if(item->isExtendedUseable() && hk.item.useXHairs)
-			{
-				beginExtendedUse(item, 0, hotkeyPos);
+			// NOTE (nfries88): Not sure if this is good behavior, but it seems to me like it will do the trick.
+			static Item* hk_item = NULL;
+			if(hk_item != NULL){
+				delete hk_item;
+				hk_item = NULL;
 			}
-			else if(item->isExtendedUseable())
+			hk_item = Item::CreateItem(hk.item.itemid, 1);
+			if(hk_item->isExtendedUseable() && hk.item.useXHairs)
+			{
+				beginExtendedUse(hk_item, 0, hotkeyPos);
+			}
+			else if(hk_item->isExtendedUseable())
 			{
 				if(hk.item.useOnSelf)
 				{

@@ -51,6 +51,8 @@ class MapUI {
 
         static void makePopup(Popup*popup,void*owner,void*arg);
 
+        std::vector<Direction> getPathTo(int scrx, int scry);
+
 
 		int getMinZ();
 

@@ -33,6 +33,8 @@
 
 #include "../stdinttypes.h"
 
+#include "enums.h"
+
 class Item;
 class Creature;
 class Thing;
@@ -141,6 +143,8 @@ public:
 	typedef std::list<AnimatedText> AnimatedTextList;
 	void addAnimatedText(const Position& pos, uint32_t color, const std::string& text);
 	AnimatedTextList& getAnimatedTexts(uint8_t floor) { return m_animatedTexts[floor];}
+
+	std::vector<Direction> getPathTo(int x, int y, int z);
 
 private:
 	Map();
