@@ -93,6 +93,13 @@ void onKeyDown(const SDL_Event& event)
 {
 	int key = event.key.keysym.sym;
 	switch(key){
+	case 0:
+		{
+			// TODO (nfries88): Some key combinations (IE, CTRL+TAB) result in scancodes that
+			//	can't be represented using  ascii for proper UI compatibility we need to
+			//	interpret some of those keys combinations.
+		}
+		break;
 	case SDLK_ESCAPE:
 		//g_running = false;
 		g_game->specKeyPress(event.key.keysym);

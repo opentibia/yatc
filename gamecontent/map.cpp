@@ -466,3 +466,11 @@ void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string
 	ASSERT(pos.z < MAP_LAYER);
 	m_animatedTexts[pos.z].push_back(AnimatedText(pos, color, text));
 }
+
+std::vector<Direction> Map::getPathTo(int x, int y, int z)
+{
+	std::vector<Direction> path;
+	// TODO (nfries88): Actually calculate the path.
+
+	return path;
+}
