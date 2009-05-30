@@ -398,9 +398,11 @@ void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller)
     winShop_t *wst = (winShop_t*)caller->GetCustomData();
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     if (!wst->selling) {
+    	#ifdef DEBUG
         printf("Buying..."); fflush(stdout);
         printf("itemid %d subtype %d count %d\n", wst->currentBuyItem.getItemId(),wst->currentBuyItem.getSubType(),
             /* amount: */wst->sbCt.GetValue());
+		#endif
         gw->m_protocol->sendShopPurchase(
             /* itemid: */wst->currentBuyItem.getItemId(),
             /* subtype: */wst->currentBuyItem.getSubType(),
@@ -410,9 +412,11 @@ void winShop_t::OnOkClick(glictPos* pos, glictContainer *caller)
 
     }
     else {
+    	#ifdef DEBUG
         printf("Selling..."); fflush(stdout);
         printf("itemid %d subtype %d count %d\n", wst->currentSellItem.getItemId(),wst->currentSellItem.getSubType(),
                 /* amount: */wst->sbCt.GetValue());
+		#endif
 
 
         gw->m_protocol->sendShopSale(

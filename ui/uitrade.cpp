@@ -209,14 +209,6 @@ void winTrade_t::tradeItemOnClick(glictPos* relmousepos, glictContainer* caller)
 	gw->m_protocol->sendLookInTrade(flag, slot);
 }
 
-/*
-void winTrade_t::tradeItemOnPaint(glictRect *real, glictRect *clipped, glictContainer *caller)
-{
-	printf("Item trade paint\n");
-	ItemPanel::itemPanelOnPaint(real, clipped, caller);
-}
-*/
-
 void winTrade_t::onClose()
 {
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;

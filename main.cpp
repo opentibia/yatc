@@ -306,6 +306,7 @@ void crashhndl(int sig, siginfo_t *info,
 				on a Unix-like system at the moment.
 			If this is found to work as expected it should be used instead of the
 				stringstream code above, as this shouldn't use dynamic allocations.
+		// FIXME (nfries88): Test this and use it instead of stringstream.
 		sprintf(addr2line_buffer, "addr2line -C -e yatc %8x", trace[i]);
 		system(addr2line_buffer);
 		*/

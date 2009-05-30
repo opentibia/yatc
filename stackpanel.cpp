@@ -37,7 +37,6 @@ bool yatcStackPanel::CastEvent(glictEvents evt, void* wparam, long lparam, void*
 {
 #if (GLICT_APIREV>=95)
     if (evt == GLICT_MOUSEMOVE) {
-        //printf("dragged child of %s: %p\n", GetCaption().c_str(), draggedchild);
         if (draggedchild) {
             _updateDraggedChildPos((*(glictPos*)wparam));
             return true;

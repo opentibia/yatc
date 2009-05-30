@@ -305,8 +305,6 @@ void CreatureUI::loadOutfit()
                 continue;
             }
             else{
-                //printf("check i + m_obj->height * m_obj->width < m_obj->numsprites\n");
-                //printf(" -II-            %d                    <      %d \n", i + m_obj->height * m_obj->width, m_obj->numsprites);
             	ASSERT(i + m_obj->height * m_obj->width < m_obj->numsprites);
             	ASSERT(m_obj->imageData)
 
@@ -321,7 +319,6 @@ void CreatureUI::loadOutfit()
         	spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
         }
         for (int i = 1; i < 255; i++) {
-            //printf("%d\n", i);
             Objects::getInstance()->getOutfitType(i)->isGfxLoaded();
         }
 		m_gfx.insert(m_gfx.end(), spr);
