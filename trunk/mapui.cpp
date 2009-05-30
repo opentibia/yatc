@@ -358,7 +358,7 @@ int MapUI::getMinZ() { // find out how far can we render... if anything is direc
 
 void MapUI::drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height)
 {
-    float scaledSize = 32*scale;
+    float scaledSize = std::floor(32*m_scale);
     // go through all tiles around it and see if any of the creatures is moving in direction of this tile
     for (int i = -1; i <= 1; i++)
         for (int j = -1; j <= 1; j++) {
@@ -507,7 +507,7 @@ void MapUI::dragThing(int x, int y, const Thing*& thing, uint32_t& retx, uint32_
 
 Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, uint32_t &retz)
 {
-    float scaledSize = 32*m_scale;
+    float scaledSize = std::floor(32*m_scale);
     x-=m_x; y-=m_y;
 	x /= scaledSize; // divide by tile size
 	y /= scaledSize; // we need the tile coordinates, not the mouse coordinates
@@ -525,24 +525,46 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 
 	// get player position
 	Position pos = GlobalVariables::getPlayerPosition();
+	int z = pos.z;
 
 	printf("Click on %d %d\n", x,y);
 	printf("That translates into %d %d %d\n", pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
 	// get the tile we clicked on
-	Tile* tile = Map::getInstance().getTile(pos.x + x - m_vpw/2, pos.y + y - m_vph/2, pos.z);
+
+	// NOTE (nfries88): The official client recognizes the floor above you before the floor you're on
+	//	for a tile click if there's a tile there, and also floors below you after.
+	//	Implemented that here.
+	Tile* tile = NULL;
+	int minz = 7;
+	int maxz = m_minz;
+	if(pos.z > 7){
+		minz = pos.z + 3;
+	}
+
+	for(z = maxz; z <= minz; z++)
+	{
+		tile = Map::getInstance().getTile(pos.x + x - (z-pos.z) - m_vpw/2, pos.y + y - (z-pos.z) - m_vph/2, z);
+		if(tile){ // found you
+			// test
+			tile->addEffect(1);
+			break;
+		}
+	}
 
 
-
-	retx = pos.x + x - m_vpw/2;
-	rety = pos.y + y - m_vph/2;
-	retz = pos.z;
+	retx = pos.x + x - (z-pos.z) - m_vpw/2;
+	rety = pos.y + y - (z-pos.z) - m_vph/2;
+	retz = z;
 	return tile;
 }
 
 bool MapUI::handlePopup(int x, int y)
 {
-    float scaledSize = 32*m_scale;
+    float scaledSize = std::floor(32*m_scale);
     if (x > 2*scaledSize && y > 2*scaledSize && x < 2*scaledSize+15*scaledSize && y < 2*scaledSize+11*scaledSize) { // click within visible area of map?
+        uint32_t retx, rety, retz;
+        if(!translateClickToTile(x, y, retx, rety, retz)) return false;
+
         glictPos p;
         p.x = x; p.y = y;
         ((GM_Gameworld*)g_game)->performPopup(MapUI::makePopup,this,&p);
@@ -558,6 +580,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 	Position playerpos = GlobalVariables::getPlayerPosition();
 
     Tile* t = m->translateClickToTile(pos.x, pos.y, retx, rety, retz);
+    if(!t) return;
     m->m_lastRightclickTilePos.x = retx;
     m->m_lastRightclickTilePos.y = rety;
     m->m_lastRightclickTilePos.z = retz;
@@ -659,8 +682,9 @@ void MapUI::onLookAt(Popup::Item *parent)
     int stackpos;
 
     m->lookAtItem(t, thing, stackpos);
-
-    gw->m_protocol->sendLookItem(t->getPos(), thing->getID(), stackpos );
+	if(stackpos != -1){
+		gw->m_protocol->sendLookItem(t->getPos(), thing->getID(), stackpos );
+	}
 }
 
 void MapUI::onUse(Popup::Item *parent)
