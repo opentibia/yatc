@@ -632,7 +632,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
         s << gettext("Follow");
         popup->addItem(s.str(),onFollow,m);
 
-        if (!c->isMonster() && !c->isNpc() && (c->getCurrentPos().z == GlobalVariables::getPlayerPosition().z))
+        if (/*!c->isMonster() && !c->isNpc()*/ c->isPlayer() && (c->getCurrentPos().z == GlobalVariables::getPlayerPosition().z))
         {
             popup->addItem("-",NULL,NULL);
 
@@ -664,7 +664,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 						if(player != c){
 							s.str("");
 							s << gettext("Revoke") << c->getName() << "'s " << gettext("Invitation");
-							popup->addItem(s.str(),onRevokeInvite);
+							popup->addItem(s.str(), onRevokeInvite, (void*)c->getID());
 						}
 						break;
 					}
@@ -673,7 +673,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 						if(player != c){
 							s.str("");
 							s << gettext("Accept") << c->getName() << "'s " << gettext("Invitation");
-							popup->addItem(s.str(),onAcceptInvite);
+							popup->addItem(s.str(), onAcceptInvite, (void*)c->getID());
 						}
 						break;
 					}
@@ -697,7 +697,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 						if(player != c){
 							s.str("");
 							s << gettext("Pass Leadership To") << " " << c->getName();
-							popup->addItem(s.str(),onPassLeadership);
+							popup->addItem(s.str(), onPassLeadership, (void*)c->getID());
 						}
 						// NOTE (nfries88): lack of break; is intentional!
 					}
@@ -706,7 +706,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 						if(player == c){
 							s.str("");
 							s << gettext("Leave Party");
-							popup->addItem(s.str(),onLeaveParty);
+							popup->addItem(s.str(), onLeaveParty, (void*)c->getID());
 						}
 						break;
 					}
@@ -724,28 +724,24 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 
 void MapUI::onInviteToParty(Popup::Item *parent)
 {
-	MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendInviteParty(m->m_popupCreatureID);
+    gw->m_protocol->sendInviteParty((uint32_t)parent->data);
 }
 void MapUI::onRevokeInvite(Popup::Item *parent)
 {
-	MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendCancelInviteParty(m->m_popupCreatureID);
+    gw->m_protocol->sendCancelInviteParty((uint32_t)parent->data);
 }
 void MapUI::onAcceptInvite(Popup::Item *parent)
 {
-	MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendJoinParty(m->m_popupCreatureID);
+    gw->m_protocol->sendJoinParty((uint32_t)parent->data);
 }
 void MapUI::onSharedExp(Popup::Item *parent)
 {
-	MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
 	//if(parent->data)
@@ -755,10 +751,9 @@ void MapUI::onSharedExp(Popup::Item *parent)
 }
 void MapUI::onPassLeadership(Popup::Item *parent)
 {
-	MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendPassPartyLeader(m->m_popupCreatureID);
+    gw->m_protocol->sendPassPartyLeader((uint32_t)parent->data);
 }
 void MapUI::onLeaveParty(Popup::Item *parent)
 {
