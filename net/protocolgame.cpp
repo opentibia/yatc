@@ -506,6 +506,12 @@ bool ProtocolGame::parseTileRemoveThing(NetworkMessage& msg)
         //TODO. send update tile
         return true;
     }
+    // NOTE (nfries88): Maybe this will fix http://otfans.net/project.php?issueid=490
+    Creature* creature = thing->getCreature();
+    if(creature != NULL){
+    	creature->setCurrentPos(Position(0, 0, 0));
+    	Notifications::onCreatureMove(creature->getID(), tilePos, creature->getCurrentPos());
+    }
     if(!tile->removeThing(thing)){
         RAISE_PROTOCOL_ERROR("Tile Remove - removeThing");
     }
