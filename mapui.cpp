@@ -632,7 +632,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
         s << gettext("Follow");
         popup->addItem(s.str(),onFollow,m);
 
-        if (!c->isMonster() && !c->isNpc())
+        if (!c->isMonster() && !c->isNpc() && (c->getCurrentPos().z == GlobalVariables::getPlayerPosition().z))
         {
             popup->addItem("-",NULL,NULL);
 
@@ -648,23 +648,125 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
             s << gettext("Ignore") << " " << c->getName();
             popup->addItem(s.str(),onUnimplemented);
 
-            s.str("");
-            s << gettext("Invite to Party");
-            popup->addItem(s.str(),onUnimplemented);
+            if(c->getShield() == 0){
+				s.str("");
+				s << gettext("Invite to Party");
+				popup->addItem(s.str(),onInviteToParty);
+            }
+            else{
+            	Creature* player = Creatures::getInstance().getPlayer();
+            	switch(player->getShield())
+            	{
+            		case 0:
+						break;
+					case SHIELD_WHITEYELLOW:
+					{
+						if(player != c){
+							s.str("");
+							s << gettext("Revoke") << c->getName() << "'s " << gettext("Invitation");
+							popup->addItem(s.str(),onRevokeInvite);
+						}
+						break;
+					}
+					case SHIELD_WHITEBLUE:
+					{
+						if(player != c){
+							s.str("");
+							s << gettext("Accept") << c->getName() << "'s " << gettext("Invitation");
+							popup->addItem(s.str(),onAcceptInvite);
+						}
+						break;
+					}
+					case SHIELD_YELLOW_SHAREDEXP: case SHIELD_YELLOW_NOSHAREDEXP_BLINK: case SHIELD_YELLOW_NOSHAREDEXP:
+					{
+						if(player == c){
+							s.str("");
+							s << gettext("Disable Shaded Experience");
+							popup->addItem(s.str(), onSharedExp, (void*)false);
+						}
+						// NOTE (nfries88): lack of break; is intentional!
+					}
+					case SHIELD_YELLOW:
+					{
 
+						if(player == c){
+							s.str("");
+							s << gettext("Enable Shaded Experience");
+							popup->addItem(s.str(), onSharedExp, (void*)true);
+						}
+						if(player != c){
+							s.str("");
+							s << gettext("Pass Leadership To") << " " << c->getName();
+							popup->addItem(s.str(),onPassLeadership);
+						}
+						// NOTE (nfries88): lack of break; is intentional!
+					}
+					default:
+					{
+						if(player == c){
+							s.str("");
+							s << gettext("Leave Party");
+							popup->addItem(s.str(),onLeaveParty);
+						}
+						break;
+					}
+            	}
+
+            }
         }
 
         popup->addItem("-",NULL,NULL);
         s.str("");
         s << gettext("Copy Name");
         popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
-
     }
-
-
-
 }
 
+void MapUI::onInviteToParty(Popup::Item *parent)
+{
+	MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->m_protocol->sendInviteParty(m->m_popupCreatureID);
+}
+void MapUI::onRevokeInvite(Popup::Item *parent)
+{
+	MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->m_protocol->sendCancelInviteParty(m->m_popupCreatureID);
+}
+void MapUI::onAcceptInvite(Popup::Item *parent)
+{
+	MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->m_protocol->sendJoinParty(m->m_popupCreatureID);
+}
+void MapUI::onSharedExp(Popup::Item *parent)
+{
+	MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+	//if(parent->data)
+    //	gw->m_protocol->sendEnableSharedExp();
+    //else
+    //	gw->m_protocol->sendDisableSharedExp();
+}
+void MapUI::onPassLeadership(Popup::Item *parent)
+{
+	MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->m_protocol->sendPassPartyLeader(m->m_popupCreatureID);
+}
+void MapUI::onLeaveParty(Popup::Item *parent)
+{
+	MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+
+    gw->m_protocol->sendLeaveParty();
+}
 
 void MapUI::onLookAt(Popup::Item *parent)
 {
@@ -700,8 +802,6 @@ void MapUI::onUse(Popup::Item *parent)
             gw->beginExtendedUse(thing,stackpos,t->getPos());
         }
     }
-
-
 }
 
 void MapUI::onAttack(Popup::Item *parent)

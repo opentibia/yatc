@@ -89,6 +89,29 @@ enum WindowMessage_t{
 	MESSAGE_MOTD
 };
 
+enum Skulls_t{
+	SKULL_NONE      = 0,
+	SKULL_YELLOW    = 1,
+	SKULL_GREEN     = 2,
+	SKULL_WHITE     = 3,
+	SKULL_RED       = 4,
+};
+
+// NOTE (nfries88): If I recall correctly, blue = member, yellow = leader
+enum PartyShields_t{
+	SHIELD_NONE = 0,
+	SHIELD_WHITEYELLOW = 1,
+	SHIELD_WHITEBLUE = 2,
+	SHIELD_BLUE = 3,
+	SHIELD_YELLOW = 4,
+	SHIELD_BLUE_SHAREDEXP = 5,
+	SHIELD_YELLOW_SHAREDEXP = 6,
+	SHIELD_BLUE_NOSHAREDEXP_BLINK = 7,
+	SHIELD_YELLOW_NOSHAREDEXP_BLINK = 8,
+	SHIELD_BLUE_NOSHAREDEXP = 9,
+	SHIELD_YELLOW_NOSHAREDEXP = 10
+};
+
 enum MessageType_t{
 	MSG_STATUS_CONSOLE_ORNG = 0x11, /*Orange message in the console (TODO (ivucica#1#): check with real client if it appears in game window and where)*/
 	MSG_STATUS_WARNING      = 0x12, /*Red message in game window and in the console*/
