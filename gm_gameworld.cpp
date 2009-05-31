@@ -568,6 +568,25 @@ void GM_Gameworld::keyPress (int key)
 
 		txtConsoleEntry.SetCaption("");
 	} else if(key != 0) {
+		if(key == SDLK_TAB) {
+			std::vector<Console*>::iterator it = std::find(m_consoles.begin(), m_consoles.end(), m_activeconsole);
+			// NOTE (nfries88): This appears to always evaluate to false.
+			if(SDL_GetModState() & MOD_SHIFT){
+				// NOTE (nfries88): vector is unidirectional if I recall. Might be wise to switch to list.
+				NativeGUIError("", "");
+				std::vector<Console*>::iterator it2 = m_consoles.begin();
+				for(; it2 != it; ++it2);
+				if(it2 != m_consoles.end())
+					setActiveConsole((*it2));
+			}
+			else {
+				it++;
+				if(it == m_consoles.end())
+					it = m_consoles.begin();
+				if(it != m_consoles.end()) // theoretically possible to have no consoles..
+					setActiveConsole((*it));
+			}
+		}
 		if(key == 22) // CTRL+C
 		{
 			std::string text = g_clipboard.getText();
