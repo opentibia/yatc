@@ -193,6 +193,8 @@ public:
 			scbMaxFPS.SetValue(options.maxfps);
 			scbMaxFPS.SetCustomData(this);
 			scbMaxFPS.SetOnClick(winOptionsGraphicsAdvanced_t::OnChangeFPS);
+			// NOTE (nfries88): For when we implement horizontal scrollbar chip dragging in glict
+			scbMaxFPS.SetOnMouseUp(winOptionsGraphicsAdvanced_t::OnChangeFPS);
 
 			window.AddObject(&lblFPS);
 			lblFPS.SetPos(13, 254);
