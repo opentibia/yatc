@@ -726,19 +726,19 @@ void MapUI::onInviteToParty(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendInviteParty((uint32_t)parent->data);
+    gw->m_protocol->sendInviteParty((uint32_t)VOIDP2INT(parent->data));
 }
 void MapUI::onRevokeInvite(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendCancelInviteParty((uint32_t)parent->data);
+    gw->m_protocol->sendCancelInviteParty((uint32_t)VOIDP2INT(parent->data));
 }
 void MapUI::onAcceptInvite(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendJoinParty((uint32_t)parent->data);
+    gw->m_protocol->sendJoinParty((uint32_t)VOIDP2INT(parent->data));
 }
 void MapUI::onSharedExp(Popup::Item *parent)
 {
@@ -753,7 +753,7 @@ void MapUI::onPassLeadership(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-    gw->m_protocol->sendPassPartyLeader((uint32_t)parent->data);
+    gw->m_protocol->sendPassPartyLeader((uint32_t)VOIDP2INT(parent->data));
 }
 void MapUI::onLeaveParty(Popup::Item *parent)
 {
