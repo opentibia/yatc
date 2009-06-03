@@ -369,13 +369,13 @@ void pnlInventory_t::paintIcons(glictRect *real, glictRect *clipped, glictContai
 
 void pnlInventory_t::onSetFightModes(ChoiceGrid::Item *parent, ChoiceGrid::Item *olditem)
 {
-	options.battlemode = (int)parent->data;
+	options.battlemode = VOIDP2INT(parent->data);
 	((GM_Gameworld*)g_game)->m_protocol->sendFightModes(options.battlemode, options.chasemode, options.safemode);
 	options.Save();
 }
 void pnlInventory_t::onSetChase(ChoiceGrid::Item *parent, ChoiceGrid::Item *olditem)
 {
-	options.chasemode = (int)parent->data;
+	options.chasemode = VOIDP2INT(parent->data);
 	((GM_Gameworld*)g_game)->m_protocol->sendFightModes(options.battlemode, options.chasemode, options.safemode);
 	options.Save();
 }

@@ -48,6 +48,8 @@
 #define time _time64
 #endif
 
+#include <algorithm>
+
 extern yatcClipboard g_clipboard;
 
 extern bool g_running;
@@ -570,14 +572,21 @@ void GM_Gameworld::keyPress (int key)
 	} else if(key != 0) {
 		if(key == SDLK_TAB) {
 			std::vector<Console*>::iterator it = std::find(m_consoles.begin(), m_consoles.end(), m_activeconsole);
-			// NOTE (nfries88): This appears to always evaluate to false.
-			if(SDL_GetModState() & MOD_SHIFT){
+			if(SDL_GetModState() & KMOD_SHIFT){
 				// NOTE (nfries88): vector is unidirectional if I recall. Might be wise to switch to list.
-				NativeGUIError("", "");
 				std::vector<Console*>::iterator it2 = m_consoles.begin();
-				for(; it2 != it; ++it2);
-				if(it2 != m_consoles.end())
-					setActiveConsole((*it2));
+				std::vector<Console*>::iterator lastit = it2;
+				// NOTE (nfries88): after this loop, it2 will be equal to it; so we need to hold the last iteration
+				for(; it2 != it; ++it2) {
+					lastit = it2;
+				}
+				if(lastit == m_consoles.end() || lastit == it){
+					std::vector<Console*>::reverse_iterator rit = m_consoles.rbegin();
+					if(rit != m_consoles.rend())
+						setActiveConsole((*rit));
+				}
+				else if(lastit != m_consoles.end())
+					setActiveConsole((*lastit));
 			}
 			else {
 				it++;
@@ -1480,7 +1489,7 @@ void GM_Gameworld::onSetOutfit(Popup::Item *parent) {
 }
 void GM_Gameworld::onCopyName(Popup::Item *parent) {
     // happens when user clicks on "Copy Name" in right click popup menu
-    Creature* c = Creatures::getInstance().getCreature((int)parent->data);
+    Creature* c = Creatures::getInstance().getCreature((uint32_t)VOIDP2INT(parent->data));
     g_clipboard.setText(c->getName());
 }
 void GM_Gameworld::openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available){
@@ -1544,7 +1553,7 @@ void onPaintConsole(glictRect* real, glictRect* clipped, glictContainer* callerc
 
 void onMessageTo(Popup::Item *parent)
 {
-	Creature* c = Creatures::getInstance().getCreature((uint32_t)parent->data);
+	Creature* c = Creatures::getInstance().getCreature((uint32_t)VOIDP2INT(parent->data));
 	if(c != NULL)
 	{
 		GM_Gameworld *gw = (GM_Gameworld*)g_game;
