@@ -581,11 +581,9 @@ void GM_Gameworld::keyPress (int key)
 					lastit = it2;
 				}
 				if(lastit == m_consoles.end() || lastit == it){
-					std::vector<Console*>::reverse_iterator rit = m_consoles.rbegin();
-					if(rit != m_consoles.rend())
-						setActiveConsole((*rit));
+					lastit = m_consoles.end()-1;
 				}
-				else if(lastit != m_consoles.end())
+				if(lastit != m_consoles.end())
 					setActiveConsole((*lastit));
 			}
 			else {
@@ -1515,15 +1513,15 @@ void GM_Gameworld::setActiveConsole(Console* i){
 	// TODO (nfries88): buttons for yelling, closing channel, etc.
 	/*if(i == getDefaultConsole())
 	{
-		m_btnConsoleSpeakLevel.SetVisible(true);
-		m_btnConsoleClose.SetVisible(false);
-		m_btnConsoleM.SetVisible(false);
+		btnConsoleSpeakLevel.SetVisible(true);
+		btnConsoleClose.SetVisible(false);
+		btnConsoleM.SetVisible(false);
 	}
 	else
 	{
-		m_btnConsoleSpeakLevel.SetVisible(false);
-		m_btnConsoleClose.SetVisible(true);
-		m_btnConsoleM.SetVisible(true);
+		btnConsoleSpeakLevel.SetVisible(false);
+		btnConsoleClose.SetVisible(true);
+		btnConsoleM.SetVisible(true);
 	}*/
 	pnlConsoleEntryView.SetCustomData(m_activeconsole);
 }
@@ -1584,19 +1582,22 @@ void makeConsolePopup(Popup* popup, void* owner, void* arg)
 		Creature* c = Creatures::getInstance().lookup(speaker);
 		if(c != NULL)
 		{
-			s.str("");
-			s << gettext("Message to") << " " << speaker;
-			popup->addItem(s.str(), onMessageTo, (void*)c->getID());
+			if(c->isPlayer()){
+				s.str("");
+				s << gettext("Message to") << " " << speaker;
+				popup->addItem(s.str(), onMessageTo, (void*)c->getID());
 
-			s.str("");
-			s << gettext("Add to VIP list");
-			popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
+				s.str("");
+				s << gettext("Add to VIP list");
+				popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
 
-			s.str("");
-			s << gettext("Ignore") << " " << speaker;
-			popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
+				s.str("");
+				s << gettext("Ignore") << " " << speaker;
+				popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
 
-			popup->addItem("-",NULL,NULL);
+
+				popup->addItem("-",NULL,NULL);
+			}
 
 			s.str("");
 			s << gettext("Copy Name");
