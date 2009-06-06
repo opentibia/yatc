@@ -39,6 +39,7 @@ winBattle_t::BattleEntry* winBattle_t::get(uint32_t id)
 			return e;
 		}
 	}
+	return NULL;
 }
 
 void winBattle_t::add(uint32_t id)
@@ -196,10 +197,10 @@ void winBattle_t::makeConsolePopup(Popup* popup, void* owner, void* arg)
 	s << gettext("Follow");
 	popup->addItem(s.str(), winBattle_t::onFollow, (void*)c->getID());
 
-	popup->addItem("-",NULL,NULL);
-
-	if (!c->isMonster() && !c->isNpc())
+	if (c->isPlayer())
 	{
+		popup->addItem("-",NULL,NULL);
+
 		s.str("");
 		s << gettext("Message to") << " " << c->getName();
 		popup->addItem(s.str(), winBattle_t::onMessageTo, (void*)c->getID());
@@ -215,13 +216,13 @@ void winBattle_t::makeConsolePopup(Popup* popup, void* owner, void* arg)
 		s.str("");
 		s << gettext("Invite to Party");
 		popup->addItem(s.str(), winBattle_t::onUnimplemented, (void*)c->getID());
-
-		popup->addItem("-",NULL,NULL);
-
-		s.str("");
-		s << gettext("Copy Name");
-		popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
 	}
+
+	popup->addItem("-",NULL,NULL);
+
+	s.str("");
+	s << gettext("Copy Name");
+	popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
 }
 
 void winBattle_t::clickEntry(glictPos* relmousepos, glictContainer* callerclass)
