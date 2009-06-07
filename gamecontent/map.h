@@ -25,6 +25,7 @@
 #include <map>
 #include <list>
 #include <string>
+#include <bitset>
 
 #include "position.h"
 
@@ -102,6 +103,8 @@ public:
 
     const Position& getPos() const { return m_position; }
 
+    bool blockPath() const;
+
 private:
 	Item* m_ground;
 	ThingVector m_objects;
@@ -145,7 +148,7 @@ public:
 	void addAnimatedText(const Position& pos, uint32_t color, const std::string& text);
 	AnimatedTextList& getAnimatedTexts(uint8_t floor) { return m_animatedTexts[floor];}
 
-	std::vector<Direction> getPathTo(int x, int y, int z);
+	std::list<Direction> getPathTo(int x, int y, int z);
 
 private:
 	Map();
@@ -165,5 +168,4 @@ private:
 	AnimatedTextList m_animatedTexts[16];
 	DistanceEffectList m_distanceEffects[16];
 };
-
 #endif

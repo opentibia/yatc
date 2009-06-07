@@ -27,6 +27,8 @@
 #include "../objects.h"
 #include "../notifications.h"
 
+#include "../util.h"
+
 extern uint32_t g_frameTime;
 
 //*************** DistanceEffect **************************
@@ -158,7 +160,35 @@ int Tile::getUseStackpos() const
 int Tile::getExtendedUseStackpos() const
 {
 	// TODO (nfries88): figure out the proper way to do this...
-	return getUseStackpos();
+	int pos = 0;
+	int lastPos = 0;
+	int lastCreaturePos = 0;
+	for(;pos != getThingCount(); ++pos) {
+		const Thing* thing = getThingByStackPos(pos);
+		if(!thing) {
+			return 0;
+		}
+
+		const Item* item = thing->getItem();
+
+		if((item != NULL)||(thing->getCreature() != NULL)){
+			const Thing* lastThing = getThingByStackPos(lastPos);
+
+			if(item && item->isAlwaysUsed()) {
+				return pos;
+			}
+			else if( (lastThing == NULL) || (thing->getOrder() > lastThing->getOrder())) {
+				lastPos = pos;
+				if(thing->getCreature() != NULL)
+				{
+					lastCreaturePos = pos;
+				}
+			}
+		}
+	}
+	if(lastCreaturePos == 0)
+		return lastPos;
+	return lastPos;
 }
 
 const Item* Tile::getGround() const
@@ -328,6 +358,24 @@ uint8_t Tile::getMinimapColor() const
     return color;
 }
 
+bool Tile::blockPath() const
+{
+	if(m_ground){
+		const ObjectType* obj = m_ground->getObjectType();
+		if(obj->blockPathFind) return true;
+	}
+	for(ThingVector::const_iterator it = m_objects.begin(); it != m_objects.end(); ++it){
+		if((*it)->getCreature()) return true;
+
+		Item* item = (*it)->getItem();
+		if(item != NULL){
+			const ObjectType* obj = item->getObjectType();
+			if(obj->blockPathFind) return true;
+		}
+	}
+	return false;
+}
+
 
 //*************** Map **************************
 
@@ -473,9 +521,16 @@ void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string
 	m_animatedTexts[pos.z].push_back(AnimatedText(pos, color, text));
 }
 
-std::vector<Direction> Map::getPathTo(int x, int y, int z)
+std::list<Direction> Map::getPathTo(int x, int y, int z)
 {
-	std::vector<Direction> path;
+	// keep it on the map
+	#define MAX_SEARCH_DIST 25
+	std::list<Direction> path;
+	path.clear();
+	// make sure we can walk to the tile to begin with.
+	Tile* ttile = getTile(x, y, z);
+	if(!ttile || ttile->blockPath()) return path;
+
 	// TODO (nfries88): Actually calculate the path.
 
 	return path;
