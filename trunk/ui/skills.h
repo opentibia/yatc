@@ -300,9 +300,15 @@ public:
 
 		// FIXME (ivucica#4#) insert comma after every three characters
 		s << GlobalVariables::getPlayerStat(STAT_EXPERIENCE);
-		lblExperienceRight.SetPos(160 - 12 - g_engine->sizeText(s.str().c_str(), "system"), 5);
-		lblExperienceRight.SetWidth(g_engine->sizeText(s.str().c_str(), "system"));
-		lblExperienceRight.SetCaption(s.str());
+		std::string expstr = s.str();
+		size_t pos = expstr.length() % 3;
+		while(pos < expstr.length()) {
+			expstr.insert(pos, 1, ',');
+			pos += 3;
+		}
+		lblExperienceRight.SetPos(160 - 12 - g_engine->sizeText(expstr.c_str(), "system"), 5);
+		lblExperienceRight.SetWidth(g_engine->sizeText(expstr.c_str(), "system"));
+		lblExperienceRight.SetCaption(expstr);
 
 		s.str("");
 		s << GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_LEVEL);

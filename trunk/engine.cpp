@@ -256,5 +256,5 @@ void Engine::doResize(int& w, int& h)
 void Engine::reloadGlobalGfx()
 {
     delete m_ui;
-    m_ui = createSprite("Tibia.spr", 3);
+    m_ui = createSprite("Tibia.pic", 3);
 }

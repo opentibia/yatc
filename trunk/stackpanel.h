@@ -44,6 +44,10 @@ public:
 	yatcStackPanelWindow();
     virtual ~yatcStackPanelWindow() {}
 
+    void Collapse();
+    void Expand();
+    void Close();
+
 	static void OnClose(glictPos* pos, glictContainer *caller);
 	static void OnCollapse(glictPos* pos, glictContainer *caller);
 	static void OnExpand(glictPos* pos, glictContainer *caller);

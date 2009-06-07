@@ -79,6 +79,7 @@ public:
 		lstChars.SetHeight(146);
 		lstChars.SetBGColor(.25,.25,.25,1.);
 		lstChars.SetFocusable(true);
+		lstChars.SetSkin(&g_skin.txt);
 		if (options.ui_compat) lstChars.SetNext(&btnOk);
 
 		lblAccStatus.SetWidth(200);

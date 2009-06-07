@@ -85,7 +85,7 @@ public:
 	void setShield(uint32_t shield) { m_shield = shield;}
 	uint32_t getShield() const { return m_shield;}
 
-	const Position& getCurrentPos() const { return m_currentPos; } 
+	const Position& getCurrentPos() const { return m_currentPos; }
 	void setCurrentPos(const Position& pos) { m_currentPos = pos; }
 
 	void resetSelf() { CreatureUI::resetSelf(); m_id = 0; }
@@ -111,11 +111,15 @@ protected:
 
 	uint32_t m_moveStartTime;
 	Position m_moveOldPos;
-	
+
 	Position m_currentPos;
 
 	friend class Creatures;
 };
+
+#if defined(YATC_THREADED)
+struct SDL_mutex;
+#endif
 
 class Creatures
 {

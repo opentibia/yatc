@@ -92,6 +92,7 @@ public:
 	const Creature* getTopCreature() const;
 	const Item* getGround() const;
 	int getUseStackpos() const;
+	int getExtendedUseStackpos() const;
 	uint8_t  getMinimapColor() const;
 	uint16_t getSpeedIndex() const;
 

@@ -195,5 +195,4 @@ void Creatures::loadGfx()
         if(!m_creaturesArray[i].isLoaded())
             m_creaturesArray[i].loadOutfit();
     }
-
 }

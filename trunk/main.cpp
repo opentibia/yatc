@@ -548,8 +548,6 @@ int main(int argc, char *argv[])
 
             }
 
-
-
 			//check connection
 			if(g_connection){
 				g_connection->executeNetwork();

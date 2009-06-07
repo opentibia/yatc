@@ -37,6 +37,7 @@ class MapUI {
 		inline int getHeight() const { return m_h; }
 
 		void useItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos, bool &extended);
+		void useItemExtended(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos);
 		void attackCreature(int x, int y, const Creature* &creature);
 		void lookAtItem(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos);
 		void dragThing(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos);

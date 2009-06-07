@@ -20,6 +20,290 @@
 
 #include "console.h"
 #include "engine.h"
+
+#include "skin.h"
+#include "clipboard.h"
+
+#include "gm_gameworld.h"
+#include "gamecontent/creature.h"
+
+extern yatcClipboard g_clipboard;
+extern int g_lastmousebutton;
+
+ConsolePanel::ConsolePanel()
+{
+	AddObject(&pnlConsoleEntryContainer);
+    pnlConsoleEntryContainer.SetSkin(&g_skin.rsp);
+    pnlConsoleEntryContainer.SetPos(0, 16);
+
+    AddObject(&pnlConsoleButtonContainer);
+    pnlConsoleButtonContainer.SetSkin(&g_skin.consoletabbg);
+    pnlConsoleButtonContainer.SetPos(0,0);
+    pnlConsoleButtonContainer.SetHeight(18);
+    //pnlConsoleButtonContainer.SetBGActiveness(false);
+
+    pnlConsoleEntryContainer.AddObject(&pnlConsoleEntryView);
+    pnlConsoleEntryView.SetSkin(&g_skin.ptb);
+    pnlConsoleEntryView.SetPos(5, 5);
+    pnlConsoleEntryView.SetOnPaint(onPaintConsole);
+    pnlConsoleEntryView.SetOnClick(onClickConsole);
+
+    pnlConsoleEntryContainer.AddObject(&txtConsoleEntry);
+	txtConsoleEntry.SetHeight(12);
+	txtConsoleEntry.SetCaption("");
+
+	pnlConsoleEntryContainer.AddObject(&btnSpeakLevel);
+	btnSpeakLevel.SetWidth(16);
+	btnSpeakLevel.SetHeight(16);
+	switch(options.speaktype)
+	{
+		case SPEAK_YELL:
+			btnSpeakLevel.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_WHISPER]);
+			btnSpeakLevel.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_WHISPER]);
+			break;
+		case SPEAK_WHISPER:
+			btnSpeakLevel.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_SPEAK]);
+			btnSpeakLevel.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_SPEAK]);
+			break;
+		case SPEAK_SAY: default:
+			btnSpeakLevel.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_YELL]);
+			btnSpeakLevel.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_YELL]);
+			break;
+	}
+	btnSpeakLevel.SetCaption("");
+	btnSpeakLevel.SetOnClick(btnSpeak_OnClick);
+
+	pnlConsoleButtonContainer.AddObject(&btnIgnore);
+	btnIgnore.SetWidth(16);
+	btnIgnore.SetHeight(16);
+	btnIgnore.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_IGNORELIST]);
+	btnIgnore.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_IGNORELIST]);
+	btnIgnore.SetCaption("");
+	//btnIgnore.SetOnClick(btnIgnoreOnClick);
+	pnlConsoleButtonContainer.AddObject(&btnChannelList);
+	btnChannelList.SetWidth(16);
+	btnChannelList.SetHeight(16);
+	btnChannelList.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_CHANNELS]);
+	btnChannelList.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_CHANNELS]);
+	btnChannelList.SetCaption("");
+	//btnChannelList.SetOnClick(btnChannelListOnClick);
+	pnlConsoleButtonContainer.AddObject(&btnClose);
+	btnClose.SetWidth(16);
+	btnClose.SetHeight(16);
+	btnClose.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_CLOSE]);
+	btnClose.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_CLOSE]);
+	btnClose.SetCaption("");
+	//btnClose.SetOnClick(btnChannelCloseOnClick);
+	pnlConsoleButtonContainer.AddObject(&btnM);
+	btnM.SetWidth(16);
+	btnM.SetHeight(16);
+	btnM.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_M]);
+	btnM.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_M]);
+	btnM.SetCaption("");
+	//btnM.SetOnClick(btnMOnClick);
+}
+
+ConsolePanel::~ConsolePanel()
+{
+}
+
+void ConsolePanel::SetHeight(float h)
+{
+	glictPanel::SetHeight(h);
+
+	pnlConsoleEntryContainer.SetHeight(GetHeight()-16);
+	pnlConsoleEntryView.SetHeight(GetHeight()-40);
+	txtConsoleEntry.SetPos(20,GetHeight()-33);
+	btnSpeakLevel.SetPos(2, GetHeight()-34);
+}
+void ConsolePanel::SetWidth(float w)
+{
+	glictPanel::SetWidth(w);
+
+	pnlConsoleEntryContainer.SetWidth(GetWidth());
+    pnlConsoleButtonContainer.SetWidth(GetWidth());
+    btnIgnore.SetPos(pnlConsoleButtonContainer.GetWidth()-16, 0);
+    btnChannelList.SetPos(pnlConsoleButtonContainer.GetWidth()-32, 0);
+    btnClose.SetPos(pnlConsoleButtonContainer.GetWidth()-48, 0);
+    btnM.SetPos(pnlConsoleButtonContainer.GetWidth()-64, 0);
+    pnlConsoleEntryView.SetWidth(GetWidth()-10);
+
+    txtConsoleEntry.SetWidth(GetWidth()-20-7);
+}
+
+void ConsolePanel::SetActiveConsole(Console* console)
+{
+	pnlConsoleEntryView.SetCustomData(console);
+    console->getAssignedButton()->SetSkin(&g_skin.consoletabactive);
+    #if (GLICT_APIREV >= 85)
+    console->getAssignedButton()->SetCaptionColor(0.7,0.7,0.7);
+    #else
+	#warning No support for setcaptioncolor before glict apirev 85
+	#endif
+	// TODO (nfries88): buttons for yelling, closing channel, etc.
+	if(!console->getSpeakerName().length() && (console->getAssignedButton()->GetCaption() == "Console"))
+	{
+		btnSpeakLevel.SetVisible(true);
+		btnClose.SetVisible(false);
+		btnM.SetVisible(false);
+	}
+	else
+	{
+		btnSpeakLevel.SetVisible(false);
+		btnClose.SetVisible(true);
+		btnM.SetVisible(true);
+	}
+}
+
+void ConsolePanel::MakeConsole(Console* console, const std::string& name)
+{
+	glictPanel* p = new glictPanel;
+    console->setAssignedButton(p);
+    p->SetCustomData(console);
+    p->SetHeight(18);
+    p->SetCaption(name.c_str());
+    p->SetWidth(96); //g_engine->sizeText(s.str().c_str(),"system"));
+    p->SetBGColor(.2,.2,.2,1.);
+    #if (GLICT_APIREV >= 85)
+    p->SetTextOffset(int(96 / 2 - g_engine->sizeText(name.c_str(),"gamefont") / 2), 4);
+    p->SetCaptionColor(0.5,0.5,0.5);
+    #else
+	#warning No support for setcaptioncolor before glict apirev 85
+	#endif
+	// note (nfries88): Start at 20px offset to make appearance more like official client.
+    int sum=20;
+    for (std::vector<glictPanel*>::iterator it = pnlConsoleButtons.begin(); it != pnlConsoleButtons.end(); it++) {
+        (*it)->SetPos(sum,0);
+        sum += (int)(*it)->GetWidth();
+    }
+    p->SetPos(sum,0);
+    p->SetOnClick(pnlConsoleButton_OnClick);
+    p->SetSkin(&g_skin.consoletabpassive);
+    p->SetFont("gamefont");
+    AddObject(p);
+    pnlConsoleButtons.push_back(p);
+}
+
+void ConsolePanel::pnlConsoleButton_OnClick(glictPos* relmousepos, glictContainer* caller)
+{
+    if (g_lastmousebutton != SDL_BUTTON_LEFT)
+        return;
+    Console* c = (Console*)caller->GetCustomData();
+    GM_Gameworld* gw = (GM_Gameworld*)g_game;
+    //std::vector<Console*>::iterator cit = gw->findConsole_it(c);
+    gw->setActiveConsole(c);
+}
+
+void ConsolePanel::onPaintConsole(glictRect* real, glictRect* clipped, glictContainer* callerclass)
+{
+	Console* console = (Console*)(callerclass->GetCustomData());
+	if(console)
+	{
+		console->paintConsole(real->left+4, real->top+2, real->right-4, real->bottom-2);
+	}
+}
+
+void ConsolePanel::onMessageTo(Popup::Item *parent)
+{
+	Creature* c = Creatures::getInstance().getCreature((uint32_t)VOIDP2INT(parent->data));
+	if(c != NULL)
+	{
+		GM_Gameworld *gw = (GM_Gameworld*)g_game;
+		gw->setActiveConsole(gw->findConsole(c->getName()));
+	}
+}
+
+void ConsolePanel::onCopyMessage(Popup::Item *parent)
+{
+	ConsoleEntry* e = (ConsoleEntry*)parent->data;
+	g_clipboard.setText(e->getFullText());
+}
+
+void ConsolePanel::onUnimplemented(Popup::Item *parent)
+{
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
+}
+
+void ConsolePanel::makeConsolePopup(Popup* popup, void* owner, void* arg)
+{
+	ConsoleEntry* e = (ConsoleEntry*)arg;
+	std::string speaker = e->getSpeaker();
+
+	std::stringstream s;
+	if(speaker.length() != 0)
+	{
+		Creature* c = Creatures::getInstance().lookup(speaker);
+		if(c != NULL)
+		{
+			if(c->isPlayer()){
+				s.str("");
+				s << gettext("Message to") << " " << speaker;
+				popup->addItem(s.str(), onMessageTo, (void*)c->getID());
+
+				s.str("");
+				s << gettext("Add to VIP list");
+				popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
+
+				s.str("");
+				s << gettext("Ignore") << " " << speaker;
+				popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
+
+
+				popup->addItem("-",NULL,NULL);
+			}
+
+			s.str("");
+			s << gettext("Copy Name");
+			popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
+		}
+	}
+	s.str("");
+	s << gettext("Copy Message");
+	popup->addItem(s.str(), onCopyMessage, e);
+	popup->addItem("-",NULL,NULL);
+
+	s.str("");
+	s << gettext("Select all");
+	popup->addItem(s.str(), onUnimplemented /*onSelectAll*/);
+}
+
+void ConsolePanel::onClickConsole(glictPos* relmousepos, glictContainer* callerclass)
+{
+	if(g_lastmousebutton != SDL_BUTTON_RIGHT) return;
+
+	Console* console = (Console*)(callerclass->GetCustomData());
+	if(console != NULL)
+	{
+		ConsoleEntry* e = console->getConsoleEntryAt(relmousepos->x, callerclass->GetHeight() - relmousepos->y);
+		if(e != NULL)
+			((GM_Gameworld*)g_game)->performPopup(makeConsolePopup, NULL, (void*) e);
+	}
+}
+
+void ConsolePanel::btnSpeak_OnClick(glictPos* relmousepos, glictContainer* caller)
+{
+	glictButton* btnSpeak = (glictButton*)(caller);
+	switch(options.speaktype)
+	{
+		case SPEAK_YELL:
+			options.speaktype = SPEAK_WHISPER;
+			btnSpeak->SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_WHISPER]);
+			btnSpeak->SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_WHISPER]);
+			break;
+		case SPEAK_WHISPER:
+			options.speaktype = SPEAK_SAY;
+			btnSpeak->SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_SPEAK]);
+			btnSpeak->SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_SPEAK]);
+			break;
+		case SPEAK_SAY: default:
+			options.speaktype = SPEAK_YELL;
+			btnSpeak->SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_YELL]);
+			btnSpeak->SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_YELL]);
+			break;
+	}
+}
+
 int ConsoleEntry::paintEntry(float x, float y)
 {
 	// TODO (ivucica#3#) add word wrapping

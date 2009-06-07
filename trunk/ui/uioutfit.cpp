@@ -46,7 +46,7 @@ winOutfit_t::winOutfit_t() {
     pnlOutfit.SetHeight(140);
     pnlOutfit.SetOnPaint(onGfxPaint);
     pnlOutfit.SetCustomData(this);
-    pnlOutfit.SetSkin(&g_skin.inv);
+    pnlOutfit.SetSkin(&g_skin.btnh);
     //pnlOutfit.SetBGActiveness(false);
 
     window.AddObject(&btnHead);
@@ -104,7 +104,9 @@ winOutfit_t::winOutfit_t() {
     btnLeft.SetPos(14,159);
     btnLeft.SetWidth(20);
     btnLeft.SetHeight(20);
-    btnLeft.SetCaption("<"); // FIXME (ivucica#4#): graphic should be extracted from .pic and displayed here
+    btnLeft.SetCaption("");
+    btnLeft.SetSkin(&g_skin.graphicbtn[BUTTON_OUTFIT_LEFT]);
+    btnLeft.SetHighlightSkin(&g_skin.graphicbth[BUTTON_OUTFIT_LEFT]);
     btnLeft.SetOnClick(onPrev);
     btnLeft.SetCustomData(this);
 
@@ -112,7 +114,9 @@ winOutfit_t::winOutfit_t() {
     btnRight.SetPos(134,159);
     btnRight.SetWidth(20);
     btnRight.SetHeight(20);
-    btnRight.SetCaption(">"); // FIXME (ivucica#4#): graphic should be extracted from .pic and displayed here
+    btnRight.SetCaption("");
+    btnRight.SetSkin(&g_skin.graphicbtn[BUTTON_OUTFIT_RIGHT]);
+    btnRight.SetHighlightSkin(&g_skin.graphicbth[BUTTON_OUTFIT_RIGHT]);
     btnRight.SetOnClick(onNext);
     btnRight.SetCustomData(this);
 

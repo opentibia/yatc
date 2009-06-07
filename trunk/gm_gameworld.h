@@ -41,7 +41,8 @@
 
 #include "options.h"
 
-class Console;
+#include "console.h"
+
 class Tile;
 class ProtocolGame;
 class Popup;
@@ -168,12 +169,7 @@ private:
 	winOutfit_t winOutfit;
 	glictPanel pnlTraffic;
 
-	glictPanel pnlConsoleContainer;
-	glictPanel pnlConsoleEntryContainer;
-	glictPanel pnlConsoleEntryView;
-	glictTextbox txtConsoleEntry;
-	std::vector<glictPanel*> pnlConsoleButtons;
-    glictPanel pnlConsoleButtonContainer;
+	ConsolePanel pnlConsoleContainer;
 
     std::vector<winContainer_t*> containers;
 

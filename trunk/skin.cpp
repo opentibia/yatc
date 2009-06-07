@@ -572,6 +572,12 @@ void Skin::loadSkin() {
 		graphicbtn[BUTTON_OPTIONSMINI].SetCenter	(graphicbtnc [BUTTON_OPTIONSMINI] = new skinImage(312, 128, 20, 20));
 		graphicbth[BUTTON_OPTIONSMINI].SetCenter	(graphicbtnc [BUTTON_OPTIONSMINI] = new skinImage(332, 128, 20, 20));
     }
+    // buttons for outfit change window
+    for (int i = BUTTON_OUTFIT_LEFT; i <= BUTTON_OUTFIT_RIGHT; i++)
+    {
+        graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(240 + 20*(i-BUTTON_OUTFIT_LEFT), 232, 20, 20));
+        graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(240 + (20*(i-BUTTON_OUTFIT_LEFT))+40, 232, 20, 20));
+    }
     // buttons that go above the console
     for (int i = BUTTON_CONSOLE_CLOSE; i <= BUTTON_CONSOLE_IGNORELIST; i++)
     {
@@ -581,8 +587,8 @@ void Skin::loadSkin() {
     // buttons that go next to the console entry
     for (int i = BUTTON_CONSOLE_YELL; i <= BUTTON_CONSOLE_WHISPER; i++)
     {
-        graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(258 + 16*(i-BUTTON_CONSOLE_IGNORELIST), 144, 16, 16));
-        graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(258 + 16*(i-BUTTON_CONSOLE_IGNORELIST), 144+16, 16, 16));
+        graphicbtn[i].SetCenter	    (graphicbtnc [i] = new skinImage(258 + 16*(i-BUTTON_CONSOLE_YELL), 114, 16, 16));
+        graphicbth[i].SetCenter	    (graphicbthc [i] = new skinImage(258 + 16*(i-BUTTON_CONSOLE_YELL), 114+16, 16, 16));
     }
     // buttons that go in window headers
     for (int i = BUTTON_CLOSE_WINDOW; i <= BUTTON_CONTAINER_PARENT; i++)
@@ -593,6 +599,18 @@ void Skin::loadSkin() {
 
 	graphicbtn[BUTTON_EXPAND_WINDOW].SetCenter(graphicbtnc [BUTTON_EXPAND_WINDOW] = new skinImage(308, 158, 12, 12));
 	graphicbth[BUTTON_EXPAND_WINDOW].SetCenter(graphicbthc [BUTTON_EXPAND_WINDOW] = new skinImage(308, 158+12, 12, 12));
+
+	// arrow buttons
+	for(int i = BUTTON_LEFT; i <= BUTTON_RIGHT; i++)
+	{
+		graphicbtn[i].SetCenter(graphicbtnc[i] = new skinImage(306+18*(i-BUTTON_LEFT), 200, 18, 16));
+		graphicbth[i].SetCenter(graphicbthc[i] = new skinImage(306+18*(i-BUTTON_LEFT), 200, 18, 16));
+	}
+	for(int i = BUTTON_LEFT_RED; i <= BUTTON_RIGHT_WHITE; i++)
+	{
+		graphicbtn[i].SetCenter(graphicbtnc[i] = new skinImage(96+18*(i-BUTTON_LEFT_RED), 254, 18, 16));
+		graphicbth[i].SetCenter(graphicbthc[i] = new skinImage(96+18*(i-BUTTON_LEFT_RED), 254, 18, 16));
+	}
 
     background.SetTL		(backgroundtl = NULL);
     background.SetTop	    (backgroundt  = NULL);

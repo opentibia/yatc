@@ -111,6 +111,8 @@ Options::Options()
 	battleh = -1;	// -1 = closed, 0 = collapsed
 	viph = -1;		// -1 = closed, 0 = collapsed
 	consoleh = 150+18;	// always 150 + 18 for now.
+
+	speaktype = SPEAK_SAY;
 }
 
 Options::~Options()
