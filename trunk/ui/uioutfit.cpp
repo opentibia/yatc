@@ -218,6 +218,13 @@ void winOutfit_t::onBtnPaint(glictRect *real, glictRect *clipped, glictContainer
 }
 void winOutfit_t::onGfxPaint(glictRect *real, glictRect *clipped, glictContainer *caller) {
     winOutfit_t* wo = (winOutfit_t*)(caller->GetCustomData());
+    // TODO (nfries88): Maybe move this into a checkbox callback?
+    int addons = 0;
+    if(wo->chkAddon[0].GetValue() != 0) addons |= 1;
+    if(wo->chkAddon[1].GetValue() != 0) addons |= 2;
+    if(wo->chkAddon[2].GetValue() != 0) addons |= 4;
+    wo->dispCreature->getOutfit().m_addons = addons;
+
     if (wo->dispCreature) {
         wo->dispCreature->Blit((int)real->left+64, (int)real->top+64,2);
     }
@@ -321,12 +328,17 @@ void winOutfit_t::onApply(glictPos* pos, glictContainer *caller) {
     winOutfit_t* wo = (winOutfit_t*)caller->GetCustomData();
     GM_Gameworld *gw = ((GM_Gameworld*)g_game);
     wo->window.SetVisible(false);
+
+    int addons = 0;
+    if(wo->chkAddon[0].GetValue() != 0) addons |= 1;
+    if(wo->chkAddon[1].GetValue() != 0) addons |= 2;
+    //if(wo->chkAddon[2].GetValue() != 0) addons |= 4;
+
     gw->m_protocol->sendSetOutfit(
         wo->dispCreature->getOutfit().m_looktype,
         wo->dispCreature->getOutfit().m_lookhead,
         wo->dispCreature->getOutfit().m_lookbody,
         wo->dispCreature->getOutfit().m_looklegs,
         wo->dispCreature->getOutfit().m_lookfeet,
-        0); // FIXME last argument (addons) not used or sent
-
+        addons);
 }
