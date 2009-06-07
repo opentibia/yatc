@@ -50,6 +50,15 @@ ProtocolGame83::~ProtocolGame83()
 	//
 }
 
+
+void ProtocolGame83::sendEnableSharedExperience(bool enabled, uint8_t unknown)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA8);
+	m_outputMessage.addU8(enabled);
+	m_outputMessage.addU8(unknown);
+}
+
 bool ProtocolGame83::parsePacket(uint8_t cmd, NetworkMessage& msg)
 {
     // example for overrides

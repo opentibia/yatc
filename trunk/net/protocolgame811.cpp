@@ -23,7 +23,7 @@
 #include "../gamecontent/globalvars.h"
 
 ProtocolGame811::ProtocolGame811(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
-ProtocolGame80(accountname, password, name, isGM)
+ProtocolGame81(accountname, password, name, isGM)
 {
 	//
 }
