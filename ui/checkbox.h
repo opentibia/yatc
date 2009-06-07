@@ -30,7 +30,6 @@ public:
 		pnlPanel.SetHeight(20);
         pnlPanel.AddObject(&btnButton);
         pnlPanel.AddObject(&lblLabel);
-        // TODO (nfries88): Determine the real skin used to make this look recessed.
         pnlPanel.SetSkin(&g_skin.btnh);
 
         btnButton.SetPos(5,5);

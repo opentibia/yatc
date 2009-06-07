@@ -158,52 +158,61 @@ yatcStackPanelWindow::yatcStackPanelWindow()
     #endif
 }
 
-void yatcStackPanelWindow::OnClose(glictPos* pos, glictContainer *caller) {
-	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+void yatcStackPanelWindow::Collapse()
+{
+    window.SetHeight(0);
+	btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_EXPAND_WINDOW]);
+	btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_EXPAND_WINDOW]);
+    btnCollapse.SetOnClick(OnExpand);
 
-	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
-	window->OnClose();
-
-	/* since typically this will have closed our window, rebuild list automatically here */
-	glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
+    glictList* parentlist = dynamic_cast<glictList*>(window.GetParent());
     if (parentlist)
         parentlist->RebuildList();
 
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
 	gameclass->updateRightSide();
+}
+
+void yatcStackPanelWindow::Expand()
+{
+    window.SetHeight(GetDefaultHeight());
+	btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_COLLAPSE_WINDOW]);
+	btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_COLLAPSE_WINDOW]);
+    btnCollapse.SetOnClick(OnCollapse);
+
+    glictList* parentlist = dynamic_cast<glictList*>(window.GetParent());
+    if (parentlist)
+        parentlist->RebuildList();
+
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+	gameclass->updateRightSide();
+}
+
+void yatcStackPanelWindow::Close()
+{
+	OnClose();
+
+	glictList* parentlist = dynamic_cast<glictList*>(window.GetParent());
+    if (parentlist)
+        parentlist->RebuildList();
+
+	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+	gameclass->updateRightSide();
+}
+
+void yatcStackPanelWindow::OnClose(glictPos* pos, glictContainer *caller) {
+	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
+	window->Close();
 }
 
 void yatcStackPanelWindow::OnCollapse(glictPos* pos, glictContainer *caller) {
-	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
-
-    window->window.SetHeight(0);
-	window->btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_EXPAND_WINDOW]);
-	window->btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_EXPAND_WINDOW]);
-    window->btnCollapse.SetOnClick(OnExpand);
-
-    glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
-    if (parentlist)
-        parentlist->RebuildList();
-
-	gameclass->updateRightSide();
+	window->Collapse();
 }
 
 void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
-	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
-
-    window->window.SetHeight(window->GetDefaultHeight());
-	window->btnCollapse.SetSkin(&g_skin.graphicbtn[BUTTON_COLLAPSE_WINDOW]);
-	window->btnCollapse.SetHighlightSkin(&g_skin.graphicbth[BUTTON_COLLAPSE_WINDOW]);
-    window->btnCollapse.SetOnClick(OnCollapse);
-
-    glictList* parentlist = dynamic_cast<glictList*>(window->window.GetParent());
-    if (parentlist)
-        parentlist->RebuildList();
-
-	gameclass->updateRightSide();
+	window->Expand();
 }
 
 void yatcStackPanelWindow::OnResized(glictSize* size, glictContainer* caller)

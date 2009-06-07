@@ -453,6 +453,23 @@ void MapUI::useItem(Tile* tile, const Thing* &thing, int &stackpos, bool &extend
         extended = false;
 }
 
+void MapUI::useItemExtended(int x, int y, const Thing* &thing, uint32_t &retx, uint32_t &rety, uint32_t &retz, int &stackpos)
+{
+	Tile* tile = translateClickToTile(x,y,retx,rety,retz);
+
+    if (!tile) {
+        thing = NULL;
+        stackpos = -1;
+        return;
+    }
+	// get stackpos of thing that we clicked on
+	stackpos = tile->getExtendedUseStackpos();
+
+
+	// get thing that we clicked on
+	thing = tile->getThingByStackPos(stackpos);
+}
+
 
 void MapUI::attackCreature(int x, int y, const Creature* &creature)
 {

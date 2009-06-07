@@ -23,6 +23,7 @@
 
 #include <string>
 #include "net/connection.h"
+#include "gamecontent/enums.h"
 
 enum enginelist_t {
 	ENGINE_SDL = 0, // software renderer
@@ -113,6 +114,9 @@ public:
 	int battleh;	// -1 = closed, 0 = collapsed
 	int viph;		// -1 = closed, 0 = collapsed
 	int consoleh;	// always 150 + 18 for now.
+
+	// [not saved]
+	SpeakClasses_t speaktype;
 };
 
 

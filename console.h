@@ -26,10 +26,52 @@
 #include <string>
 #include <SDL/SDL.h>
 #include <GLICT/panel.h>
+#include <GLICT/textbox.h>
+#include <GLICT/button.h>
 #include "stdinttypes.h"
 #include "gamecontent/enums.h"
+#include "popup.h"
 
-class glictPanel;
+class Console;
+
+class ConsolePanel: public glictPanel
+{
+public:
+	ConsolePanel();
+	virtual ~ConsolePanel();
+
+	virtual void SetHeight(float h);
+	virtual void SetWidth(float w);
+
+	void SetActiveConsole(Console* console);
+	void MakeConsole(Console* console, const std::string& name);
+
+
+	glictPanel pnlConsoleEntryContainer;
+	glictPanel pnlConsoleEntryView;
+	glictTextbox txtConsoleEntry;
+	std::vector<glictPanel*> pnlConsoleButtons;
+    glictPanel pnlConsoleButtonContainer;
+
+    glictButton btnSpeakLevel;
+    glictButton btnClose;
+    glictButton btnM;
+    glictButton btnChannelList;
+    glictButton btnIgnore;
+protected:
+	static void pnlConsoleButton_OnClick(glictPos* relmousepos, glictContainer* caller);
+	static void onPaintConsole(glictRect* real, glictRect* clipped, glictContainer* callerclass);
+	static void onClickConsole(glictPos* relmousepos, glictContainer* callerclass);
+
+	// popup stuff
+	static void makeConsolePopup(Popup* popup, void* owner, void* arg);
+	static void onUnimplemented(Popup::Item *parent);
+	static void onCopyMessage(Popup::Item *parent);
+	static void onMessageTo(Popup::Item *parent);
+
+	// button clicks
+	static void btnSpeak_OnClick(glictPos* relmousepos, glictContainer* caller);
+};
 
 class ConsoleEntry {
 	public:

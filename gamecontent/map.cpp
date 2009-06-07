@@ -155,6 +155,12 @@ int Tile::getUseStackpos() const
 	return lastPos;
 }
 
+int Tile::getExtendedUseStackpos() const
+{
+	// TODO (nfries88): figure out the proper way to do this...
+	return getUseStackpos();
+}
+
 const Item* Tile::getGround() const
 {
 	return m_ground;

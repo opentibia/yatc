@@ -61,9 +61,6 @@ extern uint32_t g_frameDiff;
 
 void resetDefaultCursor();
 
-void onPaintConsole(glictRect* real, glictRect* clipped, glictContainer* callerclass);
-void onClickConsole(glictPos* relmousepos, glictContainer* callerclass);
-
 extern int g_lastmousebutton;
 
 void exitWarning_t::btnLogout_onClick(glictPos* relmousepos, glictContainer* callerclass)
@@ -245,35 +242,11 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
     desktop.AddObject(&pnlConsoleContainer);
     //pnlConsoleContainer.SetBGActiveness(false);
 
-    pnlConsoleContainer.AddObject(&pnlConsoleEntryContainer);
-    pnlConsoleEntryContainer.SetSkin(&g_skin.rsp);
-    pnlConsoleEntryContainer.SetPos(0, 16);
-
-    pnlConsoleContainer.AddObject(&pnlConsoleButtonContainer);
-    pnlConsoleButtonContainer.SetSkin(&g_skin.consoletabbg);
-    pnlConsoleButtonContainer.SetPos(0,0);
-    pnlConsoleButtonContainer.SetHeight(18);
-    //pnlConsoleButtonContainer.SetBGActiveness(false);
-
-    pnlConsoleEntryContainer.AddObject(&pnlConsoleEntryView);
-    pnlConsoleEntryView.SetSkin(&g_skin.ptb);
-    pnlConsoleEntryView.SetPos(5, 5);
-    pnlConsoleEntryView.SetOnPaint(onPaintConsole);
-    pnlConsoleEntryView.SetOnClick(onClickConsole);
-
-    pnlConsoleEntryContainer.AddObject(&txtConsoleEntry);
-	txtConsoleEntry.SetHeight(12);
-	txtConsoleEntry.SetCaption("");
 
     createConsole(); // add default console
 	m_activeconsole = getDefaultConsole();
-	pnlConsoleEntryView.SetCustomData(m_activeconsole);
-	pnlConsoleButtons[0]->SetSkin(&g_skin.consoletabactive);
-	#if (GLICT_APIREV>=85)
-	pnlConsoleButtons[0]->SetCaptionColor(0.7,0.7,0.7,1.0);
-	#else
-	#warning No support for setcaptioncolor before glict apirev 85
-	#endif
+	setActiveConsole(m_activeconsole);
+	//pnlConsoleContainer.SetActiveConsole(m_activeconsole);
 
 	m_startTime = time(NULL);
 
@@ -297,17 +270,26 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	if(options.skillsh != -1) {
 		sbvlPanel.winSkills.window.SetVisible(true);
 		sbvlPanel.btnSkills.SetHold(true);
-		sbvlPanel.winSkills.window.SetHeight(options.skillsh);
+		if(options.skillsh == 0)
+			sbvlPanel.winSkills.Collapse();
+		else
+			sbvlPanel.winSkills.window.SetHeight(options.skillsh);
 	}
 	if(options.battleh != -1) {
 		sbvlPanel.winBattle.window.SetVisible(true);
 		sbvlPanel.btnBattle.SetHold(true);
-		sbvlPanel.winBattle.window.SetHeight(options.skillsh);
+		if(options.battleh == 0)
+			sbvlPanel.winBattle.Collapse();
+		else
+			sbvlPanel.winBattle.window.SetHeight(options.battleh);
 	}
 	if(options.viph != -1) {
 		sbvlPanel.winVIP.window.SetVisible(true);
 		sbvlPanel.btnVIP.SetHold(true);
-		sbvlPanel.winVIP.window.SetHeight(options.skillsh);
+		if(options.viph == 0)
+			sbvlPanel.winVIP.Collapse();
+		else
+			sbvlPanel.winVIP.window.SetHeight(options.viph);
 	}
 
 	doResize(MAX(glictGlobals.w, 656), MAX(glictGlobals.h, 520));
@@ -369,17 +351,6 @@ void GM_Gameworld::doResize(float w, float h)
 	pnlConsoleContainer.SetPos(0,h-150-18);
 	pnlConsoleContainer.SetWidth(w-172-4);
 	pnlConsoleContainer.SetHeight(150+18);
-
-	pnlConsoleEntryContainer.SetWidth(w-172-4);
-	pnlConsoleEntryContainer.SetHeight(150+2);
-
-    pnlConsoleButtonContainer.SetWidth(w-172-2);
-
-	pnlConsoleEntryView.SetWidth(w-172-4-10);
-	pnlConsoleEntryView.SetHeight(150-12-2-5);
-
-    txtConsoleEntry.SetWidth(w-172-4-20);
-	txtConsoleEntry.SetPos(20,150-12);
 
 	#if (GLICT_APIREV>=95)
 	// update right side with changes
@@ -486,11 +457,11 @@ void GM_Gameworld::keyPress (int key)
 	// NOTE (nfries88): You can't add text hotkeys (among other things) in-game if console always has focus.
 	// TODO (nfries88): make a proper method of doing this. The gamemode should be notified of a focus change maybe?
 	if(dynamic_cast<glictTextbox*>(glictGlobals.topFocused) == NULL)
-		txtConsoleEntry.Focus(NULL);
+		pnlConsoleContainer.txtConsoleEntry.Focus(NULL);
 	if (key==13) {
-		if (txtConsoleEntry.GetCaption().size()) {
+		if (pnlConsoleContainer.txtConsoleEntry.GetCaption().size()) {
 		    bool sent = false;
-		    std::string msg = txtConsoleEntry.GetCaption();
+		    std::string msg = pnlConsoleContainer.txtConsoleEntry.GetCaption();
 		    if (msg[0] == '@') {
 		        printf("Local client command\n");
 		        int i = msg.find(' ',1);
@@ -549,15 +520,15 @@ void GM_Gameworld::keyPress (int key)
             if (!sent)
             {
                 if (getActiveConsole() == getDefaultConsole()) {
-                    // currently nothing happens ONLY on default console
-                    // TODO (nfries88): implement yelling and whispering via the button near the console entry
+                	m_protocol->sendSay(options.speaktype, msg);
+                	sent = true;
                 } else {
                     if (getActiveConsole()->getSpeakerName() == "NPCs") { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
                         getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
                         m_protocol->sendSay(SPEAK_PRIVATE_PN, msg);
                         sent = true;
-                    } else
-                    if (getActiveConsole()->getSpeakerName().size()) {
+                    }
+                    else if (getActiveConsole()->getSpeakerName().size()) {
                         getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
                         m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
                         sent = true;
@@ -568,7 +539,7 @@ void GM_Gameworld::keyPress (int key)
             }
 		}
 
-		txtConsoleEntry.SetCaption("");
+		pnlConsoleContainer.txtConsoleEntry.SetCaption("");
 	} else if(key != 0) {
 		if(key == SDLK_TAB) {
 			std::vector<Console*>::iterator it = std::find(m_consoles.begin(), m_consoles.end(), m_activeconsole);
@@ -749,12 +720,12 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		{
 			if(hk.text.length())
 			{
-				txtConsoleEntry.SetCaption(hk.text);
+				pnlConsoleContainer.txtConsoleEntry.SetCaption(hk.text);
 				if(hk.sendAuto)
 					keyPress(13); // let keypress() take care of all the dirty work ;)
 			}
 			else
-				txtConsoleEntry.SetCaption("");
+				pnlConsoleContainer.txtConsoleEntry.SetCaption("");
 		}
 		else if(hk.item.itemid >= 100)
 		{
@@ -895,9 +866,8 @@ void GM_Gameworld::actionUseWith(const glictPos& pos)
 	const Thing* thing;
 	uint32_t x,y,z;
 	int stackpos;
-	bool isextended;
 
-	m_mapui.useItem((int)pos.x, (int)pos.y, thing, x, y, z, stackpos, isextended);
+	m_mapui.useItemExtended((int)pos.x, (int)pos.y, thing, x, y, z, stackpos);
 	performExtendedUse(Position(x,y,z), thing, stackpos);
 }
 
@@ -1300,16 +1270,6 @@ std::vector<Console*>::iterator GM_Gameworld::findConsole_it(const Console* c)
     ASSERTFRIENDLY(c, "Code attempted to access a non-existing console")
     return m_consoles.end();
 }
-void GM_Gameworld::pnlConsoleButton_OnClick(glictPos* relmousepos, glictContainer* caller)
-{
-    if (g_lastmousebutton != SDL_BUTTON_LEFT)
-        return;
-    Console* c = (Console*)caller->GetCustomData();
-    GM_Gameworld* gw = (GM_Gameworld*)g_game;
-    //std::vector<Console*>::iterator cit = gw->findConsole_it(c);
-    gw->setActiveConsole(c);
-
-}
 void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
 {
     Console* nc;
@@ -1325,32 +1285,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
         s << gettext("Console");
     }
 
-
-    glictPanel* p = new glictPanel;
-    nc->setAssignedButton(p);
-    p->SetCustomData(nc);
-    p->SetHeight(18);
-    p->SetCaption(s.str().c_str());
-    p->SetWidth(96); //g_engine->sizeText(s.str().c_str(),"system"));
-    p->SetBGColor(.2,.2,.2,1.);
-    #if (GLICT_APIREV >= 85)
-    p->SetTextOffset(int(96 / 2 - g_engine->sizeText(s.str().c_str(),"gamefont") / 2), 4);
-    p->SetCaptionColor(0.5,0.5,0.5);
-    #else
-	#warning No support for setcaptioncolor before glict apirev 85
-	#endif
-	// note (nfries88): Start at 20px offset to make appearance more like official client.
-    int sum=20;
-    for (std::vector<glictPanel*>::iterator it = pnlConsoleButtons.begin(); it != pnlConsoleButtons.end(); it++) {
-        (*it)->SetPos(sum,0);
-        sum += (int)(*it)->GetWidth();
-    }
-    p->SetPos(sum,0);
-    p->SetOnClick(pnlConsoleButton_OnClick);
-    p->SetSkin(&g_skin.consoletabpassive);
-    p->SetFont("gamefont");
-    pnlConsoleButtonContainer.AddObject(p);
-    pnlConsoleButtons.push_back(p);
+	pnlConsoleContainer.MakeConsole(nc, s.str());
 
     m_consoles.push_back(nc);
 }
@@ -1497,6 +1432,7 @@ void GM_Gameworld::openOutfitWindow(const Outfit_t& current, const std::list<Ava
 }
 
 void GM_Gameworld::setActiveConsole(Console* i){
+	// TODO (nfries88): find a nice way to move all this into ConsolePanel class.
     m_activeconsole->getAssignedButton()->SetSkin(&g_skin.consoletabpassive);
     #if (GLICT_APIREV >= 85)
     m_activeconsole->getAssignedButton()->SetCaptionColor(0.5,0.5,0.5);
@@ -1504,26 +1440,8 @@ void GM_Gameworld::setActiveConsole(Console* i){
 	#warning No support for setcaptioncolor before glict apirev 85
 	#endif
     m_activeconsole = i;
-    m_activeconsole->getAssignedButton()->SetSkin(&g_skin.consoletabactive);
-    #if (GLICT_APIREV >= 85)
-    m_activeconsole->getAssignedButton()->SetCaptionColor(0.7,0.7,0.7);
-    #else
-	#warning No support for setcaptioncolor before glict apirev 85
-	#endif
-	// TODO (nfries88): buttons for yelling, closing channel, etc.
-	/*if(i == getDefaultConsole())
-	{
-		btnConsoleSpeakLevel.SetVisible(true);
-		btnConsoleClose.SetVisible(false);
-		btnConsoleM.SetVisible(false);
-	}
-	else
-	{
-		btnConsoleSpeakLevel.SetVisible(false);
-		btnConsoleClose.SetVisible(true);
-		btnConsoleM.SetVisible(true);
-	}*/
-	pnlConsoleEntryView.SetCustomData(m_activeconsole);
+
+	pnlConsoleContainer.SetActiveConsole(m_activeconsole);
 }
 
 void GM_Gameworld::updateRightSide()
@@ -1540,89 +1458,4 @@ void GM_Gameworld::updateRightSide()
 	pnlRightSideFiller.SetHeight(MAX(0, options.h-(yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight())));
 }
 
-void onPaintConsole(glictRect* real, glictRect* clipped, glictContainer* callerclass)
-{
-	Console* console = (Console*)(callerclass->GetCustomData());
-	if(console)
-	{
-		console->paintConsole(real->left+4, real->top+2, real->right-4, real->bottom-2);
-	}
-}
 
-void onMessageTo(Popup::Item *parent)
-{
-	Creature* c = Creatures::getInstance().getCreature((uint32_t)VOIDP2INT(parent->data));
-	if(c != NULL)
-	{
-		GM_Gameworld *gw = (GM_Gameworld*)g_game;
-		gw->setActiveConsole(gw->findConsole(c->getName()));
-	}
-}
-
-void onCopyMessage(Popup::Item *parent)
-{
-	ConsoleEntry* e = (ConsoleEntry*)parent->data;
-	g_clipboard.setText(e->getFullText());
-}
-
-void onUnimplemented(Popup::Item *parent)
-{
-	GM_Gameworld *gw = (GM_Gameworld*)g_game;
-    gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
-}
-
-void makeConsolePopup(Popup* popup, void* owner, void* arg)
-{
-	ConsoleEntry* e = (ConsoleEntry*)arg;
-	std::string speaker = e->getSpeaker();
-
-	std::stringstream s;
-	if(speaker.length() != 0)
-	{
-		Creature* c = Creatures::getInstance().lookup(speaker);
-		if(c != NULL)
-		{
-			if(c->isPlayer()){
-				s.str("");
-				s << gettext("Message to") << " " << speaker;
-				popup->addItem(s.str(), onMessageTo, (void*)c->getID());
-
-				s.str("");
-				s << gettext("Add to VIP list");
-				popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
-
-				s.str("");
-				s << gettext("Ignore") << " " << speaker;
-				popup->addItem(s.str(), onUnimplemented, (void*)c->getID());
-
-
-				popup->addItem("-",NULL,NULL);
-			}
-
-			s.str("");
-			s << gettext("Copy Name");
-			popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
-		}
-	}
-	s.str("");
-	s << gettext("Copy Message");
-	popup->addItem(s.str(), onCopyMessage, e);
-	popup->addItem("-",NULL,NULL);
-
-	s.str("");
-	s << gettext("Select all");
-	popup->addItem(s.str(), onUnimplemented /*onSelectAll*/);
-}
-
-void onClickConsole(glictPos* relmousepos, glictContainer* callerclass)
-{
-	if(g_lastmousebutton != SDL_BUTTON_RIGHT) return;
-
-	Console* console = (Console*)(callerclass->GetCustomData());
-	if(console != NULL)
-	{
-		ConsoleEntry* e = console->getConsoleEntryAt(relmousepos->x, callerclass->GetHeight() - relmousepos->y);
-		if(e != NULL)
-			((GM_Gameworld*)g_game)->performPopup(makeConsolePopup, NULL, (void*) e);
-	}
-}
