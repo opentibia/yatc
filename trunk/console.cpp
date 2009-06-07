@@ -141,7 +141,7 @@ void ConsolePanel::SetActiveConsole(Console* console)
 	#warning No support for setcaptioncolor before glict apirev 85
 	#endif
 	// TODO (nfries88): buttons for yelling, closing channel, etc.
-	if(!console->getSpeakerName().length() && (console->getAssignedButton()->GetCaption() == "Console"))
+	if(!console->getSpeakerName().length() && (console->getAssignedButton()->GetCaption() == "Default"))
 	{
 		btnSpeakLevel.SetVisible(true);
 		btnClose.SetVisible(false);
@@ -184,13 +184,28 @@ void ConsolePanel::MakeConsole(Console* console, const std::string& name)
     pnlConsoleButtons.push_back(p);
 }
 
+void ConsolePanel::DeleteConsole(Console* console)
+{
+	std::vector<glictPanel*>::iterator it = std::find(pnlConsoleButtons.begin(), pnlConsoleButtons.end(), console->getAssignedButton());
+	if(it != pnlConsoleButtons.end()){
+		pnlConsoleButtons.erase(it);
+		console->getAssignedButton()->SetVisible(false);
+		pnlConsoleButtonContainer.RemoveObject(console->getAssignedButton());
+		console->clearEntries();
+		// FIXME (nfries88): This is a memory leak, need to delete getAssignedButton at a later time.
+		//delete console->getAssignedButton();
+		delete console;
+	}
+}
+
 void ConsolePanel::pnlConsoleButton_OnClick(glictPos* relmousepos, glictContainer* caller)
 {
-    if (g_lastmousebutton != SDL_BUTTON_LEFT)
-        return;
     Console* c = (Console*)caller->GetCustomData();
     GM_Gameworld* gw = (GM_Gameworld*)g_game;
-    //std::vector<Console*>::iterator cit = gw->findConsole_it(c);
+
+    if (g_lastmousebutton == SDL_BUTTON_RIGHT){
+        gw->performPopup(makeConsoleBtnPopup, NULL, (void*) c);
+    }
     gw->setActiveConsole(c);
 }
 
@@ -223,6 +238,56 @@ void ConsolePanel::onUnimplemented(Popup::Item *parent)
 {
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
     gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
+}
+
+void ConsolePanel::onCloseConsole(Popup::Item *parent)
+{
+	Console* c = (Console*)parent->data;
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+	gw->removeConsole(c);
+}
+void ConsolePanel::onShowM(Popup::Item *parent)
+{
+	Console* c = (Console*)parent->data;
+	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+}
+void ConsolePanel::onSaveConsole(Popup::Item *parent)
+{
+	Console* c = (Console*)parent->data;
+	// 22:34 Channel Default appended to 'C:\Users\John\AppData\Roaming\Tibia\Default.txt'
+}
+void ConsolePanel::onClearConsole(Popup::Item *parent)
+{
+	Console* c = (Console*)parent->data;
+	c->clearEntries();
+}
+
+void ConsolePanel::makeConsoleBtnPopup(Popup* popup, void* owner, void* arg)
+{
+	Console* c = (Console*)arg;
+
+	std::stringstream s;
+
+	if(c->getSpeakerName().length() || (c->getAssignedButton()->GetCaption() != "Default"))
+	{
+		s.str("");
+		s << gettext("Close");
+		popup->addItem(s.str(), onCloseConsole, c);
+
+		s.str("");
+		s << gettext("Show server messages");
+		popup->addItem(s.str(), onShowM, c);
+
+		popup->addItem("-",NULL,NULL);
+	}
+
+	s.str("");
+	s << gettext("Save Window");
+	popup->addItem(s.str(), onSaveConsole, c);
+
+	s.str("");
+	s << gettext("Clear Window");
+	popup->addItem(s.str(), onClearConsole, c);
 }
 
 void ConsolePanel::makeConsolePopup(Popup* popup, void* owner, void* arg)
@@ -373,4 +438,10 @@ ConsoleEntry* Console::getConsoleEntryAt(float relx, float rely)
 }
 void Console::insertEntry(ConsoleEntry ce) {
 	m_content.insert(m_content.end(), ce);
+}
+void Console::clearEntries() {
+	m_content.clear();
+	//for (std::vector<ConsoleEntry>::reverse_iterator it=m_content.rbegin(); it!=m_content.rend(); it++) {
+	//	m_content.erase(it);
+	//}
 }

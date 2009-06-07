@@ -172,7 +172,6 @@ class ProtocolGame : public Protocol
 		virtual void sendJoinParty(uint32_t playerid);
 		virtual void sendCancelInviteParty(uint32_t playerid);
 		virtual void sendPassPartyLeader(uint32_t playerid);
-		virtual void sendEnableSharedExperience(bool enabled, uint8_t unknown){};
 		virtual void sendLeaveParty();
 		virtual void sendCancelMove();
 		virtual void sendRequestOutfit();
@@ -184,6 +183,10 @@ class ProtocolGame : public Protocol
 		virtual void sendGMReport(const std::string& targetplayer, uint8_t reason, const std::string& comment, const std::string& statement, uint8_t action, bool ipban);
 		virtual void sendRequestQuestLog();
 		virtual void sendRequestQuest(uint16_t questid);
+
+
+		// 8.1+
+		virtual void sendEnableSharedExperience(bool enabled, uint8_t unknown){};
 
 		// 8.2+
         virtual void sendCloseNPCChannel();

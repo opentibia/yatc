@@ -915,7 +915,10 @@ void GM_Gameworld::actionTrade(const glictPos& pos)
 
 void GM_Gameworld::actionWalk(const glictPos& pos)
 {
-	//
+	std::list<Direction> path = m_mapui.getPathTo(pos.x, pos.y);
+	if(path.size()){
+		m_protocol->sendAutoWalk(path);
+	}
 }
 
 void GM_Gameworld::mouseEvent(SDL_Event& event)
@@ -1281,7 +1284,7 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
         s << speaker;
     } else {
         nc = new Console();
-        s << gettext("Console");
+        s << gettext("Default");
     }
 
 	pnlConsoleContainer.MakeConsole(nc, s.str());
@@ -1441,6 +1444,21 @@ void GM_Gameworld::setActiveConsole(Console* i){
     m_activeconsole = i;
 
 	pnlConsoleContainer.SetActiveConsole(m_activeconsole);
+}
+
+void GM_Gameworld::removeConsole(Console* i){
+	if(i == m_activeconsole){
+		setActiveConsole(getDefaultConsole());
+		std::vector<Console*>::reverse_iterator it = std::find(m_consoles.rbegin(), m_consoles.rend(), i);
+		if(it != m_consoles.rend()){
+			it++;
+			setActiveConsole((*it));
+		}
+	}
+	std::vector<Console*>::iterator it = std::find(m_consoles.begin(), m_consoles.end(), i);
+	if(it != m_consoles.end()) m_consoles.erase(it);
+
+	pnlConsoleContainer.DeleteConsole(i);
 }
 
 void GM_Gameworld::updateRightSide()

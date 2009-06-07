@@ -45,6 +45,7 @@ public:
 
 	void SetActiveConsole(Console* console);
 	void MakeConsole(Console* console, const std::string& name);
+	void DeleteConsole(Console* console);
 
 
 	glictPanel pnlConsoleEntryContainer;
@@ -68,6 +69,12 @@ protected:
 	static void onUnimplemented(Popup::Item *parent);
 	static void onCopyMessage(Popup::Item *parent);
 	static void onMessageTo(Popup::Item *parent);
+
+	static void makeConsoleBtnPopup(Popup* popup, void* owner, void* arg);
+	static void onCloseConsole(Popup::Item *parent);
+	static void onShowM(Popup::Item *parent);
+	static void onSaveConsole(Popup::Item *parent);
+	static void onClearConsole(Popup::Item *parent);
 
 	// button clicks
 	static void btnSpeak_OnClick(glictPos* relmousepos, glictContainer* caller);
@@ -116,9 +123,9 @@ class Console {
         glictPanel *getAssignedButton() const { return m_assignedButton; }
 
 		ConsoleEntry* getConsoleEntryAt(float relx, float rely);
+		void clearEntries();
 	private:
 		std::vector <ConsoleEntry> m_content;
-		SDL_Surface *m_surface;
 		std::string m_speakername;
 		uint32_t m_channelid;
 		int m_consoleid;

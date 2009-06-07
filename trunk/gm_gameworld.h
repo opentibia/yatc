@@ -120,6 +120,7 @@ public:
     Console* findConsole(const std::string& speaker) { return *findConsole_it(speaker); }
     Console* getActiveConsole() const {return m_activeconsole;}
     void setActiveConsole(Console* i);
+    void removeConsole(Console* i);
 
 	void beginExtendedUse(const Thing* thing, int stackpos, const Position& pos);
 	void performExtendedUse(const Position& destpos, const Thing* destthing, int deststackpos);
