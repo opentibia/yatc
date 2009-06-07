@@ -696,7 +696,11 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 					}
 					case SHIELD_YELLOW_SHAREDEXP: case SHIELD_YELLOW_NOSHAREDEXP_BLINK: case SHIELD_YELLOW_NOSHAREDEXP:
 					{
-						if(player == c){
+						ClientVersion_t ver = options.protocol;
+						if(ver == CLIENT_VERSION_AUTO) {
+							ver = ProtocolConfig::detectVersion();
+						}
+						if((player == c) && (ver >= CLIENT_VERSION_781)){
 							s.str("");
 							s << gettext("Disable Shaded Experience");
 							popup->addItem(s.str(), onSharedExp, (void*)false);
@@ -705,8 +709,11 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 					}
 					case SHIELD_YELLOW:
 					{
-
-						if(player == c){
+						ClientVersion_t ver = options.protocol;
+						if(ver == CLIENT_VERSION_AUTO) {
+							ver = ProtocolConfig::detectVersion();
+						}
+						if((player == c) && (ver >= CLIENT_VERSION_781)){
 							s.str("");
 							s << gettext("Enable Shaded Experience");
 							popup->addItem(s.str(), onSharedExp, (void*)true);
@@ -761,10 +768,7 @@ void MapUI::onSharedExp(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
-	//if(parent->data)
-    //	gw->m_protocol->sendEnableSharedExp();
-    //else
-    //	gw->m_protocol->sendDisableSharedExp();
+	gw->m_protocol->sendEnableSharedExperience((parent->data != 0), 0);
 }
 void MapUI::onPassLeadership(Popup::Item *parent)
 {

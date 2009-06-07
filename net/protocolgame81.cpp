@@ -38,6 +38,14 @@ void ProtocolGame81::checkVersion()
 	ASSERT(ProtocolConfig::getInstance().getClientVersion() == CLIENT_VERSION_810);
 }
 
+void ProtocolGame81::sendEnableSharedExperience(bool enabled, uint8_t unknown)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0xA8);
+	m_outputMessage.addU8(enabled);
+	m_outputMessage.addU8(unknown);
+}
+
 bool ProtocolGame81::parseGMActions(NetworkMessage& msg)
 {
     for(uint32_t i = 0; i < 22; ++i){

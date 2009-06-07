@@ -172,6 +172,7 @@ class ProtocolGame : public Protocol
 		virtual void sendJoinParty(uint32_t playerid);
 		virtual void sendCancelInviteParty(uint32_t playerid);
 		virtual void sendPassPartyLeader(uint32_t playerid);
+		virtual void sendEnableSharedExperience(bool enabled, uint8_t unknown){};
 		virtual void sendLeaveParty();
 		virtual void sendCancelMove();
 		virtual void sendRequestOutfit();

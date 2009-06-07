@@ -22,16 +22,16 @@
 #ifndef __PROTOCOLGAME811_H
 #define __PROTOCOLGAME811_H
 
-#include "protocolgame80.h"
+#include "protocolgame81.h"
 
 class Thing;
 class Item;
 
-class ProtocolGame811 : public ProtocolGame80
+class ProtocolGame811 : public ProtocolGame81
 {
 	public:
 		virtual ~ProtocolGame811();
-	
+
 		virtual const char* getProtocolName() { return "Protocol811";}
 		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_811; }
 

@@ -37,6 +37,9 @@ class ProtocolGame81 : public ProtocolGame80
 
         virtual bool parseGMActions(NetworkMessage& msg);
 
+        // send
+		virtual void sendEnableSharedExperience(bool enabled, uint8_t unknown);
+
 	protected:
 		ProtocolGame81(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 

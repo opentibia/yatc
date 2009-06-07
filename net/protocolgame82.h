@@ -38,6 +38,9 @@ class ProtocolGame82 : public ProtocolGame
 		virtual const char* getProtocolName() { return "Protocol82";}
 		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_820; }
 
+		//send
+		virtual void sendEnableSharedExperience(bool enabled, uint8_t unknown);
+
         //receive f. impl
         virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
         virtual bool parseGMActions(NetworkMessage& msg);
