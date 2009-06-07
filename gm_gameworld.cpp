@@ -1079,7 +1079,6 @@ void GM_Gameworld::onConnectionClosed()
 {
 	delete g_game;
 	g_game = new GM_MainMenu();
-	// FIXME (nfries88): You can't get back into the game like this, for some reason.
 	((GM_MainMenu*)g_game)->login(options.account, options.password);
 }
 

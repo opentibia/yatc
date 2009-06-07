@@ -304,7 +304,7 @@ public:
 		size_t pos = expstr.length() % 3;
 		while(pos < expstr.length()) {
 			expstr.insert(pos, 1, ',');
-			pos += 3;
+			pos += 4; // to account for the addition of ','
 		}
 		lblExperienceRight.SetPos(160 - 12 - g_engine->sizeText(expstr.c_str(), "system"), 5);
 		lblExperienceRight.SetWidth(g_engine->sizeText(expstr.c_str(), "system"));

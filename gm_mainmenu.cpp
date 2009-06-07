@@ -493,7 +493,7 @@ void GM_MainMenu::winCharlist_btnOk_OnClick(glictPos* relmousepos, glictContaine
 	ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, proto); // TODO (ivucica#3#) see if we can freely tell the 'real' OS, meaning "linux" on unices, and "windows" on windows
 	ProtocolConfig::getInstance().setServer(ip, m->winCharlist.currentChar.port);
 	ProtocolConfig::getInstance().setVersionOverride(options.overrideversion);
-	ProtocolConfig::createGameConnection(m->winLogin.txtUsername.GetCaption(), m->winLogin.txtPassword.GetCaption(), m->winCharlist.currentChar.name, false /* isgm*/);
+	ProtocolConfig::createGameConnection(options.account, options.password, m->winCharlist.currentChar.name, false /* isgm*/);
 
     std::string text;
 	m->desktop.AddObject(&m->winStatus);
