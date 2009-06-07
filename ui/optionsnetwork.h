@@ -132,8 +132,9 @@ public:
 // end of not yet implemented
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.0", NULL, (void*)CLIENT_VERSION_800));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.1", NULL, (void*)CLIENT_VERSION_810));
-		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.11", NULL, (void*)CLIENT_VERSION_820));
-		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.2", NULL, (void*)CLIENT_VERSION_821));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.11", NULL, (void*)CLIENT_VERSION_811));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.2", NULL, (void*)CLIENT_VERSION_820));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.21", NULL, (void*)CLIENT_VERSION_821));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.22", NULL, (void*)CLIENT_VERSION_822));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.3", NULL, (void*)CLIENT_VERSION_830));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.31", NULL, (void*)CLIENT_VERSION_831));
