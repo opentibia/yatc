@@ -1125,14 +1125,14 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     switch (type){
     case SPEAK_PRIVATE_NP:
     case SPEAK_PRIVATE_PN:
-        findConsole("NPCs")->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_LIGHTBLUE)); // this is bad; this way we disallow potential player called "NPCs"
+        findConsole("NPCs")->insertEntry(ConsoleEntry(message, name, -1, TEXTCOLOR_LIGHTBLUE)); // this is bad; this way we disallow potential player called "NPCs"
         break;
     case SPEAK_MONSTER_SAY:
     case SPEAK_MONSTER_YELL:
-         getDefaultConsole()->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_ORANGE));
+         getDefaultConsole()->insertEntry(ConsoleEntry(message, name, -1, TEXTCOLOR_ORANGE));
          break;
     default:
-        getDefaultConsole()->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_YELLOW));
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_YELLOW));
     }
 
 }
@@ -1154,7 +1154,7 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
         default:
             col = TEXTCOLOR_YELLOW;
     }
-	getDefaultConsole()->insertEntry(ConsoleEntry(message, name, col));
+	getDefaultConsole()->insertEntry(ConsoleEntry(message, name, -1, col));
 }
 //SPEAK_PRIVATE, SPEAK_PRIVATE_RED, SPEAK_BROADCAST
 void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string& name, int level, const std::string& message)
@@ -1173,12 +1173,12 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     }
     switch (type) {
         case SPEAK_PRIVATE:
-            findConsole(name)->insertEntry(ConsoleEntry(message, name, TEXTCOLOR_LIGHTBLUE));
+            findConsole(name)->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_LIGHTBLUE));
             break;
         default: {
             std::stringstream s;
             s << "(private msg of unknown speakclass " << type << ")";
-            getDefaultConsole()->insertEntry(ConsoleEntry(message + s.str(), name, TEXTCOLOR_YELLOW));
+            getDefaultConsole()->insertEntry(ConsoleEntry(message + s.str(), name, level, TEXTCOLOR_YELLOW));
         }
     }
 
