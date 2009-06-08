@@ -88,13 +88,15 @@ class ConsoleEntry {
 			m_speaker = "";
 			m_color = c;
 			m_timestamp = time(NULL);
+			m_level = -1;
 		}
-		ConsoleEntry(std::string text, std::string speaker, TextColor_t c=TEXTCOLOR_WHITE)
+		ConsoleEntry(std::string text, std::string speaker, int level, TextColor_t c=TEXTCOLOR_WHITE)
 		{
 			m_text = text;
 			m_speaker = speaker;
 			m_color = c;
 			m_timestamp = time(NULL);
+			m_level = level;
 		}
 		int paintEntry(float x, float y);
 		int getHeight();
@@ -104,6 +106,7 @@ class ConsoleEntry {
 		std::string m_text, m_speaker;
 		TextColor_t m_color;
 		uint32_t m_timestamp;
+		int m_level;
 };
 class Console {
 	public:
@@ -124,6 +127,7 @@ class Console {
 
 		ConsoleEntry* getConsoleEntryAt(float relx, float rely);
 		void clearEntries();
+		void dumpText();
 	private:
 		std::vector <ConsoleEntry> m_content;
 		std::string m_speakername;

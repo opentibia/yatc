@@ -254,6 +254,11 @@ void ConsolePanel::onShowM(Popup::Item *parent)
 void ConsolePanel::onSaveConsole(Popup::Item *parent)
 {
 	Console* c = (Console*)parent->data;
+	c->dumpText();
+	std::stringstream ss;
+	ss << "Channel " << c->getAssignedButton()->GetCaption() << " appended to '" << c->getAssignedButton()->GetCaption() << ".txt'";
+	ConsoleEntry ce(ss.str());
+	c->insertEntry(ce);
 	// 22:34 Channel Default appended to 'C:\Users\John\AppData\Roaming\Tibia\Default.txt'
 }
 void ConsolePanel::onClearConsole(Popup::Item *parent)
@@ -380,7 +385,22 @@ int ConsoleEntry::paintEntry(float x, float y)
 
 std::string ConsoleEntry::getFullText()
 {
-	return (m_speaker + (m_speaker.size() ? ": " : "") + m_text);
+	std::stringstream ss;
+	if(options.timestamps) {
+		struct tm* timeinfo = localtime((time_t*)(&m_timestamp));
+		ss << timeinfo->tm_hour << ":" << timeinfo->tm_min << " ";
+	}
+	if(m_speaker.size()){
+		ss << m_speaker;
+
+		if(options.levels && m_level != -1){
+			ss << " [" << m_level << "]";
+		}
+		ss << ": ";
+	}
+
+	ss << m_text;
+	return ss.str();//(m_speaker + (m_speaker.size() ? ": " : "") + m_text);
 }
 
 int ConsoleEntry::getHeight()
@@ -444,4 +464,15 @@ void Console::clearEntries() {
 	//for (std::vector<ConsoleEntry>::reverse_iterator it=m_content.rbegin(); it!=m_content.rend(); it++) {
 	//	m_content.erase(it);
 	//}
+}
+void Console::dumpText()
+{
+	std::stringstream ss;
+	ss << getAssignedButton()->GetCaption() << ".txt";
+	FILE* f = fopen(ss.str().c_str(), "wt+");
+	if(!f) return;
+	for (std::vector<ConsoleEntry>::iterator it=m_content.begin(); it!=m_content.end(); it++) {
+		fprintf(f, "%s\n", (*it).getFullText().c_str());
+	}
+	fclose(f);
 }
