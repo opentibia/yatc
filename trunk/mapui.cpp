@@ -705,7 +705,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 						}
 						if(ver >= CLIENT_VERSION_781){
 							s.str("");
-							s << gettext("Disable Shaded Experience");
+							s << gettext("Disable Shared Experience");
 							popup->addItem(s.str(), onSharedExp, (void*)false);
 						}
 					}
@@ -725,7 +725,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 						}
 						if(ver >= CLIENT_VERSION_781){
 							s.str("");
-							s << gettext("Enable Shaded Experience");
+							s << gettext("Enable Shared Experience");
 							popup->addItem(s.str(), onSharedExp, (void*)true);
 						}
 					}
