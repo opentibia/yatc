@@ -197,33 +197,85 @@ void winBattle_t::makeConsolePopup(Popup* popup, void* owner, void* arg)
 	s << gettext("Follow");
 	popup->addItem(s.str(), winBattle_t::onFollow, (void*)c->getID());
 
-	if (c->isPlayer())
+	if (c->isPlayer() && (c->getCurrentPos().z == GlobalVariables::getPlayerPosition().z))
 	{
 		popup->addItem("-",NULL,NULL);
-
 		s.str("");
 		s << gettext("Message to") << " " << c->getName();
-		popup->addItem(s.str(), winBattle_t::onMessageTo, (void*)c->getID());
+		popup->addItem(s.str(),onMessageTo,(void*)c->getID());
 
 		s.str("");
 		s << gettext("Add to VIP list");
-		popup->addItem(s.str(), winBattle_t::onUnimplemented, (void*)c->getID());
+		popup->addItem(s.str(),onUnimplemented);
 
 		s.str("");
 		s << gettext("Ignore") << " " << c->getName();
-		popup->addItem(s.str(), winBattle_t::onUnimplemented, (void*)c->getID());
+		popup->addItem(s.str(),onUnimplemented);
 
-		s.str("");
-		s << gettext("Invite to Party");
-		popup->addItem(s.str(), winBattle_t::onUnimplemented, (void*)c->getID());
+		Creature* player = Creatures::getInstance().getPlayer();
+		switch(player->getShield())
+		{
+			case 0:
+				break;
+			case SHIELD_WHITEBLUE:
+			{
+				s.str("");
+				s << gettext("Accept") << c->getName() << "'s " << gettext("Invitation");
+				popup->addItem(s.str(), onAcceptInvite, (void*)c->getID());
+				break;
+			}
+			case SHIELD_YELLOW:
+			{
+				if(c->getShield() == SHIELD_WHITEBLUE){
+					s.str("");
+					s << gettext("Revoke") << c->getName() << "'s " << gettext("Invitation");
+					popup->addItem(s.str(), onRevokeInvite, (void*)c->getID());
+					break;
+				}
+
+				s.str("");
+				s << gettext("Pass Leadership To") << " " << c->getName();
+				popup->addItem(s.str(), onPassLeadership, (void*)c->getID());
+				// NOTE (nfries88): lack of break; is intentional!
+			}
+			default:
+			{
+				if(c->getShield() == SHIELD_NONE){
+					s.str("");
+					s << gettext("Invite to Party");
+					popup->addItem(s.str(),onInviteToParty,(void*)c->getID());
+				}
+			}
+		}
 	}
-
 	popup->addItem("-",NULL,NULL);
 
 	s.str("");
 	s << gettext("Copy Name");
 	popup->addItem(s.str(), GM_Gameworld::onCopyName, (void*)c->getID());
 }
+
+void winBattle_t::onInviteToParty(Popup::Item *parent)
+{
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    gw->m_protocol->sendInviteParty((uint32_t)VOIDP2INT(parent->data));
+}
+void winBattle_t::onRevokeInvite(Popup::Item *parent)
+{
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    gw->m_protocol->sendCancelInviteParty((uint32_t)VOIDP2INT(parent->data));
+}
+void winBattle_t::onAcceptInvite(Popup::Item *parent)
+{
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    gw->m_protocol->sendJoinParty((uint32_t)VOIDP2INT(parent->data));
+}
+void winBattle_t::onPassLeadership(Popup::Item *parent)
+{
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    gw->m_protocol->sendPassPartyLeader((uint32_t)VOIDP2INT(parent->data));
+}
+
 
 void winBattle_t::clickEntry(glictPos* relmousepos, glictContainer* callerclass)
 {

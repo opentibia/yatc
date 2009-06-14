@@ -91,6 +91,10 @@ public:
 	static void onMessageTo(Popup::Item *parent);
 	static void onFollow(Popup::Item* parent);
 	static void onAttack(Popup::Item* parent);
+	static void onInviteToParty(Popup::Item *parent);
+	static void onRevokeInvite(Popup::Item *parent);
+	static void onAcceptInvite(Popup::Item *parent);
+	static void onPassLeadership(Popup::Item *parent);
 
 	static void paintEntry(glictRect *real, glictRect *clipped, glictContainer *caller);
 	static void clickEntry(glictPos* relmousepos, glictContainer* callerclass);

@@ -97,7 +97,6 @@ enum Skulls_t{
 	SKULL_RED       = 4,
 };
 
-// NOTE (nfries88): If I recall correctly, blue = member, yellow = leader
 enum PartyShields_t{
 	SHIELD_NONE = 0,
 	SHIELD_WHITEYELLOW = 1,
