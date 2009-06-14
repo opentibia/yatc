@@ -98,7 +98,7 @@ class ConsoleEntry {
 			m_timestamp = time(NULL);
 			m_level = level;
 		}
-		int paintEntry(float x, float y);
+		int paintEntry(float x, float y, float width = -1);
 		int getHeight();
 		const std::string& getSpeaker(){ return m_speaker; }
 		std::string getFullText();

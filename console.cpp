@@ -212,8 +212,7 @@ void ConsolePanel::pnlConsoleButton_OnClick(glictPos* relmousepos, glictContaine
 void ConsolePanel::onPaintConsole(glictRect* real, glictRect* clipped, glictContainer* callerclass)
 {
 	Console* console = (Console*)(callerclass->GetCustomData());
-	if(console)
-	{
+	if(console){
 		console->paintConsole(real->left+4, real->top+2, real->right-4, real->bottom-2);
 	}
 }
@@ -221,8 +220,7 @@ void ConsolePanel::onPaintConsole(glictRect* real, glictRect* clipped, glictCont
 void ConsolePanel::onMessageTo(Popup::Item *parent)
 {
 	Creature* c = Creatures::getInstance().getCreature((uint32_t)VOIDP2INT(parent->data));
-	if(c != NULL)
-	{
+	if(c != NULL){
 		GM_Gameworld *gw = (GM_Gameworld*)g_game;
 		gw->setActiveConsole(gw->findConsole(c->getName()));
 	}
@@ -259,7 +257,6 @@ void ConsolePanel::onSaveConsole(Popup::Item *parent)
 	ss << "Channel " << c->getAssignedButton()->GetCaption() << " appended to '" << c->getAssignedButton()->GetCaption() << ".txt'";
 	ConsoleEntry ce(ss.str());
 	c->insertEntry(ce);
-	// 22:34 Channel Default appended to 'C:\Users\John\AppData\Roaming\Tibia\Default.txt'
 }
 void ConsolePanel::onClearConsole(Popup::Item *parent)
 {
@@ -374,11 +371,12 @@ void ConsolePanel::btnSpeak_OnClick(glictPos* relmousepos, glictContainer* calle
 	}
 }
 
-int ConsoleEntry::paintEntry(float x, float y)
+int ConsoleEntry::paintEntry(float x, float y, float width /*= -1*/)
 {
 	// TODO (ivucica#3#) add word wrapping
 	// TODO (nfries88): limit font width, start new line when exceeded.
 	std::string fulltext = getFullText();
+
 	g_engine->drawText(fulltext.c_str(), "aafont", (int)x, (int)(y - glictFontNumberOfLines(fulltext.c_str())*12), m_color);
 	return glictFontNumberOfLines(m_text.c_str())*12;
 }
@@ -400,7 +398,7 @@ std::string ConsoleEntry::getFullText()
 	}
 
 	ss << m_text;
-	return ss.str();//(m_speaker + (m_speaker.size() ? ": " : "") + m_text);
+	return ss.str();
 }
 
 int ConsoleEntry::getHeight()
@@ -461,9 +459,6 @@ void Console::insertEntry(ConsoleEntry ce) {
 }
 void Console::clearEntries() {
 	m_content.clear();
-	//for (std::vector<ConsoleEntry>::reverse_iterator it=m_content.rbegin(); it!=m_content.rend(); it++) {
-	//	m_content.erase(it);
-	//}
 }
 void Console::dumpText()
 {
