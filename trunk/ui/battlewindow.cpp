@@ -215,16 +215,22 @@ void winBattle_t::makeConsolePopup(Popup* popup, void* owner, void* arg)
 		Creature* player = Creatures::getInstance().getPlayer();
 		switch(player->getShield())
 		{
-			case 0:
-				break;
-			case SHIELD_WHITEBLUE:
+			case SHIELD_NONE:
 			{
-				s.str("");
-				s << gettext("Accept") << c->getName() << "'s " << gettext("Invitation");
-				popup->addItem(s.str(), onAcceptInvite, (void*)c->getID());
+				if(c->getShield() == SHIELD_NONE){
+					s.str("");
+					s << gettext("Invite to Party");
+					popup->addItem(s.str(),onInviteToParty,(void*)c->getID());
+				}
+				else if(c->getShield() == SHIELD_WHITEYELLOW){
+					s.str("");
+					s << gettext("Accept") << c->getName() << "'s " << gettext("Invitation");
+					popup->addItem(s.str(), onAcceptInvite, (void*)c->getID());
+				}
 				break;
 			}
-			case SHIELD_YELLOW:
+			case SHIELD_YELLOW: case SHIELD_YELLOW_SHAREDEXP:
+			case SHIELD_YELLOW_NOSHAREDEXP_BLINK: case SHIELD_YELLOW_NOSHAREDEXP:
 			{
 				if(c->getShield() == SHIELD_WHITEBLUE){
 					s.str("");
@@ -232,19 +238,18 @@ void winBattle_t::makeConsolePopup(Popup* popup, void* owner, void* arg)
 					popup->addItem(s.str(), onRevokeInvite, (void*)c->getID());
 					break;
 				}
-
-				s.str("");
-				s << gettext("Pass Leadership To") << " " << c->getName();
-				popup->addItem(s.str(), onPassLeadership, (void*)c->getID());
-				// NOTE (nfries88): lack of break; is intentional!
-			}
-			default:
-			{
-				if(c->getShield() == SHIELD_NONE){
+				else if(c->getShield() == SHIELD_NONE){
 					s.str("");
 					s << gettext("Invite to Party");
 					popup->addItem(s.str(),onInviteToParty,(void*)c->getID());
 				}
+				else if(player->getShield() != SHIELD_WHITEYELLOW){
+					// NOTE (nfries88): Because of location, this will only affect players in party.
+					s.str("");
+					s << gettext("Pass Leadership To") << " " << c->getName();
+					popup->addItem(s.str(), onPassLeadership, (void*)c->getID());
+				}
+				break;
 			}
 		}
 	}

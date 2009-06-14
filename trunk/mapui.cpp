@@ -585,6 +585,24 @@ bool MapUI::handlePopup(int x, int y)
 
 void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 {
+	#define IS_LEADER(player, c, popup, s){\
+		if(c->getShield() == SHIELD_NONE){\
+			s.str("");\
+			s << gettext("Invite to Party");\
+			popup->addItem(s.str(),onInviteToParty,(void*)c->getID());\
+		}\
+		else if(c->getShield() == SHIELD_WHITEBLUE){\
+			s.str("");\
+			s << gettext("Revoke") << c->getName() << "'s " << gettext("Invitation");\
+			popup->addItem(s.str(), onRevokeInvite, (void*)c->getID());\
+		}\
+		else if(player != c){\
+			s.str("");\
+			s << gettext("Pass Leadership To") << " " << c->getName();\
+			popup->addItem(s.str(), onPassLeadership, (void*)c->getID());\
+		}\
+	}
+
     MapUI *m = (MapUI*)(owner);
     glictPos &pos = *((glictPos*)(arg));
     uint32_t retx, rety, retz;
@@ -595,8 +613,6 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
     m->m_lastRightclickTilePos.x = retx;
     m->m_lastRightclickTilePos.y = rety;
     m->m_lastRightclickTilePos.z = retz;
-
-
     // TODO (ivucica#5#): if clicked on dark, right click must say "you cant see anything"
     // but first we must implement lighting at all ... :)
 
@@ -622,60 +638,54 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
         popup->addItem(s.str(), MapUI::onUse, m);
     }
 
-
-
-    if (retx == playerpos.x && rety == playerpos.y && retz == playerpos.z)
-    {
-        popup->addItem("-",NULL,NULL);
-
-        s.str("");
-        s << gettext("Set Outfit") << "...";
-        popup->addItem(s.str(), GM_Gameworld::onSetOutfit);
-        popup->addItem("-",NULL,NULL);
-        popup->addItem(gettext("Copy Name"), GM_Gameworld::onCopyName, (void*)GlobalVariables::getPlayerID());
-    } else
     // attack depends if there is a creature and we're NOT on player pos
     if (const Creature *c = t->getTopCreature())
     {
-        popup->addItem("-",NULL,NULL);
+		Creature* player = Creatures::getInstance().getPlayer();
+		if(c != player) {
+			popup->addItem("-",NULL,NULL);
+			s.str("");
+			s << gettext("Attack") << " (Alt)";
+			popup->addItem(s.str(),onAttack,m);
+			m->m_popupCreatureID = c->getID();
 
-
-        s.str("");
-        s << gettext("Attack") << " (Alt)";
-        popup->addItem(s.str(),onAttack,m);
-        m->m_popupCreatureID = c->getID();
-
-        s.str("");
-        s << gettext("Follow");
-        popup->addItem(s.str(),onFollow,m);
+			s.str("");
+			s << gettext("Follow");
+			popup->addItem(s.str(),onFollow,m);
+		}
 
         if (c->isPlayer() && (c->getCurrentPos().z == GlobalVariables::getPlayerPosition().z))
         {
             popup->addItem("-",NULL,NULL);
+			if(c != player) {
+				s.str("");
+				s << gettext("Message to") << " " << c->getName();
+				popup->addItem(s.str(),onMessageTo,m);
 
-            s.str("");
-            s << gettext("Message to") << " " << c->getName();
-            popup->addItem(s.str(),onMessageTo,m);
+				s.str("");
+				s << gettext("Add to VIP list");
+				popup->addItem(s.str(),onUnimplemented);
 
-            s.str("");
-            s << gettext("Add to VIP list");
-            popup->addItem(s.str(),onUnimplemented);
+				s.str("");
+				s << gettext("Ignore") << " " << c->getName();
+				popup->addItem(s.str(),onUnimplemented);
+			}
+			else {
+				s.str("");
+				s << gettext("Set Outfit") << "...";
+				popup->addItem(s.str(), GM_Gameworld::onSetOutfit);
+			}
 
-            s.str("");
-            s << gettext("Ignore") << " " << c->getName();
-            popup->addItem(s.str(),onUnimplemented);
-
-            Creature* player = Creatures::getInstance().getPlayer();
-            switch(player->getShield())
+			switch(player->getShield())
             {
-            	case 0:
-					break;
-				case SHIELD_WHITEBLUE:
+            	case SHIELD_NONE:
 				{
-					if(player != c && (c->getShield() == SHIELD_YELLOW_SHAREDEXP || c->getShield() == SHIELD_YELLOW_NOSHAREDEXP
-						|| c->getShield() == SHIELD_YELLOW_NOSHAREDEXP_BLINK || c->getShield() == SHIELD_YELLOW
-						|| c->getShield() == SHIELD_WHITEYELLOW)
-					){
+					if(player != c && c->getShield() == SHIELD_NONE){
+						s.str("");
+						s << gettext("Invite to Party");
+						popup->addItem(s.str(),onInviteToParty,(void*)c->getID());
+					}
+					else if(c->getShield() == SHIELD_WHITEYELLOW){
 						s.str("");
 						s << gettext("Accept") << c->getName() << "'s " << gettext("Invitation");
 						popup->addItem(s.str(), onAcceptInvite, (void*)c->getID());
@@ -684,51 +694,50 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 				}
 				case SHIELD_YELLOW_SHAREDEXP: case SHIELD_YELLOW_NOSHAREDEXP_BLINK: case SHIELD_YELLOW_NOSHAREDEXP:
 				{
-					ClientVersion_t ver = options.protocol;
-					if(ver == CLIENT_VERSION_AUTO) {
-						ver = ProtocolConfig::detectVersion();
-					}
-					if((player == c) && (ver >= CLIENT_VERSION_781)){
+					if(player == c){
 						s.str("");
-						s << gettext("Disable Shaded Experience");
-						popup->addItem(s.str(), onSharedExp, (void*)false);
+						s << gettext("Leave Party");
+						popup->addItem(s.str(), onLeaveParty, (void*)c->getID());
+
+						ClientVersion_t ver = options.protocol;
+						if(ver == CLIENT_VERSION_AUTO) {
+							ver = ProtocolConfig::detectVersion();
+						}
+						if(ver >= CLIENT_VERSION_781){
+							s.str("");
+							s << gettext("Disable Shaded Experience");
+							popup->addItem(s.str(), onSharedExp, (void*)false);
+						}
 					}
-					// NOTE (nfries88): lack of break; is intentional!
+					else IS_LEADER(player, c, popup, s)
+					break;
 				}
 				case SHIELD_YELLOW:
-				{
-					ClientVersion_t ver = options.protocol;
-					if(ver == CLIENT_VERSION_AUTO) {
-						ver = ProtocolConfig::detectVersion();
-					}
-					if((player == c) && (ver >= CLIENT_VERSION_781)){
-						s.str("");
-						s << gettext("Enable Shaded Experience");
-						popup->addItem(s.str(), onSharedExp, (void*)true);
-					}
-					if(player != c){
-						s.str("");
-						s << gettext("Pass Leadership To") << " " << c->getName();
-						popup->addItem(s.str(), onPassLeadership, (void*)c->getID());
-					}
-					// NOTE (nfries88): lack of break; is intentional!
-				}
-				default:
 				{
 					if(player == c){
 						s.str("");
 						s << gettext("Leave Party");
 						popup->addItem(s.str(), onLeaveParty, (void*)c->getID());
+
+						ClientVersion_t ver = options.protocol;
+						if(ver == CLIENT_VERSION_AUTO) {
+							ver = ProtocolConfig::detectVersion();
+						}
+						if(ver >= CLIENT_VERSION_781){
+							s.str("");
+							s << gettext("Enable Shaded Experience");
+							popup->addItem(s.str(), onSharedExp, (void*)true);
+						}
 					}
-					else if(c->getShield() == SHIELD_NONE){
+					else IS_LEADER(player, c, popup, s)
+					break;
+				}
+				default: // all the blue ones
+				{
+					if(player == c){
 						s.str("");
-						s << gettext("Invite to Party");
-						popup->addItem(s.str(),onInviteToParty,(void*)c->getID());
-					}
-					else if(c->getShield() == SHIELD_WHITEBLUE){
-						s.str("");
-						s << gettext("Revoke") << c->getName() << "'s " << gettext("Invitation");
-						popup->addItem(s.str(), onRevokeInvite, (void*)c->getID());
+						s << gettext("Leave Party");
+						popup->addItem(s.str(), onLeaveParty, (void*)c->getID());
 					}
 					break;
 				}
