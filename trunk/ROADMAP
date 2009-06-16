@@ -45,10 +45,6 @@ should comment.
 * moving items +/-
 * remove dependence of animations upon VALUE/g_fps, make it VALUE*(ms difference between updates with SDL_GetTicks())/1000
 
-(due to lack of time, these were moved from 0.2 to 0.3)
-* add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
-* completely fixing GL engine
-
 
 ? replacing GLICT with YATC-specific GUI
 
@@ -56,3 +52,7 @@ should comment.
 ---
 * vip
 * battle window +
+
+(due to lack of time, these were moved from 0.2 to 0.4)
+* add extra base classes to Item/ItemUI et al, to kick out casting *UI to *
+* completely fixing GL engine

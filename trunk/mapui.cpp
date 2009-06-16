@@ -82,7 +82,7 @@ void MapUI::renderMap()
 	m_scale = scaledSize/32;
 
     m_x = -scaledSize*2; m_y = -scaledSize*2;
-	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/scaledSize,scaledSize,13*scaledSize,9*scaledSize);
+	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/0,0,15*scaledSize,11*scaledSize);
 
 	// NOTE (nfries88): Draw black under the game area, this will make blank tiles appear black like in the official client.
 	g_engine->drawRectangle(0, 0, 15*scaledSize, 11*scaledSize, oRGBA(0, 0, 0, 255));
