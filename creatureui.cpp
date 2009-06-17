@@ -361,9 +361,6 @@ void CreatureUI::loadOutfit()
             ASSERT(m_obj->imageData)
         	spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
         }
-        for (int i = 1; i < 255; i++) {
-            Objects::getInstance()->getOutfitType(i)->isGfxLoaded();
-        }
 		m_gfx.insert(m_gfx.end(), spr);
 	}
 }
