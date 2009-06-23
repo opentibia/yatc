@@ -396,6 +396,9 @@ bool Objects::load780plus(const char* filename)
 						yatc_fread(&read_short, sizeof(read_short), 1, fp);
 						oType->yOffset = read_short;
 					break;
+				case 0x20: // New with Tibia 8.5 - "look through"
+					// NOTE (nfries88): Not sure if client or server does this...
+					break;
 				case 0x1A:
 						oType->hasHeight = true;
 						// (should be) the height change in px; Tibia always uses 8

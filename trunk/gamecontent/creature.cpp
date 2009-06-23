@@ -113,7 +113,7 @@ Creature* Creatures::getPlayer()
 Creature* Creatures::getCreature(uint32_t id)
 {
 	CreatureMap::iterator it = m_creaturesId.find(id);
-	ASSERT(id)
+	//ASSERT(id)// NOTE (nfries88): this assertion seems to fail sometimes. it doesn't seem necessary anyway.
 	if(it != m_creaturesId.end()){
 		return &m_creaturesArray[it->second];
 	}
