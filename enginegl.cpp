@@ -71,7 +71,6 @@ EngineGL::EngineGL()
     SDL_SetCursor(m_cursorBasic);
 
 	initEngine();
-
 }
 
 EngineGL::~EngineGL()
@@ -101,7 +100,7 @@ void EngineGL::doResize(int& w, int& h)
 	Engine::doResize(w, h);
 
 	if (m_screen) SDL_FreeSurface(m_screen);
-	m_videoflags = SDL_OPENGL | SDL_RESIZABLE;
+	m_videoflags = SDL_OPENGL | SDL_RESIZABLE | SDL_DOUBLEBUF | SDL_HWSURFACE;
 
 	m_creationTimestamp = time(NULL);
 

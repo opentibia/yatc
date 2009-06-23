@@ -183,6 +183,7 @@ void SpriteGL::destroyGLTexture()
 {
     if(m_texture != GL_INVALID_VALUE){
 		glDeleteTextures(1, &m_texture);
+		m_texture = GL_INVALID_VALUE;
 	}
 }
 #endif

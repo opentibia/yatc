@@ -234,36 +234,39 @@ bool Tile::insertThing(Thing *thing, int32_t stackpos)
 	int pos = stackpos;
 
 	Item* item = thing->getItem();
-	if(!item){
-		return false;
-	}
-
-	if(item->isGroundTile() && pos == 0){
-		if(m_ground){
-			Thing::deleteThing(m_ground);
+	if(item != NULL){
+		if(item->isGroundTile() && pos == 0){
+			if(m_ground){
+				Thing::deleteThing(m_ground);
+			}
+			m_ground = item;
+			return true;
 		}
-		m_ground = item;
-		return true;
+
+		if(item->isGroundTile() && pos != 0){
+			return false;
+		}
 	}
 
-	if(item->isGroundTile() && pos != 0){
-		return false;
-	}
+	if(pos != 255){
+		if(m_ground){
+			--pos;
+		}
 
-	if(m_ground){
-		--pos;
-	}
+		ThingVector::iterator it = m_objects.begin();
+		while(pos > 0 && it != m_objects.end()){
+			pos--;
+			++it;
+		}
+		if(pos > 0){
+			return false;
+		}
 
-	ThingVector::iterator it = m_objects.begin();
-	while(pos > 0 && it != m_objects.end()){
-		pos--;
-		++it;
+		m_objects.insert(it, thing);
 	}
-	if(pos > 0){
-		return false;
+	else {
+		addThing(thing, true);
 	}
-
-	m_objects.insert(it, item);
 	return true;
 }
 

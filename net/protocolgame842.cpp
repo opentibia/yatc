@@ -68,7 +68,7 @@ void ProtocolGame842::onConnect()
 bool ProtocolGame842::parseTileAddThing(NetworkMessage& msg)
 {
     MSG_READ_POSITION(tilePos);
-    MSG_READ_U8(stackPos); // thomac says it behaves weird and is most probably some kind of check ... we can probably ignore it
+    MSG_READ_U8(stackPos);
     Thing* thing = internalGetThing(msg);
     if(!thing){
         RAISE_PROTOCOL_ERROR("Tile Add - getThing");
@@ -79,7 +79,7 @@ bool ProtocolGame842::parseTileAddThing(NetworkMessage& msg)
         RAISE_PROTOCOL_ERROR("Tile Add - !tile");
     }
 
-    if(!tile->addThing(thing, true)){
+    if(!tile->insertThing(thing, stackPos)){
         RAISE_PROTOCOL_ERROR("Tile Add - addThing");
     }
     Notifications::onTileUpdate(tilePos);
