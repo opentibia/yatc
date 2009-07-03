@@ -236,6 +236,10 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 		case SKULL_RED:
 			g_engine->getUISprite()->Blit(x, y-10, 87, 225, 11, 11);
 			break;
+		case SKULL_BLACK:
+			g_engine->getUISprite()->Blit(x, y-10, 98, 297, 11, 11);
+			break;
+
 		default: break;
 	}
 
@@ -262,13 +266,15 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 			break;
 		case SHIELD_YELLOW_NOSHAREDEXP_BLINK:
 			// TODO (nfries88): actually make this blink...
-			// NOTE (nfries88): no break intentionally
+			g_engine->getUISprite()->Blit(x+11, y-10, 168, 261, 11, 11);
+			break;
 		case SHIELD_YELLOW_NOSHAREDEXP:
 			g_engine->getUISprite()->Blit(x+11, y-10, 168, 261, 11, 11);
 			break;
 		case SHIELD_BLUE_NOSHAREDEXP_BLINK:
 			// TODO (nfries88): actually make this blink...
-			// NOTE (nfries88): no break intentionally
+			g_engine->getUISprite()->Blit(x+11, y-10, 179, 261, 11, 11);
+			break;
 		case SHIELD_BLUE_NOSHAREDEXP:
 			g_engine->getUISprite()->Blit(x+11, y-10, 179, 261, 11, 11);
 			break;
