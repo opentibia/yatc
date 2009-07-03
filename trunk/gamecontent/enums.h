@@ -95,6 +95,7 @@ enum Skulls_t{
 	SKULL_GREEN     = 2,
 	SKULL_WHITE     = 3,
 	SKULL_RED       = 4,
+	SKULL_BLACK		= 5, // added in Tibia 8.5
 };
 
 enum PartyShields_t{
@@ -214,6 +215,8 @@ enum ConditionIcons_t{
 	ICON_DAZZLED    = 1024,
 	ICON_CURSED     = 2048,
 	ICON_PARTY_BUFF = 4096,
+	ICON_PZBLOCK 	= 8192,
+	ICON_PZ 		= 16384,
 };
 
 

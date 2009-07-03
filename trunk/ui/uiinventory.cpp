@@ -24,6 +24,7 @@
 #include "../gamecontent/enums.h"
 #include "../gamecontent/item.h"
 #include "../gamecontent/inventory.h"
+#include "../gamecontent/creature.h"
 #include "../net/protocolgame.h"
 #include "../popup.h"
 #include "../options.h"
@@ -349,7 +350,6 @@ void pnlInventory_t::paintIcons(glictRect *real, glictRect *clipped, glictContai
 		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 68, 9, 9);
 		posx += 10;
 	}
-
 	if(icons & ICON_DAZZLED)
 	{
 		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 77, 9, 9);
@@ -364,6 +364,41 @@ void pnlInventory_t::paintIcons(glictRect *real, glictRect *clipped, glictContai
 	{
 		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 307, 148, 9, 9);
 		posx += 10;
+	}
+	if(icons & ICON_PZBLOCK)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 310, 191, 9, 9);
+		posx += 10;
+	}
+	if(icons & ICON_PZ)
+	{
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 210, 182, 9, 9);
+		posx += 10;
+	}
+
+	Creature* player = Creatures::getInstance().getPlayer();
+	switch(player->getSkull()){
+		case SKULL_GREEN:
+			g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 279, 50, 9, 9);
+			posx += 10;
+			break;
+		case SKULL_YELLOW:
+			g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 288, 50, 9, 9);
+			posx += 10;
+			break;
+		case SKULL_WHITE:
+			g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 297, 50, 9, 9);
+			posx += 10;
+			break;
+		case SKULL_RED:
+			g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 306, 50, 9, 9);
+			posx += 10;
+			break;
+		case SKULL_BLACK:
+			g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 342, 200, 9, 9);
+			posx += 10;
+			break;
+		default: break;
 	}
 }
 

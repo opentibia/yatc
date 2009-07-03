@@ -21,11 +21,6 @@
 #ifdef USE_OPENGL
 
 #include <SDL/SDL_opengl.h>
-#ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#include <GL/glext.h> // TODO (ivucica#1#) ivucica asks: do we really need this include?
-#endif
 
 #include "spritegl.h"
 #include "util.h"
