@@ -26,6 +26,7 @@
 #include "gamecontent/creature.h"
 #include "gamecontent/globalvars.h"
 #include "options.h"
+#include <cmath>
 
 static std::map<uint32_t, Sprite*> s_spritecache;
 extern uint32_t g_frameTime;
@@ -66,8 +67,8 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		return;
 
 	if(map_x != 0 && map_y != 0) {
-		x = x - m_obj->xOffset;
-		y = y - m_obj->yOffset;
+		x = x - std::floor(m_obj->xOffset * scale);
+		y = y - std::floor(m_obj->yOffset * scale);
 	}
 	else {
 		// shrink larger creatures to be 32x32

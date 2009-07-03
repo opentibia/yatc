@@ -24,6 +24,7 @@
 
 #include "util.h"
 #include "gamecontent/enums.h"
+#include <cmath>
 
 
 extern uint32_t g_frameTime;
@@ -95,8 +96,8 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, ObjectType* obj, float scale,
 	if(!obj)
 		return;
 
-	x = x - obj->xOffset;
-	y = y - obj->xOffset;
+	x = x - std::floor(obj->xOffset * scale);
+	y = y - std::floor(obj->yOffset * scale);
 
     if (!obj->isGfxLoaded()) {
         obj->loadGfx();
