@@ -141,6 +141,7 @@ public:
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.4", NULL, (void*)CLIENT_VERSION_840));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.41", NULL, (void*)CLIENT_VERSION_841));
 		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.42", NULL, (void*)CLIENT_VERSION_842));
+		protocols.push_back(btnProtocol.addItem(std::string(gettext("Protocol")) + " 8.5", NULL, (void*)CLIENT_VERSION_850));
 		protocols.push_back(btnProtocol.addItem(gettext("Autodetect"), NULL, (void*)CLIENT_VERSION_AUTO));
 
 		window.AddObject(&pnlSeparator);
