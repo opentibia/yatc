@@ -25,15 +25,12 @@
 /// \sa EngineGL
 
 #ifdef USE_OPENGL
-#ifndef __APPLE__
-	#ifdef _WIN32
-		#define WIN32_LEAN_AND_MEAN
-		#include <windows.h>
-	#endif
-#include <GL/gl.h>
-#else
-#include <OpenGL/gl.h>
+#include <SDL/SDL_opengl.h>
+#ifdef WIN32
+	#define WIN32_LEAN_AND_MEAN
+	#include <windows.h>
 #endif
+
 #include <GLICT/globals.h>
 #include <time.h>
 #include "options.h"

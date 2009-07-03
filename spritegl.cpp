@@ -20,21 +20,13 @@
 
 #ifdef USE_OPENGL
 
-#ifdef __APPLE__
-	#include <OpenGL/gl.h>
-	#include <OpenGL/glu.h>
-#else
-	#ifdef _WIN32
-		#define WIN32_LEAN_AND_MEAN
-		#include <windows.h>
-	#endif
-	#include <GL/gl.h>
-	#include <GL/glu.h>
-#endif
-
+#include <SDL/SDL_opengl.h>
 #ifdef WIN32
+	#define WIN32_LEAN_AND_MEAN
+	#include <windows.h>
 	#include <GL/glext.h> // TODO (ivucica#1#) ivucica asks: do we really need this include?
 #endif
+
 #include "spritegl.h"
 #include "util.h"
 #include "debugprint.h"
