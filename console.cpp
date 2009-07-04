@@ -245,10 +245,16 @@ void ConsolePanel::onCloseConsole(Popup::Item *parent)
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
 	gw->removeConsole(c);
 }
-void ConsolePanel::onShowM(Popup::Item *parent)
+void ConsolePanel::onShowM(Popup::Item *parent) 
+// FIXME (ivucica#1#): nate, please rename or document this function, it's unclear what it does
+// FIXME (ivucica#1#): please use onUnimplemented() if the functionality is not added!
 {
+/*
 	Console* c = (Console*)parent->data;
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
+*/
+// commented out by ivucica to fix warning
+
 }
 void ConsolePanel::onSaveConsole(Popup::Item *parent)
 {

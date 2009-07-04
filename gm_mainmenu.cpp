@@ -253,7 +253,7 @@ bool GM_MainMenu::specKeyPress (const SDL_keysym& key)
 	if (glictGlobals.topFocused == &winCharlist.lstChars) {
 	    if (key.sym == SDLK_DOWN) {
             int32_t newchar = winCharlist.currentCharId+1;
-            if (newchar >= winCharlist.lsiChars.size()) newchar = 0;
+            if (newchar >= (int32_t)winCharlist.lsiChars.size()) newchar = 0;
 	        winCharlist_t::OnListbox(NULL, winCharlist.lsiChars[newchar]);
 	        renderUI();
 	        return true;

@@ -783,7 +783,8 @@ void MapUI::onPassLeadership(Popup::Item *parent)
 }
 void MapUI::onLeaveParty(Popup::Item *parent)
 {
-	MapUI *m = (MapUI*)(parent->data);
+// FIXME (ivucica#5#): remove line below?
+//	MapUI *m = (MapUI*)(parent->data); 
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
     gw->m_protocol->sendLeaveParty();

@@ -19,6 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <string.h>
+#include <stdio.h>
 #include "confighandler.h"
 #include "util.h"
 #include "product.h"
