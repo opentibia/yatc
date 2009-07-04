@@ -467,7 +467,7 @@ void GM_Gameworld::keyPress (int key)
 		        int i = msg.find(' ',1);
 		        std::string command = msg.substr(1,i-1);
                 std::string params = "";
-                if (i < msg.size())
+                if (i < (int)msg.size())
                     params = msg.substr(i+1);
 
 		        if (command == "help" && !sent)

@@ -18,6 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <stdio.h>
 #include "../fassert.h"
 #include "protocolgame84.h"
 
@@ -85,7 +86,8 @@ char ProtocolGame84::translateSpeakClassFromInternal(SpeakClasses_t s){
             return 0x14;
 
         default: // UNK6, UNK7, UNK8 -- perhaps these are reports? those that we commented out above?
-            RAISE_PROTOCOL_WARNING("speakclass translatefrominternal failed");
+            printf("speakclass translatefrominternal failed");
+            return 0x01;
     }
     //RAISE_PROTOCOL_ERROR("speakclass translatetoint error");
 }
@@ -134,7 +136,7 @@ SpeakClasses_t ProtocolGame84::translateSpeakClassToInternal(char s){
         case 0x14:
             return SPEAK_MONSTER_YELL;
         default:
-            printf("speakclass translatetointernal failed\n");
+            printf("speakclass translatetointernal failed");
             return SPEAK_SAY;
 
     }
@@ -181,7 +183,7 @@ MessageType_t ProtocolGame84::translateTextMessageToInternal(uint8_t messageType
 
 		default:
 			/*RAISE_PROTOCOL_ERROR(*/
-			printf("text message - 8.4 translation problem\n");
+			printf("text message - 8.4 translation problem");
 			nmessageType = MSG_INFO_DESCR;
 	}
 	return nmessageType;
