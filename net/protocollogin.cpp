@@ -32,6 +32,7 @@ ProtocolLogin::ProtocolLogin(const std::string& accountname, const std::string& 
 	m_accountname = accountname;
 	m_account = atoi(accountname.c_str());
 	m_password = password;
+	m_sendsysconf = false;
 }
 
 void ProtocolLogin::onConnect()
@@ -71,6 +72,9 @@ void ProtocolLogin::onConnect()
 		output.addString(m_accountname);
 	output.addString(m_password);
 
+    if (m_sendsysconf)
+        sendSystemConfiguration(output);
+
 	//Rsa size has to be 128
 	int rsaSize = output.getSize() - sizeBefore;
 	output.addPaddingBytes(128 - rsaSize);
@@ -87,7 +91,8 @@ void ProtocolLogin::onConnect()
 	//m_connection->setChecksumState(oldChecksumState);
 
 	m_account = 0;
-	m_password = "";
+	m_accountname = "----------------------"; // fill with nonsense for protection of user
+	m_password = "---------------------";
 }
 
 bool ProtocolLogin::onRecv(NetworkMessage& msg)
@@ -157,4 +162,34 @@ bool ProtocolLogin::onRecv(NetworkMessage& msg)
 		}
 	}
 	return true;
+}
+void ProtocolLogin::sendSystemConfiguration(NetworkMessage &output)
+{
+    // decoded by thomac, praise the Lord
+
+    // FIXME (ivucica#1#): this sends thomac's configuration.
+    // this can easily be detected.
+    // we need to figure out remaining bytes and real detection
+    char hardware_spec[] = {
+        0x2C, // unknown
+        0x55, 0x53, 0x41, // USA - locale
+        0xFE, 0x1F, // 8190 - RAM
+
+        0x04, 0x5E, 0x08, 0x40, 0x10, 0x00,  // unknown
+
+        0x39, 0x36, 0x35, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, // 9650 - processor, padded to 9 bytes
+
+        0x11, 0x44, // unknown
+
+        0x06, 0x09, // proc freq
+        0x06, 0x09, // proc freq (?)
+        0x22, 0x00, 0x00, 0x00, // unknown
+
+        0x34, 0x38, 0x30, 0x30, 0x20, 0x53, 0x45, 0x52, 0x49, // 4800 SERI - gfx card padded to 9 bytes
+        0x00, 0x04, // 1024 - vram?
+        0x80, 0x07, // 1920 - horiz reso
+        0x38, 0x04, // 1080 - vert reso,
+        0x3C // refresh rate
+    };
+    output.addRaw(hardware_spec, sizeof(hardware_spec));
 }

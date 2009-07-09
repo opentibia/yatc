@@ -61,6 +61,7 @@ class NetworkMessage
 		}
 		void addString(const std::string& value) { addString(value.c_str()); }
 		void addString(const char* value);
+		void addRaw(const void* content, size_t amount);
 		void addPosition(const Position& pos);
 		void addPaddingBytes(uint32_t n);
 		void addHeader();
