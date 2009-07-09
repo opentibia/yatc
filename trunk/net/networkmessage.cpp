@@ -230,6 +230,16 @@ void NetworkMessage::addString(const char* value)
 	}
 }
 
+void NetworkMessage::addRaw(const void* content, size_t amount)
+{
+    if (canWrite(amount))
+    {
+        memcpy(m_buffer + m_writePos, content, amount);
+        m_writePos += amount;
+        m_size += amount;
+    }
+}
+
 void NetworkMessage::addPosition(const Position& pos)
 {
 	if(canWrite(5)){

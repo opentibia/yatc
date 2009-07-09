@@ -108,6 +108,8 @@ public:
 	uint16_t yOffset;
 	bool hasHeight;
 	uint16_t mapColor;
+	bool lookThrough;
+
 	uint16_t width;
 	uint16_t height;
 	uint16_t blendframes;
@@ -116,7 +118,6 @@ public:
 	uint16_t unk1;
 	uint16_t animcount;
 	uint16_t numsprites;
-
 	uint16_t* imageData;
 
 	static uint16_t minItemId;

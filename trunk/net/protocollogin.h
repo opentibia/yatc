@@ -34,13 +34,17 @@ class ProtocolLogin : public Protocol
 		virtual void onConnect();
 		virtual bool onRecv(NetworkMessage& msg);
 
+        void setSendSystemConfiguration(bool yes) { m_sendsysconf = yes; }
+
 	protected:
 		ProtocolLogin(const std::string& account, const std::string& password);
+		virtual void sendSystemConfiguration(NetworkMessage &output);
 
 		const char* getProtocolName() { return "Protocol Login"; }
 
 		std::string m_accountname, m_password;
 		uint32_t m_account;
+		bool m_sendsysconf;
 
 		friend class ProtocolConfig;
 };

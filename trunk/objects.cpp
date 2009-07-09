@@ -24,6 +24,14 @@
 #include "util.h"
 #include "options.h"
 #include "net/connection.h"
+#include "product.h"
+
+#if defined(HAVE_LIBINTL_H)
+    #include <libintl.h>
+#else
+    #define gettext(x) (x)
+#endif
+
 
 uint16_t ObjectType::minItemId = 0;
 uint16_t ObjectType::maxItemId = 0;
@@ -69,6 +77,8 @@ ObjectType::ObjectType(uint16_t _id)
 	yOffset = 0;
 	hasHeight = false;
 	mapColor = 0;
+	lookThrough = false;
+
 	width = 1;
 	height = 1;
 	blendframes = 0;
@@ -236,7 +246,7 @@ bool Objects::loadDat(const char* filename)
 		ver = ProtocolConfig::detectVersion();
 	}
 
-	/* 7.80 - 8.41 use same .dat format to the best of my knowledge */
+	/* 7.80 - 8.5 use almost same .dat format (with an addition hereanddthere)*/
 	if(ver >= CLIENT_VERSION_780) {
 		return load780plus(filename);
 	}
@@ -244,6 +254,17 @@ bool Objects::loadDat(const char* filename)
 	else if(ver >= CLIENT_VERSION_760) {
 		return load76_77series(filename);
 	}
+
+    NativeGUIError(str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext(
+                               "Unrecognized data files.\n"
+                               "\n"
+                               "* Please install a supported version of data files, or override\n"
+                               "  autodetection manually in configuration.\n"
+                               "\n"
+                               "* You may be attempting to use a too new version of data files.\n"
+                               "  Check if a new version of " PRODUCTSHORT " came out which\n"
+                               "  supports this version of data files.")).c_str(),
+                    gettext("Data files not recognized"));
 
 	return false;
 }
@@ -396,9 +417,6 @@ bool Objects::load780plus(const char* filename)
 						yatc_fread(&read_short, sizeof(read_short), 1, fp);
 						oType->yOffset = read_short;
 					break;
-				case 0x20: // New with Tibia 8.5 - "look through"
-					// NOTE (nfries88): Not sure if client or server does this...
-					break;
 				case 0x1A:
 						oType->hasHeight = true;
 						// (should be) the height change in px; Tibia always uses 8
@@ -425,9 +443,14 @@ bool Objects::load780plus(const char* filename)
 				case 0x1F: //?
 
 					break;
+				case 0x20: // New with Tibia 8.5 - "look through"
+                        // NOTE (nfries88): Not sure if client or server does this...
+                        // NOTE (ivucica): It's almost certainly the client
+                        oType->lookThrough = true;
+					break;
 				default:
 						optbyte = optbyte;
-						//std::cout << "unknown byte: " << (uint16_t)optbyte << std::endl;
+						std::cout << "unknown byte: " << (uint16_t)optbyte << std::endl;
 						return false;
 					break;
 			}

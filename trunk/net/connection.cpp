@@ -202,7 +202,7 @@ ClientVersion_t ProtocolConfig::detectVersion()
         picSignature == 0x49144178)
         return CLIENT_VERSION_842;
 
-    if (datSignature == 0x4A49C5EB &&
+    if (datSignature == 0x4A49C5EB || datSignature == 0x4a4cc0dc && // verbatim release, and the minipatch
         sprSignature == 0x4A44FD4E &&
         picSignature == 0x4A2FA8D6)
         return CLIENT_VERSION_850;
@@ -234,7 +234,7 @@ void ProtocolConfig::createLoginConnection(const std::string& accountname, const
 	ASSERT(g_connection == NULL);
 
 	EncXTEA* crypto = new EncXTEA;
-	Protocol* protocol = new ProtocolLogin(accountname, password);
+	ProtocolLogin* protocol = new ProtocolLogin(accountname, password);
 	g_connection = new Connection(getInstance().m_host, getInstance().m_port, crypto, protocol);
 	if(getInstance().m_clientVersion<CLIENT_VERSION_830){
 		g_connection->setChecksumState(false);
@@ -242,6 +242,11 @@ void ProtocolConfig::createLoginConnection(const std::string& accountname, const
 	} else {
 		g_connection->setChecksumState(true);
 		protocol->usesAccountName(true);
+
+		if (getInstance().m_clientVersion>=CLIENT_VERSION_850)
+		{
+            protocol->setSendSystemConfiguration(true);
+		}
 	}
 }
 
