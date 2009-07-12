@@ -39,6 +39,7 @@ private:
     void _BlitInternal(float dx, float dy, float sx, float sy, float w, float h);
     friend class Engine;
 
+	double oldw, oldh;
 };
 
 #endif
