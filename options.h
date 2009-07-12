@@ -83,6 +83,7 @@ public:
 	bool fullscreen;
 	int maxfps;
 	bool stretchGameWindow;
+	bool smoothstretch;
 
 	// [console]
 	bool infomsgs;

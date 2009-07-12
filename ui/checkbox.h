@@ -35,7 +35,6 @@ public:
         btnButton.SetPos(5,5);
         btnButton.SetWidth(12);
         btnButton.SetHeight(12);
-        btnButton.SetOnClick(uiCheckbox::OnCheckbox);
         lblLabel.SetPos(22,7);
         lblLabel.SetWidth(170);
         lblLabel.SetHeight(11);
@@ -43,7 +42,7 @@ public:
 		lblLabel.SetBGActiveness(false);
 
         SetValue(false);
-
+		SetEnabled(true);
     }
 
     void SetPos(int x, int y) {
@@ -76,6 +75,25 @@ public:
         btnButton.SetCustomData(value ? (void*)1 : NULL);
         btnButton.SetSkin(value ? &g_skin.chk : &g_skin.txt);
 
+    }
+
+    void SetEnabled(bool value) {
+    	if(value) {
+    		#if (GLICT_APIREV >= 85)
+    		lblLabel.SetCaptionColor(1.f, 1.f, 1.f);
+			#else
+			#warning No support for setcaptioncolor before glict apirev 85
+			#endif
+			btnButton.SetOnClick(uiCheckbox::OnCheckbox);
+    	}
+    	else {
+    		#if (GLICT_APIREV >= 85)
+    		lblLabel.SetCaptionColor(.5f, .5f, .5f);
+			#else
+			#warning No support for setcaptioncolor before glict apirev 85
+			#endif
+			btnButton.SetOnClick(NULL);
+    	}
     }
 
 	static void OnCheckbox(glictPos* pos, glictContainer *caller) {

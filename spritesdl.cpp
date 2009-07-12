@@ -21,6 +21,8 @@
 #include "enginesdl.h"
 #include "spritesdl.h"
 
+#include "options.h"
+
 SpriteSDL::SpriteSDL(int w, int h, const oRGBA& c) : Sprite(w, h, c)
 {
 
@@ -78,7 +80,11 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, f
 
     double neww = getBasicImage()->w * lambdaw;
     double newh = getBasicImage()->h * lambdah;
-	Stretch(neww, newh, 0);
+    if(oldw != neww || oldh != newh) {
+		Stretch(neww, newh, options.smoothstretch);
+		oldw = neww;
+		oldh = newh;
+    }
 
 	_BlitInternal(dx,dy,sx*lambdaw,sy*lambdah,destw,desth);
 }

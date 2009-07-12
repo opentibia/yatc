@@ -326,20 +326,20 @@ public:
 				btnUseCrosshair.SetHold(true);
 			}
 
-			chkSendAuto.lblLabel.SetCaptionColor(glictColor(.5f, .5f, .5f, .5f));
+			chkSendAuto.SetEnabled(false);
 		}
 		else
 		{
 			if(!hotkey.text.empty()) {
 				txtText.SetCaption(hotkey.text);
 				chkSendAuto.SetValue(hotkey.sendAuto);
-				chkSendAuto.lblLabel.SetCaptionColor(glictColor(.7f, .7f, .7f, .7f));
+				chkSendAuto.SetEnabled(true);
 			}
 			else
 			{
 				txtText.SetCaption("");
 				chkSendAuto.SetValue(false);
-				chkSendAuto.lblLabel.SetCaptionColor(glictColor(.5f, .5f, .5f, .5f));
+				chkSendAuto.SetEnabled(false);
 			}
 			hotkey.item.itemid = 0;
 		}
