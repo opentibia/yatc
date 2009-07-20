@@ -56,14 +56,14 @@ svn revert debian/changelog
 svn revert product.h
 svn revert README
 
-sed s/0.3.1SVN/$version/g product.h > product.h.new
+sed s/0.3.2SVN/$version/g product.h > product.h.new
 mv product.h.new product.h
-sed s/0.3.1SVN/$version/g README > README.new
+sed s/0.3.2SVN/$version/g README > README.new
 mv README.new README
 
 svn revert configure.ac
 
-sed s/0.3.1SVN/$version/g configure.ac > configure.ac.new
+sed s/0.3.2SVN/$version/g configure.ac > configure.ac.new
 mv configure.ac.new configure.ac
 
 
@@ -135,7 +135,7 @@ if [ $win32release != "n" ]; then
 	cp gettextsrc.dll "yatc-$version"
 	cp iconv.dll "yatc-$version"
 	cp intl.dll "yatc-$version"
-	
+
 	cp yatc.exe "yatc-$version"
 	mkdir "yatc-$version/translations/"
 	cp -R translations/hr_HR "yatc-$version/translations/hr_HR"
@@ -169,11 +169,11 @@ if [ $debrelease != "n" ]; then
 
 	cat - << EOF > .tmpdebchangelog
 yatc (${version}-1) unstable; urgency=low
- 
+
   * New upstream release
- 
+
  -- ${debianiser}  ${debchangelogdate}
- 
+
 EOF
 	echo ""
 	echo ""
@@ -186,7 +186,7 @@ EOF
 	read skipedit
 	echo "You entered: "
 	echo $skipedit
-	
+
 	if [ "$skipedit" != "y" ]; then
 		sensible-editor .tmpdebchangelog
 	else

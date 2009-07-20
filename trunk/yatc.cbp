@@ -126,6 +126,7 @@
 		<Unit filename="AUTHORS" />
 		<Unit filename="BUGS" />
 		<Unit filename="COPYING" />
+		<Unit filename="Makefile.am" />
 		<Unit filename="README" />
 		<Unit filename="ROADMAP" />
 		<Unit filename="automap.cpp" />
@@ -143,6 +144,7 @@
 		<Unit filename="codeguide.txt" />
 		<Unit filename="confighandler.cpp" />
 		<Unit filename="confighandler.h" />
+		<Unit filename="configure.ac" />
 		<Unit filename="console.cpp" />
 		<Unit filename="console.h" />
 		<Unit filename="creatureui.cpp" />
@@ -253,6 +255,7 @@
 		<Unit filename="popup.cpp" />
 		<Unit filename="popup.h" />
 		<Unit filename="product.h" />
+		<Unit filename="release.sh" />
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug Windows" />
