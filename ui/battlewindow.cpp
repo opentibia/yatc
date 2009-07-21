@@ -18,7 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-// BIG OLD TODO
+
 #include "battlewindow.h"
 #include "../gamecontent/creature.h"
 
@@ -315,4 +315,9 @@ void winBattle_t::clickEntry(glictPos* relmousepos, glictContainer* callerclass)
 		winBattle_t::BattleEntry* e = gw->sbvlPanel.winBattle.get(creature->getID());
 		gw->performPopup(winBattle_t::makeConsolePopup, NULL, (void*) e);
 	}
+}
+
+void winBattle_t::OnClose()
+{
+	controller->closeBattle();
 }

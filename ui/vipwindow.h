@@ -38,26 +38,14 @@ public:
 
 	sbvlPanel_t* controller;
 
-	winVIP_t()
-	{
-		window.SetWidth(160);
-		window.SetHeight(GetDefaultHeight());
-		window.SetCaption(gettext("VIP"));
-		window.AddObject(&container);
-		container.SetWidth(160);
-		container.SetHeight(GetDefaultHeight());
-		container.SetVirtualSize(160, 270);
-		container.SetBGActiveness(false);
-	}
-	~winVIP_t()
-	{
-	}
+	winVIP_t();
+	~winVIP_t();
 
 	void addVIP(std::string);
 	void updateVIP(std::string, bool status);
 	void removeVIP(std::string);
 
-	virtual float GetDefaultHeight(){ return 40.F; }
+	virtual float GetDefaultHeight();
 	virtual void OnClose();
 };
 
