@@ -24,9 +24,13 @@
     #define gettext(x) (x)
 #endif
 
+#include "../gm_gameworld.h"
 #include "vipwindow.h"
 #include "sbvlpanel.h"
 #include "../gamecontent/viplist.h"
+#include "../net/protocolgame.h"
+
+extern int g_lastmousebutton;
 
 winVIP_t::winVIP_t()
 {
@@ -103,8 +107,10 @@ void winVIP_t::updateVIP(uint32_t id)
 void winVIP_t::removeVIP(uint32_t id)
 {
     glictPanel *p=m_entries[id];
-    p->RemoveObject(p);
-    //VipList::getInstance().removeEntry(id);
+    container.RemoveObject(p);
+    if (m_entries.find(id) != m_entries.end())
+        m_entries.erase(m_entries.find(id));
+
 }
 
 float winVIP_t::GetDefaultHeight()
@@ -120,14 +126,94 @@ void winVIP_t::OnClose()
 
 void winVIP_t::OnListbox(glictPos* pos, glictContainer *caller)
 {
-    std::map<uint32_t, glictPanel*>::iterator it;
-
+    GM_Gameworld* gw = (GM_Gameworld*)g_game;
     winVIP_t *wvip = (winVIP_t*)(caller->GetCustomData());
+
+    std::map<uint32_t, glictPanel*>::iterator it;
 
     for (it = wvip->m_entries.begin(); it != wvip->m_entries.end(); it++)
     {
         it->second->SetBGActiveness(false);
     }
-
     ((glictPanel*)caller)->SetBGActiveness(true);
+
+    if (g_lastmousebutton == SDL_BUTTON_RIGHT)
+    {
+        gw->performPopup(makeVIPPopup, (void*)wvip, (void*)caller);
+    }
+}
+
+void winVIP_t::makeVIPPopup(Popup* popup, void* owner, void* arg)
+{
+	winVIP_t* wvip = (winVIP_t*)owner;
+	glictPanel* pnl = (glictPanel*)arg;
+
+	std::stringstream s;
+
+	uint32_t creatureid=0;
+	for(std::map<uint32_t, glictPanel*>::iterator it = wvip->m_entries.begin(); it != wvip->m_entries.end(); it++)
+	{
+	    if (it->second == pnl)
+            creatureid = it->first;
+	}
+	wvip->selectedcreature=creatureid;
+
+    s.str("");
+    s << gettext("Edit ") + pnl->GetCaption();
+    popup->addItem(s.str(), onUnimplemented);
+
+    s.str("");
+    s << gettext("Remove ") + pnl->GetCaption();
+    popup->addItem(s.str(), onRemoveVIP, wvip);
+
+    s.str("");
+    s << gettext("Message to ") + pnl->GetCaption();
+    popup->addItem(s.str(), onUnimplemented);
+
+    popup->addItem("-",NULL,NULL);
+
+    s.str("");
+    s << gettext("Add new VIP");
+    popup->addItem(s.str(), onUnimplemented);
+
+    s.str("");
+    s << gettext("Sort by name");
+    popup->addItem(s.str(), onUnimplemented);
+
+    s.str("");
+    s << gettext("Sort by type");
+    popup->addItem(s.str(), onUnimplemented);
+
+    s.str("");
+    s << gettext("Sort by status");
+    popup->addItem(s.str(), onUnimplemented);
+
+    s.str("");
+    s << gettext("Hide offline VIPs");
+    popup->addItem(s.str(), onUnimplemented);
+
+    popup->addItem("-",NULL,NULL);
+
+    s.str("");
+    s << gettext("Copy name");
+    popup->addItem(s.str(), onUnimplemented);
+
+}
+
+void winVIP_t::onUnimplemented(Popup::Item *parent)
+{
+	GM_Gameworld* gw = (GM_Gameworld*)g_game;
+
+    gw->msgBox(gettext("This functionality is not yet implemented."), "TODO");
+}
+
+void winVIP_t::onRemoveVIP(Popup::Item *parent)
+{
+	GM_Gameworld* gw = (GM_Gameworld*)g_game;
+
+	winVIP_t* wvip = (winVIP_t*)parent->data;
+	printf("Removing %d\n", wvip->selectedcreature),
+    wvip->removeVIP(wvip->selectedcreature);
+    VipList::getInstance().removeEntry(wvip->selectedcreature);
+    gw->m_protocol->sendRemVip(wvip->selectedcreature);
 }

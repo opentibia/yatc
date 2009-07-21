@@ -36,7 +36,8 @@ xgettext -d yatc -s -o yatc.pot \
 	../ui/sbvlpanel.h \
 	../ui/battlewindow.h \
 	../ui/exitwarning.h \
-	../ui/deathnotification.h
+	../ui/deathnotification.h \
+	../ui/vipwindow.cpp
 echo "Done."
 
 # above list all files with extractable gettext() strings
