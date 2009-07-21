@@ -82,6 +82,7 @@ void Popup::addItem(const std::string &txt, Callback_t cb, void* data) {
 void Popup::updateWidths()
 {
     m_list.SetWidth(m_maxw);
+    m_pnl.SetWidth(m_maxw + 6);
     for (std::vector<Item*>::iterator it = items.begin(); it != items.end(); it++)
     {
         if ((*it)->pnlSep)
