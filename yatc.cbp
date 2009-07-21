@@ -59,7 +59,6 @@
 				<Option object_output=".objswin\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="incoming_server_packets.binary" />
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
 					<Add option="-Wall" />

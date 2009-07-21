@@ -76,6 +76,8 @@ private:
 	glictButton btnGoToDebug;
 
 	Sprite* background;
+
+	bool mGotMotd;
 protected:
 	static void btnHelp_OnClick(glictPos* relmousepos, glictContainer* callerclass);
 

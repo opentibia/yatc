@@ -1,0 +1,31 @@
+ABOUT REPLAY.BINARY
+
+This file was produced by a special utility given by Thomac. Here's what we
+have to say about it (in net/connectionreplay.h):
+
+
+// This class performs local file replay services.
+// Replay files are of this format:
+//
+// repeat {
+//  <uint32_t> time
+//  <uint16_t> message length
+//  {
+//   message itself
+//  }
+// }
+//
+// No encryption or checksum applies.
+// Only gameworld is replayable.
+
+
+To use it, pass the file name as the first argument to YATC.
+
+UNIX:
+$ ./yatc replay.binary
+Win32:
+Drag the file onto YATC's icon.
+
+
+Utility for recording works only under win32 and is available to official
+developers from ivucica or thomac.
