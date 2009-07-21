@@ -53,6 +53,7 @@ GM_MainMenu::GM_MainMenu()
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting main menu...\n");
     //resetDefaultCursor();
     SDL_SetCursor(g_engine->m_cursorBasic);
+    mGotMotd = false;
 
     /* ****************** MAIN MENU *********************** */
 	desktop.AddObject(&pnlMainMenu.mainmenu);
@@ -391,6 +392,8 @@ void GM_MainMenu::winLogin_btnOk_OnClick(glictPos* relmousepos, glictContainer* 
 	options.account = m->winLogin.txtUsername.GetCaption();
 	options.password = m->winLogin.txtPassword.GetCaption();
 	m->login(options.account, options.password);
+
+	m->mGotMotd=false;
 }
 
 void GM_MainMenu::login(const std::string& username, const std::string& password)
@@ -559,7 +562,7 @@ void GM_MainMenu::onConnectionError(int message, const char* errortext)
 }
 void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 {
-
+    mGotMotd=true;
 	if (options.motdnum == motdnum) {
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Motd numbers matching, not displaying motd.\n");
 		desktop.RemoveObject(&winStatus);
@@ -621,6 +624,12 @@ void GM_MainMenu::openCharactersList(const std::list<CharacterList_t>& list, int
 {
     winCharlist.destroyList();
 	winCharlist.generateList(list, premDays);
+	if (!mGotMotd)
+	{
+        winCharlist.window.SetVisible(true);
+        centerWindow(&winCharlist.window);
+        winStatus.SetVisible(false);
+	}
 	renderUI();
 }
 
