@@ -67,25 +67,27 @@ public:
     ~Popup();
 
     void addItem(const std::string &txt, Callback_t cb, void* data=NULL);
-    void mouseOver(float x, float y);
+    void mouseOver(int x, int y);
     //static void onClick(glictPos* pos, glictContainer *caller);
-    void mouseClick(float x, float y);
+    void mouseClick(int x, int y);
 
 	glictPanel* getPanel() { return &m_pnl; }
 
+    void updateWidths();
     void prepareToDie() { wantdeath = true; }
     bool wantsDeath() const { return wantdeath; }
-    bool cursorInside(float x, float y);
+    bool cursorInside(int x, int y);
 
     inline void setOwner(void* owner) { this->owner = owner; }
     inline void*getOwner() const      { return owner; }
 
 private:
-    glictList list;
+    glictList m_list;
     glictPanel m_pnl;
     std::vector<Item*> items;
     bool wantdeath;
     void* owner;
+    int m_maxw;
 };
 
 #endif

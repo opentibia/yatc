@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-12 17:48+0200\n"
+"POT-Creation-Date: 2009-07-21 16:47+0200\n"
 "PO-Revision-Date: 2008-11-30 01:44+0100\n"
 "Last-Translator: Rasmus Karlsson <qwerty@wuut.se>\n"
 "Language-Team: Rasmus Karlsson <qwerty@wuut.se>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../gm_mainmenu.cpp:366
+#: ../gm_mainmenu.cpp:367
 #, fuzzy
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
@@ -34,11 +34,11 @@ msgstr ""
 msgid " gold"
 msgstr " guld"
 
-#: ../main.cpp:192 ../main.cpp:212
+#: ../main.cpp:201 ../main.cpp:221
 msgid "$$PRODUCTSHORT$$ Fatal Error"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:353
+#: ../gm_mainmenu.cpp:354
 msgid "(in no particular order)"
 msgstr "(i ingen speciell ordning)"
 
@@ -74,11 +74,11 @@ msgstr "<Observera uppdragsknappen>"
 msgid "<The outfit window should be opened now>"
 msgstr "<Utseendefönstret ska ha öppnats nu>"
 
-#: ../ui/uitrade.cpp:99
+#: ../mapui.cpp:689 ../ui/uitrade.cpp:102
 msgid "Accept"
 msgstr ""
 
-#: ../ui/charlist.h:86
+#: ../ui/charlist.h:87
 msgid "Account Status:"
 msgstr "Kontostatus:"
 
@@ -90,15 +90,15 @@ msgstr "Kontonamn:"
 msgid "Account number:"
 msgstr "Kontonummer:"
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:665
 msgid "Add to VIP list"
 msgstr "Lägg till i VIP-listan"
 
-#: ../ui/uioutfit.cpp:128
+#: ../ui/uioutfit.cpp:132
 msgid "Addon "
 msgstr "Tillägg "
 
-#: ../ui/optionsgfxadv.h:176 ../ui/optionsgfxadv.h:302
+#: ../ui/optionsgfxadv.h:197 ../ui/optionsgfxadv.h:329
 msgid "Adjust framerate limit"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgstr ""
 msgid "Advanced"
 msgstr "Avancerat"
 
-#: ../ui/optionsgfxadv.h:70
+#: ../ui/optionsgfxadv.h:71
 #, fuzzy
 msgid "Advanced Graphics Options"
 msgstr "Grafikinställningar"
@@ -123,7 +123,7 @@ msgstr "Ah, det mäktige handelsfönstret. Detta hint är inte skrivet än."
 msgid "Amount:"
 msgstr "Mängd:"
 
-#: ../mapui.cpp:602
+#: ../mapui.cpp:647
 msgid "Attack"
 msgstr "Attackera"
 
@@ -131,7 +131,7 @@ msgstr "Attackera"
 msgid "Auto Chase Off"
 msgstr "Autofölj Av"
 
-#: ../ui/optionsnetwork.h:142
+#: ../ui/optionsnetwork.h:145
 msgid "Autodetect"
 msgstr "Autodetektera"
 
@@ -144,11 +144,7 @@ msgstr "Utnyttjingsbara upplösningar:"
 msgid "Available resolutions:"
 msgstr "Utnyttjingsbara upplösningar:"
 
-#: ../ui/skills.h:290
-msgid "Axe Fighting"
-msgstr "Yxskicklighet"
-
-#: ../ui/sbvlpanel.h:70 ../ui/battlewindow.h:58
+#: ../ui/battlewindow.h:59
 msgid "Battle"
 msgstr ""
 
@@ -156,22 +152,18 @@ msgstr ""
 msgid "Buy"
 msgstr "Köp"
 
-#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:169
+#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:172
 #: ../ui/optionsgraphics.h:141 ../ui/optionshotkeys.h:203
-#: ../ui/optionsconsole.h:139 ../ui/login.h:123 ../ui/uioutfit.cpp:155
-#: ../ui/charlist.h:115 ../ui/itemmove.h:110 ../ui/uitrade.cpp:166
-#: ../ui/optionsgfxadv.h:233 ../ui/exitwarning.h:85
-#: ../ui/deathnotification.h:84
+#: ../ui/optionsconsole.h:139 ../ui/login.h:123 ../ui/uioutfit.cpp:159
+#: ../ui/charlist.h:116 ../ui/itemmove.h:110 ../ui/uitrade.cpp:169
+#: ../ui/optionsgfxadv.h:256 ../ui/exitwarning.h:85
+#: ../ui/deathnotification.h:85
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../gm_mainmenu.cpp:538
+#: ../gm_mainmenu.cpp:546
 msgid "Cannot connect to a login server."
 msgstr "Kan inte ansluta till en loginserver."
-
-#: ../ui/skills.h:178
-msgid "Cap"
-msgstr "Kapacitet"
 
 #: ../ui/minimap.h:120
 msgid "Centre"
@@ -202,20 +194,16 @@ msgstr "Klassiska Kontroller"
 msgid "Clear Object"
 msgstr "Flytta Objekt"
 
-#: ../ui/skills.h:288
-msgid "Club Fighting"
-msgstr "Klubbsskicklighet"
-
-#: ../gm_mainmenu.cpp:409 ../gm_mainmenu.cpp:496
+#: ../gm_mainmenu.cpp:418 ../gm_mainmenu.cpp:504
 msgid "Connecting"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:497
+#: ../gm_mainmenu.cpp:505
 #, fuzzy
 msgid "Connecting to the game world. Please wait."
 msgstr "Ansluter till servern..."
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1191
+#: ../ui/optionsui.h:97
 msgid "Console"
 msgstr "Konsoll"
 
@@ -223,11 +211,11 @@ msgstr "Konsoll"
 msgid "Console Options"
 msgstr "Konsollinställningar"
 
-#: ../gm_mainmenu.cpp:360
+#: ../gm_mainmenu.cpp:361
 msgid "Contributors"
 msgstr "Medhjälpare"
 
-#: ../mapui.cpp:634
+#: ../mapui.cpp:748
 msgid "Copy Name"
 msgstr "Kopiera namn"
 
@@ -235,11 +223,11 @@ msgstr "Kopiera namn"
 msgid "Create Account"
 msgstr "Skapa Konto"
 
-#: ../gm_mainmenu.cpp:341
+#: ../gm_mainmenu.cpp:342
 msgid "Current engine"
 msgstr "Nuvarande motor"
 
-#: ../ui/optionsgfxadv.h:314
+#: ../ui/optionsgfxadv.h:341
 #, fuzzy
 msgid "Current framerate: "
 msgstr "Nuvarande motor"
@@ -248,7 +236,7 @@ msgstr "Nuvarande motor"
 msgid "Customise the console"
 msgstr "Skräddarsy konsollen"
 
-#: ../gm_mainmenu.cpp:436
+#: ../gm_mainmenu.cpp:445
 msgid ""
 "Data files in the directory either:\n"
 "* do not belong to same protocol version, or\n"
@@ -261,15 +249,24 @@ msgid ""
 "protocol."
 msgstr ""
 
+#: ../gm_gameworld.cpp:1373
+#, fuzzy
+msgid "Default"
+msgstr "Detalj"
+
 #: ../ui/uioutfit.cpp:83
 msgid "Detail"
 msgstr "Detalj"
 
-#: ../ui/skills.h:291
-msgid "Distance Fighting"
-msgstr "Distansskicklighet"
+#: ../mapui.cpp:707
+msgid "Disable Shared Experience"
+msgstr ""
 
-#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:575
+#: ../ui/optionsgfxadv.h:163
+msgid "Don't Stretch/Shrink Game Window"
+msgstr ""
+
+#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:583
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
@@ -289,15 +286,19 @@ msgstr "Ändra snabbtangetstexter"
 msgid "Edit your hotkey texts"
 msgstr "Ändra snabbtangetstexter"
 
+#: ../mapui.cpp:727
+msgid "Enable Shared Experience"
+msgstr ""
+
 #: ../ui/optionsui.cpp:339
 msgid "Engine change"
 msgstr "Motorbyte"
 
-#: ../ui/mainmenu.cpp:44 ../ui/login.h:45 ../main.cpp:424
+#: ../ui/mainmenu.cpp:44 ../ui/login.h:45
 msgid "Enter Game"
 msgstr "Starta Spelet"
 
-#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:600
+#: ../gm_mainmenu.cpp:548 ../gm_mainmenu.cpp:555 ../gm_mainmenu.cpp:608
 msgid "Error"
 msgstr "Fel"
 
@@ -310,29 +311,17 @@ msgstr "Avsluta spel"
 msgid "Exit Game"
 msgstr "Avsluta spel"
 
-#: ../ui/skills.h:85
-msgid "Experience"
-msgstr "Erfarenhet"
-
-#: ../ui/skills.h:293
-msgid "Fishing"
-msgstr "Fiske"
-
-#: ../ui/skills.h:287
-msgid "Fist Fighting"
-msgstr "Knytnävesskicklighet"
-
-#: ../mapui.cpp:607
+#: ../mapui.cpp:652
 msgid "Follow"
 msgstr "Följ"
 
-#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:578
+#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:586
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:542
+#: ../gm_mainmenu.cpp:550
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -340,7 +329,7 @@ msgstr ""
 "För mer information, ta en titt på trådar i forumet\n"
 "på otfans.net."
 
-#: ../ui/charlist.h:151
+#: ../ui/charlist.h:152
 msgid "Free Account"
 msgstr "Gratiskonto"
 
@@ -378,15 +367,15 @@ msgstr "Grafik"
 msgid "Graphics Options"
 msgstr "Grafikinställningar"
 
-#: ../ui/charlist.h:153
+#: ../ui/charlist.h:154
 msgid "Gratis Premium Account"
 msgstr "Gratis Premiekonto"
 
-#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:581
+#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:589
 msgid "Have fun in"
 msgstr ""
 
-#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:579
+#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:587
 msgid "Have fun in Tibia!"
 msgstr ""
 
@@ -398,19 +387,16 @@ msgstr "Huvud"
 msgid "Health"
 msgstr "Hälsa"
 
-#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:155
-#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:383
-#: ../ui/optionsconsole.h:125 ../ui/optionsgfxadv.h:219
+#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:158
+#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:384
+#: ../ui/optionsconsole.h:125 ../ui/uiinventory.cpp:247
+#: ../ui/optionsgfxadv.h:242
 msgid "Help"
 msgstr "Hjälp"
 
 #: ../ui/optionsui.cpp:89
 msgid "Help not done."
 msgstr "Hjälpsektionen är inte klar."
-
-#: ../ui/skills.h:133
-msgid "Hit Points"
-msgstr "Hälsopoäng"
 
 #: ../ui/optionshotkeys.h:81
 #, fuzzy
@@ -421,7 +407,7 @@ msgstr "Konsollinställningar"
 msgid "Hotkeys"
 msgstr "Snabbtangenter"
 
-#: ../main.cpp:206
+#: ../main.cpp:215
 msgid ""
 "If you are a Debian user, you may have forgotten to install\n"
 "the 'tibia-data' or 'yatc-data' package."
@@ -443,41 +429,47 @@ msgid ""
 "character."
 msgstr ""
 
-#: ../mapui.cpp:623
+#: ../mapui.cpp:669
 msgid "Ignore"
 msgstr "Ignorera"
 
-#: ../ui/optionsui.cpp:231 ../gm_mainmenu.cpp:582
+#: ../ui/optionsui.cpp:231 ../gm_mainmenu.cpp:590
 msgid "Important Reminder"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:372
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:373
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:602
+#: ../gm_mainmenu.cpp:610
 msgid "Information"
 msgstr "Information"
 
-#: ../ui/uiinventory.cpp:59
+#: ../ui/uiinventory.cpp:57
 msgid "Inventory"
 msgstr "Inventarie"
 
-#: ../mapui.cpp:627
+#: ../mapui.cpp:595 ../mapui.cpp:689
+#, fuzzy
+msgid "Invitation"
+msgstr "Information"
+
+#: ../mapui.cpp:590 ../mapui.cpp:684
 msgid "Invite to Party"
 msgstr "Bjud in till Grupp"
 
-#: ../ui/skills.h:100
-msgid "Level"
-msgstr "Nivå"
+#: ../mapui.cpp:698 ../mapui.cpp:718 ../mapui.cpp:738
+#, fuzzy
+msgid "Leave Party"
+msgstr "Bjud in till Grupp"
 
-#: ../main.cpp:186
+#: ../main.cpp:195
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
 msgstr ""
 
-#: ../main.cpp:181
+#: ../main.cpp:190
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -485,12 +477,12 @@ msgid ""
 "the 'tibia-data' or 'yatc-data' package."
 msgstr ""
 
-#: ../ui/sbvlpanel.h:89 ../ui/exitwarning.h:68
+#: ../ui/exitwarning.h:68
 #, fuzzy
 msgid "Logout"
 msgstr "Titta"
 
-#: ../mapui.cpp:567
+#: ../mapui.cpp:622
 msgid "Look"
 msgstr "Titta"
 
@@ -508,19 +500,11 @@ msgstr ""
 "någon ett par \n"
 "minuter sedan, och den {red skull} betyder att han har dödat flera personer."
 
-#: ../ui/skills.h:222
-msgid "Magic Level"
-msgstr "Maginivå"
-
-#: ../ui/skills.h:148
-msgid "Mana"
-msgstr "Mana"
-
-#: ../ui/optionsui.cpp:234 ../gm_mainmenu.cpp:585
+#: ../ui/optionsui.cpp:234 ../gm_mainmenu.cpp:593
 msgid "Message of the Day"
 msgstr "Dagens Meddelande"
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:661
 msgid "Message to"
 msgstr "Meddelande till"
 
@@ -544,7 +528,7 @@ msgstr "NPC Handel"
 msgid "Network"
 msgstr "Nätverk"
 
-#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:70
+#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:69
 msgid "Network Options"
 msgstr "Nätverksinställningar"
 
@@ -566,15 +550,15 @@ msgid ""
 "$PRODUCTSHORT$$!"
 msgstr ""
 
-#: ../ui/optionsnetwork.h:108
+#: ../ui/optionsnetwork.h:109
 msgid "OT Encryption Key"
 msgstr "OT-enkryptionsnyckel"
 
-#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:162
+#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:165
 #: ../ui/optionsgraphics.h:134 ../ui/optionshotkeys.h:196
 #: ../ui/optionsconsole.h:132 ../ui/login.h:114 ../ui/uishop.cpp:131
-#: ../ui/uioutfit.cpp:146 ../ui/charlist.h:107 ../ui/itemmove.h:101
-#: ../ui/optionsgfxadv.h:226 ../ui/deathnotification.h:76
+#: ../ui/uioutfit.cpp:150 ../ui/charlist.h:108 ../ui/itemmove.h:101
+#: ../ui/optionsgfxadv.h:249 ../ui/deathnotification.h:76
 msgid "Ok"
 msgstr "Ok"
 
@@ -586,7 +570,7 @@ msgstr ""
 "Ok; Du kan också testa {clicking} på miniatyrkartan. Till exempel \n"
 "så finns det en {marker} på miniatyrkartan nu, försök gå dit."
 
-#: ../mapui.cpp:579
+#: ../mapui.cpp:634
 msgid "Open"
 msgstr "Öppna"
 
@@ -606,9 +590,13 @@ msgstr ""
 "  och är för tillfället inte rekommenderat för det blir mycket långsammare\n"
 "  På de flesta bärbara datorer, och kanske även stationära datorer.\n"
 
-#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76 ../ui/uiinventory.cpp:63
+#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76 ../ui/uiinventory.cpp:236
 msgid "Options"
 msgstr "Inställningar"
+
+#: ../mapui.cpp:600
+msgid "Pass Leadership To"
+msgstr ""
 
 #: ../ui/login.h:76
 msgid "Password:"
@@ -628,13 +616,13 @@ msgstr ""
 "För att aktiva ett tillägg kan premiespelare\n"
 "lösa olika uppdrag."
 
-#: ../ui/uitrade.cpp:228
+#: ../ui/uitrade.cpp:223
 msgid ""
 "Please wait for your \n"
 "partner to accept."
 msgstr ""
 
-#: ../ui/charlist.h:156
+#: ../ui/charlist.h:157
 msgid "Premium Account"
 msgstr "Premiekonto"
 
@@ -646,21 +634,26 @@ msgstr "Pris:"
 msgid "Primary"
 msgstr "Primär"
 
-#: ../gm_mainmenu.cpp:353
+#: ../gm_mainmenu.cpp:354
 msgid "Programmed by"
 msgstr "Programmerat av"
 
-#: ../ui/optionsnetwork.h:132 ../ui/optionsnetwork.h:133
-#: ../ui/optionsnetwork.h:134 ../ui/optionsnetwork.h:135
-#: ../ui/optionsnetwork.h:136 ../ui/optionsnetwork.h:137
-#: ../ui/optionsnetwork.h:138 ../ui/optionsnetwork.h:139
-#: ../ui/optionsnetwork.h:140 ../ui/optionsnetwork.h:141
+#: ../ui/optionsnetwork.h:133 ../ui/optionsnetwork.h:134
+#: ../ui/optionsnetwork.h:135 ../ui/optionsnetwork.h:136
+#: ../ui/optionsnetwork.h:137 ../ui/optionsnetwork.h:138
+#: ../ui/optionsnetwork.h:139 ../ui/optionsnetwork.h:140
+#: ../ui/optionsnetwork.h:141 ../ui/optionsnetwork.h:142
+#: ../ui/optionsnetwork.h:143 ../ui/optionsnetwork.h:144
 msgid "Protocol"
 msgstr "Protokoll"
 
-#: ../gm_mainmenu.cpp:446
+#: ../gm_mainmenu.cpp:455
 msgid "Protocol detection failed"
 msgstr "Protokolldetektionen misslyckades"
+
+#: ../ui/uiinventory.cpp:73
+msgid "Quests"
+msgstr ""
 
 #: ../ui/optionsui.cpp:125
 #, fuzzy
@@ -674,13 +667,17 @@ msgstr ""
 "\n"
 "För att versktälla ändring utav grafikmotor så krävs en omstart\n"
 
-#: ../ui/uitrade.cpp:107
+#: ../ui/uitrade.cpp:110
 msgid "Reject"
 msgstr ""
 
 #: ../ui/optionsui.cpp:339
 msgid "Restart is required to apply engine change."
 msgstr "Omstart krävs för att verkställa ändringen utav grafikmotor."
+
+#: ../mapui.cpp:595
+msgid "Revoke"
+msgstr ""
 
 #: ../ui/optionsui.cpp:115
 msgid ""
@@ -711,7 +708,7 @@ msgstr "Flytta Objekt"
 msgid "Select character:"
 msgstr "Välj karaktär:"
 
-#: ../ui/optionsgfxadv.h:78
+#: ../ui/optionsgfxadv.h:79
 #, fuzzy
 msgid "Select graphics engine"
 msgstr "Vi erbjuder två grafiska motorer:\n"
@@ -724,7 +721,7 @@ msgstr "Sälj"
 msgid "Send automatically"
 msgstr ""
 
-#: ../ui/optionsnetwork.h:74
+#: ../ui/optionsnetwork.h:73
 msgid "Server address:"
 msgstr "Serveradress:"
 
@@ -752,7 +749,7 @@ msgstr ""
 msgid "Server port:"
 msgstr "Server port:"
 
-#: ../mapui.cpp:592 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:674 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr "Bestäm utseende"
 
@@ -772,10 +769,6 @@ msgstr ""
 "Välj antalet föremål\n"
 "du vill flytta:"
 
-#: ../ui/skills.h:292
-msgid "Shielding"
-msgstr "Sköldskicklighet"
-
 #: ../ui/optionsconsole.h:88
 msgid "Show Event Messages in Console"
 msgstr "Visa Händelsemeddelanden i Konsollen"
@@ -791,6 +784,11 @@ msgstr "Visa Informationsmeddelanden i Konsollen"
 #: ../ui/optionsconsole.h:106
 msgid "Show Levels in Console"
 msgstr "Visa Nivå i Konsollen"
+
+#: ../ui/optionsgfxadv.h:152
+#, fuzzy
+msgid "Show Light Effects"
+msgstr "Visa Texteffekter"
 
 #: ../ui/optionsgeneral.h:90
 msgid "Show Names of Creatures"
@@ -820,14 +818,6 @@ msgstr ""
 "Visa senaste\n"
 "Dagens meddelande"
 
-#: ../ui/skills.h:265
-msgid "Skill "
-msgstr "Färdighet "
-
-#: ../ui/skills.h:71 ../ui/sbvlpanel.h:61
-msgid "Skills"
-msgstr "Färdigheter"
-
 #: ../ui/tutorialhints.cpp:102
 msgid ""
 "So the {container window} opened. {Drag} whatever's in it into your {bag} "
@@ -837,17 +827,9 @@ msgstr ""
 "Så {container window} öppnades. {Drag} what du än vill in i din {bag} för \n"
 "att ta det med dig. Du behöver samla minst tre kackerlackben för NPCn!"
 
-#: ../ui/skills.h:163
-msgid "Soul Points"
-msgstr "Själspoäng"
-
-#: ../ui/skills.h:193
-msgid "Stamina"
-msgstr "Uthållighet"
-
-#: ../ui/skills.h:289
-msgid "Sword Fighting"
-msgstr "Svärdsskicklighet"
+#: ../ui/uiinventory.cpp:61
+msgid "Stop"
+msgstr ""
 
 #: ../ui/tutorialhints.cpp:106
 msgid ""
@@ -874,7 +856,7 @@ msgstr ""
 "Det finns en {chest} här inne. Försök {ctrl+clicking} (kallas även \n"
 "'Använd') på den för att öppna den."
 
-#: ../mapui.cpp:720
+#: ../mapui.cpp:865
 msgid "This functionality is not yet finished"
 msgstr "Denna funktionalitet är inte klar än"
 
@@ -907,21 +889,25 @@ msgstr ""
 msgid "Trade"
 msgstr "NPC Handel"
 
-#: ../gm_gameworld.cpp:1315
+#: ../gm_gameworld.cpp:1497
 msgid "Tutorial Hint"
 msgstr "Handledning Tips"
 
-#: ../ui/charlist.h:93
+#: ../ui/charlist.h:94
 msgid "Unknown"
 msgstr "Okänd"
 
-#: ../ui/optionsgfxadv.h:178 ../ui/optionsgfxadv.h:304
+#: ../ui/optionsgfxadv.h:199 ../ui/optionsgfxadv.h:331
 msgid "Unlimited"
 msgstr ""
 
-#: ../mapui.cpp:581
+#: ../mapui.cpp:636
 msgid "Use"
 msgstr "Använd"
+
+#: ../ui/optionsgfxadv.h:184
+msgid "Use Smooth Stretching"
+msgstr ""
 
 #: ../ui/optionshotkeys.h:180
 msgid "Use on crosshair"
@@ -935,27 +921,23 @@ msgstr ""
 msgid "Use on yourself"
 msgstr ""
 
-#: ../mapui.cpp:576
+#: ../mapui.cpp:631
 msgid "Use with..."
 msgstr "Använd med..."
 
-#: ../gm_mainmenu.cpp:343
+#: ../gm_mainmenu.cpp:344
 msgid "Uses GLICT"
 msgstr "Använder GLICT"
 
-#: ../gm_mainmenu.cpp:345
+#: ../gm_mainmenu.cpp:346
 msgid "Uses OpenGL"
 msgstr "Använder OpenGL"
 
-#: ../gm_mainmenu.cpp:342
+#: ../gm_mainmenu.cpp:343
 msgid "Uses SDL"
 msgstr "Använder SDL"
 
-#: ../ui/sbvlpanel.h:79
-msgid "VIP"
-msgstr ""
-
-#: ../ui/uitrade.cpp:168
+#: ../ui/uitrade.cpp:171
 msgid "Wait for a counter offer."
 msgstr ""
 
@@ -963,7 +945,7 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
-#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:577
+#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:585
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
@@ -973,7 +955,7 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr "Vi erbjuder två grafiska motorer:\n"
 
-#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:580
+#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:588
 msgid "Welcome to"
 msgstr ""
 
@@ -982,7 +964,7 @@ msgstr ""
 msgid "Welcome to $$PRODUCTSHORT$$! Use {arrows} or {mouse} to move around."
 msgstr "Välkommen till YATC! Använd {arrows} eller {mouse} för att röra dig."
 
-#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:574
+#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:582
 msgid "Welcome to Tibia!"
 msgstr ""
 
@@ -1009,6 +991,10 @@ msgstr ""
 "Plundra \n"
 "dens {body}. Det är bara att {ctrl+click} på den."
 
+#: ../ui/optionsgfxadv.h:173
+msgid "Windows Mouse Pointer"
+msgstr ""
+
 #: ../ui/tutorialhints.cpp:112
 msgid ""
 "With the {rope} you can climb up from dungeons and caves. Find a {rope "
@@ -1023,7 +1009,7 @@ msgstr ""
 msgid "You are dead"
 msgstr ""
 
-#: ../main.cpp:199
+#: ../main.cpp:208
 msgid ""
 "You are missing '$$FILENAME$$'.\n"
 "We will launch Tibia Data File Fetcher which should automatically install\n"
@@ -1033,38 +1019,89 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:410
+#: ../gm_mainmenu.cpp:419
 msgid "Your character list is being loaded. Please wait."
 msgstr ""
 
-#: ../gm_mainmenu.cpp:349
+#: ../gm_mainmenu.cpp:350
 msgid "[for info run with GL engine]\n"
 msgstr "[för information kör med GL motorn]\n"
 
-#: ../gm_mainmenu.cpp:342
+#: ../gm_mainmenu.cpp:343
 msgid "compiled with"
 msgstr "kompilerad med"
 
-#: ../ui/charlist.h:156
+#: ../ui/charlist.h:157
 msgid "days left"
 msgstr "dagar kvar"
 
-#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:576
+#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:584
 msgid "to the state of"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:356
+#: ../gm_mainmenu.cpp:357
 msgid "with inactive developers"
 msgstr "med inaktiva utvecklare"
 
 #~ msgid "."
 #~ msgstr "."
 
+#~ msgid "Axe Fighting"
+#~ msgstr "Yxskicklighet"
+
+#~ msgid "Cap"
+#~ msgstr "Kapacitet"
+
+#~ msgid "Club Fighting"
+#~ msgstr "Klubbsskicklighet"
+
+#~ msgid "Distance Fighting"
+#~ msgstr "Distansskicklighet"
+
 #~ msgid "Entering game"
 #~ msgstr "Startar Spelet"
 
+#~ msgid "Experience"
+#~ msgstr "Erfarenhet"
+
+#~ msgid "Fishing"
+#~ msgstr "Fiske"
+
+#~ msgid "Fist Fighting"
+#~ msgstr "Knytnävesskicklighet"
+
+#~ msgid "Hit Points"
+#~ msgstr "Hälsopoäng"
+
+#~ msgid "Level"
+#~ msgstr "Nivå"
+
 #~ msgid "Logging in"
 #~ msgstr "Loggar in"
+
+#~ msgid "Magic Level"
+#~ msgstr "Maginivå"
+
+#~ msgid "Mana"
+#~ msgstr "Mana"
+
+#~ msgid "Shielding"
+#~ msgstr "Sköldskicklighet"
+
+#~ msgid "Skill "
+#~ msgstr "Färdighet "
+
+#~ msgid "Skills"
+#~ msgstr "Färdigheter"
+
+#~ msgid "Soul Points"
+#~ msgstr "Själspoäng"
+
+#~ msgid "Stamina"
+#~ msgstr "Uthållighet"
+
+#~ msgid "Sword Fighting"
+#~ msgstr "Svärdsskicklighet"
 
 #~ msgid "Trade with"
 #~ msgstr "Handla med"

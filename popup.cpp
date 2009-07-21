@@ -28,9 +28,10 @@ Popup::Popup() {
     m_pnl.SetSkin(&g_skin.ptb);
     m_pnl.SetWidth(120);
     m_pnl.SetHeight(10);
-    m_pnl.AddObject(&list);
-    list.SetPos(3, 5);
-    list.SetBGActiveness(false);
+    m_pnl.AddObject(&m_list);
+    m_list.SetPos(3, 5);
+    m_list.SetBGActiveness(false);
+    m_maxw = 114; // minimum size is 114
 }
 Popup::~Popup() {
     for (std::vector<Popup::Item*>::iterator it = items.begin(); it != items.end(); it++) {
@@ -65,43 +66,60 @@ void Popup::addItem(const std::string &txt, Callback_t cb, void* data) {
     pi->pnl.SetBGColor(.7, .7, .7, 1.);
     pi->parent = this;
     items.push_back(pi);
-    list.AddObject(&pi->pnl);
+    m_list.AddObject(&pi->pnl);
 
-    list.SetHeight(14*items.size());
-    m_pnl.SetHeight(list.GetHeight() + 10);
-    list.SetWidth(114);
+    m_list.SetHeight(14*items.size());
+    m_pnl.SetHeight(m_list.GetHeight() + 10);
+    m_list.SetWidth(114);
+
+    if (glictFontSize(txt.c_str(), "gamefont")>m_maxw)
+    {
+        m_maxw = int(glictFontSize(txt.c_str(), "gamefont"));
+    }
 
 }
 
-void Popup::mouseOver(float x, float y) {
+void Popup::updateWidths()
+{
+    m_list.SetWidth(m_maxw);
+    for (std::vector<Item*>::iterator it = items.begin(); it != items.end(); it++)
+    {
+        if ((*it)->pnlSep)
+        {
+            (*it)->pnlSep->SetWidth(m_maxw);
+        }
+        (*it)->pnl.SetWidth(m_maxw);
+    }
+}
+
+void Popup::mouseOver(int x, int y) {
     for (std::vector<Popup::Item*>::iterator it = items.begin(); it != items.end(); it++) {
         Popup::Item* pi = *it;
 
         pi->pnl.SetBGActiveness(false);
     }
     if (cursorInside(x,y)) {
-        y -= (m_pnl.GetY() + list.GetY());
+        y -= int(m_pnl.GetY() + m_list.GetY());
         y /= 14;
-        if (y < items.size() && items[y]->txt != "-")
+        if (y < int(items.size()) && items[y]->txt != "-")
             items[y]->pnl.SetBGActiveness(true);
         else if (items[y]->txt != "-") // separator
             printf("Warning: popup tried to highligh nonexisting listitem\n");
     }
-
 }
 
-void Popup::mouseClick(float x, float y) {
+void Popup::mouseClick(int x, int y) {
     if (cursorInside(x,y)) {
-        y -= (m_pnl.GetY() + list.GetY());
+        y -= int(m_pnl.GetY() + m_list.GetY());
         y /= 14;
-        if (y < items.size())
+        if (y < int(items.size()))
             if (items[y]->cb)
                 items[y]->cb(items[y]);
     }
     prepareToDie();
 }
 
-bool Popup::cursorInside(float x, float y) {
-    return (x >= (m_pnl.GetX() + list.GetX()) && x < (m_pnl.GetX() + list.GetX()) + list.GetWidth() && y >= (m_pnl.GetY() + list.GetY()) && y < (m_pnl.GetY() + list.GetY()) + list.GetHeight());
+bool Popup::cursorInside(int x, int y) {
+    return (x >= (m_pnl.GetX() + m_list.GetX()) && x < (m_pnl.GetX() + m_list.GetX()) + m_list.GetWidth() && y >= (m_pnl.GetY() + m_list.GetY()) && y < (m_pnl.GetY() + m_list.GetY()) + m_list.GetHeight());
 
 }

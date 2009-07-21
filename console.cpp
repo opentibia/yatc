@@ -245,7 +245,7 @@ void ConsolePanel::onCloseConsole(Popup::Item *parent)
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
 	gw->removeConsole(c);
 }
-void ConsolePanel::onShowM(Popup::Item *parent) 
+void ConsolePanel::onShowM(Popup::Item *parent)
 // FIXME (ivucica#1#): nate, please rename or document this function, it's unclear what it does
 // FIXME (ivucica#1#): please use onUnimplemented() if the functionality is not added!
 {
@@ -437,7 +437,7 @@ Console::~Console()
 }
 void Console::paintConsole(float left, float top, float right, float bottom)
 {
-    g_engine->setClipping(left,top,right-left,bottom-top);
+    g_engine->setClipping(int(left),int(top),int(right-left),int(bottom-top));
 
 	float x, y;
 	x = left; y = bottom;

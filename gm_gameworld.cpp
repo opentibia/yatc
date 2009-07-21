@@ -1021,7 +1021,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             }
         }
         if(m_popup){
-            m_popup->mouseOver(pos.x,pos.y);
+            m_popup->mouseOver(int(pos.x),int(pos.y));
         }
     }
     else if(event.button.button == SDL_BUTTON_LEFT) {
@@ -1030,7 +1030,7 @@ void GM_Gameworld::mouseEvent(SDL_Event& event)
             printf("Handling left mousedn on popup\n");
 
             if(event.button.state == SDL_RELEASED)
-                m_popup->mouseClick(pos.x, pos.y);
+                m_popup->mouseClick(int(pos.x), int(pos.y));
         }
         else if(event.button.state == SDL_PRESSED){
             if(desktop.CastEvent(GLICT_MOUSEDOWN, &pos, 0)){ // if event got handled by glict
@@ -1148,6 +1148,7 @@ void GM_Gameworld::performPopup(PopupProducerCallback cb, void*owner, void*arg) 
             cb(m_popup,owner,arg);
 
         m_popup->getPanel()->SetPos(ptrx,ptry);
+        m_popup->updateWidths();
     }
     else{
         m_popup->prepareToDie();
