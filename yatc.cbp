@@ -59,6 +59,7 @@
 				<Option object_output=".objswin\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="incoming_server_packets.binary" />
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
 					<Add option="-Wall" />
@@ -211,6 +212,8 @@
 		<Unit filename="mapui.h" />
 		<Unit filename="net\connection.cpp" />
 		<Unit filename="net\connection.h" />
+		<Unit filename="net\connectionreplay.cpp" />
+		<Unit filename="net\connectionreplay.h" />
 		<Unit filename="net\encryption.cpp" />
 		<Unit filename="net\encryption.h" />
 		<Unit filename="net\networkmessage.cpp" />

@@ -148,8 +148,10 @@ class ProtocolConfig
 
 		static void createLoginConnection(const std::string& accountname, const std::string& password);
 		static ProtocolGame* createGameConnection(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
+        static ProtocolGame* createGameProtocol(int version, const std::string&accountname, const std::string&password, const std::string&name, bool isGM);
 
 	protected:
+
 
 		ClientOS_t m_os;
 		ClientVersion_t m_clientVersion;
@@ -251,7 +253,7 @@ class Protocol
 class Connection
 {
 	public:
-		~Connection();
+		virtual ~Connection();
 
 		enum STATE
 		{
@@ -286,13 +288,13 @@ class Connection
 		};
 		static const char* getErrorDesc(int message);
 
-		void executeNetwork();
+		virtual void executeNetwork();
 
-		void closeConnection();
+		virtual void closeConnection();
 		STATE getState(){ return m_state; }
 		int getSocketError();
 
-		void sendMessage(NetworkMessage& msg);
+		virtual void sendMessage(NetworkMessage& msg);
 
 		bool getChecksumState() const { return m_checksumEnable; }
 		void setCryptoState(bool state){ m_cryptoEnable = state;}
@@ -315,13 +317,12 @@ class Connection
 		Connection(const std::string& host, uint16_t port, Encryption* crypto, Protocol* protocol);
 		friend class ProtocolConfig;
 
-	private:
 		//functions
 		void callCallback(int error);
-		unsigned long getPendingInput();
-		int internalRead(unsigned int n, bool all);
+		virtual unsigned long getPendingInput();
+		virtual int internalRead(unsigned int n, bool all);
 		void closeConnectionError(int error);
-		void checkSocketReadState();
+		virtual void checkSocketReadState();
 
 		//
 		Encryption* m_crypto;
