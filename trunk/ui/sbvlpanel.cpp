@@ -24,6 +24,64 @@
 #include "../net/protocolgame.h"
 
 
+sbvlPanel_t::sbvlPanel_t()
+{
+    panel.SetWidth(172);
+    panel.SetHeight(30);
+    #if (GLICT_APIREV >= 98)
+    panel.SetDraggable(true);
+    panel.SetSkin(&g_skin.background);
+    panel.SetFocusable(true);
+    #else
+    #warning svblPanel_t is not properly operated until you upgrade to GLICT 98+
+    #endif
+
+    panel.AddObject(&btnSkills);
+    btnSkills.SetCaption(gettext("Skills"));
+    btnSkills.SetCustomData(this);
+    btnSkills.SetWidth(35);
+    btnSkills.SetHeight(20);
+    btnSkills.SetPos(8, 6);
+    btnSkills.SetOnClick(btnSkills_onClick);
+    btnSkills.SetFont("minifont");
+
+    panel.AddObject(&btnBattle);
+    btnBattle.SetCaption(gettext("Battle"));
+    btnBattle.SetCustomData(this);
+    btnBattle.SetWidth(35);
+    btnBattle.SetHeight(20);
+    btnBattle.SetPos(45, 6);
+    btnBattle.SetOnClick(btnBattle_onClick);
+    btnBattle.SetFont("minifont");
+
+    panel.AddObject(&btnVIP);
+    btnVIP.SetCaption(gettext("VIP"));
+    btnVIP.SetCustomData(this);
+    btnVIP.SetWidth(35);
+    btnVIP.SetHeight(20);
+    btnVIP.SetPos(82, 6);
+    btnVIP.SetOnClick(btnVIP_onClick);
+    btnVIP.SetFont("minifont");
+
+
+    panel.AddObject(&btnLogout);
+    btnLogout.SetCaption(gettext("Logout"));
+    btnLogout.SetCustomData(this);
+    btnLogout.SetWidth(45);
+    btnLogout.SetHeight(20);
+    btnLogout.SetPos(124, 6);
+    btnLogout.SetOnClick(onClick_Logout);
+    btnLogout.SetFont("minifont");
+
+    winSkills.window.SetVisible(false);
+    winSkills.controller = this;
+    winBattle.window.SetVisible(false);
+    winBattle.controller = this;
+    winVIP.window.SetVisible(false);
+    winVIP.controller = this;
+
+}
+
 void sbvlPanel_t::onClick_Logout(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
@@ -165,15 +223,3 @@ void sbvlPanel_t::closeVIP()
 	options.Save();
 }
 
-void winSkills_t::OnClose()
-{
-	controller->closeSkills();
-}
-void winBattle_t::OnClose()
-{
-	controller->closeBattle();
-}
-void winVIP_t::OnClose()
-{
-	controller->closeVIP();
-}
