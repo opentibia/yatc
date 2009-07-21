@@ -82,12 +82,14 @@ void winBattle_t::update(uint32_t id)
 			int hp = Creatures::getInstance().getCreature(id)->getHealth();
 			if(hp == 0)
 			{
+			    printf("removing object from battlewindow\n");
 				list.RemoveObject(&e->pnl);
 				list.RebuildList();
 
 				entries.erase(it);
 				delete e;
-				return;
+				it = entries.begin();
+				continue;
 			}
 			oRGBA col = CreatureUI::getHealthColor(hp);
 			e->pbHealth.SetValue(hp);
