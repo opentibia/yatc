@@ -37,10 +37,11 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		ui/optionsui.cpp ui/tutorialhints.cpp ui/uicontainer.cpp \
 		ui/uiinventory.cpp ui/uishop.cpp ui/uitrade.cpp \
 		ui/mainmenu.cpp ui/uioutfit.cpp ui/itempanel.cpp \
-		ui/battlewindow.cpp ui/sbvlpanel.cpp ui/vipwindow.cpp \
+		ui/battlewindow.cpp ui/sbvlpanel.cpp ui/vipwindow.cpp ui/skills.cpp \
 		\
 		gamecontent/container.cpp gamecontent/creature.cpp gamecontent/globalvars.cpp \
-		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp
+		gamecontent/inventory.cpp gamecontent/item.cpp gamecontent/map.cpp \
+		gamecontent/viplist.cpp
 
 EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		engine.h gamemode.h options.h spritesdl.h \
@@ -60,13 +61,15 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		net/protocolgame78.h \
 		\
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
+        \
 		gamecontent/container.h gamecontent/creature.h gamecontent/globalvars.h \
 		gamecontent/inventory.h gamecontent/item.h gamecontent/map.h \
 		gamecontent/position.h gamecontent/shop.h \
-		gamecontent/itemcontainer.h \
+		gamecontent/itemcontainer.h gamecontent/viplist.h \
+		gamecontent/enums.h gamecontent/thing.h gamecontent/viplist.h \
 		\
-		defines.h gamecontent/enums.h fassert.h \
-		gamecontent/thing.h \
+		defines.h fassert.h \
+		\
 		ui/login.h ui/mainmenu.h ui/optionsui.h ui/optionsgeneral.h \
 		ui/optionsgraphics.h ui/optionsconsole.h ui/optionsnetwork.h \
 		ui/charlist.h ui/tutorialhints.h ui/itemmove.h \

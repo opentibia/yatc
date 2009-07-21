@@ -21,32 +21,37 @@
 #ifndef __UI_VIPWINDOW_H
 #define __UI_VIPWINDOW_H
 
-#include <GLICT/panel.h>
+#include <GLICT/list.h>
 #include <GLICT/progressbar.h>
+#include <map>
 
 #include "stackpanel.h"
 
-// this class is a big TODO
-
 class sbvlPanel_t;
+
 
 class winVIP_t : public yatcStackPanelWindow
 {
 public:
-	std::vector<std::pair<std::string, bool> > entries;
-	glictPanel container;
+	std::map<uint32_t, glictPanel*> m_entries;
+	glictList container;
+
 
 	sbvlPanel_t* controller;
 
 	winVIP_t();
 	~winVIP_t();
 
-	void addVIP(std::string);
-	void updateVIP(std::string, bool status);
-	void removeVIP(std::string);
+	void addVIP(uint32_t);
+	void updateVIP(uint32_t);
+	void removeVIP(uint32_t);
 
 	virtual float GetDefaultHeight();
 	virtual void OnClose();
+
+
+	static void OnListbox(glictPos* pos, glictContainer *caller);
+
 };
 
 #endif //__UI_VIPWINDOW_H

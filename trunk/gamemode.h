@@ -115,11 +115,12 @@ public:
 
 
     virtual void showTutorial(uint8_t id) {}
-
     virtual void openDeathWindow() {}
-
     virtual void onTileUpdate(const Position& pos) {}
 
+    virtual void onVipLogin(uint32_t id) {}
+    virtual void onVipLogout(uint32_t id) {}
+    virtual void onVipState(uint32_t id, const std::string& name, bool state) {}
 };
 
 class GameModeOptions : public GameMode

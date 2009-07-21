@@ -94,6 +94,10 @@ public:
     void onTileUpdate(const Position& pos);
     void openDeathWindow();
 
+    void onVipLogin(uint32_t id);
+    void onVipLogout(uint32_t id);
+    void onVipState(uint32_t id, const std::string& name, bool state);
+
     void showTutorial(uint8_t id);
 
     bool isExtendedUsing() const { return (m_extendedThingId != 0); }

@@ -305,3 +305,17 @@ void Notifications::onCreatureChangeHealth(uint32_t id, uint32_t health)
 {
 	g_game->onCreatureChangeHealth(id, health);
 }
+
+
+void Notifications::onVipLogin(uint32_t id)
+{
+    g_game->onVipLogin(id);
+}
+void Notifications::onVipLogout(uint32_t id)
+{
+    g_game->onVipLogout(id);
+}
+void Notifications::onVipState(uint32_t id, const std::string& name, bool state)
+{
+    g_game->onVipState(id,name,state);
+}

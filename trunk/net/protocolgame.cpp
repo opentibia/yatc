@@ -32,6 +32,7 @@
 #include "../gamecontent/container.h"
 #include "../gamecontent/inventory.h"
 #include "../gamecontent/shop.h" // 8.2+
+#include "../gamecontent/viplist.h"
 
 #ifndef min
 #include <algorithm> // std::min
@@ -1221,18 +1222,21 @@ bool ProtocolGame::parseVipState(NetworkMessage& msg)
 	MSG_READ_U32(creatureID);
 	MSG_READ_STRING(name);
 	MSG_READ_U8(online);
+	VipList::getInstance().setEntry(creatureID, name, online);
 	Notifications::onVipState(creatureID, name, online);
 	return true;
 }
 bool ProtocolGame::parseVipLogin(NetworkMessage& msg)
 {
 	MSG_READ_U32(creatureID);
+	VipList::getInstance().setEntry(creatureID, true);
 	Notifications::onVipLogin(creatureID);
 	return true;
 }
 bool ProtocolGame::parseVipLogout(NetworkMessage& msg)
 {
 	MSG_READ_U32(creatureID);
+	VipList::getInstance().setEntry(creatureID, false);
 	Notifications::onVipLogout(creatureID);
 	return true;
 }

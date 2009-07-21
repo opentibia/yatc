@@ -121,7 +121,7 @@ public:
 			lblAmbLight.SetCaption(ss.str());
 			ss.str("");
 			*/
-			lblAmbLight.SetCaption("Ambient Light");
+			lblAmbLight.SetCaption(gettext("Ambient Light"));
 			#if (GLICT_APIREV >= 85)
     		lblAmbLight.SetCaptionColor(.5f, .5f, .5f);
 			#else
@@ -345,4 +345,3 @@ public:
 };
 
 #endif
-

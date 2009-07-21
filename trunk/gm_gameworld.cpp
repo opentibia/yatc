@@ -1165,6 +1165,22 @@ void GM_Gameworld::onConnectionClosed()
 
 /////////////// PROTOCOL EVENTS ///////////////////////
 
+void GM_Gameworld::onVipLogin(uint32_t id)
+{
+    sbvlPanel.winVIP.updateVIP(id);
+}
+
+void GM_Gameworld::onVipLogout(uint32_t id)
+{
+    sbvlPanel.winVIP.updateVIP(id);
+}
+
+void GM_Gameworld::onVipState(uint32_t id, const std::string& name, bool state)
+{
+    sbvlPanel.winVIP.updateVIP(id);
+}
+
+
 void GM_Gameworld::onWalk()
 {
 	Creatures::getInstance().getPlayer()->confirmWalk();

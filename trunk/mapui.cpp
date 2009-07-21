@@ -642,11 +642,12 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
     {
 		Creature* player = Creatures::getInstance().getPlayer();
 		if(c != player) {
+            m->m_popupCreatureID = c->getID();
+
 			popup->addItem("-",NULL,NULL);
 			s.str("");
 			s << gettext("Attack") << " (Alt)";
 			popup->addItem(s.str(),onAttack,m);
-			m->m_popupCreatureID = c->getID();
 
 			s.str("");
 			s << gettext("Follow");
@@ -663,7 +664,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 
 				s.str("");
 				s << gettext("Add to VIP list");
-				popup->addItem(s.str(),onUnimplemented);
+				popup->addItem(s.str(),onAddVIP,m);
 
 				s.str("");
 				s << gettext("Ignore") << " " << c->getName();
@@ -854,6 +855,18 @@ void MapUI::onMessageTo(Popup::Item *parent)
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
     gw->setActiveConsole(gw->findConsole(Creatures::getInstance().getCreature(m->m_popupCreatureID)->getName()));
+}
+
+void MapUI::onAddVIP(Popup::Item *parent)
+{
+    //MapUI *m = (MapUI*)(parent->data);
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    MapUI *m = (MapUI*)(parent->data);
+    Creature *c = Creatures::getInstance().getCreature(m->m_popupCreatureID);
+
+    if (!c)
+        return;
+    gw->m_protocol->sendAddVip(c->getName());
 }
 
 
