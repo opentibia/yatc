@@ -71,6 +71,7 @@ unsigned int MAXFPS=50;
 #include "clipboard.h"
 
 #include "net/connection.h"
+#include "net/connectionreplay.h"
 #include "net/protocollogin.h"
 #include "net/protocolgame.h"
 #include "gamecontent/creature.h"
@@ -474,8 +475,18 @@ int main(int argc, char *argv[])
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Constructing gamemode...\n");
 		resetDefaultCursor();
-		g_game = new GM_MainMenu();
-		//g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+		if (argc == 1)
+		{
+		    g_game = new GM_MainMenu();
+            //g_game = new GM_Debug(); // ivucica: this is for testing -- choice should be a cmd line option
+		} else
+		{
+		    g_game = new GM_MainMenu();
+            ProtocolGame* protocol = ProtocolConfig::createGameProtocol(850,"","","",false);
+            g_connection = new ConnectionReplay(argv[1], protocol);
+
+		}
+
 
         DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Initializing framerate manager...\n");
         SDL_initFramerate(&g_fpsmgr);

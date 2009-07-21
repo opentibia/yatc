@@ -250,13 +250,11 @@ void ProtocolConfig::createLoginConnection(const std::string& accountname, const
 	}
 }
 
-ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountname, const std::string& password, const std::string& name, bool isGM)
+ProtocolGame* ProtocolConfig::createGameProtocol(int version, const std::string&accountname, const std::string&password, const std::string&name, bool isGM)
 {
-	ASSERT(g_connection == NULL);
-
-	ProtocolGame* protocol;
-	switch(getInstance().m_clientVersion){
-	case CLIENT_VERSION_780:
+    ProtocolGame* protocol;
+    switch(version){
+	    case CLIENT_VERSION_780:
 		protocol = new ProtocolGame78(accountname, password, name, isGM);
 		break;
 	// todo (nfries88): more client version protocols.
@@ -300,6 +298,16 @@ ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountnam
 		return NULL;
 		break;
 	}
+	return protocol;
+}
+
+ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountname, const std::string& password, const std::string& name, bool isGM)
+{
+	ASSERT(g_connection == NULL);
+
+	ProtocolGame* protocol = createGameProtocol(getInstance().m_clientVersion,accountname,password,name,isGM);
+	if (protocol == NULL)
+        return NULL;
 
 	EncXTEA* crypto = new EncXTEA;
 
@@ -457,13 +465,17 @@ void Connection::executeNetwork()
 		m_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		#ifdef WIN32
 		if(m_socket == INVALID_SOCKET){
+            closeConnectionError(ERROR_CANNOT_CREATE_SOCKET);
+			return;
+		}
 		#else
 		if(m_socket <= 0){
 			m_socket = INVALID_SOCKET;
-		#endif
-			closeConnectionError(ERROR_CANNOT_CREATE_SOCKET);
+            closeConnectionError(ERROR_CANNOT_CREATE_SOCKET);
 			return;
 		}
+		#endif
+
 
 		//Set non-blocking socket
 		#ifdef WIN32
