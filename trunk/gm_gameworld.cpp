@@ -95,7 +95,7 @@ void winItemMove_t::moveItem(glictPos* pos, glictContainer *caller)
 	if(win)
 	{
 		gw->m_protocol->sendThrow(win->fromPos, win->itemid, win->fromStack,
-									win->toPos, win->sbCt.GetValue());
+									win->toPos, int(win->sbCt.GetValue()));
 		win->window.SetVisible(false);
 	}
 }
@@ -296,6 +296,9 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
     SDL_SetCursor(g_engine->m_cursorBasic);
 
+    m_consolehistory.clear();
+    m_consolehistorycurrent = m_consolehistory.end();
+
 	m_protocol->sendFightModes(options.battlemode, options.chasemode, options.safemode);
 }
 
@@ -437,14 +440,13 @@ void GM_Gameworld::updateScene()
     }
 
     // status messages
-    m_statusStatMsg.paintSelf(0,0,glictGlobals.w-172-4, glictGlobals.h - 150 - 20);
+    m_statusStatMsg.paintSelf(0,0,int(glictGlobals.w-172-4), int(glictGlobals.h - 150 - 20));
     m_statusStatMsg.updateSelf(g_frameDiff / 1000.);
-    m_lookatStatMsg.paintSelf(0,0,glictGlobals.w-172-4, glictGlobals.h - 150 - 20);
+    m_lookatStatMsg.paintSelf(0,0,int(glictGlobals.w-172-4), int(glictGlobals.h - 150 - 20));
     m_lookatStatMsg.updateSelf(g_frameDiff / 1000.);
 
 	desktop.Paint();
 	g_engine->resetClipping();
-
 
 	//getActiveConsole()->paintConsole(0, glictGlobals.h-150, glictGlobals.w-172-4, glictGlobals.h-12);
 
@@ -523,12 +525,14 @@ void GM_Gameworld::keyPress (int key)
                 	m_protocol->sendSay(options.speaktype, msg);
                 	sent = true;
                 } else {
-                    if (getActiveConsole()->getSpeakerName() == "NPCs") { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
+                    if (getActiveConsole()->getSpeakerName() == "NPCs")
+                    { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
                         getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
                         m_protocol->sendSay(SPEAK_PRIVATE_PN, msg);
                         sent = true;
                     }
-                    else if (getActiveConsole()->getSpeakerName().size()) {
+                    else if (getActiveConsole()->getSpeakerName().size())
+                    {
                         getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
                         m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
                         sent = true;
@@ -539,12 +543,34 @@ void GM_Gameworld::keyPress (int key)
             }
 		}
 
+        if (m_consolehistory.size()==0 ||
+            pnlConsoleContainer.txtConsoleEntry.GetCaption() != *(m_consolehistory.end()-1)) // text not same as the one we just typed in
+        {
+            m_consolehistory.push_back(pnlConsoleContainer.txtConsoleEntry.GetCaption());
+            m_consolehistorycurrent = m_consolehistory.end();
+            printf("Added to history: %s\n", pnlConsoleContainer.txtConsoleEntry.GetCaption().c_str());
+            printf("New history size: %d\n", m_consolehistory.size());
+        }
+
 		pnlConsoleContainer.txtConsoleEntry.SetCaption("");
-	} else if(key != 0) {
-		if(key == SDLK_TAB) {
+	}
+	else if (key != 0)
+	{
+	    // ALT and CTRL are 0.
+		// pressing ALT or CTRL will otherwise cause the text console to lose append with (char)0
+		// which is bad because it causes the string to terminate the console textbox to lose focus.
+		// It should always have focus
+
+
+		if(key == SDLK_TAB)
+        {
 			std::vector<Console*>::iterator it = std::find(m_consoles.begin(), m_consoles.end(), m_activeconsole);
-			if(SDL_GetModState() & KMOD_SHIFT){
+			if(SDL_GetModState() & KMOD_SHIFT)
+			{
 				// NOTE (nfries88): vector is unidirectional if I recall. Might be wise to switch to list.
+				// NOTE (ivucica): no, it's pretty much bidirectional. vector loses iterator validity in case of removal
+				//                 of an element, and afaik list is the one that's unidirectional.
+				//                 i'm quite happily using -- operator on an iterator farther in the code.
 				std::vector<Console*>::iterator it2 = m_consoles.begin();
 				std::vector<Console*>::iterator lastit = it2;
 				// NOTE (nfries88): after this loop, it2 will be equal to it; so we need to hold the last iteration
@@ -557,7 +583,8 @@ void GM_Gameworld::keyPress (int key)
 				if(lastit != m_consoles.end())
 					setActiveConsole((*lastit));
 			}
-			else {
+			else
+			{
 				it++;
 				if(it == m_consoles.end())
 					it = m_consoles.begin();
@@ -565,22 +592,18 @@ void GM_Gameworld::keyPress (int key)
 					setActiveConsole((*it));
 			}
 		}
-		if(key == 22) // CTRL+C
+		else if (key == 22) // CTRL+C
 		{
 			std::string text = g_clipboard.getText();
 			glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
 			if(textbox) textbox->SetCaption(textbox->GetCaption()+text);
 			return;
 		}
-		if(key == 3) // CTRL+V
+		else if (key == 3) // CTRL+V
 		{
 			// we can't currently select anything, so how could we copy?
 			return;
 		}
-		// ALT and CTRL are 0.
-		// pressing ALT or CTRL will otherwise cause the text console to lose append with (char)0
-		// which is bad because it causes the string to terminate the console textbox to lose focus.
-		// It should always have focus
 		desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 	}
 
@@ -602,11 +625,27 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		ret = true;
 		break;
 	case SDLK_UP:
-		action = 1; dir = DIRECTION_NORTH;
+        if (SDL_GetModState() & KMOD_SHIFT)
+		{
+		    action = 3; // console history
+		    dir = DIRECTION_NORTH;
+		}
+		else
+		{
+            action = 1; dir = DIRECTION_NORTH;
+		}
 		ret = true;
 		break;
 	case SDLK_DOWN:
-		action = 1; dir = DIRECTION_SOUTH;
+        if (SDL_GetModState() & KMOD_SHIFT)
+        {
+            action = 3; // console history
+            dir = DIRECTION_SOUTH;
+        }
+        else
+        {
+            action = 1; dir = DIRECTION_SOUTH;
+        }
 		ret = true;
 		break;
 	case SDLK_KP1:
@@ -710,6 +749,7 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		break;
 	case 2: // hotkeys
 	{
+
 		//NOTE (nfries88) IDK if key-SDLK_F1 works like i think it will in all cases... hoping it will :P
 		int hkkey = key.sym - SDLK_F1;
 		if(key.mod & KMOD_SHIFT) hkkey += 12;
@@ -760,6 +800,43 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 		}
 		break;
 	}
+	case 3: // console history
+        switch (dir)
+        {
+            case DIRECTION_NORTH:
+            if (m_consolehistorycurrent != m_consolehistory.begin())
+		    {
+		        m_consolehistorycurrent--;
+		        pnlConsoleContainer.txtConsoleEntry.SetCaption(*m_consolehistorycurrent);
+		    }
+		    else
+		    {
+		        m_consolehistorycurrent = m_consolehistory.end();
+		        pnlConsoleContainer.txtConsoleEntry.SetCaption("");
+		    }
+		    break;
+
+		    case DIRECTION_SOUTH:
+            if (m_consolehistorycurrent != m_consolehistory.end())
+		    {
+		        m_consolehistorycurrent++;
+		        if (m_consolehistorycurrent == m_consolehistory.end())
+                    pnlConsoleContainer.txtConsoleEntry.SetCaption("");
+                else
+                    pnlConsoleContainer.txtConsoleEntry.SetCaption(*m_consolehistorycurrent);
+		    }
+		    else
+		    {
+		        m_consolehistorycurrent = m_consolehistory.begin();
+		        pnlConsoleContainer.txtConsoleEntry.SetCaption(*m_consolehistorycurrent);
+		    }
+		    break;
+
+            default:
+            // boo! nothing.
+            break;
+        }
+
 	}
 	return ret;
 }
@@ -1186,7 +1263,15 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
 void GM_Gameworld::onAddCreature(uint32_t id)
 {
 	if(id != GlobalVariables::getPlayerID()) {
-		sbvlPanel.winBattle.add(id);
+	    Creature*c=Creatures::getInstance().getCreature(id);
+	    if (c && c->getHealth())
+	    {
+	        sbvlPanel.winBattle.add(id);
+	    }
+        else
+        {
+            printf("For some reason, adding nonexistent creature or creature with no health called %s!\n", c ? c->getName().c_str() : "(nonexistent)");
+        }
 	}
 	else {
 		m_mapui.getMinZ();

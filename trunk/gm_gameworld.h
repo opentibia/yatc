@@ -187,6 +187,8 @@ private:
 
 	std::vector<Console*> m_consoles;
 	Console* m_activeconsole;
+	std::vector<std::string> m_consolehistory;
+	std::vector<std::string>::iterator m_consolehistorycurrent;
 
 	uint32_t m_startTime;
 

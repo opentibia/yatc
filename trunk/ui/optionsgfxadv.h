@@ -323,7 +323,7 @@ public:
 		winOptionsGraphicsAdvanced_t* win = (winOptionsGraphicsAdvanced_t*)caller->GetCustomData();
 		std::stringstream ss;
 
-		options.maxfps = sb->GetValue();
+		options.maxfps = int(sb->GetValue());
 		DEBUGPRINT(0, 0, "New FPS: %d\n", options.maxfps);
 
 		ss << gettext("Adjust framerate limit") << ": ";
