@@ -49,9 +49,9 @@ class Notifications{
 		static void openCharactersList(const std::list<CharacterList_t>& list, int premDays);
 
 		//**** inGame events ****
-		static void onVipLogin(uint32_t id) {}
-		static void onVipLogout(uint32_t id) {}
-		static void onVipState(uint32_t id, const std::string& name, bool state) {}
+		static void onVipLogin(uint32_t id);
+		static void onVipLogout(uint32_t id);
+		static void onVipState(uint32_t id, const std::string& name, bool state);
 		static void onCancelWalk(Direction direction);
 		static void onCancelAttack();
 		//static void onDistanceEffect(const Position& from, const Position& to) {}

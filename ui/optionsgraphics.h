@@ -182,8 +182,6 @@ public:
 
 
 	void FillResolutions() {
-
-
 		SDL_Rect **modes;
 		int i,j;
 

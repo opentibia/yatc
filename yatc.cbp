@@ -186,6 +186,8 @@
 		<Unit filename="gamecontent\position.h" />
 		<Unit filename="gamecontent\shop.h" />
 		<Unit filename="gamecontent\thing.h" />
+		<Unit filename="gamecontent\viplist.cpp" />
+		<Unit filename="gamecontent\viplist.h" />
 		<Unit filename="gamemode.cpp" />
 		<Unit filename="gamemode.h" />
 		<Unit filename="gm_debug.cpp">

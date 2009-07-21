@@ -77,6 +77,7 @@ class MapUI {
 		static void onAttack(Popup::Item *parent);
 		static void onFollow(Popup::Item *parent);
 		static void onMessageTo(Popup::Item *parent);
+		static void onAddVIP(Popup::Item *parent);
 		static void onInviteToParty(Popup::Item *parent);
 		static void onRevokeInvite(Popup::Item *parent);
 		static void onAcceptInvite(Popup::Item *parent);
