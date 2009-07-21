@@ -859,6 +859,9 @@ void MapUI::onMessageTo(Popup::Item *parent)
 
 void MapUI::onAddVIP(Popup::Item *parent)
 {
+    // TODO (ivucica#3#): check if cip client is making a clientside check if player is already on list
+    // perhaps we should do it anyways?
+
     //MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
     MapUI *m = (MapUI*)(parent->data);

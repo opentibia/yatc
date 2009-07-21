@@ -26,6 +26,7 @@
 #include <map>
 
 #include "stackpanel.h"
+#include "../popup.h"
 
 class sbvlPanel_t;
 
@@ -36,6 +37,7 @@ public:
 	std::map<uint32_t, glictPanel*> m_entries;
 	glictList container;
 
+    uint32_t selectedcreature;
 
 	sbvlPanel_t* controller;
 
@@ -49,9 +51,12 @@ public:
 	virtual float GetDefaultHeight();
 	virtual void OnClose();
 
+    static void makeVIPPopup(Popup* popup, void* owner, void* arg);
 
 	static void OnListbox(glictPos* pos, glictContainer *caller);
 
+    static void onUnimplemented(Popup::Item *parent);
+    static void onRemoveVIP(Popup::Item *parent);
 };
 
 #endif //__UI_VIPWINDOW_H

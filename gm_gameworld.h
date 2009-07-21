@@ -231,6 +231,7 @@ private:
 	friend class sbvlPanel_t;
 	friend class Notifications;
 	friend class winBattle_t;
+	friend class winVIP_t;
 
 	MapUI m_mapui;
 
