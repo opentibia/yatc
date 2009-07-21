@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-12 17:48+0200\n"
+"POT-Creation-Date: 2009-07-21 16:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../gm_mainmenu.cpp:366
+#: ../gm_mainmenu.cpp:367
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in file COPYING.\n"
@@ -29,11 +29,11 @@ msgstr ""
 msgid " gold"
 msgstr ""
 
-#: ../main.cpp:192 ../main.cpp:212
+#: ../main.cpp:201 ../main.cpp:221
 msgid "$$PRODUCTSHORT$$ Fatal Error"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:353
+#: ../gm_mainmenu.cpp:354
 msgid "(in no particular order)"
 msgstr ""
 
@@ -69,11 +69,11 @@ msgstr ""
 msgid "<The outfit window should be opened now>"
 msgstr ""
 
-#: ../ui/uitrade.cpp:99
+#: ../mapui.cpp:689 ../ui/uitrade.cpp:102
 msgid "Accept"
 msgstr ""
 
-#: ../ui/charlist.h:86
+#: ../ui/charlist.h:87
 msgid "Account Status:"
 msgstr ""
 
@@ -85,15 +85,15 @@ msgstr ""
 msgid "Account number:"
 msgstr ""
 
-#: ../mapui.cpp:619
+#: ../mapui.cpp:665
 msgid "Add to VIP list"
 msgstr ""
 
-#: ../ui/uioutfit.cpp:128
+#: ../ui/uioutfit.cpp:132
 msgid "Addon "
 msgstr ""
 
-#: ../ui/optionsgfxadv.h:176 ../ui/optionsgfxadv.h:302
+#: ../ui/optionsgfxadv.h:197 ../ui/optionsgfxadv.h:329
 msgid "Adjust framerate limit"
 msgstr ""
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
-#: ../ui/optionsgfxadv.h:70
+#: ../ui/optionsgfxadv.h:71
 msgid "Advanced Graphics Options"
 msgstr ""
 
@@ -117,7 +117,7 @@ msgstr ""
 msgid "Amount:"
 msgstr ""
 
-#: ../mapui.cpp:602
+#: ../mapui.cpp:647
 msgid "Attack"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Auto Chase Off"
 msgstr ""
 
-#: ../ui/optionsnetwork.h:142
+#: ../ui/optionsnetwork.h:145
 msgid "Autodetect"
 msgstr ""
 
@@ -137,11 +137,7 @@ msgstr ""
 msgid "Available resolutions:"
 msgstr ""
 
-#: ../ui/skills.h:290
-msgid "Axe Fighting"
-msgstr ""
-
-#: ../ui/sbvlpanel.h:70 ../ui/battlewindow.h:58
+#: ../ui/battlewindow.h:59
 msgid "Battle"
 msgstr ""
 
@@ -149,21 +145,17 @@ msgstr ""
 msgid "Buy"
 msgstr ""
 
-#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:169
+#: ../ui/optionsgeneral.h:123 ../ui/optionsnetwork.h:172
 #: ../ui/optionsgraphics.h:141 ../ui/optionshotkeys.h:203
-#: ../ui/optionsconsole.h:139 ../ui/login.h:123 ../ui/uioutfit.cpp:155
-#: ../ui/charlist.h:115 ../ui/itemmove.h:110 ../ui/uitrade.cpp:166
-#: ../ui/optionsgfxadv.h:233 ../ui/exitwarning.h:85
-#: ../ui/deathnotification.h:84
+#: ../ui/optionsconsole.h:139 ../ui/login.h:123 ../ui/uioutfit.cpp:159
+#: ../ui/charlist.h:116 ../ui/itemmove.h:110 ../ui/uitrade.cpp:169
+#: ../ui/optionsgfxadv.h:256 ../ui/exitwarning.h:85
+#: ../ui/deathnotification.h:85
 msgid "Cancel"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:538
+#: ../gm_mainmenu.cpp:546
 msgid "Cannot connect to a login server."
-msgstr ""
-
-#: ../ui/skills.h:178
-msgid "Cap"
 msgstr ""
 
 #: ../ui/minimap.h:120
@@ -190,19 +182,15 @@ msgstr ""
 msgid "Clear Object"
 msgstr ""
 
-#: ../ui/skills.h:288
-msgid "Club Fighting"
-msgstr ""
-
-#: ../gm_mainmenu.cpp:409 ../gm_mainmenu.cpp:496
+#: ../gm_mainmenu.cpp:418 ../gm_mainmenu.cpp:504
 msgid "Connecting"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:497
+#: ../gm_mainmenu.cpp:505
 msgid "Connecting to the game world. Please wait."
 msgstr ""
 
-#: ../ui/optionsui.h:97 ../gm_gameworld.cpp:1191
+#: ../ui/optionsui.h:97
 msgid "Console"
 msgstr ""
 
@@ -210,11 +198,11 @@ msgstr ""
 msgid "Console Options"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:360
+#: ../gm_mainmenu.cpp:361
 msgid "Contributors"
 msgstr ""
 
-#: ../mapui.cpp:634
+#: ../mapui.cpp:748
 msgid "Copy Name"
 msgstr ""
 
@@ -222,11 +210,11 @@ msgstr ""
 msgid "Create Account"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:341
+#: ../gm_mainmenu.cpp:342
 msgid "Current engine"
 msgstr ""
 
-#: ../ui/optionsgfxadv.h:314
+#: ../ui/optionsgfxadv.h:341
 msgid "Current framerate: "
 msgstr ""
 
@@ -234,7 +222,7 @@ msgstr ""
 msgid "Customise the console"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:436
+#: ../gm_mainmenu.cpp:445
 msgid ""
 "Data files in the directory either:\n"
 "* do not belong to same protocol version, or\n"
@@ -247,15 +235,23 @@ msgid ""
 "protocol."
 msgstr ""
 
+#: ../gm_gameworld.cpp:1373
+msgid "Default"
+msgstr ""
+
 #: ../ui/uioutfit.cpp:83
 msgid "Detail"
 msgstr ""
 
-#: ../ui/skills.h:291
-msgid "Distance Fighting"
+#: ../mapui.cpp:707
+msgid "Disable Shared Experience"
 msgstr ""
 
-#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:575
+#: ../ui/optionsgfxadv.h:163
+msgid "Don't Stretch/Shrink Game Window"
+msgstr ""
+
+#: ../ui/optionsui.cpp:224 ../gm_mainmenu.cpp:583
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
@@ -273,15 +269,19 @@ msgstr ""
 msgid "Edit your hotkey texts"
 msgstr ""
 
+#: ../mapui.cpp:727
+msgid "Enable Shared Experience"
+msgstr ""
+
 #: ../ui/optionsui.cpp:339
 msgid "Engine change"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:44 ../ui/login.h:45 ../main.cpp:424
+#: ../ui/mainmenu.cpp:44 ../ui/login.h:45
 msgid "Enter Game"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:540 ../gm_mainmenu.cpp:547 ../gm_mainmenu.cpp:600
+#: ../gm_mainmenu.cpp:548 ../gm_mainmenu.cpp:555 ../gm_mainmenu.cpp:608
 msgid "Error"
 msgstr ""
 
@@ -293,35 +293,23 @@ msgstr ""
 msgid "Exit Game"
 msgstr ""
 
-#: ../ui/skills.h:85
-msgid "Experience"
-msgstr ""
-
-#: ../ui/skills.h:293
-msgid "Fishing"
-msgstr ""
-
-#: ../ui/skills.h:287
-msgid "Fist Fighting"
-msgstr ""
-
-#: ../mapui.cpp:607
+#: ../mapui.cpp:652
 msgid "Follow"
 msgstr ""
 
-#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:578
+#: ../ui/optionsui.cpp:227 ../gm_mainmenu.cpp:586
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:542
+#: ../gm_mainmenu.cpp:550
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
 msgstr ""
 
-#: ../ui/charlist.h:151
+#: ../ui/charlist.h:152
 msgid "Free Account"
 msgstr ""
 
@@ -354,15 +342,15 @@ msgstr ""
 msgid "Graphics Options"
 msgstr ""
 
-#: ../ui/charlist.h:153
+#: ../ui/charlist.h:154
 msgid "Gratis Premium Account"
 msgstr ""
 
-#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:581
+#: ../ui/optionsui.cpp:230 ../gm_mainmenu.cpp:589
 msgid "Have fun in"
 msgstr ""
 
-#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:579
+#: ../ui/optionsui.cpp:228 ../gm_mainmenu.cpp:587
 msgid "Have fun in Tibia!"
 msgstr ""
 
@@ -374,18 +362,15 @@ msgstr ""
 msgid "Health"
 msgstr ""
 
-#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:155
-#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:383
-#: ../ui/optionsconsole.h:125 ../ui/optionsgfxadv.h:219
+#: ../ui/optionsgeneral.h:109 ../ui/optionsnetwork.h:158
+#: ../ui/optionsgraphics.h:127 ../ui/optionsui.cpp:167 ../gm_mainmenu.cpp:384
+#: ../ui/optionsconsole.h:125 ../ui/uiinventory.cpp:247
+#: ../ui/optionsgfxadv.h:242
 msgid "Help"
 msgstr ""
 
 #: ../ui/optionsui.cpp:89
 msgid "Help not done."
-msgstr ""
-
-#: ../ui/skills.h:133
-msgid "Hit Points"
 msgstr ""
 
 #: ../ui/optionshotkeys.h:81
@@ -396,7 +381,7 @@ msgstr ""
 msgid "Hotkeys"
 msgstr ""
 
-#: ../main.cpp:206
+#: ../main.cpp:215
 msgid ""
 "If you are a Debian user, you may have forgotten to install\n"
 "the 'tibia-data' or 'yatc-data' package."
@@ -416,41 +401,45 @@ msgid ""
 "character."
 msgstr ""
 
-#: ../mapui.cpp:623
+#: ../mapui.cpp:669
 msgid "Ignore"
 msgstr ""
 
-#: ../ui/optionsui.cpp:231 ../gm_mainmenu.cpp:582
+#: ../ui/optionsui.cpp:231 ../gm_mainmenu.cpp:590
 msgid "Important Reminder"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:372
+#: ../ui/mainmenu.cpp:78 ../gm_mainmenu.cpp:373
 msgid "Info"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:602
+#: ../gm_mainmenu.cpp:610
 msgid "Information"
 msgstr ""
 
-#: ../ui/uiinventory.cpp:59
+#: ../ui/uiinventory.cpp:57
 msgid "Inventory"
 msgstr ""
 
-#: ../mapui.cpp:627
+#: ../mapui.cpp:595 ../mapui.cpp:689
+msgid "Invitation"
+msgstr ""
+
+#: ../mapui.cpp:590 ../mapui.cpp:684
 msgid "Invite to Party"
 msgstr ""
 
-#: ../ui/skills.h:100
-msgid "Level"
+#: ../mapui.cpp:698 ../mapui.cpp:718 ../mapui.cpp:738
+msgid "Leave Party"
 msgstr ""
 
-#: ../main.cpp:186
+#: ../main.cpp:195
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
 msgstr ""
 
-#: ../main.cpp:181
+#: ../main.cpp:190
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -458,11 +447,11 @@ msgid ""
 "the 'tibia-data' or 'yatc-data' package."
 msgstr ""
 
-#: ../ui/sbvlpanel.h:89 ../ui/exitwarning.h:68
+#: ../ui/exitwarning.h:68
 msgid "Logout"
 msgstr ""
 
-#: ../mapui.cpp:567
+#: ../mapui.cpp:622
 msgid "Look"
 msgstr ""
 
@@ -475,19 +464,11 @@ msgid ""
 "minutes ago, and {red skull} means he killed several people."
 msgstr ""
 
-#: ../ui/skills.h:222
-msgid "Magic Level"
-msgstr ""
-
-#: ../ui/skills.h:148
-msgid "Mana"
-msgstr ""
-
-#: ../ui/optionsui.cpp:234 ../gm_mainmenu.cpp:585
+#: ../ui/optionsui.cpp:234 ../gm_mainmenu.cpp:593
 msgid "Message of the Day"
 msgstr ""
 
-#: ../mapui.cpp:615
+#: ../mapui.cpp:661
 msgid "Message to"
 msgstr ""
 
@@ -511,7 +492,7 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:70
+#: ../ui/mainmenu.cpp:55 ../ui/optionsnetwork.h:69
 msgid "Network Options"
 msgstr ""
 
@@ -531,15 +512,15 @@ msgid ""
 "$PRODUCTSHORT$$!"
 msgstr ""
 
-#: ../ui/optionsnetwork.h:108
+#: ../ui/optionsnetwork.h:109
 msgid "OT Encryption Key"
 msgstr ""
 
-#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:162
+#: ../ui/optionsui.h:187 ../ui/optionsgeneral.h:116 ../ui/optionsnetwork.h:165
 #: ../ui/optionsgraphics.h:134 ../ui/optionshotkeys.h:196
 #: ../ui/optionsconsole.h:132 ../ui/login.h:114 ../ui/uishop.cpp:131
-#: ../ui/uioutfit.cpp:146 ../ui/charlist.h:107 ../ui/itemmove.h:101
-#: ../ui/optionsgfxadv.h:226 ../ui/deathnotification.h:76
+#: ../ui/uioutfit.cpp:150 ../ui/charlist.h:108 ../ui/itemmove.h:101
+#: ../ui/optionsgfxadv.h:249 ../ui/deathnotification.h:76
 msgid "Ok"
 msgstr ""
 
@@ -549,7 +530,7 @@ msgid ""
 "there's a {marker} on the minimap now, try moving there."
 msgstr ""
 
-#: ../mapui.cpp:579
+#: ../mapui.cpp:634
 msgid "Open"
 msgstr ""
 
@@ -563,8 +544,12 @@ msgid ""
 "  on most laptops and perhaps on many desktops.\n"
 msgstr ""
 
-#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76 ../ui/uiinventory.cpp:63
+#: ../ui/mainmenu.cpp:66 ../ui/optionsui.h:76 ../ui/uiinventory.cpp:236
 msgid "Options"
+msgstr ""
+
+#: ../mapui.cpp:600
+msgid "Pass Leadership To"
 msgstr ""
 
 #: ../ui/login.h:76
@@ -580,13 +565,13 @@ msgid ""
 "solve various quests."
 msgstr ""
 
-#: ../ui/uitrade.cpp:228
+#: ../ui/uitrade.cpp:223
 msgid ""
 "Please wait for your \n"
 "partner to accept."
 msgstr ""
 
-#: ../ui/charlist.h:156
+#: ../ui/charlist.h:157
 msgid "Premium Account"
 msgstr ""
 
@@ -598,20 +583,25 @@ msgstr ""
 msgid "Primary"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:353
+#: ../gm_mainmenu.cpp:354
 msgid "Programmed by"
 msgstr ""
 
-#: ../ui/optionsnetwork.h:132 ../ui/optionsnetwork.h:133
-#: ../ui/optionsnetwork.h:134 ../ui/optionsnetwork.h:135
-#: ../ui/optionsnetwork.h:136 ../ui/optionsnetwork.h:137
-#: ../ui/optionsnetwork.h:138 ../ui/optionsnetwork.h:139
-#: ../ui/optionsnetwork.h:140 ../ui/optionsnetwork.h:141
+#: ../ui/optionsnetwork.h:133 ../ui/optionsnetwork.h:134
+#: ../ui/optionsnetwork.h:135 ../ui/optionsnetwork.h:136
+#: ../ui/optionsnetwork.h:137 ../ui/optionsnetwork.h:138
+#: ../ui/optionsnetwork.h:139 ../ui/optionsnetwork.h:140
+#: ../ui/optionsnetwork.h:141 ../ui/optionsnetwork.h:142
+#: ../ui/optionsnetwork.h:143 ../ui/optionsnetwork.h:144
 msgid "Protocol"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:446
+#: ../gm_mainmenu.cpp:455
 msgid "Protocol detection failed"
+msgstr ""
+
+#: ../ui/uiinventory.cpp:73
+msgid "Quests"
 msgstr ""
 
 #: ../ui/optionsui.cpp:125
@@ -622,12 +612,16 @@ msgid ""
 "$$PRODUCTSHORT$$."
 msgstr ""
 
-#: ../ui/uitrade.cpp:107
+#: ../ui/uitrade.cpp:110
 msgid "Reject"
 msgstr ""
 
 #: ../ui/optionsui.cpp:339
 msgid "Restart is required to apply engine change."
+msgstr ""
+
+#: ../mapui.cpp:595
+msgid "Revoke"
 msgstr ""
 
 #: ../ui/optionsui.cpp:115
@@ -654,7 +648,7 @@ msgstr ""
 msgid "Select character:"
 msgstr ""
 
-#: ../ui/optionsgfxadv.h:78
+#: ../ui/optionsgfxadv.h:79
 msgid "Select graphics engine"
 msgstr ""
 
@@ -666,7 +660,7 @@ msgstr ""
 msgid "Send automatically"
 msgstr ""
 
-#: ../ui/optionsnetwork.h:74
+#: ../ui/optionsnetwork.h:73
 msgid "Server address:"
 msgstr ""
 
@@ -686,7 +680,7 @@ msgstr ""
 msgid "Server port:"
 msgstr ""
 
-#: ../mapui.cpp:592 ../ui/uioutfit.cpp:39
+#: ../mapui.cpp:674 ../ui/uioutfit.cpp:39
 msgid "Set Outfit"
 msgstr ""
 
@@ -700,10 +694,6 @@ msgstr ""
 msgid ""
 "Set the number of \n"
 "items you want to move:"
-msgstr ""
-
-#: ../ui/skills.h:292
-msgid "Shielding"
 msgstr ""
 
 #: ../ui/optionsconsole.h:88
@@ -720,6 +710,10 @@ msgstr ""
 
 #: ../ui/optionsconsole.h:106
 msgid "Show Levels in Console"
+msgstr ""
+
+#: ../ui/optionsgfxadv.h:152
+msgid "Show Light Effects"
 msgstr ""
 
 #: ../ui/optionsgeneral.h:90
@@ -748,14 +742,6 @@ msgid ""
 "Message of the Day"
 msgstr ""
 
-#: ../ui/skills.h:265
-msgid "Skill "
-msgstr ""
-
-#: ../ui/skills.h:71 ../ui/sbvlpanel.h:61
-msgid "Skills"
-msgstr ""
-
 #: ../ui/tutorialhints.cpp:102
 msgid ""
 "So the {container window} opened. {Drag} whatever's in it into your {bag} "
@@ -763,16 +749,8 @@ msgid ""
 "take it with you. You need to collect three cockroach legs for the NPC!"
 msgstr ""
 
-#: ../ui/skills.h:163
-msgid "Soul Points"
-msgstr ""
-
-#: ../ui/skills.h:193
-msgid "Stamina"
-msgstr ""
-
-#: ../ui/skills.h:289
-msgid "Sword Fighting"
+#: ../ui/uiinventory.cpp:61
+msgid "Stop"
 msgstr ""
 
 #: ../ui/tutorialhints.cpp:106
@@ -792,7 +770,7 @@ msgid ""
 "'Use') on it to open it."
 msgstr ""
 
-#: ../mapui.cpp:720
+#: ../mapui.cpp:865
 msgid "This functionality is not yet finished"
 msgstr ""
 
@@ -815,20 +793,24 @@ msgstr ""
 msgid "Trade"
 msgstr ""
 
-#: ../gm_gameworld.cpp:1315
+#: ../gm_gameworld.cpp:1497
 msgid "Tutorial Hint"
 msgstr ""
 
-#: ../ui/charlist.h:93
+#: ../ui/charlist.h:94
 msgid "Unknown"
 msgstr ""
 
-#: ../ui/optionsgfxadv.h:178 ../ui/optionsgfxadv.h:304
+#: ../ui/optionsgfxadv.h:199 ../ui/optionsgfxadv.h:331
 msgid "Unlimited"
 msgstr ""
 
-#: ../mapui.cpp:581
+#: ../mapui.cpp:636
 msgid "Use"
+msgstr ""
+
+#: ../ui/optionsgfxadv.h:184
+msgid "Use Smooth Stretching"
 msgstr ""
 
 #: ../ui/optionshotkeys.h:180
@@ -843,27 +825,23 @@ msgstr ""
 msgid "Use on yourself"
 msgstr ""
 
-#: ../mapui.cpp:576
+#: ../mapui.cpp:631
 msgid "Use with..."
 msgstr ""
 
-#: ../gm_mainmenu.cpp:343
+#: ../gm_mainmenu.cpp:344
 msgid "Uses GLICT"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:345
+#: ../gm_mainmenu.cpp:346
 msgid "Uses OpenGL"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:342
+#: ../gm_mainmenu.cpp:343
 msgid "Uses SDL"
 msgstr ""
 
-#: ../ui/sbvlpanel.h:79
-msgid "VIP"
-msgstr ""
-
-#: ../ui/uitrade.cpp:168
+#: ../ui/uitrade.cpp:171
 msgid "Wait for a counter offer."
 msgstr ""
 
@@ -871,7 +849,7 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
-#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:577
+#: ../ui/optionsui.cpp:226 ../gm_mainmenu.cpp:585
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
@@ -881,7 +859,7 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr ""
 
-#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:580
+#: ../ui/optionsui.cpp:229 ../gm_mainmenu.cpp:588
 msgid "Welcome to"
 msgstr ""
 
@@ -889,7 +867,7 @@ msgstr ""
 msgid "Welcome to $$PRODUCTSHORT$$! Use {arrows} or {mouse} to move around."
 msgstr ""
 
-#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:574
+#: ../ui/optionsui.cpp:223 ../gm_mainmenu.cpp:582
 msgid "Welcome to Tibia!"
 msgstr ""
 
@@ -909,6 +887,10 @@ msgid ""
 "its {body}. Just do a {ctrl+click} on it."
 msgstr ""
 
+#: ../ui/optionsgfxadv.h:173
+msgid "Windows Mouse Pointer"
+msgstr ""
+
 #: ../ui/tutorialhints.cpp:112
 msgid ""
 "With the {rope} you can climb up from dungeons and caves. Find a {rope "
@@ -920,7 +902,7 @@ msgstr ""
 msgid "You are dead"
 msgstr ""
 
-#: ../main.cpp:199
+#: ../main.cpp:208
 msgid ""
 "You are missing '$$FILENAME$$'.\n"
 "We will launch Tibia Data File Fetcher which should automatically install\n"
@@ -930,26 +912,26 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:410
+#: ../gm_mainmenu.cpp:419
 msgid "Your character list is being loaded. Please wait."
 msgstr ""
 
-#: ../gm_mainmenu.cpp:349
+#: ../gm_mainmenu.cpp:350
 msgid "[for info run with GL engine]\n"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:342
+#: ../gm_mainmenu.cpp:343
 msgid "compiled with"
 msgstr ""
 
-#: ../ui/charlist.h:156
+#: ../ui/charlist.h:157
 msgid "days left"
 msgstr ""
 
-#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:576
+#: ../ui/optionsui.cpp:225 ../gm_mainmenu.cpp:584
 msgid "to the state of"
 msgstr ""
 
-#: ../gm_mainmenu.cpp:356
+#: ../gm_mainmenu.cpp:357
 msgid "with inactive developers"
 msgstr ""

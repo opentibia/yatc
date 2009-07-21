@@ -307,6 +307,7 @@
 		<Unit filename="ui\optionsui.h" />
 		<Unit filename="ui\sbvlpanel.cpp" />
 		<Unit filename="ui\sbvlpanel.h" />
+		<Unit filename="ui\skills.cpp" />
 		<Unit filename="ui\skills.h" />
 		<Unit filename="ui\tutorialhints.cpp" />
 		<Unit filename="ui\tutorialhints.h" />

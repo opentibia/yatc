@@ -69,7 +69,6 @@ MapUI::~MapUI()
 void MapUI::renderMap()
 {
 	//TODO: center game area horizontally (cipsoft's client does this)
-	// FIXME (ivucica#2#) make renderMap use m_x,m_y and m_w,m_h
 
 	// set up scale
 	if(!options.stretchGameWindow)
@@ -81,8 +80,8 @@ void MapUI::renderMap()
 	float scaledSize = std::floor(32*m_scale);
 	m_scale = scaledSize/32;
 
-    m_x = -scaledSize*2; m_y = -scaledSize*2;
-	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/0,0,15*scaledSize,11*scaledSize);
+    m_x = int(-scaledSize*2); m_y = int(-scaledSize*2);
+	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/0,0,int(15*scaledSize),int(11*scaledSize));
 
 	// NOTE (nfries88): Draw black under the game area, this will make blank tiles appear black like in the official client.
 	g_engine->drawRectangle(0, 0, 15*scaledSize, 11*scaledSize, oRGBA(0, 0, 0, 255));
@@ -128,8 +127,8 @@ void MapUI::renderMap()
 					continue;
 				}
 
-				int screenx = (i*scaledSize + walkoffx) + m_x;
-				int screeny = (j*scaledSize + walkoffy) + m_y;
+				int screenx = int((i*scaledSize + walkoffx) + m_x);
+				int screeny = int((j*scaledSize + walkoffy) + m_y);
 
 				const Item* ground = tile->getGround();
 				if(ground){
@@ -383,13 +382,13 @@ void MapUI::drawTileGhosts(int x, int y, int z, int screenx, int screeny, float 
                         case DIRECTION_SOUTH:
                             if (j != -1 || i != 0) continue;
                             tile_y -= 1;
-                            screeny2 -= scaledSize;
+                            screeny2 -= int(scaledSize);
                             break;
                         case DIRECTION_WEST:
                         case DIRECTION_EAST:
                             if (i != -1 || j != 0) continue;
                             tile_x -= 1;
-                            screenx2 -= scaledSize;
+                            screenx2 -= int(scaledSize);
                             break;
 
 
@@ -525,8 +524,8 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 {
     float scaledSize = std::floor(32*m_scale);
     x-=m_x; y-=m_y;
-	x /= scaledSize; // divide by tile size
-	y /= scaledSize; // we need the tile coordinates, not the mouse coordinates
+	x /= int(scaledSize); // divide by tile size
+	y /= int(scaledSize); // we need the tile coordinates, not the mouse coordinates
 
 	printf("Click on %d %d\n", x, y);
 	printf("Limitx: 0 - %d\n", m_vpw);
@@ -608,7 +607,7 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
     uint32_t retx, rety, retz;
 	Position playerpos = GlobalVariables::getPlayerPosition();
 
-    Tile* t = m->translateClickToTile(pos.x, pos.y, retx, rety, retz);
+    Tile* t = m->translateClickToTile(int(pos.x), int(pos.y), retx, rety, retz);
     if(!t) return;
     m->m_lastRightclickTilePos.x = retx;
     m->m_lastRightclickTilePos.y = rety;
@@ -784,7 +783,7 @@ void MapUI::onPassLeadership(Popup::Item *parent)
 void MapUI::onLeaveParty(Popup::Item *parent)
 {
 // FIXME (ivucica#5#): remove line below?
-//	MapUI *m = (MapUI*)(parent->data); 
+//	MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
     gw->m_protocol->sendLeaveParty();

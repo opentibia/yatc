@@ -33,7 +33,7 @@ class sbvlPanel_t;
 class winVIP_t : public yatcStackPanelWindow
 {
 public:
-	std::vector<std::string> entries;
+	std::vector<std::pair<std::string, bool> > entries;
 	glictPanel container;
 
 	sbvlPanel_t* controller;
