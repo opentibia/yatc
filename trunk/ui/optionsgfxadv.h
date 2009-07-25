@@ -20,7 +20,9 @@
 
 #ifndef __UI_OPTIONSGFXADV_H
 #define __UI_OPTIONSGFXADV_H
-
+#if defined(HAVE_CONFIG_H)
+    #include "../config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else

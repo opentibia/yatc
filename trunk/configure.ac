@@ -98,8 +98,8 @@ AC_CHECK_HEADERS([SDL/SDL_rotozoom.h], ,[AC_MSG_ERROR("*** SDL_gfx headers not f
 LIBS="$LIBS -lSDL_gfx"
 
 
-#LIBS="$LIBS gamecontent/__all.a net/__all.a"
-
+# a lame check for libintl. is there a right way to do this?
+AC_CHECK_HEADERS(libintl.h, HAVE_LIBINTL_H=1)
 
 # output files
 AC_CONFIG_HEADERS([config.h])

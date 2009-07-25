@@ -21,6 +21,9 @@
 #ifndef __UI_LOGIN_H
 #define __UI_LOGIN_H
 
+#if defined(HAVE_CONFIG_H)
+    #include "../config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else

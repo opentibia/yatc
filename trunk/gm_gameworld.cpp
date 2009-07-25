@@ -104,6 +104,7 @@ void pnlInventory_t::onClick_Options(glictPos* relmousepos, glictContainer* call
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
 	gameclass->winOptions.window.SetVisible(true);
+	gameclass->winOptions.window.Focus(NULL);
     /*gameclass->msgBox(gettext("This functionality is not yet finished"),"TODO");*/
 }
 

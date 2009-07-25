@@ -45,16 +45,16 @@ unsigned int MAXFPS=50;
 #include <GLICT/globals.h>
 #include <sstream>
 #include <stdlib.h>
+
+#ifdef HAVE_CONFIG_H
+	#include "config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
 	#include <libintl.h>
 #else
 	#define gettext(x) (x)
 #endif
 #include <locale.h>
-
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
 
 #include "debugprint.h"
 #include "options.h"

@@ -24,6 +24,10 @@
 #include <GLICT/window.h>
 #include <GLICT/panel.h>
 #include <GLICT/button.h>
+
+#if defined(HAVE_CONFIG_H)
+    #include "../config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else

@@ -31,6 +31,9 @@
 #include "engine.h"
 #include "skin.h"
 
+#if defined(HAVE_CONFIG_H)
+    #include "../config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
 	#include <libintl.h>
 #else

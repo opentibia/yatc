@@ -24,6 +24,10 @@
 #include "../skin.h"
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
+
+#ifdef HAVE_CONFIG_H
+	#include "../config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else
@@ -234,6 +238,7 @@ void winOutfit_t::onGfxPaint(glictRect *real, glictRect *clipped, glictContainer
 void winOutfit_t::openSelf(const Outfit_t& current, const std::list<AvailOutfit_t>& available){
     dispCreature->getOutfit() = current;
     window.SetVisible(true);
+    window.Focus(NULL);
     m_availableOutfits = available;
     m_currentOutfit = m_availableOutfits.begin();
     for(std::list<AvailOutfit_t>::iterator it = m_availableOutfits.begin(); it!=m_availableOutfits.end();it++)

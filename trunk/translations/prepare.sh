@@ -7,6 +7,12 @@
 
 echo "Extracting..."
 xgettext -d yatc -s -o yatc.pot \
+	../*.cpp ../*.h \
+	../ui/*.cpp ../ui/*.h \
+	../net/*.cpp ../net/*.h \
+	../gamecontent/*.cpp ../gamecontent/*.h
+
+echo \
 	../ui/mainmenu.cpp \
 	../ui/optionsui.h \
 	../ui/optionsgeneral.h \
@@ -25,6 +31,7 @@ xgettext -d yatc -s -o yatc.pot \
 	../ui/uiinventory.h \
 	../ui/uiinventory.cpp \
 	../ui/skills.h \
+	../ui/skills.cpp \
 	../ui/itemmove.h \
 	../ui/health.h \
 	../ui/tutorialhints.cpp \
@@ -37,7 +44,8 @@ xgettext -d yatc -s -o yatc.pot \
 	../ui/battlewindow.h \
 	../ui/exitwarning.h \
 	../ui/deathnotification.h \
-	../ui/vipwindow.cpp
+	../ui/vipwindow.cpp \
+	../ui/itempanel.cpp > /dev/null
 echo "Done."
 
 # above list all files with extractable gettext() strings
