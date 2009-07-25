@@ -21,6 +21,10 @@
 #include "uishop.h"
 #include "../gm_gameworld.h"
 #include "../net/protocolgame.h"
+
+#ifdef HAVE_CONFIG_H
+	#include "../config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else

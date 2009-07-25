@@ -26,6 +26,9 @@
 #include "net/connection.h"
 #include "product.h"
 
+#ifdef HAVE_CONFIG_H
+	#include "config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else
@@ -262,7 +265,7 @@ bool Objects::loadDat(const char* filename)
                                "  autodetection manually in configuration.\n"
                                "\n"
                                "* You may be attempting to use a too new version of data files.\n"
-                               "  Check if a new version of " PRODUCTSHORT " came out which\n"
+                               "  Check if a new version of $$PRODUCTSHORT$$ came out which\n"
                                "  supports this version of data files.")).c_str(),
                     gettext("Data files not recognized"));
 

@@ -18,6 +18,10 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+
+#ifdef HAVE_CONFIG_H
+	#include "../config.h"
+#endif
 #if defined(HAVE_LIBINTL_H)
     #include <libintl.h>
 #else
@@ -204,7 +208,7 @@ void winVIP_t::onUnimplemented(Popup::Item *parent)
 {
 	GM_Gameworld* gw = (GM_Gameworld*)g_game;
 
-    gw->msgBox(gettext("This functionality is not yet implemented."), "TODO");
+    gw->msgBox(gettext("This functionality is not yet finished"), "TODO");
 }
 
 void winVIP_t::onRemoveVIP(Popup::Item *parent)
