@@ -84,9 +84,10 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		\
 		translations/yatc.pot translations/prepare.sh \
 		translations/merge.sh translations/build.sh \
-		translations/brazilian.po translations/croatian.po \
-		translations/polish.po translations/spanish.po \
-		translations/swedish.po \
+		translations/mergeall.sh \
+		translations/pt_BR.po translations/hr_HR.po \
+		translations/pl_PL.po translations/es_ES.po \
+		translations/sv_SE.po \
 		translations/README  \
 		\
 		yatc.cbp \
