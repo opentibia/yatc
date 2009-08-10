@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-25 16:08+0200\n"
+"POT-Creation-Date: 2009-07-25 16:42+0200\n"
 "PO-Revision-Date: 2008-11-30 01:44+0100\n"
 "Last-Translator: Rasmus Karlsson <qwerty@wuut.se>\n"
 "Language-Team: Rasmus Karlsson <qwerty@wuut.se>\n"
@@ -34,7 +34,7 @@ msgstr ""
 msgid " gold"
 msgstr " guld"
 
-#: ../main.cpp:201 ../main.cpp:221
+#: ../main.cpp:201 ../main.cpp:222 ../main.cpp:440
 msgid "$$PRODUCTSHORT$$ Fatal Error"
 msgstr ""
 
@@ -292,7 +292,7 @@ msgstr ""
 msgid "Data files not recognized"
 msgstr ""
 
-#: ../gm_gameworld.cpp:1389
+#: ../gm_gameworld.cpp:1390
 #, fuzzy
 msgid "Default"
 msgstr "Detalj"
@@ -479,7 +479,7 @@ msgstr "Konsollinställningar"
 msgid "Hotkeys"
 msgstr "Snabbtangenter"
 
-#: ../main.cpp:215
+#: ../main.cpp:216
 msgid ""
 "If you are a Debian user, you may have forgotten to install\n"
 "the 'tibia-data' or 'yatc-data' package."
@@ -541,7 +541,11 @@ msgstr "Bjud in till Grupp"
 msgid "Level"
 msgstr "Nivå"
 
-#: ../main.cpp:195
+#: ../main.cpp:436
+msgid "Loading data file failed!"
+msgstr ""
+
+#: ../main.cpp:195 ../main.cpp:437
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -1039,7 +1043,7 @@ msgstr "NPC Handel"
 msgid "Trade with"
 msgstr "Handla med"
 
-#: ../gm_gameworld.cpp:1513
+#: ../gm_gameworld.cpp:1514
 msgid "Tutorial Hint"
 msgstr "Handledning Tips"
 
@@ -1175,7 +1179,7 @@ msgstr ""
 msgid "You are dead"
 msgstr ""
 
-#: ../main.cpp:208
+#: ../main.cpp:209
 msgid ""
 "You are missing '$$FILENAME$$'.\n"
 "We will launch Tibia Data File Fetcher which should automatically install\n"

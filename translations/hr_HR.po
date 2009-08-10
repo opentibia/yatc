@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.3.1SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-25 16:08+0200\n"
-"PO-Revision-Date: 2009-07-25 16:14+0200\n"
+"POT-Creation-Date: 2009-07-25 16:42+0200\n"
+"PO-Revision-Date: 2009-07-25 16:43+0200\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vučica <ivucica@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr ""
 msgid " gold"
 msgstr " u zlatu"
 
-#: ../main.cpp:201 ../main.cpp:221
+#: ../main.cpp:201 ../main.cpp:222 ../main.cpp:440
 msgid "$$PRODUCTSHORT$$ Fatal Error"
 msgstr "$$PRODUCTSHORT$$ fatalna greška"
 
@@ -291,7 +291,7 @@ msgstr ""
 msgid "Data files not recognized"
 msgstr "Podatkovne datoteke nisu prepoznate"
 
-#: ../gm_gameworld.cpp:1389
+#: ../gm_gameworld.cpp:1390
 msgid "Default"
 msgstr "Zadano"
 
@@ -477,7 +477,7 @@ msgstr "Opcije kratica"
 msgid "Hotkeys"
 msgstr "Kratice"
 
-#: ../main.cpp:215
+#: ../main.cpp:216
 msgid ""
 "If you are a Debian user, you may have forgotten to install\n"
 "the 'tibia-data' or 'yatc-data' package."
@@ -542,7 +542,11 @@ msgstr "Napusti grupu"
 msgid "Level"
 msgstr "Razina"
 
-#: ../main.cpp:195
+#: ../main.cpp:436
+msgid "Loading data file failed!"
+msgstr "Učitavanje podatkovne datoteke nije uspjelo!"
+
+#: ../main.cpp:195 ../main.cpp:437
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -1052,7 +1056,7 @@ msgstr "Trgovina"
 msgid "Trade with"
 msgstr "Trguj sa"
 
-#: ../gm_gameworld.cpp:1513
+#: ../gm_gameworld.cpp:1514
 msgid "Tutorial Hint"
 msgstr "Savjet za prohod"
 
@@ -1198,7 +1202,7 @@ msgstr ""
 msgid "You are dead"
 msgstr "Mrtav si"
 
-#: ../main.cpp:208
+#: ../main.cpp:209
 msgid ""
 "You are missing '$$FILENAME$$'.\n"
 "We will launch Tibia Data File Fetcher which should automatically install\n"
@@ -1248,6 +1252,14 @@ msgstr "uz neaktivne razvijatelje"
 
 #~ msgid "Entering game"
 #~ msgstr "Ulazim u igru"
+
+#, fuzzy
+#~ msgid ""
+#~ "Loading the data file '$$FILENAME$$' has failed.\n"
+#~ "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$."
+#~ msgstr ""
+#~ "Učitavanje datoteke s podacima '$$FILENAME$$' je neuspjelo.\n"
+#~ "Molimo postavite '$$FILENAME$$' u istu mapu kao $$PRODUCTSHORT$$.\n"
 
 #~ msgid "Logging in"
 #~ msgstr "Prijavljujem"

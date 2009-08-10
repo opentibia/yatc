@@ -1,5 +1,5 @@
 /* pictool: ANSI C converter for Tibia's PIC files
- * (c) 2007-2008 Ivan Vucica
+ * (c) 2007-2009 Ivan Vucica
  * Part of OpenTibia project
  *
  * Although written in ANSI C, this makes use of #pragma pack(),
@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <SDL/SDL.h>
 #include <errno.h>
+#include <unistd.h>
 
 #include "../../sprdata.h"
 #include "picfuncs.h"

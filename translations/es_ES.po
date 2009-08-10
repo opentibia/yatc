@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.2.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-25 16:08+0200\n"
+"POT-Creation-Date: 2009-07-25 16:42+0200\n"
 "PO-Revision-Date: 2009-07-25 16:05+0200\n"
 "Last-Translator: kupi <kupi.ots@gmail.com>\n"
 "Language-Team: kupi <kupi.ots@gmail.com>, <kupi_ots@hotmail.com>\n"
@@ -37,7 +37,7 @@ msgstr ""
 msgid " gold"
 msgstr " oro"
 
-#: ../main.cpp:201 ../main.cpp:221
+#: ../main.cpp:201 ../main.cpp:222 ../main.cpp:440
 msgid "$$PRODUCTSHORT$$ Fatal Error"
 msgstr "$$PRODUCTSHORT$$ Error critico"
 
@@ -296,7 +296,7 @@ msgstr ""
 msgid "Data files not recognized"
 msgstr ""
 
-#: ../gm_gameworld.cpp:1389
+#: ../gm_gameworld.cpp:1390
 msgid "Default"
 msgstr "Por defecto"
 
@@ -481,7 +481,7 @@ msgstr "Opciones de las teclas de acceso rápido"
 msgid "Hotkeys"
 msgstr "Teclas de acceso rápido"
 
-#: ../main.cpp:215
+#: ../main.cpp:216
 msgid ""
 "If you are a Debian user, you may have forgotten to install\n"
 "the 'tibia-data' or 'yatc-data' package."
@@ -548,7 +548,11 @@ msgstr "Salir de la fiesta"
 msgid "Level"
 msgstr "Nivel"
 
-#: ../main.cpp:195
+#: ../main.cpp:436
+msgid "Loading data file failed!"
+msgstr ""
+
+#: ../main.cpp:195 ../main.cpp:437
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -1066,7 +1070,7 @@ msgstr "Negociar"
 msgid "Trade with"
 msgstr "Comerciar con"
 
-#: ../gm_gameworld.cpp:1513
+#: ../gm_gameworld.cpp:1514
 msgid "Tutorial Hint"
 msgstr "Tutorial de sugerencia"
 
@@ -1206,7 +1210,7 @@ msgstr ""
 msgid "You are dead"
 msgstr "Estas muerto"
 
-#: ../main.cpp:208
+#: ../main.cpp:209
 msgid ""
 "You are missing '$$FILENAME$$'.\n"
 "We will launch Tibia Data File Fetcher which should automatically install\n"
@@ -1246,6 +1250,15 @@ msgstr "al estado de"
 #: ../gm_mainmenu.cpp:361
 msgid "with inactive developers"
 msgstr "con los desarrolladores inactivos"
+
+#, fuzzy
+#~ msgid ""
+#~ "Loading the data file '$$FILENAME$$' has failed.\n"
+#~ "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$."
+#~ msgstr ""
+#~ "La carga del archivo data '$$FILENAME$$' ha fracasado.\n"
+#~ "Porfavor, situen el '$$FILENAME$$' en la misma carpeta que $$PRODUCTSHORT$"
+#~ "$.\n"
 
 #, fuzzy
 #~ msgid "This functionality is not yet finished."

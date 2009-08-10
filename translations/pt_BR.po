@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.3.2SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-25 16:08+0200\n"
+"POT-Creation-Date: 2009-07-25 16:42+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: jakexblaster <marcos.x86@hotmail.com>\n"
 "Language-Team: heliton <helitonnordt@gmail.com>, jakexblaster "
@@ -38,7 +38,7 @@ msgstr ""
 msgid " gold"
 msgstr " ouro"
 
-#: ../main.cpp:201 ../main.cpp:221
+#: ../main.cpp:201 ../main.cpp:222 ../main.cpp:440
 msgid "$$PRODUCTSHORT$$ Fatal Error"
 msgstr "$$PRODUCTSHORT$$ Erro Fatal"
 
@@ -301,7 +301,7 @@ msgstr ""
 msgid "Data files not recognized"
 msgstr ""
 
-#: ../gm_gameworld.cpp:1389
+#: ../gm_gameworld.cpp:1390
 msgid "Default"
 msgstr "Padrão"
 
@@ -488,7 +488,7 @@ msgstr "Teclas de atalho"
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
-#: ../main.cpp:215
+#: ../main.cpp:216
 msgid ""
 "If you are a Debian user, you may have forgotten to install\n"
 "the 'tibia-data' or 'yatc-data' package."
@@ -555,7 +555,11 @@ msgstr "Deixar time"
 msgid "Level"
 msgstr "Nível"
 
-#: ../main.cpp:195
+#: ../main.cpp:436
+msgid "Loading data file failed!"
+msgstr ""
+
+#: ../main.cpp:195 ../main.cpp:437
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -1071,7 +1075,7 @@ msgstr "Comercializar"
 msgid "Trade with"
 msgstr "Negociar com"
 
-#: ../gm_gameworld.cpp:1513
+#: ../gm_gameworld.cpp:1514
 msgid "Tutorial Hint"
 msgstr "Dica de Tutorial"
 
@@ -1210,7 +1214,7 @@ msgstr ""
 msgid "You are dead"
 msgstr "Você está morto"
 
-#: ../main.cpp:208
+#: ../main.cpp:209
 msgid ""
 "You are missing '$$FILENAME$$'.\n"
 "We will launch Tibia Data File Fetcher which should automatically install\n"
@@ -1255,6 +1259,15 @@ msgstr "com desenvolvedores inativos"
 
 #~ msgid "Entering game"
 #~ msgstr "Entrando no jogo"
+
+#, fuzzy
+#~ msgid ""
+#~ "Loading the data file '$$FILENAME$$' has failed.\n"
+#~ "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$."
+#~ msgstr ""
+#~ "O arquivo '$$FILENAME$$' não pôde ser carregado.\n"
+#~ "Por favor copie o arquivo '$$FILENAME$$' na mesma pasta do $$PRODUCTSHORT$"
+#~ "$.\n"
 
 #~ msgid "Logging in"
 #~ msgstr "Entrando"
