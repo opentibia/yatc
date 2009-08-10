@@ -286,8 +286,7 @@ bool ProtocolGame::parsePacket(uint8_t cmd, NetworkMessage& msg)
 bool ProtocolGame::parseSelfAppear(NetworkMessage& msg)
 {
     MSG_READ_U32(ourID);
-    MSG_READ_U8(unk32);
-    MSG_READ_U8(unk);
+    MSG_READ_U16(unkDrawSpeed); // Related to draw speed
     MSG_READ_U8(canReportBugs);
 
     //Reset everything. Todo notify gui?
