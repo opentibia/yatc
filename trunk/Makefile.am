@@ -11,6 +11,15 @@ if USE_OPENGL
 MAYBE_OPENGL = spritegl.cpp enginegl.cpp
 endif
 
+yatc.ico.png: yatc.ico
+	convert yatc.ico yatc.ico.png
+
+all-am: yatc.ico.png
+clean-am:
+	-rm -f yatc.ico.png
+distclean-am:
+	-rm -f yatc.ico.png
+
 #SUBDIRS = net gamecontent ui
 
 yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \

@@ -10,6 +10,6 @@ Exec=yatc
 StartupNotify=false
 Terminal=false
 Type=Application
-Icon=nautilus.png
+Icon=yatc.ico.png
 Categories=Game;Adventure
 

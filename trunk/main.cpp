@@ -199,6 +199,7 @@ void checkFile(const char *filename)
                 forreplace = str_replace("$$FILENAME$$", filename, forreplace);
                 forreplace = str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, forreplace);
                 NativeGUIError(forreplace.c_str(), str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext("$$PRODUCTSHORT$$ Fatal Error")).c_str());
+                printf("EXITING\n");
                 exit(1);
 		    }
         }
@@ -432,8 +433,11 @@ int main(int argc, char *argv[])
 
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Loading data...\n");
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){
-		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Loading data file failed!");
-		NativeGUIError("Loading the data file 'Tibia.dat' has failed.\nPlease place 'Tibia.dat' in the same folder as " PRODUCTSHORT ".", PRODUCTSHORT " Fatal Error");
+		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, gettext("Loading data file failed!"));
+		std::string forreplace = gettext("Loading the data file '$$FILENAME$$' has failed.\nPlease place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n");
+		forreplace = str_replace("$$FILENAME$$", "Tibia.dat", forreplace);
+		forreplace = str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, forreplace);
+		NativeGUIError(forreplace.c_str(), str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext("$$PRODUCTSHORT$$ Fatal Error")).c_str());
 		exit(1);
 	}
 

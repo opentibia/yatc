@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-25 16:08+0200\n"
+"POT-Creation-Date: 2009-08-10 23:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid " gold"
 msgstr ""
 
-#: ../main.cpp:201 ../main.cpp:221
+#: ../main.cpp:201 ../main.cpp:222 ../main.cpp:440
 msgid "$$PRODUCTSHORT$$ Fatal Error"
 msgstr ""
 
@@ -274,7 +274,7 @@ msgstr ""
 msgid "Data files not recognized"
 msgstr ""
 
-#: ../gm_gameworld.cpp:1389
+#: ../gm_gameworld.cpp:1390
 msgid "Default"
 msgstr ""
 
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Hotkeys"
 msgstr ""
 
-#: ../main.cpp:215
+#: ../main.cpp:216
 msgid ""
 "If you are a Debian user, you may have forgotten to install\n"
 "the 'tibia-data' or 'yatc-data' package."
@@ -506,7 +506,11 @@ msgstr ""
 msgid "Level"
 msgstr ""
 
-#: ../main.cpp:195
+#: ../main.cpp:436
+msgid "Loading data file failed!"
+msgstr ""
+
+#: ../main.cpp:195 ../main.cpp:437
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -935,7 +939,7 @@ msgstr ""
 msgid "Trade with"
 msgstr ""
 
-#: ../gm_gameworld.cpp:1513
+#: ../gm_gameworld.cpp:1514
 msgid "Tutorial Hint"
 msgstr ""
 
@@ -1060,7 +1064,7 @@ msgstr ""
 msgid "You are dead"
 msgstr ""
 
-#: ../main.cpp:208
+#: ../main.cpp:209
 msgid ""
 "You are missing '$$FILENAME$$'.\n"
 "We will launch Tibia Data File Fetcher which should automatically install\n"
