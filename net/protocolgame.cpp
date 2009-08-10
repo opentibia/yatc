@@ -99,14 +99,11 @@ void ProtocolGame::sendLogin(NetworkMessage* msg)
 
 	if (msg)
 	{
-	    // we got the garbage
-        // packets of form 0x1F <garbage 5 bytes>
-        // doc by thomac
-	    output.addU16(msg->getU16()); // random 2 bytes
-	    output.addU16(msg->getU16()); // 00 00
-	    output.addU8(msg->getU8()); // random 1 byte
-	    // also skip 3 more "encryption alignment" bytes
-	    //msg->getU8(); msg->getU8(); msg->getU8();
+	    // Packet of form 0x1F
+	    // A sort of timestamp and random byte(?): Server will disallow clients if it doesn't match.
+ 	    // Probably used to make sure that login packets cannot be spied from the network and replayed.
+	    output.addU32(msg->getU32()); // timestamp
+	    output.addU8(msg->getU8());   // random byte (?)
 	}
 
 	//RSA size has to be 128
