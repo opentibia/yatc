@@ -25,7 +25,7 @@
 #include <GLICT/progressbar.h>
 #include <map>
 
-#include "stackpanel.h"
+#include "../stackpanel.h"
 #include "../popup.h"
 
 class sbvlPanel_t;

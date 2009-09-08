@@ -38,7 +38,7 @@
     #define gettext(x) (x)
 #endif
 
-#include "stackpanel.h"
+#include "../stackpanel.h"
 
 class sbvlPanel_t;
 
