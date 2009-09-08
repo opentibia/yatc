@@ -24,6 +24,12 @@
 #include <GLICT/panel.h>
 #include <GLICT/progressbar.h>
 
+#ifndef _MSC_VER
+#include <stdint.h>
+#else
+#include <SDL/SDL_config.h> // uint8 and friends are conveniently defined by sdl
+#endif
+
 #include "../stackpanel.h"
 #include "../popup.h"
 

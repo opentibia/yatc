@@ -498,7 +498,7 @@ void GM_Gameworld::keyPress (int key)
 		    } else
 		    if (msg[0] == '#')
 		    {
-		        if (tolower(msg[1]) == 'y' and msg[2] == ' ')
+		        if (tolower(msg[1]) == 'y' && msg[2] == ' ')
 		        {
                     m_protocol->sendSay(SPEAK_YELL, msg.substr(3));
                     sent = true;

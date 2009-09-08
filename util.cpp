@@ -60,7 +60,7 @@ void NativeGUIError(const char* text, const char *title) {
 	#endif
 	#ifdef WIN32
 		#ifndef WINCE
-			MessageBox(HWND_DESKTOP, text, title, MB_ICONSTOP);
+			MessageBoxA(HWND_DESKTOP, text, title, MB_ICONSTOP);
 		#else
 			int a, b;
 
@@ -317,7 +317,7 @@ openurl(const char *url)
     // from a post by Gabriele Greco
     // will use later on
 #ifdef WIN32
-    ShellExecute(GetActiveWindow(),
+    ShellExecuteA(GetActiveWindow(),
          "open", url, NULL, NULL, SW_SHOWNORMAL);
 #elif defined(__APPLE__)
     char buffer[256];

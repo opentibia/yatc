@@ -27,8 +27,8 @@
 	#define gettext(x) (x)
 #endif
 #include "tutorialhints.h"
-#include "product.h"
-#include "util.h"
+#include "../product.h"
+#include "../util.h"
 UITutorialHints::UITutorialHints() {
 
     // The following text titled "Tutorial Hints" is written by Ivan Vucica.

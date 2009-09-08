@@ -28,7 +28,7 @@
 #include <cmath>
 #include "../defines.h"
 #include "../popup.h"
-#include "stackpanel.h"
+#include "../stackpanel.h"
 
 class winContainer_t : public yatcStackPanelWindow {
 public:

@@ -48,10 +48,12 @@ extern Connection* g_connection;
 
 extern bool g_running;
 
+#ifdef GMDEBUG_STACKPANEL_TEST
 #include "stackpanel.h"
 #define YSPWINDOWS 5
 static yatcStackPanel yatcstackpanel;
 static glictWindow yspwTest[YSPWINDOWS];
+#endif
 
 #ifdef SDLTTF_EXPERIMENT
 #warning Compiling with SDL_ttf test. If you dont have SDL_ttf library, undefine SDLTTF_EXPERIMENT.
@@ -252,7 +254,8 @@ GM_Debug::GM_Debug()
     grid.addItem("Sure?", NULL, NULL);
     grid.setOnClick(cb3);
 
-    desktop.AddObject(&yatcstackpanel);
+#ifdef GMDEBUG_STACKPANEL_TEST
+	desktop.AddObject(&yatcstackpanel);
     yatcstackpanel.SetPos(400,100);
     yatcstackpanel.SetHeight(200);
     yatcstackpanel.SetWidth(100);
@@ -264,7 +267,7 @@ GM_Debug::GM_Debug()
         yspwTest[i].SetCaption(s.str().c_str());
         yatcstackpanel.AddObject(&yspwTest[i]);
     }
-
+#endif
 
     popup = NULL;
     killpopup = false;

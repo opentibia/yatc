@@ -31,7 +31,7 @@
 #include "../gamecontent/item.h"
 #include "../gamecontent/shop.h"
 #include "../skin.h"
-#include "stackpanel.h"
+#include "../stackpanel.h"
 
 #include <sstream>
 

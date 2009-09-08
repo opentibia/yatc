@@ -27,7 +27,7 @@
 #include "../gamecontent/container.h"
 #include <cmath>
 #include "../defines.h"
-#include "stackpanel.h"
+#include "../stackpanel.h"
 
 class winTrade_t: public yatcStackPanelWindow {
 public:
