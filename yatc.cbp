@@ -59,6 +59,7 @@
 				<Option object_output=".objswin\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters='&quot;debugging.bin&quot;' />
 				<Option projectLinkerOptionsRelation="1" />
 				<Compiler>
 					<Add option="-Wall" />

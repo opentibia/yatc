@@ -271,12 +271,15 @@ void MapUI::renderMap()
 		{
 		Map::DistanceEffectList& distanceEffects = Map::getInstance().getDistanceEffect(z);
 		Map::DistanceEffectList::iterator it = distanceEffects.begin();
+
+        if (distanceEffects.size()) printf("Drawing %d distance shots\n", distanceEffects.size());
 		while(it != distanceEffects.end()){
 			float flightProgress = (*it)->getFlightProgress();
 
 			if(flightProgress > 1.f){
 				delete *it;
 				distanceEffects.erase(it++);
+				printf("Removed a distance shot\n");
 			}
 			else{
 				const Position& fromPos = (*it)->getFromPos();
