@@ -142,7 +142,7 @@ public:
 
 	typedef std::list<DistanceEffect*> DistanceEffectList;
 	void addDistanceEffect(const Position& from, const Position& to, uint32_t type);
-	DistanceEffectList& getDistanceEffect(uint8_t floor) { return m_distanceEffects[floor];}
+	DistanceEffectList& getDistanceEffect(uint8_t floor) { printf("des: %d\n", m_distanceEffects[floor].size()); return m_distanceEffects[floor];}
 
 	typedef std::list<AnimatedText> AnimatedTextList;
 	void addAnimatedText(const Position& pos, uint32_t color, const std::string& text);
