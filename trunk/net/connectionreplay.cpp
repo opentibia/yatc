@@ -20,8 +20,11 @@
 
 #include <SDL/SDL.h>
 #include "connectionreplay.h"
+#include "../notifications.h"
 
-// description of purpose included in connectionreplay.h
+// description of purpose is placed in connectionreplay.h
+
+float g_replayspeed=1.;
 
 ConnectionReplay::ConnectionReplay(const std::string& file, Protocol* protocol) :
 Connection(file,0,NULL,protocol) // we don't need crypto, we'll use m_host as storage for filename, port is of no use to us, etc
@@ -82,8 +85,8 @@ void ConnectionReplay::executeNetwork()
     case STATE_CONNECTED:
     {
         //Update ticks
-        m_ticks += SDL_GetTicks() - m_lastticks;
-        m_lastticks = SDL_GetTicks();
+        m_ticks += int((SDL_GetTicks() - m_lastticks) * g_replayspeed);
+        m_lastticks = int(SDL_GetTicks() );
         printf("Ticks: %d\n", m_ticks);
 
         //Try to read messages
@@ -166,7 +169,12 @@ void ConnectionReplay::executeNetwork()
 					m_readState = READING_SIZE;
 					m_inputMessage.reset();
 
-					fread(&m_nextticks, 4, 1, m_file);
+					if (!fread(&m_nextticks, 4, 1, m_file))
+                    {
+                        Notifications::openMessageWindow(MESSAGE_INFORMATION, "Replay has ended.");
+                        closeConnectionError(ERROR_PROTOCOL_ONRECV); // just throw any error
+                        return;
+                    }
 					//m_ticks = 0; // nextticks is a delta, let's hack
 					//m_lastticks = SDL_GetTicks();
 					break;
@@ -194,6 +202,8 @@ unsigned long ConnectionReplay::getPendingInput()
             break;
         case READING_MESSAGE:
             return m_msgSize;
+            break;
+        default:
             break;
     }
     return 0;

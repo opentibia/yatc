@@ -71,6 +71,7 @@ public:
     // net/gamecontent reactions
 	virtual void onConnectionClosed();
 
+    void openMessageWindow(WindowMessage_t type, const std::string& message);
 	void onWalk();
 	void onCancelWalk();
 	void onTextMessage(MessageType_t type, const std::string& message);

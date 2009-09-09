@@ -97,7 +97,7 @@ void MapUI::renderMap()
 	int m = m_minz;
 	int sz;
 	if(pos.z > 7){ // underground
-		sz = pos.z + 3;
+		sz = MIN(pos.z + 3, 15);
 	}
 	else{
 		sz = 7;
