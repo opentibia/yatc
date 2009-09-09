@@ -1166,6 +1166,18 @@ void GM_Gameworld::onConnectionClosed()
 
 /////////////// PROTOCOL EVENTS ///////////////////////
 
+
+void GM_Gameworld::openMessageWindow(WindowMessage_t type, const std::string& text)
+{
+    std::string title;
+	if (type == MESSAGE_ERROR)
+		title=gettext("Error");
+	else
+		title=gettext("Information");
+
+	msgBox(text.c_str(), title.c_str(), &pnlConsoleContainer.txtConsoleEntry);
+}
+
 void GM_Gameworld::onVipLogin(uint32_t id)
 {
     sbvlPanel.winVIP.updateVIP(id);

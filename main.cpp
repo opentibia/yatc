@@ -90,6 +90,8 @@ FPSmanager g_fpsmgr; // for sdl_gfx's fps management functions
 
 yatcClipboard g_clipboard;
 
+extern float g_replayspeed;
+
 void onKeyDown(const SDL_Event& event)
 {
 	int key = event.key.keysym.sym;
@@ -488,6 +490,10 @@ int main(int argc, char *argv[])
 		    g_game = new GM_MainMenu();
             ProtocolGame* protocol = ProtocolConfig::createGameProtocol(850,"","","",false);
             g_connection = new ConnectionReplay(argv[1], protocol);
+            if (argc==3)
+            {
+                sscanf(argv[2], "%f", &g_replayspeed);
+            }
 
 		}
 
