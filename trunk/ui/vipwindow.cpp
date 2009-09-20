@@ -100,7 +100,7 @@ void winVIP_t::updateVIP(uint32_t id)
 
     glictPanel *p=m_entries[id];
     p->SetBGActiveness(false);
-    p->SetCaption(it->second.getName() + (isonline ? " *" : ""));
+    p->SetCaption(it->second.getName());
     p->SetCustomData(this);
     p->SetBGColor(.4,.4,.4,1.);
     if (isonline)

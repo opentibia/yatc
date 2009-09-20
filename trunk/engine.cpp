@@ -113,7 +113,6 @@ void Engine::font_color(const void* font, glictColor &col){
     YATCFont* f = (YATCFont*)font;
     f->resetColor();
     f->addColor(col.r,col.g,col.b);
-
 }
 
 
@@ -198,9 +197,9 @@ void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t 
         glictFontRender(text, font, x, y);
     else
     {
-        float r = (color % 6) / 5.;
+        float r = (color / 36) / 5.;
         float g = ((color / 6) % 6) / 5.;
-        float b = (color / 36) / 5.;
+        float b = (color % 6) / 5.;
 
         if (color!=215)
             f->addColor(r,g,b);
@@ -226,7 +225,7 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
         }
         else
         {
-            f->addColor(color.b/255, color.g/255, color.r/255); // FIXME (ivucica#1#): WTF FIXME should be RGB not BGR!?
+            f->addColor(color.r/255, color.g/255, color.b/255);
         }
 
 

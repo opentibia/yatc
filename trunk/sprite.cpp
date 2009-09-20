@@ -572,7 +572,6 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
 void Sprite::addColor(float r, float g, float b)
 {
 	register uint8_t ro, go, bo, ao;  // old rgba
-	register uint32_t pv; // pixel value
 
 	if (r > 1) r = 1;
 	if (g > 1) g = 1;
@@ -584,7 +583,6 @@ void Sprite::addColor(float r, float g, float b)
 	SDL_LockSurface(m_image);
 	SDL_LockSurface(m_coloredimage);
 
-static bool nomoredebug=false;
 	for(register int i = 0; i < m_image->w; i++){
 		for(register int j =0; j < m_image->h; j++){
 		    if (!getBasicImage()) {
@@ -593,15 +591,10 @@ static bool nomoredebug=false;
 		    if (!getBasicImage()->pixels) {
 		        printf("I don't have image's pixels!\n");
 		    }
-			SDL_GetRGBA(pv=getPixel(i,j, m_image), m_image->format, &ro, &go, &bo, &ao);
+			SDL_GetRGBA(getPixel(i,j, getBasicImage()), getBasicImage()->format, &ro, &go, &bo, &ao);
 
 			if(ao){
-				putPixel(i, j, SDL_MapRGBA(m_image->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
-
-				if ((ro*r > 50 || go*g > 50 || bo * b > 50) && ao > 0 &&  !nomoredebug) {
-				    printf("INVALID COLOR: %g %g %g %d; %g %g %g %d\n", ro*r, go*g, bo*b, ao, r, g, b, 255);
-				    nomoredebug=true;
-				}
+				putPixel(i, j, SDL_MapRGBA(m_coloredimage->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
 			}
 		}
 	}
