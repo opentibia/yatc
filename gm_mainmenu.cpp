@@ -216,28 +216,28 @@ void GM_MainMenu::keyPress (int key)
 	}
     // login assistance for login box
 	else if (!options.ui_compat) {
-		if (glictGlobals.topFocused == &winLogin.txtUsername && key == 13)
+		if (glictGlobals.topFocused == &winLogin.txtUsername && key == 13 && glictGlobals.topFocused->GetParent()->GetVisible())
 			winLogin.btnOk.Focus(NULL);
-		else if (glictGlobals.topFocused == &winLogin.txtPassword && key == 13)
+		else if (glictGlobals.topFocused == &winLogin.txtPassword && key == 13 && glictGlobals.topFocused->GetParent()->GetVisible())
 			winLogin.btnOk.Focus(NULL);
 	} else {
-		if (glictGlobals.topFocused == &winLogin.txtUsername && key == 13) {
+		if (glictGlobals.topFocused == &winLogin.txtUsername && key == 13 && glictGlobals.topFocused->GetParent()->GetVisible()) {
 			winLogin.txtPassword.Focus(NULL);
 			renderUI();
 			return;
 		}
-		else if (glictGlobals.topFocused == &winLogin.txtPassword && key == 13)
+		else if (glictGlobals.topFocused == &winLogin.txtPassword && key == 13 && glictGlobals.topFocused->GetParent()->GetVisible())
 			winLogin.btnOk.Focus(NULL);
 	}
 	if (glictGlobals.topFocused && glictGlobals.topFocused->GetParent() && (
         glictGlobals.topFocused == &winLogin.window || glictGlobals.topFocused->GetParent() == &winLogin.window) &&
-        key == 27) {
+        key == 27 && (glictGlobals.topFocused->GetVisible() && glictGlobals.topFocused->GetParent()->GetVisible())) {
         key=13;
         winCharlist.btnCancel.Focus(NULL);
         }
 
 	// login assistance for charlist
-    if (glictGlobals.topFocused == &winCharlist.lstChars) {
+    if (glictGlobals.topFocused == &winCharlist.lstChars && glictGlobals.topFocused->GetVisible()) {
         if (key == 13) {
             winCharlist.btnOk.Focus(NULL);
         } else
