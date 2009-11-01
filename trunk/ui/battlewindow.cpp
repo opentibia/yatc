@@ -77,7 +77,7 @@ void winBattle_t::update(uint32_t id)
 	for(it = entries.begin(); it != entries.end(); ++it)
 	{
 		BattleEntry* e = (*it);
-		if(e->creatureId == id)
+		if(e != NULL && e->creatureId == id)
 		{
 			int hp = Creatures::getInstance().getCreature(id)->getHealth();
 			if(hp == 0)
