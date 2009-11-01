@@ -338,6 +338,10 @@ class Connection
 		uint32_t m_sentBytes;
 		uint32_t m_recvBytes;
 
+        //For recording a replay
+		FILE* m_recordfile;
+		uint32_t m_recordstart;
+
 		//internal connection state
 		bool m_cryptoEnable;
 	    bool m_checksumEnable;

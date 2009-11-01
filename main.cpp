@@ -85,12 +85,12 @@ uint32_t g_frameTime = 0;
 uint32_t g_frameDiff = 0;
 
 int g_frames;
-
 FPSmanager g_fpsmgr; // for sdl_gfx's fps management functions
-
 yatcClipboard g_clipboard;
+std::string g_recordfilename="debugrecord.rec";
 
 extern float g_replayspeed;
+
 
 void onKeyDown(const SDL_Event& event)
 {

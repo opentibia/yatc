@@ -57,7 +57,6 @@ bool ProtocolGame78::onRecv(NetworkMessage& msg)
 		MSG_READ_U8(cmd);
 		addServerCmd(cmd);
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Received packet 0x%02x\n", cmd);
-		// TODO (nfries88): move switch statement to a virtual function for simpler expansion
 		bool parsed = parsePacket(cmd,msg);
 		if (!parsed) { // i wanted to avoid putting brackets around everything.
 		    DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Did not handle 0x%02x in first step, retrying\n", cmd);

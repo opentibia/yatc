@@ -56,6 +56,7 @@ const char RSAKey_otserv[] = "10912013296739942927886096050899554152823750290279
 const char RSAKey_cip[]    = "124710459426827943004376449897985582167801707960697037164044904862948569380850421396904597686953877022394604239428185498284169068581802277612081027966724336319448537811441719076484340922854929273517308661370727105382899118999403808045846444647284499123164879035103627004668521005328367415259939915284902061793";
 
 extern Connection* g_connection;
+extern std::string g_recordfilename;
 
 ProtocolConfig::ProtocolConfig()
 {
@@ -404,6 +405,9 @@ m_inputMessage(NetworkMessage::CAN_READ)
 	m_sentBytes = 0;
 	m_recvBytes = 0;
 
+	m_recordstart=0;
+	m_recordfile=NULL;
+
 }
 
 Connection::~Connection()
@@ -435,6 +439,12 @@ void Connection::closeConnection()
 		m_socket = INVALID_SOCKET;
 	}
 	m_state = STATE_CLOSED;
+	if(m_recordfile)
+	{
+	    fclose(m_recordfile);
+	    m_recordstart=0;
+	    m_recordfile=NULL;
+	}
 }
 
 void Connection::executeNetwork()
@@ -544,6 +554,13 @@ void Connection::executeNetwork()
 				//connection succeeded
 				m_state = STATE_CONNECTED;
 
+				// record starts now
+				if(g_recordfilename.size())
+				{
+                    m_recordstart=SDL_GetTicks();
+                    m_recordfile=yatc_fopen(g_recordfilename.c_str(),"wb");
+				}
+
 				//raise onConnect event
                 m_protocol->onConnect();
 			}
@@ -643,6 +660,19 @@ void Connection::executeNetwork()
                         // let's just cut the cr/\p
                         /*uint16_t size = */m_inputMessage.getU16();
 					}
+
+					if(m_recordfile)
+					{
+					    uint32_t timestamp=SDL_GetTicks()-m_recordstart;
+					    uint16_t size=m_inputMessage.getReadSize();
+
+					    fwrite(&timestamp, 4, 1, m_recordfile);
+					    fwrite(&size,2,1,m_recordfile);
+					    fwrite(m_inputMessage.getReadBuffer(), m_inputMessage.getReadSize(), 1, m_recordfile);
+
+					}
+
+
 					//raise onRecv event
 					if(!m_protocol->onRecv(m_inputMessage)){
 						closeConnectionError(ERROR_PROTOCOL_ONRECV);

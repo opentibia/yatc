@@ -68,7 +68,6 @@ uint32_t NetworkMessage::getU32()
 		return v;
 	}
 	else{
-		printf("cant read four bytes\n");
 		return 0;
 	}
 }
