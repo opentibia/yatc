@@ -104,6 +104,8 @@ public:
 
     const Position& getPos() const { return m_position; }
 
+    bool isTileBlocking() const;
+
     bool blockPath() const;
 
 private:

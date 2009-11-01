@@ -26,6 +26,7 @@
 #include "globalvars.h"
 #include "../objects.h"
 #include "../notifications.h"
+#include "debugprint.h"
 
 #include "../util.h"
 
@@ -189,6 +190,35 @@ int Tile::getExtendedUseStackpos() const
 	if(lastCreaturePos == 0)
 		return lastPos;
 	return lastPos;
+}
+
+bool Tile::isTileBlocking() const
+{
+	int pos = 0;
+	int lastPos = 0;
+	int lastCreaturePos = 0;
+	for(;pos != getThingCount(); ++pos) {
+		const Thing* thing = getThingByStackPos(pos);
+		if(!thing) {
+			return 0;
+		}
+
+		const Item* item = thing->getItem();
+
+		if((item != NULL)||(thing->getCreature() != NULL)){
+			const Thing* lastThing = getThingByStackPos(lastPos);
+
+
+			if(item && item->isBlocking()) {
+				return true;
+			}
+
+
+		}
+	}
+
+    return false;
+
 }
 
 const Item* Tile::getGround() const
