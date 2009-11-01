@@ -39,6 +39,7 @@ public:
 	bool isGroundTile() const { return m_it->ground; }
 
 	bool isRune() const { return m_it->rune; }
+	bool isBlocking() const { return m_it->blockSolid; }
 	bool isStackable() const { return m_it->stackable; }
 	bool isSplash() const { return m_it->splash; }
 	bool isFluidContainer() const { return m_it->fluidContainer; }

@@ -742,8 +742,83 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 			if (key.mod & KMOD_CTRL)
 				m_protocol->sendTurn(dir);
 			else {
-				Creatures::getInstance().getPlayer()->startWalk();
-				m_protocol->sendMove(dir);
+
+			    //ORMIN FIX - Check if tile has block solid
+                Position gotile_position = Creatures::getInstance().getPlayer()->getCurrentPos();
+
+
+                // FIXME (ivucica#3#): perhaps we should have something like getNeighbourTile(position, direction)?
+                switch(dir)
+                {
+
+
+                    case DIRECTION_NORTH:
+
+                    gotile_position.y -= 1;
+                    break;
+
+                    case DIRECTION_SOUTH:
+
+                    gotile_position.y += 1;
+                    break;
+
+                    case DIRECTION_WEST:
+
+                    gotile_position.x -= 1;
+                    break;
+
+                    case DIRECTION_EAST:
+
+                    gotile_position.x += 1;
+                    break;
+
+
+                    case DIRECTION_NW:
+
+                    gotile_position.y += 1;
+                    gotile_position.x -= 1;
+
+                    break;
+
+                    case DIRECTION_NE:
+
+                    gotile_position.y += 1;
+                    gotile_position.x += 1;
+
+                    break;
+
+                    case DIRECTION_SW:
+
+                    gotile_position.y -= 1;
+                    gotile_position.x -= 1;
+
+                    break;
+
+                    case DIRECTION_SE:
+
+                    gotile_position.y -= 1;
+                    gotile_position.x += 1;
+
+                    break;
+
+
+                }
+
+
+
+                const Tile* gotile = Map::getInstance().getTile(gotile_position);
+                if(!gotile->isTileBlocking())
+                {
+                    Creatures::getInstance().getPlayer()->startWalk();
+                    m_protocol->sendMove(dir);
+                }
+                else
+                {
+                    onTextMessage(MSG_STATUS_SMALL,gettext("Sorry, not possible"));
+                }
+
+                //End of Ormin FIX
+
 			}
 
 		}
