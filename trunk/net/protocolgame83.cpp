@@ -155,6 +155,9 @@ Thing* ProtocolGame83::internalGetThing(NetworkMessage& msg)
 		creature->setSkull(msg.getU8());
 		creature->setShield(msg.getU8());
 
+		if(getVersion()>=CLIENT_VERSION_853)
+            msg.getU8(); // war symbol
+
 		return creature;
 	}
 	else if(thingId == 0x0063){

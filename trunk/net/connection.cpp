@@ -44,6 +44,7 @@
 #include "protocolgame841.h"
 #include "protocolgame842.h"
 #include "protocolgame85.h"
+#include "protocolgame853.h"
 #include "../debugprint.h"
 #include "../util.h" // yatc_fopen
 
@@ -120,6 +121,9 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	case CLIENT_VERSION_850:
 		m_clientVersion = CLIENT_VERSION_850;
 		break;
+    case CLIENT_VERSION_853:
+        m_clientVersion = CLIENT_VERSION_853;
+        break;
 	case CLIENT_VERSION_AUTO:
 		m_clientVersion = detectVersion();
 		break;
@@ -208,6 +212,13 @@ ClientVersion_t ProtocolConfig::detectVersion()
         picSignature == 0x4A2FA8D6)
         return CLIENT_VERSION_850;
 
+
+    if (datSignature == 0x4AE97492  &&
+        sprSignature == 0x4ACB5230  &&
+        picSignature == 0x4AE5C3D3)
+        return CLIENT_VERSION_853;
+
+
 	return CLIENT_VERSION_AUTO; // failure
 }
 void ProtocolConfig::setVersionOverride(uint16_t version) {
@@ -294,6 +305,9 @@ ProtocolGame* ProtocolConfig::createGameProtocol(int version, const std::string&
 		break;
 	case CLIENT_VERSION_850:
 		protocol = new ProtocolGame85(accountname, password, name, isGM);
+		break;
+	case CLIENT_VERSION_853:
+		protocol = new ProtocolGame853(accountname, password, name, isGM);
 		break;
 	default:
 		return NULL;

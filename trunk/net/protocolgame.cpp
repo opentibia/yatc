@@ -433,7 +433,11 @@ bool ProtocolGame::parseTileAddThing(NetworkMessage& msg)
         RAISE_PROTOCOL_ERROR("Tile Add - !tile");
     }
 
-    if(!tile->addThing(thing, true)){
+    bool pushThing=true;
+    if(getVersion()>=CLIENT_VERSION_853)
+        pushThing=false; // from 8.53 onwards, creatures need to be added with pushThing=false - http://otfans.net/project.php?issueid=666
+
+    if(!tile->addThing(thing, pushThing)){
         RAISE_PROTOCOL_ERROR("Tile Add - addThing");
     }
     Notifications::onTileUpdate(tilePos);
@@ -550,7 +554,12 @@ bool ProtocolGame::parseCreatureMove(NetworkMessage& msg)
     if(!tile){
         RAISE_PROTOCOL_ERROR("Creature move - !tile new");
     }
-    if(!tile->addThing(creature, true)){
+
+    bool pushThing=true;
+    if(getVersion()>=CLIENT_VERSION_853)
+        pushThing=false; // from 8.53 onwards, creatures need to be added with pushThing=false - http://otfans.net/project.php?issueid=666
+
+    if(!tile->addThing(creature, pushThing)){
         RAISE_PROTOCOL_ERROR("Creature move - addThing");
     }
 
@@ -1894,7 +1903,7 @@ bool ProtocolGame::setTileDescription(NetworkMessage& msg, const Position& pos)
 				return false;
 			}
 			//and add to the tile
-			if(!tile->addThing(thing)) {
+			if(!tile->addThing(thing)) { // no need to update for 8.53, pushThing is already false by default = http://otfans.net/project.php?issueid=666
 			    printf("Failed to add thing\n");
 				return false;
 			}
