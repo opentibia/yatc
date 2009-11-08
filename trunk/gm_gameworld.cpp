@@ -748,6 +748,8 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 
 
                 // FIXME (ivucica#3#): perhaps we should have something like getNeighbourTile(position, direction)?
+                // FIXME (Ormin): yeah, probably
+
                 switch(dir)
                 {
 
@@ -775,28 +777,28 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 
                     case DIRECTION_NW:
 
-                    gotile_position.y += 1;
+                    gotile_position.y -= 1;
                     gotile_position.x -= 1;
 
                     break;
 
                     case DIRECTION_NE:
 
-                    gotile_position.y += 1;
+                    gotile_position.y -= 1;
                     gotile_position.x += 1;
 
                     break;
 
                     case DIRECTION_SW:
 
-                    gotile_position.y -= 1;
+                    gotile_position.y += 1;
                     gotile_position.x -= 1;
 
                     break;
 
                     case DIRECTION_SE:
 
-                    gotile_position.y -= 1;
+                    gotile_position.y += 1;
                     gotile_position.x += 1;
 
                     break;
@@ -807,7 +809,7 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 
 
                 const Tile* gotile = Map::getInstance().getTile(gotile_position);
-                if(!gotile->isTileBlocking())
+                if(!gotile->isTileBlocking() && (Creatures::getInstance().getPlayer()->getWalkState() == 1 && !Creatures::getInstance().getPlayer()->isPreWalking()))
                 {
                     Creatures::getInstance().getPlayer()->startWalk();
                     m_protocol->sendMove(dir);
