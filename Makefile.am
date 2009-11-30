@@ -14,10 +14,10 @@ endif
 yatc.ico.png: yatc.ico
 	convert yatc.ico yatc.ico.png
 
-all-am: yatc.ico.png
-clean-am:
+all: all-am yatc.ico.png
+clean: clean-am
 	-rm -f yatc.ico.png
-distclean-am:
+distclean: distclean-am
 	-rm -f yatc.ico.png
 
 #SUBDIRS = net gamecontent ui

@@ -809,7 +809,7 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 
 
                 const Tile* gotile = Map::getInstance().getTile(gotile_position);
-                if(!gotile->isTileBlocking() && (Creatures::getInstance().getPlayer()->getWalkState() == 1 && !Creatures::getInstance().getPlayer()->isPreWalking()))
+                if(gotile && !gotile->isTileBlocking() && (Creatures::getInstance().getPlayer()->getWalkState() == 1 && !Creatures::getInstance().getPlayer()->isPreWalking()))
                 {
                     Creatures::getInstance().getPlayer()->startWalk();
                     m_protocol->sendMove(dir);

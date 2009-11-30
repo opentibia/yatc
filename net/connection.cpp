@@ -683,7 +683,8 @@ void Connection::executeNetwork()
 					    fwrite(&timestamp, 4, 1, m_recordfile);
 					    fwrite(&size,2,1,m_recordfile);
 					    fwrite(m_inputMessage.getReadBuffer(), m_inputMessage.getReadSize(), 1, m_recordfile);
-
+                                            fflush(m_recordfile);
+                                           
 					}
 
 
