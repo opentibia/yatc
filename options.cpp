@@ -458,6 +458,9 @@ void Options::Load()
         case 853:
             protocol = CLIENT_VERSION_853;
             break;
+        case 854:
+            protocol = CLIENT_VERSION_854;
+            break;
     }
 
 	// [game]

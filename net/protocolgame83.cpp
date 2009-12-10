@@ -156,7 +156,11 @@ Thing* ProtocolGame83::internalGetThing(NetworkMessage& msg)
 		creature->setShield(msg.getU8());
 
 		if(getVersion()>=CLIENT_VERSION_853)
-            msg.getU8(); // war symbol
+		{
+			creature->setEmblem(msg.getU8());
+			if(thingId == 0x0061) // only in packet type 0x61, else the client debugs
+				creature->setImpassable(msg.getU8() == 0x01); // impassable
+		}
 
 		return creature;
 	}

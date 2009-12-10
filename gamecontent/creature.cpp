@@ -42,6 +42,8 @@ Creature::Creature()
 	m_speed = 0;
 	m_skull = 0;
 	m_shield = 0;
+	m_emblem = 0;
+	m_impassable = true;
 
 	m_squareColor = 0;
 	m_squareStartTime = 0;

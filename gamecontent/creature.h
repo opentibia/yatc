@@ -85,6 +85,12 @@ public:
 	void setShield(uint32_t shield) { m_shield = shield;}
 	uint32_t getShield() const { return m_shield;}
 
+	void setEmblem(uint32_t emblem) { m_emblem = emblem;}
+	uint32_t getEmblem() const { return m_emblem;}
+
+	void setImpassable(bool impassable) { m_impassable = impassable;}
+	bool isImpassable() const { return m_impassable;}
+
 	const Position& getCurrentPos() const { return m_currentPos; }
 	void setCurrentPos(const Position& pos) { m_currentPos = pos; }
 
@@ -105,6 +111,8 @@ protected:
 	uint32_t m_speed;
 	uint32_t m_skull;
 	uint32_t m_shield;
+	uint32_t m_emblem;
+	bool m_impassable;
 
 	uint32_t m_squareColor;
 	uint32_t m_squareStartTime;

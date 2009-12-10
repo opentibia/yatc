@@ -197,15 +197,16 @@ bool Tile::isTileBlocking() const
 	int pos = 0;
 	int lastPos = 0;
 	int lastCreaturePos = 0;
-	for(;pos != getThingCount(); ++pos) {
+	for(; pos != getThingCount(); ++pos) {
 		const Thing* thing = getThingByStackPos(pos);
 		if(!thing) {
 			return 0;
 		}
 
 		const Item* item = thing->getItem();
+		const Creature* creature = thing->getCreature();
 
-		if((item != NULL)||(thing->getCreature() != NULL)){
+		if((item != NULL)||(creature != NULL)) {
 			const Thing* lastThing = getThingByStackPos(lastPos);
 
 
@@ -213,6 +214,9 @@ bool Tile::isTileBlocking() const
 				return true;
 			}
 
+			if(creature && creature->isImpassable()) {
+				return true;
+			}
 
 		}
 	}
