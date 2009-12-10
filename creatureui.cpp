@@ -213,7 +213,9 @@ oRGBA CreatureUI::getHealthColor(int hp)
 void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 {
 	// skulls: (54, 225), each skull 11x11, green yellow white red black
-	// shields: (54, 236), each shield 11x11, yellow blue whiteyellow whiteblue yellowsharedexp yellownosharedexpblink yellownosharedexp bluenosharedexpblink bluenosharedexp
+	// shields: (54, 236), each shield 11x11, yellow blue whiteyellow whiteblue
+	// shields: (76, 214), each shield 11x11, yellowsharedexp bluesharedexp
+	// shields: (168, 261), each shield 11x11, yellownosharedexp (+ blinking) bluenosharedexp (+ blinking)
 	// emblems: (287, 211), each emblem 11x11, green red blue
 
 	Creature* n = (Creature*)this;
