@@ -209,7 +209,6 @@ bool Tile::isTileBlocking() const
 		if((item != NULL)||(creature != NULL)) {
 			const Thing* lastThing = getThingByStackPos(lastPos);
 
-
 			if(item && item->isBlocking()) {
 				return true;
 			}
@@ -221,8 +220,7 @@ bool Tile::isTileBlocking() const
 		}
 	}
 
-    return false;
-
+	return false;
 }
 
 const Item* Tile::getGround() const

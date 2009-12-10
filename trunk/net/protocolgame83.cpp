@@ -157,9 +157,10 @@ Thing* ProtocolGame83::internalGetThing(NetworkMessage& msg)
 
 		if(getVersion()>=CLIENT_VERSION_853)
 		{
-			creature->setEmblem(msg.getU8());
-			if(thingId == 0x0061) // only in packet type 0x61, else the client debugs
-				creature->setImpassable(msg.getU8() == 0x01); // impassable
+			if(thingId == 0x0061) // emblem is sent only in packet type 0x61
+				creature->setEmblem(msg.getU8());
+
+			creature->setImpassable(msg.getU8() == 0x01);
 		}
 
 		return creature;
