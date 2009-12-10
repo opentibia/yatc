@@ -112,6 +112,13 @@ enum PartyShields_t{
 	SHIELD_YELLOW_NOSHAREDEXP = 10
 };
 
+enum GuildEmblems_t{
+	EMBLEM_NONE = 0,
+	EMBLEM_GREEN = 1,
+	EMBLEM_RED = 2,
+	EMBLEM_BLUE = 3
+};
+
 enum MessageType_t{
 	MSG_STATUS_CONSOLE_ORNG = 0x11, /*Orange message in the console (TODO (ivucica#1#): check with real client if it appears in game window and where)*/
 	MSG_STATUS_WARNING      = 0x12, /*Red message in game window and in the console*/

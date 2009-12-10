@@ -402,6 +402,11 @@ void pnlInventory_t::paintIcons(glictRect *real, glictRect *clipped, glictContai
 			break;
 		default: break;
 	}
+
+	if(player->getEmblem() != EMBLEM_NONE) { // our player shouldn't have other emblem than green
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 251, 218, 9, 9);
+		posx += 10;
+	}
 }
 
 void pnlInventory_t::onSetFightModes(ChoiceGrid::Item *parent, ChoiceGrid::Item *olditem)
