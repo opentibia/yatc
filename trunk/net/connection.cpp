@@ -45,6 +45,7 @@
 #include "protocolgame842.h"
 #include "protocolgame85.h"
 #include "protocolgame853.h"
+#include "protocolgame854.h"
 #include "../debugprint.h"
 #include "../util.h" // yatc_fopen
 
@@ -121,9 +122,12 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 	case CLIENT_VERSION_850:
 		m_clientVersion = CLIENT_VERSION_850;
 		break;
-    case CLIENT_VERSION_853:
-        m_clientVersion = CLIENT_VERSION_853;
-        break;
+	case CLIENT_VERSION_853:
+		m_clientVersion = CLIENT_VERSION_853;
+		break;
+	case CLIENT_VERSION_854:
+		m_clientVersion = CLIENT_VERSION_854;
+		break;
 	case CLIENT_VERSION_AUTO:
 		m_clientVersion = detectVersion();
 		break;
@@ -131,7 +135,6 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 		//ASSERT(0);
 		NativeGUIError("This client version is not currently supported.", "Sorry");
 		return;
-		break;
 	}
 	m_datSignature = this->readSignature("Tibia.dat");
 	m_sprSignature = this->readSignature("Tibia.spr");
@@ -218,6 +221,10 @@ ClientVersion_t ProtocolConfig::detectVersion()
         picSignature == 0x4AE5C3D3)
         return CLIENT_VERSION_853;
 
+    if (datSignature == 0x4B1E2CAA  &&
+        sprSignature == 0x4B1E2C87  &&
+        picSignature == 0x4AE5C3D3)
+        return CLIENT_VERSION_854;
 
 	return CLIENT_VERSION_AUTO; // failure
 }
@@ -308,6 +315,9 @@ ProtocolGame* ProtocolConfig::createGameProtocol(int version, const std::string&
 		break;
 	case CLIENT_VERSION_853:
 		protocol = new ProtocolGame853(accountname, password, name, isGM);
+		break;
+	case CLIENT_VERSION_854:
+		protocol = new ProtocolGame854(accountname, password, name, isGM);
 		break;
 	default:
 		return NULL;

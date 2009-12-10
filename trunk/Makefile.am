@@ -25,19 +25,19 @@ distclean: distclean-am
 yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		objects.cpp  \
 		engine.cpp gamemode.cpp main.cpp options.cpp spritesdl.cpp \
-		 gm_debug.cpp notifications.cpp sprite.cpp util.cpp \
+		gm_debug.cpp notifications.cpp sprite.cpp util.cpp \
 		sprdata.c font.cpp confighandler.cpp gm_gameworld.cpp \
 		skin.cpp thingui.cpp itemui.cpp creatureui.cpp effectui.cpp \
 		distanceui.cpp mapui.cpp console.cpp popup.cpp \
 		bigint.cpp automap.cpp choicegrid.cpp stackpanel.cpp \
 		statusmsg.cpp clipboard.cpp \
 		\
-		net/connectionreplay.cpp \
-		net/connection.cpp net/networkmessage.cpp net/protocolgame80.cpp \
-		net/protocolgame81.cpp net/protocolgame811.cpp net/protocolgame82.cpp \
-		net/protocolgame821.cpp net/protocolgame822.cpp net/protocolgame83.cpp \
-		net/protocolgame831.cpp net/protocolgame84.cpp net/protocolgame841.cpp \
-		net/protocolgame842.cpp net/protocolgame85.cpp net/protocolgame853.cpp \
+		net/connectionreplay.cpp net/connection.cpp net/networkmessage.cpp \
+		net/protocolgame80.cpp net/protocolgame81.cpp net/protocolgame811.cpp \
+		net/protocolgame82.cpp net/protocolgame821.cpp net/protocolgame822.cpp \
+		net/protocolgame83.cpp net/protocolgame831.cpp net/protocolgame84.cpp \
+		net/protocolgame841.cpp net/protocolgame842.cpp net/protocolgame85.cpp \
+		net/protocolgame853.cpp net/protocolgame854.cpp \
 		\
 		net/protocolgame78.cpp \
 		\
