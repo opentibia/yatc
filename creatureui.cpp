@@ -212,15 +212,16 @@ oRGBA CreatureUI::getHealthColor(int hp)
 
 void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 {
-	// skulls: (54, 225), each skull 11x11, green yellow white red
-	// shields: (54, 236), each shield 11x11, yellow blue whiteyellow whiteblue
+	// skulls: (54, 225), each skull 11x11, green yellow white red black
+	// shields: (54, 236), each shield 11x11, yellow blue whiteyellow whiteblue yellowsharedexp yellownosharedexpblink yellownosharedexp bluenosharedexpblink bluenosharedexp
+	// emblems: (287, 211), each emblem 11x11, green red blue
 
 	Creature* n = (Creature*)this;
 	float walkoffx = 0.f, walkoffy = 0.f;
 
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-	x+=walkoffx;
+	x+=walkoffx+11;
 	y+=walkoffy-10;
 	uint32_t skull =  n->getSkull();
 	switch (skull) {
@@ -244,44 +245,58 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 	}
 
 	uint32_t shield =  n->getShield();
-	switch(shield){
+	switch(shield) {
 		case SHIELD_YELLOW:
-			g_engine->getUISprite()->Blit(x+11, y-10, 54, 236, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 54, 236, 11, 11);
 			break;
 		case SHIELD_BLUE:
-			g_engine->getUISprite()->Blit(x+11, y-10, 65, 236, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 65, 236, 11, 11);
 			break;
 		case SHIELD_WHITEYELLOW:
-			g_engine->getUISprite()->Blit(x+11, y-10, 76, 236, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 76, 236, 11, 11);
 			break;
 		case SHIELD_WHITEBLUE:
-			g_engine->getUISprite()->Blit(x+11, y-10, 87, 236, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 87, 236, 11, 11);
 			break;
 
 		case SHIELD_YELLOW_SHAREDEXP:
-			g_engine->getUISprite()->Blit(x+11, y-10, 76, 214, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 76, 214, 11, 11);
 			break;
 		case SHIELD_BLUE_SHAREDEXP:
-			g_engine->getUISprite()->Blit(x+11, y-10, 87, 214, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 87, 214, 11, 11);
 			break;
 		case SHIELD_YELLOW_NOSHAREDEXP_BLINK:
 			// TODO (nfries88): actually make this blink...
-			g_engine->getUISprite()->Blit(x+11, y-10, 168, 261, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 168, 261, 11, 11);
 			break;
 		case SHIELD_YELLOW_NOSHAREDEXP:
-			g_engine->getUISprite()->Blit(x+11, y-10, 168, 261, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 168, 261, 11, 11);
 			break;
 		case SHIELD_BLUE_NOSHAREDEXP_BLINK:
 			// TODO (nfries88): actually make this blink...
-			g_engine->getUISprite()->Blit(x+11, y-10, 179, 261, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 179, 261, 11, 11);
 			break;
 		case SHIELD_BLUE_NOSHAREDEXP:
-			g_engine->getUISprite()->Blit(x+11, y-10, 179, 261, 11, 11);
+			g_engine->getUISprite()->Blit(x-11, y-10, 179, 261, 11, 11);
 			break;
 		default:
 			break;
 	}
 
+	uint32_t emblem =  n->getEmblem();
+	switch(emblem) {
+		case EMBLEM_GREEN:
+			g_engine->getUISprite()->Blit(x, y+1, 287, 218, 11, 11);
+			break;
+		case EMBLEM_RED:
+			g_engine->getUISprite()->Blit(x, y+1, 298, 218, 11, 11);
+			break;
+		case EMBLEM_BLUE:
+			g_engine->getUISprite()->Blit(x, y+1, 309, 218, 11, 11);
+			break;
+		default:
+			break;
+	}
 }
 
 void CreatureUI::getWalkOffset(float &walkoffx, float &walkoffy, float scale) const
