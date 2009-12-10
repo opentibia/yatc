@@ -737,90 +737,63 @@ bool GM_Gameworld::specKeyPress (const SDL_keysym& key)
 			if(lookdir == DIRECTION_NE || lookdir == DIRECTION_SE) {
 				lookdir = DIRECTION_EAST;
 			}
-			Creatures::getInstance().getPlayer()->setLookDir(lookdir);
 
+			Creatures::getInstance().getPlayer()->setLookDir(lookdir);
 			if (key.mod & KMOD_CTRL)
 				m_protocol->sendTurn(dir);
 			else {
+				//ORMIN FIX - Check if tile has block solid
+		                Position gotile_position = Creatures::getInstance().getPlayer()->getCurrentPos();
+                		// FIXME (ivucica#3#): perhaps we should have something like getNeighbourTile(position, direction)?
+		                // FIXME (Ormin): yeah, probably
+				switch(dir) {
+					case DIRECTION_NORTH:
+						gotile_position.y -= 1;
+						break;
 
-			    //ORMIN FIX - Check if tile has block solid
-                Position gotile_position = Creatures::getInstance().getPlayer()->getCurrentPos();
+					case DIRECTION_SOUTH:
+						gotile_position.y += 1;
+						break;
 
+					case DIRECTION_WEST:
+						gotile_position.x -= 1;
+						break;
 
-                // FIXME (ivucica#3#): perhaps we should have something like getNeighbourTile(position, direction)?
-                // FIXME (Ormin): yeah, probably
+					case DIRECTION_EAST:
+						gotile_position.x += 1;
+						break;
 
-                switch(dir)
-                {
+					case DIRECTION_NW:
+						gotile_position.y -= 1;
+						gotile_position.x -= 1;
+						break;
 
+					case DIRECTION_NE:
+						gotile_position.y -= 1;
+						gotile_position.x += 1;
+						break;
 
-                    case DIRECTION_NORTH:
+					case DIRECTION_SW:
+						gotile_position.y += 1;
+						gotile_position.x -= 1;
+						break;
 
-                    gotile_position.y -= 1;
-                    break;
+					case DIRECTION_SE:
+						gotile_position.y += 1;
+						gotile_position.x += 1;
+						break;
+				}
 
-                    case DIRECTION_SOUTH:
+				const Tile* gotile = Map::getInstance().getTile(gotile_position);
+				if(gotile && !gotile->isTileBlocking() && (Creatures::getInstance().getPlayer()->getWalkState() == 1 && !Creatures::getInstance().getPlayer()->isPreWalking()))
+				{
+					Creatures::getInstance().getPlayer()->startWalk();
+					m_protocol->sendMove(dir);
+				}
+				else
+					onTextMessage(MSG_STATUS_SMALL,gettext("Sorry, not possible"));
 
-                    gotile_position.y += 1;
-                    break;
-
-                    case DIRECTION_WEST:
-
-                    gotile_position.x -= 1;
-                    break;
-
-                    case DIRECTION_EAST:
-
-                    gotile_position.x += 1;
-                    break;
-
-
-                    case DIRECTION_NW:
-
-                    gotile_position.y -= 1;
-                    gotile_position.x -= 1;
-
-                    break;
-
-                    case DIRECTION_NE:
-
-                    gotile_position.y -= 1;
-                    gotile_position.x += 1;
-
-                    break;
-
-                    case DIRECTION_SW:
-
-                    gotile_position.y += 1;
-                    gotile_position.x -= 1;
-
-                    break;
-
-                    case DIRECTION_SE:
-
-                    gotile_position.y += 1;
-                    gotile_position.x += 1;
-
-                    break;
-
-
-                }
-
-
-
-                const Tile* gotile = Map::getInstance().getTile(gotile_position);
-                if(gotile && !gotile->isTileBlocking() && (Creatures::getInstance().getPlayer()->getWalkState() == 1 && !Creatures::getInstance().getPlayer()->isPreWalking()))
-                {
-                    Creatures::getInstance().getPlayer()->startWalk();
-                    m_protocol->sendMove(dir);
-                }
-                else
-                {
-                    onTextMessage(MSG_STATUS_SMALL,gettext("Sorry, not possible"));
-                }
-
-                //End of Ormin FIX
-
+				//End of Ormin FIX
 			}
 
 		}
