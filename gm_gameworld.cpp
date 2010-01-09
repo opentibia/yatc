@@ -593,14 +593,15 @@ void GM_Gameworld::keyPress (int key)
 					setActiveConsole((*it));
 			}
 		}
-		else if (key == 22) // CTRL+C
+		else if (key == 22) // CTRL+V
 		{
 			std::string text = g_clipboard.getText();
 			glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
 			if(textbox) textbox->SetCaption(textbox->GetCaption()+text);
+			updateScene();
 			return;
 		}
-		else if (key == 3) // CTRL+V
+		else if (key == 3) // CTRL+C
 		{
 			// we can't currently select anything, so how could we copy?
 			return;

@@ -207,6 +207,7 @@ void GM_MainMenu::keyPress (int key)
 		std::string text = g_clipboard.getText();
 		glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
 		if(textbox) textbox->SetCaption(textbox->GetCaption()+text);
+		renderUI();
 		return;
 	}
 	else if(key == 3)
