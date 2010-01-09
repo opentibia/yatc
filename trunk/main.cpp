@@ -473,6 +473,11 @@ int main(int argc, char *argv[])
 			g_engine = new EngineSDL;
 		}
 
+		// NOTE (nfries88): Make sure the window is sized as per the options
+		int w = MAX(options.w, 656);
+		int h = MAX(options.h, 520);
+		g_engine->doResize(w, h);
+
 
 		DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Loading skin...\n");
 		g_skin.loadSkin();
