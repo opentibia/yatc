@@ -332,7 +332,7 @@ GM_Gameworld::~GM_Gameworld ()
 
 void GM_Gameworld::doResize(float w, float h)
 {
-	#if (GLICT_APIREV>=95)
+    #if (GLICT_APIREV>=95)
 	// just to make sure right-side is as expected.
 	updateRightSide();
     #endif
@@ -352,9 +352,9 @@ void GM_Gameworld::doResize(float w, float h)
 
 	pnlTraffic.SetPos(w-200, 0);
 
-	pnlConsoleContainer.SetPos(0,h-150-18);
-	pnlConsoleContainer.SetWidth(w-172-4);
-	pnlConsoleContainer.SetHeight(150+18);
+	pnlConsoleContainer.SetPos(0,h-168);
+	pnlConsoleContainer.SetWidth(w-176);
+	pnlConsoleContainer.SetHeight(168);
 
 	#if (GLICT_APIREV>=95)
 	// update right side with changes
