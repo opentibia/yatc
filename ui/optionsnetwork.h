@@ -83,6 +83,7 @@ public:
 
 		window.AddObject(&txtServer);
 		txtServer.SetCaption("");
+		txtServer.SetAllowedChars(" !\"#$%/()=?*'+<>[]{}`~\\|;:_,.-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 		txtServer.SetPos(16, 27);
 		txtServer.SetWidth(200);
 		txtServer.SetHeight(13);
@@ -99,6 +100,7 @@ public:
 
 		window.AddObject(&txtPort);
 		txtPort.SetCaption("");
+		txtPort.SetAllowedChars("0123456789");
 		txtPort.SetPos(16, 60);
 		txtPort.SetWidth(200);
 		txtPort.SetHeight(13);

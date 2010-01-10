@@ -25,8 +25,7 @@
 #include "gm_gameworld.h"
 extern Connection* g_connection;
 
-std::list<std::string> g_recFiles;
-std::list<std::string>::iterator g_recIt;
+extern std::string g_recordfilename;
 
 #include "gamecontent/container.h"
 #include "gamecontent/shop.h"
@@ -122,13 +121,25 @@ void Notifications::onProtocolError(bool fatal)
         else
             s << "There was a protocol warning: " << error << std::endl;
         s << std::endl;
-        s << "If you use GNU/Linux, please see your terminal for more information." << std::endl;
-        s << "If you use Windows, please see stdout.txt for more information." << std::endl;
+#if !defined(WIN32) && !defined(__APPLE__)
+        s << "You use GNU/Linux version: please see your terminal for more information." << std::endl;
+#endif
+#if defined(WIN32)
+        s << "You use Windows version: please see stdout.txt for more information." << std::endl;
+#endif
+#if defined(__APPLE__)
+		s << "You use MacOSX: please see Console.app (in /Applications/Utilities) for more information." << std::endl;
+#endif
         s << std::endl;
         s << "Report this bug if you are able to reproduce it." << std::endl;
         s << "Tell us what we have to do to reproduce the bug, and provide us with" << std::endl;
-        s << "last 20 lines of stdout.txt, or the output on the terminal, depending" << std::endl;
-        s << "on your operating system." << std::endl;
+        s << "last 20 lines of output as described above." << std::endl;
+		s << std::endl;
+		s << "In your report please also include debug record file " << g_recordfilename << "." << std::endl;
+		s << "Note, this will include information which can be used to identify" << std::endl;
+		s << "your character, your VIP list, your full chat log for the session" << std::endl;
+		s << "(including private messages). It will not include username, password," << std::endl;
+		s << "or server name." << std::endl;
         s << std::endl;
         NativeGUIError(s.str().c_str(), "Protocol error");
 	}

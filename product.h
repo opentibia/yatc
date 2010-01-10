@@ -24,4 +24,13 @@
 #define PRODUCTLONG "YATC - Yet Another Tibia Client"
 #define PRODUCTNAME PRODUCTSHORT " v" PRODUCTVERSION
 #define PRODUCTLONGNAME PRODUCTLONG " version " PRODUCTVERSION
+
+
+#if !defined(__DATE__)
+#define __DATE__ "unknown"
+#endif
+#if !defined(__TIME__)
+#define __TIME__ ""
+#endif
+
 #endif

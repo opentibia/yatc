@@ -41,7 +41,8 @@ public:
 
 	glictButton btnOk, btnCancel;
 
-	winLogin_t() {
+	winLogin_t() 
+	{
 
 		window.SetWidth(231-4);
 		window.SetHeight(173-17 - 2);
@@ -131,12 +132,16 @@ public:
 
 	}
 
-	void permitAccountName(bool yes) {
-		if(yes){
+	void permitAccountName(bool yes) 
+	{
+		if(yes)
+		{
 			// we can't have weird-ass symbols in account names either. ;)
 			txtUsername.SetAllowedChars(" !\"#$%/()=?*'+<>[]{}`~\\|;:_,.-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 			pnlUsername.SetCaption(gettext("Account name:"));
-		} else {
+		} 
+		else 
+		{
 			txtUsername.SetAllowedChars("0123456789");
 			pnlUsername.SetCaption(gettext("Account number:"));
 		}

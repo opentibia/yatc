@@ -339,10 +339,12 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	SDL_version sdl_compilever;
 	SDL_VERSION(&sdl_compilever);
+	
 	txt << PRODUCTLONG << "\n"
 		<< PRODUCTVERSION << "\n"
+		<< gettext("Compiled on: ") << __DATE__ << " " << __TIME__ << "\n"
 		<< "\n"
-		<< c <<" 2007-2009 OpenTibia Team\n"
+		<< c <<" 2007-2010 OpenTibia Team\n"
 		<< "\n"
 		<< gettext("Current engine") << ": " << g_engine->getName() << "\n"
 		<< gettext("Uses SDL") << ": " << int(SDL_Linked_Version()->major) << "." << int(SDL_Linked_Version()->minor) << "." << int(SDL_Linked_Version()->patch) << " (" << gettext("compiled with") << ": " << int(sdl_compilever.major) <<"."<< int(sdl_compilever.minor) <<"."<< int(sdl_compilever.patch) << ")\n"

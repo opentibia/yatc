@@ -26,6 +26,12 @@
 
 #if HAVE_TOMMATH
 	#include <tommath.h>
+#elif HAVE_GMP_H
+	#ifndef __APPLE__
+		#include <gmp.h>
+	#else
+		#include <GMP/gmp.h>
+	#endif
 #else
 	#include "../bigint.h"
 #endif
@@ -48,8 +54,10 @@ protected:
 
 	bool m_keyset;
 
-    #ifdef HAVE_TOMMATH
+	#ifdef HAVE_TOMMATH
 	mp_int m_mod, m_e;
+	#elif defined(HAVE_GMP_H)
+	mpz_t m_mod, m_e;
 	#else
 	BigInt m_mod, m_e;
 	#endif
