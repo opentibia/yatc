@@ -26,18 +26,24 @@
 #include "../debugprint.h"
 RSA::RSA()
 {
-    #ifdef HAVE_TOMMATH
+	#ifdef HAVE_TOMMATH
 	mp_init_size(&m_mod, 1024);
 	mp_init_size(&m_e, 1024);
+	#elif defined(HAVE_GMP_H)
+	mpz_init2(m_mod, 1024);
+	mpz_init2(m_e, 1024);
 	#endif
 	m_keyset = false;
 }
 
 RSA::~RSA()
 {
-    #ifdef HAVE_TOMMATH
+	#ifdef HAVE_TOMMATH
 	mp_clear(&m_e);
 	mp_clear(&m_mod);
+	#elif defined(HAVE_GMP_H)
+	mpz_clear(m_e);
+	mpz_clear(m_mod);
 	#endif
 }
 
@@ -47,8 +53,11 @@ void RSA::setPublicKey(const char* m, const char* e)
 	#ifdef HAVE_TOMMATH
 	mp_read_radix(&m_mod, m, 10);
 	mp_read_radix(&m_e, e, 10);
+	#elif defined(HAVE_GMP_H)
+	mpz_set_str(m_mod, m, 10);
+ 	mpz_set_str(m_e, e, 10);
 	#else
- 	m_mod = m;
+	m_mod = m;
 	m_e = e;
 	#endif
 }
@@ -73,6 +82,22 @@ bool RSA::encrypt(char* msg, int32_t size)
 
 	mp_clear(&c);
 	mp_clear(&plain);
+	#elif defined(HAVE_GMP_H)
+	mpz_t plain,c;
+	mpz_init2(plain, 1024);
+	mpz_init2(c, 1024);
+	
+	mpz_import(plain, 128, 1, 1, 0, 0, msg);
+
+	mpz_powm(c, plain, m_e, m_mod);
+
+	size_t count = (mpz_sizeinbase(c, 2) + 7)/8;
+	memset(msg, 0, 128 - count);
+	mpz_export(&msg[128 - count], NULL, 1, 1, 0, 0, c);
+
+	mpz_clear(c);
+	mpz_clear(plain);
+
     #else
     BigInt plain(msg),c;
 
@@ -80,7 +105,7 @@ bool RSA::encrypt(char* msg, int32_t size)
     c = t_modulo(c, m_mod);
 
     /* FIXME (ivucica#2#) we need to add bignum=>binary (meaning, convert from internal base into base 256) */
-    NativeGUIError("Please recompile with -lgmp and with #define HAVE_TOMMATH. Internal bignums are not done yet. Thank you!", "Bignums not done");
+    NativeGUIError("Please recompile with -ltommath and with #define HAVE_TOMMATH, or -lgmp and #define HAVE_GMP_H. Internal bignums are not done yet. Thank you!", "Bignums not done");
     exit(EXIT_FAILURE);
 
 

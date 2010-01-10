@@ -41,6 +41,9 @@
 #include <shellapi.h> // needed for ShellExecute
 #endif
 
+#include "macutil.h"
+#include "product.h"
+
 
 #define WINCE_INSTALLDIR "/Storage Card/YATC/"
 
@@ -77,15 +80,20 @@ void NativeGUIError(const char* text, const char *title) {
 
 		#endif
 	#else
-		std::string texts=text, titles=title;
-		texts = str_replace("\\", "\\\\",texts);
-		texts = str_replace("\"", "\\\"",texts);
+		#ifdef __APPLE__
+			macutil_NSRunAlertPanel(title, text, "OK", NULL, NULL	);
+		#else
+	
+			std::string texts=text, titles=title;
+			texts = str_replace("\\", "\\\\",texts);
+			texts = str_replace("\"", "\\\"",texts);
 
-		std::stringstream cmd;
-		cmd << "xmessage -title \"" << title << "\" -center \"" << texts << "\"";
+			std::stringstream cmd;
+			cmd << "xmessage -title \"" << title << "\" -center \"" << texts << "\"";
 
-		int dummy = system(cmd.str().c_str());
-		dummy = 0;
+			int dummy = system(cmd.str().c_str());
+			dummy = 0;
+		#endif
 	#endif
 }
 
@@ -156,6 +164,32 @@ void yatc_fwrite(void* ptr, size_t size, size_t count, FILE *stream) {
 	dummy = 0;
 }
 
+
+int yatc_makedirs(const char* path, int mode)
+{
+	char* tmppath = (char*)malloc(strlen(path)+1);
+	for(const char* c = path; *c; c++)
+	{
+		if(*c=='/' && c-path > 0)
+		{
+			memcpy(tmppath,path,c-path);
+			tmppath[c-path]=0;
+			struct stat s; 
+			int ret = access(tmppath, 0); //&s);
+			if(ret)
+			{
+				int mdret;
+				if(mdret=mkdir(tmppath, mode))
+				{
+					free(tmppath);
+					return mdret;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
 FILE *yatc_fopen(const char* filename, const char* mode) {
 #ifdef WINCE
 	/* ugly as hell, but WINCE's fopen does not use current working dir
@@ -184,7 +218,6 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 
 		if (__internal_fileexists(fn.c_str())) {
 			FILE *f=fopen(fn.c_str(), mode);
-
 			if (f) {
 				return f;
 			}
@@ -194,12 +227,17 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 	// if not found anywhere in the path, let's see what we can do with it
 	#ifndef WIN32 // if these aren't windows, it's probably a unioxid; if not, we'll port later
 	if (mode[0] == 'w' || mode[0] == 'a') {// if we're trying to access for writing
-		std::string outfn = (std::string(getenv("HOME")) + "/.yatc/" + filename);
+		std::string subdir = "/.yatc/";
+		#ifdef __APPLE__
+		subdir = "/Library/Application Support/OpenTibia/" PRODUCTSHORT "/";
+		#endif
+		
+		std::string outfn = (std::string(getenv("HOME")) + subdir + filename);
 		FILE* f = fopen(outfn.c_str(), mode);
 		if(f)
 			return f;
 		printf("Trying to make cfg dir in home, fopen(...,w) was failing: %s\n", strerror(errno));
-		if(mkdir((std::string(getenv("HOME")) + "/.yatc/").c_str(), 0700)){
+		if(yatc_makedirs((std::string(getenv("HOME")) + subdir).c_str(), 0700)){
 			printf("Failed to make cfg dir: %s\n", strerror(errno));
 		}
 		else{
@@ -238,6 +276,9 @@ void yatc_fopen_init(char *cmdline) {
 	if (!searchpath)
 	searchpath =
 	#ifndef WIN32
+	#ifdef __APPLE__
+		"~/Library/Application Support/OpenTibia/" PRODUCTSHORT ":"
+	#endif
 		"~/.yatc/:"
 		"/usr/share/games/yatc-data/:"
 		"/usr/share/games/tibia/:"
