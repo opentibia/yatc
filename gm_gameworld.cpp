@@ -1199,8 +1199,13 @@ void GM_Gameworld::performPopup(PopupProducerCallback cb, void*owner, void*arg) 
         if(cb)
             cb(m_popup,owner,arg);
 
-        m_popup->getPanel()->SetPos(ptrx,ptry);
         m_popup->updateWidths();
+        float popupx = ptrx, popupy = ptry;
+        if(m_popup->getPanel()->GetWidth()+ptrx > glictGlobals.w)
+            popupx = ptrx-m_popup->getPanel()->GetWidth();
+        if(m_popup->getPanel()->GetHeight()+ptry > glictGlobals.h)
+            popupy = ptry-m_popup->getPanel()->GetHeight();
+        m_popup->getPanel()->SetPos(popupx,popupy);
     }
     else{
         m_popup->prepareToDie();
