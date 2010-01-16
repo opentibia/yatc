@@ -169,8 +169,9 @@ void yatcStackPanelWindow::Collapse()
     if (parentlist)
         parentlist->RebuildList();
 
-	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-	gameclass->updateRightSide();
+	GM_Gameworld* gameclass = dynamic_cast<GM_Gameworld*>(g_game);
+	if(gameclass)
+        gameclass->updateRightSide();
 }
 
 void yatcStackPanelWindow::Expand()
@@ -184,8 +185,9 @@ void yatcStackPanelWindow::Expand()
     if (parentlist)
         parentlist->RebuildList();
 
-	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-	gameclass->updateRightSide();
+	GM_Gameworld* gameclass = dynamic_cast<GM_Gameworld*>(g_game);
+	if(gameclass)
+        gameclass->updateRightSide();
 }
 
 void yatcStackPanelWindow::Close()
@@ -196,8 +198,9 @@ void yatcStackPanelWindow::Close()
     if (parentlist)
         parentlist->RebuildList();
 
-	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-	gameclass->updateRightSide();
+	GM_Gameworld* gameclass = dynamic_cast<GM_Gameworld*>(g_game);
+	if(gameclass)
+        gameclass->updateRightSide();
 }
 
 void yatcStackPanelWindow::OnClose(glictPos* pos, glictContainer *caller) {
@@ -217,8 +220,6 @@ void yatcStackPanelWindow::OnExpand(glictPos* pos, glictContainer *caller) {
 
 void yatcStackPanelWindow::OnResized(glictSize* size, glictContainer* caller)
 {
-	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
-
 	yatcStackPanelWindow* window = (yatcStackPanelWindow*)caller->GetCustomData();
 
 	//NativeGUIError("Holy Crap", "This works");
@@ -231,5 +232,7 @@ void yatcStackPanelWindow::OnResized(glictSize* size, glictContainer* caller)
     if (parentlist)
         parentlist->RebuildList();
 
-	gameclass->updateRightSide();
+	GM_Gameworld* gameclass = dynamic_cast<GM_Gameworld*>(g_game);
+	if(gameclass)
+        gameclass->updateRightSide();
 }

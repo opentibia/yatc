@@ -260,7 +260,11 @@ bool Tile::insertThing(Thing *thing, int32_t stackpos)
 	}
 
 	if(getThingCount() == 10){
-		return false;
+		Thing* pushThing = getThingByStackPos(9);
+		if(!removeThing(pushThing)){
+			return false;
+		}
+		Thing::deleteThing(pushThing);
 	}
 
 	int pos = stackpos;
