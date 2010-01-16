@@ -272,6 +272,9 @@ bool GM_MainMenu::specKeyPress (const SDL_keysym& key)
 	        return true;
 	    }
 	}
+	if(SDL_GetModState() & KMOD_ALT && key.sym == SDLK_F4){
+	    onExitAttempt();
+	}
 	return false;
 }
 
