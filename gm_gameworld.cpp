@@ -1638,7 +1638,7 @@ void GM_Gameworld::updateRightSide()
     yspRightSideWindows.SetHeight(yspRightSideWindows.GetTotalHeight());
 
 	pnlRightSideFiller.SetPos(0, yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight());
-	pnlRightSideFiller.SetHeight(MAX(0, options.h-(yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight())));
+	pnlRightSideFiller.SetHeight(MAX(0, glictGlobals.h-(yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight())));
 }
 
 
