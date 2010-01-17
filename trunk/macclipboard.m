@@ -3,22 +3,23 @@
 #include <Cocoa/Cocoa.h>
 #include <Cocoa/NSPasteboard.h>
 
+#include <stdlib.h>
+#include <string.h>
+
 const char* getPasteboardText()
 {
-    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-    NSArray *classes = [[NSArray alloc] initWithObjects:[NSString class], nil];
-
-    NSArray *copiedItems = [pasteboard readObjectsForClasses:classes];
-
-    if(copiedItems != nil) {
-        return [const char* [NSString [copiedItems objectAtIndex:0] UTF8String]];
-    }
+    NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+    NSString* string = [pasteboard stringForType:NSStringPboardType];
+    const char* cstring = [string cString];
+    char* ret = (char*)malloc(strlen(cstring));
+    strcpy(ret, cstring);
+    return ret;
 }
+
 void putPasteBoardText(const char* text)
 {
-    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+    NSString* string = [NSString stringWithCString:text];
     [pasteboard clearContents];
-    NSArray *objectsToCopy = [[NSArray alloc] initWithObjects:[NSString stringWithUTF8String:text], nil];
-
-    [pasteboard writeObjects:objectsToCopy];
+    [pasteboard setString:string forType:NSStringPboardType];
 }
