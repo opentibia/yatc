@@ -34,9 +34,6 @@ yatcClipboard::yatcClipboard()
 {
 	#ifdef __USE_INTERNAL_CLIPBOARD
 	m_text = "";
-	#elif defined(__APPLE__)
-	OSStatus err = PasteboardCreate(kPasteboardClipboard, &m_clipboard);
-	// TODO: error handling?
 	#endif
 }
 yatcClipboard::~yatcClipboard()
@@ -56,42 +53,7 @@ std::string yatcClipboard::getText()
 	#elif defined (__USE_INTERNAL_CLIPBOARD)
 	return m_text;
 	#elif defined(__APPLE__)
-	OSStatus err = noErr;
-	ItemCount count;
-	CFArrayRef flavorArray;
-	// synchronize pasteboard
-	PasteboardSyncFlags sflags;
-	sflags = PasteboardSynchronize(m_clipboard);
-	// get the number of things in the clipboard
-	count = PasteboardGetItemCount(m_clipboard, &count);
-	if((int)count >= 1)
-	{
-		PasteboardItemID itemID;
-        CFArrayRef flavorTypeArray;
-        CFIndex flavorCount;
-		err = PasteboardGetItemIdentifier(m_clipboard, (ItemCount)1, &itemID);
-		// determine if data is text and retrieve it if so
-		err = PasteboardCopyItemFlavors(m_clipboard, itemID, &flavorTypeArray);
-		flavorCount = CFArrayGetCount(flavorTypeArray);
-		for(CFIndex flavorIndex = 0; flavorIndex < flavorCount; flavorIndex++)
-		{
-			CFStringRef flavorType;
-            CFDataRef flavorData;
-            CFIndex flavorDataSize;
-
-			flavorType = (CFStringRef)CFArrayGetValueAtIndex(flavorTypeArray, flavorIndex);
-			// note (nfries88): the example I'm using converts utf16 into a char type, I'd rather not unless
-			//	it's found to be needed.
-			if (UTTypeConformsTo(flavorType, CFSTR("public.utf8-plain-text")))
-			{
-				err = PasteboardCopyItemFlavorData(m_clipboard, itemID, flavorType, &flavorData);
-                flavorDataSize = CFDataGetLength(flavorData);
-                std::string ret = (const char*)CFDataGetBytePtr(flavorData);
-                CFRelease(flavorData);
-                return ret;
-			}
-		}
-	}
+	return getPasteboardText();
 	#endif
 	return "";
 }
@@ -113,13 +75,6 @@ void yatcClipboard::setText(const std::string& text)
 	#elif defined (__USE_INTERNAL_CLIPBOARD)
 	m_text = text;
 	#elif defined(__APPLE__)
-	OSStatus err = noErr;
-	// synchronize pasteboard
-	PasteboardSyncFlags sflags;
-	sflags = PasteboardSynchronize(m_clipboard);
-	// add the data
-	CFDataRef textdata = CFDataCreate(kCFAllocatorDefault, (UInt8*)text.c_str(), text.length());
-	err = PasteboardPutItemFlavor(m_clipboard, (PasteboardItemID)1, CFSTR("public.utf8-plain-text"), textdata, 0);
-	// TODO: handle errors?
+	putPasteboardText(text.c_str());
 	#endif
 }
