@@ -115,6 +115,7 @@ public:
 	int battleh;	// -1 = closed, 0 = collapsed
 	int viph;		// -1 = closed, 0 = collapsed
 	int consoleh;	// always 150 + 18 for now.
+	bool hideofflineVIP;
 
 	// [not saved]
 	SpeakClasses_t speaktype;

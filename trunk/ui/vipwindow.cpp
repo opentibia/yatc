@@ -32,9 +32,12 @@
 #include "vipwindow.h"
 #include "sbvlpanel.h"
 #include "../gamecontent/viplist.h"
+#include "../gamecontent/creature.h"
+#include "../clipboard.h"
 #include "../net/protocolgame.h"
 
 extern int g_lastmousebutton;
+extern yatcClipboard g_clipboard;
 
 winVIP_t::winVIP_t()
 {
@@ -77,8 +80,12 @@ void winVIP_t::addVIP(uint32_t id)
     p->SetBGColor(.4,.4,.4,1.);
     if (isonline)
         p->SetCaptionColor(0,1,0);
-    else
-        p->SetCaptionColor(1,0,0);
+    else {
+        if(options.hideofflineVIP)
+            p->SetVisible(false);
+        else
+            p->SetCaptionColor(1,0,0);
+    }
     container.AddObject(p);
 }
 void winVIP_t::updateVIP(uint32_t id)
@@ -105,8 +112,12 @@ void winVIP_t::updateVIP(uint32_t id)
     p->SetBGColor(.4,.4,.4,1.);
     if (isonline)
         p->SetCaptionColor(0,1,0);
-    else
-        p->SetCaptionColor(1,0,0);
+    else {
+        if(options.hideofflineVIP)
+            p->SetVisible(false);
+        else
+            p->SetCaptionColor(1,0,0);
+    }
 }
 void winVIP_t::removeVIP(uint32_t id)
 {
@@ -172,7 +183,7 @@ void winVIP_t::makeVIPPopup(Popup* popup, void* owner, void* arg)
 
     s.str("");
     s << gettext("Message to ") + pnl->GetCaption();
-    popup->addItem(s.str(), onUnimplemented);
+    popup->addItem(s.str(), onMessageTo, (void*)wvip->selectedcreature);
 
     popup->addItem("-",NULL,NULL);
 
@@ -193,14 +204,17 @@ void winVIP_t::makeVIPPopup(Popup* popup, void* owner, void* arg)
     popup->addItem(s.str(), onUnimplemented);
 
     s.str("");
-    s << gettext("Hide offline VIPs");
-    popup->addItem(s.str(), onUnimplemented);
+    if(!options.hideofflineVIP)
+        s << gettext("Hide offline VIPs");
+    else
+        s << gettext("Show offline VIPs");
+    popup->addItem(s.str(), onHideOfflineVIPs, wvip);
 
     popup->addItem("-",NULL,NULL);
 
     s.str("");
     s << gettext("Copy name");
-    popup->addItem(s.str(), onUnimplemented);
+    popup->addItem(s.str(), onCopyName, (void*)wvip->selectedcreature);
 
 }
 
@@ -220,4 +234,37 @@ void winVIP_t::onRemoveVIP(Popup::Item *parent)
     wvip->removeVIP(wvip->selectedcreature);
     VipList::getInstance().removeEntry(wvip->selectedcreature);
     gw->m_protocol->sendRemVip(wvip->selectedcreature);
+}
+
+void winVIP_t::onHideOfflineVIPs(Popup::Item *parent)
+{
+    winVIP_t* wvip = (winVIP_t*)parent->data;
+    std::map<uint32_t, glictPanel*>::iterator eit = wvip->m_entries.begin();
+
+    options.hideofflineVIP = !options.hideofflineVIP;
+    if(options.hideofflineVIP){
+        for(; eit != wvip->m_entries.end(); eit++){
+            if(!(VipList::getInstance().entryIsOnline(eit->first)))
+                (eit->second)->SetVisible(false);
+        }
+    }
+    else {
+        for(; eit != wvip->m_entries.end(); eit++){
+            if(!(VipList::getInstance().entryIsOnline(eit->first)))
+                (eit->second)->SetVisible(true);
+        }
+    }
+}
+
+void winVIP_t::onMessageTo(Popup::Item *parent)
+{
+	VipEntry vip = VipList::getInstance().getEntry((uint32_t)VOIDP2INT(parent->data));
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    gw->setActiveConsole(gw->findConsole(vip.getName()));
+}
+
+void winVIP_t::onCopyName(Popup::Item *parent)
+{
+    VipEntry vip = VipList::getInstance().getEntry((uint32_t)VOIDP2INT(parent->data));
+    g_clipboard.setText(vip.getName());
 }

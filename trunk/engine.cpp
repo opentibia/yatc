@@ -236,12 +236,11 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
 
 void Engine::doResize(int& w, int& h)
 {
-	if((w < 656) ||	/* horizontal resize */
-		(h < 520) /* vertical resize */)
-	{
-		w = 656;
-		h = 520;
-	}
+	#ifndef WINCE
+    // NOTE (nfries88): Make sure the window is sized as per the options
+    w = std::max(w, 656);
+	h = std::max(h, 352+options.consoleh);
+	#endif
 	m_width = w;
 	m_height = h;
 	glictGlobals.w = w;

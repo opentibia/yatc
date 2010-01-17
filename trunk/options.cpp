@@ -24,6 +24,7 @@
 #include "options.h"
 #include "confighandler.h"
 #include "util.h"
+#include "defines.h"
 Options options;
 
 std::string hotkeystrs[36] =
@@ -112,6 +113,7 @@ Options::Options()
 	battleh = -1;	// -1 = closed, 0 = collapsed
 	viph = -1;		// -1 = closed, 0 = collapsed
 	consoleh = 150+18;	// always 150 + 18 for now.
+	hideofflineVIP = false;
 
 	speaktype = SPEAK_SAY;
 }
@@ -308,7 +310,9 @@ void Options::Save()
 	ss << consoleh;
 	section->addKey("consoleh", ss.str());
 	ss.str("");
-
+	ss << hideofflineVIP;
+	section->addKey("hideofflinevips", ss.str());
+	ss.str("");
 
 	configHandler->saveConfig("yatc.cfg");
 }
@@ -480,6 +484,13 @@ void Options::Load()
 		viph = atoi(configHandler->getKeyValue("gui", "viph").c_str());
 	if(configHandler->keyExists("gui", "consoleh"))
 		consoleh = atoi(configHandler->getKeyValue("gui", "consoleh").c_str());
+    hideofflineVIP = (configHandler->getKeyValue("gui", "hideofflinevips") == "1");
+
+    #ifndef WINCE
+    // NOTE (nfries88): Make sure the window is sized as per the options
+    w = MAX(options.w, 656);
+	h = MAX(options.h, 352+options.consoleh);
+	#endif
 
 	configHandler->clear();
 }
