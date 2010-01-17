@@ -20,15 +20,14 @@
 
 #include <string>
 
-#if !defined(WIN32) && !(defined(__APPLE__) && defined(DEBUG))
-	// NOTE (nfries88): Mac clipboard doesn't work, can't toy with it myself.
+#ifdef __APPLE__
+    extern "C" const char* getPasteboardText();
+    extern "C" void putPasteBoardText(const char*);
+#elif !defined(WIN32)
+	// NOTE (nfries88):
 	//		No X11 clipboard currently, X11 clipboard seems a PITA to implement.
 	//		So, for now, we'll just use an internal std::string to hold our clipboard text.
 	#define __USE_INTERNAL_CLIPBOARD
-#endif
-
-#ifdef __APPLE__
-	#include <Carbon/Carbon.h>
 #endif
 
 // NOTE (nfries88): we'll only bother supporting text for the clipboard,
@@ -45,7 +44,5 @@ public:
 private:
 	#ifdef __USE_INTERNAL_CLIPBOARD
 	std::string m_text;
-	#elif defined(__APPLE__)
-	PasteboardRef m_clipboard;
 	#endif
 };

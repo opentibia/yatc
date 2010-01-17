@@ -83,7 +83,7 @@ void NativeGUIError(const char* text, const char *title) {
 		#ifdef __APPLE__
 			macutil_NSRunAlertPanel(title, text, "OK", NULL, NULL	);
 		#else
-	
+
 			std::string texts=text, titles=title;
 			texts = str_replace("\\", "\\\\",texts);
 			texts = str_replace("\"", "\\\"",texts);
@@ -164,7 +164,7 @@ void yatc_fwrite(void* ptr, size_t size, size_t count, FILE *stream) {
 	dummy = 0;
 }
 
-
+#ifndef WIN32
 int yatc_makedirs(const char* path, int mode)
 {
 	char* tmppath = (char*)malloc(strlen(path)+1);
@@ -174,7 +174,7 @@ int yatc_makedirs(const char* path, int mode)
 		{
 			memcpy(tmppath,path,c-path);
 			tmppath[c-path]=0;
-			struct stat s; 
+			struct stat s;
 			int ret = access(tmppath, 0); //&s);
 			if(ret)
 			{
@@ -189,6 +189,7 @@ int yatc_makedirs(const char* path, int mode)
 	}
 	return 0;
 }
+#endif
 
 FILE *yatc_fopen(const char* filename, const char* mode) {
 #ifdef WINCE
@@ -231,7 +232,7 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 		#ifdef __APPLE__
 		subdir = "/Library/Application Support/OpenTibia/" PRODUCTSHORT "/";
 		#endif
-		
+
 		std::string outfn = (std::string(getenv("HOME")) + subdir + filename);
 		FILE* f = fopen(outfn.c_str(), mode);
 		if(f)
