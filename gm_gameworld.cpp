@@ -344,7 +344,7 @@ void GM_Gameworld::doResize(float w, float h)
 	desktop.SetHeight(h);
 	desktop.ResetTransformations();
 
-	m_mapui.setSize(wi-172-4,hi-150-18);
+	m_mapui.setSize(wi-172-4,hi-options.consoleh);
 
 	pnlRightSide.SetHeight(h);
 	yspRightSideWindows.SetHeight(MAX(h-yspRightSide.GetTotalHeight(), 0));
@@ -352,9 +352,9 @@ void GM_Gameworld::doResize(float w, float h)
 
 	pnlTraffic.SetPos(w-200, 0);
 
-	pnlConsoleContainer.SetPos(0,h-168);
+	pnlConsoleContainer.SetPos(0,h-options.consoleh);
 	pnlConsoleContainer.SetWidth(w-176);
-	pnlConsoleContainer.SetHeight(168);
+	pnlConsoleContainer.SetHeight(options.consoleh);
 
 	#if (GLICT_APIREV>=95)
 	// update right side with changes

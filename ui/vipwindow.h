@@ -57,6 +57,9 @@ public:
 
     static void onUnimplemented(Popup::Item *parent);
     static void onRemoveVIP(Popup::Item *parent);
+    static void onMessageTo(Popup::Item *parent);
+    static void onHideOfflineVIPs(Popup::Item *parent);
+    static void onCopyName(Popup::Item *parent);
 };
 
 #endif //__UI_VIPWINDOW_H

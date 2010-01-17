@@ -476,7 +476,7 @@ int main(int argc, char *argv[])
 
 		// NOTE (nfries88): Make sure the window is sized as per the options
 		int w = MAX(options.w, 656);
-		int h = MAX(options.h, 520);
+		int h = MAX(options.h, 352+options.consoleh);
 		g_engine->doResize(w, h);
 
 
