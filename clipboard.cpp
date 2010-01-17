@@ -53,7 +53,10 @@ std::string yatcClipboard::getText()
 	#elif defined (__USE_INTERNAL_CLIPBOARD)
 	return m_text;
 	#elif defined(__APPLE__)
-	return getPasteboardText();
+	const char* ret = getPasteboardText();
+	std::string str = ret;
+	free(ret);  // ret is allocated within getPasteboardText
+	return str;
 	#endif
 	return "";
 }
