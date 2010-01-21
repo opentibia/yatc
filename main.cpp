@@ -91,6 +91,12 @@ std::string g_recordfilename="debugrecord.rec";
 
 extern float g_replayspeed;
 
+// NOTE (nfries88): This should really have been included by SDL as a modifier key, but wasn't
+//              So I'll make my own cruddy implementation. :D
+//              This is apple's "command" key and microsoft's "windows" key.
+// false is down, true is up
+bool superkey_state = false;
+
 
 void onKeyDown(const SDL_Event& event)
 {
@@ -112,6 +118,10 @@ void onKeyDown(const SDL_Event& event)
 	case SDLK_RSHIFT:
 		// ignore shiftpresses
 		break;
+
+    case SDLK_LSUPER: case SDLK_RSUPER:
+        superkey_state = true;
+        break;
 
 	case SDLK_LEFT: case SDLK_RIGHT: case SDLK_UP: case SDLK_DOWN: case SDLK_KP1: case SDLK_KP2: case SDLK_KP3: case SDLK_KP4: case SDLK_KP6: case SDLK_KP7: case SDLK_KP8: case SDLK_KP9:
 	case SDLK_PAGEUP: case SDLK_PAGEDOWN:  case SDLK_HOME: case SDLK_END:
@@ -536,16 +546,14 @@ int main(int argc, char *argv[])
 						g_game->onExitAttempt();
 						break;
 
-					case SDL_KEYUP:
-						/*if(event.key.keysym.sym == SDLK_LSHIFT ||
-							event.key.keysym.sym == SDLK_RSHIFT){
-							keymods = keymods & ~(uint32_t)KMOD_SHIFT;
-						}*/
-						break;
-
 					case SDL_KEYDOWN:
 						onKeyDown(event);
 						break;
+                    case SDL_KEYUP:
+                        if((event.key.keysym.sym == SDLK_LSUPER)
+                          || (event.key.keysym.sym == SDLK_RSUPER))
+                            superkey_state = false;
+                        break;
 
 					case SDL_MOUSEBUTTONUP:
 					case SDL_MOUSEBUTTONDOWN:

@@ -63,6 +63,8 @@ void resetDefaultCursor();
 
 extern int g_lastmousebutton;
 
+extern bool superkey_state;
+
 void exitWarning_t::btnLogout_onClick(glictPos* relmousepos, glictContainer* callerclass)
 {
 	GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
@@ -593,7 +595,7 @@ void GM_Gameworld::keyPress (int key)
 					setActiveConsole((*it));
 			}
 		}
-		else if (key == 22) // CTRL+V
+		else if(ISPASTEEVENT(key)) // CTRL+V
 		{
 			std::string text = g_clipboard.getText();
 			glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
@@ -601,9 +603,11 @@ void GM_Gameworld::keyPress (int key)
 			updateScene();
 			return;
 		}
-		else if (key == 3) // CTRL+C
+		else if(ISCOPYEVENT(key)) // CTRL+C
 		{
 			// we can't currently select anything, so how could we copy?
+			glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
+			if(textbox) g_clipboard.setText(textbox->GetCaption());
 			return;
 		}
 		desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
