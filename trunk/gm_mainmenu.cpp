@@ -49,6 +49,8 @@ extern yatcClipboard g_clipboard;
 extern Connection* g_connection;
 extern bool g_running;
 
+extern bool superkey_state;
+
 
 void resetDefaultCursor();
 
@@ -202,7 +204,7 @@ void GM_MainMenu::keyPress (int key)
 {
 	if(key == 0 || key == SDLK_LCTRL || key == SDLK_RCTRL) return; // don't pass these values to glict
 	// NOTE (nfries88): I have no clue why, but I get 22 and 3 when pressing CTRL+V and CTRL+C respectively.
-	if(key == 22)
+	if(ISPASTEEVENT(key))
 	{
 		std::string text = g_clipboard.getText();
 		glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
@@ -210,9 +212,10 @@ void GM_MainMenu::keyPress (int key)
 		renderUI();
 		return;
 	}
-	else if(key == 3)
+	else if(ISCOPYEVENT(key))
 	{
-		// we can't currently select anything, so how could we copy?
+        glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
+        if(textbox) g_clipboard.setText(textbox->GetCaption());
 		return;
 	}
     // login assistance for login box
@@ -247,6 +250,9 @@ void GM_MainMenu::keyPress (int key)
         }
 
     }
+
+    if(superkey_state)
+        NativeGUIError(yatc_itoa(key).c_str(), "!");
 
 	desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 
@@ -342,7 +348,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 	GM_MainMenu* m = (GM_MainMenu*)g_game;
 	SDL_version sdl_compilever;
 	SDL_VERSION(&sdl_compilever);
-	
+
 	txt << PRODUCTLONG << "\n"
 		<< PRODUCTVERSION << "\n"
 		<< gettext("Compiled on: ") << __DATE__ << " " << __TIME__ << "\n"

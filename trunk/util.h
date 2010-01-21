@@ -46,4 +46,13 @@ inline std::string yatc_itoa(int val)
 	return b.str();
 }
 
+// Support on apple for cmd+c copying and cmd+v pasting, as well as old ctrl+c/ctrl+v copy/paste.
+#ifdef __APPLE__
+#define ISCOPYEVENT(key) (key == 3 || (key == SDLK_c && superkey_state))
+#define ISPASTEEVENT(key) (key == 22 || (key == SDLK_v && superkey_state))
+#else
+#define ISCOPYEVENT(key) (key==3)
+#define ISPASTEEVENT(key) (key==22)
+#endif
+
 #endif
