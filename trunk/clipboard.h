@@ -23,6 +23,8 @@
 #ifdef __APPLE__
     extern "C" const char* getPasteboardText();
     extern "C" void putPasteBoardText(const char*);
+#elif defined(USE_X11_CLIPBOARD)
+	#include <SDL/SDL_events.h>
 #elif !defined(WIN32)
 	// NOTE (nfries88):
 	//		No X11 clipboard currently, X11 clipboard seems a PITA to implement.
@@ -44,5 +46,12 @@ public:
 private:
 	#ifdef __USE_INTERNAL_CLIPBOARD
 	std::string m_text;
+	#elif defined(USE_X11_CLIPBOARD)
+    Display *m_display;
+    Window m_window;
+    void (*m_lockdisplay)(void);
+    void (*m_unlockdisplay)(void);
+
+    static int clipboard_filter(const SDL_Event *event);
 	#endif
 };
