@@ -6,7 +6,7 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug Unix">
+			<Target title="Debug Unix - X11">
 				<Option platforms="Unix;" />
 				<Option output="yatc" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objsunix\" />
@@ -23,6 +23,7 @@
 					<Add option="-DDEBUG_BUILD" />
 					<Add option="-DHAVE_LIBINTL_H" />
 					<Add option="-DSDLTTF_EXPERIMENT" />
+					<Add option="-DUSE_X11_CLIPBOARD" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg" />
@@ -34,7 +35,7 @@
 					<Add library="SDL_ttf" />
 				</Linker>
 			</Target>
-			<Target title="Release Unix">
+			<Target title="Release Unix - X11">
 				<Option platforms="Unix;" />
 				<Option output="yatc" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objsunixr\" />
@@ -44,6 +45,7 @@
 					<Add option="-O3" />
 					<Add option="-DUSE_OPENGL" />
 					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-DUSE_X11_CLIPBOARD" />
 				</Compiler>
 				<Linker>
 					<Add library="GL" />
@@ -112,7 +114,7 @@
 			</Target>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="Debug Unix;Release Unix;Debug Windows;Release Windows;" />
+			<Add alias="All" targets="Debug Unix - X11;Release Unix - X11;Debug Windows;Release Windows;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-fexpensive-optimizations" />
@@ -133,7 +135,7 @@
 		<Unit filename="automap.cpp" />
 		<Unit filename="automap.h" />
 		<Unit filename="bigint.cpp">
-			<Option target="Debug Unix" />
+			<Option target="Debug Unix - X11" />
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
 		</Unit>
@@ -192,11 +194,11 @@
 		<Unit filename="gamemode.cpp" />
 		<Unit filename="gamemode.h" />
 		<Unit filename="gm_debug.cpp">
-			<Option target="Debug Unix" />
+			<Option target="Debug Unix - X11" />
 			<Option target="Debug Windows" />
 		</Unit>
 		<Unit filename="gm_debug.h">
-			<Option target="Debug Unix" />
+			<Option target="Debug Unix - X11" />
 			<Option target="Debug Windows" />
 		</Unit>
 		<Unit filename="gm_gameworld.cpp" />
