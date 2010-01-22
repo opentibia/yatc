@@ -372,12 +372,12 @@ void pnlInventory_t::paintIcons(glictRect *real, glictRect *clipped, glictContai
 	}
 	if(icons & ICON_PZ)
 	{
-		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 210, 182, 9, 9);
+		g_engine->getUISprite()->Blit((int)real->left+posx, (int)real->top+2, 310, 182, 9, 9);
 		posx += 10;
 	}
 
 	Creature* player = Creatures::getInstance().getPlayer();
-	if (!player) 
+	if (!player)
 		return;
 	switch(player->getSkull()){
 		case SKULL_GREEN:
