@@ -83,7 +83,6 @@ void exitWarning_t::btnExit_onClick(glictPos* relmousepos, glictContainer* calle
 
 void deathNotice_t::btnOk_onClick(glictPos* relmousepos, glictContainer* callerclass)
 {
-	// todo (nfries88): return to GM_MainMenu with charlist up
 	deathNotice_t* deathnote = ((deathNotice_t*)callerclass->GetCustomData());
 	deathnote->window.SetVisible(false);
 	((GM_Gameworld*)g_game)->m_protocol->sendLogout();
@@ -136,7 +135,6 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	yspRightSide.SetWidth(172);
 	yspRightSide.SetBGActiveness(false);
 	yspRightSide.SetHeight(600); // dynamic and updated later
-	// TODO (nfries88): skin yspRightSide and yspRightSideWindows
 
 	#if (GLICT_APIREV>=95)
 	#define RIGHTSIDE yspRightSide
@@ -198,7 +196,6 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	yspRightSideWindows.SetBGActiveness(false);
 	#endif
 
-//TODO (nfries88): AUTOSETPOS crap?
 	WINDOWREGION.AddObject(&sbvlPanel.winSkills.window);
 	sbvlPanel.winSkills.window.SetPos(0, 0);
 	sbvlPanel.winSkills.window.SetVisible(false);
@@ -459,8 +456,6 @@ void GM_Gameworld::updateScene()
 
 void GM_Gameworld::keyPress (int key)
 {
-	// NOTE (nfries88): You can't add text hotkeys (among other things) in-game if console always has focus.
-	// TODO (nfries88): make a proper method of doing this. The gamemode should be notified of a focus change maybe?
 	if(dynamic_cast<glictTextbox*>(glictGlobals.topFocused) == NULL)
 		pnlConsoleContainer.txtConsoleEntry.Focus(NULL);
 	if (key==13) {
@@ -1646,7 +1641,6 @@ void GM_Gameworld::updateRightSide()
     yspRightSide.SetHeight(yspRightSide.GetTotalHeight());
     pnlRightSidePanels.SetHeight(yspRightSide.GetTotalHeight()+4);
 	yspRightSideWindows.SetPos(0, pnlRightSidePanels.GetHeight());
-	// TODO (nfries88): close panels no longer needed.
     yspRightSideWindows.RebuildList();
     yspRightSideWindows.SetHeight(yspRightSideWindows.GetTotalHeight());
 

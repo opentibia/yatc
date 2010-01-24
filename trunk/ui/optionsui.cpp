@@ -396,7 +396,6 @@ void winOptions_t::winOptionsNetwork_btnCancel_OnClick(glictPos* relmousepos, gl
 
 void winOptionsHotkeys_t::drawObject(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
-	// TODO(nfries88)
 	winOptionsHotkeys_t* winHK = (winOptionsHotkeys_t*)(caller->GetCustomData());
 	if(winHK->item)
 	{

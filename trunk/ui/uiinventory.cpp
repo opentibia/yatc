@@ -171,7 +171,7 @@ pnlInventory_t::~pnlInventory_t()
 
 void pnlInventory_t::collapse()
 {
-	// TODO (nfries88): implement this as cleanly as possible
+	// TODO (nfries88): finish collapsed GUI
 	panel.SetHeight(64);
 	panel.SetWidth(170);
 
