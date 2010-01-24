@@ -20,15 +20,14 @@
 
 #include <string>
 
-#ifdef __APPLE__
+#if defined(USE_X11_CLIPBOARD)
+    // NOTE (nfries88): This should include req'd X11 headers for compilation.
+	#include <SDL/SDL_syswm.h>
+#elif defined(__APPLE__)
     extern "C" const char* getPasteboardText();
     extern "C" void putPasteBoardText(const char*);
-#elif defined(USE_X11_CLIPBOARD)
-	#include <SDL/SDL_events.h>
 #elif !defined(WIN32)
-	// NOTE (nfries88):
-	//		No X11 clipboard currently, X11 clipboard seems a PITA to implement.
-	//		So, for now, we'll just use an internal std::string to hold our clipboard text.
+	// NOTE (nfries88): Using an internal std::string on unsupported platforms.
 	#define __USE_INTERNAL_CLIPBOARD
 #endif
 
