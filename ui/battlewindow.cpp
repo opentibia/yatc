@@ -145,7 +145,7 @@ void winBattle_t::refreshVisibility()
 
 void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer *caller)
 {
-	Creature* creature = Creatures::getInstance().getCreature((int)caller->GetCustomData());
+	Creature* creature = Creatures::getInstance().getCreature(VOIDP2INT(caller->GetCustomData()));
 	oRGBA col;
 	if(creature->getID() == GlobalVariables::getAttackID())
 		col = oRGBA(180, 50, 20, 255);
@@ -158,20 +158,20 @@ void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer
 void winBattle_t::onAttack(Popup::Item* parent)
 {
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
-	gw->m_protocol->sendAttackCreature((uint32_t)parent->data);
-	GlobalVariables::setAttackID((uint32_t)parent->data);
+	gw->m_protocol->sendAttackCreature((uint32_t)VOIDP2INT(parent->data));
+	GlobalVariables::setAttackID((uint32_t)VOIDP2INT(parent->data));
 }
 
 void winBattle_t::onFollow(Popup::Item* parent)
 {
 	GM_Gameworld *gw = (GM_Gameworld*)g_game;
-	gw->m_protocol->sendFollowCreature((uint32_t)parent->data);
-	GlobalVariables::setFollowID((uint32_t)parent->data);
+	gw->m_protocol->sendFollowCreature((uint32_t)VOIDP2INT(parent->data));
+	GlobalVariables::setFollowID((uint32_t)VOIDP2INT(parent->data));
 }
 
 void winBattle_t::onMessageTo(Popup::Item *parent)
 {
-	Creature* c = Creatures::getInstance().getCreature((uint32_t)parent->data);
+	Creature* c = Creatures::getInstance().getCreature((uint32_t)VOIDP2INT(parent->data));
 	if(c != NULL)
 	{
 		GM_Gameworld *gw = (GM_Gameworld*)g_game;
@@ -286,13 +286,13 @@ void winBattle_t::onPassLeadership(Popup::Item *parent)
 
 void winBattle_t::clickEntry(glictPos* relmousepos, glictContainer* callerclass)
 {
-	Creature* creature = Creatures::getInstance().getCreature((int)callerclass->GetCustomData());
+	Creature* creature = Creatures::getInstance().getCreature(VOIDP2INT(callerclass->GetCustomData()));
 	GM_Gameworld* gw = ((GM_Gameworld*)g_game);
 
 	if(g_lastmousebutton == SDL_BUTTON_LEFT){
 		if(gw->isExtendedUsing())
 		{
-			gw->performExtendedUseBattleWindow((int)callerclass->GetCustomData());
+			gw->performExtendedUseBattleWindow(VOIDP2INT(callerclass->GetCustomData()));
 		}
 		else if(SDL_GetModState() & KMOD_SHIFT)
 		{
