@@ -31,7 +31,7 @@
 #ifdef USE_X11_CLIPBOARD
 // Important note: X11 clipboard code is lifted and modified from SDL_scrap (by Sam Lantinga) with his explicit permission.
 #include <SDL/SDL.h>
-#include <SDL/SDL_syswm.h>
+#include <SDL/SDL_events.h>
 #endif
 
 #include "clipboard.h"
@@ -40,7 +40,7 @@ yatcClipboard::yatcClipboard()
 {
 	#ifdef __USE_INTERNAL_CLIPBOARD
 	m_text = "";
-	#elifdef USE_X11_CLIPBOARD
+	#elif defined(USE_X11_CLIPBOARD)
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
     if(SDL_GetWMInfo(&info))
@@ -166,8 +166,8 @@ void yatcClipboard::setText(const std::string& text)
 	m_lockdisplay();
     XChangeProperty(m_display, DefaultRootWindow(m_display),
         XA_CUT_BUFFER0, XA_STRING, 8, PropModeReplace, src, srclen);
-    if (lost_scrap())
-        XSetSelectionOwner(m_display, XA_PRIMARY, m_window, CurrentTime);
+    //if (lost_scrap())
+    XSetSelectionOwner(m_display, XA_PRIMARY, m_window, CurrentTime);
     m_unlockdisplay();
 	#elif defined(__APPLE__)
 	putPasteboardText(text.c_str());
