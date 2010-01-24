@@ -462,3 +462,14 @@ bool ProtocolGame83::parsePlayerCash(NetworkMessage& msg)
     Notifications::onUpdatePlayerCash(cash);
     return true;
 }
+
+void ProtocolGame83::sendShopPurchase(uint16_t itemid, uint8_t subtype, uint8_t amount, bool ignoreCap, bool withBackpack)
+{
+	PROTOCOLGAME_SEND_FUNCTION;
+	m_outputMessage.addMessageType(0x7A);
+	m_outputMessage.addU16(itemid);
+	m_outputMessage.addU8(subtype);
+	m_outputMessage.addU8(amount);
+	m_outputMessage.addU8(ignoreCap ? 1 : 0);
+    m_outputMessage.addU8(withBackpack ? 1 : 0);
+}

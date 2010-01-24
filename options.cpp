@@ -247,6 +247,33 @@ void Options::Save()
 	ss << overrideversion;
 	section->addKey("overrideversion", ss.str());
 	ss.str("");
+	/* TODO (nfries88): Remember old servers played, possibly like so:
+	ss << serverct;
+	section->addKey("server_count", ss.str());
+	ss.str("");
+
+	for(int it = 0; it < serverct; ++it){
+	    ss << "server" << it;
+	    section = configHandler->newSection(ss.str());
+	    ss.str("");
+
+        ss << serverlist[it].server;
+        section->addKey("ip", ss.str());
+        ss.str("");
+        ss << serverlist[it].port;
+        section->addKey("port", ss.str());
+        ss.str("");
+        ss << serverlist[it].otkey;
+        section->addKey("otkey", ss.str());
+        ss.str("");
+        ss << serverlist[it].protocol;
+        section->addKey("protocol", ss.str());
+        ss.str("");
+        ss << serverlist[it].overrideversion;
+        section->addKey("overrideversion", ss.str());
+        ss.str("");
+	}
+	*/
 
 	// [hotkeys]
 	section = configHandler->newSection("hotkeys");

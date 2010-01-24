@@ -79,7 +79,6 @@ winTrade_t::winTrade_t()
 	pnlContainerRight.SetHeight(75);
 	pnlContainerRight.SetVirtualSize(80, 75);
 
-	// TODO (nfries88): add middle seperator to pnlContainer
 	window.AddObject(&pnlSepMiddle);
 	pnlSepMiddle.SetPos(80, 13);
 	pnlSepMiddle.SetWidth(2);

@@ -40,6 +40,7 @@ class ProtocolGame83 : public ProtocolGame
 
 		//send
 		virtual void sendEnableSharedExperience(bool enabled, uint8_t unknown);
+		virtual void sendShopPurchase(uint16_t itemid, uint8_t subtype, uint8_t amount, bool ignoreCap, bool withBackpack);
 
         //receive f. impl
         virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);

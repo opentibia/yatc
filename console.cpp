@@ -141,7 +141,6 @@ void ConsolePanel::SetActiveConsole(Console* console)
     #else
 	#warning No support for setcaptioncolor before glict apirev 85
 	#endif
-	// TODO (nfries88): buttons for yelling, closing channel, etc.
 	if(!console->getSpeakerName().length() && (console->getAssignedButton()->GetCaption() == "Default"))
 	{
 		btnSpeakLevel.SetVisible(true);
@@ -246,8 +245,7 @@ void ConsolePanel::onCloseConsole(Popup::Item *parent)
 	gw->removeConsole(c);
 }
 void ConsolePanel::onShowM(Popup::Item *parent)
-// FIXME (ivucica#1#): nate, please rename or document this function, it's unclear what it does
-// FIXME (ivucica#1#): please use onUnimplemented() if the functionality is not added!
+// TODO (nfries88): Figure out what pushing the "M" Button actually does and implement it.
 {
 /*
 	Console* c = (Console*)parent->data;

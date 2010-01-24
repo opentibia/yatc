@@ -39,8 +39,6 @@
 	#define gettext(x) (x)
 #endif
 
-//TODO (nfries88) actually implement this and make sure it works.
-
 class winItemMove_t {
 public:
 	glictWindow window;		// 228x115
