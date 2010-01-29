@@ -31,6 +31,13 @@
 static void putPixel(SDL_Surface *surface, int x, int y, uint32_t pixel);
 static uint32_t getPixel(SDL_Surface *surface, int x, int y);
 
+// FIXME SOMEHOW (nfries88): Copied this here because we can't include util.h, which contains C++ code, from a file compiled with a C compiler.
+#include <SDL/SDL_endian.h>
+// NOTE(nfries88): SDL_SwapLE is a no-op on little-endian machines.
+//  On big engian machines it always swaps byte order, so we can use it to convert back and forth between little engian and big endian. :)
+#define ECORR16(var) var = SDL_SwapLE16(var)
+#define ECORR32(var) var = SDL_SwapLE32(var)
+
 int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 {
     uint16_t size;
@@ -40,6 +47,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 	register char transparent = 1;
 
 	dummy = fread(&size, 2, 1, f);
+	ECORR16(size);
 	if (size > 3444) {
 		SDL_UnlockSurface(surface);
 		SDL_FreeSurface(surface);
@@ -53,6 +61,7 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 		register uint32_t color=0;
 		unsigned char rgba[3];
 		dummy = fread(&pixelchunksize, 2, 1, f);
+		ECORR16(pixelchunksize);
 		if(pixelchunksize > 3076){
 			/* captain, the warp core breach has happened! what shall we do?! */
 			SDL_UnlockSurface(surface);
@@ -65,7 +74,12 @@ int readSprData(FILE* f, SDL_Surface *surface, int offx, int offy)
 		if(!transparent){
 			for(j = 0; j < pixelchunksize; j++){
 				dummy = fread(&rgba, 3, 1, f);
+				// NOTE (nfries88): Endianness correction for big endian machines, but not even sure if this is needed here...
+				#if SDL_BYTEORDER == SDL_LIL_ENDIAN
 				color = SDL_MapRGB(surface->format, rgba[0], rgba[1], rgba[2]);
+				#else
+				color = SDL_MapRGB(surface->format, rgba[2], rgba[1], rgba[0]);
+				#endif
 				putPixel(surface, offx+(destination+j) % 32, offy+(destination+j) / 32, color);
 			}
 		}
@@ -114,6 +128,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 			i++;
 			chunksize++;
 		}
+		ECORR16(chunksize);
 		dummy = fwrite(&chunksize, 2, 1, f);
 
 		if (i >= 1024) break;
@@ -135,6 +150,8 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 			if (transparent)
 				break;
 
+            // NOTE (nfries88): Endianness correction for big endian machines, but not even sure if this is needed here...
+            ECORR32(*(uint32_t*)rgba);
 			dummy = fwrite(rgba, 3, 1, f);
 
 			i++;
@@ -142,6 +159,7 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 		}
 
 		fseek(f, chunksizepos, SEEK_SET);
+		ECORR16(chunksize);
 		dummy = fwrite(&chunksize, 2, 1, f);
 
 		fseek(f, chunksize*3, SEEK_CUR);
@@ -152,6 +170,8 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 	if (transparent) i-=2;
 
 	fseek(f, sizepos, SEEK_SET);
+    // NOTE (nfries88): Endianness correction for big endian machines, but not sure if this is correct...
+	ECORR16((uint16_t)i);
 	dummy = fwrite(&i, 2, 1, f);
 	*datasize = i;
 

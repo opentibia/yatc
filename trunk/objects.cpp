@@ -293,21 +293,25 @@ bool Objects::load780plus(const char* filename)
 	fseek(fp, 0x04, SEEK_SET);
 	//Items
 	yatc_fread(&read_short, 2, 1, fp);
+	ECORR16(read_short);
 	ObjectType::minItemId = 100;
 	ObjectType::maxItemId = read_short;
 	maxObjects += ObjectType::maxItemId;
 	//Outfits
 	yatc_fread(&read_short, 2, 1, fp);
+	ECORR16(read_short);
 	ObjectType::minOutfitId = 0;
 	ObjectType::maxOutfitId = read_short;
 	maxObjects += ObjectType::maxOutfitId;
 	//Effects
 	yatc_fread(&read_short, 2, 1, fp);
+	ECORR16(read_short);
 	ObjectType::minEffectId = 0;
 	ObjectType::maxEffectId = read_short;
 	maxObjects += ObjectType::maxEffectId;
 	//Distance
 	yatc_fread(&read_short, 2, 1, fp);
+	ECORR16(read_short);
 	ObjectType::minDistanceId = 0;
 	ObjectType::maxDistanceId = read_short;
 	maxObjects += ObjectType::maxDistanceId;
@@ -330,6 +334,7 @@ bool Objects::load780plus(const char* filename)
 			switch(optbyte){
 				case 0x00: //Ground tile
 						yatc_fread(&read_short, 2, 1, fp);
+                        ECORR16(read_short);
 						oType->speed = read_short;
 						oType->ground = true;
 						oType->alwaysOnTopOrder = 0;
@@ -364,10 +369,12 @@ bool Objects::load780plus(const char* filename)
 				case 0x09: //Writtable/Readable Objectss
 						oType->readable = true;
 						yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+                        ECORR16(read_short);
 						break;
 				case 0x0A: //Writtable Objectss that can't be edited
 						oType->readable = true;
 						yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+                        ECORR16(read_short);
 					break;
 				case 0x0B: //Fluid containers
 						oType->fluidContainer = true;
@@ -404,8 +411,10 @@ bool Objects::load780plus(const char* filename)
 					break;
 				case 0x16: //Light info
 						yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                        ECORR16(read_short);
 						oType->lightLevel = read_short;
 						yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                        ECORR16(read_short);
 						oType->lightColor = read_short;
 					break;
 				case 0x17:  //Floor change?
@@ -416,14 +425,17 @@ bool Objects::load780plus(const char* filename)
 					break;
 				case 0x19: //Offset?
 						yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                        ECORR16(read_short);
 						oType->xOffset = read_short;
 						yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                        ECORR16(read_short);
 						oType->yOffset = read_short;
 					break;
 				case 0x1A:
 						oType->hasHeight = true;
-						// (should be) the height change in px; Tibia always uses 8
+						// (should be) the height change in px; Cipsoft always uses 8
 						yatc_fread(&read_short, sizeof(read_short), 1, fp); // ?
+                        ECORR16(read_short);
 					break;
 				case 0x1B://draw with height offset for all parts (2x2) of the sprite
 
@@ -433,6 +445,7 @@ bool Objects::load780plus(const char* filename)
 					break;
 				case 0x1D:
 						yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                        ECORR16(read_short);
 						oType->mapColor = read_short;
 					break;
 				case 0x1E:  //line spot
@@ -479,6 +492,7 @@ bool Objects::load780plus(const char* filename)
 
 		for(unsigned int i = 0; i < oType->numsprites; i++) {
 			yatc_fread(&oType->imageData[i], sizeof(uint16_t), 1, fp);
+            ECORR16(oType->imageData[i]);
 		}
 
 		if(id <= ObjectType::maxItemId){
@@ -522,21 +536,25 @@ bool Objects::load76_77series(const char* filename)
 	fseek(fp, 0x04, SEEK_SET);
 	//Items
 	yatc_fread(&read_short, 2, 1, fp);
+    ECORR16(read_short);
 	ObjectType::minItemId = 100;
 	ObjectType::maxItemId = read_short;
 	maxObjects += ObjectType::maxItemId;
 	//Outfits
 	yatc_fread(&read_short, 2, 1, fp);
+    ECORR16(read_short);
 	ObjectType::minOutfitId = 0;
 	ObjectType::maxOutfitId = read_short;
 	maxObjects += ObjectType::maxOutfitId;
 	//Effects
 	yatc_fread(&read_short, 2, 1, fp);
+    ECORR16(read_short);
 	ObjectType::minEffectId = 0;
 	ObjectType::maxEffectId = read_short;
 	maxObjects += ObjectType::maxEffectId;
 	//Distance
 	yatc_fread(&read_short, 2, 1, fp);
+    ECORR16(read_short);
 	ObjectType::minDistanceId = 0;
 	ObjectType::maxDistanceId = read_short;
 	maxObjects += ObjectType::maxDistanceId;
@@ -551,6 +569,7 @@ bool Objects::load76_77series(const char* filename)
 			switch(optbyte){
 			case 0x00: //is groundtile
 				yatc_fread(&read_short, 2, 1, fp);
+                ECORR16(read_short);
 				oType->speed = read_short;
 				oType->ground = true;
 				break;
@@ -580,11 +599,13 @@ bool Objects::load76_77series(const char* filename)
 				break;
 			case 0x08: //writtable objects
 				oType->readable = true;
-				yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //unknown, values like 80, 200, 512, 1024, 2000
+				yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+                ECORR16(read_short);
 				break;
 			case 0x09: //writtable objects that can't be edited
 				oType->readable = true;
-				yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //unknown, all have the value 1024
+				yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+                ECORR16(read_short);
 				break;
 			case 0x0A: //can contain fluids
 				oType->fluidContainer = true;
@@ -623,23 +644,28 @@ bool Objects::load76_77series(const char* filename)
 			case 0x15: //light info .. //sprite-drawing related
 				unsigned short lightlevel;
 				yatc_fread(&lightlevel, sizeof(lightlevel), 1, fp);
+                ECORR16(read_short);
 				oType->lightLevel = lightlevel;
 				unsigned short lightcolor;
 				yatc_fread(&lightcolor, sizeof(lightcolor), 1, fp);
+                ECORR16(read_short);
 				oType->lightColor = lightcolor;
 				break;
 			case 0x17:  //floor change
 				break;
 			case 0x18: //offset
 				yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                ECORR16(read_short);
 				oType->xOffset = read_short;
 				yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                ECORR16(read_short);
 				oType->yOffset = read_short;
 				break;
 			case 0x19: //height
 				oType->hasHeight = true;
-				// (should be) the height change in px; Tibia always uses 8
-				yatc_fread(&read_short, sizeof(read_short), 1, fp); // ?
+				// (should be) the height change in px; Cipsoft always uses 8
+				yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                ECORR16(read_short);
 				break;
 			case 0x1A://draw with height offset for all parts (2x2) of the sprite
 				break;
@@ -648,6 +674,7 @@ bool Objects::load76_77series(const char* filename)
 			case 0x1C:
 				unsigned short color;
 				yatc_fread(&color, sizeof(color), 1, fp);
+                ECORR16(read_short);
 				oType->mapColor = color;
 				break;
 			case 0x1D:  //line spot
@@ -691,6 +718,7 @@ bool Objects::load76_77series(const char* filename)
 
 		for(unsigned int i = 0; i < oType->numsprites; i++) {
 			yatc_fread(&oType->imageData[i], sizeof(uint16_t), 1, fp);
+            ECORR16(oType->imageData[i]);
 		}
 
 		if(id <= ObjectType::maxItemId){

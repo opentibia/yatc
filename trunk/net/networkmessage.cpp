@@ -21,6 +21,7 @@
 #include "networkmessage.h"
 #include "stdio.h"
 #include "../gamecontent/map.h"
+#include "../util.h"
 
 NetworkMessage::NetworkMessage(int type)
 {
@@ -65,6 +66,7 @@ uint32_t NetworkMessage::getU32()
 		uint32_t v = (((uint8_t)m_buffer[m_readPos]            | ((uint8_t)m_buffer[m_readPos + 1] <<  8) |
 					  ((uint8_t)m_buffer[m_readPos + 2] << 16) | ((uint8_t)m_buffer[m_readPos + 3] << 24)));
 		m_readPos += 4;
+		ECORR32(v);
 		return v;
 	}
 	else{
@@ -77,6 +79,7 @@ uint16_t NetworkMessage::getU16()
 	if(canRead(2)){
 		uint16_t v = ((uint8_t)m_buffer[m_readPos] | ((uint8_t)m_buffer[m_readPos + 1] << 8));
 		m_readPos += 2;
+		ECORR16(v);
 		return v;
 	}
 	else{
@@ -97,6 +100,7 @@ uint8_t NetworkMessage::getU8()
 std::string NetworkMessage::getString()
 {
 	uint16_t stringSize = getU16();
+    ECORR16(stringSize);
 	if(stringSize != 0 && canRead(stringSize)){
 		const char* v = (const char*)(m_buffer + m_readPos);
 		m_readPos += stringSize;
@@ -137,6 +141,7 @@ bool NetworkMessage::inspectU16(uint16_t& v)
 {
 	if(canRead(2)){
 		v = ((uint8_t)m_buffer[m_readPos] | ((uint8_t)m_buffer[m_readPos + 1] << 8));
+		ECORR16(v);
 		return true;
 	}
 	else{
@@ -158,6 +163,7 @@ bool NetworkMessage::getU8(uint8_t& v)
 bool NetworkMessage::getString(std::string& v)
 {
 	uint16_t stringSize;
+    ECORR16(v);
 	if(getU16(stringSize) && canRead(stringSize)){
 		const char* cstr = (const char*)(m_buffer + m_readPos);
 		m_readPos += stringSize;
@@ -192,6 +198,7 @@ bool NetworkMessage::getPosition(Position& p)
 
 void NetworkMessage::addU32(uint32_t value)
 {
+    ECORR32(value);
 	if(canWrite(4)){
 		m_buffer[m_writePos++] = (uint8_t)(value);
 		m_buffer[m_writePos++] = (uint8_t)(value >>  8);
@@ -203,6 +210,7 @@ void NetworkMessage::addU32(uint32_t value)
 
 void NetworkMessage::addU16(uint16_t value)
 {
+    ECORR16(value);
 	if(canWrite(2)){
 		m_buffer[m_writePos++] = (uint8_t)(value);
 		m_buffer[m_writePos++] = (uint8_t)(value >>  8);
@@ -306,6 +314,7 @@ void NetworkMessage::addChecksum()
 
 	if(canWrite(4)){
 		uint32_t sum = getChecksum(2);
+		ECORR32(sum);
 		memmove(m_buffer + m_start + 6, m_buffer + m_start + 2, m_size - 2); // move everything but first two bytes
 		*((uint32_t*)(m_buffer+m_start+2)) = sum;
 		m_size += 4;
