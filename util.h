@@ -55,4 +55,11 @@ inline std::string yatc_itoa(int val)
 #define ISPASTEEVENT(key) (key==22)
 #endif
 
+#include <SDL/SDL_endian.h>
+// NOTE(nfries88): SDL_SwapLE is a no-op on little-endian machines.
+//  On big engian machines it always swaps byte order, so we can use it to convert back and forth between little engian and big endian. :)
+#define ECORR16(var) var = SDL_SwapLE16(var)
+#define ECORR32(var) var = SDL_SwapLE32(var)
+
+
 #endif
