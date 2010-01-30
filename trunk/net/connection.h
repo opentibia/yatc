@@ -74,6 +74,8 @@ class ProtocolGame;
 enum ClientVersion_t{
 	CLIENT_VERSION_AUTO = 0, // used only in ui, feeding it elsewhere is invalid
 	//note (nfries88): Although many client versions are listed here, not all of them are supported yet.
+	CLIENT_VERSION_740 = 740,
+
 	CLIENT_VERSION_760 = 760,
 
 	CLIENT_VERSION_770 = 770,

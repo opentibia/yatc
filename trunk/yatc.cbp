@@ -224,6 +224,10 @@
 		<Unit filename="net\networkmessage.h" />
 		<Unit filename="net\protocolgame.cpp" />
 		<Unit filename="net\protocolgame.h" />
+		<Unit filename="net\protocolgame74.cpp" />
+		<Unit filename="net\protocolgame74.h" />
+		<Unit filename="net\protocolgame76.cpp" />
+		<Unit filename="net\protocolgame76.h" />
 		<Unit filename="net\protocolgame78.cpp" />
 		<Unit filename="net\protocolgame78.h" />
 		<Unit filename="net\protocolgame80.cpp" />

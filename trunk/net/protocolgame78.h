@@ -35,8 +35,8 @@ class ProtocolGame78 : public ProtocolGame
 
 		virtual bool onRecv(NetworkMessage& msg);
 
-		virtual const char* getProtocolName() { return "Protocol80";}
-		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_800; }
+		virtual const char* getProtocolName() { return "Protocol7.8";}
+		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_780; }
 
         virtual void sendCloseShop() {} // does not exist in 8.0-8.11 family of protocols
         virtual void sendCloseNPCChannel() {} // does not exist in 8.0-8.11 family of protocols

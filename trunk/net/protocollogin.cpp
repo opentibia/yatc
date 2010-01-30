@@ -39,10 +39,11 @@ void ProtocolLogin::onConnect()
 {
 	printf("Connected!\n");
 	ProtocolConfig& config = ProtocolConfig::getInstance();
+	int version = config.getVersionOverride() ? config.getVersionOverride() : config.getClientVersion();
 	NetworkMessage output(NetworkMessage::CAN_WRITE);
 	output.addU8(0x01); //Login Protocol
 	output.addU16(config.getOS());
-	output.addU16(config.getVersionOverride() ? config.getVersionOverride() : config.getClientVersion());
+	output.addU16(version);
 	output.addU32(config.getDatSignature());
 	output.addU32(config.getSprSignature());
 	output.addU32(config.getPicSignature());
@@ -55,16 +56,18 @@ void ProtocolLogin::onConnect()
 
 	//From here bytes are encrypted using RSA
 	//generate XTEA key
-	uint32_t k[4];
-	srand(time(NULL)); //TODO use a real seed
-	k[0] = (rand() << 16) | rand(); k[1] = (rand() << 16) | rand();
-	k[2] = (rand() << 16) | rand(); k[3] = (rand() << 16) | rand();
+    uint32_t k[4];
+	if(version > CLIENT_VERSION_760){
+        srand(time(NULL)); //TODO use a real seed
+        k[0] = (rand() << 16) | rand(); k[1] = (rand() << 16) | rand();
+        k[2] = (rand() << 16) | rand(); k[3] = (rand() << 16) | rand();
 
-	output.addU8(0); // first byte have to be 0
-	output.addU32(k[0]); //XTEA key
-	output.addU32(k[1]);
-	output.addU32(k[2]);
-	output.addU32(k[3]);
+        output.addU8(0); // first byte have to be 0
+        output.addU32(k[0]); //XTEA key
+        output.addU32(k[1]);
+        output.addU32(k[2]);
+        output.addU32(k[3]);
+	}
 
 	if(!m_usesaccountname)
 		output.addU32(m_account);
@@ -75,19 +78,26 @@ void ProtocolLogin::onConnect()
     if (m_sendsysconf)
         sendSystemConfiguration(output);
 
-	//Rsa size has to be 128
-	int rsaSize = output.getSize() - sizeBefore;
-	output.addPaddingBytes(128 - rsaSize);
+	if(version > CLIENT_VERSION_760){
+        //Rsa size has to be 128
+        int rsaSize = output.getSize() - sizeBefore;
+        output.addPaddingBytes(128 - rsaSize);
 
-	char* rsaBuffer = output.getBuffer() + sizeBefore;
-	RSA::getInstance()->encrypt(rsaBuffer, 128);
+        char* rsaBuffer = output.getBuffer() + sizeBefore;
+        RSA::getInstance()->encrypt(rsaBuffer, 128);
+	}
 
 	//bool oldChecksumState = m_connection->getChecksumState();
 	//m_connection->setChecksumState(true);
 
 	m_connection->sendMessage(output);
-	m_connection->setKey((char*)k, 4*sizeof(uint32_t));
-	m_connection->setCryptoState(true);
+	if(version > CLIENT_VERSION_760){
+        m_connection->setKey((char*)k, 4*sizeof(uint32_t));
+        m_connection->setCryptoState(true);
+	}
+	else {
+	    m_connection->setCryptoState(false);
+	}
 	//m_connection->setChecksumState(oldChecksumState);
 
 	m_account = 0;
