@@ -31,6 +31,8 @@
 
 #include "rsa.h"
 #include "protocollogin.h"
+#include "protocolgame74.h"
+#include "protocolgame76.h"
 #include "protocolgame78.h"
 #include "protocolgame80.h"
 #include "protocolgame81.h"
@@ -82,6 +84,14 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 {
 	m_os = os;
 	switch(version){
+    //case CLIENT_VERSION_740:
+	//	NativeGUIError("Support for this client version is only experimental.", "Warning");
+	//	m_clientVersion = CLIENT_VERSION_740;
+    //    break;
+    case CLIENT_VERSION_760:
+		NativeGUIError("Support for this client version is only experimental.", "Warning");
+		m_clientVersion = CLIENT_VERSION_760;
+        break;
 	case CLIENT_VERSION_780:
 		NativeGUIError("Support for this client version is only experimental.", "Warning");
 		m_clientVersion = CLIENT_VERSION_780;
@@ -147,6 +157,7 @@ ClientVersion_t ProtocolConfig::detectVersion()
 	uint32_t picSignature = ProtocolConfig::readSignature("Tibia.pic");
 
 	printf("Data file signatures: %08x %08x %08x\n", datSignature, sprSignature, picSignature);
+	//todo (nfries88): Client version 74 autodetect
 	//todo (nfries88): Client version 76 and 77 series autodetect
 	//todo (nfries88): Client version 78 series autodetect
 	if (datSignature == 0x439D5A33 &&
@@ -273,7 +284,13 @@ ProtocolGame* ProtocolConfig::createGameProtocol(int version, const std::string&
 {
     ProtocolGame* protocol;
     switch(version){
-	    case CLIENT_VERSION_780:
+    case CLIENT_VERSION_740:
+        protocol = new ProtocolGame74(accountname, password, name, isGM);
+        break;
+    case CLIENT_VERSION_760:
+        protocol = new ProtocolGame76(accountname, password, name, isGM);
+        break;
+    case CLIENT_VERSION_780:
 		protocol = new ProtocolGame78(accountname, password, name, isGM);
 		break;
 	// todo (nfries88): more client version protocols.
@@ -694,7 +711,7 @@ void Connection::executeNetwork()
 					    fwrite(&size,2,1,m_recordfile);
 					    fwrite(m_inputMessage.getReadBuffer(), m_inputMessage.getReadSize(), 1, m_recordfile);
                                             fflush(m_recordfile);
-                                           
+
 					}
 
 

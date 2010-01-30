@@ -450,6 +450,15 @@ void Options::Load()
 		case 0:
 			protocol = CLIENT_VERSION_AUTO;
 			break;
+    	case 740:
+			protocol = CLIENT_VERSION_740;
+			break;
+    	case 760:
+			protocol = CLIENT_VERSION_760;
+			break;
+    	case 780:
+			protocol = CLIENT_VERSION_780;
+			break;
     	case 800:
 			protocol = CLIENT_VERSION_800;
 			break;
