@@ -35,6 +35,7 @@
 #include "../gamecontent/creature.h"
 #include "../clipboard.h"
 #include "../net/protocolgame.h"
+#include "../skin.h"
 
 extern int g_lastmousebutton;
 extern yatcClipboard g_clipboard;
@@ -75,7 +76,7 @@ void winVIP_t::addVIP(uint32_t id)
     glictPanel *p=m_entries[id]=new glictPanel;
     p->SetOnClick(OnListbox);
     p->SetBGActiveness(false);
-    p->SetCaption(it->second.getName() + (isonline ? " *" : ""));
+    p->SetCaption(it->second.getName());
     p->SetCustomData(this);
     p->SetBGColor(.4,.4,.4,1.);
     if (isonline)
@@ -175,7 +176,7 @@ void winVIP_t::makeVIPPopup(Popup* popup, void* owner, void* arg)
 
     s.str("");
     s << gettext("Edit ") + pnl->GetCaption();
-    popup->addItem(s.str(), onUnimplemented);
+    popup->addItem(s.str(), onEditVIP, (void*)pnl->GetCaption().c_str());
 
     s.str("");
     s << gettext("Remove ") + pnl->GetCaption();
@@ -189,7 +190,7 @@ void winVIP_t::makeVIPPopup(Popup* popup, void* owner, void* arg)
 
     s.str("");
     s << gettext("Add new VIP");
-    popup->addItem(s.str(), onUnimplemented);
+    popup->addItem(s.str(), onAddVIP);
 
     s.str("");
     s << gettext("Sort by name");
@@ -223,6 +224,17 @@ void winVIP_t::onUnimplemented(Popup::Item *parent)
 	GM_Gameworld* gw = (GM_Gameworld*)g_game;
 
     gw->msgBox(gettext("This functionality is not yet finished"), "TODO");
+}
+
+void winVIP_t::onAddVIP(Popup::Item *parent)
+{
+    winVIP_t* wvip = (winVIP_t*)(parent->parent->getOwner());
+    wvip->winAdd.launch();
+}
+void winVIP_t::onEditVIP(Popup::Item* parent)
+{
+    winVIP_t* wvip = (winVIP_t*)(parent->parent->getOwner());
+    wvip->winEdit.launch(std::string((char*)parent->data));
 }
 
 void winVIP_t::onRemoveVIP(Popup::Item *parent)
@@ -267,4 +279,185 @@ void winVIP_t::onCopyName(Popup::Item *parent)
 {
     VipEntry vip = VipList::getInstance().getEntry((uint32_t)VOIDP2INT(parent->data));
     g_clipboard.setText(vip.getName());
+}
+
+winAddVIP_t::winAddVIP_t()
+{
+    window.SetWidth(236);
+    window.SetHeight(105);
+    window.SetCaption(gettext("Add to VIP list"));
+
+    window.AddObject(&lblName);
+    lblName.SetWidth(210);
+    lblName.SetHeight(12);
+    lblName.SetPos(14, 16);
+    lblName.SetFont("aafont");
+    lblName.SetCaption(gettext("Please enter a character name:"));
+    lblName.SetBGActiveness(false);
+
+    window.AddObject(&name);
+    name.SetPos(14, 30);
+    name.SetWidth(200);
+    name.SetHeight(16);
+
+    window.AddObject(&pnlSep);
+    pnlSep.SetPos(10, 68);
+    pnlSep.SetWidth(210);
+    pnlSep.SetHeight(2);
+    pnlSep.SetSkin(&g_skin.txt);
+
+    window.AddObject(&btnAdd);
+    btnAdd.SetCaption("Add");
+    btnAdd.SetFont("minifont");
+    btnAdd.SetPos(124, 76);
+    btnAdd.SetWidth(42);
+    btnAdd.SetHeight(20);
+    btnAdd.SetCustomData(this);
+    btnAdd.SetOnClick(winAddVIP_t::onButtonPressed);
+
+    window.AddObject(&btnCancel);
+    btnCancel.SetCaption("Cancel");
+    btnCancel.SetFont("minifont");
+    btnCancel.SetPos(176, 76);
+    btnCancel.SetWidth(42);
+    btnCancel.SetHeight(20);
+    btnCancel.SetCustomData(this);
+    btnCancel.SetOnClick(winAddVIP_t::onButtonPressed);
+}
+winAddVIP_t::~winAddVIP_t()
+{
+}
+void winAddVIP_t::onButtonPressed(glictPos* pos, glictContainer *caller)
+{
+    winAddVIP_t* wadd = (winAddVIP_t*)caller->GetCustomData();
+    GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    if(caller == &(wadd->btnAdd)){
+        gw->m_protocol->sendAddVip(wadd->name.GetCaption());
+    }
+    wadd->name.SetCaption("");
+    wadd->window.SetVisible(false);
+}
+void winAddVIP_t::launch()
+{
+    this->window.SetVisible(true);
+    g_game->centerWindow(&this->window);
+}
+
+winChangeVIP_t::winChangeVIP_t()
+{
+    window.SetCaption(gettext("Change player in VIP list"));
+    window.SetWidth(286);
+    window.SetHeight(250);
+
+    window.AddObject(&lblName);
+    lblName.SetFont("aafont");
+    lblName.SetPos(18, 14);
+    lblName.SetWidth(250);
+    lblName.SetHeight(12);
+    lblName.SetBGActiveness(false);
+
+    window.AddObject(&sepTop);
+    sepTop.SetPos(18, 28);
+    sepTop.SetWidth(250);
+    sepTop.SetHeight(2);
+    sepTop.SetSkin(&g_skin.txt);
+    sepTop.SetBGColor(.2,.2,.2,1.);
+
+    window.AddObject(&lblType);
+    lblType.SetPos(18, 48);
+    lblType.SetWidth(85);
+    lblType.SetHeight(12);
+    lblType.SetFont("aafont");
+    lblType.SetCaption(gettext("Select a type:"));
+    lblType.SetBGActiveness(false);
+
+    window.AddObject(btnIcons.getGrid());
+    btnIcons.getGrid()->SetPos(18,60);
+    btnIcons.setItemSize(16,16);
+    btnIcons.setPadding(4,4);
+    btnIcons.setRows(11);
+    btnIcons.setOnClick(NULL);
+    btnIcons.setData(this);
+    for(int i = 0; i <= 10; i++){
+        ChoiceGrid::Item* item = btnIcons.addItem("", NULL, (void*)i);
+        item->btn.SetOnPaint(winChangeVIP_t::paintButtonIcon);
+        icons.push_back(item);
+    }
+    btnIcons.setSelected(icons[0]);
+
+    window.AddObject(&lblDesc);
+    lblDesc.SetPos(18, 92);
+    lblDesc.SetWidth(150);
+    lblDesc.SetHeight(12);
+    lblDesc.SetFont("aafont");
+    lblDesc.SetCaption(gettext("Enter a short description:"));
+    lblDesc.SetBGActiveness(false);
+
+    window.AddObject(&desc);
+    desc.SetPos(18, 104);
+    desc.SetWidth(250);
+    desc.SetHeight(48);
+    // trick to get a scrollbar to appear but basically do nothing?
+    desc.SetVirtualSize(250, 49);
+
+    window.AddObject(&notify.pnlPanel);
+    notify.SetCaption("Notify at login");
+    notify.SetPos(18, 166);
+    notify.SetSize(250, 22);
+
+    window.AddObject(&sepBottom);
+    sepBottom.SetPos(18, 208);
+    sepBottom.SetWidth(250);
+    sepBottom.SetHeight(2);
+    sepBottom.SetSkin(&g_skin.txt);
+    sepBottom.SetBGColor(.2,.2,.2,1.);
+
+    window.AddObject(&btnOk);
+    btnOk.SetCaption("Ok");
+    btnOk.SetFont("minifont", 8);
+    btnOk.SetPos(178, 218);
+    btnOk.SetWidth(44);
+    btnOk.SetHeight(20);
+    btnOk.SetCustomData(this);
+    btnOk.SetOnClick(winChangeVIP_t::onButtonPressed);
+
+    window.AddObject(&btnCancel);
+    btnCancel.SetCaption("Cancel");
+    btnCancel.SetFont("minifont", 8);
+    btnCancel.SetPos(230, 218);
+    btnCancel.SetWidth(44);
+    btnCancel.SetHeight(20);
+    btnCancel.SetCustomData(this);
+    btnCancel.SetOnClick(winChangeVIP_t::onButtonPressed);
+}
+winChangeVIP_t::~winChangeVIP_t()
+{
+}
+
+void winChangeVIP_t::onButtonPressed(glictPos* pos, glictContainer* caller)
+{
+    winChangeVIP_t* wch = (winChangeVIP_t*)caller->GetCustomData();
+    //GM_Gameworld *gw = (GM_Gameworld*)g_game;
+    if(caller == &(wch->btnOk)){
+        // TODO
+    }
+    wch->desc.SetCaption("");
+    wch->window.SetVisible(false);
+}
+void winChangeVIP_t::paintButtonIcon(glictRect *real, glictRect *clipped, glictContainer *caller)
+{
+    ChoiceGrid::Item* pi = (ChoiceGrid::Item*)caller->GetCustomData();
+    int type = VOIDP2INT(pi->data);
+    if(type == 0) return;
+    int x = 12 * ((type > 5) ? (type - 6) : type-1);
+    int y = 12 * (type > 5);
+
+    g_engine->getUISprite()->Blit(real->left+2, real->top+2, (289 + x) ,  (72 + y) , 12, 12);
+}
+
+void winChangeVIP_t::launch(std::string name)
+{
+    lblName.SetCaption(name);
+    this->window.SetVisible(true);
+    g_game->centerWindow(&this->window);
 }

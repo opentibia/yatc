@@ -291,6 +291,10 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 		else
 			sbvlPanel.winVIP.window.SetHeight(options.viph);
 	}
+	desktop.AddObject(&sbvlPanel.winVIP.winAdd.window);
+	sbvlPanel.winVIP.winAdd.window.SetVisible(false);
+	desktop.AddObject(&sbvlPanel.winVIP.winEdit.window);
+	sbvlPanel.winVIP.winEdit.window.SetVisible(false);
 
 	doResize(MAX(glictGlobals.w, 656), MAX(glictGlobals.h, 520));
 
@@ -1198,6 +1202,9 @@ void GM_Gameworld::performPopup(PopupProducerCallback cb, void*owner, void*arg) 
 			return;
 		}
         m_popup = new Popup();
+        // NOTE (nfries88): contrary to what one would believe, the popup's owner was not set here. Fixed... probably?
+        m_popup->setOwner(owner);
+
         desktop.AddObject(m_popup->getPanel());
         if(cb)
             cb(m_popup,owner,arg);
