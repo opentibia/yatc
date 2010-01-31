@@ -21,15 +21,56 @@
 #ifndef __UI_VIPWINDOW_H
 #define __UI_VIPWINDOW_H
 
+#include <GLICT/textbox.h>
 #include <GLICT/list.h>
 #include <GLICT/progressbar.h>
 #include <map>
 
 #include "../stackpanel.h"
 #include "../popup.h"
+#include "../choicegrid.h"
+#include "checkbox.h"
 
 class sbvlPanel_t;
 
+class winChangeVIP_t{
+public:
+    glictWindow window; // "Change player in VIP list."
+    glictPanel lblName; // [Player's name]
+    glictPanel sepTop;
+    glictPanel lblType; // "Select a type:"
+    ChoiceGrid btnIcons;
+	std::vector<ChoiceGrid::Item*> icons;
+    glictPanel lblDesc; // "Enter a short description:"
+    glictTextbox desc;
+    uiCheckbox notify;  // "Notify at login"
+    glictPanel sepBottom;
+    glictButton btnOk;
+    glictButton btnCancel;
+
+    winChangeVIP_t();
+    ~winChangeVIP_t();
+
+    static void onButtonPressed(glictPos* pos, glictContainer* caller);
+    static void paintButtonIcon(glictRect *real, glictRect *clipped, glictContainer *caller);
+    void launch(std::string name);
+};
+
+class winAddVIP_t{
+public:
+    glictWindow window; // "Add to VIP list"
+    glictPanel lblName; // "Please enter a character name:"
+    glictTextbox name;
+    glictPanel pnlSep;
+    glictButton btnAdd; // "Add"
+    glictButton btnCancel;
+
+    winAddVIP_t();
+    ~winAddVIP_t();
+
+    static void onButtonPressed(glictPos* pos, glictContainer *caller);
+    void launch();
+};
 
 class winVIP_t : public yatcStackPanelWindow
 {
@@ -56,10 +97,15 @@ public:
 	static void OnListbox(glictPos* pos, glictContainer *caller);
 
     static void onUnimplemented(Popup::Item *parent);
+    static void onAddVIP(Popup::Item *parent);
+    static void onEditVIP(Popup::Item *parent);
     static void onRemoveVIP(Popup::Item *parent);
     static void onMessageTo(Popup::Item *parent);
     static void onHideOfflineVIPs(Popup::Item *parent);
     static void onCopyName(Popup::Item *parent);
+
+    winAddVIP_t winAdd;
+    winChangeVIP_t winEdit;
 };
 
 #endif //__UI_VIPWINDOW_H

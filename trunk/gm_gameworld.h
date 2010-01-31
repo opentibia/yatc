@@ -233,6 +233,8 @@ private:
 	friend class Notifications;
 	friend class winBattle_t;
 	friend class winVIP_t;
+	friend class winAddVIP_t;
+	friend class winChangeVIP_t;
 
 	MapUI m_mapui;
 
