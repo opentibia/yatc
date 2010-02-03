@@ -33,13 +33,22 @@ extern int g_lastmousebutton;
 
 ConsolePanel::ConsolePanel()
 {
+    AddObject(&pnlConsoleResizer);
+    pnlConsoleResizer.SetSkin(&g_skin.btnn);
+    pnlConsoleResizer.SetHeight(5);
+    pnlConsoleResizer.SetPos(0, 0);
+    #if (GLICT_APIREV >= 98)
+    pnlConsoleResizer.SetDraggable(true);
+    pnlConsoleResizer.SetFocusable(true);
+    #endif
+
 	AddObject(&pnlConsoleEntryContainer);
     pnlConsoleEntryContainer.SetSkin(&g_skin.rsp);
-    pnlConsoleEntryContainer.SetPos(0, 16);
+    pnlConsoleEntryContainer.SetPos(0, 21);
 
     AddObject(&pnlConsoleButtonContainer);
     pnlConsoleButtonContainer.SetSkin(&g_skin.consoletabbg);
-    pnlConsoleButtonContainer.SetPos(0,0);
+    pnlConsoleButtonContainer.SetPos(0,5);
     pnlConsoleButtonContainer.SetHeight(18);
     //pnlConsoleButtonContainer.SetBGActiveness(false);
 
@@ -108,19 +117,48 @@ ConsolePanel::~ConsolePanel()
 {
 }
 
+bool ConsolePanel::CastEvent(glictEvents evt, void* wparam, long lparam, void* returnvalue)
+{
+#if (GLICT_APIREV>=95)
+    if (evt == GLICT_MOUSEMOVE) {
+        if (draggedchild) {
+            glictPos pos = *(glictPos*)wparam;
+            SetHeight(GetHeight() - (pos.y - GetY()));
+            SetPos(GetX(), glictGlobals.h - GetHeight());
+            // TODO (nfries88): update game area size.
+            g_game->doResize(glictGlobals.w, glictGlobals.h);
+            return true;
+        }
+    }
+    else if (evt == GLICT_MOUSEUP) {
+        if (draggedchild){
+            StopDraggingChild(*(glictPos*)wparam);
+            return true;
+        }
+    }
+#endif
+    return glictPanel::CastEvent(evt,wparam,lparam,returnvalue);
+}
+
 void ConsolePanel::SetHeight(float h)
 {
+    // NOTE (nfries88): The purpose of this is to prevent a 0 height console and confusing people on how to restore it.
+    //      and also prevent from shrinking the game area into oblivion.
+    h = std::min(std::max(h, 200.f), glictGlobals.h - 352);
 	glictPanel::SetHeight(h);
 
-	pnlConsoleEntryContainer.SetHeight(GetHeight()-16);
-	pnlConsoleEntryView.SetHeight(GetHeight()-40);
-	txtConsoleEntry.SetPos(20,GetHeight()-33);
-	btnSpeakLevel.SetPos(2, GetHeight()-34);
+	pnlConsoleEntryContainer.SetHeight(GetHeight()-21);
+	pnlConsoleEntryView.SetHeight(GetHeight()-45);
+	txtConsoleEntry.SetPos(20,GetHeight()-38);
+	btnSpeakLevel.SetPos(2, GetHeight()-39);
+
+	options.consoleh = h;
 }
 void ConsolePanel::SetWidth(float w)
 {
 	glictPanel::SetWidth(w);
 
+    pnlConsoleResizer.SetWidth(GetWidth());
 	pnlConsoleEntryContainer.SetWidth(GetWidth());
     pnlConsoleButtonContainer.SetWidth(GetWidth());
     btnIgnore.SetPos(pnlConsoleButtonContainer.GetWidth()-16, 0);
@@ -173,10 +211,10 @@ void ConsolePanel::MakeConsole(Console* console, const std::string& name)
 	// note (nfries88): Start at 20px offset to make appearance more like official client.
     int sum=20;
     for (std::vector<glictPanel*>::iterator it = pnlConsoleButtons.begin(); it != pnlConsoleButtons.end(); it++) {
-        (*it)->SetPos(sum,0);
+        (*it)->SetPos(sum,5);
         sum += (int)(*it)->GetWidth();
     }
-    p->SetPos(sum,0);
+    p->SetPos(sum,5);
     p->SetOnClick(pnlConsoleButton_OnClick);
     p->SetSkin(&g_skin.consoletabpassive);
     p->SetFont("gamefont");

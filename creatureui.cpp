@@ -166,7 +166,6 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 
 void CreatureUI::drawName(int x, int y, float scale) const
 {
-
     if (!options.shownames) return;
 	float walkoffx = 0.f, walkoffy = 0.f;
 
@@ -196,8 +195,10 @@ void CreatureUI::drawName(int x, int y, float scale) const
 	g_engine->drawText(name.c_str() , "gamefont", (int)(x + m_obj->xOffset + walkoffx + centralizationoffset),
                 (int)(y - nameyoffset + walkoffy), col);
 
-    g_engine->drawRectangle(x + walkoffx + 3, y - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
-	g_engine->drawRectangle(x + walkoffx + 4, y - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
+    if(hp != 0 || (n->getID() == GlobalVariables::getPlayerID())) {
+        g_engine->drawRectangle(x + walkoffx + 3, y - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
+        g_engine->drawRectangle(x + walkoffx + 4, y - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
+    }
 }
 
 oRGBA CreatureUI::getHealthColor(int hp)
