@@ -42,12 +42,13 @@ public:
 
 	virtual void SetHeight(float h);
 	virtual void SetWidth(float w);
+	virtual bool CastEvent(glictEvents evt, void* wparam, long lparam, void* returnvalue);
 
 	void SetActiveConsole(Console* console);
 	void MakeConsole(Console* console, const std::string& name);
 	void DeleteConsole(Console* console);
 
-
+    glictPanel pnlConsoleResizer;
 	glictPanel pnlConsoleEntryContainer;
 	glictPanel pnlConsoleEntryView;
 	glictTextbox txtConsoleEntry;
