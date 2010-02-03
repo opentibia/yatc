@@ -239,26 +239,6 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 
 	x+=walkoffx+11;
 	y+=walkoffy-10;
-	uint32_t skull =  n->getSkull();
-	switch (skull) {
-		case SKULL_GREEN:
-			g_engine->getUISprite()->Blit(x, y-10, 54, 225, 11, 11);
-			break;
-		case SKULL_YELLOW:
-			g_engine->getUISprite()->Blit(x, y-10, 65, 225, 11, 11);
-			break;
-		case SKULL_WHITE:
-			g_engine->getUISprite()->Blit(x, y-10, 76, 225, 11, 11);
-			break;
-		case SKULL_RED:
-			g_engine->getUISprite()->Blit(x, y-10, 87, 225, 11, 11);
-			break;
-		case SKULL_BLACK:
-			g_engine->getUISprite()->Blit(x, y-10, 98, 297, 11, 11);
-			break;
-
-		default: break;
-	}
 
 	uint32_t shield =  n->getShield();
 	switch(shield) {
@@ -298,6 +278,34 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 		default:
 			break;
 	}
+
+	// NOTE (nfries88): 11 for width of shield, 2 for padding
+	if(shield != SHIELD_NONE) x += 13;
+
+	uint32_t skull =  n->getSkull();
+	switch (skull) {
+		case SKULL_GREEN:
+			g_engine->getUISprite()->Blit(x, y-10, 54, 225, 11, 11);
+			break;
+		case SKULL_YELLOW:
+			g_engine->getUISprite()->Blit(x, y-10, 65, 225, 11, 11);
+			break;
+		case SKULL_WHITE:
+			g_engine->getUISprite()->Blit(x, y-10, 76, 225, 11, 11);
+			break;
+		case SKULL_RED:
+			g_engine->getUISprite()->Blit(x, y-10, 87, 225, 11, 11);
+			break;
+		case SKULL_BLACK:
+			g_engine->getUISprite()->Blit(x, y-10, 98, 297, 11, 11);
+			break;
+
+		default: break;
+	}
+
+
+	// NOTE (nfries88): 11 for width of skull, 2 for padding
+	if(skull != SKULL_NONE) x += 13;
 
 	uint32_t emblem =  n->getEmblem();
 	switch(emblem) {
