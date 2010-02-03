@@ -119,7 +119,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		//Pink square around the attacked creature
 		if(n->getID() == GlobalVariables::getAttackID()) {
 			// "Deep Pink" - may not be the right color
-			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 32*scale, 32*scale, oRGBA(255, 140, 7, 255), 2*scale);
+			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 32*scale, 32*scale, oRGBA(244, 63, 33, 255), 2*scale);
 		}
 		//Green square around the followed creature
 		else if(n->getID() == GlobalVariables::getFollowID()) {
@@ -187,25 +187,39 @@ void CreatureUI::drawName(int x, int y, float scale) const
     int hp = n->getHealth();
     oRGBA col = getHealthColor(hp);
 
-	g_engine->drawText(name.c_str() , "gamefont", (int)(x + walkoffx + centralizationoffset), (int)(y - 16 - 8 + walkoffy), col);
+    // NOTE1 (nfries88): Creature name and health offset must account for scaling, too!
+    // NOTE2 (nfries88): Official client always renders name at 16px ABOVE head.
+    //      Meaning 24, WHEN the creature has an offset of 8px and no scaling. (Player outfits, but not all outfits)
+    int nameyoffset = std::floor(m_obj->yOffset * scale) + 16;
+    int hpyoffset = nameyoffset - 11;
 
-	g_engine->drawRectangle(x + walkoffx + centralizationoffset, y - 14 + walkoffy, 35, 4, oRGBA(0,0,0,1));
-	g_engine->drawRectangle(x + walkoffx + centralizationoffset+1, y - 13 + walkoffy, 33*(hp/100.), 2, col);
+	g_engine->drawText(name.c_str() , "gamefont", (int)(x + m_obj->xOffset + walkoffx + centralizationoffset),
+                (int)(y - nameyoffset + walkoffy), col);
+
+    g_engine->drawRectangle(x + walkoffx + 3, y - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
+	g_engine->drawRectangle(x + walkoffx + 4, y - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
 }
 
 oRGBA CreatureUI::getHealthColor(int hp)
 {
-	oRGBA col;
-    if (hp >= 50.0) {
-        col.r = (1. - (hp/200.))*255.;
-        col.g = (0.75 + hp/400.)*255.;
-        col.b = 0.;
-        col.a = 255.;
-    } else {
-        col.r = 255.;
-        col.g = (hp / 50.) * 255.;
-        col.b = 0.;
-        col.a = 1.;
+    oRGBA col;
+    if (hp > 92.0) {
+        col = oRGBA(0., 188., 0., 255.);
+    }
+    else if (hp > 60.0) {
+        col = oRGBA(80., 161., 80., 255.);
+    }
+    else if (hp > 30.0) {
+        col = oRGBA(161., 161., 0., 255.);
+    }
+    else if (hp > 8.0) {
+        col = oRGBA(160., 39., 39., 255.);
+    }
+    else if (hp > 3.0) {
+        col = oRGBA(160., 0., 0., 255.);
+    }
+    else {
+        col = oRGBA(79., 0., 0., 255.);
     }
     return col;
 }

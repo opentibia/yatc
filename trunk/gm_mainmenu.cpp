@@ -380,6 +380,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 		<< b << " FightingElf\n"
 		<< b << " Magnus KL - Smygflik\n"
 		<< b << " Alexandru Pitis - Ormin\n"
+		<< b << " Kilouco\n"
 		<< "\n"
 		<< PRODUCTSHORT << gettext(" comes with ABSOLUTELY NO WARRANTY; \n"
 		   "for details see sections 11 and 12 in file COPYING.\n"
