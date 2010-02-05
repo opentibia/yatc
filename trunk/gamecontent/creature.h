@@ -125,10 +125,6 @@ protected:
 	friend class Creatures;
 };
 
-#if defined(YATC_THREADED)
-struct SDL_mutex;
-#endif
-
 class Creatures
 {
 public:

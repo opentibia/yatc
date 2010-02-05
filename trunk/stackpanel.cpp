@@ -66,6 +66,12 @@ void yatcStackPanel::StopDraggingChild(const glictPos &eventmousepos) {
 #endif
 }
 
+void yatcStackPanel::ForceHeight(int height)
+{
+    // TODO (nfries88): close windows if needed, resize bottom remaining window appropriately.
+    SetHeight(GetTotalHeight());
+}
+
 void yatcStackPanel::_updateDraggedChildPos(const glictPos &eventmousepos)
 {
 #if (GLICT_APIREV>=95)

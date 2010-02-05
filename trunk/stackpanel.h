@@ -23,6 +23,8 @@ public:
     void StopDraggingChild(const glictPos &eventmousepos);
     void Paint();
     int GetTotalHeight() { return int(totalheight); }
+    // NOTE (nfries88): for yspRightSideWindows, this will close or appropriately resize the windows.
+    void ForceHeight(int height);
 private:
     void _updateDraggedChildPos(const glictPos &eventmousepos);
 };

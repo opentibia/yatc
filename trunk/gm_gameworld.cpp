@@ -1644,13 +1644,15 @@ void GM_Gameworld::removeConsole(Console* i){
 
 void GM_Gameworld::updateRightSide()
 {
+    // TODO (nfries88): move the yatcStackPanel code into their class, where it belongs.
     yspRightSide.RebuildList();
     yspRightSide.SetHeight(yspRightSide.GetTotalHeight());
     pnlRightSidePanels.SetHeight(yspRightSide.GetTotalHeight()+4);
 	yspRightSideWindows.SetPos(0, pnlRightSidePanels.GetHeight());
     yspRightSideWindows.RebuildList();
-    yspRightSideWindows.SetHeight(yspRightSideWindows.GetTotalHeight());
+    yspRightSideWindows.ForceHeight(std::min(yspRightSideWindows.GetTotalHeight(), int(glictGlobals.h - pnlRightSidePanels.GetHeight())));
 
+    // TODO (nfries88): put this functionality into yatcStackPanel instead.
 	pnlRightSideFiller.SetPos(0, yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight());
 	pnlRightSideFiller.SetHeight(MAX(0, glictGlobals.h-(yspRightSideWindows.GetY()+yspRightSideWindows.GetTotalHeight())));
 }

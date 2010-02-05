@@ -19,6 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
+#include <iomanip>
 #include "console.h"
 #include "engine.h"
 
@@ -429,7 +430,7 @@ std::string ConsoleEntry::getFullText()
 	std::stringstream ss;
 	if(options.timestamps) {
 		struct tm* timeinfo = localtime((time_t*)(&m_timestamp));
-		ss << timeinfo->tm_hour << ":" << timeinfo->tm_min << " ";
+		ss << setfill('0') << setw(2) << timeinfo->tm_hour << ":" << setfill('0') << setw(2) << timeinfo->tm_min << " ";
 	}
 	if(m_speaker.size()){
 		ss << m_speaker;
