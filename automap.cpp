@@ -119,6 +119,8 @@ bool MiniMapArea::load()
     }
 
     //Create the sprite
+    // FIXME (nfries88): OpenGL does not work well when SDL is being used on the screen.
+    //      this operation must be changed for GL engine to work.
 	SDL_Surface* s = m_bitmap->lockSurface();
 	for(int i = 0; i < 256; i++){
 		for(int j = 0; j < 256; j++){
@@ -139,6 +141,7 @@ void MiniMapArea::setTileColor(uint16_t x, uint16_t y, uint8_t color, uint8_t sp
 	m_color[x][y] = color;
 	m_speed[x][y] = speedindex;
 	//update the srpite
+	// FIXME (nfries88): Must be changed to engine-independent for OpenGL engine.
 	SDL_Surface* s = m_bitmap->lockSurface();
 	uint8_t r, g, b;
 	getRGB(color, r, g, b);
