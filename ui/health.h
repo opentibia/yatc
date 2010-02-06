@@ -155,12 +155,12 @@ public:
         s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_HEALTH);
 		lblHealth.SetCaption(s.str());
-		lblHealth.SetPos(140-glictFontSize(s.str().c_str(), "system"), 6);
+		lblHealth.SetPos(120, 6);
 
 		s.str("");
 		s << GlobalVariables::getPlayerStat(STAT_MANA);
 		lblMana.SetCaption(s.str());
-		lblMana.SetPos(140-glictFontSize(s.str().c_str(), "system"), 20);
+		lblMana.SetPos(120, 20);
     }
 
 
