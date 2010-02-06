@@ -77,6 +77,10 @@
 		7FAA74E30E97C98C0033E348 /* Tibia.pic in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74E00E97C98C0033E348 /* Tibia.pic */; };
 		7FAA74E40E97C98C0033E348 /* Tibia.dat in Resources */ = {isa = PBXBuildFile; fileRef = 7FAA74E10E97C98C0033E348 /* Tibia.dat */; };
 		7FAA754D0E97CD8D0033E348 /* protocolgame831.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FAA754B0E97CD8D0033E348 /* protocolgame831.cpp */; };
+		7FAE8BAB111DC16300846B24 /* protocolgame74.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FAE8BA7111DC16300846B24 /* protocolgame74.cpp */; };
+		7FAE8BAC111DC16300846B24 /* protocolgame76.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FAE8BA9111DC16300846B24 /* protocolgame76.cpp */; };
+		7FAE8BC3111DC34500846B24 /* macclipboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAE8BC2111DC34500846B24 /* macclipboard.m */; };
+		7FAE8BCD111DC3CF00846B24 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FAE8BCC111DC3CF00846B24 /* Cocoa.framework */; };
 		7FB09A981077802E0034A482 /* connectionreplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB09A961077802E0034A482 /* connectionreplay.cpp */; };
 		7FB09A9B1077803B0034A482 /* protocolgame85.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB09A991077803B0034A482 /* protocolgame85.cpp */; };
 		7FB09A9D1077804E0034A482 /* skills.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB09A9C1077804E0034A482 /* skills.cpp */; };
@@ -267,6 +271,12 @@
 		7FAA74E10E97C98C0033E348 /* Tibia.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tibia.dat; sourceTree = "<group>"; };
 		7FAA754B0E97CD8D0033E348 /* protocolgame831.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame831.cpp; sourceTree = "<group>"; };
 		7FAA754C0E97CD8D0033E348 /* protocolgame831.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame831.h; sourceTree = "<group>"; };
+		7FAE8BA7111DC16300846B24 /* protocolgame74.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame74.cpp; sourceTree = "<group>"; };
+		7FAE8BA8111DC16300846B24 /* protocolgame74.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame74.h; sourceTree = "<group>"; };
+		7FAE8BA9111DC16300846B24 /* protocolgame76.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame76.cpp; sourceTree = "<group>"; };
+		7FAE8BAA111DC16300846B24 /* protocolgame76.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame76.h; sourceTree = "<group>"; };
+		7FAE8BC2111DC34500846B24 /* macclipboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = macclipboard.m; sourceTree = "<group>"; };
+		7FAE8BCC111DC3CF00846B24 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7FB09A961077802E0034A482 /* connectionreplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connectionreplay.cpp; sourceTree = "<group>"; };
 		7FB09A971077802E0034A482 /* connectionreplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connectionreplay.h; sourceTree = "<group>"; };
 		7FB09A991077803B0034A482 /* protocolgame85.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame85.cpp; sourceTree = "<group>"; };
@@ -322,6 +332,7 @@
 				7F37669F10D793C600D2C69A /* GMP.framework in Frameworks */,
 				7F3766A510D793E500D2C69A /* SDL_gfx.framework in Frameworks */,
 				7F3766A710D793E500D2C69A /* SDL.framework in Frameworks */,
+				7FAE8BCD111DC3CF00846B24 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +377,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				7FAE8BCC111DC3CF00846B24 /* Cocoa.framework */,
 			);
 			name = yatc;
 			sourceTree = "<group>";
@@ -416,6 +428,7 @@
 				7FA4FB640E93D5B30089D560 /* gamecontent */,
 				7FA4FB3D0E93D5AA0089D560 /* ui */,
 				7FA4FB160E93D5A10089D560 /* net */,
+				7FAE8BC2111DC34500846B24 /* macclipboard.m */,
 				7FA4FB140E93D5990089D560 /* sprdata.c */,
 				7FD1F38F0F1390F60061E357 /* choicegrid.cpp */,
 				7FD1F3900F1390F60061E357 /* choicegrid.h */,
@@ -496,6 +509,10 @@
 		7FA4FB160E93D5A10089D560 /* net */ = {
 			isa = PBXGroup;
 			children = (
+				7FAE8BA7111DC16300846B24 /* protocolgame74.cpp */,
+				7FAE8BA8111DC16300846B24 /* protocolgame74.h */,
+				7FAE8BA9111DC16300846B24 /* protocolgame76.cpp */,
+				7FAE8BAA111DC16300846B24 /* protocolgame76.h */,
 				7F3766B410D7942900D2C69A /* protocolgame853.cpp */,
 				7F3766B510D7942900D2C69A /* protocolgame853.h */,
 				7F3766B610D7942900D2C69A /* protocolgame854.cpp */,
@@ -775,6 +792,9 @@
 				7F3766B810D7942900D2C69A /* protocolgame853.cpp in Sources */,
 				7F3766B910D7942900D2C69A /* protocolgame854.cpp in Sources */,
 				7FDAA91910FA25F00067AB2B /* macutil.m in Sources */,
+				7FAE8BAB111DC16300846B24 /* protocolgame74.cpp in Sources */,
+				7FAE8BAC111DC16300846B24 /* protocolgame76.cpp in Sources */,
+				7FAE8BC3111DC34500846B24 /* macclipboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
