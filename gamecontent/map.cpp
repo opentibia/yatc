@@ -69,13 +69,14 @@ bool AnimatedText::canBeDeleted()
 }
 
 //*************** PublicMessage *************************
-PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos)
+PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName)
 {
 	m_color = color;
 	m_sender = sender;
 	m_text = text;
 	m_pos = pos;
 	m_startTime = g_frameTime;
+	m_showName = showName;
 }
 
 bool PublicMessage::canBeDeleted()
@@ -580,10 +581,10 @@ void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string
 	m_animatedTexts[pos.z].push_back(AnimatedText(pos, color, text));
 }
 
-void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender)
+void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender, bool showName)
 {
 	ASSERT(pos.z < MAP_LAYER);
-	m_publicMessages[pos.z].push_back(PublicMessage(color, text, sender, pos));
+	m_publicMessages[pos.z].push_back(PublicMessage(color, text, sender, pos, showName));
 }
 
 std::list<Direction> Map::getPathTo(int x, int y, int z)
