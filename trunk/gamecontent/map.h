@@ -79,6 +79,25 @@ private:
 	Position m_pos;
 };
 
+class PublicMessage{
+public:
+    PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos);
+
+	uint32_t getStartTime(){ return m_startTime;}
+	TextColor_t getColor() { return m_color;}
+	const std::string& getText() { return m_text;}
+	const std::string& getSender() { return m_sender; }
+	const Position& getPosition() { return m_pos;}
+
+    bool canBeDeleted();
+private:
+    uint32_t m_startTime;
+    TextColor_t m_color;
+    std::string m_text;
+    std::string m_sender;
+    Position m_pos;
+};
+
 class Tile{
 public:
 	Tile();
@@ -151,6 +170,10 @@ public:
 	void addAnimatedText(const Position& pos, uint32_t color, const std::string& text);
 	AnimatedTextList& getAnimatedTexts(uint8_t floor) { return m_animatedTexts[floor];}
 
+	typedef std::list<PublicMessage> PublicMessageList;
+	void addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender);
+	PublicMessageList& getPublicMessages(uint8_t floor) { return m_publicMessages[floor]; }
+
 	std::list<Direction> getPathTo(int x, int y, int z);
 
 private:
@@ -170,5 +193,6 @@ private:
 
 	AnimatedTextList m_animatedTexts[16];
 	DistanceEffectList m_distanceEffects[16];
+	PublicMessageList m_publicMessages[16];
 };
 #endif
