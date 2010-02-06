@@ -346,18 +346,15 @@ void MapUI::renderMap()
                     messages.erase(mit++);
                 }
                 else{
-                    const Position& pos = (*mit).getPosition();
-                    // NOTE (nfries88): yelling can be seen off screen.
-                    Position txtpos = pos;
-                    //txtpos.x = std::min(std::max(txtpos.x, (uint32_t)m_x), (uint32_t)(m_x+m_vpw));
-                    //txtpos.y = std::min(std::max(txtpos.y, (uint32_t)m_y), (uint32_t)(m_y+m_vpw));
-
+                    // FIXME (nfries88): This will not draw properly when there are multiple messages on the same tile.
+                    const Position& txtpos = (*mit).getPosition();
                     std::string text = (*mit).getSender() + " says:\n" + (*mit).getText();
 
-                    int screenx = (int)(((txtpos.x - pos.x + m_vpw/2 + 0.4)*scaledSize + walkoffx) + m_x) - (scaledSize/2);
-                    //screenx = std::min(std::max(0, screenx), int(m_vpw*scaledSize));
-                    int screeny = (int)(((txtpos.y - pos.y + m_vph/2)*scaledSize + walkoffy) + m_y) + (scaledSize/2);
-                    //screeny = std::min(std::max(0, screeny), int(m_vph*scaledSize));
+                    // NOTE (nfries88): yelling can be seen even if it's from off screen.
+                    int screenx = (int)(((txtpos.x - pos.x + m_vpw/2 + 0.4)*scaledSize) + m_x) - (scaledSize/2);
+                    screenx = std::min(std::max(0, screenx), int(m_vpw*scaledSize));
+                    int screeny = (int)(((txtpos.y - pos.y + m_vph/2)*scaledSize) + m_y) + (scaledSize/2);
+                    screeny = std::min(std::max(0, screeny), int(m_vph*scaledSize));
 
                     g_engine->drawText(text.c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines(text.c_str())*12), (*mit).getColor());
                     ++mit;
