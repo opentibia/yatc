@@ -375,6 +375,7 @@ bool Tile::addThing(Thing *thing, bool pushThing/* = false*/)
 	int thingOrder = thing->getOrder();
 	ThingVector::iterator it;
 
+    // TODO (nfries88): thomac says that for creatures, version 8.54+, must be added at the BOTTOM of their order; not the top.
 	for(it = m_objects.begin(); it != m_objects.end(); ++it){
 		int itThingOrder = (*it)->getOrder();
 		if(pushThing){

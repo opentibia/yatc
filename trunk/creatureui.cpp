@@ -167,15 +167,27 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 void CreatureUI::drawName(int x, int y, float scale) const
 {
     if (!options.shownames) return;
-	float walkoffx = 0.f, walkoffy = 0.f;
-
 
 	Creature* n = (Creature*)this;
+
+	// NOTE (nfries88): Do not draw name or HP for creatures with 0%hp, unless it is this player
+    int hp = n->getHealth();
+    if (hp != 0 || (n->getID() == GlobalVariables::getPlayerID())) return;
+
+    // NOTE (kilouco): Here we will take some more conditions for names and healthbars to be rendered.
+    Position playerPos = GlobalVariables::getPlayerPosition();
+    Position creaturePos = n->getCurrentPos();
+    int relative_x = creaturePos.x - playerPos.x;
+    int relative_y = creaturePos.y - playerPos.y;
+    if (std::abs(relative_x) > 7 || std::abs(relative_y) > 5) //Shouldn't render names and health bars in these cases.
+        return;
+
+	float walkoffx = 0.f, walkoffy = 0.f;
+
 	Outfit_t outfit = n->getOutfit();
 	if(!m_obj){
 		return;
 	}
-
 
     std::string name = n->getName().c_str();
     name[0] = toupper(name[0]);
@@ -183,7 +195,6 @@ void CreatureUI::drawName(int x, int y, float scale) const
 	volatile float centralizationoffset = -(g_engine->sizeText( name.c_str(), "gamefont" ) / 2) + 16 - 8;
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-    int hp = n->getHealth();
     oRGBA col = getHealthColor(hp);
 
     // NOTE1 (nfries88): Creature name and health offset must account for scaling, too!
@@ -192,13 +203,20 @@ void CreatureUI::drawName(int x, int y, float scale) const
     int nameyoffset = std::floor(m_obj->yOffset * scale) + 16;
     int hpyoffset = nameyoffset - 11;
 
-	g_engine->drawText(name.c_str() , "gamefont", (int)(x + m_obj->xOffset + walkoffx + centralizationoffset),
-                (int)(y - nameyoffset + walkoffy), col);
+    g_engine->drawTextGW(name.c_str() , "gamefont", (int)(x + m_obj->xOffset + walkoffx + centralizationoffset),
+            (int)(y - nameyoffset + walkoffy), col);
 
-    if(hp != 0 || (n->getID() == GlobalVariables::getPlayerID())) {
-        g_engine->drawRectangle(x + walkoffx + 3, y - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
-        g_engine->drawRectangle(x + walkoffx + 4, y - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
+    if ((y - nameyoffset + walkoffy) <= 0) {
+        g_engine->drawRectangle(x + walkoffx + 3, 12, 28, 4, oRGBA(0,0,0,1));
+        g_engine->drawRectangle(x + walkoffx + 4, 12, 26*(hp/100.), 2, col);
     }
+    else {
+        g_engine->drawRectangle(x + walkoffx + 3, (y+1) - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
+        g_engine->drawRectangle(x + walkoffx + 4, (y+1) - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
+    }
+
+    //g_engine->drawRectangle(x + walkoffx + 3, y - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
+    //g_engine->drawRectangle(x + walkoffx + 4, y - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
 }
 
 oRGBA CreatureUI::getHealthColor(int hp)

@@ -262,7 +262,7 @@ void MapUI::renderMap()
                     int screenx = (int)((txtpos.x - pos.x + m_vpw/2 + offset + 0.4)*scaledSize + walkoffx) + m_x;
                     int screeny = (int)((txtpos.y - pos.y + m_vph/2 + offset - textYOffset)*scaledSize + walkoffy) + m_y;
 
-                    g_engine->drawText((*it).getText().c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines((*it).getText().c_str())*12), (*it).getColor());
+                    g_engine->drawTextGW((*it).getText().c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines((*it).getText().c_str())*12), (*it).getColor());
                     ++it;
                 }
             }
@@ -360,7 +360,7 @@ void MapUI::renderMap()
                     int screeny = (int)(((txtpos.y - pos.y + m_vph/2)*scaledSize) + m_y) + (scaledSize/2);
                     screeny = std::min(std::max(0, screeny), int(m_vph*scaledSize));
 
-                    g_engine->drawText(text.c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines(text.c_str())*12), (*mit).getColor());
+                    g_engine->drawTextGW(text.c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines(text.c_str())*12), (*mit).getColor());
                     ++mit;
                 }
             }
