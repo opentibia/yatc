@@ -348,7 +348,11 @@ void MapUI::renderMap()
                 else{
                     // FIXME (nfries88): This will not draw properly when there are multiple messages on the same tile.
                     const Position& txtpos = (*mit).getPosition();
-                    std::string text = (*mit).getSender() + " says:\n" + (*mit).getText();
+                    std::string text;
+                    if((*mit).shouldShowName())
+                        text = (*mit).getSender() + " says:\n" + (*mit).getText();
+                    else
+                        text = (*mit).getText();
 
                     // NOTE (nfries88): yelling can be seen even if it's from off screen.
                     int screenx = (int)(((txtpos.x - pos.x + m_vpw/2 + 0.4)*scaledSize) + m_x) - (scaledSize/2);
