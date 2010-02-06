@@ -24,8 +24,8 @@
     // NOTE (nfries88): This should include req'd X11 headers for compilation.
 	#include <SDL/SDL_syswm.h>
 #elif defined(__APPLE__)
-    extern "C" const char* getPasteboardText();
-    extern "C" void putPasteBoardText(const char*);
+	extern "C" char* getPasteboardText();
+    extern "C" void putPasteboardText(const char*);
 #elif !defined(WIN32)
 	// NOTE (nfries88): Using an internal std::string on unsupported platforms.
 	#define __USE_INTERNAL_CLIPBOARD

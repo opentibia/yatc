@@ -138,7 +138,7 @@ std::string yatcClipboard::getText()
     }
     m_unlockdisplay();
 	#elif defined(__APPLE__)
-	const char* ret = getPasteboardText();
+	char* ret = getPasteboardText();
 	std::string str = ret;
 	free(ret);  // ret is allocated within getPasteboardText
 	return str;

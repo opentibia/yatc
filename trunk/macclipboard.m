@@ -1,12 +1,10 @@
-#include "clipboard.h"
-
 #include <Cocoa/Cocoa.h>
-#include <Cocoa/NSPasteboard.h>
+#include <AppKit/NSPasteboard.h>
 
 #include <stdlib.h>
 #include <string.h>
 
-const char* getPasteboardText()
+char* getPasteboardText()
 {
     NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
     NSString* string = [pasteboard stringForType:NSStringPboardType];
@@ -16,7 +14,7 @@ const char* getPasteboardText()
     return ret;
 }
 
-void putPasteBoardText(const char* text)
+void putPasteboardText(const char* text)
 {
     NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
     NSString* string = [NSString stringWithCString:text];

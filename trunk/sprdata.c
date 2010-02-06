@@ -171,8 +171,9 @@ int writeSprData(FILE* f, SDL_Surface *surface, int offx, int offy, uint16_t *da
 
 	fseek(f, sizepos, SEEK_SET);
     // NOTE (nfries88): Endianness correction for big endian machines, but not sure if this is correct...
-	ECORR16((uint16_t)i);
-	dummy = fwrite(&i, 2, 1, f);
+	uint16_t i16=(uint16_t)i;
+	ECORR16(i16);
+	dummy = fwrite(&i16, 2, 1, f);
 	*datasize = i;
 
 	SDL_UnlockSurface(surface);

@@ -163,7 +163,7 @@ bool NetworkMessage::getU8(uint8_t& v)
 bool NetworkMessage::getString(std::string& v)
 {
 	uint16_t stringSize;
-    ECORR16(v);
+    ECORR16(stringSize);
 	if(getU16(stringSize) && canRead(stringSize)){
 		const char* cstr = (const char*)(m_buffer + m_readPos);
 		m_readPos += stringSize;
