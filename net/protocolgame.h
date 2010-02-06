@@ -81,6 +81,7 @@ class ProtocolGame : public Protocol
         virtual bool parseCreatureSpeed(NetworkMessage& msg); // 0x8F
         virtual bool parseCreatureSkulls(NetworkMessage& msg); // 0x90
         virtual bool parseCreatureShields(NetworkMessage& msg); // 0x91
+        virtual bool parseCreaturePassable(NetworkMessage& msg); // 0x92; added 8.54
 		virtual bool parseItemTextWindow(NetworkMessage& msg); // 0x96
 		virtual bool parseHouseTextWindow(NetworkMessage& msg); // 0x97
 		virtual bool parsePlayerStats(NetworkMessage& msg); // 0xA0

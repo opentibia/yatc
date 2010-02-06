@@ -48,6 +48,9 @@ class Engine
 		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness = 1.f) {}
 		virtual void drawText(const char* text, const char* font, int x, int y, uint8_t color=215); // 215 == TEXTCOLOR_WHITE
 		virtual void drawText(const char* text, const char* font, int x, int y, oRGBA color);
+		// NOTE (nfries88): Special text drawing functions are required for the game area; these are them!
+		virtual void drawTextGW(const char* text, const char* font, int x, int y, uint8_t color=215); // 215 == TEXTCOLOR_WHITE
+		virtual void drawTextGW(const char* text, const char* font, int x, int y, oRGBA color);
 		virtual float sizeText(const char* text, const char* font) { float a = glictFontSize(text, font, 10); ASSERTFRIENDLY(a<20000, "Looks like text width is enormous."); return a; }
 
 		int getWindowWidth() const {return m_width;};

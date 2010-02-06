@@ -212,6 +212,8 @@ bool ProtocolGame::parsePacket(uint8_t cmd, NetworkMessage& msg)
         return parseCreatureSkulls(msg);
     case 0x91:
         return parseCreatureShields(msg);
+    case 0x92:
+        return parseCreaturePassable(msg);
 	case 0x96:
 		return parseItemTextWindow(msg);
 	case 0x97:
@@ -881,6 +883,17 @@ bool ProtocolGame::parseCreatureShields(NetworkMessage& msg)
     Creature* creature = Creatures::getInstance().getCreature(creatureID);
     if(creature){
         creature->setShield(shield);
+    }
+    return true;
+}
+// 8.53+
+bool ProtocolGame::parseCreaturePassable(NetworkMessage& msg)
+{
+    MSG_READ_U32(creatureID);
+    MSG_READ_U8(impassable);
+    Creature* creature = Creatures::getInstance().getCreature(creatureID);
+    if(creature){
+        creature->setImpassable((impassable == 0x01));
     }
     return true;
 }
