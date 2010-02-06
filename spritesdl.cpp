@@ -80,7 +80,7 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, f
 
     double neww = getBasicImage()->w * lambdaw;
     double newh = getBasicImage()->h * lambdah;
-    if(oldw != neww || oldh != newh) {
+    if(getImage()->w != neww || getImage()->h != newh) {
 		Stretch(neww, newh, options.smoothstretch);
 		oldw = neww;
 		oldh = newh;
