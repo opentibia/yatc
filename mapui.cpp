@@ -248,24 +248,24 @@ void MapUI::renderMap()
 
 		//draw animated texts
 		if (options.showtexteffects) {
-		Map::AnimatedTextList& aniTexts = Map::getInstance().getAnimatedTexts(z);
-		Map::AnimatedTextList::iterator it = aniTexts.begin();
-		while(it != aniTexts.end()){
-			if((*it).canBeDeleted()){
-				aniTexts.erase(it++);
-			}
-			else{
-				const Position& txtpos = (*it).getPosition();
+            Map::AnimatedTextList& aniTexts = Map::getInstance().getAnimatedTexts(z);
+            Map::AnimatedTextList::iterator it = aniTexts.begin();
+            while(it != aniTexts.end()){
+                if((*it).canBeDeleted()){
+                    aniTexts.erase(it++);
+                }
+                else{
+                    const Position& txtpos = (*it).getPosition();
 
-				float textYOffset = (g_frameTime - (*it).getStartTime())/1000.f*0.75f;
+                    float textYOffset = (g_frameTime - (*it).getStartTime())/1000.f*0.75f;
 
-				int screenx = (int)((txtpos.x - pos.x + m_vpw/2 + offset + 0.4)*scaledSize + walkoffx) + m_x;
-				int screeny = (int)((txtpos.y - pos.y + m_vph/2 + offset - textYOffset)*scaledSize + walkoffy) + m_y;
+                    int screenx = (int)((txtpos.x - pos.x + m_vpw/2 + offset + 0.4)*scaledSize + walkoffx) + m_x;
+                    int screeny = (int)((txtpos.y - pos.y + m_vph/2 + offset - textYOffset)*scaledSize + walkoffy) + m_y;
 
-				g_engine->drawText((*it).getText().c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines((*it).getText().c_str())*12), (*it).getColor());
-				++it;
-			}
-		}
+                    g_engine->drawText((*it).getText().c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines((*it).getText().c_str())*12), (*it).getColor());
+                    ++it;
+                }
+            }
 		}
 		//draw distance effects
 		{
@@ -336,6 +336,33 @@ void MapUI::renderMap()
 			}
 
 		}
+	}
+	// draw publicly displayed messages
+	{
+        Map::PublicMessageList& messages = Map::getInstance().getPublicMessages(GlobalVariables::getPlayerPosition().z);
+            Map::PublicMessageList::iterator mit = messages.begin();
+            while(mit != messages.end()){
+                if((*mit).canBeDeleted()){
+                    messages.erase(mit++);
+                }
+                else{
+                    const Position& pos = (*mit).getPosition();
+                    // NOTE (nfries88): yelling can be seen off screen.
+                    Position txtpos = pos;
+                    //txtpos.x = std::min(std::max(txtpos.x, (uint32_t)m_x), (uint32_t)(m_x+m_vpw));
+                    //txtpos.y = std::min(std::max(txtpos.y, (uint32_t)m_y), (uint32_t)(m_y+m_vpw));
+
+                    std::string text = (*mit).getSender() + " says:\n" + (*mit).getText();
+
+                    int screenx = (int)(((txtpos.x - pos.x + m_vpw/2 + 0.4)*scaledSize + walkoffx) + m_x) - (scaledSize/2);
+                    //screenx = std::min(std::max(0, screenx), int(m_vpw*scaledSize));
+                    int screeny = (int)(((txtpos.y - pos.y + m_vph/2)*scaledSize + walkoffy) + m_y) + (scaledSize/2);
+                    //screeny = std::min(std::max(0, screeny), int(m_vph*scaledSize));
+
+                    g_engine->drawText(text.c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines(text.c_str())*12), (*mit).getColor());
+                    ++mit;
+                }
+            }
 	}
 
 	g_engine->resetClipping();

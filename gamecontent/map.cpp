@@ -68,6 +68,26 @@ bool AnimatedText::canBeDeleted()
 	}
 }
 
+//*************** PublicMessage *************************
+PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos)
+{
+	m_color = color;
+	m_sender = sender;
+	m_text = text;
+	m_pos = pos;
+	m_startTime = g_frameTime;
+}
+
+bool PublicMessage::canBeDeleted()
+{
+	if(g_frameTime - m_startTime > 3000){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 //*************** Tile **************************
 
 Tile::Tile()
@@ -558,6 +578,12 @@ void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string
 {
 	ASSERT(pos.z < MAP_LAYER);
 	m_animatedTexts[pos.z].push_back(AnimatedText(pos, color, text));
+}
+
+void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender)
+{
+	ASSERT(pos.z < MAP_LAYER);
+	m_publicMessages[pos.z].push_back(PublicMessage(color, text, sender, pos));
 }
 
 std::list<Direction> Map::getPathTo(int x, int y, int z)

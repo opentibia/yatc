@@ -1303,9 +1303,12 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     case SPEAK_MONSTER_SAY:
     case SPEAK_MONSTER_YELL:
          getDefaultConsole()->insertEntry(ConsoleEntry(message, name, -1, TEXTCOLOR_ORANGE));
+         Map::getInstance().addPublicMessage(pos, TEXTCOLOR_ORANGE, message, name);
          break;
     default:
         getDefaultConsole()->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_YELLOW));
+        // NOTE (nfries88): Need to make SPEAK_YELL and SPEAK_MONSTER_YELL go to other floors.
+        Map::getInstance().addPublicMessage(pos, TEXTCOLOR_YELLOW, message, name);
     }
 
 }
@@ -1347,6 +1350,7 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     switch (type) {
         case SPEAK_PRIVATE:
             findConsole(name)->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_LIGHTBLUE));
+            Map::getInstance().addPublicMessage(GlobalVariables::getPlayerPosition(), TEXTCOLOR_LIGHTBLUE, message, name);
             break;
         default: {
             std::stringstream s;
