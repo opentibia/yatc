@@ -176,26 +176,26 @@ bool ProtocolLogin::onRecv(NetworkMessage& msg)
 void ProtocolLogin::sendSystemConfiguration(NetworkMessage &output)
 {
     // decoded by thomac, praise the Lord
-
+	
     // FIXME (ivucica#1#): this sends thomac's configuration.
     // this can easily be detected.
     // we need to figure out remaining bytes and real detection
     char hardware_spec[] = {
         0x2C, // unknown
-        0x55, 0x53, 0x41, // USA - locale
+        'U', 'S', 'A', // USA - locale
         0xFE, 0x1F, // 8190 - RAM
-
+		
         0x04, 0x5E, 0x08, 0x40, 0x10, 0x00,  // unknown
-
-        0x39, 0x36, 0x35, 0x30, 0x00, 0x00, 0x00, 0x00, 0x00, // 9650 - processor, padded to 9 bytes
-
+		
+        '9', '6', '5', '0', '\0', 0x00, 0x00, 0x00, 0x00, // 9650 - processor, padded to 9 bytes
+		
         0x11, 0x44, // unknown
-
+		
         0x06, 0x09, // proc freq
         0x06, 0x09, // proc freq (?)
         0x22, 0x00, 0x00, 0x00, // unknown
-
-        0x34, 0x38, 0x30, 0x30, 0x20, 0x53, 0x45, 0x52, 0x49, // 4800 SERI - gfx card padded to 9 bytes
+		
+        '4', '8', '0', '0', ' ', 'S', 'E', 'R', 'I', // 4800 SERI - gfx card padded to 9 bytes
         0x00, 0x04, // 1024 - vram?
         0x80, 0x07, // 1920 - horiz reso
         0x38, 0x04, // 1080 - vert reso,

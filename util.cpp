@@ -390,3 +390,39 @@ openurl(const char *url)
 
 }
 
+
+
+
+
+
+
+
+
+// hex printing code:
+/*for(int i = 0; i < to-from; i+=8)
+ {
+ 
+ if(i % 16 == 0)
+ {
+ printf("\t");
+ 
+ for(int j = i-16; j < i; j++)
+ {
+ if(i<0)break;
+ printf("%c", isprint(memory[from+j]) ? memory[from+j] : '.');
+ }
+ printf("\n%08X\t\t", from+i);
+ }
+ else
+ {
+ printf("\t");
+ }
+ 
+ int adr = 0;
+ for(int j = 0; j < 8 && adr < to; j++)
+ {
+ adr = from + i + j;
+ printf("%02hhX ", memory[adr]); // hhX -- forsira da koristimo cetvrt-int, tj. half-half-int.
+ }
+ 
+ }*/
