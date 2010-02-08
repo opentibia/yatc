@@ -513,7 +513,7 @@ void GM_Gameworld::keyPress (int key)
                         m_protocol->sendSay(SPEAK_PRIVATE, recipient,newmsg);
                         Console*c = findConsole(recipient);
                         if (c) {
-                            c->insertEntry(ConsoleEntry(newmsg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() ,TEXTCOLOR_LIGHTBLUE));
+                            c->insertEntry(ConsoleEntry(newmsg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName(), TEXTCOLOR_PURPLE));
                         }
                         sent = true;
                     }
@@ -529,13 +529,15 @@ void GM_Gameworld::keyPress (int key)
                 } else {
                     if (getActiveConsole()->getSpeakerName() == "NPCs")
                     { // FIXME (ivucica#1#) Incorrect way; what if there really is a player called NPCs?
-                        getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
+                        getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName(),
+                            GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_LEVEL), TEXTCOLOR_PURPLE));
                         m_protocol->sendSay(SPEAK_PRIVATE_PN, msg);
                         sent = true;
                     }
                     else if (getActiveConsole()->getSpeakerName().size())
                     {
-                        getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName() , TEXTCOLOR_LIGHTBLUE));
+                        getActiveConsole()->insertEntry(ConsoleEntry(msg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName(),
+                            GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_LEVEL), TEXTCOLOR_PURPLE));
                         m_protocol->sendSay(SPEAK_PRIVATE, getActiveConsole()->getSpeakerName(), msg);
                         sent = true;
                     }
@@ -1344,13 +1346,14 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
         case SPEAK_CHANNEL_R1:
         case SPEAK_CHANNEL_R2:
         case SPEAK_BROADCAST:
+        case SPEAK_PRIVATE_RED:
             col = TEXTCOLOR_RED;
             break;
         default:
             col = TEXTCOLOR_YELLOW;
     }
     switch (type) {
-        case SPEAK_PRIVATE:
+        case SPEAK_PRIVATE: case SPEAK_PRIVATE_RED:
             findConsole(name)->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_LIGHTBLUE));
             Map::getInstance().addPublicMessage(GlobalVariables::getPlayerPosition(), TEXTCOLOR_LIGHTBLUE, message, name);
             break;
@@ -1424,7 +1427,8 @@ void GM_Gameworld::onChangeStats()
 void GM_Gameworld::onTileUpdate(const Position& pos)
 {
     Tile* t = Map::getInstance().getTile(pos);
-    m_automap.setTileColor(pos.x,pos.y,pos.z, t->getMinimapColor(), t->getSpeedIndex());
+    if(!g_engine->hasGL())
+        m_automap.setTileColor(pos.x,pos.y,pos.z, t->getMinimapColor(), t->getSpeedIndex());
 }
 
 
