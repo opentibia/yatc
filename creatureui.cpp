@@ -172,7 +172,7 @@ void CreatureUI::drawName(int x, int y, float scale) const
 
 	// NOTE (nfries88): Do not draw name or HP for creatures with 0%hp, unless it is this player
     int hp = n->getHealth();
-    if (hp == 0 || (n->getID() != GlobalVariables::getPlayerID())) return;
+    if (hp == 0 && (n->getID() != GlobalVariables::getPlayerID())) return;
 
     // NOTE (kilouco): Here we will take some more conditions for names and healthbars to be rendered.
     Position playerPos = GlobalVariables::getPlayerPosition();
