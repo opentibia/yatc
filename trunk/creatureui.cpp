@@ -34,7 +34,6 @@ extern uint32_t g_frameDiff;
 
 CreatureUI::CreatureUI() : ThingUI()
 {
-	//m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", Objects::getInstance()->getOutfitType(1)->imageData[0]));
 	resetSelf();
 }
 
@@ -106,10 +105,12 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	//for(uint32_t k = 0; k < m_obj->blendframes; ++k){ // note: if it's anything except item, there won't be blendframes...
 	{
 	    uint32_t aframes;
-	    if(m_obj->animcount == 3) // TODO (ivucica#2#) add support for permanently moving creatures (e.g. rotworms) and for item-based outfits with animcount != 3
+	    if(m_obj->animcount == 3){
 			aframes = aniSize * (m_walkState == 1. ? 0 : (((int)(m_walkState*100) / 25) % 2 + 1));
-		else
-			aframes = 0;
+		}
+	    else if(m_obj->idleAnim){
+		    // TODO (nfries88): all appearances that animate while idle.
+		}
 
 		//Square around the creature
 		if(g_frameTime - n->getSquareStart() < 1000){
@@ -128,9 +129,6 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		}
 
 		// "Creature Squares" sent by the server
-		// NOTE (nfries88): I have no idea if this will render the proper colors at all.
-		// It does send black square correctly, though.
-		// Also not sure how long the square is supposed to be shown... 1s? 500ms?
 		if((map_x != 0 && map_y != 0) && (n->getSquareStart() + 1000) >= g_frameTime)
 		{
 			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 34*scale, 34*scale, n->getSquareColor(), 2*scale);
@@ -171,9 +169,6 @@ void CreatureUI::drawInfo(int x, int y, float scale) const
 
     if(!m_obj && !n->isPlayer() && outfit.m_lookitem == 0)
         return; //It is an invisible creature.
-
-        //Tile* tile = Map::getInstance().getTile(creaturePos);
-        //tile->addEffect(0x0D); //Should update it VERY less often.
 
     // NOTE (kilouco): Here we will take some position based conditions for names and healthbars to be rendered.
     Position playerPos = GlobalVariables::getPlayerPosition();
@@ -427,7 +422,6 @@ void CreatureUI::advanceWalk(int groundspeed)
 void CreatureUI::loadOutfit()
 {
     Creature* n = (Creature*)this;
-//    DEBUGPRINT(0,0,"Loading creature %d (itemlook %d)\n", n->getOutfit().m_looktype, n->getOutfit().m_lookitem);
 
     unloadGfx();
 
@@ -481,17 +475,14 @@ bool CreatureUI::isLoaded() const {
 void CreatureUI::setupObject() {
     Creature* n = (Creature*)this;
 	Outfit_t outfit = n->getOutfit();
+    m_startTime = g_frameTime;
 	if (!m_obj) {
         if(!outfit.m_looktype && !outfit.m_lookitem){
-            m_obj = NULL;
-            unloadGfx();
-            //Tile* tile = Map::getInstance().getTile(creaturePos);
-            //tile->addEffect(0x0D); //Should update it VERY less often.
-            return;
+            // NOTE (nfries88): Kilouco reports 0x0D is proper effect for when invisible.
+            m_obj = Objects::getInstance()->getEffectType(0x0D);
         }
         else if(outfit.m_looktype == 0 && outfit.m_lookitem != 0){
             m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
-            return;
         }
         else{
             m_obj = Objects::getInstance()->getOutfitType(outfit.m_looktype);

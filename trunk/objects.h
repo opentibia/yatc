@@ -100,6 +100,7 @@ public:
 	bool isHorizontal;
 	bool isVertical;
 	bool rotatable;
+	bool idleAnim;
 	//items with 0x06 property
 	bool alwaysUsed;
 	uint16_t lightLevel;
