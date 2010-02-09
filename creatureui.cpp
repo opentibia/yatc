@@ -185,7 +185,9 @@ void CreatureUI::drawName(int x, int y, float scale) const
 	float walkoffx = 0.f, walkoffy = 0.f;
 
 	Outfit_t outfit = n->getOutfit();
-	if(!m_obj){
+	// FIXME (nfries88): The !n->getPlayer() is a temporary fix to render player's name and hp even when invis [like official client]
+	//      however, m_obj should be set to a certain magic effect.
+	if(!m_obj && !n->isPlayer()){
 		return;
 	}
 
@@ -467,10 +469,11 @@ void CreatureUI::setupObject() {
         if(!outfit.m_looktype && !outfit.m_lookitem){
             m_obj = NULL;
             unloadGfx();
+            // TODO (nfries88): implement invisible players [they are visible]
             return;
         }
         else if(outfit.m_looktype == 0 && outfit.m_lookitem != 0){
-            //TODO
+            //TODO (nfries88): implement creatures looking like items
             m_obj = NULL;
             //m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
             return;
