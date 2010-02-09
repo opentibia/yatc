@@ -116,15 +116,15 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 			g_engine->drawRectangleLines(x + walkoffx, y + walkoffy, 32*scale, 32*scale, oRGBA(0,0,0,0));
 		}
 
-		//Pink square around the attacked creature
+		//Red square around the attacked creature
 		if(n->getID() == GlobalVariables::getAttackID()) {
-			// "Deep Pink" - may not be the right color
-			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 32*scale, 32*scale, oRGBA(244, 63, 33, 255), 2*scale);
+			// "Faded Red" - right color. (Verified)
+			g_engine->drawRectangleLines((x+1) + walkoffx, (y+1) + walkoffy, 32*scale, 32*scale, oRGBA(224, 64, 64, 255), 2*scale);
 		}
 		//Green square around the followed creature
 		else if(n->getID() == GlobalVariables::getFollowID()) {
-			// "Lime Green" - may not be the right color
-			g_engine->drawRectangleLines((x+2) + walkoffx, (y+2) + walkoffy, 32*scale, 32*scale, oRGBA(50, 205, 50, 255), 2*scale);
+			// "Light Green" - right color. (Verified)
+			g_engine->drawRectangleLines((x+2) + walkoffx, (y+2) + walkoffy, 32*scale, 32*scale, oRGBA(64, 224, 64, 255), 2*scale);
 		}
 
 		// "Creature Squares" sent by the server
@@ -164,23 +164,16 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	}
 }
 
-void CreatureUI::draw(int x, int y, float scale) const
+void CreatureUI::drawInfo(int x, int y, float scale) const
 {
     Creature* n = (Creature*)this;
     Outfit_t outfit = n->getOutfit();
 
-    if(!m_obj) {
-        if (!n->isPlayer() && outfit.m_lookitem == 0)
-            return; //creatures might have itemlook. Magicthrowers and some traps are good examples.
+    if(!m_obj && !n->isPlayer() && outfit.m_lookitem == 0)
+        return; //It is an invisible creature.
 
-	    if(outfit.m_lookitem != 0) {
-            //renderItem();
-        }
-        else {
-            //Tile* tile = Map::getInstance().getTile(creaturePos);
-            //tile->addEffect(0x0D); //Should update it VERY less often.
-        }
-	}
+        //Tile* tile = Map::getInstance().getTile(creaturePos);
+        //tile->addEffect(0x0D); //Should update it VERY less often.
 
     // NOTE (kilouco): Here we will take some position based conditions for names and healthbars to be rendered.
     Position playerPos = GlobalVariables::getPlayerPosition();
@@ -201,16 +194,21 @@ void CreatureUI::draw(int x, int y, float scale) const
 void CreatureUI::drawName(int x, int y, float scale) const
 {
 	Creature* n = (Creature*)this;
+	Outfit_t outfit = n->getOutfit();
 
     float walkoffx = 0.f, walkoffy = 0.f;
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-	int c_xOffSet = 8;
-    int c_yOffSet = 8;
+	int c_xOffSet = 0;
+    int c_yOffSet = 0;
 
 	if(m_obj) {
 	    c_xOffSet = m_obj->xOffset;
 	    c_yOffSet = m_obj->yOffset;
+	}
+	else if(outfit.m_lookitem == 0) {
+	    c_xOffSet = 8;
+        c_yOffSet = 8;
 	}
 
 	// NOTE (nfries88): Do not draw name or HP for creatures with 0%hp, unless it is this player
@@ -229,16 +227,16 @@ void CreatureUI::drawName(int x, int y, float scale) const
     int nameyoffset = std::floor(c_yOffSet * scale) + 16;
     int hpyoffset = nameyoffset - 11;
 
-    g_engine->drawTextGW(name.c_str() , "gamefont", (int)(x + c_xOffSet + walkoffx + centralizationoffset),
+    g_engine->drawTextGW(name.c_str() , "gamefont", (int)(x + (24 - (c_xOffSet * 2)) + walkoffx + centralizationoffset),
             (int)(y - nameyoffset + walkoffy), col);
 
     if ((y - nameyoffset + walkoffy) <= 0) {
-        g_engine->drawRectangle(x + walkoffx + 3, 12, 28, 4, oRGBA(0,0,0,1));
-        g_engine->drawRectangle(x + walkoffx + 4, 12, 26*(hp/100.), 2, col);
+        g_engine->drawRectangle(x + walkoffx + (19 - (c_xOffSet * 2)), 12, 28, 4, oRGBA(0,0,0,1));
+        g_engine->drawRectangle(x + walkoffx + (20 - (c_xOffSet * 2)), 12, 26*(hp/100.), 2, col);
     }
     else {
-        g_engine->drawRectangle(x + walkoffx + 3, (y+1) - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
-        g_engine->drawRectangle(x + walkoffx + 4, (y+1) - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
+        g_engine->drawRectangle(x + walkoffx + (19 - (c_xOffSet * 2)), (y+1) - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
+        g_engine->drawRectangle(x + walkoffx + (20 - (c_xOffSet * 2)), (y+1) - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
     }
 }
 
@@ -275,19 +273,24 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 	// emblems: (287, 211), each emblem 11x11, green red blue
 
 	Creature* n = (Creature*)this;
+	Outfit_t outfit = n->getOutfit();
 
 	float walkoffx = 0.f, walkoffy = 0.f;
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-	int c_xOffSet = 8;
-    int c_yOffSet = 8;
+	int c_xOffSet = 0;
+    int c_yOffSet = 0;
 
 	if(m_obj) {
 	    c_xOffSet = m_obj->xOffset;
 	    c_yOffSet = m_obj->yOffset;
 	}
+	else if(outfit.m_lookitem == 0) {
+	    c_xOffSet = 8;
+        c_yOffSet = 8;
+	}
 
-	x += walkoffx + 27;
+	x += walkoffx + (43 - (c_xOffSet * 2));
 	y += walkoffy - std::floor(c_yOffSet * scale);
 
 	uint32_t shield =  n->getShield();
@@ -482,13 +485,12 @@ void CreatureUI::setupObject() {
         if(!outfit.m_looktype && !outfit.m_lookitem){
             m_obj = NULL;
             unloadGfx();
-            // TODO (nfries88): implement invisible players [they are visible]
+            //Tile* tile = Map::getInstance().getTile(creaturePos);
+            //tile->addEffect(0x0D); //Should update it VERY less often.
             return;
         }
         else if(outfit.m_looktype == 0 && outfit.m_lookitem != 0){
-            //TODO (nfries88): implement creatures looking like items
-            m_obj = NULL;
-            //m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
+            m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
             return;
         }
         else{
