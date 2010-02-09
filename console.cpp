@@ -435,7 +435,7 @@ std::string ConsoleEntry::getFullText()
 	if(m_speaker.size()){
 		ss << m_speaker;
 
-		if(options.levels && m_level != -1){
+		if(options.levels && m_level > 0){
 			ss << " [" << m_level << "]";
 		}
 		ss << ": ";

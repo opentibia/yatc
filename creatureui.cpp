@@ -252,47 +252,63 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 	// emblems: (287, 211), each emblem 11x11, green red blue
 
 	Creature* n = (Creature*)this;
-	float walkoffx = 0.f, walkoffy = 0.f;
+
+	// NOTE (kilouco): Here we will take some more conditions for skulls and shields to be rendered. Same process as for names and bars.
+    Position playerPos = GlobalVariables::getPlayerPosition();
+    Position creaturePos = n->getCurrentPos();
+    int relative_x = creaturePos.x - playerPos.x;
+    int relative_y = creaturePos.y - playerPos.y;
+    if (std::abs(relative_x) > 7 || std::abs(relative_y) > 5)
+        return;
+
+    float walkoffx = 0.f, walkoffy = 0.f;
 
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-	x+=walkoffx+11;
-	y+=walkoffy-10;
+	//x = x + walkoffx + 27;
+	//y = y - (std::floor(m_obj->yOffset * scale) + 16) + walkoffy + 16;
+
+	if(!m_obj){
+		return; // TODO (Kilouco): doing things this way won't let invisible players appear at all.
+	}
+
+	x += walkoffx + 27;
+	y += walkoffy - std::floor(m_obj->yOffset * scale);
 
 	uint32_t shield =  n->getShield();
 	switch(shield) {
 		case SHIELD_YELLOW:
-			g_engine->getUISprite()->Blit(x-11, y-10, 54, 236, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 54, 236, 11, 11);
 			break;
 		case SHIELD_BLUE:
-			g_engine->getUISprite()->Blit(x-11, y-10, 65, 236, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 65, 236, 11, 11);
 			break;
 		case SHIELD_WHITEYELLOW:
-			g_engine->getUISprite()->Blit(x-11, y-10, 76, 236, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 76, 236, 11, 11);
 			break;
 		case SHIELD_WHITEBLUE:
-			g_engine->getUISprite()->Blit(x-11, y-10, 87, 236, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 87, 236, 11, 11);
 			break;
 
 		case SHIELD_YELLOW_SHAREDEXP:
-			g_engine->getUISprite()->Blit(x-11, y-10, 76, 214, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 76, 214, 11, 11);
 			break;
 		case SHIELD_BLUE_SHAREDEXP:
-			g_engine->getUISprite()->Blit(x-11, y-10, 87, 214, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 87, 214, 11, 11);
 			break;
 		case SHIELD_YELLOW_NOSHAREDEXP_BLINK:
 			// TODO (nfries88): actually make this blink...
-			g_engine->getUISprite()->Blit(x-11, y-10, 168, 261, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 168, 261, 11, 11);
 			break;
 		case SHIELD_YELLOW_NOSHAREDEXP:
-			g_engine->getUISprite()->Blit(x-11, y-10, 168, 261, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 168, 261, 11, 11);
 			break;
 		case SHIELD_BLUE_NOSHAREDEXP_BLINK:
 			// TODO (nfries88): actually make this blink...
-			g_engine->getUISprite()->Blit(x-11, y-10, 179, 261, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 179, 261, 11, 11);
 			break;
 		case SHIELD_BLUE_NOSHAREDEXP:
-			g_engine->getUISprite()->Blit(x-11, y-10, 179, 261, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 179, 261, 11, 11);
 			break;
 		default:
 			break;
@@ -304,19 +320,19 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 	uint32_t skull =  n->getSkull();
 	switch (skull) {
 		case SKULL_GREEN:
-			g_engine->getUISprite()->Blit(x, y-10, 54, 225, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 54, 225, 11, 11);
 			break;
 		case SKULL_YELLOW:
-			g_engine->getUISprite()->Blit(x, y-10, 65, 225, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 65, 225, 11, 11);
 			break;
 		case SKULL_WHITE:
-			g_engine->getUISprite()->Blit(x, y-10, 76, 225, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 76, 225, 11, 11);
 			break;
 		case SKULL_RED:
-			g_engine->getUISprite()->Blit(x, y-10, 87, 225, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 87, 225, 11, 11);
 			break;
 		case SKULL_BLACK:
-			g_engine->getUISprite()->Blit(x, y-10, 98, 297, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 98, 297, 11, 11);
 			break;
 
 		default: break;
@@ -329,13 +345,13 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 	uint32_t emblem =  n->getEmblem();
 	switch(emblem) {
 		case EMBLEM_GREEN:
-			g_engine->getUISprite()->Blit(x, y+1, 287, 218, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 287, 218, 11, 11);
 			break;
 		case EMBLEM_RED:
-			g_engine->getUISprite()->Blit(x, y+1, 298, 218, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 298, 218, 11, 11);
 			break;
 		case EMBLEM_BLUE:
-			g_engine->getUISprite()->Blit(x, y+1, 309, 218, 11, 11);
+			g_engine->getUISprite()->Blit(x, y, 309, 218, 11, 11);
 			break;
 		default:
 			break;
