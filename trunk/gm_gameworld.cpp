@@ -78,6 +78,11 @@ void exitWarning_t::btnLogout_onClick(glictPos* relmousepos, glictContainer* cal
 
 void exitWarning_t::btnExit_onClick(glictPos* relmousepos, glictContainer* callerclass)
 {
+    // NOTE (Kilouco): Try to logout anyway. If the character will or not logout is server sided.
+    GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+
+    gameclass->getActiveConsole()->insertEntry(ConsoleEntry(PRODUCTSHORT ": Forcing quit...", TEXTCOLOR_WHITE));
+	gameclass->m_protocol->sendLogout();
 	g_running = false;
 }
 
