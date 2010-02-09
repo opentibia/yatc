@@ -440,8 +440,8 @@ bool Objects::load780plus(const char* filename)
 				case 0x1B://draw with height offset for all parts (2x2) of the sprite
 
 					break;
-				case 0x1C://some monsters
-
+				case 0x1C://idle animated
+                        oType->idleAnim = true;
 					break;
 				case 0x1D:
 						yatc_fread(&read_short, sizeof(read_short), 1, fp);

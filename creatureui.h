@@ -57,7 +57,8 @@ private:
 
 	bool m_preWalk;
 	float m_walkState;
-
+    // for invisible, constant animations, etc
+	uint32_t m_startTime;
 };
 
 #endif
