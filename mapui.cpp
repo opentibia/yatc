@@ -323,9 +323,9 @@ void MapUI::renderMap()
 				Thing* thing = tile->getThingByStackPos(drawIndex);
 				if(thing){
 					if(thing->getCreature()){
-
-						thing->getCreature()->drawName(screenx, screeny, m_scale);
-						thing->getCreature()->drawSkullsShields(screenx, screeny, m_scale);
+                        thing->getCreature()->draw(screenx, screeny, m_scale);
+						//thing->getCreature()->drawName(screenx, screeny, m_scale);
+						//thing->getCreature()->drawSkullsShields(screenx, screeny, m_scale);
 						if(!player || thing->getCreature()->getId() != player->getId())
 							thing->getCreature()->advanceWalk(groundspeed);
 						else

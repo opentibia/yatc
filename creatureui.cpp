@@ -164,48 +164,72 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	}
 }
 
+void CreatureUI::draw(int x, int y, float scale) const
+{
+    Creature* n = (Creature*)this;
+    Outfit_t outfit = n->getOutfit();
+
+    if(!m_obj) {
+        if (!n->isPlayer() && outfit.m_lookitem == 0)
+            return; //creatures might have itemlook. Magicthrowers and some traps are good examples.
+
+	    if(outfit.m_lookitem != 0) {
+            //renderItem();
+        }
+        else {
+            //Tile* tile = Map::getInstance().getTile(creaturePos);
+            //tile->addEffect(0x0D); //Should update it VERY less often.
+        }
+	}
+
+    // NOTE (kilouco): Here we will take some position based conditions for names and healthbars to be rendered.
+    Position playerPos = GlobalVariables::getPlayerPosition();
+    Position creaturePos = n->getCurrentPos();
+    int relative_x = creaturePos.x - playerPos.x;
+    int relative_y = creaturePos.y - playerPos.y;
+
+    if (std::abs(relative_x) > 7 || std::abs(relative_y) > 5) //Shouldn't render names and health bars in these cases.
+        return;
+
+    if (options.shownames)
+        drawName(x, y, scale);
+
+    drawSkullsShields(x, y, scale);
+}
+
+
 void CreatureUI::drawName(int x, int y, float scale) const
 {
-    if (!options.shownames) return;
-
 	Creature* n = (Creature*)this;
+
+    float walkoffx = 0.f, walkoffy = 0.f;
+	getWalkOffset(walkoffx, walkoffy, scale);
+
+	int c_xOffSet = 8;
+    int c_yOffSet = 8;
+
+	if(m_obj) {
+	    c_xOffSet = m_obj->xOffset;
+	    c_yOffSet = m_obj->yOffset;
+	}
 
 	// NOTE (nfries88): Do not draw name or HP for creatures with 0%hp, unless it is this player
     int hp = n->getHealth();
     if (hp == 0 && (n->getID() != GlobalVariables::getPlayerID())) return;
 
-    // NOTE (kilouco): Here we will take some more conditions for names and healthbars to be rendered.
-    Position playerPos = GlobalVariables::getPlayerPosition();
-    Position creaturePos = n->getCurrentPos();
-    int relative_x = creaturePos.x - playerPos.x;
-    int relative_y = creaturePos.y - playerPos.y;
-    if (std::abs(relative_x) > 7 || std::abs(relative_y) > 5) //Shouldn't render names and health bars in these cases.
-        return;
-
-	float walkoffx = 0.f, walkoffy = 0.f;
-
-	Outfit_t outfit = n->getOutfit();
-	// FIXME (nfries88): The !n->getPlayer() is a temporary fix to render player's name and hp even when invis [like official client]
-	//      however, m_obj should be set to a certain magic effect.
-	if(!m_obj && !n->isPlayer()){
-		return;
-	}
-
     std::string name = n->getName().c_str();
     name[0] = toupper(name[0]);
 
-	volatile float centralizationoffset = -(g_engine->sizeText( name.c_str(), "gamefont" ) / 2) + 16 - 8;
-	getWalkOffset(walkoffx, walkoffy, scale);
-
+	volatile float centralizationoffset = -(g_engine->sizeText(name.c_str(), "gamefont" ) / 2) + 16 - 8;
     oRGBA col = getHealthColor(hp);
 
     // NOTE1 (nfries88): Creature name and health offset must account for scaling, too!
     // NOTE2 (nfries88): Official client always renders name at 16px ABOVE head.
     //      Meaning 24, WHEN the creature has an offset of 8px and no scaling. (Player outfits, but not all outfits)
-    int nameyoffset = std::floor(m_obj->yOffset * scale) + 16;
+    int nameyoffset = std::floor(c_yOffSet * scale) + 16;
     int hpyoffset = nameyoffset - 11;
 
-    g_engine->drawTextGW(name.c_str() , "gamefont", (int)(x + m_obj->xOffset + walkoffx + centralizationoffset),
+    g_engine->drawTextGW(name.c_str() , "gamefont", (int)(x + c_xOffSet + walkoffx + centralizationoffset),
             (int)(y - nameyoffset + walkoffy), col);
 
     if ((y - nameyoffset + walkoffy) <= 0) {
@@ -216,9 +240,6 @@ void CreatureUI::drawName(int x, int y, float scale) const
         g_engine->drawRectangle(x + walkoffx + 3, (y+1) - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
         g_engine->drawRectangle(x + walkoffx + 4, (y+1) - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
     }
-
-    //g_engine->drawRectangle(x + walkoffx + 3, y - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
-    //g_engine->drawRectangle(x + walkoffx + 4, y - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
 }
 
 oRGBA CreatureUI::getHealthColor(int hp)
@@ -255,27 +276,19 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 
 	Creature* n = (Creature*)this;
 
-	// NOTE (kilouco): Here we will take some more conditions for skulls and shields to be rendered. Same process as for names and bars.
-    Position playerPos = GlobalVariables::getPlayerPosition();
-    Position creaturePos = n->getCurrentPos();
-    int relative_x = creaturePos.x - playerPos.x;
-    int relative_y = creaturePos.y - playerPos.y;
-    if (std::abs(relative_x) > 7 || std::abs(relative_y) > 5)
-        return;
-
-    float walkoffx = 0.f, walkoffy = 0.f;
-
+	float walkoffx = 0.f, walkoffy = 0.f;
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-	//x = x + walkoffx + 27;
-	//y = y - (std::floor(m_obj->yOffset * scale) + 16) + walkoffy + 16;
+	int c_xOffSet = 8;
+    int c_yOffSet = 8;
 
-	if(!m_obj){
-		return; // TODO (Kilouco): doing things this way won't let invisible players appear at all.
+	if(m_obj) {
+	    c_xOffSet = m_obj->xOffset;
+	    c_yOffSet = m_obj->yOffset;
 	}
 
 	x += walkoffx + 27;
-	y += walkoffy - std::floor(m_obj->yOffset * scale);
+	y += walkoffy - std::floor(c_yOffSet * scale);
 
 	uint32_t shield =  n->getShield();
 	switch(shield) {
