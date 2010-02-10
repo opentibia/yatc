@@ -196,10 +196,11 @@ struct Outfit_t{
 
 enum TextColor_t {
         TEXTCOLOR_BLUE        = 5,
+        TEXTCOLOR_BOLDBLUE    = 23,
         TEXTCOLOR_LIGHTBLUE   = 35,
         TEXTCOLOR_LIGHTGREEN  = 30,
-        TEXTCOLOR_PURPLE      = 83,
         TEXTCOLOR_LIGHTGREY   = 129,
+        TEXTCOLOR_PURPLE      = 131,
         TEXTCOLOR_DARKRED     = 144,
         TEXTCOLOR_RED         = 180,
         TEXTCOLOR_ORANGE      = 198,
