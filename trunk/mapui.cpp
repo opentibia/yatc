@@ -786,39 +786,31 @@ void MapUI::makePopup(Popup* popup, void* owner, void* arg)
 void MapUI::onInviteToParty(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
-
     gw->m_protocol->sendInviteParty((uint32_t)VOIDP2INT(parent->data));
 }
 void MapUI::onRevokeInvite(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
-
     gw->m_protocol->sendCancelInviteParty((uint32_t)VOIDP2INT(parent->data));
 }
 void MapUI::onAcceptInvite(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
-
     gw->m_protocol->sendJoinParty((uint32_t)VOIDP2INT(parent->data));
 }
 void MapUI::onSharedExp(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
-
 	gw->m_protocol->sendEnableSharedExperience((parent->data != 0), 0);
 }
 void MapUI::onPassLeadership(Popup::Item *parent)
 {
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
-
     gw->m_protocol->sendPassPartyLeader((uint32_t)VOIDP2INT(parent->data));
 }
 void MapUI::onLeaveParty(Popup::Item *parent)
 {
-// FIXME (ivucica#5#): remove line below?
-//	MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
-
     gw->m_protocol->sendLeaveParty();
 }
 
@@ -893,8 +885,6 @@ void MapUI::onAddVIP(Popup::Item *parent)
 {
     // TODO (ivucica#3#): check if cip client is making a clientside check if player is already on list
     // perhaps we should do it anyways?
-
-    //MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
     MapUI *m = (MapUI*)(parent->data);
     Creature *c = Creatures::getInstance().getCreature(m->m_popupCreatureID);
@@ -907,9 +897,7 @@ void MapUI::onAddVIP(Popup::Item *parent)
 
 void MapUI::onUnimplemented(Popup::Item *parent)
 {
-    //MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
-
     gw->msgBox(gettext("This functionality is not yet finished"),"TODO");
 }
 
