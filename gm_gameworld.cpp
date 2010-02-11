@@ -563,7 +563,7 @@ void GM_Gameworld::keyPress (int key)
 
 		pnlConsoleContainer.txtConsoleEntry.SetCaption("");
 	}
-	else if (key != 0)
+	else if (key != SDLK_RCTRL && key != SDLK_LCTRL && key != SDLK_RALT && key != SDLK_LALT)
 	{
 	    // ALT and CTRL are 0.
 		// pressing ALT or CTRL will otherwise cause the text console to lose append with (char)0
@@ -616,6 +616,10 @@ void GM_Gameworld::keyPress (int key)
 			if(textbox) g_clipboard.setText(textbox->GetCaption());
 			return;
 		}
+		else if(key == 12){ // CTRL+L
+		    m_protocol->sendLogout();
+		}
+		//NativeGUIError(yatc_itoa(key).c_str(), "KEY:");
 		desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 	}
 
