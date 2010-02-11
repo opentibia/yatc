@@ -200,11 +200,26 @@ void ConsolePanel::MakeConsole(Console* console, const std::string& name)
     console->setAssignedButton(p);
     p->SetCustomData(console);
     p->SetHeight(18);
-    p->SetCaption(name.c_str());
+
+    // NOTE (kilouco): Should shorten names which size exceed 66px.
+    int real_size = (int)g_engine->sizeText(name.c_str(),"gamefont");
+    int caption_size = real_size;
+    std::string caption_name = name;
+
+    while (caption_size > 66) {
+        caption_name.erase(caption_name.end()-1);
+        caption_size = (int)g_engine->sizeText(caption_name.c_str(),"gamefont");
+    }
+
+    if (real_size != caption_size)
+        caption_name.insert(caption_name.end(),3,'.');
+
+    p->SetCaption(caption_name.c_str());
+    //p->SetCaption(name.c_str());
     p->SetWidth(96); //g_engine->sizeText(s.str().c_str(),"system"));
     p->SetBGColor(.2,.2,.2,1.);
     #if (GLICT_APIREV >= 85)
-    p->SetTextOffset(int(96 / 2 - g_engine->sizeText(name.c_str(),"gamefont") / 2), 4);
+    p->SetTextOffset(int(96 / 2 - g_engine->sizeText(caption_name.c_str(),"gamefont") / 2), 4);
     p->SetCaptionColor(0.5,0.5,0.5);
     #else
 	#warning No support for setcaptioncolor before glict apirev 85
@@ -284,7 +299,7 @@ void ConsolePanel::onCloseConsole(Popup::Item *parent)
 	gw->removeConsole(c);
 }
 void ConsolePanel::onShowM(Popup::Item *parent)
-// TODO (nfries88): Figure out what pushing the "M" Button actually does and implement it.
+// TODO (kilouco): Show Server Messages in any console where this button is turned on.
 {
 /*
 	Console* c = (Console*)parent->data;
@@ -418,11 +433,56 @@ void ConsolePanel::btnSpeak_OnClick(glictPos* relmousepos, glictContainer* calle
 int ConsoleEntry::paintEntry(float x, float y, float width /*= -1*/)
 {
 	// TODO (ivucica#3#) add word wrapping
-	// TODO (nfries88): limit font width, start new line when exceeded.
+	// TODO (kilouco): limit character input to 255.
 	std::string fulltext = getFullText();
 
+	std::string message, old_line_message, new_line_message;
+	message = new_line_message = old_line_message = fulltext;
+
+	int max_width = (glictGlobals.w-172-4);
+	int text_size = (int)g_engine->sizeText(message.c_str(),"aafont");
+	int line_size = text_size;
+
+	int linecount = 1;
+
+	std::stringstream final_text;
+
+	size_t pos;
+
+    if (line_size > max_width) {
+        //linecount = 1;
+    //else {
+        while (line_size > max_width) {
+            old_line_message.erase(old_line_message.end()-1);
+            line_size = (int)g_engine->sizeText(old_line_message.c_str(),"aafont");
+
+            if (line_size <= max_width) {
+                pos = old_line_message.find_last_of(" ");
+
+                if(!pos)
+                    pos = old_line_message.size();
+                else
+                    old_line_message.resize(pos);
+
+                new_line_message = new_line_message.substr(pos);
+
+                if (linecount <= 1)
+                    final_text << old_line_message << "\n" << new_line_message;
+                else
+                    final_text << "\n" << new_line_message;
+
+                linecount++;
+
+                old_line_message = new_line_message;
+                line_size = (int)g_engine->sizeText(new_line_message.c_str(),"aafont");
+            }
+        }
+
+        fulltext = final_text.str();
+    }
+
 	g_engine->drawText(fulltext.c_str(), "aafont", (int)x, (int)(y - glictFontNumberOfLines(fulltext.c_str())*12), m_color);
-	return glictFontNumberOfLines(m_text.c_str())*12;
+	return glictFontNumberOfLines(m_text.c_str())* (12 * linecount);
 }
 
 std::string ConsoleEntry::getFullText()
@@ -442,8 +502,118 @@ std::string ConsoleEntry::getFullText()
 	}
 
 	ss << m_text;
+
 	return ss.str();
+
+    /*
+    std::string message, old_line_message, new_line_message;
+	message = new_line_message = old_line_message = ss.str();
+
+	int max_width = (glictGlobals.w-172-4);
+	int text_size = (int)g_engine->sizeText(message.c_str(),"aafont");
+	int line_size = text_size;
+
+	std::stringstream final_text;
+
+	size_t pos;
+
+    if (line_size <= max_width)
+        return ss.str();
+    else {
+        while (line_size > max_width) {
+            old_line_message.erase(old_line_message.end()-1);
+            line_size = (int)g_engine->sizeText(old_line_message.c_str(),"aafont");
+
+            if (line_size <= max_width) {
+                pos = old_line_message.find_last_of(" ");
+                new_line_message = new_line_message.substr(pos);
+
+                //if (final_text == "")
+                    final_text << old_line_message << "\n" << new_line_message;
+                //else
+                //    final_text << "\n" << new_line_message;
+
+                old_line_message = new_line_message;
+                line_size = (int)g_engine->sizeText(new_line_message.c_str(),"aafont");
+            }
+        }
+    }
+    */
+
+    /*
+    while (line_size > max_width) {
+
+        //space = new_line_message.find_last_of(" ");
+        old_line_message = new_line_message;
+        pos = old_line_message.find_last_of(" ");
+
+        //if (pos == NULL) {
+
+        old_line_message.erase(old_line_message.end()-1);
+        line_size = (int)g_engine->sizeText(message.c_str(),"aafont");
+
+
+
+        new_line_message = new_line_message.substr(pos);
+        old_line_message = old_line_message.substr(0,pos);
+
+        final_text << new_line_message << "\n" << old_line_message;
+
+        //new_line_message -= old_line_message;
+
+        //old_line_message.erase(caption_name.end()-1);
+        //caption_size = (int)g_engine->sizeText(caption_name.c_str(),"gamefont");
+
+
+        //str.replace (found,key.length(),"seventh");
+    }*/
+
+    //if (real_size != caption_size)
+    //    caption_name.insert(caption_name.end(),3,'.');
+
+
+
+    /*    space = string_message.find_last_of(" ");
+
+        for (i = string_message.length(); i = 0; i--)
+            if (string_message[i] == " ")
+        new_line_message.assign(string_message,string_message.     ,string_message.end());
+    */
+
+
+	//return final_text.str();
 }
+
+/*std::string ConsoleEntry::getFullText()
+{
+	std::stringstream ss;
+	if(options.timestamps) {
+		struct tm* timeinfo = localtime((time_t*)(&m_timestamp));
+		ss << setfill('0') << setw(2) << timeinfo->tm_hour << ":" << setfill('0') << setw(2) << timeinfo->tm_min << " ";
+	}
+	if(m_speaker.size()){
+		ss << m_speaker;
+
+		if(options.levels && m_level > 0){
+			ss << " [" << m_level << "]";
+		}
+		ss << ": ";
+	}
+
+	ss << m_text;
+
+	std::string str = ss.str();
+
+	//int max_width = (glictGlobals.w-172-4);
+	int text_size = (int)g_engine->sizeText(str.c_str(),"aafont");
+
+	std::stringstream sss;
+
+	//if (text_size > max_width)
+    //    return sss.str();
+
+	return ss.str();
+}*/
 
 int ConsoleEntry::getHeight()
 {

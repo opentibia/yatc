@@ -73,6 +73,9 @@ void winVIP_t::addVIP(uint32_t id)
 
     bool isonline = it->second.isOnline();
 
+    // TODO (Kilouco): Shouldn't be highlighten when selected.
+    // TODO (Kilouco): Should add Padding for contacts.
+
     glictPanel *p=m_entries[id]=new glictPanel;
     p->SetOnClick(OnListbox);
     p->SetBGActiveness(false);
@@ -80,12 +83,14 @@ void winVIP_t::addVIP(uint32_t id)
     p->SetCustomData(this);
     p->SetBGColor(.4,.4,.4,1.);
     if (isonline)
-        p->SetCaptionColor(0,1,0);
+        p->SetCaptionColor(0.3725f,0.9686f,0.3725f);
+        //p->SetCaptionColor(0,1,0);
     else {
         if(options.hideofflineVIP)
             p->SetVisible(false);
         else
-            p->SetCaptionColor(1,0,0);
+            p->SetCaptionColor(0.9686f,0.3725f,0.3725f);
+            //p->SetCaptionColor(1,0,0);
     }
     container.AddObject(p);
 }
@@ -112,12 +117,14 @@ void winVIP_t::updateVIP(uint32_t id)
     p->SetCustomData(this);
     p->SetBGColor(.4,.4,.4,1.);
     if (isonline)
-        p->SetCaptionColor(0,1,0);
+        p->SetCaptionColor(0.3725f,0.9686f,0.3725f);
+        //p->SetCaptionColor(0,1,0);
     else {
         if(options.hideofflineVIP)
             p->SetVisible(false);
         else
-            p->SetCaptionColor(1,0,0);
+            p->SetCaptionColor(0.9686f,0.3725f,0.3725f);
+            //p->SetCaptionColor(1,0,0);
     }
 }
 void winVIP_t::removeVIP(uint32_t id)
