@@ -110,6 +110,10 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		}
 	    else if(m_obj->idleAnim){
 		    // TODO (nfries88): all appearances that animate while idle.
+		    aframes = 0;
+		}
+		else {
+		    aframes = 0;
 		}
 
 		//Square around the creature

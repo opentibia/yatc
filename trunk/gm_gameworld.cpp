@@ -516,9 +516,10 @@ void GM_Gameworld::keyPress (int key)
                         std::string recipient = msg.substr(1,i-1);
                         std::string newmsg = msg.substr(i+1);
                         m_protocol->sendSay(SPEAK_PRIVATE, recipient,newmsg);
-                        Console*c = findConsole(recipient);
+                        Console*c = findConsole(recipient, false);
                         if (c) {
-                            c->insertEntry(ConsoleEntry(newmsg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName(), TEXTCOLOR_PURPLE));
+                            c->insertEntry(ConsoleEntry(newmsg, Creatures::getInstance().getCreature(GlobalVariables::getPlayerID())->getName(),
+                                GlobalVariables::getPlayerSkill(SKILL_LEVEL, SKILL_ATTR_LEVEL), TEXTCOLOR_PURPLE));
                         }
                         sent = true;
                     }
@@ -563,15 +564,8 @@ void GM_Gameworld::keyPress (int key)
 
 		pnlConsoleContainer.txtConsoleEntry.SetCaption("");
 	}
-	//else if (key != SDLK_RCTRL && key != SDLK_LCTRL && key != SDLK_RALT && key != SDLK_LALT)
 	else if (key != 0)
 	{
-	    // ALT and CTRL are 0.
-		// pressing ALT or CTRL will otherwise cause the text console to lose append with (char)0
-		// which is bad because it causes the string to terminate the console textbox to lose focus.
-		// It should always have focus
-
-
 		if(key == SDLK_TAB)
         {
 			std::vector<Console*>::iterator it = std::find(m_consoles.begin(), m_consoles.end(), m_activeconsole);
@@ -621,7 +615,10 @@ void GM_Gameworld::keyPress (int key)
 		    m_protocol->sendLogout();
 		}
 		//NativeGUIError(yatc_itoa(key).c_str(), "KEY:");
-		desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
+
+		// NOTE (nfries88): CTRL and ALT will cause insertion of an odd "small space" in the text. It's weird.
+        if (key != SDLK_RCTRL && key != SDLK_LCTRL && key != SDLK_RALT && key != SDLK_LALT)
+            desktop.CastEvent(GLICT_KEYPRESS, &key, 0);
 	}
 
 }
@@ -1374,7 +1371,7 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     }
     switch (type) {
         case SPEAK_PRIVATE: case SPEAK_PRIVATE_RED:
-            findConsole(name)->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_LIGHTBLUE));
+            findConsole(name, false)->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_LIGHTBLUE));
             Map::getInstance().addPublicMessage(GlobalVariables::getPlayerPosition(), TEXTCOLOR_LIGHTBLUE, message, name);
             break;
         case SPEAK_BROADCAST:
@@ -1463,12 +1460,15 @@ std::vector<Console*>::iterator GM_Gameworld::findConsole_it(uint32_t channelid)
     createConsole(channelid);
     return m_consoles.end()-1;
 }
-std::vector<Console*>::iterator GM_Gameworld::findConsole_it(const std::string& speaker)
+std::vector<Console*>::iterator GM_Gameworld::findConsole_it(const std::string& speaker, bool makeIfNotPresent)
 {
     for(std::vector<Console*>::iterator it=m_consoles.begin(); it != m_consoles.end(); it++) {
         if ((*it)->getSpeakerName() == speaker) {
             return it;
         }
+    }
+    if(!makeIfNotPresent){
+        return getDefaultConsole_it();
     }
     printf("Creating console for speaker\n");
     createConsole(speaker);
