@@ -168,7 +168,7 @@ void CreatureUI::drawInfo(int x, int y, float scale) const
     Outfit_t outfit = n->getOutfit();
 
     if(!m_obj && !n->isPlayer() && outfit.m_lookitem == 0)
-        return; //It is an invisible creature.
+        return; //It is a creature which cannot be seen by a player.
 
     // NOTE (kilouco): Here we will take some position based conditions for names and healthbars to be rendered.
     Position playerPos = GlobalVariables::getPlayerPosition();
@@ -183,116 +183,70 @@ void CreatureUI::drawInfo(int x, int y, float scale) const
         // instantly update their positions (one of the first things it should do). This
         // must be fixed because Here I am not fixing a bug, just AVOIDING it by ignoring creatures with pos 0,0.
 
-    if (options.shownames)
-        drawName(x, y, scale);
 
-    drawSkullsShields(x, y, scale);
-}
-
-
-void CreatureUI::drawName(int x, int y, float scale) const
-{
-	Creature* n = (Creature*)this;
-	Outfit_t outfit = n->getOutfit();
-
+    // NOTE (Kilouco): Generic position formula
     float walkoffx = 0.f, walkoffy = 0.f;
 	getWalkOffset(walkoffx, walkoffy, scale);
 
-	int c_xOffSet = 0;
-    int c_yOffSet = 0;
+    int c_xOffSet = 0, c_yOffSet = 0, result_x = 0, result_y = 0;
 
-	if(m_obj) {
+    if(m_obj) {
 	    c_xOffSet = m_obj->xOffset;
 	    c_yOffSet = m_obj->yOffset;
+
+	    if (c_xOffSet != 8 || c_yOffSet != 8) {
+            c_xOffSet = 0;
+            c_xOffSet = 0;
+        }
 	}
 	else if(outfit.m_lookitem == 0) {
 	    c_xOffSet = 8;
         c_yOffSet = 8;
 	}
 
-	// NOTE (nfries88): Do not draw name or HP for creatures with 0%hp, unless it is this player
-    int hp = n->getHealth();
-    if (hp == 0 && (n->getID() != GlobalVariables::getPlayerID())) return;
+	result_x = (x + walkoffx + (16 * scale) - (c_xOffSet * scale)) - 13;
+	result_y = (y + walkoffy - (c_xOffSet * scale)) - 3;
 
-    std::string name = n->getName().c_str();
-    name[0] = toupper(name[0]);
+	if (result_y <= 0)
+        result_y = 12;
 
-	volatile float centralizationoffset = -(g_engine->sizeText(name.c_str(), "gamefont" ) / 2) + 16 - 8;
-    oRGBA col = getHealthColor(hp);
+    if (options.shownames)
+        drawName(result_x, result_y, scale);
 
-    // NOTE1 (nfries88): Creature name and health offset must account for scaling, too!
-    // NOTE2 (nfries88): Official client always renders name at 16px ABOVE head.
-    //      Meaning 24, WHEN the creature has an offset of 8px and no scaling. (Player outfits, but not all outfits)
-    int nameyoffset = std::floor(c_yOffSet * scale) + 16;
-    int hpyoffset = nameyoffset - 11;
+    result_x += 23;
+	result_y += 4;
 
-    g_engine->drawTextGW(name.c_str() , "gamefont", (int)(x + (24 - (c_xOffSet * 2)) + walkoffx + centralizationoffset),
-            (int)(y - nameyoffset + walkoffy), col);
-
-    if ((y - nameyoffset + walkoffy) <= 0) {
-        g_engine->drawRectangle(x + walkoffx + (19 - (c_xOffSet * 2)), 12, 28, 4, oRGBA(0,0,0,1));
-        g_engine->drawRectangle(x + walkoffx + (20 - (c_xOffSet * 2)), 12, 26*(hp/100.), 2, col);
-    }
-    else {
-        g_engine->drawRectangle(x + walkoffx + (19 - (c_xOffSet * 2)), (y+1) - (hpyoffset+1) + walkoffy, 28, 4, oRGBA(0,0,0,1));
-        g_engine->drawRectangle(x + walkoffx + (20 - (c_xOffSet * 2)), (y+1) - hpyoffset + walkoffy, 26*(hp/100.), 2, col);
-    }
+    drawSkullsShields(result_x, result_y, scale);
 }
 
-oRGBA CreatureUI::getHealthColor(int hp)
+void CreatureUI::drawName(int x, int y, float scale) const
 {
-    oRGBA col;
-    if (hp > 92.0) {
-        col = oRGBA(0., 188., 0., 255.);
-    }
-    else if (hp > 60.0) {
-        col = oRGBA(80., 161., 80., 255.);
-    }
-    else if (hp > 30.0) {
-        col = oRGBA(161., 161., 0., 255.);
-    }
-    else if (hp > 8.0) {
-        col = oRGBA(160., 39., 39., 255.);
-    }
-    else if (hp > 3.0) {
-        col = oRGBA(160., 0., 0., 255.);
-    }
-    else {
-        col = oRGBA(79., 0., 0., 255.);
-    }
-    return col;
+    //Health Bar
+    Creature* n = (Creature*)this;
+    int hp = n->getHealth();
+    if (hp == 0 && (n->getID() != GlobalVariables::getPlayerID())) return;
+    oRGBA col = getHealthColor(hp);
+
+    g_engine->drawRectangle(x-1, y-1, 28, 4, oRGBA(0,0,0,1));
+    g_engine->drawRectangle(x, y, 26*(hp/100.), 2, col);
+
+    //Name
+    std::string name = n->getName().c_str();
+    name[0] = toupper(name[0]);
+    volatile float centralizationoffset = (g_engine->sizeText(name.c_str(), "gamefont" ) / 2);
+
+    x = (x + 14 - centralizationoffset);
+    y -= 12;
+
+    g_engine->drawTextGW(name.c_str(), "gamefont", x, y, col);
 }
 
 void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 {
-	// skulls: (54, 225), each skull 11x11, green yellow white red black
-	// shields: (54, 236), each shield 11x11, yellow blue whiteyellow whiteblue
-	// shields: (76, 214), each shield 11x11, yellowsharedexp bluesharedexp
-	// shields: (168, 261), each shield 11x11, yellownosharedexp (+ blinking) bluenosharedexp (+ blinking)
-	// emblems: (287, 211), each emblem 11x11, green red blue
-
-	Creature* n = (Creature*)this;
+    Creature* n = (Creature*)this;
 	Outfit_t outfit = n->getOutfit();
 
-	float walkoffx = 0.f, walkoffy = 0.f;
-	getWalkOffset(walkoffx, walkoffy, scale);
-
-	int c_xOffSet = 0;
-    int c_yOffSet = 0;
-
-	if(m_obj) {
-	    c_xOffSet = m_obj->xOffset;
-	    c_yOffSet = m_obj->yOffset;
-	}
-	else if(outfit.m_lookitem == 0) {
-	    c_xOffSet = 8;
-        c_yOffSet = 8;
-	}
-
-	x += walkoffx + (43 - (c_xOffSet * 2));
-	y += walkoffy - std::floor(c_yOffSet * scale);
-
-	uint32_t shield =  n->getShield();
+    uint32_t shield =  n->getShield();
 	switch(shield) {
 		case SHIELD_YELLOW:
 			g_engine->getUISprite()->Blit(x, y, 54, 236, 11, 11);
@@ -355,7 +309,6 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 		default: break;
 	}
 
-
 	// NOTE (nfries88): 11 for width of skull, 2 for padding
 	if(skull != SKULL_NONE) x += 13;
 
@@ -373,6 +326,30 @@ void CreatureUI::drawSkullsShields(int x, int y, float scale) const
 		default:
 			break;
 	}
+}
+
+oRGBA CreatureUI::getHealthColor(int hp)
+{
+    oRGBA col;
+    if (hp > 92.0) {
+        col = oRGBA(0., 188., 0., 255.);
+    }
+    else if (hp > 60.0) {
+        col = oRGBA(80., 161., 80., 255.);
+    }
+    else if (hp > 30.0) {
+        col = oRGBA(161., 161., 0., 255.);
+    }
+    else if (hp > 8.0) {
+        col = oRGBA(160., 39., 39., 255.);
+    }
+    else if (hp > 3.0) {
+        col = oRGBA(160., 0., 0., 255.);
+    }
+    else {
+        col = oRGBA(79., 0., 0., 255.);
+    }
+    return col;
 }
 
 void CreatureUI::getWalkOffset(float &walkoffx, float &walkoffy, float scale) const

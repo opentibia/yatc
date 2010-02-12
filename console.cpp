@@ -436,10 +436,11 @@ int ConsoleEntry::paintEntry(float x, float y, float width /*= -1*/)
 	// TODO (kilouco): limit character input to 255.
 	std::string fulltext = getFullText();
 
+    // The code below may seem a little confusing, but it WORKS, HAHAHA!!!
 	std::string message, old_line_message, new_line_message;
 	message = new_line_message = old_line_message = fulltext;
 
-	int max_width = (glictGlobals.w-172-4);
+	int max_width = (glictGlobals.w-172-4) - 20;
 	int text_size = (int)g_engine->sizeText(message.c_str(),"aafont");
 	int line_size = text_size;
 
@@ -450,8 +451,6 @@ int ConsoleEntry::paintEntry(float x, float y, float width /*= -1*/)
 	size_t pos;
 
     if (line_size > max_width) {
-        //linecount = 1;
-    //else {
         while (line_size > max_width) {
             old_line_message.erase(old_line_message.end()-1);
             line_size = (int)g_engine->sizeText(old_line_message.c_str(),"aafont");
@@ -460,21 +459,24 @@ int ConsoleEntry::paintEntry(float x, float y, float width /*= -1*/)
                 pos = old_line_message.find_last_of(" ");
 
                 if(!pos)
-                    pos = old_line_message.size();
-                else
-                    old_line_message.resize(pos);
+                    pos = old_line_message.length();
+
+                old_line_message.resize(pos);
 
                 new_line_message = new_line_message.substr(pos);
 
                 if (linecount <= 1)
-                    final_text << old_line_message << "\n" << new_line_message;
+                    final_text << old_line_message << "\n";
                 else
-                    final_text << "\n" << new_line_message;
+                    final_text << "  " << old_line_message << "\n";
 
                 linecount++;
 
                 old_line_message = new_line_message;
                 line_size = (int)g_engine->sizeText(new_line_message.c_str(),"aafont");
+
+                if (line_size <= max_width)
+                    final_text << "   " << new_line_message;// << new_line_message;
             }
         }
 
