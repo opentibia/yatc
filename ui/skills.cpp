@@ -264,6 +264,7 @@ void winSkills_t::updateSelf()
     s << GlobalVariables::getPlayerStat(STAT_EXPERIENCE);
     std::string expstr = s.str();
     size_t pos = expstr.length() % 3;
+    if(pos == 0) pos = 3; // to prevent exp from having leading comma (",666")
     while(pos < expstr.length()) {
         expstr.insert(pos, 1, ',');
         pos += 4; // to account for the addition of ','
