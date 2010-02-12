@@ -458,7 +458,7 @@ int ConsoleEntry::paintEntry(float x, float y, float width /*= -1*/)
             if (line_size <= max_width) {
                 pos = old_line_message.find_last_of(" ");
 
-                if(!pos)
+                if(pos == std::string::npos)
                     pos = old_line_message.length();
 
                 old_line_message.resize(pos);
