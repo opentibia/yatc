@@ -563,7 +563,8 @@ void GM_Gameworld::keyPress (int key)
 
 		pnlConsoleContainer.txtConsoleEntry.SetCaption("");
 	}
-	else if (key != SDLK_RCTRL && key != SDLK_LCTRL && key != SDLK_RALT && key != SDLK_LALT)
+	//else if (key != SDLK_RCTRL && key != SDLK_LCTRL && key != SDLK_RALT && key != SDLK_LALT)
+	else if (key != 0)
 	{
 	    // ALT and CTRL are 0.
 		// pressing ALT or CTRL will otherwise cause the text console to lose append with (char)0
@@ -1285,10 +1286,20 @@ void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
 {
 	switch (type){
 
+    //Revised
+	case MSG_STATUS_WARNING:
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_RED));
+		m_lookatStatMsg = StatusMsg(TEXTCOLOR_RED, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
+		break;
 	case MSG_INFO_DESCR:
 		getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_LIGHTGREEN));
 		m_lookatStatMsg = StatusMsg(TEXTCOLOR_LIGHTGREEN, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
 		break;
+    case MSG_STATUS_CONSOLE_BLUE:
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_PURPLE));
+		break;
+    //Revised
+
     case MSG_EVENT_ADVANCE:
     case MSG_EVENT_DEFAULT:
     case MSG_STATUS_DEFAULT:
