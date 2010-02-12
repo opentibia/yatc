@@ -855,6 +855,11 @@ void MapUI::onAttack(Popup::Item *parent)
     MapUI *m = (MapUI*)(parent->data);
     GM_Gameworld *gw = (GM_Gameworld*)g_game;
 
+    if(m->m_popupCreatureID == GlobalVariables::getAttackID()){
+        gw->m_protocol->sendAttackCreature(0);
+        return;
+    }
+
     gw->m_protocol->sendAttackCreature(m->m_popupCreatureID);
     GlobalVariables::setAttackID(m->m_popupCreatureID);
 }
