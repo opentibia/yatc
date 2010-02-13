@@ -774,10 +774,11 @@ bool ProtocolGame::parseMagicEffect(NetworkMessage& msg)
     MSG_READ_POSITION(effectPos);
     MSG_READ_U8(effect);
     Tile* tile = Map::getInstance().getTile(effectPos);
-    if(!tile){
-        RAISE_PROTOCOL_ERROR("Magic effect - !tile");
+    // NOTE (nfries88) it's fine for there to be no tile for magic effects
+        // just don't add them. (is this correct behavior?)
+    if(tile){
+        tile->addEffect(effect);
     }
-    tile->addEffect(effect);
     return true;
 }
 bool ProtocolGame::parseAnimatedText(NetworkMessage& msg)
