@@ -20,7 +20,6 @@
 
 #include <stdlib.h> // srand, rand
 #include <time.h> // time
-#include <sstream>
 
 #include "../fassert.h"
 #include "protocollogin.h"
@@ -28,7 +27,6 @@
 #include "rsa.h"
 #include "../notifications.h"
 #include "../debugprint.h"
-#include "../util.h"
 ProtocolLogin::ProtocolLogin(const std::string& accountname, const std::string& password)
 {
 	m_accountname = accountname;
@@ -109,10 +107,6 @@ void ProtocolLogin::onConnect()
 
 bool ProtocolLogin::onRecv(NetworkMessage& msg)
 {
-	static FILE* patcherFile=NULL;
-	static uint32_t patcherTotal=0;
-	static uint32_t patcherSoFar=0;
-	static std::string patcherFN="";
 	m_currentMsg = &msg;
 	m_currentMsgN++;
 	while(msg.getReadSize() > 0){
@@ -138,109 +132,9 @@ bool ProtocolLogin::onRecv(NetworkMessage& msg)
 			Notifications::openMessageWindow(MESSAGE_MOTD, motd);
 			break;
 		}
-		case 0x1E: // Patching part?
-		{
-			MSG_READ_U8(p_type); // type?
-			MSG_READ_U32(p_size); // size?
-			
-			patcherSoFar = 0;
-			patcherTotal = p_size;
-			
-			switch(p_type)
-			{
-				case 0:
-					patcherFile = yatc_fopen((patcherFN="part.exe").c_str(),"w");
-					break;
-				case 1:
-					patcherFile = yatc_fopen((patcherFN="part.dat").c_str(),"w");
-					break;
-				case 2:
-					patcherFile = yatc_fopen((patcherFN="part.spr").c_str(),"w");
-					break;
-				case 3:
-					patcherFile = yatc_fopen((patcherFN="part.pic").c_str(),"w");
-					break;
-				case 4:
-					patcherFile = yatc_fopen((patcherFN="part.patch.exe").c_str(),"w");
-					break;
-				case 5:
-					patcherFile = yatc_fopen((patcherFN="part.showerror.elf").c_str(),"w");
-					break;
-			}
-			
-			Notifications::openMessageWindow(MESSAGE_ERROR, std::string() + "Patching part: " + patcherFN);
-			printf("Patching part: %02x %08x\n", p_type, p_size);
-
-			
-			
-			break;
-		}
-		case 0x1F: // Patching full?
-		{
-			MSG_READ_U8(p_type);
-			MSG_READ_U32(p_size);
-			patcherSoFar = 0;
-			patcherTotal = p_size;
-			switch(p_type)
-			{
-				case 0:
-					patcherFile = yatc_fopen((patcherFN="full.exe").c_str(),"w");
-					break;
-				case 1:
-					patcherFile = yatc_fopen((patcherFN="full.dat").c_str(),"w");
-					break;
-				case 2:
-					patcherFile = yatc_fopen((patcherFN="full.spr").c_str(),"w");
-					break;
-				case 3:
-					patcherFile = yatc_fopen((patcherFN="full.pic").c_str(),"w");
-					break;
-				case 4:
-					patcherFile = yatc_fopen((patcherFN="full.patch.exe").c_str(),"w");
-					break;
-				case 5:
-					patcherFile = yatc_fopen((patcherFN="full.showerror.elf").c_str(),"w");
-					break;
-			}
-			Notifications::openMessageWindow(MESSAGE_ERROR, std::string()+"Patching full: " + patcherFN);
-			printf("Patching full: %02x %08x\n", p_type, p_size);
-			break;
-			
-		}
-		case 0x20: // Patching blob
-		{
-			int sz = msg.getU16();
-			int from = 0, to = sz;
-			const char* memory = msg.getReadBuffer();
-			printf("Patch size %d (%08x)\n", sz, sz);
-			
-			//printf("Begin: %02x %02x %02x\n", memory[0], memory[1], memory[2]);
-
-			if(patcherFile)
-				fwrite(memory, sz, 1, patcherFile);
-			else
-				printf("Dropping bytes\n");
-			msg.skipBytes(sz);
-			
-			patcherSoFar+=sz;
-			if(patcherSoFar>=patcherTotal)
-			{
-				fclose(patcherFile);
-				patcherFile=NULL;
-			}
-			
-			//MSG_READ_STRING(p_unk);
-			std::stringstream progress;
-			progress << "Patching " << patcherFN << ": " << patcherSoFar << "/" << patcherTotal << "(" << (patcherSoFar*100/patcherTotal) << "%)";
-			Notifications::openMessageWindow(MESSAGE_ERROR, progress.str());
-			printf("Patching file - blob\n");
-
-			
-			break;
-		}
-		//case 0x1E: //Patching dat/pic/spr messages
-		//case 0x1F:
-		//case 0x20:
+		case 0x1E: //Patching exe/dat/spr messages
+		case 0x1F:
+		case 0x20:
 		{
 			Notifications::openMessageWindow(MESSAGE_ERROR, "Patching is not supported.");
 			RAISE_PROTOCOL_ERROR("Patching is not supported");
@@ -282,7 +176,7 @@ bool ProtocolLogin::onRecv(NetworkMessage& msg)
 void ProtocolLogin::sendSystemConfiguration(NetworkMessage &output)
 {
     // decoded by thomac, praise the Lord
-
+	
     // FIXME (ivucica#1#): this sends thomac's configuration.
     // this can easily be detected.
     // we need to figure out remaining bytes and real detection
@@ -290,17 +184,17 @@ void ProtocolLogin::sendSystemConfiguration(NetworkMessage &output)
         0x2C, // unknown
         'U', 'S', 'A', // USA - locale
         0xFE, 0x1F, // 8190 - RAM
-
+		
         0x04, 0x5E, 0x08, 0x40, 0x10, 0x00,  // unknown
-
+		
         '9', '6', '5', '0', '\0', 0x00, 0x00, 0x00, 0x00, // 9650 - processor, padded to 9 bytes
-
+		
         0x11, 0x44, // unknown
-
+		
         0x06, 0x09, // proc freq
         0x06, 0x09, // proc freq (?)
         0x22, 0x00, 0x00, 0x00, // unknown
-
+		
         '4', '8', '0', '0', ' ', 'S', 'E', 'R', 'I', // 4800 SERI - gfx card padded to 9 bytes
         0x00, 0x04, // 1024 - vram?
         0x80, 0x07, // 1920 - horiz reso
