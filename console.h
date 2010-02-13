@@ -24,7 +24,11 @@
 #include <time.h>
 #include <vector>
 #include <string>
+#ifndef __USE_GLSDL__
 #include <SDL/SDL.h>
+#else
+#include <SDL/glSDL.h>
+#endif
 #include <GLICT/panel.h>
 #include <GLICT/textbox.h>
 #include <GLICT/button.h>
