@@ -87,7 +87,7 @@ ObjectType::ObjectType(uint16_t _id)
 	blendframes = 0;
 	xdiv = 1;
 	ydiv = 1;
-	unk1 = 0;
+	zdiv = 0;
 	animcount = 1;
 	numsprites = 0;
 	//0x06 property
@@ -253,9 +253,12 @@ bool Objects::loadDat(const char* filename)
 	if(ver >= CLIENT_VERSION_780) {
 		return load780plus(filename);
 	}
-	/* 7.60 - 7.72 use same .dat format to the best of my knowledge */
-	else if(ver >= CLIENT_VERSION_760) {
+	/* 7.55 - 7.72 use same .dat format to the best of my knowledge */
+	else if(ver >= CLIENT_VERSION_755) {
 		return load76_77series(filename);
+	}
+	else if(ver >= CLIENT_VERSION_740) {
+	    return load74_75series(filename);
 	}
 
     NativeGUIError(str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext(
@@ -315,15 +318,6 @@ bool Objects::load780plus(const char* filename)
 	ObjectType::minDistanceId = 0;
 	ObjectType::maxDistanceId = read_short;
 	maxObjects += ObjectType::maxDistanceId;
-
-	/*
-	 * A T T E N T I O N ! ! !
-	 *
-	 * Do not update the reader to 8.1 without first making it possible
-	 * to choose between 8.1 and 8.0 reader. We want to be able to load
-	 * older formats as well.
-	 */
-
 
 	while(ftell(fp) < size && id <= maxObjects){
 		ObjectType* oType = new ObjectType(id);
@@ -481,10 +475,10 @@ bool Objects::load780plus(const char* filename)
 		oType->blendframes = fgetc(fp);
 		oType->xdiv        = fgetc(fp);
 		oType->ydiv        = fgetc(fp);
-		oType->unk1        = fgetc(fp);
+		oType->zdiv        = fgetc(fp);
 		oType->animcount   = fgetc(fp);
 
-		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->unk1;
+		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->zdiv;
 
 		oType->imageData = new uint16_t[oType->numsprites];
 
@@ -517,6 +511,7 @@ bool Objects::load780plus(const char* filename)
 	return true;
 }
 
+// NOTE (nfries88): This actually loads 755 too
 bool Objects::load76_77series(const char* filename)
 {
 	uint16_t id = 100;
@@ -707,10 +702,223 @@ bool Objects::load76_77series(const char* filename)
 		oType->blendframes = fgetc(fp);
 		oType->xdiv        = fgetc(fp);
 		oType->ydiv        = fgetc(fp);
-		oType->unk1        = fgetc(fp);
+		oType->zdiv        = fgetc(fp);
 		oType->animcount   = fgetc(fp);
 
-		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->unk1;
+		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->zdiv;
+
+		oType->imageData = new uint16_t[oType->numsprites];
+
+        ASSERT(oType->imageData);
+
+		for(unsigned int i = 0; i < oType->numsprites; i++) {
+			yatc_fread(&oType->imageData[i], sizeof(uint16_t), 1, fp);
+            ECORR16(oType->imageData[i]);
+		}
+
+		if(id <= ObjectType::maxItemId){
+			m_item.addElement(oType, id);
+		}
+		else if(id <= (ObjectType::maxItemId + ObjectType::maxOutfitId)){
+			m_outfit.addElement(oType, id - ObjectType::maxItemId);
+		}
+		else if(id <= (ObjectType::maxItemId + ObjectType::maxOutfitId + ObjectType::maxEffectId)){
+			m_effect.addElement(oType, id - ObjectType::maxItemId - ObjectType::maxOutfitId);
+		}
+		else if(id <= (ObjectType::maxItemId + ObjectType::maxOutfitId + ObjectType::maxEffectId + ObjectType::maxDistanceId)){
+			m_distance.addElement(oType, id - ObjectType::maxItemId - ObjectType::maxOutfitId - ObjectType::maxEffectId);
+		}
+
+		id++;
+	}
+
+	fclose(fp);
+	m_datLoaded = true;
+
+	return true;
+}
+
+// NOTE (nfries88): 740 - 750 loader
+bool Objects::load74_75series(const char* filename)
+{
+	uint16_t id = 100;
+	int32_t size;
+	uint16_t read_short, read_short2;
+	uint32_t maxObjects = 0;
+
+	FILE *fp = yatc_fopen(filename, "rb");
+	if(!fp){
+		return false;
+	}
+
+	fseek(fp,0,SEEK_END);
+	size = ftell(fp);
+
+	//get max id
+	fseek(fp, 0x04, SEEK_SET);
+	//Items
+	yatc_fread(&read_short, 2, 1, fp);
+	ECORR16(read_short);
+	ObjectType::minItemId = 100;
+	ObjectType::maxItemId = read_short;
+	maxObjects += ObjectType::maxItemId;
+	//Outfits
+	yatc_fread(&read_short, 2, 1, fp);
+	ECORR16(read_short);
+	ObjectType::minOutfitId = 0;
+	ObjectType::maxOutfitId = read_short;
+	maxObjects += ObjectType::maxOutfitId;
+	//Effects
+	yatc_fread(&read_short, 2, 1, fp);
+	ECORR16(read_short);
+	ObjectType::minEffectId = 0;
+	ObjectType::maxEffectId = read_short;
+	maxObjects += ObjectType::maxEffectId;
+	//Distance
+	yatc_fread(&read_short, 2, 1, fp);
+	ECORR16(read_short);
+	ObjectType::minDistanceId = 0;
+	ObjectType::maxDistanceId = read_short;
+	maxObjects += ObjectType::maxDistanceId;
+
+	while(ftell(fp) < size && id <= maxObjects){
+		ObjectType* oType = new ObjectType(id);
+
+		int optbyte;
+		//bool colorTemplate = false;
+		while(((optbyte = fgetc(fp)) >= 0) && (optbyte != 0xFF)){
+			switch(optbyte){
+				case 0x00: //Ground tile
+						yatc_fread(&read_short, 2, 1, fp);
+                        ECORR16(read_short);
+						oType->speed = read_short;
+						oType->ground = true;
+						oType->alwaysOnTopOrder = 0;
+					break;
+				case 0x01: //ontop
+						oType->alwaysOnTop = true;
+						oType->alwaysOnTopOrder = 1;
+					break;
+				case 0x02: //Walk through (doors etc)
+						oType->alwaysOnTop = true;
+						oType->alwaysOnTopOrder = 2;
+					break;
+				case 0x03: //Container
+						oType->container = true;
+					break;
+				case 0x04: //Stackable
+						oType->stackable = true;
+					break;
+				case 0x05: //Useable
+						oType->useable = true;
+					break;
+				case 0x06: //Ladders?
+						oType->alwaysUsed = true;
+					break;
+				case 0x07: //Writtable/Readable Objectss
+						oType->readable = true;
+						yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+                        ECORR16(read_short);
+						break;
+				case 0x08: //Writtable Objectss that can't be edited
+						oType->readable = true;
+						yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
+                        ECORR16(read_short);
+					break;
+				case 0x09: //Fluid containers
+						oType->fluidContainer = true;
+					break;
+				case 0x0A: //Splashes?
+						oType->splash = true;
+					break;
+				case 0x0B: //Is blocking
+						oType->blockSolid = true;
+					break;
+				case 0x0C: //Is not moveable
+						oType->moveable = false;
+					break;
+				case 0x0D: //Blocks missiles (walls, magic wall etc)
+						oType->blockProjectile = true;
+					break;
+				case 0x0E: //Blocks monster movement (flowers, parcels etc)
+						oType->blockPathFind = true;
+					break;
+				case 0x0F: //Can be equipped
+						oType->pickupable = true;
+					break;
+                case 0x10: //Light info
+						yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                        ECORR16(read_short);
+						oType->lightLevel = read_short;
+						yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                        ECORR16(read_short);
+						oType->lightColor = read_short;
+					break;
+                case 0x11:  //Floor change?
+					break;
+                case 0x12: // "Solid Floor" According to BlackDemon
+                    break;
+                case 0x13:
+                    oType->hasHeight = true;
+						// (should be) the height change in px; Cipsoft always uses 8
+						yatc_fread(&read_short, sizeof(read_short), 1, fp); // ?
+                        ECORR16(read_short);
+					break;
+                case 0x14: // "Adjusted" According to BlackDemon: 8px x and y offset
+                    oType->xOffset = 8;
+                    oType->yOffset = 8;
+                    break;
+                case 0x16: // Minimap
+						yatc_fread(&read_short, sizeof(read_short), 1, fp);
+                        ECORR16(read_short);
+						oType->mapColor = read_short;
+					break;
+                case 0x17: //Rotatable items
+                    oType->rotatable = true;
+				case 0x18: // "Bottom Layer" according to BlackDemon?
+					break;
+				case 0x19: //Wall items
+                    oType->isHangable = true;
+					break;
+                case 0x1A:
+                    oType->isHorizontal = true;
+					break;
+				case 0x1B:
+                    oType->isVertical = true;
+					break;
+				case 0x1C://idle animated
+                        oType->idleAnim = true;
+					break;
+				case 0x1D:  //line spot
+						int tmp;
+						tmp = fgetc(fp); // 86 -> openable holes, 77-> can be used to go down, 76 can be used to go up, 82 -> stairs up, 79 switch,
+						if(tmp == 0x58)
+							oType->readable = true;
+
+						fgetc(fp); // always 4
+					break;
+				default:
+						optbyte = optbyte;
+						std::cout << "unknown byte: " << (uint16_t)optbyte << std::endl;
+						return false;
+					break;
+			}
+		}
+
+		oType->width  = fgetc(fp);
+		oType->height = fgetc(fp);
+		if((oType->width > 1) || (oType->height > 1)){
+			fgetc(fp);
+		}
+
+		oType->blendframes = fgetc(fp);
+		oType->xdiv        = fgetc(fp);
+		oType->ydiv        = fgetc(fp);
+		// NOTE (nfries88): Black Demon says "zdiv" (our "unk1") was not added until 7.55
+		oType->zdiv        = 1;
+		oType->animcount   = fgetc(fp);
+
+		oType->numsprites = oType->width * oType->height * oType->blendframes * oType->xdiv * oType->ydiv * oType->animcount * oType->zdiv;
 
 		oType->imageData = new uint16_t[oType->numsprites];
 

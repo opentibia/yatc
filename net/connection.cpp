@@ -84,10 +84,10 @@ void ProtocolConfig::setVersion(ClientOS_t os, ClientVersion_t version)
 {
 	m_os = os;
 	switch(version){
-    //case CLIENT_VERSION_740:
-	//	NativeGUIError("Support for this client version is only experimental.", "Warning");
-	//	m_clientVersion = CLIENT_VERSION_740;
-    //    break;
+    case CLIENT_VERSION_740:
+		NativeGUIError("Support for this client version is only experimental.", "Warning");
+		m_clientVersion = CLIENT_VERSION_740;
+        break;
     case CLIENT_VERSION_760:
 		NativeGUIError("Support for this client version is only experimental.", "Warning");
 		m_clientVersion = CLIENT_VERSION_760;

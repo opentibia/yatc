@@ -116,7 +116,7 @@ public:
 	uint16_t blendframes;
 	uint16_t xdiv;
 	uint16_t ydiv;
-	uint16_t unk1;
+	uint16_t zdiv;
 	uint16_t animcount;
 	uint16_t numsprites;
 	uint16_t* imageData;
@@ -159,6 +159,7 @@ public:
 protected:
 	bool load780plus(const char* filename);
 	bool load76_77series(const char* filename);
+	bool load74_75series(const char* filename);
 	bool m_datLoaded;
 	static Objects* m_instance;
 
