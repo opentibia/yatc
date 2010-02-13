@@ -324,6 +324,11 @@ bool Tile::insertThing(Thing *thing, int32_t stackpos)
 	else {
 		addThing(thing, true);
 	}
+	Creature *c = thing->getCreature();
+	if(c){
+		c->setCurrentPos(this->getPos());
+	}
+
 	return true;
 }
 
@@ -553,7 +558,7 @@ bool Map::playerCanSee(int32_t x, int32_t y, int32_t z)
 	else if(playerPos.z >= 8){
 		//we are underground (8 -> 15)
 		//view is +/- 2 from the floor we stand on
-		if(std::abs((int32_t)playerPos.z - z) > 2){
+		if(abs((int32_t)playerPos.z - z) > 2){
 			return false;
 		}
 	}
