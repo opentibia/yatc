@@ -26,7 +26,11 @@
  * and should not be polluted by C++ code.
  */
 
+#ifndef __USE_GLSDL__
 #include <SDL/SDL.h>
+#else
+#include <SDL/glSDL.h>
+#endif
 #include "sprdata.h"
 static void putPixel(SDL_Surface *surface, int x, int y, uint32_t pixel);
 static uint32_t getPixel(SDL_Surface *surface, int x, int y);

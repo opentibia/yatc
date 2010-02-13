@@ -35,7 +35,11 @@ unsigned int MAXFPS=50;
 #endif
 
 
+#ifndef __USE_GLSDL__
 #include <SDL/SDL.h>
+#else
+#include <SDL/glSDL.h>
+#endif
 #ifdef __APPLE__
 	#include <SDL_gfx/SDL_framerate.h>
 #else

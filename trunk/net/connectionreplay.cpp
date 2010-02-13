@@ -18,7 +18,11 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#ifndef __USE_GLSDL__
 #include <SDL/SDL.h>
+#else
+#include <SDL/glSDL.h>
+#endif
 #include "connectionreplay.h"
 #include "../notifications.h"
 

@@ -23,7 +23,11 @@
 
 #include <GLICT/fonts.h>
 #include <GLICT/globals.h>
+#ifndef __USE_GLSDL__
 #include <SDL/SDL.h>
+#else
+#include <SDL/glSDL.h>
+#endif
 #include "debugprint.h"
 #include "defines.h"
 #include "sprite.h"

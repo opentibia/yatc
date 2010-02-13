@@ -34,7 +34,11 @@
 #endif
 
 #include <string>
+#ifndef __USE_GLSDL__
 #include <SDL/SDL.h>
+#else
+#include <SDL/glSDL.h>
+#endif
 #include "stdinttypes.h"
 
 struct SDL_Surface;
