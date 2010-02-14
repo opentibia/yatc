@@ -110,7 +110,18 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 		}
 	    else if(m_obj->idleAnim){
 		    // TODO (nfries88): all appearances that animate while idle.
-		    aframes = 0;
+		    //aframes = 0;
+            uint32_t animationTime = (g_frameTime - m_startTime)/100;
+            aframes = (map_x % m_obj->xdiv + (map_y % m_obj->ydiv)*m_obj->xdiv +
+					(animationTime % m_obj->animcount)*m_obj->xdiv*m_obj->ydiv)*
+					spriteSize;
+		}
+		else if(n->getOutfit().m_looktype == 0 && n->getOutfit().m_lookitem == 0){
+		    uint32_t animationTime = (g_frameTime - m_startTime)/100;
+            aframes = (map_x % m_obj->xdiv + (map_y % m_obj->ydiv)*m_obj->xdiv +
+					(animationTime % m_obj->animcount)*m_obj->xdiv*m_obj->ydiv)*
+					spriteSize;
+            activeframe = 0;
 		}
 		else {
 		    aframes = 0;
