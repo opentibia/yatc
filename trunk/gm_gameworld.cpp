@@ -606,9 +606,21 @@ void GM_Gameworld::keyPress (int key)
 		}
 		else if(ISCOPYEVENT(key)) // CTRL+C
 		{
-			// we can't currently select anything, so how could we copy?
+			// FIXME (nfries88): Selection is not available in glict,
+                // so we are using the textbox's whole text.
 			glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
 			if(textbox) g_clipboard.setText(textbox->GetCaption());
+			return;
+		}
+		else if(ISCUTEVENT(key)) // CTRL+X
+		{
+            // FIXME (nfries88): Selection is not available in glict,
+                // so we are using the textbox's whole text.
+			glictTextbox* textbox = dynamic_cast<glictTextbox*>(glictGlobals.topFocused);
+			if(textbox){
+			    g_clipboard.setText(textbox->GetCaption());
+			    textbox->SetCaption("");
+			}
 			return;
 		}
 		else if(key == 12){ // CTRL+L
