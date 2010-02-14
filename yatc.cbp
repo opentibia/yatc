@@ -55,6 +55,28 @@
 					<Add library="GLICT" />
 				</Linker>
 			</Target>
+			<Target title="Release Unix - X11 with glSDL">
+				<Option platforms="Unix;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsunixr\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-DUSE_X11_CLIPBOARD" />
+					<Add option="-D__USE_GLSDL__" />
+				</Compiler>
+				<Linker>
+					<Add library="GL" />
+					<Add library="GLU" />
+					<Add library="SDL" />
+					<Add library="SDL_gfx" />
+					<Add library="GLICT" />
+					<Add library="glSDL" />
+				</Linker>
+			</Target>
 			<Target title="Debug Windows">
 				<Option platforms="Windows;" />
 				<Option output="yatc" prefix_auto="1" extension_auto="1" />
@@ -112,9 +134,37 @@
 					<Add option="-lintl" />
 				</Linker>
 			</Target>
+			<Target title="Release Windows with glSDL">
+				<Option platforms="Windows;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsrelease\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-D__USE_GLSDL__" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-lgmp" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
+					<Add option="-lintl" />
+					<Add option="-lglSDL" />
+				</Linker>
+			</Target>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="Debug Unix - X11;Release Unix - X11;Debug Windows;Release Windows;" />
+			<Add alias="All" targets="Debug Unix - X11;Release Unix - X11;Debug Windows;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-fexpensive-optimizations" />
@@ -138,6 +188,7 @@
 			<Option target="Debug Unix - X11" />
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
+			<Option target="Release Windows with glSDL" />
 		</Unit>
 		<Unit filename="bigint.h" />
 		<Unit filename="choicegrid.cpp" />
@@ -168,6 +219,7 @@
 		<Unit filename="exchndl2.cxx">
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
+			<Option target="Release Windows with glSDL" />
 		</Unit>
 		<Unit filename="fassert.h" />
 		<Unit filename="font.cpp" />
@@ -275,6 +327,7 @@
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
+			<Option target="Release Windows with glSDL" />
 		</Unit>
 		<Unit filename="skin.cpp" />
 		<Unit filename="skin.h" />
