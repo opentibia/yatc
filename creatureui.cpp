@@ -65,17 +65,21 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
     if (!m_obj)
 		return;
 
+    Creature* n = (Creature*)this;
+
 	if(map_x != 0 && map_y != 0) {
-		x = x - std::floor(m_obj->xOffset * scale);
-		y = y - std::floor(m_obj->yOffset * scale);
+	    if(n->getOutfit().m_looktype != 0){
+	        x = x - std::floor(8 * scale);
+	        y = y - std::floor(8 * scale);
+	    } else {
+            x = x - std::floor(m_obj->xOffset * scale);
+            y = y - std::floor(m_obj->yOffset * scale);
+	    }
 	}
 	else {
 		// shrink larger creatures to be 32x32
 		scale /= MAX(m_obj->width, m_obj->height);
 	}
-
-    Creature* n = (Creature*)this;
-
 
     if (!isLoaded()) {
         printf("Not loaded!\n");
@@ -109,8 +113,6 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 			aframes = aniSize * (m_walkState == 1. ? 0 : (((int)(m_walkState*100) / 25) % 2 + 1));
 		}
 	    else if(m_obj->idleAnim){
-		    // TODO (nfries88): all appearances that animate while idle.
-		    //aframes = 0;
             uint32_t animationTime = (g_frameTime - m_startTime)/100;
             aframes = (map_x % m_obj->xdiv + (map_y % m_obj->ydiv)*m_obj->xdiv +
 					(animationTime % m_obj->animcount)*m_obj->xdiv*m_obj->ydiv)*
@@ -206,15 +208,21 @@ void CreatureUI::drawInfo(int x, int y, float scale) const
     int c_xOffSet = 0, c_yOffSet = 0, result_x = 0, result_y = 0;
 
     if(m_obj) {
-	    c_xOffSet = m_obj->xOffset;
-	    c_yOffSet = m_obj->yOffset;
+        if(outfit.m_looktype == 0){
+            c_xOffSet = 8;
+            c_yOffSet = 8;
+        }
+        else {
+            c_xOffSet = m_obj->xOffset;
+            c_yOffSet = m_obj->yOffset;
+        }
 
 	    if (c_xOffSet != 8 || c_yOffSet != 8) {
             c_xOffSet = 0;
             c_xOffSet = 0;
         }
 	}
-	else if(outfit.m_lookitem == 0) {
+	else {
 	    c_xOffSet = 8;
         c_yOffSet = 8;
 	}
