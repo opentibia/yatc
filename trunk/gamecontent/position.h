@@ -36,9 +36,13 @@ public:
 		z = _z;
 	}
 	~Position(){};
-	bool operator!=(const Position& pos){
+	bool operator!=(const Position& pos) const {
 		return (pos.x != x || pos.y != y || pos.z != z);
 	}
+
+	bool operator==(const Position& pos2) const {
+	    return (pos2.x == x && pos2.y == y && pos2.z == z);
+    }
 
 	uint32_t x, y, z;
 };

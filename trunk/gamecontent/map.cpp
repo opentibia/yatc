@@ -69,7 +69,7 @@ bool AnimatedText::canBeDeleted()
 }
 
 //*************** PublicMessage *************************
-PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName)
+PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName, int linecount)
 {
 	m_color = color;
 	m_sender = sender;
@@ -77,6 +77,8 @@ PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const s
 	m_pos = pos;
 	m_startTime = g_frameTime;
 	m_showName = showName;
+	m_linecount = linecount;
+    m_handled = false;
 }
 
 bool PublicMessage::canBeDeleted()
@@ -87,6 +89,14 @@ bool PublicMessage::canBeDeleted()
 	else{
 		return false;
 	}
+}
+
+bool PublicMessage::set_handled(bool handled)
+{
+    if (handled == true)
+        m_handled = true;
+    else
+        m_handled = false;
 }
 
 //*************** Tile **************************
@@ -590,7 +600,54 @@ void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string
 void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender, bool showName)
 {
 	ASSERT(pos.z < MAP_LAYER);
-	m_publicMessages[pos.z].push_back(PublicMessage(color, text, sender, pos, showName));
+
+	std::string new_line_text, old_line_text;
+    std::stringstream final_text;
+
+    new_line_text = old_line_text = text;
+    int linecount = 1;
+    int line_size = text.length();
+    size_t iter_pos;
+
+    //39 characters per line, despite their size.
+    if (line_size > 39) {
+        while (line_size > 39) {
+            old_line_text.erase(old_line_text.end()-1);
+            line_size = old_line_text.length();
+
+            if (line_size <= 39) {
+                iter_pos = old_line_text.find_last_of(" ");
+
+                if(iter_pos == std::string::npos || !iter_pos) {
+                    iter_pos = old_line_text.length();
+                    new_line_text = new_line_text.substr(iter_pos-1);
+                    old_line_text.resize(iter_pos);
+
+                    old_line_text.erase(old_line_text.end()-1);
+                    old_line_text = old_line_text + "-";
+                    iter_pos = old_line_text.length();
+                }
+                else {
+                    new_line_text = new_line_text.substr(iter_pos);
+                    old_line_text.resize(iter_pos);
+                }
+
+                final_text << old_line_text << "\n";
+
+                linecount++;
+
+                old_line_text = new_line_text;
+                line_size = old_line_text.length();
+
+                if (line_size <= 39)
+                    final_text << new_line_text;
+            }
+        }
+        m_publicMessages[pos.z].push_back(PublicMessage(color, final_text.str(), sender, pos, showName, linecount));
+        return;
+    }
+
+	m_publicMessages[pos.z].push_back(PublicMessage(color, text, sender, pos, showName, linecount));
 }
 
 std::list<Direction> Map::getPathTo(int x, int y, int z)

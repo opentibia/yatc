@@ -81,7 +81,7 @@ private:
 
 class PublicMessage{
 public:
-    PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName);
+    PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName, int linecount);
 
 	uint32_t getStartTime(){ return m_startTime;}
 	TextColor_t getColor() { return m_color;}
@@ -89,8 +89,11 @@ public:
 	const std::string& getSender() { return m_sender; }
 	const Position& getPosition() { return m_pos;}
 	bool shouldShowName(){ return m_showName; }
+    int getLinecount() { return m_linecount;}
 
     bool canBeDeleted();
+    bool set_handled(bool handled);
+    bool is_handled() {return m_handled; }
 private:
     uint32_t m_startTime;
     TextColor_t m_color;
@@ -98,6 +101,9 @@ private:
     std::string m_sender;
     Position m_pos;
     bool m_showName;
+    int m_linecount;
+
+    bool m_handled;
 };
 
 class Tile{

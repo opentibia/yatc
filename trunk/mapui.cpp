@@ -337,31 +337,62 @@ void MapUI::renderMap()
 	}
 	// draw publicly displayed messages
 	{
-        Map::PublicMessageList& messages = Map::getInstance().getPublicMessages(GlobalVariables::getPlayerPosition().z);
-            Map::PublicMessageList::iterator mit = messages.begin();
-            while(mit != messages.end()){
-                if((*mit).canBeDeleted()){
-                    messages.erase(mit++);
-                }
-                else{
-                    // FIXME (nfries88): This will not draw properly when there are multiple messages on the same tile.
-                    const Position& txtpos = (*mit).getPosition();
-                    std::string text;
-                    if((*mit).shouldShowName())
-                        text = (*mit).getSender() + " says:\n" + (*mit).getText();
-                    else
-                        text = (*mit).getText();
+	    Map::PublicMessageList& messages = Map::getInstance().getPublicMessages(GlobalVariables::getPlayerPosition().z);
+	    Map::PublicMessageList::iterator it = messages.begin();
+	    Map::PublicMessageList::reverse_iterator rit = messages.rbegin(), temp_rit = messages.rbegin();
+	    std::string text;
+	    int x = 0, y = 0, linecount = 0;
 
-                    // NOTE (nfries88): yelling can be seen even if it's from off screen.
-                    int screenx = (int)(((txtpos.x - pos.x + m_vpw/2 + 0.4)*scaledSize) + m_x) - (scaledSize/2);
-                    screenx = std::min(std::max(0, screenx), int(m_vpw*scaledSize));
-                    int screeny = (int)(((txtpos.y - pos.y + m_vph/2)*scaledSize) + m_y) + (scaledSize/2);
-                    screeny = std::min(std::max(0, screeny), int(m_vph*scaledSize));
+	    while(it != messages.end())
+            if((*it).canBeDeleted())
+                it = messages.erase(it);
+            else
+                it++;
 
-                    g_engine->drawTextGW(text.c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines(text.c_str())*12), (*mit).getColor());
-                    ++mit;
+        while(rit != messages.rend()){
+            temp_rit = rit;
+
+            const Position& txtpos = (*rit).getPosition();
+            x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32)) + walkoffx; // + ((m_vpw/2) * m_scale));//(txtpos.x - pos.x + m_vpw/2
+            y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy; // + ((m_vph/2) * m_scale));
+
+            if((*rit).is_handled() == false) {
+                linecount = (*rit).getLinecount();
+
+                text = (*rit).getText();
+                (*rit).set_handled(true);
+
+                g_engine->drawTextGW(text.c_str() , "gamefont", x, y-(glictFontNumberOfLines(text.c_str())*12), (*rit).getColor());
+
+                while(temp_rit != messages.rend()){
+                    if((*rit).getPosition() == (*temp_rit).getPosition() && (*temp_rit).getSender() == (*rit).getSender() && (*temp_rit).is_handled() == false) {
+                        (*temp_rit).set_handled(true);
+
+                        text = (*temp_rit).getText();
+
+                        if ((linecount + (*temp_rit).getLinecount()) <= 9) {
+                            g_engine->drawTextGW(text.c_str() , "gamefont", x, y-(glictFontNumberOfLines(text.c_str())*12) - (linecount * 12), (*temp_rit).getColor());
+                            linecount += (*temp_rit).getLinecount();
+                        }
+                    }
+                    temp_rit++;
                 }
+
+                if((*rit).shouldShowName()) {
+                    text = (*rit).getSender() + " says:\n";
+                    g_engine->drawTextGW(text.c_str() , "gamefont", x, y-(glictFontNumberOfLines(text.c_str())*12) - ((linecount-1) * 12), (*rit).getColor());
+                }
+                else
+                    text = (*rit).getText();
             }
+            rit++;
+	    }
+
+	    it = messages.begin();
+	    while(it != messages.end()) {
+	        (*it).set_handled(false);
+            it++;
+	    }
 	}
 
 	g_engine->resetClipping();
