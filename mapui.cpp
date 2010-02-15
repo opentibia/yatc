@@ -63,10 +63,38 @@ MapUI::MapUI()
     m_scale = 1.F;
 
     m_minz = -1;
+
+    lightmap = new vertex[m_vpw * m_vph];
 }
 
 MapUI::~MapUI()
 {
+    delete [] lightmap;
+}
+
+void MapUI::fillLightCircle(int x, int y, int radius, oRGBA color)
+{
+	if (radius > 0)
+	{
+		for (int i = 0; i < m_vpw; ++i)
+		{
+			for (int j = 0; j < m_vph; ++j)
+			{
+				float dist = std::max((float)sqrt(pow((double)(i - x), (double)2) + pow((double)(j - y), (double)2)), 0.0f);
+				if (i >= 0 && j >= 0 && i < m_vpw && j < m_vph)
+				{
+				    int index = ((j * m_vpw) + i);
+					lightmap[index].alpha = std::min((int)(lightmap[index].alpha), 255 - (int)std::max((int)(255 * (1 - (dist / radius))), (int)(0)));
+
+					lightmap[index].r += color.r;
+					lightmap[index].g += color.g;
+					lightmap[index].b += color.b;
+
+					++lightmap[index].blended;
+				}
+			}
+		}
+	}
 }
 
 void MapUI::renderMap()
@@ -111,7 +139,26 @@ void MapUI::renderMap()
 	}
 	walkoffx *= -1; walkoffy *= -1;
 
-	for(int z = sz; z >= m; z--){
+    // reset light map
+    memset((void*)lightmap, 0, sizeof(vertex) * m_vpw * m_vph);
+    int initValue = (pos.z <= 7 ? (255 - GlobalVariables::getWorldLightLevel()) : 255);
+    //oRGBA initColor = (pos.z <= 7 ? (makeLightColor((uint16_t)GlobalVariables::getWorldLightColor())) : oRGBA(0, 0, 0, 255));
+    oRGBA initColor = oRGBA(0, 0, 0, 255);
+    // for debugging purposes
+    for (int i = 0; i < m_vpw; ++i)
+    {
+        for (int j = 0; j < m_vph; j++)
+        {
+            lightmap[(j * m_vpw) + i].alpha = initValue;
+			lightmap[(j * m_vpw) + i].blended = 1;
+			lightmap[(j * m_vpw) + i].r = initColor.r;
+			lightmap[(j * m_vpw) + i].g = initColor.g;
+			lightmap[(j * m_vpw) + i].b = initColor.b;
+        }
+    }
+
+	for(int z = sz; z >= m; z--)
+	{
 
 		ASSERT(z >= 0);
 		int offset = z - pos.z;
@@ -133,11 +180,19 @@ void MapUI::renderMap()
 				int screenx = int((i*scaledSize + walkoffx) + m_x);
 				int screeny = int((j*scaledSize + walkoffy) + m_y);
 
+				int index    = ((j * m_vpw) + i);
+                lightmap[index].x = screenx;
+                lightmap[index].y = screeny;
+
 				const Item* ground = tile->getGround();
 				if(ground){
 					ground->Blit(screenx, screeny, m_scale, tile_x, tile_y);
+
 					if(ground->hasHeight())
 						tile_height++;
+
+					//fillLightCircle(i, j, ground->getObjectType()->lightLevel, makeLightColor(ground->getObjectType()->lightColor));
+					fillLightCircle(i-offset, j-offset, ground->getObjectType()->lightLevel, initColor);
 				}
 
 				enum drawingStates_t{
@@ -207,6 +262,8 @@ void MapUI::renderMap()
                                     (c->getLookDir() == DIRECTION_WEST && c->isPreWalking())))
                                     performPaint = false;
                             }
+                            //fillLightCircle(i, j, c->getLightLevel(), makeLightColor(c->getLightColor()));
+                            fillLightCircle(i-offset, j-offset, c->getLightLevel(), initColor);
                         }
 
 						if (performPaint)
@@ -217,6 +274,9 @@ void MapUI::renderMap()
 						if(const Item* item = thing->getItem()){
 							if(item->hasHeight())
 								tile_height++;
+
+							//fillLightCircle(i, j, item->getObjectType()->lightLevel, makeLightColor(item->getObjectType()->lightColor));
+							fillLightCircle(i-offset, j-offset, item->getObjectType()->lightLevel, initColor);
 						}
 
 						switch(drawState){
@@ -266,7 +326,8 @@ void MapUI::renderMap()
                     ++it;
                 }
             }
-		}
+        }
+
 		//draw distance effects
 		{
 		Map::DistanceEffectList& distanceEffects = Map::getInstance().getDistanceEffect(z);
@@ -332,9 +393,9 @@ void MapUI::renderMap()
 				}
 				drawIndex++;
 			}
-
 		}
 	}
+
 	// draw publicly displayed messages
 	{
 	    Map::PublicMessageList& messages = Map::getInstance().getPublicMessages(GlobalVariables::getPlayerPosition().z);
@@ -394,6 +455,10 @@ void MapUI::renderMap()
             it++;
 	    }
 	}
+
+    if(options.showlighteffects){
+        g_engine->drawVertices(lightmap, m_vpw, m_vph);
+    }
 
 	g_engine->resetClipping();
 

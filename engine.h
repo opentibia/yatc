@@ -40,6 +40,18 @@ struct glictColor;
 #define __PRETTY_FUNCTION__ "(msvc)"
 #endif
 
+struct vertex
+{
+	int x;
+	int y;
+	int alpha;
+
+	int r;
+	int g;
+	int b;
+	int blended;
+};
+
 class Engine
 {
 	public:
@@ -47,6 +59,7 @@ class Engine
 
 		virtual bool isSupported() = 0;
 
+		virtual void drawVertices(vertex* vertices, int width, int height) = 0;
 		virtual void doResize(int& w, int& h);
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
 		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness = 1.f) {}

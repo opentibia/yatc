@@ -28,6 +28,7 @@
 #include "options.h"
 #include "util.h"
 #include "product.h"
+#include <SDL/SDL_gfxPrimitives.h>
 EngineSDL::EngineSDL()
 {
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting SDL engine\n");
@@ -88,7 +89,13 @@ void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA
 {
 	static const SDL_VideoInfo* vi = SDL_GetVideoInfo();
 	SDL_Rect r={(int)x,(int)y,(int)width,(int)height};
-	SDL_FillRect(m_screen, &r, SDL_MapRGBA(vi->vfmt, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)color.a));
+	if(color.a != 255) {
+	    // draw with alpha channel
+        boxRGBA(m_screen, x, y, x + width, y + height, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)(color.a));
+	} else {
+	    // draw without alpha channel
+	    SDL_FillRect(m_screen, &r, SDL_MapRGBA(vi->vfmt, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)color.a));
+	}
 }
 
 void EngineSDL::drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness /*= 1.f*/)

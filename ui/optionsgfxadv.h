@@ -152,8 +152,7 @@ public:
 			chkLightEffects.SetWidth(230);
 			chkLightEffects.SetHeight(22);
 			chkLightEffects.SetCaption(gettext("Show Light Effects"));
-			chkLightEffects.SetValue(false);
-			chkLightEffects.SetEnabled(false);
+			chkLightEffects.SetValue(options.showlighteffects);
 		}
 
 		// "Don't Stretch/Shrink Game Window"
@@ -282,6 +281,7 @@ public:
 		//
 		options.stretchGameWindow = chkStrShrGWind.GetValue();
 		options.smoothstretch = chkSmoothStretch.GetValue();
+		options.showlighteffects = chkLightEffects.GetValue();
 		options.Save();
 	}
 

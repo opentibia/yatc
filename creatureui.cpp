@@ -243,7 +243,7 @@ void CreatureUI::drawName(int x, int y, float scale) const
     if (hp == 0 && (n->getID() != GlobalVariables::getPlayerID())) return;
     oRGBA col = getHealthColor(hp);
 
-    g_engine->drawRectangle(x-1, y-1, 28, 4, oRGBA(0,0,0,1));
+    g_engine->drawRectangle(x-1, y-1, 28, 4, oRGBA(0,0,0,255));
     g_engine->drawRectangle(x, y, 26*(hp/100.), 2, col);
 
     //Name

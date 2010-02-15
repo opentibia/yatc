@@ -33,6 +33,7 @@
 #include "../gamecontent/inventory.h"
 #include "../gamecontent/shop.h" // 8.2+
 #include "../gamecontent/viplist.h"
+#include "../util.h"
 
 #ifndef min
 #include <algorithm> // std::min

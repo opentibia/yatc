@@ -252,7 +252,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		yatc_fread(&where, sizeof(where), 1, f);
 
 		// create surface where we'll store data, and fill it with transparency
-		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE, 32, 32, 32, rmask, gmask, bmask, amask);
+		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, 32, 32, 32, rmask, gmask, bmask, amask);
 		if(!m_image){
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			goto loadFail;
@@ -261,7 +261,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 		// dont make static since if we change the rendering engine at runtime,
 		//  this may change too
-		Uint32 magenta = SDL_MapRGB(m_image->format, 255, 0, 255);
+		Uint32 magenta = SDL_MapRGBA(m_image->format, 255, 0, 255, 255);
 		SDL_FillRect(m_image, NULL, magenta);
 
 		// read the data

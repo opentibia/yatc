@@ -79,10 +79,10 @@ EngineGL::~EngineGL()
 
 void EngineGL::initEngine()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glShadeModel(GL_SMOOTH);
 	glClearDepth(1.0);
-	glDepthFunc(GL_LEQUAL);
+	glDepthFunc(GL_LESS);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -113,6 +113,27 @@ void EngineGL::doResize(int& w, int& h)
 	glOrtho(0.0f, w, h, 0.0f, -1.0f, 1.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void EngineGL::drawVertices(vertex* vertices, int width, int height)
+{
+	glDisable(GL_TEXTURE_2D);
+
+	for (int y = 0; y < height - 1; ++y)
+	{
+		glBegin(GL_TRIANGLE_STRIP);
+
+		for (int x = 0; x < width; ++x)
+		{
+			glColor4f((vertices[(((y + 1) * width) + x)].r / vertices[(((y + 1) * width) + x)].blended) / 255.0f, (vertices[(((y + 1) * width) + x)].g / vertices[(((y + 1) * width) + x)].blended) / 255.0f, (vertices[(((y + 1) * width) + x)].b / vertices[(((y + 1) * width) + x)].blended) / 255.0f, vertices[(((y + 1) * width) + x)].alpha / 255.0f);
+			glVertex2f(vertices[(((y + 1) * width) + x)].x, vertices[(((y + 1) * width) + x)].y);
+
+			glColor4f((vertices[((y * width) + x)].r / vertices[((y * width) + x)].blended) / 255.0f, (vertices[((y * width) + x)].g / vertices[((y * width) + x)].blended) / 255.0f, (vertices[((y * width) + x)].b / vertices[((y * width) + x)].blended) / 255.0f, vertices[((y * width) + x)].alpha / 255.0f);
+			glVertex2f(vertices[((y * width) + x)].x, vertices[((y * width) + x)].y);
+		}
+
+		glEnd();
+	}
 }
 
 void EngineGL::drawRectangle(float x, float y, float width, float height, oRGBA color)
