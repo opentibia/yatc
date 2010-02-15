@@ -84,7 +84,7 @@ public:
 	int maxfps;
 	bool stretchGameWindow;
 	bool smoothstretch;
-	bool showlighteffects;
+	int showlighteffects;
 
 	// [console]
 	bool infomsgs;
