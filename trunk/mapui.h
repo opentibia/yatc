@@ -24,6 +24,8 @@
 #include "gamecontent/map.h"
 #include "popup.h"
 
+struct vertex;
+
 class MapUI {
 	public:
 		MapUI();
@@ -87,9 +89,12 @@ class MapUI {
 
 		static void onUnimplemented(Popup::Item *parent);
 
+		vertex* lightmap;
+
 	protected:
 		void drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height);
         void drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height);
+        void fillLightCircle(int x, int y, int radius, oRGBA color);
 
 };
 

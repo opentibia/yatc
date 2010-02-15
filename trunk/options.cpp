@@ -209,6 +209,9 @@ void Options::Save()
 	ss << smoothstretch;
 	section->addKey("smoothstretch", ss.str());
 	ss.str("");
+	ss << showlighteffects;
+	section->addKey("lighteffects", ss.str());
+	ss.str("");
 
 
 	section = configHandler->newSection("console");
@@ -397,6 +400,7 @@ void Options::Load()
 	maxfps = atoi(configHandler->getKeyValue("graphics", "maxfps").c_str());
 	stretchGameWindow = (atoi(configHandler->getKeyValue("graphics", "stretchgame").c_str()) == 1);
 	smoothstretch = (atoi(configHandler->getKeyValue("graphics", "smoothstretch").c_str()) == 1);
+	showlighteffects = (atoi(configHandler->getKeyValue("graphics", "lighteffects").c_str()) == 1);
 
 	// [console]
     infomsgs = (atoi(configHandler->getKeyValue("console", "infomsgs").c_str()) == 1);

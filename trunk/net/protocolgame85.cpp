@@ -22,6 +22,7 @@
 #include "protocolgame85.h"
 #include "../gamecontent/position.h"
 #include "../gamecontent/map.h"
+#include "../engine.h"
 ProtocolGame85::ProtocolGame85(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame84(accountname, password, name, isGM)
 {

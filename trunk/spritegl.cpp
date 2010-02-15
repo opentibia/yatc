@@ -83,14 +83,14 @@ void SpriteGL::buildGLTexture() {
 #endif
 
 
-	SDL_Surface *sfc = SDL_CreateRGBSurface(SDL_SWSURFACE, nextpow(getImage()->w), nextpow(getImage()->h), 32, rmask, gmask, bmask, amask);
+	SDL_Surface *sfc = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, nextpow(getImage()->w), nextpow(getImage()->h), 32, rmask, gmask, bmask, amask);
 
 	SDL_Rect s = {0,0,getImage()->w,getImage()->h};
 	SDL_Rect d = {0,0,getImage()->w,getImage()->h};
 
 	SDL_BlitSurface(getImage(), &s, sfc, &d);
 
-
+	SDL_SetAlpha(sfc, SDL_SRCALPHA, 255);
 	SDL_LockSurface(sfc);
 
 	glEnable(GL_TEXTURE_2D);
@@ -136,10 +136,13 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
 	double spriteWidth = nextpow(getWidth())  / m_multiplierx ;
 	double spriteHeight = nextpow(getHeight())  / m_multipliery;
 
-	glAlphaFunc(GL_GEQUAL, .80);
-	glEnable(GL_ALPHA_TEST);
+	//glAlphaFunc(GL_GEQUAL, .80);
+	//glEnable(GL_ALPHA_TEST);
     if(m_r != 1. || m_g != 1. || m_b != 1.)
         glColor4f(m_r, m_g, m_b, 1.);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBegin(GL_QUADS);

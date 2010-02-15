@@ -26,7 +26,7 @@
 #include "globalvars.h"
 #include "../objects.h"
 #include "../notifications.h"
-#include "debugprint.h"
+#include "../debugprint.h"
 
 #include "../util.h"
 
