@@ -28,7 +28,11 @@
 #include "options.h"
 #include "util.h"
 #include "product.h"
+#ifndef __APPLE__
 #include <SDL/SDL_gfxPrimitives.h>
+#else
+#include <SDL_gfx/SDL_gfxPrimitives.h>
+#endif
 EngineSDL::EngineSDL()
 {
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting SDL engine\n");
