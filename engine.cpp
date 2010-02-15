@@ -213,11 +213,7 @@ void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t 
 void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA color)
 {
     YATCFont *f = (YATCFont*)(glictFindFont(font)->GetFontParam());
-	if (!f)
-	{
-        glictFontRender(text, font, x, y);
-	}
-    else
+    if (f)
     {
         if (color.r == color.g && color.g == color.b && color.b == 1.)
         {
@@ -227,15 +223,91 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
         {
             f->addColor(color.r/255, color.g/255, color.b/255);
         }
+    }
 
+    std::string temp_text = text;
+    std::string new_line_text, old_line_text;
 
+    new_line_text = old_line_text = temp_text;
+    //std::string::reverse_iterator rit = temp_text.rbegin();
+    int linecount = 1;
+    size_t iter_pos;
 
-        glictFontRender(text, font, x, y);
+    while (1) {
+        iter_pos = old_line_text.rfind("\n");//old_line_text.find_last_of("\\");
+
+        if(iter_pos == std::string::npos || !iter_pos) {
+            volatile float centralizationoffset = (g_engine->sizeText(old_line_text.c_str(), "gamefont" ) / 2);
+            glictFontRender(old_line_text.c_str(), font, x - centralizationoffset, y + (12 * (linecount - 1))); //One line message.
+            break;
+        }
+        else {
+            new_line_text = old_line_text.substr(iter_pos+1);
+            old_line_text.resize(iter_pos);
+
+            volatile float centralizationoffset = (g_engine->sizeText(old_line_text.c_str(), "gamefont" ) / 2);
+            glictFontRender(old_line_text.c_str(), font, x - centralizationoffset, y + (12 * (linecount - 1)));
+
+            old_line_text = new_line_text;
+            linecount++;
+        }
     }
 }
+
 void Engine::drawTextGW(const char* text, const char* font, int x, int y, uint8_t color)
 {
-    // NOTE (nfries88): adaptation of kilouco's patch to keep all rendering in the game area.
+    // NOTE (nfries88): keeps all rendering in the game area.
+    x = std::min(std::max(1, x), (m_width - 176) - (int)sizeText(text, font));
+    y = std::max(1, y);
+
+	YATCFont *f = (YATCFont*)(glictFindFont(font)->GetFontParam());
+    if (f)
+    {
+        float r = (color / 36) / 5.;
+        float g = ((color / 6) % 6) / 5.;
+        float b = (color % 6) / 5.;
+
+        if (color!=215)
+            f->addColor(r,g,b);
+        else if (color == 255) // we'll just use otherwise useless 255 for drawing with 0.75, 0.75, 0.75 if needed
+            f->addColor(0.75, 0.75, 0.75);
+        else
+            f->resetColor();
+    }
+
+    std::string temp_text = text;
+    std::string new_line_text, old_line_text;
+
+    new_line_text = old_line_text = temp_text;
+    //std::string::reverse_iterator rit = temp_text.rbegin();
+    int linecount = 1;
+    size_t iter_pos;
+
+    while (1) {
+        iter_pos = old_line_text.rfind("\n");//old_line_text.find_last_of("\\");
+
+        if(iter_pos == std::string::npos || !iter_pos) {
+            volatile float centralizationoffset = (g_engine->sizeText(old_line_text.c_str(), "gamefont" ) / 2);
+            glictFontRender(old_line_text.c_str(), font, x - centralizationoffset, y + (12 * (linecount - 1))); //One line message.
+            break;
+        }
+        else {
+            new_line_text = old_line_text.substr(iter_pos+1);
+            old_line_text.resize(iter_pos);
+
+            volatile float centralizationoffset = (g_engine->sizeText(old_line_text.c_str(), "gamefont" ) / 2);
+            glictFontRender(old_line_text.c_str(), font, x - centralizationoffset, y + (12 * (linecount - 1)));
+
+            old_line_text = new_line_text;
+            linecount++;
+        }
+    }
+}
+
+/*
+void Engine::drawTextGW(const char* text, const char* font, int x, int y, uint8_t color)
+{
+    // NOTE (nfries88): keeps all rendering in the game area.
     x = std::min(std::max(1, x), (m_width - 176) - (int)sizeText(text, font));
     y = std::max(1, y);
 
@@ -256,11 +328,11 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, uint8_
             f->resetColor();
         glictFontRender(text, font, x, y);
     }
-}
+}*/
 
 void Engine::drawTextGW(const char* text, const char* font, int x, int y, oRGBA color)
 {
-    // NOTE (nfries88): adaptation of kilouco's patch to keep all rendering in the game area.
+    // NOTE (nfries88): keeps all rendering in the game area.
     x = std::min(std::max(1, x), (m_width - 176) - (int)sizeText(text, font));
     y = std::max(1, y);
 

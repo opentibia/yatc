@@ -353,8 +353,8 @@ void MapUI::renderMap()
             temp_rit = rit;
 
             const Position& txtpos = (*rit).getPosition();
-            x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32)) + walkoffx; // + ((m_vpw/2) * m_scale));//(txtpos.x - pos.x + m_vpw/2
-            y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy; // + ((m_vph/2) * m_scale));
+            x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
+            y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
 
             if((*rit).is_handled() == false) {
                 linecount = (*rit).getLinecount();
