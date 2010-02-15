@@ -233,6 +233,8 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
     int linecount = 1;
     size_t iter_pos;
 
+    // FIXME (Kilouco): When leaving screen to the north all the messages are overriden.
+
     while (1) {
         iter_pos = old_line_text.rfind("\n");//old_line_text.find_last_of("\\");
 
