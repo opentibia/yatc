@@ -30,6 +30,8 @@
 #endif
 
 #include "../engine.h"
+#include "../choicegrid.h"
+#include "../util.h"
 
 #include <sstream>
 
@@ -46,7 +48,8 @@ public:
 	glictPanel lblAmbLight; // 13 62, 230 12
 	glictScrollbar scbAmbLight; // 13 80, 230 12
 
-	uiCheckbox chkLightEffects;	// 4 16, 12 12
+	ChoiceGrid btnLightEffects;	// 4 16, 12 12
+	ChoiceGrid::Item* btnsLight[4];
 	uiCheckbox chkStrShrGWind;	// 4 16, 12 12
 	uiCheckbox chkWinMouse;	// 4 16, 12 12
 	uiCheckbox chkSmoothStretch; // 4 16, 12 12
@@ -147,12 +150,22 @@ public:
 
 		// "Show Light Effects"
 		{
-			window.AddObject(&chkLightEffects.pnlPanel);
-			chkLightEffects.SetPos(13, 108);
-			chkLightEffects.SetWidth(230);
-			chkLightEffects.SetHeight(22);
-			chkLightEffects.SetCaption(gettext("Show Light Effects"));
-			chkLightEffects.SetValue(options.showlighteffects);
+			window.AddObject(btnLightEffects.getGrid());
+			//chkLightEffects.SetPos(13, 108);
+			//chkLightEffects.SetWidth(230);
+			//chkLightEffects.SetHeight(22);
+			//chkLightEffects.SetCaption(gettext("Show Light Effects"));
+			//chkLightEffects.SetValue(options.showlighteffects != 0);
+			btnLightEffects.getGrid()->SetPos(13, 108);
+			btnLightEffects.setItemSize(50, 20);
+			btnLightEffects.setPadding(4, 4);
+			btnLightEffects.setRows(4);
+			//btnLightEffects.SetOnClick(OnLightEffect);
+			btnsLight[0] = btnLightEffects.addItem(gettext("No Light"), NULL, (void*)0);
+			btnsLight[1] = btnLightEffects.addItem(gettext("Simple Light"), NULL, (void*)1);
+			btnsLight[2] = btnLightEffects.addItem(gettext("Better Light"), NULL, (void*)2);
+			btnsLight[3] = btnLightEffects.addItem(gettext("Best Light"), NULL, (void*)3);
+			btnLightEffects.setSelected(btnsLight[max(3, options.showlighteffects)]);
 		}
 
 		// "Don't Stretch/Shrink Game Window"
@@ -281,7 +294,8 @@ public:
 		//
 		options.stretchGameWindow = chkStrShrGWind.GetValue();
 		options.smoothstretch = chkSmoothStretch.GetValue();
-		options.showlighteffects = chkLightEffects.GetValue();
+		//options.showlighteffects = chkLightEffects.GetValue();
+		options.showlighteffects = VOIDP2INT(btnLightEffects.getSelected()->data);
 		options.Save();
 	}
 
