@@ -97,6 +97,10 @@ bool PublicMessage::set_handled(bool handled)
         m_handled = true;
     else
         m_handled = false;
+
+	// NOTE (Haktivex): I added this to fix compiling issues. Fix it if necessary (why does this
+	// function return a bool anyway?)
+	return m_handled;
 }
 
 //*************** Tile **************************

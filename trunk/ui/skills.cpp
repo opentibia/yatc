@@ -77,7 +77,11 @@ winSkills_t::winSkills_t()
     pbExperience.SetBorderColor(glictColor(0, 0, 0, 1));
     pbExperience.SetFGColor(glictColor(.9,.2,.1,1.));
     #else
+#if _MSC_VER
+	#pragma message ("For visual improvements to skill bars, update to glict rev 105 or higher")
+#else
     #warning For visual improvements to skill bars, update to glict rev 105 or higher
+#endif
     #endif
 
 
@@ -169,7 +173,11 @@ winSkills_t::winSkills_t()
     pbStamina.SetBGActiveness(false);
     pbStamina.SetBorderColor(glictColor(0, 0, 0, 1));
     #else
-    #warning For visual improvements to skill bars, update to glict rev 105 or higher
+#if _MSC_VER
+	#pragma message ("GLICT too old, get 105 or newer for visual improvement on some progressbars")
+#else
+	#warning GLICT too old, get 105 or newer for visual improvement on some progressbars
+#endif      
     #endif
 
 
@@ -199,7 +207,11 @@ winSkills_t::winSkills_t()
     pbMagicLevel.SetBorderColor(glictColor(0, 0, 0, 1));
     pbMagicLevel.SetFGColor(glictColor(.9,.2,.1,1.));
     #else
+#if _MSC_VER
+	#pragma message ("For visual improvements to skill bars, update to glict rev 105 or higher")
+#else
     #warning For visual improvements to skill bars, update to glict rev 105 or higher
+#endif
     #endif
 
 
@@ -241,7 +253,11 @@ winSkills_t::winSkills_t()
         pbSkill[i].SetBGActiveness(false);
         pbSkill[i].SetBorderColor(glictColor(0, 0, 0, 1));
         #else
-        #warning For visual improvements to skill bars, update to glict rev 105 or higher
+#if _MSC_VER
+	#pragma message ("For visual improvements to skill bars, update to glict rev 105 or higher")
+#else
+    #warning For visual improvements to skill bars, update to glict rev 105 or higher
+#endif
         #endif
     }
     lblSkillLeft[0].SetCaption(gettext("Fist Fighting"));

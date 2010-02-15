@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="yatc"
 	ProjectGUID="{3F7D39B0-D7EE-4CFD-A47B-A227D81CC1E8}"
 	RootNamespace="yatcvc9"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32; HAVE_GMP_H;USE_OPENGL;_DEBUG"
+				PreprocessorDefinitions="WIN32;USE_OPENGL;_DEBUG;NOMINMAX;HAVE_GMP_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -111,7 +111,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32; HAVE_GMP_H;USE_OPENGL;"
+				PreprocessorDefinitions="WIN32;USE_OPENGL;NOMINMAX;HAVE_GMP_H"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -191,6 +191,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\gamecontent\itemcontainer.h"
+					>
+				</File>
+				<File
 					RelativePath="..\gamecontent\map.h"
 					>
 				</File>
@@ -204,6 +208,10 @@
 				</File>
 				<File
 					RelativePath="..\gamecontent\thing.h"
+					>
+				</File>
+				<File
+					RelativePath="..\gamecontent\viplist.h"
 					>
 				</File>
 			</Filter>
@@ -234,6 +242,10 @@
 					RelativePath="..\gamecontent\map.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\gamecontent\viplist.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -248,6 +260,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\net\connectionreplay.h"
+					>
+				</File>
+				<File
 					RelativePath="..\net\encryption.h"
 					>
 				</File>
@@ -257,6 +273,18 @@
 				</File>
 				<File
 					RelativePath="..\net\protocolgame.h"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame74.h"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame76.h"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame78.h"
 					>
 				</File>
 				<File
@@ -296,6 +324,26 @@
 					>
 				</File>
 				<File
+					RelativePath="..\net\protocolgame841.h"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame842.h"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame85.h"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame853.h"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame854.h"
+					>
+				</File>
+				<File
 					RelativePath="..\net\protocollogin.h"
 					>
 				</File>
@@ -313,6 +361,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\net\connectionreplay.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\net\encryption.cpp"
 					>
 				</File>
@@ -322,6 +374,18 @@
 				</File>
 				<File
 					RelativePath="..\net\protocolgame.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame74.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame76.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame78.cpp"
 					>
 				</File>
 				<File
@@ -361,6 +425,26 @@
 					>
 				</File>
 				<File
+					RelativePath="..\net\protocolgame841.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame842.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame85.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame853.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolgame854.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\net\protocollogin.cpp"
 					>
 				</File>
@@ -377,11 +461,23 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath="..\ui\battlewindow.h"
+					>
+				</File>
+				<File
 					RelativePath="..\ui\charlist.h"
 					>
 				</File>
 				<File
 					RelativePath="..\ui\checkbox.h"
+					>
+				</File>
+				<File
+					RelativePath="..\ui\deathnotification.h"
+					>
+				</File>
+				<File
+					RelativePath="..\ui\exitwarning.h"
 					>
 				</File>
 				<File
@@ -397,11 +493,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\ui\itempanel.h"
+					>
+				</File>
+				<File
 					RelativePath="..\ui\login.h"
 					>
 				</File>
 				<File
 					RelativePath="..\ui\mainmenu.h"
+					>
+				</File>
+				<File
+					RelativePath="..\ui\minimap.h"
 					>
 				</File>
 				<File
@@ -433,6 +537,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\ui\sbvlpanel.h"
+					>
+				</File>
+				<File
+					RelativePath="..\ui\skills.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\ui\skills.h"
 					>
 				</File>
@@ -460,12 +572,24 @@
 					RelativePath="..\ui\uitrade.h"
 					>
 				</File>
+				<File
+					RelativePath="..\ui\vipwindow.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Source Files"
 				>
 				<File
+					RelativePath="..\ui\battlewindow.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\ui\gmactions.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\ui\itempanel.cpp"
 					>
 				</File>
 				<File
@@ -474,6 +598,10 @@
 				</File>
 				<File
 					RelativePath="..\ui\optionsui.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\ui\sbvlpanel.cpp"
 					>
 				</File>
 				<File
@@ -500,6 +628,10 @@
 					RelativePath="..\ui\uitrade.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\ui\vipwindow.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -520,6 +652,10 @@
 				</File>
 				<File
 					RelativePath="..\choicegrid.h"
+					>
+				</File>
+				<File
+					RelativePath="..\clipboard.h"
 					>
 				</File>
 				<File
@@ -595,6 +731,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\macutil.h"
+					>
+				</File>
+				<File
 					RelativePath="..\mapui.h"
 					>
 				</File>
@@ -643,6 +783,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\statusmsg.h"
+					>
+				</File>
+				<File
 					RelativePath="..\stdinttypes.h"
 					>
 				</File>
@@ -670,6 +814,10 @@
 				</File>
 				<File
 					RelativePath="..\choicegrid.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\clipboard.cpp"
 					>
 				</File>
 				<File
@@ -782,6 +930,10 @@
 				</File>
 				<File
 					RelativePath="..\stackpanel.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\statusmsg.cpp"
 					>
 				</File>
 				<File

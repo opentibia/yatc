@@ -58,7 +58,11 @@ void winBattle_t::add(uint32_t id)
 	entry->pbHealth.SetWidth(122);
 	entry->pbHealth.SetHeight(5);
 	#if (GLICT_APIREV < 105)
+#if _MSC_VER
+	#pragma message ("GLICT too old, get 105 or newer for visual improvement on some progressbars")
+#else
 	#warning GLICT too old, get 105 or newer for visual improvement on some progressbars
+#endif
 	#else
 	entry->pbHealth.SetBGActiveness(false);
 	entry->pbHealth.SetBorderColor(glictColor(0,0,0,1));
@@ -94,7 +98,11 @@ void winBattle_t::update(uint32_t id)
 			oRGBA col = CreatureUI::getHealthColor(hp);
 			e->pbHealth.SetValue(hp);
 			#if (GLICT_APIREV < 105)
-            #warning GLICT too old, get 105 or newer for visual improvement on some progressbars
+#if _MSC_VER
+	#pragma message ("GLICT too old, get 105 or newer for visual improvement on some progressbars")
+#else
+	#warning GLICT too old, get 105 or newer for visual improvement on some progressbars
+#endif      
             #else
 			e->pbHealth.SetFGColor(glictColor(col.r/255., col.g/255., col.b/255., col.a/255.));
 			#endif
