@@ -166,6 +166,35 @@
 					<Add option="-lglSDL" />
 				</Linker>
 			</Target>
+			<Target title="nfries dev">
+				<Option platforms="Windows;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsrelease\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-D__USE_GLSDL__" />
+					<Add option="-DHAVE_TOMMATH=1" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-ltommath" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
+					<Add option="-lintl" />
+					<Add option="-lglSDL" />
+				</Linker>
+			</Target>
 		</Build>
 		<VirtualTargets>
 			<Add alias="All" targets="Debug Unix - X11;Release Unix - X11;Debug Windows;" />
@@ -174,7 +203,7 @@
 			<Add option="-fexpensive-optimizations" />
 			<Add option="-Wall" />
 			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
-			<Add option="-DHAVE_TOMMATH=1" />
+			<Add option="-DHAVE_GMP_H=1" />
 			<Add directory="." />
 		</Compiler>
 		<Unit filename="AUTHORS" />
@@ -190,6 +219,7 @@
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
 			<Option target="Release Windows with glSDL" />
+			<Option target="nfries dev" />
 		</Unit>
 		<Unit filename="bigint.h" />
 		<Unit filename="choicegrid.cpp" />
@@ -221,6 +251,7 @@
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
 			<Option target="Release Windows with glSDL" />
+			<Option target="nfries dev" />
 		</Unit>
 		<Unit filename="fassert.h" />
 		<Unit filename="font.cpp" />
@@ -329,6 +360,7 @@
 			<Option target="Debug Windows" />
 			<Option target="Release Windows" />
 			<Option target="Release Windows with glSDL" />
+			<Option target="nfries dev" />
 		</Unit>
 		<Unit filename="skin.cpp" />
 		<Unit filename="skin.h" />
