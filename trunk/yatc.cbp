@@ -160,6 +160,7 @@
 					<Add option="-lSDL_gfx" />
 					<Add option="-lintl" />
 					<Add option="-lglSDL" />
+					<Add option="-lGMP" />
 				</Linker>
 			</Target>
 		</Build>
@@ -173,9 +174,6 @@
 			<Add option="-DHAVE_TOMMATH=1" />
 			<Add directory="." />
 		</Compiler>
-		<Linker>
-			<Add library="tommath" />
-		</Linker>
 		<Unit filename="AUTHORS" />
 		<Unit filename="BUGS" />
 		<Unit filename="COPYING" />
