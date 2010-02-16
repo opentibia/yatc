@@ -68,6 +68,7 @@ EngineSDL::EngineSDL()
 
 
     m_ui = createSprite("Tibia.pic", 3);
+	m_light = createSprite("Tibia.pic", 6);
     m_cursorBasic = m_ui->createCursor(290,12,11,19, 1, 1);
     m_cursorUse = m_ui->createCursor(310,12,19,19, 9, 9);
     SDL_ShowCursor(1);
@@ -87,6 +88,12 @@ EngineSDL::~EngineSDL()
 	delete (YATCFont*)m_minifont->GetFontParam();
 	delete (YATCFont*)m_aafont->GetFontParam();
 	delete (YATCFont*)m_gamefont->GetFontParam();
+}
+
+void EngineSDL::drawLightmap(vertex* lightmap, int type, int width, int height, int scale)
+{
+	// Just draw the basic light.
+	Engine::drawLightmap(lightmap, type, width, height, scale);
 }
 
 void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)

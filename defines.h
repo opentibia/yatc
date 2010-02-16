@@ -27,6 +27,10 @@
     #define MAX(a,b) (a < b ? b : a)
 #endif
 
+#if defined(_MSC_VER) && !defined(__PRETTY_FUNCTION__)
+#define __PRETTY_FUNCTION__ "(msvc)"
+#endif
+
 #include <stdio.h>
 
 // FIXME (ivucica#5#) Perhaps this one should move to "utils.h" or sth ... but it'd suck if it'd be there alone. So find some more functions to go there
@@ -60,6 +64,5 @@ inline oRGBA makeLightColor(uint16_t lightColor){
     #endif
     return color;
 }
-
 
 #endif

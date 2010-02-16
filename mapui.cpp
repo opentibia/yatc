@@ -456,25 +456,9 @@ void MapUI::renderMap()
 	    }
 	}
 
-    if(options.showlighteffects){
-        if(options.showlighteffects >= 3 && g_engine->hasGL())
-            g_engine->drawVertices(lightmap, m_vpw, m_vph);
-        else if(options.showlighteffects >= 2){
-            for (int i = 0; i < m_vpw; ++i){
-                for (int j = 0; j < m_vph; ++j){
-                    int scaledSize = (int)std::floor(32 * m_scale);
-                    int screenx = (int)(i*scaledSize + walkoffx) + m_x;
-                    int screeny = (int)(j*scaledSize + walkoffy) + m_y;
-                    int index = (j * m_vpw) + i;
-                    g_engine->drawRectangle(screenx, screeny, scaledSize, scaledSize, oRGBA(lightmap[index].r, lightmap[index].g,
-                        lightmap[index].b, (lightmap[index].alpha)));
-                }
-            }
-        }
-        else {
-            // TODO: draw from image "6" of Tibia.pic
-        }
-    }
+
+	if(options.showlighteffects)
+			g_engine->drawLightmap(lightmap, options.showlighteffects, m_vpw, m_vph, m_scale);
 
 	g_engine->resetClipping();
 
@@ -711,7 +695,7 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 	retz = z;
 
 	// NOTE (nfries88): "You cannot see anything"
-	if(lightmap[(retx * m_vpw) + rety].alpha > 210){
+	if(lightmap[(rety * m_vpw) + retx].alpha > 210){
 	    ((GM_Gameworld*)g_game)->getDefaultConsole()->insertEntry(ConsoleEntry(gettext("You can't see a thing."), TEXTCOLOR_LIGHTGREEN));
 	    return NULL;
 	}

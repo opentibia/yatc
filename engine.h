@@ -36,10 +36,6 @@
 #include "fassert.h"
 struct glictColor;
 
-#if defined(_MSC_VER) && !defined(__PRETTY_FUNCTION__)
-#define __PRETTY_FUNCTION__ "(msvc)"
-#endif
-
 struct vertex
 {
 	int x;
@@ -59,7 +55,7 @@ class Engine
 
 		virtual bool isSupported() = 0;
 
-		virtual void drawVertices(vertex* vertices, int width, int height) = 0;
+		virtual void drawLightmap(vertex* lightmap, int type, int width, int height, int scale);
 		virtual void doResize(int& w, int& h);
 		virtual void drawRectangle(float x, float y, float width, float height, oRGBA color) = 0;
 		virtual void drawRectangleLines(float x, float y, float width, float height, oRGBA color, float thickness = 1.f) {}
@@ -133,6 +129,7 @@ class Engine
 		uint32_t m_lastfpsupdate;
 
 		Sprite* m_ui;
+		Sprite* m_light;
 
 		friend class winOptionsGraphics_t;
 		friend class GM_Debug;
