@@ -26,6 +26,7 @@
 					<Add option="-DUSE_X11_CLIPBOARD" />
 				</Compiler>
 				<Linker>
+					<Add option="-pg -lgmon" />
 					<Add option="-pg" />
 					<Add library="GL" />
 					<Add library="GLU" />
@@ -33,6 +34,7 @@
 					<Add library="SDL_gfx" />
 					<Add library="GLICTd" />
 					<Add library="SDL_ttf" />
+					<Add library="gmp" />
 				</Linker>
 			</Target>
 			<Target title="Release Unix - X11">
@@ -53,6 +55,7 @@
 					<Add library="SDL" />
 					<Add library="SDL_gfx" />
 					<Add library="GLICT" />
+					<Add library="gmp" />
 				</Linker>
 			</Target>
 			<Target title="Release Unix - X11 with glSDL">
@@ -75,6 +78,7 @@
 					<Add library="SDL_gfx" />
 					<Add library="GLICT" />
 					<Add library="glSDL" />
+					<Add library="gmp" />
 				</Linker>
 			</Target>
 			<Target title="Debug Windows">
@@ -160,7 +164,6 @@
 					<Add option="-lSDL_gfx" />
 					<Add option="-lintl" />
 					<Add option="-lglSDL" />
-					<Add option="-lGMP" />
 				</Linker>
 			</Target>
 		</Build>
