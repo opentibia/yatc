@@ -249,12 +249,14 @@ void CreatureUI::drawName(int x, int y, float scale) const
     //Name
     std::string name = n->getName().c_str();
     name[0] = toupper(name[0]);
-    volatile float centralizationoffset = (g_engine->sizeText(name.c_str(), "gamefont" ) / 2);
 
-    x = (x + 14 - centralizationoffset);
+    // NOTE (Kilouco): Not calculated here anymore.
+    //volatile float centralizationoffset = (g_engine->sizeText(name.c_str(), "gamefont" ) / 2);
+
+    x = (x + 14); // - centralizationoffset);
     y -= 12;
 
-    g_engine->drawTextGW(name.c_str(), "gamefont", x, y, col);
+    g_engine->drawTextGW(name.c_str(), "gamefont", x, y, scale, col);
 }
 
 void CreatureUI::drawSkullsShields(int x, int y, float scale) const

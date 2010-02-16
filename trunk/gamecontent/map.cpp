@@ -76,9 +76,11 @@ PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const s
 	m_text = text;
 	m_pos = pos;
 	m_startTime = g_frameTime;
-	m_showName = showName;
+    m_showName = showName;
 	m_linecount = linecount;
     m_handled = false;
+
+    m_relativePos = 0;
 }
 
 bool PublicMessage::canBeDeleted()
@@ -91,16 +93,17 @@ bool PublicMessage::canBeDeleted()
 	}
 }
 
-bool PublicMessage::set_handled(bool handled)
+void PublicMessage::set_handled(bool handled)
 {
     if (handled == true)
         m_handled = true;
     else
         m_handled = false;
+}
 
-	// NOTE (Haktivex): I added this to fix compiling issues. Fix it if necessary (why does this
-	// function return a bool anyway?)
-	return m_handled;
+void PublicMessage::set_relativePos(int pos)
+{
+    m_relativePos = pos;
 }
 
 //*************** Tile **************************
@@ -613,6 +616,8 @@ void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::st
     int line_size = text.length();
     size_t iter_pos;
 
+    // NOTE (Kilouco): Here we make linebreaks for public messages.
+    // TODO (Kilouco): Generic Linebreaker.
     //39 characters per line, despite their size.
     if (line_size > 39) {
         while (line_size > 39) {
