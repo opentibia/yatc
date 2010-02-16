@@ -385,10 +385,10 @@ void Engine::doResize(int& w, int& h)
 	options.h = h;
 }
 
-void Engine::drawLightmap(vertex* lightmap, int type, int width, int height, int scale)
+void Engine::drawLightmap(vertex* lightmap, int type, int width, int height, float scale)
 {
 	int index = 0;
-	int scaledSize = (int)std::floor((float)(32 * scale));
+	int scaledSize = (int)std::floor((32.f * scale));
 
 	for (int i = 0; i < width; ++i){
         for (int j = 0; j < height; ++j){

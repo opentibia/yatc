@@ -35,7 +35,7 @@ class EngineGL : public Engine
 
 		bool isSupported();
 
-		void drawLightmap(vertex* lightmap, int type, int width, int height, int scale);
+		void drawLightmap(vertex* lightmap, int type, int width, int height, float scale);
 		void Flip(){SDL_GL_SwapBuffers();};
 		void doResize(int& h, int& w);
 		void drawRectangle(float x, float y, float width, float height, oRGBA color);

@@ -90,7 +90,7 @@ EngineSDL::~EngineSDL()
 	delete (YATCFont*)m_gamefont->GetFontParam();
 }
 
-void EngineSDL::drawLightmap(vertex* lightmap, int type, int width, int height, int scale)
+void EngineSDL::drawLightmap(vertex* lightmap, int type, int width, int height, float scale)
 {
 	// Just draw the basic light.
 	Engine::drawLightmap(lightmap, type, width, height, scale);

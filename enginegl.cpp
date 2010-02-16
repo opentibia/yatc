@@ -116,7 +116,7 @@ void EngineGL::doResize(int& w, int& h)
 	glLoadIdentity();
 }
 
-void EngineGL::drawLightmap(vertex* lightmap, int type, int width, int height, int scale)
+void EngineGL::drawLightmap(vertex* lightmap, int type, int width, int height, float scale)
 {
 	if (type == 3){
 		glDisable(GL_TEXTURE_2D);

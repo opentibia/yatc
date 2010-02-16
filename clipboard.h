@@ -22,7 +22,8 @@
 
 #if defined(USE_X11_CLIPBOARD)
     // NOTE (nfries88): This should include req'd X11 headers for compilation.
-	#include <SDL/SDL_syswm.h>
+	#include <gtk/gtk.h>
+	#include <gdk/gdk.h>
 #elif defined(__APPLE__)
 	extern "C" char* getPasteboardText();
     extern "C" void putPasteboardText(const char*);
@@ -46,11 +47,7 @@ private:
 	#ifdef __USE_INTERNAL_CLIPBOARD
 	std::string m_text;
 	#elif defined(USE_X11_CLIPBOARD)
-    Display *m_display;
-    Window m_window;
-    void (*m_lockdisplay)(void);
-    void (*m_unlockdisplay)(void);
-
-    static int clipboard_filter(const SDL_Event *event);
+	std::string m_text;
+    static void clipboard_filter(GtkClipboard *clipboard, GdkAtom format, const guint8 *text, gsize length, gpointer data);
 	#endif
 };
