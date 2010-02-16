@@ -68,15 +68,15 @@ ConsolePanel::ConsolePanel()
 	btnSpeakLevel.SetHeight(16);
 	switch(options.speaktype)
 	{
-		case SPEAK_YELL:
+		case SPEAK_WHISPER:
 			btnSpeakLevel.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_WHISPER]);
 			btnSpeakLevel.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_WHISPER]);
 			break;
-		case SPEAK_WHISPER:
+		case SPEAK_SAY:
 			btnSpeakLevel.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_SPEAK]);
 			btnSpeakLevel.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_SPEAK]);
 			break;
-		case SPEAK_SAY: default:
+		case SPEAK_YELL: default:
 			btnSpeakLevel.SetSkin(&g_skin.graphicbtn[BUTTON_CONSOLE_YELL]);
 			btnSpeakLevel.SetHighlightSkin(&g_skin.graphicbth[BUTTON_CONSOLE_YELL]);
 			break;
