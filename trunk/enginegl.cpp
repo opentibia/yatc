@@ -58,6 +58,7 @@ EngineGL::EngineGL()
 	b->addColor(.75,.75,.75);
 
     m_ui = createSprite("Tibia.pic", 3);
+	m_light = createSprite("Tibia.pic", 6);
     m_cursorBasic = m_ui->createCursor(290,12,11,19, 1, 1);
     m_cursorUse = m_ui->createCursor(310,12,19,19, 9, 9);
     SDL_ShowCursor(1);
@@ -115,24 +116,25 @@ void EngineGL::doResize(int& w, int& h)
 	glLoadIdentity();
 }
 
-void EngineGL::drawVertices(vertex* vertices, int width, int height)
+void EngineGL::drawLightmap(vertex* lightmap, int type, int width, int height, int scale)
 {
-	glDisable(GL_TEXTURE_2D);
+	if (type == 3){
+		glDisable(GL_TEXTURE_2D);
 
-	for (int y = 0; y < height - 1; ++y)
-	{
-		glBegin(GL_TRIANGLE_STRIP);
+		for (int y = 0; y < height - 1; ++y){
+			glBegin(GL_TRIANGLE_STRIP);
+			for (int x = 0; x < width; ++x){
+				glColor4f((lightmap[(((y + 1) * width) + x)].r / lightmap[(((y + 1) * width) + x)].blended) / 255.0f, (lightmap[(((y + 1) * width) + x)].g / lightmap[(((y + 1) * width) + x)].blended) / 255.0f, (lightmap[(((y + 1) * width) + x)].b / lightmap[(((y + 1) * width) + x)].blended) / 255.0f, lightmap[(((y + 1) * width) + x)].alpha / 255.0f);
+				glVertex2f(lightmap[(((y + 1) * width) + x)].x, lightmap[(((y + 1) * width) + x)].y);
 
-		for (int x = 0; x < width; ++x)
-		{
-			glColor4f((vertices[(((y + 1) * width) + x)].r / vertices[(((y + 1) * width) + x)].blended) / 255.0f, (vertices[(((y + 1) * width) + x)].g / vertices[(((y + 1) * width) + x)].blended) / 255.0f, (vertices[(((y + 1) * width) + x)].b / vertices[(((y + 1) * width) + x)].blended) / 255.0f, vertices[(((y + 1) * width) + x)].alpha / 255.0f);
-			glVertex2f(vertices[(((y + 1) * width) + x)].x, vertices[(((y + 1) * width) + x)].y);
-
-			glColor4f((vertices[((y * width) + x)].r / vertices[((y * width) + x)].blended) / 255.0f, (vertices[((y * width) + x)].g / vertices[((y * width) + x)].blended) / 255.0f, (vertices[((y * width) + x)].b / vertices[((y * width) + x)].blended) / 255.0f, vertices[((y * width) + x)].alpha / 255.0f);
-			glVertex2f(vertices[((y * width) + x)].x, vertices[((y * width) + x)].y);
+				glColor4f((lightmap[((y * width) + x)].r / lightmap[((y * width) + x)].blended) / 255.0f, (lightmap[((y * width) + x)].g / lightmap[((y * width) + x)].blended) / 255.0f, (lightmap[((y * width) + x)].b / lightmap[((y * width) + x)].blended) / 255.0f, lightmap[((y * width) + x)].alpha / 255.0f);
+				glVertex2f(lightmap[((y * width) + x)].x, lightmap[((y * width) + x)].y);
+			}
+			glEnd();
 		}
-
-		glEnd();
+	}
+	else{
+		Engine::drawLightmap(lightmap, type, width, height, scale);
 	}
 }
 
