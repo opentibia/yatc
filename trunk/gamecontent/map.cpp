@@ -69,7 +69,7 @@ bool AnimatedText::canBeDeleted()
 }
 
 //*************** PublicMessage *************************
-PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName, int linecount)
+PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName, int linecount, int range)
 {
 	m_color = color;
 	m_sender = sender;
@@ -81,6 +81,7 @@ PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const s
     m_handled = false;
 
     m_relativePos = 0;
+    m_range = range;
 }
 
 bool PublicMessage::canBeDeleted()
@@ -604,7 +605,7 @@ void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string
 	m_animatedTexts[pos.z].push_back(AnimatedText(pos, color, text));
 }
 
-void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender, bool showName)
+void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender, int range, bool showName)
 {
 	ASSERT(pos.z < MAP_LAYER);
 
@@ -652,11 +653,13 @@ void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::st
                     final_text << new_line_text;
             }
         }
-        m_publicMessages[pos.z].push_back(PublicMessage(color, final_text.str(), sender, pos, showName, linecount));
+        //m_publicMessages[pos.z].push_back(PublicMessage(color, final_text.str(), sender, pos, showName, linecount, range));
+        m_publicMessages.push_back(PublicMessage(color, final_text.str(), sender, pos, showName, linecount, range));
         return;
     }
 
-	m_publicMessages[pos.z].push_back(PublicMessage(color, text, sender, pos, showName, linecount));
+	//m_publicMessages[pos.z].push_back(PublicMessage(color, text, sender, pos, showName, linecount, range));
+	m_publicMessages.push_back(PublicMessage(color, text, sender, pos, showName, linecount, range));
 }
 
 std::list<Direction> Map::getPathTo(int x, int y, int z)

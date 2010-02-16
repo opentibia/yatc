@@ -1330,17 +1330,30 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     case SPEAK_PRIVATE_NP:
     case SPEAK_PRIVATE_PN:
         findConsole("NPCs")->insertEntry(ConsoleEntry(message, name, -1, TEXTCOLOR_LIGHTBLUE)); // this is bad; this way we disallow potential player called "NPCs"
-        Map::getInstance().addPublicMessage(GlobalVariables::getPlayerPosition(), TEXTCOLOR_LIGHTBLUE, message, name);
+        Map::getInstance().addPublicMessage(GlobalVariables::getPlayerPosition(), TEXTCOLOR_LIGHTBLUE, message, name, 0);
         break;
     case SPEAK_MONSTER_SAY:
+        Map::getInstance().addPublicMessage(pos, TEXTCOLOR_ORANGE, message, name, 1, false);
+        break;
     case SPEAK_MONSTER_YELL:
-         //getDefaultConsole()->insertEntry(ConsoleEntry(message, name, -1, TEXTCOLOR_ORANGE));
-         Map::getInstance().addPublicMessage(pos, TEXTCOLOR_ORANGE, message, name, false);
-         break;
+        Map::getInstance().addPublicMessage(pos, TEXTCOLOR_ORANGE, message, name, 2, false);
+        break;
+    case SPEAK_WHISPER:
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_YELLOW));
+        Map::getInstance().addPublicMessage(pos, TEXTCOLOR_YELLOW, message, name, 0);
+        break;
+    case SPEAK_SAY:
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_YELLOW));
+        Map::getInstance().addPublicMessage(pos, TEXTCOLOR_YELLOW, message, name, 1);
+        break;
+    case SPEAK_YELL:
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_YELLOW));
+        Map::getInstance().addPublicMessage(pos, TEXTCOLOR_YELLOW, message, name, 2);
+        break;
     default:
         getDefaultConsole()->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_YELLOW));
         // NOTE (nfries88): Need to make SPEAK_YELL and SPEAK_MONSTER_YELL go to other floors.
-        Map::getInstance().addPublicMessage(pos, TEXTCOLOR_YELLOW, message, name);
+        Map::getInstance().addPublicMessage(pos, TEXTCOLOR_YELLOW, message, name, 1);
     }
 
 }
@@ -1384,7 +1397,7 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     switch (type) {
         case SPEAK_PRIVATE: case SPEAK_PRIVATE_RED:
             findConsole(name, false)->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_LIGHTBLUE));
-            Map::getInstance().addPublicMessage(GlobalVariables::getPlayerPosition(), TEXTCOLOR_LIGHTBLUE, message, name);
+            Map::getInstance().addPublicMessage(GlobalVariables::getPlayerPosition(), TEXTCOLOR_LIGHTBLUE, message, name, 1);
             break;
         case SPEAK_BROADCAST:
             getDefaultConsole()->insertEntry(ConsoleEntry(message, name, level, col));
