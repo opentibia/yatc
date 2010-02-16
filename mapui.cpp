@@ -399,10 +399,10 @@ void MapUI::renderMap()
 	// draw publicly displayed messages
 	{
 	    Map::PublicMessageList& messages = Map::getInstance().getPublicMessages(GlobalVariables::getPlayerPosition().z);
-	    Map::PublicMessageList::iterator it = messages.begin();
+	    Map::PublicMessageList::iterator it = messages.begin(), temp_it = messages.begin();
 	    Map::PublicMessageList::reverse_iterator rit = messages.rbegin(), temp_rit = messages.rbegin();
 	    std::string text;
-	    int x = 0, y = 0, linecount = 0;
+	    int x = 0, y = 0, linecount = 0, first = 0;
 
 	    while(it != messages.end())
             if((*it).canBeDeleted())
@@ -410,52 +410,104 @@ void MapUI::renderMap()
             else
                 it++;
 
+        // NOTE (kilouco): In this loop we firstly handle public messages' then we get those
+        // which are in the same tile, said by the same player.
         while(rit != messages.rend()){
             temp_rit = rit;
-
             const Position& txtpos = (*rit).getPosition();
             x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
             y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
 
             if((*rit).is_handled() == false) {
                 linecount = (*rit).getLinecount();
-
-                text = (*rit).getText();
                 (*rit).set_handled(true);
-
-                g_engine->drawTextGW(text.c_str() , "gamefont", x, y-(glictFontNumberOfLines(text.c_str())*12), (*rit).getColor());
+                (*rit).set_relativePos(linecount);
 
                 while(temp_rit != messages.rend()){
                     if((*rit).getPosition() == (*temp_rit).getPosition() && (*temp_rit).getSender() == (*rit).getSender() && (*temp_rit).is_handled() == false) {
+                        linecount += (*temp_rit).getLinecount();
+                        (*temp_rit).set_relativePos(linecount);
                         (*temp_rit).set_handled(true);
-
-                        text = (*temp_rit).getText();
-
-                        if ((linecount + (*temp_rit).getLinecount()) <= 9) {
-                            g_engine->drawTextGW(text.c_str() , "gamefont", x, y-(glictFontNumberOfLines(text.c_str())*12) - (linecount * 12), (*temp_rit).getColor());
-                            linecount += (*temp_rit).getLinecount();
-                        }
                     }
                     temp_rit++;
                 }
-
-                if((*rit).shouldShowName()) {
-                    text = (*rit).getSender() + " says:\n";
-                    g_engine->drawTextGW(text.c_str() , "gamefont", x, y-(glictFontNumberOfLines(text.c_str())*12) - ((linecount-1) * 12), (*rit).getColor());
-                }
-                else
-                    text = (*rit).getText();
             }
             rit++;
 	    }
 
+        // NOTE (kilouco): Here we'll send messages to be handled by engine, which will make text drawing.
+        // This also gets info if messages should be rendered from up to down or vice-versa
+	    it = messages.begin();
+	    while(it != messages.end()) {
+	        const Position& txtpos = (*it).getPosition();
+	        x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
+            y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
+            int screenyPos = (y - 12 - (((*it).get_relativePos()) * 12));
+
+            // NOTE (Kilouco): This is how it will works in case the sender is too close to y = 0.
+            if (screenyPos < 0) {
+                // NOTE (Kilouco): A way to get "Player says: " position.
+                if (((*it).get_relativePos()) > first && (*it).shouldShowName()) {
+                    temp_it = it;
+                    first = (*it).get_relativePos();
+                }
+
+                text = (*it).getText();
+                y = ((linecount + 1 - (*it).get_relativePos()) * 12);
+            }
+
+            else {
+                if ((*it).get_relativePos() == linecount && (*it).shouldShowName()) {
+                    text = (*it).getSender() + " says:";
+                    g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos() + 1) * 12), m_scale, (*it).getColor());
+                }
+                text = (*it).getText();
+                y -= (((*it).get_relativePos()) * 12);
+            }
+
+            g_engine->drawTextGW(text.c_str() , "gamefont", x, y, m_scale, (*it).getColor());
+            it++;
+
+            /*
+            if (screenyPos < 0) {
+                if (((*it).get_relativePos()) > first) {
+                    temp_it = it;
+                    first = (*it).get_relativePos();
+                }
+
+                text = (*it).getText();
+                g_engine->drawTextGW(text.c_str() , "gamefont", x, ((linecount + 1 - (*it).get_relativePos()) * 12), m_scale, (*it).getColor());
+            }
+
+            else {
+                if ((*it).get_relativePos() == linecount){
+                    if((*it).shouldShowName()) {
+                        text = (*it).getSender() + " says:";
+                         g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos() + 1) * 12), m_scale, (*it).getColor());
+                    }
+                }
+                text = (*it).getText();
+                //g_engine->drawTextGW(text.c_str() , "gamefont", x, y-(glictFontNumberOfLines(text.c_str())*12) - (((*it).get_relativePos()) * 12), (*it).getColor());
+                g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos()) * 12), m_scale, (*it).getColor());
+            }
+            it++;
+            */
+	    }
+
+        // NOTE (Kilouco): Here we actually write the "Player says: ". This works for that "y = 0" case.
+	    if (first > 0)
+            if((*temp_it).shouldShowName()) {
+                text = (*temp_it).getSender() + " says:";
+                g_engine->drawTextGW(text.c_str() , "gamefont", x, 0, m_scale, (*temp_it).getColor());
+            }
+
+        // NOTE (Kilouco): Here we "unhandle" handled messages to be used in the next time.
 	    it = messages.begin();
 	    while(it != messages.end()) {
 	        (*it).set_handled(false);
             it++;
 	    }
 	}
-
 
 	if(options.showlighteffects)
 			g_engine->drawLightmap(lightmap, options.showlighteffects, m_vpw, m_vph, m_scale);

@@ -92,8 +92,11 @@ public:
     int getLinecount() { return m_linecount;}
 
     bool canBeDeleted();
-    bool set_handled(bool handled);
+    void set_handled(bool handled);
     bool is_handled() {return m_handled; }
+
+    void set_relativePos(int pos);
+    int get_relativePos() {return m_relativePos; }
 private:
     uint32_t m_startTime;
     TextColor_t m_color;
@@ -104,6 +107,7 @@ private:
     int m_linecount;
 
     bool m_handled;
+    int m_relativePos;
 };
 
 class Tile{
