@@ -694,12 +694,6 @@ Tile* MapUI::translateClickToTile(int x, int y, uint32_t &retx, uint32_t &rety, 
 	rety = pos.y + y - (z-pos.z) - m_vph/2;
 	retz = z;
 
-	// NOTE (nfries88): "You cannot see anything"
-	if(lightmap[(rety * m_vpw) + retx].alpha > 210){
-	    ((GM_Gameworld*)g_game)->getDefaultConsole()->insertEntry(ConsoleEntry(gettext("You can't see a thing."), TEXTCOLOR_LIGHTGREEN));
-	    return NULL;
-	}
-
 	return tile;
 }
 
