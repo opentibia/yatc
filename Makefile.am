@@ -12,7 +12,7 @@ MAYBE_OPENGL = spritegl.cpp enginegl.cpp
 endif
 
 yatc.ico.png: yatc.ico
-	convert yatc.ico yatc.ico.png
+	-convert yatc.ico yatc.ico.png
 
 all: all-am yatc.ico.png
 clean: clean-am
@@ -60,6 +60,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		distanceui.h mapui.h \
 		bigint.h fassert.h stdinttypes.h popup.h automap.h \
 		choicegrid.h stackpanel.h statusmsg.h clipboard.h \
+		macutil.h \
 		\
 		net/connectionreplay.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
@@ -68,6 +69,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		net/protocolgame831.h net/protocolgame84.h net/protocolgame841.h \
 		net/protocolgame842.h net/protocolgame85.h net/protocolgame853.h \
 		net/protocolgame74.h net/protocolgame76.h net/protocolgame78.h \
+		net/protocolgame854.h \
 		\
 		net/rsa.h net/encryption.h net/protocolgame.h net/protocollogin.h \
         \

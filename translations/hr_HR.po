@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the YATC package.
 #
 #
-# Ivan Vucica <ivucica@gmail.com>, 2008, 2009.
+# Ivan Vucica <ivucica@gmail.com>, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: YATC 0.3.1SVN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-25 16:42+0200\n"
-"PO-Revision-Date: 2009-07-25 16:43+0200\n"
+"POT-Creation-Date: 2010-02-16 01:49+0100\n"
+"PO-Revision-Date: 2010-02-16 01:52+0100\n"
 "Last-Translator: Ivan Vucica <ivucica@gmail.com>\n"
 "Language-Team: Ivan Vučica <ivucica@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../gm_mainmenu.cpp:371
+#: ../gm_mainmenu.cpp:399
 msgid ""
 " comes with ABSOLUTELY NO WARRANTY; \n"
 "for details see sections 11 and 12 in file COPYING.\n"
@@ -34,11 +34,11 @@ msgstr ""
 msgid " gold"
 msgstr " u zlatu"
 
-#: ../main.cpp:201 ../main.cpp:222 ../main.cpp:440
+#: ../main.cpp:217 ../main.cpp:238 ../main.cpp:457
 msgid "$$PRODUCTSHORT$$ Fatal Error"
 msgstr "$$PRODUCTSHORT$$ fatalna greška"
 
-#: ../gm_mainmenu.cpp:358
+#: ../gm_mainmenu.cpp:383
 msgid "(in no particular order)"
 msgstr "(bez posebnog redoslijeda)"
 
@@ -74,7 +74,7 @@ msgstr "<Pogledajte tipku Potrage>"
 msgid "<The outfit window should be opened now>"
 msgstr "<Sada bi se trebao otvoriti prozor s odijelom>"
 
-#: ../mapui.cpp:693 ../ui/battlewindow.cpp:229 ../ui/uitrade.cpp:106
+#: ../mapui.cpp:841 ../ui/battlewindow.cpp:237 ../ui/uitrade.cpp:105
 msgid "Accept"
 msgstr "Prihvati"
 
@@ -82,19 +82,20 @@ msgstr "Prihvati"
 msgid "Account Status:"
 msgstr "Stanje računa:"
 
-#: ../ui/login.h:138
+#: ../ui/login.h:141
 msgid "Account name:"
 msgstr "Ime računa:"
 
-#: ../ui/login.h:64 ../ui/login.h:141
+#: ../ui/login.h:65 ../ui/login.h:146
 msgid "Account number:"
 msgstr "Broj računa:"
 
-#: ../ui/vipwindow.cpp:180
+#: ../ui/vipwindow.cpp:199
 msgid "Add new VIP"
 msgstr "Dodaj novi kontakt"
 
-#: ../console.cpp:319 ../mapui.cpp:669 ../ui/battlewindow.cpp:210
+#: ../console.cpp:371 ../mapui.cpp:817 ../ui/battlewindow.cpp:218
+#: ../ui/vipwindow.cpp:295
 msgid "Add to VIP list"
 msgstr "Dodaj u kontakte"
 
@@ -102,7 +103,7 @@ msgstr "Dodaj u kontakte"
 msgid "Addon "
 msgstr "Dodatak "
 
-#: ../ui/optionsgfxadv.h:199 ../ui/optionsgfxadv.h:331
+#: ../ui/optionsgfxadv.h:211 ../ui/optionsgfxadv.h:345
 msgid "Adjust framerate limit"
 msgstr "Podesi ograničenje FPS"
 
@@ -110,7 +111,7 @@ msgstr "Podesi ograničenje FPS"
 msgid "Advanced"
 msgstr "Napredno"
 
-#: ../ui/optionsgfxadv.h:73
+#: ../ui/optionsgfxadv.h:76
 msgid "Advanced Graphics Options"
 msgstr "Napredne grafičke opcije"
 
@@ -122,7 +123,7 @@ msgstr "Napredne postavke"
 msgid "Ah, the all-mighty trade window. This hint is not written yet."
 msgstr "Ah, prozor za trgovanje. Ovaj savjet još nije napisan."
 
-#: ../ui/optionsgfxadv.h:126
+#: ../ui/optionsgfxadv.h:129
 msgid "Ambient Light"
 msgstr "Osvjetljenje"
 
@@ -130,7 +131,7 @@ msgstr "Osvjetljenje"
 msgid "Amount:"
 msgstr "Količina:"
 
-#: ../mapui.cpp:652 ../ui/battlewindow.cpp:195
+#: ../mapui.cpp:800 ../ui/battlewindow.cpp:203
 msgid "Attack"
 msgstr "Napadni"
 
@@ -138,7 +139,7 @@ msgstr "Napadni"
 msgid "Auto Chase Off"
 msgstr "Isključi auto-proganjanje"
 
-#: ../ui/optionsnetwork.h:149
+#: ../ui/optionsnetwork.h:153
 msgid "Autodetect"
 msgstr "Otkrij"
 
@@ -150,31 +151,39 @@ msgstr "Dostupne kratice:"
 msgid "Available resolutions:"
 msgstr "Dostupne rezolucije:"
 
-#: ../ui/skills.cpp:250
+#: ../ui/skills.cpp:266
 msgid "Axe Fighting"
 msgstr "Borba sjekirom"
 
-#: ../ui/sbvlpanel.cpp:49 ../ui/battlewindow.h:63
+#: ../ui/sbvlpanel.cpp:49 ../ui/battlewindow.h:69
 msgid "Battle"
 msgstr "Borba"
+
+#: ../ui/optionsgfxadv.h:167
+msgid "Best Light"
+msgstr "Najbolje osvjetljenje"
+
+#: ../ui/optionsgfxadv.h:166
+msgid "Better Light"
+msgstr "Bolje osvjetljenje"
 
 #: ../ui/uishop.cpp:46
 msgid "Buy"
 msgstr "Kupi"
 
-#: ../ui/uioutfit.cpp:163 ../ui/uitrade.cpp:173 ../ui/charlist.h:120
-#: ../ui/deathnotification.h:89 ../ui/exitwarning.h:89 ../ui/itemmove.h:113
-#: ../ui/login.h:126 ../ui/optionsconsole.h:142 ../ui/optionsgeneral.h:127
-#: ../ui/optionsgfxadv.h:258 ../ui/optionsgraphics.h:145
-#: ../ui/optionshotkeys.h:206 ../ui/optionsnetwork.h:176
+#: ../ui/uioutfit.cpp:163 ../ui/uitrade.cpp:172 ../ui/charlist.h:120
+#: ../ui/deathnotification.h:89 ../ui/exitwarning.h:89 ../ui/itemmove.h:111
+#: ../ui/login.h:127 ../ui/optionsconsole.h:142 ../ui/optionsgeneral.h:127
+#: ../ui/optionsgfxadv.h:270 ../ui/optionsgraphics.h:145
+#: ../ui/optionshotkeys.h:206 ../ui/optionsnetwork.h:180
 msgid "Cancel"
 msgstr "Poništi"
 
-#: ../gm_mainmenu.cpp:550
+#: ../gm_mainmenu.cpp:578
 msgid "Cannot connect to a login server."
 msgstr "Ne mogu se spojiti na server za prijavu."
 
-#: ../ui/skills.cpp:138
+#: ../ui/skills.cpp:142
 msgid "Cap"
 msgstr "Kap"
 
@@ -198,6 +207,10 @@ msgstr ""
 "Promijeni postavke\n"
 "grafike i performansi"
 
+#: ../ui/vipwindow.cpp:355
+msgid "Change player in VIP list"
+msgstr "Promijeni igrača u listi kontakata"
+
 #: ../ui/optionsgeneral.h:75
 msgid "Classic Control"
 msgstr "Klasično upravljanje"
@@ -206,23 +219,27 @@ msgstr "Klasično upravljanje"
 msgid "Clear Object"
 msgstr "Počisti objekt"
 
-#: ../console.cpp:298
+#: ../console.cpp:350
 msgid "Clear Window"
 msgstr "Počisti prozor"
 
-#: ../console.cpp:283
+#: ../console.cpp:335
 msgid "Close"
 msgstr "Zatvori"
 
-#: ../ui/skills.cpp:248
+#: ../ui/skills.cpp:264
 msgid "Club Fighting"
 msgstr "Borba toljagama"
 
-#: ../gm_mainmenu.cpp:422 ../gm_mainmenu.cpp:508
+#: ../gm_mainmenu.cpp:367
+msgid "Compiled on: "
+msgstr "Prevedeno u:"
+
+#: ../gm_mainmenu.cpp:450 ../gm_mainmenu.cpp:536
 msgid "Connecting"
 msgstr "Spajanje"
 
-#: ../gm_mainmenu.cpp:509
+#: ../gm_mainmenu.cpp:537
 msgid "Connecting to the game world. Please wait."
 msgstr "Spajam se u igru. Molimo pričekajte."
 
@@ -234,31 +251,31 @@ msgstr "Konzola"
 msgid "Console Options"
 msgstr "Opcije konzole"
 
-#: ../gm_mainmenu.cpp:365
+#: ../gm_mainmenu.cpp:390
 msgid "Contributors"
 msgstr "Pridonositelji"
 
-#: ../console.cpp:336
+#: ../console.cpp:388
 msgid "Copy Message"
 msgstr "Kopiraj poruku"
 
-#: ../console.cpp:331 ../mapui.cpp:752 ../ui/battlewindow.cpp:261
+#: ../console.cpp:383 ../mapui.cpp:900 ../ui/battlewindow.cpp:269
 msgid "Copy Name"
 msgstr "Kopiraj ime"
 
-#: ../ui/vipwindow.cpp:202
+#: ../ui/vipwindow.cpp:224
 msgid "Copy name"
 msgstr "Kopiraj ime"
 
-#: ../ui/login.h:102
+#: ../ui/login.h:103
 msgid "Create Account"
 msgstr "Stvori račun"
 
-#: ../gm_mainmenu.cpp:346
+#: ../gm_mainmenu.cpp:371
 msgid "Current engine"
 msgstr "Trenutni engine"
 
-#: ../ui/optionsgfxadv.h:343
+#: ../ui/optionsgfxadv.h:357
 msgid "Current framerate: "
 msgstr "Trenutni FPS"
 
@@ -266,7 +283,7 @@ msgstr "Trenutni FPS"
 msgid "Customise the console"
 msgstr "Podesi konzolu"
 
-#: ../gm_mainmenu.cpp:449
+#: ../gm_mainmenu.cpp:477
 msgid ""
 "Data files in the directory either:\n"
 "* do not belong to same protocol version, or\n"
@@ -287,11 +304,11 @@ msgstr ""
 "potpise u datotekama, ili odite na Opcije->Mreža i\n"
 "odaberite ispravan protokol."
 
-#: ../objects.cpp:270
+#: ../objects.cpp:273
 msgid "Data files not recognized"
 msgstr "Podatkovne datoteke nisu prepoznate"
 
-#: ../gm_gameworld.cpp:1390
+#: ../gm_gameworld.cpp:1512
 msgid "Default"
 msgstr "Zadano"
 
@@ -299,19 +316,19 @@ msgstr "Zadano"
 msgid "Detail"
 msgstr "Detalji"
 
-#: ../mapui.cpp:711
+#: ../mapui.cpp:859
 msgid "Disable Shared Experience"
 msgstr "Isključi dijeljeno iskustvo"
 
-#: ../ui/skills.cpp:251
+#: ../ui/skills.cpp:267
 msgid "Distance Fighting"
 msgstr "Borba na daljinu"
 
-#: ../ui/optionsgfxadv.h:165
+#: ../ui/optionsgfxadv.h:177
 msgid "Don't Stretch/Shrink Game Window"
 msgstr "Ne širi/smanjuj igraći prozor"
 
-#: ../gm_mainmenu.cpp:587 ../ui/optionsui.cpp:226
+#: ../gm_mainmenu.cpp:615 ../ui/optionsui.cpp:226
 msgid ""
 "Due to a technical problem we had to reset\n"
 "the game world"
@@ -319,7 +336,7 @@ msgstr ""
 "Zbog tehničkog problema morali smo resetirati\n"
 "igraći svijet"
 
-#: ../ui/vipwindow.cpp:166
+#: ../ui/vipwindow.cpp:185
 msgid "Edit "
 msgstr "Uredi"
 
@@ -335,7 +352,7 @@ msgstr "Uredi tekstove kratica:"
 msgid "Edit your hotkey texts"
 msgstr "Uredi tekstove kratica"
 
-#: ../mapui.cpp:731
+#: ../mapui.cpp:879
 msgid "Enable Shared Experience"
 msgstr "Omogući dijeljeno iskustvo"
 
@@ -343,11 +360,16 @@ msgstr "Omogući dijeljeno iskustvo"
 msgid "Engine change"
 msgstr "Promjena enginea"
 
-#: ../ui/mainmenu.cpp:48 ../ui/login.h:48
+#: ../ui/mainmenu.cpp:48 ../ui/login.h:49
 msgid "Enter Game"
 msgstr "Ulaz u igru"
 
-#: ../gm_mainmenu.cpp:552 ../gm_mainmenu.cpp:559 ../gm_mainmenu.cpp:612
+#: ../ui/vipwindow.cpp:400
+msgid "Enter a short description:"
+msgstr "Unesite kratak opis:"
+
+#: ../gm_gameworld.cpp:1261 ../gm_mainmenu.cpp:580 ../gm_mainmenu.cpp:587
+#: ../gm_mainmenu.cpp:640
 msgid "Error"
 msgstr "Greška"
 
@@ -363,19 +385,19 @@ msgstr "Izlaz"
 msgid "Experience"
 msgstr "Iskustvo"
 
-#: ../ui/skills.cpp:253
+#: ../ui/skills.cpp:269
 msgid "Fishing"
 msgstr "Ribarstvo"
 
-#: ../ui/skills.cpp:247
+#: ../ui/skills.cpp:263
 msgid "Fist Fighting"
 msgstr "Borba šakama"
 
-#: ../mapui.cpp:656 ../ui/battlewindow.cpp:199
+#: ../mapui.cpp:804 ../ui/battlewindow.cpp:207
 msgid "Follow"
 msgstr "Slijedi"
 
-#: ../gm_mainmenu.cpp:590 ../ui/optionsui.cpp:229
+#: ../gm_mainmenu.cpp:618 ../ui/optionsui.cpp:229
 msgid ""
 "For more information about Tibia visit our\n"
 "website at"
@@ -383,7 +405,7 @@ msgstr ""
 "Za više informacija o Tibiji posjetite našu\n"
 "web stranicu na "
 
-#: ../gm_mainmenu.cpp:554
+#: ../gm_mainmenu.cpp:582
 msgid ""
 "For more information take a look at the threads in the\n"
 "forums at otfans.net."
@@ -434,11 +456,11 @@ msgstr "Grafičke opcije"
 msgid "Gratis Premium Account"
 msgstr "Gratis Premium Račun"
 
-#: ../gm_mainmenu.cpp:593 ../ui/optionsui.cpp:232
+#: ../gm_mainmenu.cpp:621 ../ui/optionsui.cpp:232
 msgid "Have fun in"
 msgstr "Zabavite se u svijetu "
 
-#: ../gm_mainmenu.cpp:591 ../ui/optionsui.cpp:230
+#: ../gm_mainmenu.cpp:619 ../ui/optionsui.cpp:230
 msgid "Have fun in Tibia!"
 msgstr "Zabavite se u Tibiji!"
 
@@ -450,10 +472,10 @@ msgstr "Glava"
 msgid "Health"
 msgstr "Zdravlje"
 
-#: ../gm_mainmenu.cpp:388 ../ui/optionsui.cpp:169 ../ui/uiinventory.cpp:247
+#: ../gm_mainmenu.cpp:416 ../ui/optionsui.cpp:169 ../ui/uiinventory.cpp:247
 #: ../ui/optionsconsole.h:128 ../ui/optionsgeneral.h:113
-#: ../ui/optionsgfxadv.h:244 ../ui/optionsgraphics.h:131
-#: ../ui/optionsnetwork.h:162
+#: ../ui/optionsgfxadv.h:256 ../ui/optionsgraphics.h:131
+#: ../ui/optionsnetwork.h:166
 msgid "Help"
 msgstr "Pomoć"
 
@@ -461,11 +483,11 @@ msgstr "Pomoć"
 msgid "Help not done."
 msgstr "Pomoć nije napravljena."
 
-#: ../ui/vipwindow.cpp:196
+#: ../ui/vipwindow.cpp:216
 msgid "Hide offline VIPs"
 msgstr "Sakrij offline kontakte"
 
-#: ../ui/skills.cpp:93
+#: ../ui/skills.cpp:97
 msgid "Hit Points"
 msgstr "Zdravlje"
 
@@ -477,7 +499,7 @@ msgstr "Opcije kratica"
 msgid "Hotkeys"
 msgstr "Kratice"
 
-#: ../main.cpp:216
+#: ../main.cpp:232
 msgid ""
 "If you are a Debian user, you may have forgotten to install\n"
 "the 'tibia-data' or 'yatc-data' package."
@@ -485,7 +507,7 @@ msgstr ""
 "Ako ste korisnik Debiana, možda ste zaboravili instalirati\n"
 "paket 'tibia-data' ili 'yatc-data'."
 
-#: ../ui/login.h:94
+#: ../ui/login.h:95
 msgid ""
 "If you don't have\n"
 "an account yet:"
@@ -504,19 +526,19 @@ msgstr ""
 "Klikni na \"Odjava\" da osiguraš da lik izađe iz igre kako treba.\n"
 "Klikni na \"Izlaz\" ako želiš izaći iz programa bez odjave lika."
 
-#: ../console.cpp:323 ../mapui.cpp:673 ../ui/battlewindow.cpp:214
+#: ../console.cpp:375 ../mapui.cpp:821 ../ui/battlewindow.cpp:222
 msgid "Ignore"
 msgstr "Ignoriraj"
 
-#: ../gm_mainmenu.cpp:594 ../ui/optionsui.cpp:233
+#: ../gm_mainmenu.cpp:622 ../ui/optionsui.cpp:233
 msgid "Important Reminder"
 msgstr "Važan podsjetnik"
 
-#: ../gm_mainmenu.cpp:377 ../ui/mainmenu.cpp:82
+#: ../gm_mainmenu.cpp:405 ../ui/mainmenu.cpp:82
 msgid "Info"
 msgstr "Info"
 
-#: ../gm_mainmenu.cpp:614
+#: ../gm_gameworld.cpp:1263 ../gm_mainmenu.cpp:642
 msgid "Information"
 msgstr "Obavijest"
 
@@ -524,17 +546,17 @@ msgstr "Obavijest"
 msgid "Inventory"
 msgstr "Inventar"
 
-#: ../mapui.cpp:598 ../mapui.cpp:693 ../ui/battlewindow.cpp:229
-#: ../ui/battlewindow.cpp:239
+#: ../mapui.cpp:746 ../mapui.cpp:841 ../ui/battlewindow.cpp:237
+#: ../ui/battlewindow.cpp:247
 msgid "Invitation"
 msgstr "Pozivnica"
 
-#: ../mapui.cpp:593 ../mapui.cpp:688 ../ui/battlewindow.cpp:224
-#: ../ui/battlewindow.cpp:245
+#: ../mapui.cpp:741 ../mapui.cpp:836 ../ui/battlewindow.cpp:232
+#: ../ui/battlewindow.cpp:253
 msgid "Invite to Party"
 msgstr "Pozovi u grupu"
 
-#: ../mapui.cpp:702 ../mapui.cpp:722 ../mapui.cpp:742
+#: ../mapui.cpp:850 ../mapui.cpp:870 ../mapui.cpp:890
 msgid "Leave Party"
 msgstr "Napusti grupu"
 
@@ -542,11 +564,11 @@ msgstr "Napusti grupu"
 msgid "Level"
 msgstr "Razina"
 
-#: ../main.cpp:436
+#: ../main.cpp:453
 msgid "Loading data file failed!"
 msgstr "Učitavanje podatkovne datoteke nije uspjelo!"
 
-#: ../main.cpp:195 ../main.cpp:437
+#: ../main.cpp:211 ../main.cpp:454
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -554,7 +576,7 @@ msgstr ""
 "Učitavanje datoteke s podacima '$$FILENAME$$' je neuspjelo.\n"
 "Molimo postavite '$$FILENAME$$' u istu mapu kao $$PRODUCTSHORT$$.\n"
 
-#: ../main.cpp:190
+#: ../main.cpp:206
 msgid ""
 "Loading the data file '$$FILENAME$$' has failed.\n"
 "Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
@@ -570,7 +592,7 @@ msgstr ""
 msgid "Logout"
 msgstr "Odjava"
 
-#: ../mapui.cpp:625 ../ui/itempanel.cpp:170
+#: ../mapui.cpp:773 ../ui/itempanel.cpp:170
 msgid "Look"
 msgstr "Pogledaj"
 
@@ -588,23 +610,23 @@ msgstr ""
 "pred \n"
 "par minuta, a {crvena lubanja} znači da je ubio više ljudi."
 
-#: ../ui/skills.cpp:182
+#: ../ui/skills.cpp:190
 msgid "Magic Level"
 msgstr "Razina magije"
 
-#: ../ui/skills.cpp:108
+#: ../ui/skills.cpp:112
 msgid "Mana"
 msgstr "Mana"
 
-#: ../gm_mainmenu.cpp:597 ../ui/optionsui.cpp:236
+#: ../gm_mainmenu.cpp:625 ../ui/optionsui.cpp:236
 msgid "Message of the Day"
 msgstr "Poruka dana"
 
-#: ../console.cpp:315 ../mapui.cpp:665 ../ui/battlewindow.cpp:206
+#: ../console.cpp:367 ../mapui.cpp:813 ../ui/battlewindow.cpp:214
 msgid "Message to"
 msgstr "Poruka za"
 
-#: ../ui/vipwindow.cpp:174
+#: ../ui/vipwindow.cpp:193
 msgid "Message to "
 msgstr "Poruka za"
 
@@ -616,7 +638,7 @@ msgstr "Novac:"
 msgid "Motd"
 msgstr "Motd"
 
-#: ../ui/itemmove.h:64
+#: ../ui/itemmove.h:62
 msgid "Move Objects"
 msgstr "Micanje objekata"
 
@@ -631,6 +653,10 @@ msgstr "Mreža"
 #: ../ui/mainmenu.cpp:59 ../ui/optionsnetwork.h:73
 msgid "Network Options"
 msgstr "Mrežne opcije"
+
+#: ../ui/optionsgfxadv.h:164
+msgid "No Light"
+msgstr "Bez svjetla"
 
 #: ../ui/tutorialhints.cpp:89
 msgid ""
@@ -657,15 +683,15 @@ msgstr ""
 "Klikni na tipku 'Ok' ako se usuđuješ i nastavi svoja putovanja u $"
 "$PRODUCTSHORT$$!"
 
-#: ../ui/optionsnetwork.h:113
+#: ../ui/optionsnetwork.h:115
 msgid "OT Encryption Key"
 msgstr "OT enkripcijski kljuc"
 
 #: ../ui/uioutfit.cpp:154 ../ui/uishop.cpp:135 ../ui/charlist.h:112
-#: ../ui/deathnotification.h:80 ../ui/itemmove.h:104 ../ui/login.h:117
+#: ../ui/deathnotification.h:80 ../ui/itemmove.h:102 ../ui/login.h:118
 #: ../ui/optionsconsole.h:135 ../ui/optionsgeneral.h:120
-#: ../ui/optionsgfxadv.h:251 ../ui/optionsgraphics.h:138
-#: ../ui/optionshotkeys.h:199 ../ui/optionsnetwork.h:169 ../ui/optionsui.h:190
+#: ../ui/optionsgfxadv.h:263 ../ui/optionsgraphics.h:138
+#: ../ui/optionshotkeys.h:199 ../ui/optionsnetwork.h:173 ../ui/optionsui.h:190
 msgid "Ok"
 msgstr "U redu"
 
@@ -677,7 +703,7 @@ msgstr ""
 "U redu; također možete pokušati {kliknuti} na {minimapu}. Primjerice,\n"
 "sada postoji {oznaka} na karti, pokušajte se tamo pomaknuti."
 
-#: ../mapui.cpp:637 ../ui/itempanel.cpp:176
+#: ../mapui.cpp:785 ../ui/itempanel.cpp:176
 msgid "Open"
 msgstr "Otvori"
 
@@ -701,11 +727,11 @@ msgstr ""
 msgid "Options"
 msgstr "Opcije"
 
-#: ../mapui.cpp:603 ../ui/battlewindow.cpp:251
+#: ../mapui.cpp:751 ../ui/battlewindow.cpp:259
 msgid "Pass Leadership To"
 msgstr "Predaj vodstvo"
 
-#: ../ui/login.h:79
+#: ../ui/login.h:80
 msgid "Password:"
 msgstr "Zaporka:"
 
@@ -723,7 +749,11 @@ msgstr ""
 "kućicu. Da aktiviraju pojedini dodatak, premium\n"
 "igrači mogu rješavati razne potrage."
 
-#: ../ui/uitrade.cpp:227
+#: ../ui/vipwindow.cpp:302
+msgid "Please enter a character name:"
+msgstr "Molimo unesite ime lika:"
+
+#: ../ui/uitrade.cpp:226
 msgid ""
 "Please wait for your \n"
 "partner to accept."
@@ -743,20 +773,21 @@ msgstr "Cijena:"
 msgid "Primary"
 msgstr "Glavno"
 
-#: ../gm_mainmenu.cpp:358
+#: ../gm_mainmenu.cpp:383
 msgid "Programmed by"
 msgstr "Programirali"
 
-#: ../ui/optionsnetwork.h:137 ../ui/optionsnetwork.h:138
 #: ../ui/optionsnetwork.h:139 ../ui/optionsnetwork.h:140
 #: ../ui/optionsnetwork.h:141 ../ui/optionsnetwork.h:142
 #: ../ui/optionsnetwork.h:143 ../ui/optionsnetwork.h:144
 #: ../ui/optionsnetwork.h:145 ../ui/optionsnetwork.h:146
 #: ../ui/optionsnetwork.h:147 ../ui/optionsnetwork.h:148
+#: ../ui/optionsnetwork.h:149 ../ui/optionsnetwork.h:150
+#: ../ui/optionsnetwork.h:151 ../ui/optionsnetwork.h:152
 msgid "Protocol"
 msgstr "Protokol"
 
-#: ../gm_mainmenu.cpp:459
+#: ../gm_mainmenu.cpp:487
 msgid "Protocol detection failed"
 msgstr "Otkrivanje protokola neuspjelo"
 
@@ -776,11 +807,11 @@ msgstr ""
 "Da primijenite promjenu enginea, trebate izaći i ponovno\n"
 "pokrenuti $$PRODUCTSHORT$$."
 
-#: ../ui/uitrade.cpp:114
+#: ../ui/uitrade.cpp:113
 msgid "Reject"
 msgstr "Odbij"
 
-#: ../ui/vipwindow.cpp:170
+#: ../ui/vipwindow.cpp:189
 msgid "Remove "
 msgstr "Ukloni"
 
@@ -788,7 +819,7 @@ msgstr "Ukloni"
 msgid "Restart is required to apply engine change."
 msgstr "Da promijenite engine morate ponovno pokrenuti igru."
 
-#: ../mapui.cpp:598 ../ui/battlewindow.cpp:239
+#: ../mapui.cpp:746 ../ui/battlewindow.cpp:247
 msgid "Revoke"
 msgstr "Oduzmi"
 
@@ -805,7 +836,7 @@ msgstr ""
 "  enginea, s manje grešaka. To se dakako bilo kada može\n"
 "  promijeniti.\n"
 
-#: ../console.cpp:294
+#: ../console.cpp:346
 msgid "Save Window"
 msgstr "Spremi prozor"
 
@@ -821,7 +852,11 @@ msgstr "Odabir Lika"
 msgid "Select Object"
 msgstr "Odaberi objekt"
 
-#: ../console.cpp:341
+#: ../ui/vipwindow.cpp:378
+msgid "Select a type:"
+msgstr "Odaberi vrstu:"
+
+#: ../console.cpp:393
 msgid "Select all"
 msgstr "Odaberi sve"
 
@@ -829,7 +864,7 @@ msgstr "Odaberi sve"
 msgid "Select character:"
 msgstr "Odaberi lika:"
 
-#: ../ui/optionsgfxadv.h:81
+#: ../ui/optionsgfxadv.h:84
 msgid "Select graphics engine"
 msgstr "Odaberite grafički engine"
 
@@ -866,11 +901,11 @@ msgstr ""
 "pristupite OpenTibia serverima, upalite opciju\n"
 "OT Enkripcijski ključ."
 
-#: ../ui/optionsnetwork.h:93
+#: ../ui/optionsnetwork.h:94
 msgid "Server port:"
 msgstr "Port servera:"
 
-#: ../mapui.cpp:678 ../ui/uioutfit.cpp:43
+#: ../mapui.cpp:826 ../ui/uioutfit.cpp:43
 msgid "Set Outfit"
 msgstr "Postavi odijelo"
 
@@ -882,7 +917,7 @@ msgstr ""
 "Postavi mrežne opcije\n"
 "poput servera."
 
-#: ../ui/itemmove.h:77
+#: ../ui/itemmove.h:75
 msgid ""
 "Set the number of \n"
 "items you want to move:"
@@ -890,7 +925,7 @@ msgstr ""
 "Odaberite broj\n"
 "stvari koje želite seliti"
 
-#: ../ui/skills.cpp:252
+#: ../ui/skills.cpp:268
 msgid "Shielding"
 msgstr "Obrana"
 
@@ -909,10 +944,6 @@ msgstr "Prikaži info poruke u konzoli"
 #: ../ui/optionsconsole.h:109
 msgid "Show Levels in Console"
 msgstr "Prikaži levele u konzoli"
-
-#: ../ui/optionsgfxadv.h:154
-msgid "Show Light Effects"
-msgstr "Prikaži svjetlosne  efekte"
 
 #: ../ui/optionsgeneral.h:94
 msgid "Show Names of Creatures"
@@ -934,7 +965,11 @@ msgstr "Prikaži tekstualne efekte"
 msgid "Show Timestamps in Console"
 msgstr "Prikaži vrijeme u konzoli"
 
-#: ../console.cpp:287
+#: ../ui/vipwindow.cpp:218
+msgid "Show offline VIPs"
+msgstr "Prikaži offline kontakte"
+
+#: ../console.cpp:339
 msgid "Show server messages"
 msgstr "Prikaži poruke poslužitelja"
 
@@ -946,7 +981,11 @@ msgstr ""
 "Prikaži najnoviju\n"
 "poruku dana"
 
-#: ../ui/skills.cpp:225
+#: ../ui/optionsgfxadv.h:165
+msgid "Simple Light"
+msgstr "Jednostavno osvjetljenje"
+
+#: ../ui/skills.cpp:237
 msgid "Skill "
 msgstr "Vještina "
 
@@ -963,23 +1002,27 @@ msgstr ""
 "Sad se otvorio {prozor spremnika}. {Odvucite} štogod je u njemu u {vreću} \n"
 "da biste to ponijeli sa sobom. Trebate skupiti tri noge žohara sa NPCa!"
 
-#: ../ui/vipwindow.cpp:184
+#: ../gm_gameworld.cpp:823
+msgid "Sorry, not possible"
+msgstr "Žao nam je, nije moguće"
+
+#: ../ui/vipwindow.cpp:203
 msgid "Sort by name"
 msgstr "Sortiraj po imenu"
 
-#: ../ui/vipwindow.cpp:192
+#: ../ui/vipwindow.cpp:211
 msgid "Sort by status"
 msgstr "Sortiraj po statusu"
 
-#: ../ui/vipwindow.cpp:188
+#: ../ui/vipwindow.cpp:207
 msgid "Sort by type"
 msgstr "Sortiraj po vrsti"
 
-#: ../ui/skills.cpp:123
+#: ../ui/skills.cpp:127
 msgid "Soul Points"
 msgstr "Bodovi duše"
 
-#: ../ui/skills.cpp:153
+#: ../ui/skills.cpp:157
 msgid "Stamina"
 msgstr "Izdržljivost"
 
@@ -987,7 +1030,7 @@ msgstr "Izdržljivost"
 msgid "Stop"
 msgstr "Stani"
 
-#: ../ui/skills.cpp:249
+#: ../ui/skills.cpp:265
 msgid "Sword Fighting"
 msgstr "Borba mačevima"
 
@@ -1018,8 +1061,8 @@ msgstr ""
 "'Korištenje')\n"
 "da biste je otvorili."
 
-#: ../console.cpp:239 ../mapui.cpp:884 ../ui/battlewindow.cpp:185
-#: ../ui/vipwindow.cpp:211
+#: ../console.cpp:292 ../mapui.cpp:1025 ../ui/battlewindow.cpp:193
+#: ../ui/vipwindow.cpp:233
 msgid "This functionality is not yet finished"
 msgstr "Ova funkcionalnost još nije gotova"
 
@@ -1056,7 +1099,7 @@ msgstr "Trgovina"
 msgid "Trade with"
 msgstr "Trguj sa"
 
-#: ../gm_gameworld.cpp:1514
+#: ../gm_gameworld.cpp:1636
 msgid "Tutorial Hint"
 msgstr "Savjet za prohod"
 
@@ -1064,11 +1107,11 @@ msgstr "Savjet za prohod"
 msgid "Unknown"
 msgstr "Nepoznato"
 
-#: ../ui/optionsgfxadv.h:201 ../ui/optionsgfxadv.h:333
+#: ../ui/optionsgfxadv.h:213 ../ui/optionsgfxadv.h:347
 msgid "Unlimited"
 msgstr "Neograničeno"
 
-#: ../objects.cpp:262
+#: ../objects.cpp:265
 msgid ""
 "Unrecognized data files.\n"
 "\n"
@@ -1088,11 +1131,11 @@ msgstr ""
 "  Provjerite da li je nova inačica $$PRODUCTSHORT$$ izašla, koja\n"
 "  podržava ovu inačicu podatkovnih datoteka."
 
-#: ../mapui.cpp:639 ../ui/itempanel.cpp:179
+#: ../mapui.cpp:787 ../ui/itempanel.cpp:179
 msgid "Use"
 msgstr "Koristi"
 
-#: ../ui/optionsgfxadv.h:186
+#: ../ui/optionsgfxadv.h:198
 msgid "Use Smooth Stretching"
 msgstr "Koristi zaglađeno razvlačenje"
 
@@ -1108,27 +1151,27 @@ msgstr "Koristi na meti"
 msgid "Use on yourself"
 msgstr "Koristi na sebi"
 
-#: ../mapui.cpp:634 ../ui/itempanel.cpp:172
+#: ../mapui.cpp:782 ../ui/itempanel.cpp:172
 msgid "Use with..."
 msgstr "Koristi s..."
 
-#: ../gm_mainmenu.cpp:348
+#: ../gm_mainmenu.cpp:373
 msgid "Uses GLICT"
 msgstr "Koristi GLICT"
 
-#: ../gm_mainmenu.cpp:350
+#: ../gm_mainmenu.cpp:375
 msgid "Uses OpenGL"
 msgstr "Koristi OpenGL"
 
-#: ../gm_mainmenu.cpp:347
+#: ../gm_mainmenu.cpp:372
 msgid "Uses SDL"
 msgstr "Koristi SDL"
 
-#: ../ui/sbvlpanel.cpp:58 ../ui/vipwindow.cpp:43
+#: ../ui/sbvlpanel.cpp:58 ../ui/vipwindow.cpp:47
 msgid "VIP"
 msgstr "Kontakti"
 
-#: ../ui/uitrade.cpp:175
+#: ../ui/uitrade.cpp:174
 msgid "Wait for a counter offer."
 msgstr "Čekanje na protuponudu."
 
@@ -1136,7 +1179,7 @@ msgstr "Čekanje na protuponudu."
 msgid "Warning"
 msgstr "Upozorenje"
 
-#: ../gm_mainmenu.cpp:589 ../ui/optionsui.cpp:228
+#: ../gm_mainmenu.cpp:617 ../ui/optionsui.cpp:228
 msgid ""
 "We are sorry for any inconvenience. Of course we\n"
 "work hard to prevent such problems in the future."
@@ -1149,7 +1192,7 @@ msgstr ""
 msgid "We offer two graphical engines:\n"
 msgstr "Nudimo dva grafička enginea:\n"
 
-#: ../gm_mainmenu.cpp:592 ../ui/optionsui.cpp:231
+#: ../gm_mainmenu.cpp:620 ../ui/optionsui.cpp:231
 msgid "Welcome to"
 msgstr "Dobrodošli u "
 
@@ -1158,7 +1201,7 @@ msgid "Welcome to $$PRODUCTSHORT$$! Use {arrows} or {mouse} to move around."
 msgstr ""
 "Dobrodošli u $$PRODUCTSHORT$$! Koristite {strelice} ili {miša} da se krećete."
 
-#: ../gm_mainmenu.cpp:586 ../ui/optionsui.cpp:225
+#: ../gm_mainmenu.cpp:614 ../ui/optionsui.cpp:225
 msgid "Welcome to Tibia!"
 msgstr "Dobrodošli u Tibiju!"
 
@@ -1184,7 +1227,7 @@ msgstr ""
 "prekopajte\n"
 "{tijelo}. Samo {ctrl+kliknete} na njega."
 
-#: ../ui/optionsgfxadv.h:175
+#: ../ui/optionsgfxadv.h:187
 msgid "Windows Mouse Pointer"
 msgstr "Windows pokazivač miša"
 
@@ -1202,7 +1245,7 @@ msgstr ""
 msgid "You are dead"
 msgstr "Mrtav si"
 
-#: ../main.cpp:209
+#: ../main.cpp:225
 msgid ""
 "You are missing '$$FILENAME$$'.\n"
 "We will launch Tibia Data File Fetcher which should automatically install\n"
@@ -1220,15 +1263,19 @@ msgstr ""
 "to završi.\n"
 "\n"
 
-#: ../gm_mainmenu.cpp:423
+#: ../mapui.cpp:715
+msgid "You can't see a thing."
+msgstr "Ne možeš vidjeti ni prst pred nosom."
+
+#: ../gm_mainmenu.cpp:451
 msgid "Your character list is being loaded. Please wait."
 msgstr "Popis Vaših likova se učitava. Molimo pričekajte."
 
-#: ../gm_mainmenu.cpp:354
+#: ../gm_mainmenu.cpp:379
 msgid "[for info run with GL engine]\n"
 msgstr "[za podatke pokrenite s GL engineom]\n"
 
-#: ../gm_mainmenu.cpp:347
+#: ../gm_mainmenu.cpp:372
 msgid "compiled with"
 msgstr "prevedeno s"
 
@@ -1236,11 +1283,11 @@ msgstr "prevedeno s"
 msgid "days left"
 msgstr "dana preostalo"
 
-#: ../gm_mainmenu.cpp:588 ../ui/optionsui.cpp:227
+#: ../gm_mainmenu.cpp:616 ../ui/optionsui.cpp:227
 msgid "to the state of"
 msgstr "na stanje dana"
 
-#: ../gm_mainmenu.cpp:361
+#: ../gm_mainmenu.cpp:387
 msgid "with inactive developers"
 msgstr "uz neaktivne razvijatelje"
 
@@ -1263,6 +1310,9 @@ msgstr "uz neaktivne razvijatelje"
 
 #~ msgid "Logging in"
 #~ msgstr "Prijavljujem"
+
+#~ msgid "Show Light Effects"
+#~ msgstr "Prikaži svjetlosne  efekte"
 
 #, fuzzy
 #~ msgid "This functionality is not yet finished."

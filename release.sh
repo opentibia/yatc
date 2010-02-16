@@ -103,8 +103,9 @@ fi
 
 if [ $win32release != "n" ]; then
 	echo "Now building Windows release..."
-	echo "Reverting config.h"
-	svn revert config.h
+	echo "Wiping config.h clean"
+	rm config.h
+	touch config.h
 	echo "Do you want full rebuild? y/[N]"
 	read win32rebuild
 	if [ -z $win32rebuild ]; then
