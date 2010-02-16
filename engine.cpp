@@ -266,7 +266,7 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             if (x + centralizationoffset > (480 * scale) + 2)
                 x = (480 * scale - 2) - text_size;
             else if (x < 2)
-                x = 2 + centralizationoffset;
+                x = 2;
             else
                 x = x - centralizationoffset;
 
@@ -334,7 +334,7 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             if (x + centralizationoffset > (480 * scale) + 2)
                 x = (480 * scale - 2) - text_size;
             else if (x < 2)
-                x = 2 + centralizationoffset;
+                x = 2;
             else
                 x = x - centralizationoffset;
 

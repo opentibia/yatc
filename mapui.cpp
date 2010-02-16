@@ -398,7 +398,8 @@ void MapUI::renderMap()
 
 	// draw publicly displayed messages
 	{
-	    Map::PublicMessageList& messages = Map::getInstance().getPublicMessages(GlobalVariables::getPlayerPosition().z);
+	    //Map::PublicMessageList& messages = Map::getInstance().getPublicMessages(GlobalVariables::getPlayerPosition().z);
+	    Map::PublicMessageList& messages = Map::getInstance().getPublicMessages();
 	    Map::PublicMessageList::iterator it = messages.begin(), temp_it = messages.begin();
 	    Map::PublicMessageList::reverse_iterator rit = messages.rbegin(), temp_rit = messages.rbegin();
 	    std::string text;
@@ -410,7 +411,7 @@ void MapUI::renderMap()
             else
                 it++;
 
-        // NOTE (kilouco): In this loop we firstly handle public messages' then we get those
+        // NOTE (kilouco): In this loop we firstly handle public messages. Then we get those
         // which are in the same tile, said by the same player.
         while(rit != messages.rend()){
             temp_rit = rit;
@@ -458,7 +459,12 @@ void MapUI::renderMap()
 
             else {
                 if ((*it).get_relativePos() == linecount && (*it).shouldShowName()) {
-                    text = (*it).getSender() + " says:";
+                    if ((*it).get_range() == 0)
+                        text = (*it).getSender() + " whispers:";
+                    else if ((*it).get_range() == 2)
+                        text = (*it).getSender() + " yells:";
+                    else
+                        text = (*it).getSender() + " says:";
                     g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos() + 1) * 12), m_scale, (*it).getColor());
                 }
                 text = (*it).getText();
@@ -467,37 +473,17 @@ void MapUI::renderMap()
 
             g_engine->drawTextGW(text.c_str() , "gamefont", x, y, m_scale, (*it).getColor());
             it++;
-
-            /*
-            if (screenyPos < 0) {
-                if (((*it).get_relativePos()) > first) {
-                    temp_it = it;
-                    first = (*it).get_relativePos();
-                }
-
-                text = (*it).getText();
-                g_engine->drawTextGW(text.c_str() , "gamefont", x, ((linecount + 1 - (*it).get_relativePos()) * 12), m_scale, (*it).getColor());
-            }
-
-            else {
-                if ((*it).get_relativePos() == linecount){
-                    if((*it).shouldShowName()) {
-                        text = (*it).getSender() + " says:";
-                         g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos() + 1) * 12), m_scale, (*it).getColor());
-                    }
-                }
-                text = (*it).getText();
-                //g_engine->drawTextGW(text.c_str() , "gamefont", x, y-(glictFontNumberOfLines(text.c_str())*12) - (((*it).get_relativePos()) * 12), (*it).getColor());
-                g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos()) * 12), m_scale, (*it).getColor());
-            }
-            it++;
-            */
 	    }
 
         // NOTE (Kilouco): Here we actually write the "Player says: ". This works for that "y = 0" case.
 	    if (first > 0)
             if((*temp_it).shouldShowName()) {
-                text = (*temp_it).getSender() + " says:";
+                if ((*it).get_range() == 0)
+                    text = (*it).getSender() + " whispers:";
+                else if ((*it).get_range() == 2)
+                    text = (*it).getSender() + " yells:";
+                else
+                    text = (*it).getSender() + " says:";
                 g_engine->drawTextGW(text.c_str() , "gamefont", x, 0, m_scale, (*temp_it).getColor());
             }
 
