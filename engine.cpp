@@ -383,27 +383,20 @@ void Engine::drawLightmap(vertex* lightmap, int type, int width, int height, int
 	int index = 0;
 	int scaledSize = (int)std::floor((float)(32 * scale));
 
-	if (type == 2){
-        for (int i = 0; i < width; ++i){
-            for (int j = 0; j < height; ++j){
-                index = (j * width) + i;
-				drawRectangle(lightmap[index].x, lightmap[index].y, scaledSize, scaledSize, oRGBA(lightmap[index].r, lightmap[index].g,
+	for (int i = 0; i < width; ++i){
+        for (int j = 0; j < height; ++j){
+            index = (j * width) + i;
+            if(type == 1 && m_light != NULL){
+                int n = std::floor(8 - (8 * (lightmap[index].alpha / 255.0f)));
+                if (n >= 0 && n < 8)
+                    m_light->Blit(lightmap[index].x, lightmap[index].y, 32 * n, 0, 32, 32, scaledSize, scaledSize);
+            }
+            else if(type != 0){ // always default to the better light unless "no light" is specified (this value might be 3 while in SDL engine).
+                drawRectangle(lightmap[index].x, lightmap[index].y, scaledSize, scaledSize, oRGBA(lightmap[index].r, lightmap[index].g,
                     lightmap[index].b, (lightmap[index].alpha)));
             }
         }
-	}
-	else if (type == 1 && m_light != NULL){
-		int n;
-        for (int i = 0; i < width; ++i){
-            for (int j = 0; j < height; ++j){
-                index = (j * width) + i;
-				n = std::floor(8 - (8 * (lightmap[index].alpha / 255.0f)));
-
-				if (n < 8)
-					m_light->Blit(lightmap[index].x, lightmap[index].y, 32 * n, 0, 32, 32, scaledSize, scaledSize);
-            }
-        }
-	}
+    }
 }
 
 void Engine::reloadGlobalGfx()
