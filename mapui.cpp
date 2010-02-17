@@ -495,8 +495,10 @@ void MapUI::renderMap()
 	    }
 	}
 
-	if(options.showlighteffects)
-			g_engine->drawLightmap(lightmap, options.showlighteffects, m_vpw, m_vph, m_scale);
+	if(options.showlighteffects){
+	    if(lightmap[((pos.y * m_vpw) + pos.x)].alpha >= 100) fillLightCircle(pos.x, pos.y, 2, initColor);
+        g_engine->drawLightmap(lightmap, options.showlighteffects, m_vpw, m_vph, m_scale);
+	}
 
 	g_engine->resetClipping();
 

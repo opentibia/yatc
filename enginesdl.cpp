@@ -102,7 +102,9 @@ void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA
 	SDL_Rect r={(int)x,(int)y,(int)width,(int)height};
 	if(color.a != 255) {
 	    // draw with alpha channel
-        boxRGBA(m_screen, x, y, x + width, y + height, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)(color.a));
+	    // NOTE (nfries88): for some reason this always seems to exceed by 1, making the screen look like a grid when it's dark.
+            // so I'm subtracting 1 from width and height.
+        boxRGBA(m_screen, x, y, x + width - 1, y + height - 1, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)(color.a));
 	} else {
 	    // draw without alpha channel
 	    SDL_FillRect(m_screen, &r, SDL_MapRGBA(vi->vfmt, (uint8_t)color.r, (uint8_t)color.g, (uint8_t)color.b, (uint8_t)color.a));

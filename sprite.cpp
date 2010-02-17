@@ -350,6 +350,57 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		#endif
 		m_loaded = true;
 	}
+	else if(extension=="ico"){
+	    FILE* f = yatc_fopen(filename.c_str(), "rb");
+        uint16_t read_short;
+
+        if(!f) goto ico_failed;
+        fgetc(f); // always 0
+        //if(fgetc(f) != 1) { // 2 is cursor, anything else is invalid
+        //    fclose(f);
+        //    goto ico_failed;
+        //}
+
+        fgetc(f); // number of images; we will always use the first one
+
+        int width = fgetc(f);
+        if(width == 0) width = 256;
+        int height = fgetc(f);
+        if(height == 0) height = 256;
+
+        fgetc(f); // number of colors; ignore
+        fgetc(f); // always 0
+        yatc_fread(&read_short, sizeof(read_short), 1, f); // color planes, whatever those are
+
+        uint16_t bbp;
+        yatc_fread(&bbp, sizeof(bbp), 1, f); // bits per pixel
+
+        uint32_t size;
+        yatc_fread(&size, sizeof(size), 1, f); // size of bitmap data
+
+        uint32_t addr;
+        yatc_fread(&addr, sizeof(addr), 1, f); // address of bitmap data
+        fseek(f, addr, SEEK_SET);
+
+        unsigned char* pixels = new unsigned char[size];
+        if(!pixels) {   // out of memory or something similar
+            fclose(f);
+            goto ico_failed;
+        }
+        yatc_fread(pixels, 1, size, f); // pixel data
+
+        m_image = SDL_CreateRGBSurfaceFrom(pixels, width, height, bbp, 1, rmask, gmask, bmask, amask);
+        delete [] pixels;
+
+        if(!m_image){ // out of memory or SDL failure
+            ico_failed:
+            {
+                // TODO: make a really simple icon programmatically?
+                m_image = NULL;
+                return;
+            }
+        }
+	}
 	else if(extension=="blank"){
 	    double r,g,b,a;
 	    int w,h;
