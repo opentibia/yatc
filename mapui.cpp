@@ -43,6 +43,24 @@ extern uint32_t g_frameTime;
 extern Engine* g_engine;
 
 #include "options.h"
+#include "gamecontent/creature.h"
+
+inline oRGBA makeLightColor(uint16_t lightColor){
+    // FIXME (nfries88): doesn't seem to work; at least for world light color...
+    oRGBA color;
+    #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	color.r = (lightColor & 0x03);
+	color.g = (lightColor & 0x0C);
+	color.b = (lightColor & 0x30);
+	color.a = (lightColor & 0xC0);
+    #else
+	color.a = (lightColor & 0x03);
+	color.b = (lightColor & 0x0C);
+	color.g = (lightColor & 0x30);
+	color.r = (lightColor & 0xC0);
+    #endif
+    return color;
+}
 
 MapUI::MapUI()
 {
@@ -72,10 +90,11 @@ MapUI::~MapUI()
     delete [] lightmap;
 }
 
-void MapUI::fillLightCircle(int x, int y, int radius, oRGBA color)
+void MapUI::fillLightCircle(int x, int y, int radius, uint16_t color)
 {
 	if (radius > 0)
 	{
+		oRGBA realColor = makeLightColor(color);
 		for (int i = 0; i < m_vpw; ++i)
 		{
 			for (int j = 0; j < m_vph; ++j)
@@ -84,13 +103,17 @@ void MapUI::fillLightCircle(int x, int y, int radius, oRGBA color)
 				if (i >= 0 && j >= 0 && i < m_vpw && j < m_vph)
 				{
 				    int index = ((j * m_vpw) + i);
-					lightmap[index].alpha = std::min((int)(lightmap[index].alpha), 255 - (int)std::max((int)(255 * (1 - (dist / radius))), (int)(0)));
+					float influence = dist / radius;
+					lightmap[index].alpha = std::min((int)(lightmap[index].alpha), 255 - (int)std::max((int)(255 * (1 - (influence))), (int)(0)));
 
-					lightmap[index].r += color.r;
-					lightmap[index].g += color.g;
-					lightmap[index].b += color.b;
-
-					++lightmap[index].blended;
+					if (dist <= radius)
+					{
+						lightmap[index].r += realColor.r - (realColor.r * influence);
+						lightmap[index].g += realColor.g - (realColor.g * influence);
+						lightmap[index].b += realColor.b - (realColor.b * influence);
+						lightmap[index].alpha += realColor.a - (realColor.a * influence);
+						++lightmap[index].blended;
+					}
 				}
 			}
 		}
@@ -168,14 +191,16 @@ void MapUI::renderMap()
     // reset light map
     memset((void*)lightmap, 0, sizeof(vertex) * m_vpw * m_vph);
     int initValue = (pos.z <= 7 ? (255 - GlobalVariables::getWorldLightLevel()) : 255);
-    //oRGBA initColor = (pos.z <= 7 ? (makeLightColor((uint16_t)GlobalVariables::getWorldLightColor())) : oRGBA(0, 0, 0, 255));
-    oRGBA initColor = oRGBA(0, 0, 0, 255);
+    oRGBA initColor = (pos.z <= 7 ? (makeLightColor((uint16_t)GlobalVariables::getWorldLightColor())) : oRGBA(0, 0, 0, 255));
+    //oRGBA initColor = oRGBA(0, 0, 0, 255);
+	Tile::EffectList::iterator effectIt;
+
     // for debugging purposes
     for (int i = 0; i < m_vpw; ++i)
     {
         for (int j = 0; j < m_vph; j++)
         {
-            lightmap[(j * m_vpw) + i].alpha = initValue;
+			lightmap[(j * m_vpw) + i].alpha = initColor.a;
 			lightmap[(j * m_vpw) + i].blended = 1;
 			lightmap[(j * m_vpw) + i].r = initColor.r;
 			lightmap[(j * m_vpw) + i].g = initColor.g;
@@ -203,6 +228,14 @@ void MapUI::renderMap()
 					continue;
 				}
 
+				// Add light for any effects on this tile.
+				Tile::EffectList& tileEffects = const_cast<Tile*>(tile)->getEffects();
+				effectIt = tileEffects.begin();
+				while(effectIt != tileEffects.end()){
+					fillLightCircle(i-offset, j-offset, (*effectIt)->getObjectType()->lightLevel, (*effectIt)->getObjectType()->lightColor);
+					++effectIt;
+				}
+
 				int screenx = int((i*scaledSize + walkoffx) + m_x);
 				int screeny = int((j*scaledSize + walkoffy) + m_y);
 
@@ -218,7 +251,7 @@ void MapUI::renderMap()
 						tile_height++;
 
 					//fillLightCircle(i, j, ground->getObjectType()->lightLevel, makeLightColor(ground->getObjectType()->lightColor));
-					fillLightCircle(i-offset, j-offset, ground->getObjectType()->lightLevel, initColor);
+					fillLightCircle(i-offset, j-offset, ground->getObjectType()->lightLevel, ground->getObjectType()->lightColor);
 				}
 
 				enum drawingStates_t{
@@ -290,7 +323,7 @@ void MapUI::renderMap()
                             }
                             //fillLightCircle(i, j, c->getLightLevel(), makeLightColor(c->getLightColor()));
                             if(isVisible(tile->getPos()))
-                                fillLightCircle(i-offset, j-offset, c->getLightLevel(), initColor);
+                                fillLightCircle(i-offset, j-offset, c->getLightLevel(), c->getLightColor());
                         }
 
 						if (performPaint)
@@ -304,7 +337,7 @@ void MapUI::renderMap()
 
 							//fillLightCircle(i, j, item->getObjectType()->lightLevel, makeLightColor(item->getObjectType()->lightColor));
 							if(isVisible(tile->getPos()))
-                                fillLightCircle(i-offset, j-offset, item->getObjectType()->lightLevel, initColor);
+                                fillLightCircle(i-offset, j-offset, item->getObjectType()->lightLevel, item->getObjectType()->lightColor);
 						}
 
 						switch(drawState){
@@ -361,6 +394,7 @@ void MapUI::renderMap()
 		Map::DistanceEffectList& distanceEffects = Map::getInstance().getDistanceEffect(z);
 		Map::DistanceEffectList::iterator it = distanceEffects.begin();
 
+		// TODO: Distance effects need light too!
         if (distanceEffects.size()) printf("Drawing %d distance shots\n", distanceEffects.size());
 		while(it != distanceEffects.end()){
 			float flightProgress = (*it)->getFlightProgress();
