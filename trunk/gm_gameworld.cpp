@@ -118,6 +118,9 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 {
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting gameworld...\n");
 
+	// we don't load it at startup now, so...
+	Objects::getInstance()->loadDat("Tibia.dat");
+
 	m_protocol = (ProtocolGame*)g_connection->getProtocol();
 
 	#ifndef WINCE

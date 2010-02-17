@@ -263,14 +263,15 @@ void setIcon()
     printf("Setting icon\n");
 	g_engine = NULL;
 	SDL_WM_SetCaption(PRODUCTNAME, PRODUCTNAME);
-	ObjectType* o = Objects::getInstance()->getOutfitType(58);
+	//ObjectType* o = Objects::getInstance()->getOutfitType(58);
 
-    SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2]);
-	SpriteSDL *st = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2+1]);
-	s->templatedColorize(st, 79, 94, 88, 82);
+    //SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2]);
+	//SpriteSDL *st = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2+1]);
+	//s->templatedColorize(st, 79, 94, 88, 82);
+	SpriteSDL* s = new SpriteSDL("yatc.ico", 0);
 	s->setAsIcon();
 	delete s;
-	delete st;
+	//delete st;
 }
 
 void resetDefaultCursor()
@@ -448,7 +449,8 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Loading data...\n");
+    // We are no longer dependant on .dat for this!
+/*	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Loading data...\n");
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, gettext("Loading data file failed!"));
 		std::string forreplace = gettext("Loading the data file '$$FILENAME$$' has failed.\nPlease place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n");
@@ -457,6 +459,7 @@ int main(int argc, char *argv[])
 		NativeGUIError(forreplace.c_str(), str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext("$$PRODUCTSHORT$$ Fatal Error")).c_str());
 		exit(1);
 	}
+*/
 
 	setIcon(); // must be called prior to first call to SDL_SetVideoMode() (currently done in engine)
 
