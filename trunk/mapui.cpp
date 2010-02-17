@@ -322,7 +322,7 @@ void MapUI::renderMap()
                     int screenx = (int)((txtpos.x - pos.x + m_vpw/2 + offset + 0.4)*scaledSize + walkoffx) + m_x;
                     int screeny = (int)((txtpos.y - pos.y + m_vph/2 + offset - textYOffset)*scaledSize + walkoffy) + m_y;
 
-                    g_engine->drawTextGW((*it).getText().c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines((*it).getText().c_str())*12), (*it).getColor());
+                    g_engine->drawTextGW((*it).getText().c_str() , "gamefont", screenx, screeny-(glictFontNumberOfLines((*it).getText().c_str())*12), m_scale, (*it).getColor());
                     ++it;
                 }
             }
@@ -476,7 +476,7 @@ void MapUI::renderMap()
 	    }
 
         // NOTE (Kilouco): Here we actually write the "Player says: ". This works for that "y = 0" case.
-	    if (first > 0)
+	    if (first > 0) {
             if((*temp_it).shouldShowName()) {
                 if ((*it).get_range() == 0)
                     text = (*it).getSender() + " whispers:";
@@ -486,6 +486,7 @@ void MapUI::renderMap()
                     text = (*it).getSender() + " says:";
                 g_engine->drawTextGW(text.c_str() , "gamefont", x, 0, m_scale, (*temp_it).getColor());
             }
+	    }
 
         // NOTE (Kilouco): Here we "unhandle" handled messages to be used in the next time.
 	    it = messages.begin();
