@@ -1313,11 +1313,11 @@ void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
 
     //Revised
 	case MSG_STATUS_WARNING:
-        getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_RED));
+        getServerLogConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_RED));
 		m_lookatStatMsg = StatusMsg(TEXTCOLOR_RED, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
 		break;
 	case MSG_INFO_DESCR:
-		getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_LIGHTGREEN));
+		getServerLogConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_LIGHTGREEN));
 		m_lookatStatMsg = StatusMsg(TEXTCOLOR_LIGHTGREEN, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
 		break;
     case MSG_STATUS_CONSOLE_BLUE:
@@ -1326,6 +1326,10 @@ void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
     //Revised
 
     case MSG_EVENT_ADVANCE:
+        getServerLogConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_WHITE));
+		m_lookatStatMsg = StatusMsg(TEXTCOLOR_WHITE, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
+		break;
+
     case MSG_EVENT_DEFAULT:
     case MSG_STATUS_DEFAULT:
     case MSG_STATUS_SMALL:
@@ -1529,7 +1533,11 @@ std::vector<Console*>::iterator GM_Gameworld::findConsole_it(const Console* c)
 void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
 {
     Console* nc;
+    Console* nc2;
+
     std::stringstream s;
+    std::stringstream s2;
+
     if (channelid) {
         nc = new Console(channelid);
         s << channelid;
@@ -1539,11 +1547,18 @@ void GM_Gameworld::createConsole(uint32_t channelid,const std::string& speaker)
     } else {
         nc = new Console();
         s << gettext("Default");
+
+        nc2 = new Console();
+        s2 << gettext("Server Log");
     }
 
 	pnlConsoleContainer.MakeConsole(nc, s.str());
+	m_consoles.push_back(nc);
 
-    m_consoles.push_back(nc);
+	if (nc2) {
+        pnlConsoleContainer.MakeConsole(nc2, s2.str());
+        m_consoles.push_back(nc2);
+	}
 }
 
 void GM_Gameworld::openContainer(uint32_t cid)

@@ -425,104 +425,7 @@ void MapUI::renderMap()
 	}
 
 	// draw publicly displayed messages
-	{
-	    //Map::PublicMessageList& messages = Map::getInstance().getPublicMessages(GlobalVariables::getPlayerPosition().z);
-	    Map::PublicMessageList& messages = Map::getInstance().getPublicMessages();
-	    Map::PublicMessageList::iterator it = messages.begin(), temp_it = messages.begin();
-	    Map::PublicMessageList::reverse_iterator rit = messages.rbegin(), temp_rit = messages.rbegin();
-	    std::string text;
-	    int x = 0, y = 0, linecount = 0, first = 0;
-
-	    while(it != messages.end())
-            if((*it).canBeDeleted())
-                it = messages.erase(it);
-            else
-                it++;
-
-        // NOTE (kilouco): In this loop we firstly handle public messages. Then we get those
-        // which are in the same tile, said by the same player.
-        while(rit != messages.rend()){
-            temp_rit = rit;
-            const Position& txtpos = (*rit).getPosition();
-            x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
-            y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
-
-            if((*rit).is_handled() == false) {
-                linecount = (*rit).getLinecount();
-                (*rit).set_handled(true);
-                (*rit).set_relativePos(linecount);
-
-                while(temp_rit != messages.rend()){
-                    if((*rit).getPosition() == (*temp_rit).getPosition() && (*temp_rit).getSender() == (*rit).getSender() && (*temp_rit).is_handled() == false) {
-                        linecount += (*temp_rit).getLinecount();
-                        (*temp_rit).set_relativePos(linecount);
-                        (*temp_rit).set_handled(true);
-                    }
-                    temp_rit++;
-                }
-            }
-            rit++;
-	    }
-
-        // NOTE (kilouco): Here we'll send messages to be handled by engine, which will make text drawing.
-        // This also gets info if messages should be rendered from up to down or vice-versa
-	    it = messages.begin();
-	    while(it != messages.end()) {
-	        const Position& txtpos = (*it).getPosition();
-	        x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
-            y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
-            int screenyPos = (y - 12 - (((*it).get_relativePos()) * 12));
-
-            // NOTE (Kilouco): This is how it will works in case the sender is too close to y = 0.
-            if (screenyPos < 0) {
-                // NOTE (Kilouco): A way to get "Player says: " position.
-                if (((*it).get_relativePos()) > first && (*it).shouldShowName()) {
-                    temp_it = it;
-                    first = (*it).get_relativePos();
-                }
-
-                text = (*it).getText();
-                y = ((linecount + 1 - (*it).get_relativePos()) * 12);
-            }
-
-            else {
-                if ((*it).get_relativePos() == linecount && (*it).shouldShowName()) {
-                    if ((*it).get_range() == 0)
-                        text = (*it).getSender() + " whispers:";
-                    else if ((*it).get_range() == 2)
-                        text = (*it).getSender() + " yells:";
-                    else
-                        text = (*it).getSender() + " says:";
-                    g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos() + 1) * 12), m_scale, (*it).getColor());
-                }
-                text = (*it).getText();
-                y -= (((*it).get_relativePos()) * 12);
-            }
-
-            g_engine->drawTextGW(text.c_str() , "gamefont", x, y, m_scale, (*it).getColor());
-            it++;
-	    }
-
-        // NOTE (Kilouco): Here we actually write the "Player says: ". This works for that "y = 0" case.
-	    if (first > 0) {
-            if((*temp_it).shouldShowName()) {
-                if ((*it).get_range() == 0)
-                    text = (*it).getSender() + " whispers:";
-                else if ((*it).get_range() == 2)
-                    text = (*it).getSender() + " yells:";
-                else
-                    text = (*it).getSender() + " says:";
-                g_engine->drawTextGW(text.c_str() , "gamefont", x, 0, m_scale, (*temp_it).getColor());
-            }
-	    }
-
-        // NOTE (Kilouco): Here we "unhandle" handled messages to be used in the next time.
-	    it = messages.begin();
-	    while(it != messages.end()) {
-	        (*it).set_handled(false);
-            it++;
-	    }
-	}
+    drawPublicMessages(pos, walkoffx, walkoffy);
 
 	if(options.showlighteffects){
 	    if((player != NULL) && !(player->getLightLevel())){
@@ -535,6 +438,154 @@ void MapUI::renderMap()
 
 	if(player)
 		player->advanceWalk(playerspeed);
+}
+
+void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
+{
+    // OPTIMIZE ME.
+    Map::PublicMessageList& messages = Map::getInstance().getPublicMessages();
+    Map::PublicMessageList::iterator it = messages.begin(), temp_it = messages.begin();
+    Map::PublicMessageList::reverse_iterator rit = messages.rbegin(), temp_rit = messages.rbegin();
+    std::string text;
+    int x = 0, y = 0, orange_linecount = 0, linecount = 0, first = 0;
+
+    while(it != messages.end())
+        if((*it).canBeDeleted())
+            it = messages.erase(it);
+        else
+            it++;
+
+    // NOTE (kilouco): In this loop we firstly handle public messages. Then we get those
+    // which are in the same tile, said by the same player.
+
+    // First we'll handle orange messages (which has priority).
+    while(rit != messages.rend()){
+        if ((*rit).shouldShowName()) {
+            rit++;
+            continue;
+        }
+
+        temp_rit = rit;
+        const Position& txtpos = (*rit).getPosition();
+        x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
+        y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
+
+        if((*rit).is_handled() == false) {
+            orange_linecount = (*rit).getLinecount();
+            (*rit).set_handled(true);
+            (*rit).set_relativePos(orange_linecount);
+
+            while(temp_rit != messages.rend()){
+                if ((*temp_rit).shouldShowName()) {
+                    temp_rit++;
+                    continue;
+                }
+
+                if((*rit).getPosition() == (*temp_rit).getPosition() && (*temp_rit).getSender() == (*rit).getSender() && (*temp_rit).is_handled() == false) {
+                    orange_linecount += (*temp_rit).getLinecount();
+                    (*temp_rit).set_relativePos(orange_linecount);
+                    (*temp_rit).set_handled(true);
+                }
+                temp_rit++;
+            }
+        }
+        rit++;
+    }
+
+    // Then we handle yellow messages, with names and stuff.
+    rit = messages.rbegin();
+    while(rit != messages.rend()){
+        if (!(*rit).shouldShowName()) {
+            rit++;
+            continue;
+        }
+
+        temp_rit = rit;
+        const Position& txtpos = (*rit).getPosition();
+        x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
+        y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
+
+        if((*rit).is_handled() == false) {
+            linecount = (*rit).getLinecount();
+            (*rit).set_handled(true);
+            (*rit).set_relativePos(orange_linecount + linecount);
+
+            while(temp_rit != messages.rend()){
+                if (!(*temp_rit).shouldShowName()) {
+                    temp_rit++;
+                    continue;
+                }
+
+                if((*rit).getPosition() == (*temp_rit).getPosition() && (*temp_rit).getSender() == (*rit).getSender() && (*temp_rit).is_handled() == false) {
+                    linecount += (*temp_rit).getLinecount();
+                    (*temp_rit).set_relativePos(orange_linecount + linecount);
+                    (*temp_rit).set_handled(true);
+                }
+                temp_rit++;
+            }
+        }
+        rit++;
+    }
+
+    // NOTE (kilouco): Here we'll send messages to be handled by engine, which will make text drawing.
+    // This also gets info if messages should be rendered from up to down or vice-versa
+    it = messages.begin();
+    linecount;
+    while(it != messages.end()) {
+        const Position& txtpos = (*it).getPosition();
+        x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
+        y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
+        int screenyPos = (y - 12 - (((*it).get_relativePos()) * 12));
+
+        // NOTE (Kilouco): This is how it will works in case the sender is too close to y = 0.
+        if (screenyPos < 0) {
+            // NOTE (Kilouco): A way to get "Player says: " position.
+            if (((*it).get_relativePos()) > first && (*it).shouldShowName()) {
+                temp_it = it;
+                first = (*it).get_relativePos();
+            }
+
+            text = (*it).getText();
+            y = ((linecount + 1 - (*it).get_relativePos()) * 12);
+        }
+
+        else {
+            if ((*it).get_relativePos() == (linecount + orange_linecount) && (*it).shouldShowName()) {
+                if ((*it).get_range() == 0)
+                    text = (*it).getSender() + " whispers:";
+                else if ((*it).get_range() == 2)
+                    text = (*it).getSender() + " yells:";
+                else
+                    text = (*it).getSender() + " says:";
+                g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos() + 1) * 12), m_scale, (*it).getColor());
+            }
+            text = (*it).getText();
+            y -= (((*it).get_relativePos()) * 12);
+        }
+
+        g_engine->drawTextGW(text.c_str() , "gamefont", x, y, m_scale, (*it).getColor());
+        it++;
+    }
+
+    // NOTE (Kilouco): Here we actually write the "Player says: ". This works for that "y = 0" case.
+    if (first > 0) {
+        if((*temp_it).shouldShowName()) {
+            if ((*it).get_range() == 0)
+                text = (*it).getSender() + " whispers:";
+            else if ((*it).get_range() == 2)
+                text = (*it).getSender() + " yells:";
+            else
+                text = (*it).getSender() + " says:";
+            g_engine->drawTextGW(text.c_str() , "gamefont", x, 0, m_scale, (*temp_it).getColor());
+        }
+    }
+
+    // NOTE (Kilouco): Here we "unhandle" handled messages to be used in the next time.
+    it = messages.begin();
+    while(it != messages.end()) {
+        (*it).set_handled(false);
+        it++;
+    }
 }
 
 int MapUI::getMinZ() { // find out how far can we render... if anything is directly above player, then don't render above that floor
