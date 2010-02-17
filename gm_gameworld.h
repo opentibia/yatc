@@ -125,6 +125,8 @@ public:
     void doNotShowPopup(){m_showPopup = false;}
 
     Console* getDefaultConsole() { return *getDefaultConsole_it(); }
+    Console* getServerLogConsole() { return *getServerLogConsole_it(); }
+
     Console* findConsole(uint32_t channelid) { return *findConsole_it(channelid); }
     Console* findConsole(const std::string& speaker, bool makeIfNotPresent = true) { return *findConsole_it(speaker, makeIfNotPresent); }
     Console* getActiveConsole() const {return m_activeconsole;}
@@ -150,6 +152,8 @@ protected:
 
 private:
     std::vector<Console*>::iterator getDefaultConsole_it() { return m_consoles.begin(); }
+    std::vector<Console*>::iterator getServerLogConsole_it() { return m_consoles.begin() + 1; }
+
     std::vector<Console*>::iterator findConsole_it(uint32_t channelid);
     std::vector<Console*>::iterator findConsole_it(const std::string& speaker, bool makeIfNotPresent);
     std::vector<Console*>::iterator findConsole_it(const Console* c);

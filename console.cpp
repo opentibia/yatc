@@ -180,7 +180,7 @@ void ConsolePanel::SetActiveConsole(Console* console)
     #else
 	#warning No support for setcaptioncolor before glict apirev 85
 	#endif
-	if(!console->getSpeakerName().length() && (console->getAssignedButton()->GetCaption() == "Default"))
+	if(!console->getSpeakerName().length() && ((console->getAssignedButton()->GetCaption() == "Default") || (console->getAssignedButton()->GetCaption() == "Server Log")))
 	{
 		btnSpeakLevel.SetVisible(true);
 		btnClose.SetVisible(false);
