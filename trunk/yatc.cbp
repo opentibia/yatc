@@ -416,12 +416,14 @@
 		<Unit filename="ui\uiinventory.h" />
 		<Unit filename="ui\uioutfit.cpp" />
 		<Unit filename="ui\uioutfit.h" />
+		<Unit filename="ui\uireadable.h" />
 		<Unit filename="ui\uishop.cpp" />
 		<Unit filename="ui\uishop.h" />
 		<Unit filename="ui\uitrade.cpp" />
 		<Unit filename="ui\uitrade.h" />
 		<Unit filename="ui\vipwindow.cpp" />
 		<Unit filename="ui\vipwindow.h" />
+		<Unit filename="uireadable.cpp" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Unit filename="yatc.cfg" />
