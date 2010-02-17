@@ -370,7 +370,9 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
         fgetc(f); // number of colors; ignore
         fgetc(f); // always 0
-        yatc_fread(&read_short, sizeof(read_short), 1, f); // color planes, whatever those are
+        uint16_t colorplanes;
+        yatc_fread(&colorplanes, sizeof(colorplanes), 1, f); // color planes, whatever those are
+        if(colorplanes == 0) colorplanes = 1;
 
         uint16_t bbp;
         yatc_fread(&bbp, sizeof(bbp), 1, f); // bits per pixel
@@ -389,7 +391,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
         }
         yatc_fread(pixels, 1, size, f); // pixel data
 
-        m_image = SDL_CreateRGBSurfaceFrom(pixels, width, height, bbp, 1, rmask, gmask, bmask, amask);
+        m_image = SDL_CreateRGBSurfaceFrom(pixels, width, height, bbp * colorplanes, 1, rmask, gmask, bmask, amask);
         delete [] pixels;
 
         if(!m_image){ // out of memory or SDL failure

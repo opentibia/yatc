@@ -295,6 +295,7 @@ bool ProtocolGame::parseSelfAppear(NetworkMessage& msg)
     GlobalVariables::clear();
     Inventory::getInstance().clear();
     Map::getInstance().clear();
+    Creatures::getInstance().addCreature(ourID);
     //TODO. reset chats
 
     GlobalVariables::setPlayerID(ourID);
