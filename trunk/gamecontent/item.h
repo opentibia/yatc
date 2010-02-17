@@ -47,6 +47,8 @@ public:
 	// items with 0x06 property?
 	bool isAlwaysUsed() const { return m_it->alwaysUsed; }
 
+	bool isWriteable() const { return m_it->writeable; }
+
 	const ObjectType* getObjectType() const {return m_it;}
 
 	virtual uint32_t getOrder() const {return getAlwaysOnTopLevel();}

@@ -133,6 +133,8 @@ class Console {
 		ConsoleEntry* getConsoleEntryAt(float relx, float rely);
 		void clearEntries();
 		void dumpText();
+
+		int getHeight();
 	private:
 		std::vector <ConsoleEntry> m_content;
 		std::string m_speakername;

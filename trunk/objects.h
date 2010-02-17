@@ -89,6 +89,7 @@ public:
 	bool useable;
 	bool rune;
 	bool readable;
+	bool writeable;
 	bool fluidContainer;
 	bool splash;
 	bool blockSolid;

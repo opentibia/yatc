@@ -63,6 +63,7 @@ ObjectType::ObjectType(uint16_t _id)
 	useable = false;
 	rune = false;
 	readable = false;
+	writeable = false;
 	fluidContainer = false;
 	splash = false;
 	blockSolid = false;
@@ -362,6 +363,7 @@ bool Objects::load780plus(const char* filename)
 					break;
 				case 0x09: //Writtable/Readable Objectss
 						oType->readable = true;
+						oType->writeable = true;
 						yatc_fread(&read_short2, sizeof(read_short2), 1, fp); //maximum size of text entry TODO (ivucica#3#) store this data
                         ECORR16(read_short);
 						break;

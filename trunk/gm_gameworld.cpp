@@ -114,6 +114,16 @@ void pnlInventory_t::onClick_Options(glictPos* relmousepos, glictContainer* call
     /*gameclass->msgBox(gettext("This functionality is not yet finished"),"TODO");*/
 }
 
+void winReadable_t::onClose(glictPos* pos, glictContainer* caller){
+    // TODO
+    winReadable_t* win = (winReadable_t*)caller->GetCustomData();
+    GM_Gameworld* gameclass = (GM_Gameworld*)g_game;
+    win->window.SetVisible(false);
+    if(win->dispItem->isWriteable()){
+        gameclass->m_protocol->sendTextWindow(win->windowID, win->txtText.GetCaption());
+    }
+}
+
 GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 {
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting gameworld...\n");
@@ -246,6 +256,9 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 
 	desktop.AddObject(&winMove.window);
 	winMove.window.SetVisible(false);
+
+	desktop.AddObject(&winReadable.window);
+	winReadable.window.SetVisible(false);
 
     desktop.AddObject(&pnlConsoleContainer);
     //pnlConsoleContainer.SetBGActiveness(false);
@@ -1611,6 +1624,15 @@ void GM_Gameworld::closeTradeWindow()
 	// update right side with changes
 	updateRightSide();
 	#endif
+}
+
+void GM_Gameworld::onOpenItemText(int windowId, int itemid, int maxTextLenght,
+		const std::string& text, const std::string& lastChange,
+		const std::string& lastChangeDate)
+{
+    // rest of stuff; todo
+    winReadable.open(itemid, windowId, text, lastChange, lastChangeDate);
+    centerWindow(&winReadable.window);
 }
 
 void GM_Gameworld::onUpdatePlayerCash(uint32_t newcash) {

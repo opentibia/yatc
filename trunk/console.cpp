@@ -578,3 +578,12 @@ void Console::dumpText()
 	}
 	fclose(f);
 }
+int Console::getHeight()
+{
+    // TODO (nfries88): use this to adjust the starting height for paintConsole and getConsoleEntryAt;
+        //
+    int height = 0;
+    for (std::vector<ConsoleEntry>::reverse_iterator it=m_content.rbegin(); it!=m_content.rend(); it++) {
+		height += (*it).getHeight();
+	}
+}

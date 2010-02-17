@@ -525,7 +525,9 @@ void MapUI::renderMap()
 	}
 
 	if(options.showlighteffects){
-	    if(lightmap[((pos.y * m_vpw) + pos.x)].alpha >= 100) fillLightCircle(pos.x, pos.y, 2, initColor);
+	    if((player != NULL) && !(player->getLightLevel())){
+	        fillLightCircle(m_vpw/2, m_vph/2, 2, initColor);
+	    }
         g_engine->drawLightmap(lightmap, options.showlighteffects, m_vpw, m_vph, m_scale);
 	}
 

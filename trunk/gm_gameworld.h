@@ -35,6 +35,7 @@
 #include "ui/minimap.h"
 #include "ui/exitwarning.h"
 #include "ui/deathnotification.h"
+#include "ui/uireadable.h"
 #include "stackpanel.h"
 #include "automap.h"
 #include "statusmsg.h"
@@ -91,6 +92,9 @@ public:
     void closeShopWindow();
     void openTradeWindow(bool ack);
     void closeTradeWindow();
+    void onOpenItemText(int windowId, int itemid, int maxTextLenght,
+		const std::string& text, const std::string& lastChange,
+		const std::string& lastChangeDate);
     void openOutfitWindow(const Outfit_t& current, const std::list<AvailOutfit_t>& available);
     void onTileUpdate(const Position& pos);
     void openDeathWindow();
@@ -180,6 +184,7 @@ private:
     std::vector<winContainer_t*> containers;
 
     winItemMove_t winMove;
+    winReadable_t winReadable;
 
     exitWarning_t m_exitWarningWindow;
     deathNotice_t m_deathNotice;
@@ -235,6 +240,7 @@ private:
 	friend class winVIP_t;
 	friend class winAddVIP_t;
 	friend class winChangeVIP_t;
+	friend class winReadable_t;
 
 	MapUI m_mapui;
 
