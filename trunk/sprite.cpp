@@ -363,6 +363,10 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
         fgetc(f); // number of images; we will always use the first one
 
+        fgetc(f); // unknown - 0
+        fgetc(f); // unknown - 1
+        fgetc(f); // unknown - 0
+
         int width = fgetc(f);
         if(width == 0) width = 256;
         int height = fgetc(f);

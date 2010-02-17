@@ -423,7 +423,6 @@
 		<Unit filename="ui\uitrade.h" />
 		<Unit filename="ui\vipwindow.cpp" />
 		<Unit filename="ui\vipwindow.h" />
-		<Unit filename="uireadable.cpp" />
 		<Unit filename="util.cpp" />
 		<Unit filename="util.h" />
 		<Unit filename="yatc.cfg" />

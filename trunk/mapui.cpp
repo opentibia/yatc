@@ -631,8 +631,8 @@ int MapUI::getMinZ() { // find out how far can we render... if anything is direc
 		tile = Map::getInstance().getTile(pos.x-(z-pos.z), pos.y-(z-pos.z), z);
 		if (tile && tile->getThingCount() ) {
 			minz = z+1;
-            if(isVisible(tile->getPos()))
-                return (m_minz = minz);
+
+			return (m_minz = minz);
 		}
 	}
 	return (m_minz = 0);
