@@ -176,7 +176,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	}
 }
 
-void CreatureUI::drawInfo(int x, int y, float scale) const
+void CreatureUI::drawInfo(int x, int y, float scale, bool visible) const
 {
     Creature* n = (Creature*)this;
     Outfit_t outfit = n->getOutfit();
@@ -227,7 +227,7 @@ void CreatureUI::drawInfo(int x, int y, float scale) const
         result_y = 12;
 
     if (options.shownames)
-        drawName(result_x, result_y, scale);
+        drawName(result_x, result_y, scale, visible);
 
     result_x += 23;
 	result_y += 4;
@@ -235,13 +235,15 @@ void CreatureUI::drawInfo(int x, int y, float scale) const
     drawSkullsShields(result_x, result_y, scale);
 }
 
-void CreatureUI::drawName(int x, int y, float scale) const
+void CreatureUI::drawName(int x, int y, float scale, bool visible) const
 {
     //Health Bar
     Creature* n = (Creature*)this;
     int hp = n->getHealth();
     if (hp == 0 && (n->getID() != GlobalVariables::getPlayerID())) return;
     oRGBA col = getHealthColor(hp);
+    // FIXME (nfries88): This is the wrong color! But it proves the code works.
+    if(!visible) col = oRGBA(255./2., 255./2., 255./2., 255.);
 
     g_engine->drawRectangle(x-1, y-1, 28, 4, oRGBA(0,0,0,255));
     g_engine->drawRectangle(x, y, 26*(hp/100.), 2, col);

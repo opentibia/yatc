@@ -31,8 +31,8 @@ public:
 	virtual void Blit(int x, int y, float scale = 1., int map_x = 0, int map_y = 0) const;
 
 	void loadOutfit();
-	void drawInfo(int x, int y, float scale) const;
-	void drawName(int x, int y, float scale) const;
+	void drawInfo(int x, int y, float scale, bool visible) const;
+	void drawName(int x, int y, float scale, bool visible) const;
 	void drawSkullsShields(int x, int y, float scale) const;
 	void startWalk() { m_preWalk = true; m_walkState = 0.f; }
 	void cancelWalk() { m_preWalk = false; m_walkState = 1.f; }

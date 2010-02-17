@@ -97,6 +97,32 @@ void MapUI::fillLightCircle(int x, int y, int radius, oRGBA color)
 	}
 }
 
+bool MapUI::isVisible(const Position& pos)
+{
+    // you're one level underground or on the topmost floor; you won't be covered.
+    if(pos.z == 6 || pos.z == 0) return true;
+    if(m_minz < 0) getMinZ();
+    int maxz = m_minz;
+    int minz = pos.z-1;
+
+/*for(z = maxz; z <= minz; z++){
+		tile = Map::getInstance().getTile(pos.x + x - (z-pos.z) - m_vpw/2, pos.y + y - (z-pos.z) - m_vph/2, z);
+		if(tile){ // found you
+			break;
+		}
+	}*/
+
+    for(int z = maxz; z <= minz; z++){
+        int offset = z-pos.z;
+        Tile* tile = Map::getInstance().getTile(pos.x - offset, pos.y - offset, z);
+        if(tile) {
+            if(tile->getGround())// && !tile->getGround()->isSeeThrough())
+                return false;
+        }
+    }
+    return true;
+}
+
 void MapUI::renderMap()
 {
 	//TODO: center game area horizontally (cipsoft's client does this)
@@ -263,7 +289,8 @@ void MapUI::renderMap()
                                     performPaint = false;
                             }
                             //fillLightCircle(i, j, c->getLightLevel(), makeLightColor(c->getLightColor()));
-                            fillLightCircle(i-offset, j-offset, c->getLightLevel(), initColor);
+                            if(isVisible(tile->getPos()))
+                                fillLightCircle(i-offset, j-offset, c->getLightLevel(), initColor);
                         }
 
 						if (performPaint)
@@ -276,7 +303,8 @@ void MapUI::renderMap()
 								tile_height++;
 
 							//fillLightCircle(i, j, item->getObjectType()->lightLevel, makeLightColor(item->getObjectType()->lightColor));
-							fillLightCircle(i-offset, j-offset, item->getObjectType()->lightLevel, initColor);
+							if(isVisible(tile->getPos()))
+                                fillLightCircle(i-offset, j-offset, item->getObjectType()->lightLevel, initColor);
 						}
 
 						switch(drawState){
@@ -384,7 +412,7 @@ void MapUI::renderMap()
 				Thing* thing = tile->getThingByStackPos(drawIndex);
 				if(thing){
 					if(thing->getCreature()){
-                        thing->getCreature()->drawInfo(screenx, screeny, m_scale);
+                        thing->getCreature()->drawInfo(screenx, screeny, m_scale, isVisible(tile->getPos()));
 						if(!player || thing->getCreature()->getId() != player->getId())
 							thing->getCreature()->advanceWalk(groundspeed);
 						else
