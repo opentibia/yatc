@@ -249,10 +249,7 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             f->resetColor();
     }
 
-    glictFontRender(text, font, x, y);
-
     std::string temp_text = text;
-
     std::string new_line_text, old_line_text;
     new_line_text = old_line_text = temp_text;
     int linecount = 1;
