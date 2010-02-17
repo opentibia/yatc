@@ -95,7 +95,7 @@ class MapUI {
 	protected:
 		void drawTileEffects(Tile* tile, int screenx, int screeny, float scale, uint32_t tile_height);
         void drawTileGhosts(int x, int y, int z, int screenx, int screeny, float scale, uint32_t tile_height);
-        void fillLightCircle(int x, int y, int radius, oRGBA color);
+        void fillLightCircle(int x, int y, int radius, uint16_t color);
         bool isVisible(const Position& pos);
 
 };

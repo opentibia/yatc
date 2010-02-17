@@ -48,21 +48,4 @@ class oRGBA
 	float r, g, b, a;
 };
 
-inline oRGBA makeLightColor(uint16_t lightColor){
-    // FIXME (nfries88): doesn't seem to work; at least for world light color...
-    oRGBA color;
-    #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    color.r = ((float)(lightColor & 0xF000));// / 15.f) * 255.f;
-    color.g = ((float)(lightColor & 0x0F00));// / 15.f) * 255.f;
-    color.b = ((float)(lightColor & 0x00F0));// / 15.f) * 255.f;
-    color.a = ((float)(lightColor & 0x000F));// / 15.f) * 255.f;
-    #else
-    color.r = ((float)(lightColor & 0x000F));// / 15.f) * 255.f;
-    color.g = ((float)(lightColor & 0x00F0));// / 15.f) * 255.f;
-    color.b = ((float)(lightColor & 0x0F00));// / 15.f) * 255.f;
-    color.a = ((float)(lightColor & 0xF000));// / 15.f) * 255.f;
-    #endif
-    return color;
-}
-
 #endif
