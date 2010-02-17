@@ -463,7 +463,7 @@ void MapUI::renderMap()
 
 	if(options.showlighteffects){
 	    if((player != NULL) && !(player->getLightLevel())){
-	        fillLightCircle(m_vpw/2, m_vph/2, 2, initColor);
+	        fillLightCircle(m_vpw/2, m_vph/2, 2, GlobalVariables::getWorldLightColor());
 	    }
         g_engine->drawLightmap(lightmap, options.showlighteffects, m_vpw, m_vph, m_scale);
 	}
@@ -631,8 +631,8 @@ int MapUI::getMinZ() { // find out how far can we render... if anything is direc
 		tile = Map::getInstance().getTile(pos.x-(z-pos.z), pos.y-(z-pos.z), z);
 		if (tile && tile->getThingCount() ) {
 			minz = z+1;
-
-			return (m_minz = minz);
+            if(isVisible(tile->getPos()))
+                return (m_minz = minz);
 		}
 	}
 	return (m_minz = 0);
