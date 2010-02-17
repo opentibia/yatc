@@ -199,13 +199,14 @@ enum TextColor_t {
         TEXTCOLOR_BOLDBLUE    = 23,
         TEXTCOLOR_LIGHTBLUE   = 35,
         TEXTCOLOR_LIGHTGREEN  = 30,
-        TEXTCOLOR_LIGHTGREY   = 129,
+        //TEXTCOLOR_LIGHTGREY   = 129, No use for it.
         TEXTCOLOR_PURPLE      = 131,
-        TEXTCOLOR_DARKRED     = 144,
-        TEXTCOLOR_RED         = 180,
-        TEXTCOLOR_ORANGE      = 198,
+        //TEXTCOLOR_DARKRED     = 144, No use for it.
+        //TEXTCOLOR_DARKORANGE  = 186, No use for it.
+        TEXTCOLOR_RED         = 194,
+        TEXTCOLOR_ORANGE      = 192,
         TEXTCOLOR_YELLOW      = 210,
-        TEXTCOLOR_WHITE       = 215,
+        TEXTCOLOR_WHITE       = 251,
         TEXTCOLOR_NONE        = 255
 };
 

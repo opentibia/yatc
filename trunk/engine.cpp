@@ -249,31 +249,35 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             f->resetColor();
     }
 
+    glictFontRender(text, font, x, y);
+
     std::string temp_text = text;
 
     std::string new_line_text, old_line_text;
     new_line_text = old_line_text = temp_text;
     int linecount = 1;
-    size_t iter_pos;
+    size_t iter_pos, temp_x, temp_y;
 
     // NOTE (Kilouco): Here we centralize all the message and handle positions so it will never go offscreen.
     while (1) {
         iter_pos = old_line_text.find_first_of("\n");
+        temp_x = x;
+        temp_y = y;
 
         if(iter_pos == std::string::npos || iter_pos <= 0) {
             int text_size = sizeText(old_line_text.c_str(), font);
             volatile float centralizationoffset =  text_size / 2;
-            if (x + centralizationoffset > (480 * scale) + 2)
-                x = (480 * scale - 2) - text_size;
+            if (temp_x + centralizationoffset > (480 * scale) + 2)
+                temp_x = (480 * scale - 2) - text_size;
             else if (x < 2)
-                x = 2;
+                temp_x = 2;
             else
-                x = x - centralizationoffset;
+                temp_x -= centralizationoffset;
 
-            if (y < 2)
-                y = 2;
+            if (temp_y < 2)
+                temp_y = 2;
 
-            glictFontRender(old_line_text.c_str(), font, x, y + (12 * (linecount - 1)));
+            glictFontRender(old_line_text.c_str(), font, temp_x, temp_y + (12 * (linecount - 1)));
             break;
         }
         else {
@@ -281,17 +285,17 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             old_line_text.resize(iter_pos);
             int text_size = sizeText(old_line_text.c_str(), font);
             volatile float centralizationoffset =  text_size / 2;
-            if (x + centralizationoffset > (480 * scale) + 2)
-                x = (480 * scale - 2) - text_size;
+            if (temp_x + centralizationoffset > (480 * scale) + 2)
+                temp_x = (480 * scale - 2) - text_size;
             else if (x < 2)
-                x = 2 + centralizationoffset;
+                temp_x = 2 + centralizationoffset;
             else
-                x = x - centralizationoffset;
+                temp_x -= centralizationoffset;
 
-            if (y < 2)
-                y = 2;
+            if (temp_y < 2)
+                temp_y = 2;
 
-            glictFontRender(old_line_text.c_str(), font, x, y + (12 * (linecount - 1)));
+            glictFontRender(old_line_text.c_str(), font, temp_x, temp_y + (12 * (linecount - 1)));
             old_line_text = new_line_text;
             linecount++;
         }
@@ -321,49 +325,46 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
     std::string new_line_text, old_line_text;
     new_line_text = old_line_text = temp_text;
     int linecount = 1;
-    size_t iter_pos;
+    size_t iter_pos, temp_x, temp_y;
 
+    // NOTE (Kilouco): Here we centralize all the message and handle positions so it will never go offscreen.
     while (1) {
         iter_pos = old_line_text.find_first_of("\n");
+        temp_x = x;
+        temp_y = y;
 
         if(iter_pos == std::string::npos || iter_pos <= 0) {
-
             int text_size = sizeText(old_line_text.c_str(), font);
             volatile float centralizationoffset =  text_size / 2;
-
-            if (x + centralizationoffset > (480 * scale) + 2)
-                x = (480 * scale - 2) - text_size;
+            if (temp_x + centralizationoffset > (480 * scale) + 2)
+                temp_x = (480 * scale - 2) - text_size;
             else if (x < 2)
-                x = 2;
+                temp_x = 2;
             else
-                x = x - centralizationoffset;
+                temp_x -= centralizationoffset;
 
-            if (y < 2)
-                y = 2;
+            if (temp_y < 2)
+                temp_y = 2;
 
-            glictFontRender(old_line_text.c_str(), font, x, y + (12 * (linecount - 1)));
-
+            glictFontRender(old_line_text.c_str(), font, temp_x, temp_y + (12 * (linecount - 1)));
             break;
         }
         else {
             new_line_text = old_line_text.substr(iter_pos+1);
             old_line_text.resize(iter_pos);
-
             int text_size = sizeText(old_line_text.c_str(), font);
             volatile float centralizationoffset =  text_size / 2;
-
-            if (x + centralizationoffset > (480 * scale) + 2)
-                x = (480 * scale - 2) - text_size;
+            if (temp_x + centralizationoffset > (480 * scale) + 2)
+                temp_x = (480 * scale - 2) - text_size;
             else if (x < 2)
-                x = 2 + centralizationoffset;
+                temp_x = 2 + centralizationoffset;
             else
-                x = x - centralizationoffset;
+                temp_x -= centralizationoffset;
 
-            if (y < 2)
-                y = 2;
+            if (temp_y < 2)
+                temp_y = 2;
 
-            glictFontRender(old_line_text.c_str(), font, x, y + (12 * (linecount - 1)));
-
+            glictFontRender(old_line_text.c_str(), font, temp_x, temp_y + (12 * (linecount - 1)));
             old_line_text = new_line_text;
             linecount++;
         }
