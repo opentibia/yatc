@@ -260,13 +260,14 @@ void checkFiles()
 void setIcon()
 {
 	//TODO (nfries88): Change so that icon is independent of .dat and .spr
-    printf("Setting icon\n");
+	//NOTE (ivucica): I disagree. I think icon is much nicer when loaded from .spr. And we distribute one file less.
+	printf("Setting icon\n");
 	g_engine = NULL;
 	SDL_WM_SetCaption(PRODUCTNAME, PRODUCTNAME);
 	
 #if 1 //load a sprite from .spr as an icon
-	ObjectType* o = Objects::getInstance()->getOutfitType(58);// priestess
 
+	ObjectType* o = Objects::getInstance()->getOutfitType(58);// priestess
 
     	SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2]);
 
@@ -277,7 +278,7 @@ void setIcon()
 #else // load .ico -- a bad idea because then we must distribute .ico
 	SpriteSDL* s = new SpriteSDL("yatc.ico", 0);
 #endif
-	s->setAsIcon();
+	if(s) s->setAsIcon();
 	delete s;
 	//delete st;
 }
@@ -458,7 +459,9 @@ int main(int argc, char *argv[])
 	}
 
     // We are no longer dependant on .dat for this!
-/*	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Loading data...\n");
+    // ivucica asks: nate, not dependant for what? why is this removed?
+    // because of .ico? disagree.
+	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Loading data...\n");
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, gettext("Loading data file failed!"));
 		std::string forreplace = gettext("Loading the data file '$$FILENAME$$' has failed.\nPlease place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n");
@@ -467,7 +470,7 @@ int main(int argc, char *argv[])
 		NativeGUIError(forreplace.c_str(), str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext("$$PRODUCTSHORT$$ Fatal Error")).c_str());
 		exit(1);
 	}
-*/
+
 
 	setIcon(); // must be called prior to first call to SDL_SetVideoMode() (currently done in engine)
 
