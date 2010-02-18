@@ -336,7 +336,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7F0192E81128E59A0071FCB3</string>
+										<string>7FC98C76112DABF800D4D92F</string>
 										<key>history</key>
 										<array>
 											<string>7F23B1A20E978D7E0006C1FC</string>
@@ -438,7 +438,7 @@
 											<string>7F1C7C891126C9BD00926340</string>
 											<string>7F1C7C911126E17000926340</string>
 											<string>7F1C7C921126E17000926340</string>
-											<string>7FA8ACE2112743FC00AC116D</string>
+											<string>7F0192E81128E59A0071FCB3</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -450,14 +450,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {713, 420}}</string>
+								<string>{{0, 0}, {713, 413}}</string>
 								<key>RubberWindowFrame</key>
 								<string>201 111 1012 657 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>420pt</string>
+							<string>413pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -470,14 +470,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 425}, {713, 191}}</string>
+								<string>{{0, 418}, {713, 198}}</string>
 								<key>RubberWindowFrame</key>
 								<string>201 111 1012 657 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>191pt</string>
+							<string>198pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -496,9 +496,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>7F0192D91128E5320071FCB3</string>
+				<string>7FC98C77112DABF800D4D92F</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>7F0192DA1128E5320071FCB3</string>
+				<string>7FC98C78112DABF800D4D92F</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -636,10 +636,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>7F0192E41128E5320071FCB3</string>
-		<string>7F0192E51128E5320071FCB3</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>7FA4FB820E93D5D40089D560</string>
 		<string>/Users/ivucica/projects/YATC/yatc.xcodeproj</string>
 	</array>
@@ -721,7 +717,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>7FA4FB820E93D5D40089D560</string>
-				<string>7F0192DB1128E5320071FCB3</string>
+				<string>7FC98C79112DABF800D4D92F</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

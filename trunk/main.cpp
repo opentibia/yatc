@@ -263,12 +263,20 @@ void setIcon()
     printf("Setting icon\n");
 	g_engine = NULL;
 	SDL_WM_SetCaption(PRODUCTNAME, PRODUCTNAME);
-	//ObjectType* o = Objects::getInstance()->getOutfitType(58);
+	
+#if 1 //load a sprite from .spr as an icon
+	ObjectType* o = Objects::getInstance()->getOutfitType(58);// priestess
 
-    //SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2]);
+
+    	SpriteSDL *s = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2]);
+
+	// use this only if templated (colorizable) sprite is used
 	//SpriteSDL *st = new SpriteSDL("Tibia.spr", o->imageData[(o->width * o->height)* o->blendframes*2+1]);
 	//s->templatedColorize(st, 79, 94, 88, 82);
+
+#else // load .ico -- a bad idea because then we must distribute .ico
 	SpriteSDL* s = new SpriteSDL("yatc.ico", 0);
+#endif
 	s->setAsIcon();
 	delete s;
 	//delete st;

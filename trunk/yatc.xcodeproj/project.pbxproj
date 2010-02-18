@@ -309,6 +309,7 @@
 		7FB236640FC08B1600507FE1 /* protocolgame841.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame841.h; sourceTree = "<group>"; };
 		7FB236650FC08B1600507FE1 /* protocolgame842.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame842.cpp; sourceTree = "<group>"; };
 		7FB236660FC08B1600507FE1 /* protocolgame842.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame842.h; sourceTree = "<group>"; };
+		7FC98C7D112DAC2000D4D92F /* uireadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uireadable.h; sourceTree = "<group>"; };
 		7FD1F38F0F1390F60061E357 /* choicegrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = choicegrid.cpp; sourceTree = "<group>"; };
 		7FD1F3900F1390F60061E357 /* choicegrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = choicegrid.h; sourceTree = "<group>"; };
 		7FD1F3910F1390F60061E357 /* stackpanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stackpanel.cpp; sourceTree = "<group>"; };
@@ -564,6 +565,7 @@
 		7FA4FB3D0E93D5AA0089D560 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				7FC98C7D112DAC2000D4D92F /* uireadable.h */,
 				7FB09A9C1077804E0034A482 /* skills.cpp */,
 				7FB236590FC08B1600507FE1 /* minimap.h */,
 				7FB2365A0FC08B1600507FE1 /* optionsui.h */,

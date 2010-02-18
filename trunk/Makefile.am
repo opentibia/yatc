@@ -89,7 +89,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		ui/optionsgfxadv.h ui/optionshotkeys.h ui/health.h \
 		ui/itempanel.h ui/minimap.h ui/deathnotification.h \
 		ui/vipwindow.h ui/sbvlpanel.h ui/exitwarning.h \
-		ui/battlewindow.h \
+		ui/battlewindow.h ui/readable.h \
 		\
 		product.h \
 		\
