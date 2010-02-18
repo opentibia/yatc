@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -267,6 +269,7 @@
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
 								<string>7FA4FAB80E93D56C0089D560</string>
+								<string>7FA4FB3D0E93D5AA0089D560</string>
 								<string>7FA4FB160E93D5A10089D560</string>
 								<string>29B97315FDCFA39411CA2CEA</string>
 								<string>7FA4FAB10E93D5260089D560</string>
@@ -281,6 +284,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>3</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -317,14 +322,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>protocolgame83.cpp</string>
+								<string>main.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -332,11 +335,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>protocolgame83.cpp</string>
+										<string>main.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>7FC98C76112DABF800D4D92F</string>
+										<string>7FC98C84112DADFB00D4D92F</string>
 										<key>history</key>
 										<array>
 											<string>7F23B1A20E978D7E0006C1FC</string>
@@ -416,7 +419,6 @@
 											<string>7FDAA93910FA26ED0067AB2B</string>
 											<string>7FDAA96810FA2DC40067AB2B</string>
 											<string>7FDAA96910FA2DC40067AB2B</string>
-											<string>7FDAA96A10FA2DC40067AB2B</string>
 											<string>7FAE8BDA111DC48700846B24</string>
 											<string>7FAE8BDB111DC48700846B24</string>
 											<string>7FAE8BDD111DC48700846B24</string>
@@ -438,7 +440,8 @@
 											<string>7F1C7C891126C9BD00926340</string>
 											<string>7F1C7C911126E17000926340</string>
 											<string>7F1C7C921126E17000926340</string>
-											<string>7F0192E81128E59A0071FCB3</string>
+											<string>7FC98C82112DADFB00D4D92F</string>
+											<string>7FC98C83112DADFB00D4D92F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -636,8 +639,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>7FA4FB820E93D5D40089D560</string>
 		<string>/Users/ivucica/projects/YATC/yatc.xcodeproj</string>
+		<string>7FA4FB820E93D5D40089D560</string>
 	</array>
 	<key>WindowString</key>
 	<string>201 111 1012 657 0 0 1280 778 </string>
@@ -656,12 +659,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string></string>
+								<string>main.cpp</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -728,7 +733,7 @@
 			<key>WindowToolGUID</key>
 			<string>7FA4FB820E93D5D40089D560</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
