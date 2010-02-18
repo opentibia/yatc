@@ -6,7 +6,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: YATC 0.3.2SVN\n"
+"Project-Id-Version: YATC 0.3.3SVN\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-16 01:49+0100\n"
 "PO-Revision-Date: \n"
