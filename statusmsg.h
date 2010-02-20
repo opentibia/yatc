@@ -25,33 +25,30 @@
 #ifndef __STATUSMSG_H
 #define __STATUSMSG_H
 
-#include <string>
+#include <sstream>
 #include "gamecontent/enums.h"
 
-enum VAlignment
+enum MSG_POS
 {
-    ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM
-};
-enum HAlignment
-{
-    ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT
+    CENTER, BOTTOM
 };
 
 class StatusMsg
 {
     public:
         StatusMsg();
-        StatusMsg(TextColor_t color, const std::string& message, double timeout, double xoffset=0, double yoffset=0, HAlignment halign=ALIGN_CENTER, VAlignment valign=ALIGN_BOTTOM);
+        StatusMsg(TextColor_t color, const std::string& message, double timeout, MSG_POS msgPos);
 
-        void paintSelf(int windowX, int windowY, int windowW, int windowH);
+        void paintSelf();
         void updateSelf(double k);
     private:
+        void linebreaker();
+
         double m_timeRemaining;
         TextColor_t m_textColor;
         std::string m_messageText;
 
-        double m_xOffset, m_yOffset;
-        HAlignment m_hAlign; VAlignment m_vAlign;
+        MSG_POS m_msgPos;
 };
 
 #endif

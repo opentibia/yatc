@@ -231,7 +231,7 @@ void Engine::drawText(const char* text, const char* font, int x, int y, oRGBA co
 void Engine::drawTextGW(const char* text, const char* font, int x, int y, float scale, uint8_t color)
 {
     // NOTE (nfries88): keeps all rendering in the game area.
-    //x = std::min(std::max(1, x), (m_width - 176) - (int)sizeText(text, font)); // NOTE (Kilouco): Doesn't work this way anymore.
+    //x = std::min(std::max(1, x), (m_width - 176) - (int)sizeText(text, font)); // NOTE (Kilouco): Doesn't works this way anymore.
     //y = std::max(1, y);
 
 	YATCFont *f = (YATCFont*)(glictFindFont(font)->GetFontParam());
