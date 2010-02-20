@@ -29,6 +29,7 @@ StatusMsg::StatusMsg()
     m_messageText = "";
 
     m_msgPos = BOTTOM;
+    m_linecount = 1;
     linebreaker();
 }
 StatusMsg::StatusMsg(TextColor_t color, const std::string& message, double timeout, MSG_POS msgPos)
@@ -38,7 +39,10 @@ StatusMsg::StatusMsg(TextColor_t color, const std::string& message, double timeo
     m_messageText = message;
 
     m_msgPos = msgPos;
+    m_linecount = 1;
     linebreaker();
+
+    m_timeRemaining += (m_linecount - 1) * 0.5;
 }
 
 void StatusMsg::paintSelf()
@@ -55,23 +59,28 @@ void StatusMsg::paintSelf()
     switch (m_msgPos)
     {
         case CENTER:
-            y /= 2;
+            y = (y / 2) - 12;
             break;
         case BOTTOM:
             y -= 12;
             break;
     }
 
-    g_engine->drawText(m_messageText.c_str(),"gamefont",x,y,m_textColor);
+    y -= (12 * (m_linecount - 1));
+
+    g_engine->drawTextGW(m_messageText.c_str(),"gamefont",x,y,scale,m_textColor);
 }
 
 void StatusMsg::linebreaker()
 {
+    if (BOTTOM)
+        return;
+
     std::string new_line_text, old_line_text;
     std::stringstream final_text;
 
     new_line_text = old_line_text = m_messageText;
-    int linecount = 1;
+    m_linecount = 1;
     int line_size = m_messageText.length();
     size_t iter_pos;
 
@@ -102,7 +111,7 @@ void StatusMsg::linebreaker()
 
                 final_text << old_line_text << "\n";
 
-                linecount++;
+                m_linecount++;
 
                 old_line_text = new_line_text;
                 line_size = old_line_text.length();

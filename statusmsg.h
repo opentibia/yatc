@@ -49,6 +49,8 @@ class StatusMsg
         std::string m_messageText;
 
         MSG_POS m_msgPos;
+
+        int m_linecount;
 };
 
 #endif
