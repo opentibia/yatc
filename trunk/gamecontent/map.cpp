@@ -69,7 +69,7 @@ bool AnimatedText::canBeDeleted()
 }
 
 //*************** PublicMessage *************************
-PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName, int linecount, int range)
+PublicMessage::PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName, int linecount, MSG_RANGE range)
 {
 	m_color = color;
 	m_sender = sender;
@@ -605,7 +605,7 @@ void Map::addAnimatedText(const Position& pos, uint32_t color, const std::string
 	m_animatedTexts[pos.z].push_back(AnimatedText(pos, color, text));
 }
 
-void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender, int range, bool showName)
+void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender, MSG_RANGE range, bool showName)
 {
 	ASSERT(pos.z < MAP_LAYER);
 

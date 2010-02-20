@@ -58,15 +58,17 @@ void StatusMsg::paintSelf()
 
     switch (m_msgPos)
     {
-        case CENTER:
+        case CENTER_INFO:
             y = (y / 2) - 12;
+            y -= (12 * (m_linecount - 1));
+            break;
+        case CENTER_EVENT:
+            y = (y / 2) + 12;
             break;
         case BOTTOM:
             y -= 12;
             break;
     }
-
-    y -= (12 * (m_linecount - 1));
 
     g_engine->drawTextGW(m_messageText.c_str(),"gamefont",x,y,scale,m_textColor);
 }
