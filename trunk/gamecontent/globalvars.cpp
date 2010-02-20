@@ -33,6 +33,8 @@ uint32_t GlobalVariables::m_stats[STAT_LAST] = {0};
 uint32_t GlobalVariables::m_skills[SKILL_LAST][2] = {{0}};
 uint32_t GlobalVariables::m_cash = 0;
 
+float GlobalVariables::m_scale = 1.F;
+
 void GlobalVariables::clear()
 {
 	m_playerId = 0;

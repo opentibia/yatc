@@ -152,13 +152,20 @@ void MapUI::renderMap()
 
 	// set up scale
 	if(!options.stretchGameWindow)
-		m_scale = MIN(m_w/(15.*32), m_h/(11.*32));
+		GlobalVariables::setScale(MIN(m_w/(15.*32), m_h/(11.*32)));
+		//m_scale = MIN(m_w/(15.*32), m_h/(11.*32));
 	else
-		m_scale = 1.f;
+        GlobalVariables::setScale(1.f);
+		//m_scale = 1.f;
 	// NOTE (nfries88): By flooring scaledSize, we assure a full pixel value for scaledSize.
 	//	by then setting m_scale to this full pixel value / 32, we assure that all things are scaled equally.
+
+	// NOTE (Kilouco): Made Scale var global to be used everywhere without some annoying restrictions.
+	m_scale = GlobalVariables::getScale();
 	float scaledSize = std::floor(32*m_scale);
-	m_scale = scaledSize/32;
+	GlobalVariables::setScale(scaledSize/32);
+	//m_scale = scaledSize/32;
+	m_scale = GlobalVariables::getScale();
 
     m_x = int(-scaledSize*2); m_y = int(-scaledSize*2);
 	g_engine->setClipping(/*scaledSize*2 + m_x,scaledSize*2 + m_y,*/0,0,int(15*scaledSize),int(11*scaledSize));

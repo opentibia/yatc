@@ -66,6 +66,9 @@ public:
 	static uint32_t getPlayerCash() { return m_cash; }
 	static void setPlayerCash(uint32_t money) { m_cash = money; }
 
+	static float getScale() { return m_scale; }
+	static void setScale(float scale) { m_scale = scale; }
+
 protected:
 	GlobalVariables(){}
 
@@ -87,6 +90,8 @@ protected:
 	static uint32_t m_skills[SKILL_LAST][SKILL_ATTR_LAST];
 
 	static uint32_t m_cash;
+
+	static float m_scale;
 };
 
 #endif

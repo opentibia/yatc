@@ -465,9 +465,9 @@ void GM_Gameworld::updateScene()
     }
 
     // status messages
-    m_statusStatMsg.paintSelf(0,0,int(glictGlobals.w-172-4), int(glictGlobals.h - 150 - 20));
+    m_statusStatMsg.paintSelf();
     m_statusStatMsg.updateSelf(g_frameDiff / 1000.);
-    m_lookatStatMsg.paintSelf(0,0,int(glictGlobals.w-172-4), int(glictGlobals.h - 150 - 20));
+    m_lookatStatMsg.paintSelf();
     m_lookatStatMsg.updateSelf(g_frameDiff / 1000.);
 
 	desktop.Paint();
@@ -1311,23 +1311,27 @@ void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
 {
 	switch (type){
 
-    //Revised
-	case MSG_STATUS_WARNING:
-        getServerLogConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_RED));
-		m_lookatStatMsg = StatusMsg(TEXTCOLOR_RED, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
-		break;
-	case MSG_INFO_DESCR:
-		getServerLogConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_LIGHTGREEN));
-		m_lookatStatMsg = StatusMsg(TEXTCOLOR_LIGHTGREEN, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
-		break;
     case MSG_STATUS_CONSOLE_BLUE:
         getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_PURPLE));
 		break;
-    //Revised
+    case MSG_STATUS_CONSOLE_RED:
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_RED));
+        break;
+    case MSG_STATUS_CONSOLE_ORNG:
+        getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_DARKORANGE));
 
+
+    case MSG_STATUS_WARNING:
+        getServerLogConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_RED));
+		m_lookatStatMsg = StatusMsg(TEXTCOLOR_RED, message, 5, CENTER);
+		break;
+    case MSG_INFO_DESCR:
+		getServerLogConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_LIGHTGREEN));
+		m_lookatStatMsg = StatusMsg(TEXTCOLOR_LIGHTGREEN, message, 3, CENTER);
+		break;
     case MSG_EVENT_ADVANCE:
         getServerLogConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_WHITE));
-		m_lookatStatMsg = StatusMsg(TEXTCOLOR_WHITE, message, 3, 0, -30, ALIGN_CENTER, ALIGN_MIDDLE);
+		m_lookatStatMsg = StatusMsg(TEXTCOLOR_WHITE, message, 3, CENTER);
 		break;
 
     case MSG_EVENT_DEFAULT:
@@ -1335,7 +1339,7 @@ void GM_Gameworld::onTextMessage(MessageType_t type, const std::string& message)
     case MSG_STATUS_SMALL:
         if (type != MSG_STATUS_SMALL)
             getDefaultConsole()->insertEntry(ConsoleEntry(message, TEXTCOLOR_WHITE));
-        m_statusStatMsg = StatusMsg(TEXTCOLOR_WHITE, message, 3);
+        m_statusStatMsg = StatusMsg(TEXTCOLOR_WHITE, message, 3, BOTTOM);
         break;
 	default:
 		getDefaultConsole()->insertEntry(ConsoleEntry(message));
