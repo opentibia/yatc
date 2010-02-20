@@ -251,7 +251,7 @@ private:
     Popup* m_popup;
     bool m_showPopup;
 
-    StatusMsg m_statusStatMsg, m_lookatStatMsg, m_pmStatMsg, m_broadcastStatMsg;
+    StatusMsg m_statusStatMsg, m_lookatStatMsg, m_eventStatMsg;
 };
 
 #endif

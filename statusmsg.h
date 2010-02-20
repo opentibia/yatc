@@ -30,7 +30,7 @@
 
 enum MSG_POS
 {
-    CENTER, BOTTOM
+    CENTER_EVENT, CENTER_INFO, BOTTOM
 };
 
 class StatusMsg

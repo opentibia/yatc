@@ -592,11 +592,11 @@ void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
 
         else {
             if ((*it).get_relativePos() == (linecount + orange_linecount) && (*it).shouldShowName()) {
-                if ((*it).get_range() == 0)
+                if ((*it).get_range() == MSG_WHISP)
                     text = (*it).getSender() + " whispers:";
-                else if ((*it).get_range() == 2)
+                else if ((*it).get_range() == MSG_YELL)
                     text = (*it).getSender() + " yells:";
-                else
+                else if ((*it).get_range() == MSG_SAY)
                     text = (*it).getSender() + " says:";
                 g_engine->drawTextGW(text.c_str() , "gamefont", x, y - (((*it).get_relativePos() + 1) * 12), m_scale, (*it).getColor());
             }
