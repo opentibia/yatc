@@ -376,17 +376,9 @@ bool Tile::addThing(Thing *thing, bool pushThing/* = false*/)
 		return false;
 	}
 
-	if(getThingCount() == 10){
-		Thing* pushThing = getThingByStackPos(9);
-		if(!removeThing(pushThing)){
-			return false;
-		}
-		Thing::deleteThing(pushThing);
-	}
-
 	Item* item = thing->getItem();
 
-	if(item && item->isGroundTile()){
+	if(item && item->isGroundTile()){  //yes, I know this could potentially fsck up if the tile already has 10 non-ground things on it and ground is added to that, but if a server does that it does not deserve to be graced by YATC's presence.
 		if(m_ground != NULL){
 			return false;
 		}
@@ -414,6 +406,14 @@ bool Tile::addThing(Thing *thing, bool pushThing/* = false*/)
 	}
 
 	m_objects.insert(it, thing);
+
+	if(getThingCount() > 10){
+		Thing* excessThing = getThingByStackPos(10);
+		if(!removeThing(excessThing)){
+			return false;
+		}
+		Thing::deleteThing(excessThing);
+	}
 
 	Creature *c = thing->getCreature();
 	if(c){
