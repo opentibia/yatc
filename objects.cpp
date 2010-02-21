@@ -240,40 +240,68 @@ void Objects::unloadGfx()
 
 bool Objects::loadDat(const char* filename)
 {
+	bool success = false;
 	if(m_datLoaded) {
 	    printf("LOADING DATA FILE %s BUT ALREADY LOADED\n", filename);
 		return false;
 	}
 
+
 	ClientVersion_t ver = options.protocol;
 	if(ver == CLIENT_VERSION_AUTO) {
+		// detectVersion will return CLIENT_VERSION_AUTO in case of failure
 		ver = ProtocolConfig::detectVersion();
 	}
 
-	/* 7.80 - 8.5 use almost same .dat format (with an addition hereanddthere)*/
-	if(ver >= CLIENT_VERSION_780) {
-		return load780plus(filename);
-	}
-	/* 7.55 - 7.72 use same .dat format to the best of my knowledge */
-	else if(ver >= CLIENT_VERSION_755) {
-		return load76_77series(filename);
-	}
-	else if(ver >= CLIENT_VERSION_740) {
-	    return load74_75series(filename);
+
+
+	/*
+
+	outline of revamped loader:
+
+	- we have a std::map with all loaders
+	- key of std::map is minimal version where the loader applies
+	- value of std::map is pointer to loader function
+	- if detected version is larger or equal to a certain member, load, and if successful abort
+	- otherwise try again
+
+	in case detection of version failed (e.g. custom data file signatures) then ver == CLIENT_VERSION_AUTO
+	and then we try to load with each and every loader. if we're successful, yay, we're happy and we bail out.
+
+	*/
+
+	std::map<ClientVersion_t, bool (Objects::*)(const char*)> loaders;
+
+	loaders[CLIENT_VERSION_780] = &Objects::load780plus; /* 7.80 - 8.5 use almost same .dat format (with an addition hereanddthere)*/
+	loaders[CLIENT_VERSION_755] = &Objects::load76_77series; /* 7.55 - 7.72 use same .dat format to the best of my knowledge */
+	loaders[CLIENT_VERSION_740] = &Objects::load74_75series;
+
+
+	for(std::map<ClientVersion_t, bool(Objects::*)(const char*)>::reverse_iterator it = loaders.rbegin(); it != loaders.rend(); it++)
+	{
+		if(ver >= it->first || ver == CLIENT_VERSION_AUTO)
+		{
+			success = (this->*it->second)(filename);
+			if(success) 
+				break;
+		}
+		
 	}
 
-    NativeGUIError(str_replace("$$PRODUCTSHORT$$", PRODUCTSHORT, gettext(
-                               "Unrecognized data files.\n"
-                               "\n"
-                               "* Please install a supported version of data files, or override\n"
-                               "  autodetection manually in configuration.\n"
-                               "\n"
-                               "* You may be attempting to use a too new version of data files.\n"
-                               "  Check if a new version of $$PRODUCTSHORT$$ came out which\n"
-                               "  supports this version of data files.")).c_str(),
-                    gettext("Data files not recognized"));
-
-	return false;
+	if (!success)
+	{
+		NativeGUIError(	str_replace(	"$$PRODUCTSHORT$$", PRODUCTSHORT, gettext(
+						"Unrecognized data files.\n"
+						"\n"
+						"* Please install a supported version of data files, or override\n"
+						"  autodetection manually in configuration.\n"
+						"\n"
+						"* You may be attempting to use a too new version of data files.\n"
+						"  Check if a new version of $$PRODUCTSHORT$$ came out which\n"
+						"  supports this version of data files.")).c_str(),
+				gettext("Data files not recognized"));
+	}
+	return success;
 }
 
 
