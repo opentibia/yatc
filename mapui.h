@@ -58,7 +58,7 @@ class MapUI {
 
 
 		int getMinZ();
-		void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy);
+		void drawPublicMessages(Position pos, float walkoffx, float walkoffy);
 
 
 	private:
