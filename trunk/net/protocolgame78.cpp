@@ -78,9 +78,23 @@ Thing* ProtocolGame78::internalGetThing(NetworkMessage& msg)
 	if(thingId == 0x0061 || thingId == 0x0062) {
 		//creatures
 		Creature* creature = NULL;
+
 		if(thingId == 0x0062){ //creature is known
 			uint32_t creatureID = msg.getU32();
 			creature = Creatures::getInstance().getCreature(creatureID);
+
+			if(!creature){
+			return NULL;
+            }
+
+            //read creature properties
+            uint8_t hp = msg.getU8();
+            creature->setHealth(hp);
+            if(creature->getHealth() > 100){
+                return NULL;
+            }
+            Notifications::onCreatureChangeHealth(creature->getID(), hp);
+            //
 		}
 		else if(thingId == 0x0061){ //creature is not known
 			//perhaps we have to remove a known creature
@@ -90,25 +104,25 @@ Thing* ProtocolGame78::internalGetThing(NetworkMessage& msg)
 			//add a new creature
 			uint32_t creatureID = msg.getU32();
 			creature = Creatures::getInstance().addCreature(creatureID);
-			if(!creature){
-				return NULL;
-			}
-			Notifications::onAddCreature(creatureID);
 
 			creature->setName(msg.getString());
-		}
-		if(!creature){
+
+			if(!creature){
 			return NULL;
+            }
+
+            //read creature properties
+            uint8_t hp = msg.getU8();
+            creature->setHealth(hp);
+            if(creature->getHealth() > 100){
+                return NULL;
+            }
+            Notifications::onCreatureChangeHealth(creature->getID(), hp);
+            // NOTE (Kilouco): Let's make it comes before onAddCreature. Now battlewindow should works fine.
+
+            Notifications::onAddCreature(creatureID);
 		}
 
-		//read creature properties
-		uint8_t hp = msg.getU8();
-		creature->setHealth(hp);
-		if(creature->getHealth() > 100){
-			return NULL;
-		}
-		Notifications::onCreatureChangeHealth(creature->getID(), hp);
-		//
 		uint8_t direction;
 		if(!msg.getU8(direction) || direction > 3){
 			return NULL;
