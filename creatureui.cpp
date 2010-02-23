@@ -190,13 +190,8 @@ void CreatureUI::drawInfo(int x, int y, float scale, bool visible) const
     int relative_x = creaturePos.x - playerPos.x;
     int relative_y = creaturePos.y - playerPos.y;
 
-    if ((abs(relative_x) > 7 || abs(relative_y) > 5) && creaturePos.x > 0 && creaturePos.y > 0)
+    if (abs(relative_x) > 7 || abs(relative_y) > 5)
         return; //Shouldn't render names and health bars in these cases.
-        // TODO (kilouco): For some VERY strange reason, creatures who appears quickly on the screen
-        // (by teleport, login, or floor changing and not by entering in the range) do not
-        // instantly update their positions (one of the first things it should do). This
-        // must be fixed because Here I am not fixing a bug, just AVOIDING it by ignoring creatures with pos 0,0.
-
 
     // NOTE (Kilouco): Generic position formula
     float walkoffx = 0.f, walkoffy = 0.f;

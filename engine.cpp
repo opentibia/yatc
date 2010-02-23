@@ -266,7 +266,7 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             volatile float centralizationoffset =  text_size / 2;
             if (temp_x + centralizationoffset > (480 * scale) + 2)
                 temp_x = (480 * scale - 2) - text_size;
-            else if (x < 2)
+            else if (x - centralizationoffset < 2)
                 temp_x = 2;
             else
                 temp_x -= centralizationoffset;
@@ -284,8 +284,8 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             volatile float centralizationoffset =  text_size / 2;
             if (temp_x + centralizationoffset > (480 * scale) + 2)
                 temp_x = (480 * scale - 2) - text_size;
-            else if (x < 2)
-                temp_x = 2 + centralizationoffset;
+            else if (x - centralizationoffset < 2)
+                temp_x = 2;
             else
                 temp_x -= centralizationoffset;
 
@@ -335,7 +335,7 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             volatile float centralizationoffset =  text_size / 2;
             if (temp_x + centralizationoffset > (480 * scale) + 2)
                 temp_x = (480 * scale - 2) - text_size;
-            else if (x < 2)
+            else if (x - centralizationoffset < 2)
                 temp_x = 2;
             else
                 temp_x -= centralizationoffset;
@@ -353,8 +353,8 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
             volatile float centralizationoffset =  text_size / 2;
             if (temp_x + centralizationoffset > (480 * scale) + 2)
                 temp_x = (480 * scale - 2) - text_size;
-            else if (x < 2)
-                temp_x = 2 + centralizationoffset;
+            else if (x - centralizationoffset < 2)
+                temp_x = 2;
             else
                 temp_x -= centralizationoffset;
 
