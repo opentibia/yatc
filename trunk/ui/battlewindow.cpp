@@ -102,7 +102,7 @@ void winBattle_t::update(uint32_t id)
 	#pragma message ("GLICT too old, get 105 or newer for visual improvement on some progressbars")
 #else
 	#warning GLICT too old, get 105 or newer for visual improvement on some progressbars
-#endif      
+#endif
             #else
 			e->pbHealth.SetFGColor(glictColor(col.r/255., col.g/255., col.b/255., col.a/255.));
 			#endif
@@ -160,7 +160,7 @@ void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer
 	else
 		col = oRGBA(.7*255, .7*255, .7*255, .7*255);
 	g_engine->drawText(creature->getName().c_str(), "aafont", (int)real->left+23, (int)real->top, col);
-	creature->Blit((int)real->left+4, (int)real->top+4, 20.f/32.f, 0, 0);
+	creature->Blit((int)real->left+4, (int)real->top+4, (32.f/20.f)*(1.f/creature->getSize()), 0, 0);
 }
 
 void winBattle_t::onAttack(Popup::Item* parent)
