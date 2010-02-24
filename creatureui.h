@@ -23,6 +23,8 @@
 
 #include "thingui.h"
 #include "objects.h"
+#include "defines.h"
+
 class CreatureUI : virtual public ThingUI {
 public:
 
@@ -47,6 +49,8 @@ public:
 	void unloadGfx();
 
 	static oRGBA getHealthColor(int hp);
+
+	int getSize(){ return (m_obj != NULL)?(MAX(m_obj->width, m_obj->height)):(1); }
 protected:
 	void setupObject();
 

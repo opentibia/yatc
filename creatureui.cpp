@@ -104,7 +104,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	//for(uint32_t k = 0; k < m_obj->blendframes; ++k){ // note: if it's anything except item, there won't be blendframes...
 	{
 	    uint32_t aframes;
-	    if(m_obj->animcount == 3){
+	    if(m_obj->animcount == 3 && (map_x != 0 && map_y != 0)){
 			aframes = aniSize * (m_walkState == 1. ? 0 : (((int)(m_walkState*100) / 25) % 2 + 1));
 		}
 	    else if(m_obj->idleAnim){
