@@ -205,7 +205,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		std::stringstream loadingtext;
 		loadingtext << "Loading " << filename << "[" << index << "]...";
 		if (g_engine && index) {
-			g_engine->drawRectangle(0,0,240,10,oRGBA(0,0,0,1));
+			g_engine->drawRectangle(0,0,240,10,oRGBA(0,0,0,255));
 			g_engine->drawText(loadingtext.str().c_str(), "minifont", 0, 0, 0xFF);
 			g_engine->Flip();
 		}
