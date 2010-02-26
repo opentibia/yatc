@@ -46,19 +46,12 @@ extern Engine* g_engine;
 #include "gamecontent/creature.h"
 
 inline oRGBA makeLightColor(uint16_t lightColor){
-    // FIXME (nfries88): doesn't seem to work; at least for world light color...
+    // NOTE (nfries88): this works for colors sent from the server, but colors from .dat are mysteriously 16-bit rather than 8-bit... who knows
+        // also, ripped this from minimap code. Surprisingly, works.
     oRGBA color;
-    #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	color.r = (lightColor & 0x03);
-	color.g = (lightColor & 0x0C);
-	color.b = (lightColor & 0x30);
-	color.a = (lightColor & 0xC0);
-    #else
-	color.a = (lightColor & 0x03);
-	color.b = (lightColor & 0x0C);
-	color.g = (lightColor & 0x30);
-	color.r = (lightColor & 0xC0);
-    #endif
+    color.b = uint8_t((lightColor % 6) / 5. * 255);
+	color.g = uint8_t(((lightColor / 6) % 6) / 5. * 255);
+	color.r = uint8_t((lightColor / 36.) / 6. * 255);
     return color;
 }
 

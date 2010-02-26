@@ -198,7 +198,7 @@ void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos)
 {
     float zoom = m_zoom;
 	//background
-	g_engine->drawRectangle(x, y, w, h, oRGBA(0,0,0,1));
+	g_engine->drawRectangle(x, y, w, h, oRGBA(0,0,0,255));
 
 	//Coordinates of the top-left minimap corner
 	int x1 = centerPos.x - int((w/2)/zoom);
@@ -250,7 +250,7 @@ void Automap::renderSelf(int x, int y, int w, int h, const Position& centerPos)
 	}
 
     //mark where is the player
-    g_engine->drawRectangle(x + w/2 -1, y + h/2-1, 3, 3, oRGBA(255,255,255,1));
+    g_engine->drawRectangle(x + w/2 -1, y + h/2-1, 3, 3, oRGBA(255,255,255,255));
 }
 
 void Automap::zoomIn()
@@ -262,5 +262,5 @@ void Automap::zoomIn()
 void Automap::zoomOut()
 {
     if (m_zoom > 0.5)
-    m_zoom /= 2;
+        m_zoom /= 2;
 }
