@@ -163,7 +163,7 @@ void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer
 
 	Outfit_t outfit = creature->getOutfit();
 
-    if (outfit.m_looktype == 0)
+    if (outfit.m_looktype != 0)
         creature->Blit((int)real->left+4, (int)real->top+4, (32.f/20.f)*(1.f/creature->getSize()), 0, 0);
 }
 
