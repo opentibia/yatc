@@ -160,7 +160,11 @@ void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer
 	else
 		col = oRGBA(.7*255, .7*255, .7*255, .7*255);
 	g_engine->drawText(creature->getName().c_str(), "aafont", (int)real->left+23, (int)real->top, col);
-	creature->Blit((int)real->left+4, (int)real->top+4, (32.f/20.f)*(1.f/creature->getSize()), 0, 0);
+
+	Outfit_t outfit = creature->getOutfit();
+
+    if (outfit.m_looktype == 0)
+        creature->Blit((int)real->left+4, (int)real->top+4, (32.f/20.f)*(1.f/creature->getSize()), 0, 0);
 }
 
 void winBattle_t::onAttack(Popup::Item* parent)
