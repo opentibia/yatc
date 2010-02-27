@@ -479,7 +479,7 @@ void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
     // OPTIMIZE ME.
     Map::PublicMessageList& messages = Map::getInstance().getPublicMessages();
     Map::PublicMessageList::iterator it = messages.begin(), temp_it = messages.begin();
-    Map::PublicMessageList::reverse_iterator rit = messages.rbegin(), temp_rit = messages.rbegin();
+    Map::PublicMessageList::reverse_iterator rit = messages.rbegin(), temp_rit = messages.rbegin(), temp_rit2 = messages.rbegin();
     std::string text;
     int x = 0, y = 0, orange_linecount = 0, linecount = 0, first = 0;
 
@@ -505,9 +505,9 @@ void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
         y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
 
         if((*rit).is_handled() == false) {
-            orange_linecount = (*rit).getLinecount();
+            linecount = (*rit).getLinecount();
             (*rit).set_handled(true);
-            (*rit).set_relativePos(orange_linecount);
+            (*rit).set_relativePos(linecount);
 
             while(temp_rit != messages.rend()){
                 if ((*temp_rit).shouldShowName()) {
@@ -516,8 +516,8 @@ void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
                 }
 
                 if((*rit).getPosition() == (*temp_rit).getPosition() && (*temp_rit).getSender() == (*rit).getSender() && (*temp_rit).is_handled() == false) {
-                    orange_linecount += (*temp_rit).getLinecount();
-                    (*temp_rit).set_relativePos(orange_linecount);
+                    linecount += (*temp_rit).getLinecount();
+                    (*temp_rit).set_relativePos(linecount);
                     (*temp_rit).set_handled(true);
                 }
                 temp_rit++;
@@ -527,6 +527,7 @@ void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
     }
 
     // Then we handle yellow messages, with names and stuff.
+    linecount = 0;
     rit = messages.rbegin();
     while(rit != messages.rend()){
         if (!(*rit).shouldShowName()) {
@@ -535,13 +536,29 @@ void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
         }
 
         temp_rit = rit;
+        temp_rit2 = messages.rbegin();
         const Position& txtpos = (*rit).getPosition();
         x = ((txtpos.x - pos.x + m_vpw/2 - 2) * (m_scale * 32) + (m_scale * 16)) + walkoffx;
         y = ((txtpos.y - pos.y + m_vph/2 - 2) * (m_scale * 32)) + walkoffy;
 
         if((*rit).is_handled() == false) {
             linecount = (*rit).getLinecount();
+            orange_linecount = 0;
+
             (*rit).set_handled(true);
+
+            while(temp_rit2 != messages.rend()) {
+                if ((*temp_rit2).shouldShowName()) {
+                    temp_rit2++;
+                    continue;
+                }
+
+                if((*rit).getPosition() == (*temp_rit2).getPosition() && (*rit).getSender() == (*temp_rit2).getSender())
+                    orange_linecount += (*temp_rit2).getLinecount();
+
+                temp_rit2++;
+            }
+
             (*rit).set_relativePos(orange_linecount + linecount);
 
             while(temp_rit != messages.rend()){
@@ -604,12 +621,12 @@ void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
     // NOTE (Kilouco): Here we actually write the "Player says: ". This works for that "y = 0" case.
     if (first > 0) {
         if((*temp_it).shouldShowName()) {
-            if ((*it).get_range() == 0)
-                text = (*it).getSender() + " whispers:";
+            if ((*temp_it).get_range() == 0)
+                text = (*temp_it).getSender() + " whispers:";
             else if ((*it).get_range() == 2)
-                text = (*it).getSender() + " yells:";
+                text = (*temp_it).getSender() + " yells:";
             else
-                text = (*it).getSender() + " says:";
+                text = (*temp_it).getSender() + " says:";
             g_engine->drawTextGW(text.c_str() , "gamefont", x, 0, m_scale, (*temp_it).getColor());
         }
     }
