@@ -129,6 +129,8 @@ void SpriteGL::Blit(float destx, float desty, float srcx, float srcy, float srcw
     if (m_engineCreationTimestamp != g_engine->m_creationTimestamp) { // we need to recreate the texture since the context was invalidated in the meantime
         buildGLTexture();
     }
+    glPushMatrix();
+
 	glEnable(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, m_texture);

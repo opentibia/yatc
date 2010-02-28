@@ -202,10 +202,10 @@ void Engine::drawText(const char* text, const char* font, int x, int y, uint8_t 
         float g = ((color / 6) % 6) / 5.;
         float b = (color % 6) / 5.;
 
-        if (color!=215)
-            f->addColor(r,g,b);
-        else if (color == 255) // we'll just use otherwise useless 255 for drawing with 0.75, 0.75, 0.75 if needed
+        if (color == 255) // we'll just use otherwise useless 255 for drawing with 0.75, 0.75, 0.75 if needed
             f->addColor(0.75, 0.75, 0.75);
+        else if (color!=215)
+            f->addColor(r,g,b);
         else
             f->resetColor();
     }
@@ -241,10 +241,10 @@ void Engine::drawTextGW(const char* text, const char* font, int x, int y, float 
         float g = ((color / 6) % 6) / 5.;
         float b = (color % 6) / 5.;
 
-        if (color!=215)
-            f->addColor(r,g,b);
-        else if (color == 255) // we'll just use otherwise useless 255 for drawing with 0.75, 0.75, 0.75 if needed
+        if (color == 255) // we'll just use otherwise useless 255 for drawing with 0.75, 0.75, 0.75 if needed
             f->addColor(0.75, 0.75, 0.75);
+        else if (color!=215)
+            f->addColor(r,g,b);
         else
             f->resetColor();
     }
