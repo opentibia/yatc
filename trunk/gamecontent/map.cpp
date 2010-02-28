@@ -107,6 +107,32 @@ void PublicMessage::set_relativePos(int pos)
     m_relativePos = pos;
 }
 
+//*************** PrivateMessage *************************
+PrivateMessage::PrivateMessage(TextColor_t color, const std::string& text, const std::string& sender, int linecount)
+{
+	m_color = color;
+	m_sender = sender;
+	m_text = text;
+	//m_startTime = g_frameTime;
+	m_linecount = linecount;
+    //m_handled = false;
+    m_onscreen = false;
+}
+
+void PrivateMessage::setOnScreen(bool screen)
+{
+    m_onscreen = screen;
+    m_startTime = g_frameTime;
+}
+
+bool PrivateMessage::canBeDeleted()
+{
+	if(m_onscreen == true && g_frameTime - m_startTime > 2000 + (m_linecount * 1000))
+		return true;
+	else
+		return false;
+}
+
 //*************** Tile **************************
 
 Tile::Tile()
@@ -653,13 +679,62 @@ void Map::addPublicMessage(const Position& pos, TextColor_t color, const std::st
                     final_text << new_line_text;
             }
         }
-        //m_publicMessages[pos.z].push_back(PublicMessage(color, final_text.str(), sender, pos, showName, linecount, range));
         m_publicMessages.push_back(PublicMessage(color, final_text.str(), sender, pos, showName, linecount, range));
         return;
     }
-
-	//m_publicMessages[pos.z].push_back(PublicMessage(color, text, sender, pos, showName, linecount, range));
 	m_publicMessages.push_back(PublicMessage(color, text, sender, pos, showName, linecount, range));
+}
+
+void Map::addPrivateMessage(TextColor_t color, const std::string& text, const std::string& sender)
+{
+	std::string new_line_text, old_line_text;
+    std::stringstream final_text;
+
+    new_line_text = old_line_text = text;
+    int linecount = 1;
+    int line_size = text.length();
+    size_t iter_pos;
+
+    // NOTE (Kilouco): Here we make linebreaks for public messages.
+    // TODO (Kilouco): Generic Linebreaker.
+    //39 characters per line, despite their size.
+    if (line_size > 39) {
+        while (line_size > 39) {
+            old_line_text.erase(old_line_text.end()-1);
+            line_size = old_line_text.length();
+
+            if (line_size <= 39) {
+                iter_pos = old_line_text.find_last_of(" ");
+
+                if(iter_pos == std::string::npos || !iter_pos) {
+                    iter_pos = old_line_text.length();
+                    new_line_text = new_line_text.substr(iter_pos-1);
+                    old_line_text.resize(iter_pos);
+
+                    old_line_text.erase(old_line_text.end()-1);
+                    old_line_text = old_line_text + "-";
+                    iter_pos = old_line_text.length();
+                }
+                else {
+                    new_line_text = new_line_text.substr(iter_pos);
+                    old_line_text.resize(iter_pos);
+                }
+
+                final_text << old_line_text << "\n";
+
+                linecount++;
+
+                old_line_text = new_line_text;
+                line_size = old_line_text.length();
+
+                if (line_size <= 39)
+                    final_text << new_line_text;
+            }
+        }
+        m_privateMessages.push_back(PrivateMessage(color, final_text.str(), sender, linecount));
+        return;
+    }
+    m_privateMessages.push_back(PrivateMessage(color, text, sender, linecount));
 }
 
 std::list<Direction> Map::getPathTo(int x, int y, int z)

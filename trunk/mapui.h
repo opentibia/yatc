@@ -59,6 +59,7 @@ class MapUI {
 
 		int getMinZ();
 		void drawPublicMessages(Position pos, float walkoffx, float walkoffy);
+		void drawPrivateMessages();
 
 
 	private:

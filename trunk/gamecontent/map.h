@@ -117,6 +117,37 @@ private:
     MSG_RANGE m_range;
 };
 
+class PrivateMessage{
+public:
+    PrivateMessage(TextColor_t color, const std::string& text, const std::string& sender, int linecount);
+
+    void setOnScreen(bool screen);
+    bool onScreen(){ return m_onscreen; }
+
+	uint32_t getStartTime(){ return m_startTime;}
+	TextColor_t getColor() { return m_color;}
+	const std::string& getText() { return m_text;}
+	const std::string& getSender() { return m_sender; }
+    int getLinecount() { return m_linecount;}
+
+    bool canBeDeleted();
+
+private:
+    uint32_t m_startTime;
+    TextColor_t m_color;
+    std::string m_text;
+    std::string m_sender;
+    Position m_pos;
+    bool m_showName;
+    int m_linecount;
+
+    bool m_handled;
+    int m_relativePos;
+    MSG_RANGE m_range;
+
+    bool m_onscreen;
+};
+
 class Tile{
 public:
 	Tile();
@@ -190,8 +221,11 @@ public:
 	AnimatedTextList& getAnimatedTexts(uint8_t floor) { return m_animatedTexts[floor];}
 
 	typedef std::list<PublicMessage> PublicMessageList;
+	typedef std::list<PrivateMessage> PrivateMessageList;
 	void addPublicMessage(const Position& pos, TextColor_t color, const std::string& text, const std::string& sender, MSG_RANGE range, bool showName = true);
+	void addPrivateMessage(TextColor_t color, const std::string& text, const std::string& sender);
 	PublicMessageList& getPublicMessages() { return m_publicMessages; }
+	PrivateMessageList& getPrivateMessages() { return m_privateMessages; }
 
 	std::list<Direction> getPathTo(int x, int y, int z);
 
@@ -213,5 +247,6 @@ private:
 	AnimatedTextList m_animatedTexts[16];
 	DistanceEffectList m_distanceEffects[16];
 	PublicMessageList m_publicMessages;
+	PrivateMessageList m_privateMessages;
 };
 #endif
