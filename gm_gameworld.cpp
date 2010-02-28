@@ -1426,7 +1426,7 @@ void GM_Gameworld::onCreatureSpeak(SpeakClasses_t type, int n, const std::string
     switch (type) {
         case SPEAK_PRIVATE: case SPEAK_PRIVATE_RED:
             findConsole(name, false)->insertEntry(ConsoleEntry(message, name, level, TEXTCOLOR_LIGHTBLUE));
-            Map::getInstance().addPublicMessage(GlobalVariables::getPlayerPosition(), TEXTCOLOR_LIGHTBLUE, message, name, MSG_SAY);
+            Map::getInstance().addPrivateMessage(TEXTCOLOR_LIGHTBLUE, message, name);
             break;
         case SPEAK_BROADCAST:
             getDefaultConsole()->insertEntry(ConsoleEntry(message, name, level, col));

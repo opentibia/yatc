@@ -460,6 +460,8 @@ void MapUI::renderMap()
 
 	// draw publicly displayed messages
     drawPublicMessages(pos, walkoffx, walkoffy);
+    // draw private messages
+    drawPrivateMessages();
 
 	if(options.showlighteffects){
 	    if((player != NULL) && !(player->getLightLevel())){
@@ -637,6 +639,38 @@ void MapUI::drawPublicMessages(Position pos, float walkoffx, float walkoffy)
         (*it).set_handled(false);
         it++;
     }
+}
+
+void MapUI::drawPrivateMessages()
+{
+    Map::PrivateMessageList& messages = Map::getInstance().getPrivateMessages();
+    Map::PrivateMessageList::iterator it = messages.begin();
+    std::string text;
+    double x, y;
+    float scale = GlobalVariables::getScale();
+
+    x = ((scale * 32) * 15) / 2;
+    y = (((scale * 32) * 11) / 2) - ((scale * 32) * 2.5);
+
+    if(messages.empty())
+        return;
+
+    if((*it).canBeDeleted())
+        it = messages.erase(it);
+
+    if(messages.empty())
+        return;
+
+    if(!(*it).onScreen())
+        (*it).setOnScreen(true);
+
+    y -= ((*it).getLinecount() + 1) * 6;
+
+    text = (*it).getSender() + ":";
+    g_engine->drawTextGW(text.c_str() , "gamefont", x, y - 12, scale, (*it).getColor());
+
+    text = (*it).getText();
+    g_engine->drawTextGW(text.c_str() , "gamefont", x, y, scale, (*it).getColor());
 }
 
 int MapUI::getMinZ() { // find out how far can we render... if anything is directly above player, then don't render above that floor
