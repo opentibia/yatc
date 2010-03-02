@@ -194,7 +194,7 @@ MessageType_t ProtocolGame84::translateTextMessageToInternal(uint8_t messageType
 bool ProtocolGame84::parseGMActions(NetworkMessage& msg)
 {
     // FIXME (nfries88): How long was it this number of bytes for? Correct to the right protocol version for this number.
-    for(uint32_t i = 0; i < 22; ++i){
+    for(uint32_t i = 0; i < 23; ++i){
         MSG_READ_U8(GMByte);
         GlobalVariables::setGMAction(i, GMByte);
     }
