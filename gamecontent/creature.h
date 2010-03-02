@@ -155,8 +155,8 @@ public:
 private:
 
 	static int16_t reserveCreature(uint32_t id);
-	// 150 is the size for 7.8-8.0 clients
-	#define CREATURES_ARRAY 150
+	// Thomac says client can handle 250 now (see OTServ rev 4969)
+	#define CREATURES_ARRAY 250
 	static Creature m_creaturesArray[CREATURES_ARRAY];
 
 	Creatures() {}

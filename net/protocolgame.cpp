@@ -306,6 +306,9 @@ bool ProtocolGame::parseSelfAppear(NetworkMessage& msg)
 }
 bool ProtocolGame::parseGMActions(NetworkMessage& msg)
 {
+    // FIXME (nfries88): The number of bytes for this seems to have decreased over time.
+        // When it was added to OTServ in rev 4150 (Protocol 8.41), it was 22
+        // For protocol 8.50+, it is 19
     for(uint32_t i = 0; i < 28; ++i){
         MSG_READ_U8(GMByte);
         GlobalVariables::setGMAction(i, GMByte);

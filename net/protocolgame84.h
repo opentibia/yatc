@@ -35,6 +35,8 @@ class ProtocolGame84 : public ProtocolGame83
 		virtual const char* getProtocolName() { return "Protocol84";}
 		virtual ClientVersion_t getVersion() const { return CLIENT_VERSION_840; }
 
+		virtual bool parseGMActions(NetworkMessage& msg);
+
 	protected:
 		ProtocolGame84(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);
 
