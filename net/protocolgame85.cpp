@@ -91,7 +91,7 @@ bool ProtocolGame85::parseTileAddThing(NetworkMessage& msg)
 
 bool ProtocolGame85::parseGMActions(NetworkMessage& msg)
 {
-    for(uint32_t i = 0; i < 19; ++i){
+    for(uint32_t i = 0; i < 20; ++i){
         MSG_READ_U8(GMByte);
         GlobalVariables::setGMAction(i, GMByte);
     }
