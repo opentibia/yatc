@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include "../fassert.h"
 #include "protocolgame84.h"
+#include "../gamecontent/globalvars.h"
 
 ProtocolGame84::ProtocolGame84(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
 ProtocolGame83(accountname, password, name, isGM)
@@ -187,4 +188,15 @@ MessageType_t ProtocolGame84::translateTextMessageToInternal(uint8_t messageType
 			nmessageType = MSG_INFO_DESCR;
 	}
 	return nmessageType;
+}
+
+
+bool ProtocolGame84::parseGMActions(NetworkMessage& msg)
+{
+    // FIXME (nfries88): How long was it this number of bytes for? Correct to the right protocol version for this number.
+    for(uint32_t i = 0; i < 22; ++i){
+        MSG_READ_U8(GMByte);
+        GlobalVariables::setGMAction(i, GMByte);
+    }
+    return true;
 }

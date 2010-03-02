@@ -22,6 +22,7 @@
 #include "protocolgame85.h"
 #include "../gamecontent/position.h"
 #include "../gamecontent/map.h"
+#include "../gamecontent/globalvars.h"
 #include "../defines.h"
 
 ProtocolGame85::ProtocolGame85(const std::string& accountname, const std::string& password, const std::string& name, bool isGM) :
@@ -85,5 +86,14 @@ bool ProtocolGame85::parseTileAddThing(NetworkMessage& msg)
         RAISE_PROTOCOL_ERROR("Tile Add - addThing");
     }
     Notifications::onTileUpdate(tilePos);
+    return true;
+}
+
+bool ProtocolGame85::parseGMActions(NetworkMessage& msg)
+{
+    for(uint32_t i = 0; i < 19; ++i){
+        MSG_READ_U8(GMByte);
+        GlobalVariables::setGMAction(i, GMByte);
+    }
     return true;
 }

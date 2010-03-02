@@ -38,6 +38,7 @@ class ProtocolGame85 : public ProtocolGame84
         virtual void onConnect();
         virtual bool parseTileAddThing(NetworkMessage& msg);
         virtual bool parsePacket(uint8_t cmd, NetworkMessage& msg);
+        virtual bool parseGMActions(NetworkMessage& msg);
 
 	protected:
 		ProtocolGame85(const std::string& accountname, const std::string& password, const std::string& name, bool isGM);

@@ -165,7 +165,7 @@ public:
 			btnsLight[1] = btnLightEffects.addItem(gettext("Simple Light"), NULL, (void*)1);
 			btnsLight[2] = btnLightEffects.addItem(gettext("Better Light"), NULL, (void*)2);
 			btnsLight[3] = btnLightEffects.addItem(gettext("Best Light"), NULL, (void*)3);
-			btnLightEffects.setSelected(btnsLight[max(3, options.showlighteffects)]);
+			btnLightEffects.setSelected(btnsLight[max(min(3, options.showlighteffects), 0)]);
 		}
 
 		// "Don't Stretch/Shrink Game Window"
