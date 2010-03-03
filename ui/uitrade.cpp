@@ -101,6 +101,8 @@ winTrade_t::winTrade_t()
 	lblWait.SetBGActiveness(false);
 
 	window.AddObject(&btnAccept);
+    btnAccept.SetSkin(&g_skin.btnn[BUTTON_43]);
+    btnAccept.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
 	btnAccept.SetFont("minifont",8);
 	btnAccept.SetCaption(gettext("Accept"));
 	btnAccept.SetPos(67, 92);
@@ -109,6 +111,8 @@ winTrade_t::winTrade_t()
 	btnAccept.SetOnClick(tradeOnAccept);
 
 	window.AddObject(&btnReject);
+    btnReject.SetSkin(&g_skin.btnn[BUTTON_43]);
+    btnReject.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
 	btnReject.SetFont("minifont",8);
 	btnReject.SetCaption(gettext("Reject"));
 	btnReject.SetPos(115, 92);

@@ -50,10 +50,12 @@ winOutfit_t::winOutfit_t() {
     pnlOutfit.SetHeight(140);
     pnlOutfit.SetOnPaint(onGfxPaint);
     pnlOutfit.SetCustomData(this);
-    pnlOutfit.SetSkin(&g_skin.btnh);
+    pnlOutfit.SetSkin(&g_skin.btnh[0]);
     //pnlOutfit.SetBGActiveness(false);
 
     window.AddObject(&btnHead);
+    btnHead.SetSkin(&g_skin.btnn[BUTTON_58]);
+    btnHead.SetHighlightSkin(&g_skin.btnh[BUTTON_58]);
     btnHead.SetPos(167,15);
     btnHead.SetWidth(58);
     btnHead.SetHeight(20);
@@ -63,6 +65,8 @@ winOutfit_t::winOutfit_t() {
     btnHead.SetCustomData(this);
 
     window.AddObject(&btnBody);
+    btnBody.SetSkin(&g_skin.btnn[BUTTON_58]);
+    btnBody.SetHighlightSkin(&g_skin.btnh[BUTTON_58]);
     btnBody.SetPos(167,39);
     btnBody.SetWidth(58);
     btnBody.SetHeight(20);
@@ -72,6 +76,8 @@ winOutfit_t::winOutfit_t() {
     btnBody.SetCustomData(this);
 
     window.AddObject(&btnLegs);
+    btnLegs.SetSkin(&g_skin.btnn[BUTTON_58]);
+    btnLegs.SetHighlightSkin(&g_skin.btnh[BUTTON_58]);
     btnLegs.SetPos(167,63);
     btnLegs.SetWidth(58);
     btnLegs.SetHeight(20);
@@ -81,6 +87,8 @@ winOutfit_t::winOutfit_t() {
     btnLegs.SetCustomData(this);
 
     window.AddObject(&btnFeet);
+    btnFeet.SetSkin(&g_skin.btnn[BUTTON_58]);
+    btnFeet.SetHighlightSkin(&g_skin.btnh[BUTTON_58]);
     btnFeet.SetPos(167,87);
     btnFeet.SetWidth(58);
     btnFeet.SetHeight(20);
@@ -148,6 +156,8 @@ winOutfit_t::winOutfit_t() {
     pnlSeparator.SetSkin(&g_skin.chk);
 
     window.AddObject(&btnOk);
+    btnOk.SetSkin(&g_skin.btnn[BUTTON_43]);
+    btnOk.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
     btnOk.SetPos(384,296);
     btnOk.SetWidth(43);
     btnOk.SetHeight(20);
@@ -157,6 +167,8 @@ winOutfit_t::winOutfit_t() {
     btnOk.SetCustomData(this);
 
     window.AddObject(&btnCancel);
+    btnCancel.SetSkin(&g_skin.btnn[BUTTON_43]);
+    btnCancel.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
     btnCancel.SetPos(437,296);
     btnCancel.SetWidth(43);
     btnCancel.SetHeight(20);

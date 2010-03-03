@@ -231,8 +231,8 @@ void pnlInventory_t::expand()
 
 	btnQuests.SetVisible(true);
 
-	btnOptions.SetSkin(&g_skin.btnn);
-	btnOptions.SetHighlightSkin(&g_skin.btnh);
+	btnOptions.SetSkin(&g_skin.btnn[0]);
+	btnOptions.SetHighlightSkin(&g_skin.btnh[0]);
 	btnOptions.SetCaption(gettext("Options"));
 	btnOptions.SetWidth(50);
 	btnOptions.SetHeight(20);
@@ -242,8 +242,8 @@ void pnlInventory_t::expand()
 	btnStop.SetWidth(50);
 	btnStop.SetHeight(20);
 
-	btnHelp.SetSkin(&g_skin.btnn);
-	btnHelp.SetHighlightSkin(&g_skin.btnh);
+	btnHelp.SetSkin(&g_skin.btnn[0]);
+	btnHelp.SetHighlightSkin(&g_skin.btnh[0]);
 	btnHelp.SetCaption(gettext("Help"));
 	btnHelp.SetWidth(50);
 	btnHelp.SetHeight(20);

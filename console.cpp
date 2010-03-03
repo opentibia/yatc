@@ -35,7 +35,7 @@ extern int g_lastmousebutton;
 ConsolePanel::ConsolePanel()
 {
     AddObject(&pnlConsoleResizer);
-    pnlConsoleResizer.SetSkin(&g_skin.btnn);
+    pnlConsoleResizer.SetSkin(&g_skin.btnn[0]);
     pnlConsoleResizer.SetHeight(5);
     pnlConsoleResizer.SetPos(0, 0);
     #if (GLICT_APIREV >= 98)

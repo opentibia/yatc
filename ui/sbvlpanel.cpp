@@ -37,27 +37,33 @@ sbvlPanel_t::sbvlPanel_t()
     #endif
 
     panel.AddObject(&btnSkills);
+    btnSkills.SetSkin(&g_skin.btnn[BUTTON_34]);
+    btnSkills.SetHighlightSkin(&g_skin.btnh[BUTTON_34]);
     btnSkills.SetCaption(gettext("Skills"));
     btnSkills.SetCustomData(this);
-    btnSkills.SetWidth(35);
+    btnSkills.SetWidth(34);
     btnSkills.SetHeight(20);
     btnSkills.SetPos(8, 6);
     btnSkills.SetOnClick(btnSkills_onClick);
     btnSkills.SetFont("minifont");
 
     panel.AddObject(&btnBattle);
+    btnBattle.SetSkin(&g_skin.btnn[BUTTON_34]);
+    btnBattle.SetHighlightSkin(&g_skin.btnh[BUTTON_34]);
     btnBattle.SetCaption(gettext("Battle"));
     btnBattle.SetCustomData(this);
-    btnBattle.SetWidth(35);
+    btnBattle.SetWidth(34);
     btnBattle.SetHeight(20);
     btnBattle.SetPos(45, 6);
     btnBattle.SetOnClick(btnBattle_onClick);
     btnBattle.SetFont("minifont");
 
     panel.AddObject(&btnVIP);
+    btnVIP.SetSkin(&g_skin.btnn[BUTTON_34]);
+    btnVIP.SetHighlightSkin(&g_skin.btnh[BUTTON_34]);
     btnVIP.SetCaption(gettext("VIP"));
     btnVIP.SetCustomData(this);
-    btnVIP.SetWidth(35);
+    btnVIP.SetWidth(34);
     btnVIP.SetHeight(20);
     btnVIP.SetPos(82, 6);
     btnVIP.SetOnClick(btnVIP_onClick);
@@ -65,9 +71,11 @@ sbvlPanel_t::sbvlPanel_t()
 
 
     panel.AddObject(&btnLogout);
+    btnLogout.SetSkin(&g_skin.btnn[BUTTON_43]);
+    btnLogout.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
     btnLogout.SetCaption(gettext("Logout"));
     btnLogout.SetCustomData(this);
-    btnLogout.SetWidth(45);
+    btnLogout.SetWidth(43);
     btnLogout.SetHeight(20);
     btnLogout.SetPos(124, 6);
     btnLogout.SetOnClick(onClick_Logout);
