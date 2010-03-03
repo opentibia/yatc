@@ -58,6 +58,16 @@ enum button_id_t
 	BUTTON_LASTID
 };
 
+enum generic_button_id_t{
+    BUTTON_GENERIC = 0,
+    BUTTON_34 = 1,
+    BUTTON_43 = 2,
+    BUTTON_58 = 3,
+    BUTTON_86 = 4,
+    BUTTON_48_16 = 5,
+    BUTTON_GLAST
+};
+
 class skinImage : public glictImage {
 public:
 	skinImage(float x=0, float y=0, float w=-1, float h=-1);
@@ -83,10 +93,10 @@ public:
 
 	skinImage *windowtl, *windowt, *windowtr, *windowl, *windowc, *windowr, *windowbl, *windowb, *windowbr; // window
 	glictSkinner window;
-	skinImage *btnntl, *btnnt, *btnntr, *btnnl, *btnnc, *btnnr, *btnnbl, *btnnb, *btnnbr; // button
-	glictSkinner btnn;
-	skinImage *btnhtl, *btnht, *btnhtr, *btnhl, *btnhc, *btnhr, *btnhbl, *btnhb, *btnhbr; // button highlighted
-	glictSkinner btnh;
+	skinImage *btnntl[BUTTON_GLAST], *btnnt[BUTTON_GLAST], *btnntr[BUTTON_GLAST], *btnnl[BUTTON_GLAST], *btnnc[BUTTON_GLAST], *btnnr[BUTTON_GLAST], *btnnbl[BUTTON_GLAST], *btnnb[BUTTON_GLAST], *btnnbr[BUTTON_GLAST]; // button
+	glictSkinner btnn[BUTTON_GLAST];
+	skinImage *btnhtl[BUTTON_GLAST], *btnht[BUTTON_GLAST], *btnhtr[BUTTON_GLAST], *btnhl[BUTTON_GLAST], *btnhc[BUTTON_GLAST], *btnhr[BUTTON_GLAST], *btnhbl[BUTTON_GLAST], *btnhb[BUTTON_GLAST], *btnhbr[BUTTON_GLAST]; // button highlighted
+	glictSkinner btnh[BUTTON_GLAST];
 	skinImage *scrollbaruptl, *scrollbarupt, *scrollbaruptr, *scrollbarupl, *scrollbarupc, *scrollbarupr, *scrollbarupbl, *scrollbarupb, *scrollbarupbr; // scrollbar up button
 	glictSkinner scrollbarup;
 	skinImage *scrollbaruphtl, *scrollbarupht, *scrollbaruphtr, *scrollbaruphl, *scrollbaruphc, *scrollbaruphr, *scrollbaruphbl, *scrollbaruphb, *scrollbaruphbr; // scrollbar up button, highlighted

@@ -30,7 +30,7 @@ public:
 		pnlPanel.SetHeight(20);
         pnlPanel.AddObject(&btnButton);
         pnlPanel.AddObject(&lblLabel);
-        pnlPanel.SetSkin(&g_skin.btnh);
+        pnlPanel.SetSkin(&g_skin.btnh[0]);
 
         btnButton.SetPos(5,5);
         btnButton.SetWidth(12);

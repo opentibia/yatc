@@ -39,6 +39,8 @@ winShop_t::winShop_t()
 
 
     window.AddObject(&btnBuy);
+    btnBuy.SetSkin(&g_skin.btnn[BUTTON_43]);
+    btnBuy.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
     btnBuy.SetPos(74, 4);
     btnBuy.SetWidth(43);
     btnBuy.SetHeight(20);
@@ -49,6 +51,8 @@ winShop_t::winShop_t()
     btnBuy.SetCustomData(this);
 
     window.AddObject(&btnSell);
+    btnSell.SetSkin(&g_skin.btnn[BUTTON_43]);
+    btnSell.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
     btnSell.SetPos(121, 4);
     btnSell.SetWidth(43);
     btnSell.SetHeight(20);
@@ -128,6 +132,8 @@ winShop_t::winShop_t()
     pnlItem.SetCustomData(this);
 
     window.AddObject(&btnOk);
+    btnOk.SetSkin(&g_skin.btnn[BUTTON_43]);
+    btnOk.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
     btnOk.SetPos(121,118);
     btnOk.SetWidth(43);
     btnOk.SetHeight(20);

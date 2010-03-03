@@ -160,6 +160,8 @@ public:
 		pnlSeparator.SetSkin(&g_skin.chk);
 
 		window.AddObject(&btnHelp);
+		btnHelp.SetSkin(&g_skin.btnn[BUTTON_43]);
+		btnHelp.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
 		btnHelp.SetPos(72, 210-102 + ((btnProtocol.getCount()-1)/2+1)*24);
 		btnHelp.SetWidth(43);
 		btnHelp.SetHeight(19);
@@ -167,6 +169,8 @@ public:
 		btnHelp.SetFont("minifont",8);
 
 		window.AddObject(&btnOk);
+        btnOk.SetSkin(&g_skin.btnn[BUTTON_43]);
+        btnOk.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
 		btnOk.SetPos(125, 210-102 + ((btnProtocol.getCount()-1)/2+1)*24);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(19);
@@ -174,6 +178,8 @@ public:
 		btnOk.SetFont("minifont",8);
 
 		window.AddObject(&btnCancel);
+        btnCancel.SetSkin(&g_skin.btnn[BUTTON_43]);
+        btnCancel.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
 		btnCancel.SetPos(178, 210-102 + ((btnProtocol.getCount()-1)/2+1)*24);
 		btnCancel.SetWidth(43);
 		btnCancel.SetHeight(19);

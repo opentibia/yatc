@@ -94,6 +94,8 @@ public:
         pnlSep.SetSkin(&g_skin.txt);
 
         window.AddObject(&btnOk);
+        btnOk.SetSkin(&g_skin.btnn[BUTTON_43]);
+        btnOk.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
         btnOk.SetPos(226, 236);
         btnOk.SetWidth(43);
         btnOk.SetHeight(20);

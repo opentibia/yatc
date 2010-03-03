@@ -106,6 +106,8 @@ public:
 		pnlSeparator.SetHeight(2);
 		pnlSeparator.SetSkin(&g_skin.chk);
 
+        btnOk.SetSkin(&g_skin.btnn[BUTTON_43]);
+        btnOk.SetHighlightSkin(&g_skin.btnh[BUTTON_43]);
 		btnOk.SetPos(123, 247);
 		btnOk.SetWidth(43);
 		btnOk.SetHeight(20);

@@ -72,25 +72,27 @@ Skin::Skin() {
     windowb  = NULL;
     windowbr = NULL;
 
-    btnntl = NULL;
-    btnnt  = NULL;
-    btnntr = NULL;
-    btnnl  = NULL;
-    btnnc  = NULL;
-    btnnr  = NULL;
-    btnnbl = NULL;
-    btnnb  = NULL;
-    btnnbr = NULL;
+    for(int i = 0; i != BUTTON_GLAST; ++i){
+        btnntl[i] = NULL;
+        btnnt[i]  = NULL;
+        btnntr[i] = NULL;
+        btnnl[i]  = NULL;
+        btnnc[i]  = NULL;
+        btnnr[i]  = NULL;
+        btnnbl[i] = NULL;
+        btnnb[i]  = NULL;
+        btnnbr[i] = NULL;
 
-    btnhtl = NULL;
-    btnht  = NULL;
-    btnhtr = NULL;
-    btnhl  = NULL;
-    btnhc  = NULL;
-    btnhr  = NULL;
-    btnhbl = NULL;
-    btnhb  = NULL;
-    btnhbr = NULL;
+        btnhtl[i] = NULL;
+        btnht[i]  = NULL;
+        btnhtr[i] = NULL;
+        btnhl[i]  = NULL;
+        btnhc[i]  = NULL;
+        btnhr[i]  = NULL;
+        btnhbl[i] = NULL;
+        btnhb[i]  = NULL;
+        btnhbr[i] = NULL;
+    }
 
     txttl = NULL;
     txtt  = NULL;
@@ -327,29 +329,46 @@ void Skin::loadSkin() {
 
 	glictGlobals.windowBodySkin = &window;
 
-    btnn.SetTL		(btnntl = new skinImage(174,	138,	1,		1));
-    btnn.SetTop		(btnnt  = new skinImage(175,	138,	32,		1));
-    btnn.SetTR		(btnntr = new skinImage(207,	138,	1,		1));
-    btnn.SetLeft	(btnnl  = new skinImage(174,	139,	1,		18));
-    btnn.SetCenter	(btnnc  = new skinImage(175,	139,	32,		18));
-    btnn.SetRight	(btnnr  = new skinImage(207,	139,	1,		18));
-    btnn.SetBL		(btnnbl = new skinImage(174,	157,	1,		1));
-    btnn.SetBottom	(btnnb  = new skinImage(175,	157,	32,		1));
-    btnn.SetBR		(btnnbr = new skinImage(207,	157,	1,		1));
+    btnn[0].SetTL		(btnntl[0] = new skinImage(174,	138,	1,		1));
+    btnn[0].SetTop		(btnnt[0]  = new skinImage(175,	138,	32,		1));
+    btnn[0].SetTR		(btnntr[0] = new skinImage(207,	138,	1,		1));
+    btnn[0].SetLeft	(btnnl[0]  = new skinImage(174,	139,	1,		18));
+    btnn[0].SetCenter	(btnnc[0]  = new skinImage(175,	139,	32,		18));
+    btnn[0].SetRight	(btnnr[0]  = new skinImage(207,	139,	1,		18));
+    btnn[0].SetBL		(btnnbl[0] = new skinImage(174,	157,	1,		1));
+    btnn[0].SetBottom	(btnnb[0]  = new skinImage(175,	157,	32,		1));
+    btnn[0].SetBR		(btnnbr[0] = new skinImage(207,	157,	1,		1));
 
-	glictGlobals.buttonSkin = &btnn;
+	glictGlobals.buttonSkin = &btnn[0];
 
-    btnh.SetTL		(btnhtl = new skinImage(174,	158,	1,		1));
-    btnh.SetTop		(btnht  = new skinImage(175,	158,	32,		1));
-    btnh.SetTR		(btnhtr = new skinImage(207,	158,	1,		1));
-    btnh.SetLeft	(btnhl  = new skinImage(174,	159,	1,		18));
-    btnh.SetCenter	(btnhc  = new skinImage(175,	159,	32,		18));
-    btnh.SetRight	(btnhr  = new skinImage(207,	159,	1,		18));
-    btnh.SetBL		(btnhbl = new skinImage(174,	177,	1,		1));
-    btnh.SetBottom	(btnhb  = new skinImage(175,	177,	32,		1));
-    btnh.SetBR		(btnhbr = new skinImage(207,	177,	1,		1));
+    btnh[0].SetTL		(btnhtl[0] = new skinImage(174,	158,	1,		1));
+    btnh[0].SetTop		(btnht[0]  = new skinImage(175,	158,	32,		1));
+    btnh[0].SetTR		(btnhtr[0] = new skinImage(207,	158,	1,		1));
+    btnh[0].SetLeft	(btnhl[0]  = new skinImage(174,	159,	1,		18));
+    btnh[0].SetCenter	(btnhc[0]  = new skinImage(175,	159,	32,		18));
+    btnh[0].SetRight	(btnhr[0]  = new skinImage(207,	159,	1,		18));
+    btnh[0].SetBL		(btnhbl[0] = new skinImage(174,	177,	1,		1));
+    btnh[0].SetBottom	(btnhb[0]  = new skinImage(175,	177,	32,		1));
+    btnh[0].SetBR		(btnhbr[0] = new skinImage(207,	177,	1,		1));
 
-	glictGlobals.buttonHighlightSkin = &btnh;
+	glictGlobals.buttonHighlightSkin = &btnh[0];
+
+	// NOTE (nfries88): improving compatibility with custom skins, starting with buttons.
+	btnn[BUTTON_34].SetCenter(btnnc[BUTTON_34] = new skinImage(174, 138, 34, 20));
+	btnh[BUTTON_34].SetCenter(btnhc[BUTTON_34] = new skinImage(174, 158, 34, 20));
+
+	btnn[BUTTON_43].SetCenter(btnnc[BUTTON_43] = new skinImage(2, 138, 43, 20));
+	btnh[BUTTON_43].SetCenter(btnhc[BUTTON_43] = new skinImage(2, 158, 43, 20));
+
+	btnn[BUTTON_58].SetCenter(btnnc[BUTTON_58] = new skinImage(236, 252, 58, 20));
+	btnh[BUTTON_58].SetCenter(btnhc[BUTTON_58] = new skinImage(294, 252, 58, 20));
+
+	btnn[BUTTON_86].SetCenter(btnnc[BUTTON_86] = new skinImage(45, 138, 86, 20));
+	btnh[BUTTON_86].SetCenter(btnhc[BUTTON_86] = new skinImage(45, 158, 86, 20));
+
+	btnn[BUTTON_48_16].SetCenter(btnnc[BUTTON_48_16] = new skinImage(0, 255, 48, 16));
+	btnh[BUTTON_48_16].SetCenter(btnhc[BUTTON_48_16] = new skinImage(48, 255, 48, 16));
+
 
     // FIXME (ivucica#4#) looks like the "unchecked checkbox" is not the same as "textbox" -- see: "XPlike Tibia.pic" for more info
     txt.SetTL		(txttl = new skinImage(308,	96,		1,		1)); // in fact it looks like we have to HARDCODE this piece of skin.
@@ -668,48 +687,48 @@ void Skin::unloadSkin() {
 
     glictGlobals.windowBodySkin = NULL;
 
-    if (btnntl) delete btnntl; btnntl = NULL;
-    if (btnnt)  delete btnnt;  btnnt  = NULL;
-    if (btnntr) delete btnntr; btnntr = NULL;
-    if (btnnl)  delete btnnl;  btnnl  = NULL;
-    if (btnnc)  delete btnnc;  btnnc  = NULL;
-    if (btnnr)  delete btnnr;  btnnr  = NULL;
-    if (btnnbl) delete btnnbl; btnnbl = NULL;
-    if (btnnb)  delete btnnb;  btnnb  = NULL;
-    if (btnnbr) delete btnnbr; btnnbr = NULL;
+    for(int i = 0; i != BUTTON_GLAST; ++i){
+        if (btnntl[i]) delete btnntl[i]; btnntl[i] = NULL;
+        if (btnnt[i])  delete btnnt[i];  btnnt[i]  = NULL;
+        if (btnntr[i]) delete btnntr[i]; btnntr[i] = NULL;
+        if (btnnl[i])  delete btnnl[i];  btnnl[i]  = NULL;
+        if (btnnc[i])  delete btnnc[i];  btnnc[i]  = NULL;
+        if (btnnr[i])  delete btnnr[i];  btnnr[i]  = NULL;
+        if (btnnbl[i]) delete btnnbl[i]; btnnbl[i] = NULL;
+        if (btnnb[i])  delete btnnb[i];  btnnb[i]  = NULL;
+        if (btnnbr[i]) delete btnnbr[i]; btnnbr[i] = NULL;
 
-    btnn.SetTL(NULL);
-    btnn.SetTop(NULL);
-    btnn.SetTR(NULL);
-    btnn.SetLeft(NULL);
-    btnn.SetCenter(NULL);
-    btnn.SetRight(NULL);
-    btnn.SetBL(NULL);
-    btnn.SetBottom(NULL);
-    btnn.SetBR(NULL);
+        btnn[i].SetTL(NULL);
+        btnn[i].SetTop(NULL);
+        btnn[i].SetTR(NULL);
+        btnn[i].SetLeft(NULL);
+        btnn[i].SetCenter(NULL);
+        btnn[i].SetRight(NULL);
+        btnn[i].SetBL(NULL);
+        btnn[i].SetBottom(NULL);
+        btnn[i].SetBR(NULL);
 
+        if (btnhtl[i]) delete btnhtl[i]; btnhtl[i] = NULL;
+        if (btnht[i])  delete btnht[i];  btnht[i]  = NULL;
+        if (btnhtr[i]) delete btnhtr[i]; btnhtr[i] = NULL;
+        if (btnhl[i])  delete btnhl[i];  btnhl[i]  = NULL;
+        if (btnhc[i])  delete btnhc[i];  btnhc[i]  = NULL;
+        if (btnhr[i])  delete btnhr[i];  btnhr[i]  = NULL;
+        if (btnhbl[i]) delete btnhbl[i]; btnhbl[i] = NULL;
+        if (btnhb[i])  delete btnhb[i];  btnhb[i]  = NULL;
+        if (btnhbr[i]) delete btnhbr[i]; btnhbr[i] = NULL;
+
+        btnh[i].SetTL(NULL);
+        btnh[i].SetTop(NULL);
+        btnh[i].SetTR(NULL);
+        btnh[i].SetLeft(NULL);
+        btnh[i].SetCenter(NULL);
+        btnh[i].SetRight(NULL);
+        btnh[i].SetBL(NULL);
+        btnh[i].SetBottom(NULL);
+        btnh[i].SetBR(NULL);
+    }
     glictGlobals.buttonSkin = NULL;
-
-    if (btnhtl) delete btnhtl; btnhtl = NULL;
-    if (btnht)  delete btnht;  btnht  = NULL;
-    if (btnhtr) delete btnhtr; btnhtr = NULL;
-    if (btnhl)  delete btnhl;  btnhl  = NULL;
-    if (btnhc)  delete btnhc;  btnhc  = NULL;
-    if (btnhr)  delete btnhr;  btnhr  = NULL;
-    if (btnhbl) delete btnhbl; btnhbl = NULL;
-    if (btnhb)  delete btnhb;  btnhb  = NULL;
-    if (btnhbr) delete btnhbr; btnhbr = NULL;
-
-    btnh.SetTL(NULL);
-    btnh.SetTop(NULL);
-    btnh.SetTR(NULL);
-    btnh.SetLeft(NULL);
-    btnh.SetCenter(NULL);
-    btnh.SetRight(NULL);
-    btnh.SetBL(NULL);
-    btnh.SetBottom(NULL);
-    btnh.SetBR(NULL);
-
     glictGlobals.buttonHighlightSkin = NULL;
 
     if (txttl) delete txttl; txttl = NULL;

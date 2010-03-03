@@ -141,6 +141,8 @@ public:
 		pnlObjView.SetSkin(&g_skin.txt);
 
 		window.AddObject(&btnSelectObj);
+        btnSelectObj.SetSkin(&g_skin.btnn[BUTTON_86]);
+        btnSelectObj.SetHighlightSkin(&g_skin.btnh[BUTTON_86]);
 		btnSelectObj.SetPos(82, 243);
 		btnSelectObj.SetHeight(20);
 		btnSelectObj.SetWidth(86);
@@ -150,6 +152,8 @@ public:
 		btnSelectObj.SetCustomData(this);
 
 		window.AddObject(&btnClearObj);
+        btnClearObj.SetSkin(&g_skin.btnn[BUTTON_86]);
+        btnClearObj.SetHighlightSkin(&g_skin.btnh[BUTTON_86]);
 		btnClearObj.SetPos(82, 275);
 		btnClearObj.SetHeight(20);
 		btnClearObj.SetWidth(86);
@@ -159,6 +163,8 @@ public:
 		btnClearObj.SetCustomData(this);
 
 		window.AddObject(&btnUseSelf);
+        btnUseSelf.SetSkin(&g_skin.btnn[BUTTON_86]);
+        btnUseSelf.SetHighlightSkin(&g_skin.btnh[BUTTON_86]);
 		btnUseSelf.SetPos(181, 243);
 		btnUseSelf.SetHeight(20);
 		btnUseSelf.SetWidth(86);
@@ -168,6 +174,8 @@ public:
 		btnUseSelf.SetCustomData(this);
 
 		window.AddObject(&btnUseTarget);
+        btnUseTarget.SetSkin(&g_skin.btnn[BUTTON_86]);
+        btnUseTarget.SetHighlightSkin(&g_skin.btnh[BUTTON_86]);
 		btnUseTarget.SetPos(181, 275);
 		btnUseTarget.SetHeight(20);
 		btnUseTarget.SetWidth(86);
@@ -177,6 +185,8 @@ public:
 		btnUseTarget.SetCustomData(this);
 
 		window.AddObject(&btnUseCrosshair);
+        btnUseCrosshair.SetSkin(&g_skin.btnn[BUTTON_86]);
+        btnUseCrosshair.SetHighlightSkin(&g_skin.btnh[BUTTON_86]);
 		btnUseCrosshair.SetPos(181, 309);
 		btnUseCrosshair.SetHeight(20);
 		btnUseCrosshair.SetWidth(86);
