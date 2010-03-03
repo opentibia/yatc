@@ -288,6 +288,42 @@ bool Tile::isTileBlocking() const
 	return false;
 }
 
+bool Tile::isWall() const
+{
+	int pos = 0;
+	for(; pos != getThingCount(); ++pos) {
+		const Thing* thing = getThingByStackPos(pos);
+		if(!thing)
+			return false;
+
+		const Item* item = thing->getItem();
+
+		if(item)
+			if(pos == 1 && (item->getObjectType()->isHorizontal || item->getObjectType()->isVertical))
+				return true;
+	}
+
+	return false;
+}
+
+bool Tile::canSeeThrough() const
+{
+    int pos = 0;
+	for(; pos != getThingCount(); ++pos) {
+		const Thing* thing = getThingByStackPos(pos);
+		if(!thing)
+			return false;
+
+		const Item* item = thing->getItem();
+
+		if(item)
+			if(item->getObjectType()->blockProjectile)
+				return false;
+	}
+
+	return true;
+}
+
 const Item* Tile::getGround() const
 {
 	return m_ground;

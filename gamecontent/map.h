@@ -177,6 +177,9 @@ public:
 
     bool blockPath() const;
 
+    bool isWall() const;
+    bool canSeeThrough() const;
+
 private:
 	Item* m_ground;
 	ThingVector m_objects;

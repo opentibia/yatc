@@ -673,18 +673,50 @@ void MapUI::drawPrivateMessages()
     g_engine->drawTextGW(text.c_str() , "gamefont", x, y, scale, (*it).getColor());
 }
 
-int MapUI::getMinZ() { // find out how far can we render... if anything is directly above player, then don't render above that floor
-	Position pos = GlobalVariables::getPlayerPosition();
-	const Tile* tile = Map::getInstance().getTile(pos.x, pos.y, pos.z);
+int MapUI::getMinZ(Position pos) {
 
+    // NOTE (Kilouco): It works, don't ask me how. Just believe me.
+	const Tile* tile = Map::getInstance().getTile(pos.x, pos.y, pos.z);
+	const Tile* tile_perspective = Map::getInstance().getTile(pos.x, pos.y, pos.z);
 	int minz = 0;
+
+	// See if there is anything right above player (perspectively).
+	for (int z = pos.z-1; z>=0; z--) {
+        tile = Map::getInstance().getTile(pos.x, pos.y, z);
+        if (tile && tile->getThingCount()) {
+            minz = z+1;
+
+            return (m_minz = minz);
+        }
+	}
+
+	// Now see if is there anything above player not perspectively but just blocking his view.
 	for (int z = pos.z-1; z>=0; z--) {
 		tile = Map::getInstance().getTile(pos.x-(z-pos.z), pos.y-(z-pos.z), z);
-		if (tile && tile->getThingCount() ) {
+		if (tile && tile->getThingCount()) {
 			minz = z+1;
 
 			return (m_minz = minz);
 		}
+	}
+
+    // Last but not least: we take a look around.
+	for (int z = pos.z-1; z>=0; z--) {
+	    for (int y = -1; y <= 1; y++)
+            for (int x = -1; x <= 1; x++) {
+
+                if((x != 0 && y != 0) || (x == 0 && y == 0))
+                    continue;
+
+                tile = Map::getInstance().getTile(pos.x + x, pos.y + y, pos.z);
+                tile_perspective = Map::getInstance().getTile(pos.x + x, pos.y + y, z);
+
+                if (tile && tile_perspective)
+                    if (tile->canSeeThrough() && (tile_perspective->getGround() || tile_perspective->getThingCount())) {
+                        minz = z+1;
+                        return (m_minz = minz);
+                    }
+	        }
 	}
 	return (m_minz = 0);
 }
