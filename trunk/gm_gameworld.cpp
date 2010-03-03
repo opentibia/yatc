@@ -1482,7 +1482,7 @@ void GM_Gameworld::onCreatureMove(uint32_t id, const Position& oldPos, const Pos
 	}
 	if(id == GlobalVariables::getPlayerID())
 	{
-		m_mapui.getMinZ();
+		m_mapui.getMinZ(newPos);
 	}
 }
 

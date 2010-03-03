@@ -24,6 +24,8 @@
 #include "gamecontent/map.h"
 #include "popup.h"
 
+#include "gamecontent/globalvars.h"
+
 struct vertex;
 
 class MapUI {
@@ -57,7 +59,7 @@ class MapUI {
         std::list<Direction> getPathTo(int scrx, int scry);
 
 
-		int getMinZ();
+		int getMinZ(Position pos = GlobalVariables::getPlayerPosition());
 		void drawPublicMessages(Position pos, float walkoffx, float walkoffy);
 		void drawPrivateMessages();
 
