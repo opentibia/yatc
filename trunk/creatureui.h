@@ -50,7 +50,7 @@ public:
 
 	static oRGBA getHealthColor(int hp);
 
-	int getSize(){ return (m_obj != NULL)?(MAX(m_obj->width, m_obj->height)):(1); }
+	int getSize() const { return (m_obj != NULL)?(MAX(m_obj->width, m_obj->height)):(1); }
 protected:
 	void setupObject();
 

@@ -61,7 +61,6 @@ void CreatureUI::unloadGfx()
 
 void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 {
-
     if (!m_obj)
 		return;
 
@@ -71,7 +70,7 @@ void CreatureUI::Blit(int x, int y, float scale, int map_x, int map_y) const
 	}
 	else {
 		// shrink larger creatures to be 32x32
-		scale /= MAX(m_obj->width, m_obj->height);
+		scale *= (32.f/(float)m_obj->rendersize);
 	}
 
     if (!isLoaded()) {

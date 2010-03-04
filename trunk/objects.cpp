@@ -85,6 +85,7 @@ ObjectType::ObjectType(uint16_t _id)
 
 	width = 1;
 	height = 1;
+	rendersize = 32;
 	blendframes = 0;
 	xdiv = 1;
 	ydiv = 1;
@@ -282,10 +283,10 @@ bool Objects::loadDat(const char* filename)
 		if(ver >= it->first || ver == CLIENT_VERSION_AUTO)
 		{
 			success = (this->*it->second)(filename);
-			if(success) 
+			if(success)
 				break;
 		}
-		
+
 	}
 
 	if (!success)
@@ -499,7 +500,7 @@ bool Objects::load780plus(const char* filename)
 		oType->width  = fgetc(fp);
 		oType->height = fgetc(fp);
 		if((oType->width > 1) || (oType->height > 1)){
-			fgetc(fp);
+			oType->rendersize = fgetc(fp);
 		}
 
 		oType->blendframes = fgetc(fp);
@@ -726,7 +727,7 @@ bool Objects::load76_77series(const char* filename)
 		oType->width  = fgetc(fp);
 		oType->height = fgetc(fp);
 		if((oType->width > 1) || (oType->height > 1)){
-			fgetc(fp);
+			oType->rendersize = fgetc(fp);
 		}
 
 		oType->blendframes = fgetc(fp);
@@ -938,7 +939,7 @@ bool Objects::load74_75series(const char* filename)
 		oType->width  = fgetc(fp);
 		oType->height = fgetc(fp);
 		if((oType->width > 1) || (oType->height > 1)){
-			fgetc(fp);
+			oType->rendersize = fgetc(fp);
 		}
 
 		oType->blendframes = fgetc(fp);

@@ -161,10 +161,9 @@ void winBattle_t::paintEntry(glictRect *real, glictRect *clipped, glictContainer
 		col = oRGBA(.7*255, .7*255, .7*255, .7*255);
 	g_engine->drawText(creature->getName().c_str(), "aafont", (int)real->left+23, (int)real->top, col);
 
-	Outfit_t outfit = creature->getOutfit();
-
-    if (outfit.m_looktype != 0)
-        creature->Blit((int)real->left+4, (int)real->top+4, (32.f/20.f)*(1.f/creature->getSize()), 0, 0);
+    // note (nfries88): somehow, creatures fit into 32x32
+    if (creature->getHealth() != 0)
+        creature->Blit((int)real->left+4, (int)real->top+4, 20.f/32.f, 0, 0);
 }
 
 void winBattle_t::onAttack(Popup::Item* parent)
@@ -204,12 +203,24 @@ void winBattle_t::makeConsolePopup(Popup* popup, void* owner, void* arg)
 
 	std::stringstream s;
 	s.str("");
-	s << gettext("Attack");
-	popup->addItem(s.str(), winBattle_t::onAttack, (void*)c->getID());
+	if(c->getID() != GlobalVariables::getAttackID()){
+        s << gettext("Attack");
+        popup->addItem(s.str(), winBattle_t::onAttack, (void*)c->getID());
+	}
+	else {
+	    s << gettext("Stop Attack");
+	    popup->addItem(s.str(), winBattle_t::onAttack, (void*)0);
+	}
 
 	s.str("");
-	s << gettext("Follow");
-	popup->addItem(s.str(), winBattle_t::onFollow, (void*)c->getID());
+	if(c->getID() != GlobalVariables::getFollowID()){
+        s << gettext("Follow");
+        popup->addItem(s.str(), winBattle_t::onFollow, (void*)c->getID());
+	}
+	else {
+	    s << gettext("Stop Follow");
+	    popup->addItem(s.str(), winBattle_t::onFollow, (void*)0);
+	}
 
 	if (c->isPlayer() && (c->getCurrentPos().z == GlobalVariables::getPlayerPosition().z))
 	{
@@ -308,8 +319,9 @@ void winBattle_t::clickEntry(glictPos* relmousepos, glictContainer* callerclass)
 		}
 		else if(SDL_GetModState() & KMOD_SHIFT)
 		{
-			// NOTE (nfries88): too lazy to implement this...
-			//gw->lookAtPos(creature->getCurrentPos());
+			// NOTE (nfries88): too lazy to implement this right... OTServ will pick up the slack
+			int stackpos = 255;
+			gw->m_protocol->sendLookItem(creature->getCurrentPos(), creature->getID(), stackpos);
 		}
 		else if(creature->getID() != GlobalVariables::getPlayerID())
 		{
