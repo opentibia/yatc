@@ -114,6 +114,7 @@ public:
 
 	uint16_t width;
 	uint16_t height;
+	uint16_t rendersize;
 	uint16_t blendframes;
 	uint16_t xdiv;
 	uint16_t ydiv;
