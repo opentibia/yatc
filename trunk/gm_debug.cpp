@@ -43,6 +43,9 @@ extern Connection* g_connection;
 
 #include "gamecontent/item.h"
 
+#include "gamecontent/enums.h"
+#include "ui/uioutfit.h"
+
 #include "product.h"
 
 
@@ -64,6 +67,11 @@ static glictWindow yspwTest[YSPWINDOWS];
 
 static TTF_Font* font;
 #endif
+
+
+
+static winOutfit_t *outfit;
+
 
 void cb1(Popup::Item*) {
     ((GM_Debug*)g_game)->msgBox("You have clicked on the \"Hello world\" menu item", "Yipee");
@@ -269,6 +277,35 @@ GM_Debug::GM_Debug()
     }
 #endif
 
+	
+	
+	
+	
+	
+	outfit = new winOutfit_t;
+	desktop.AddObject(&outfit->window);
+	
+	Outfit_t outfitcurr;
+	
+	std::list<AvailOutfit_t> olist;
+	AvailOutfit_t avail;
+	
+	avail.name = "Citizen";
+	outfitcurr.m_looktype =	avail.id		= 128;
+	outfitcurr.m_addons	  =	avail.addons	= 0;
+	outfitcurr.m_lookhead = 50;
+	outfitcurr.m_lookbody = 60;
+	outfitcurr.m_looklegs = 70;
+	outfitcurr.m_lookfeet = 80;
+	outfitcurr.m_lookitem = 0;
+	olist.push_back(avail);
+	avail.name = "Another One";
+	avail.id = 129;
+	avail.addons = 0;
+	olist.push_back(avail);
+	outfit->openSelf(outfitcurr,olist);
+	
+	
     popup = NULL;
     killpopup = false;
     map[0] = map[1] = map[2] = map[3] = NULL;
@@ -309,7 +346,6 @@ GM_Debug::GM_Debug()
         TTF_SetFontStyle(font, renderstyle);
 
 	}
-
 	#endif
 }
 
@@ -319,6 +355,7 @@ GM_Debug::~GM_Debug()
 	delete spr;
 	delete map;
 	delete thing;
+	delete outfit;
 }
 void GM_Debug::updateScene()
 {
@@ -368,11 +405,12 @@ void GM_Debug::renderScene()
 */
 
 
-	desktop.RememberTransformations();
+	//desktop.RememberTransformations();
 	desktop.Paint();
 
 #ifdef SDLTTF_EXPERIMENT
-    if (font) {
+    if (font) 
+	{
 
         SDL_Surface* glyph = NULL;
         SDL_Color forecol, backcol;

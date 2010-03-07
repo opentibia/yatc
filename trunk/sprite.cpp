@@ -145,7 +145,8 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 
 	loadSurfaceFromFile(filename, index);
 
-	if(!m_image){
+	if(!m_image)
+	{
 		return;
 	}
 
@@ -420,6 +421,11 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 		printf("!m_image\n");
 		return;
 	}
+	if(dynamic_cast<EngineGL*>(g_engine))
+		// gl engine is crashing on SDL_UnlockSurface.
+		return;
+	templatespr->lockSurface();
+	if(SDL_MUSTLOCK(m_image)) SDL_LockSurface(m_image);
 	for(int i=0; i < m_image->h; i++){
 		for(int j=0; j < m_image->w; j++){
 			uint32_t pixel = getPixel(j,i,m_image);
@@ -443,12 +449,16 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 				templatedColorizePixel(feet, ro, go, bo);
 			}
 			else{
-				continue; // to if nothing changed, skip the change of pixel
+				continue; // if nothing changed, skip the change of pixel
 			}
 
-			putPixel(j, i, SDL_MapRGB(getBasicImage()->format, ro, go, bo), m_image);
+			putPixel(j, i, SDL_MapRGB(m_image->format, ro, go, bo), m_image);
 		}
+		printf("\n");
 	}
+	if(SDL_MUSTLOCK(m_image)) SDL_UnlockSurface(m_image);
+	templatespr->unlockSurface();
+
     rebuildSelf();
 }
 
@@ -457,6 +467,13 @@ void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
 	if (!img)
 		img = m_image;
 
+	if (!img->pixels) {
+        //DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Trying to write a pixel into a NIL array - %d, %d on a %dx%d image\n", x, y, img->w, img->h);
+        return;
+    }
+	
+	
+	
 	int bpp = img->format->BytesPerPixel;
 
 	uint8_t *p = (uint8_t *)img->pixels + y * img->pitch + x * bpp;
@@ -668,12 +685,16 @@ SDL_Cursor* Sprite::createCursor(int topx, int topy, int w, int h, int hot_x, in
 
 SDL_Surface* Sprite::lockSurface()
 {
-    SDL_LockSurface(m_image);
+	//printf("LOCK %p\n", m_image);
+    if(SDL_MUSTLOCK(m_image)) 
+		if(SDL_LockSurface(m_image)==-1)
+			return NULL;
     return m_image;
 }
 void Sprite::unlockSurface()
 {
-    SDL_UnlockSurface(m_image);
+	//printf("UNLOCK %p\n", m_image);
+    if(SDL_MUSTLOCK(m_image)) SDL_UnlockSurface(m_image);
     Stretch(getWidth(), getHeight(),m_smoothstretch,1); // when unlocking
     rebuildSelf();
 }

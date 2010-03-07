@@ -200,10 +200,12 @@ public:
 		/* Check if our resolution is restricted */
 		if(modes == (SDL_Rect **)-1){
 			// all res are available
+			/*
 			AddResolution(640, 480, 16);
 			AddResolution(800, 600, 16);
 			AddResolution(1024, 768, 16);
-
+			*/
+			
 			AddResolution(640, 480, 32);
 			AddResolution(800, 600, 32);
 			AddResolution(1024, 768, 32);
@@ -222,8 +224,8 @@ public:
 				}
 			}
 
-			for(i=0;modes[i];++i)
-				AddResolution(modes[i]->w, modes[i]->h, 16);
+			//for(i=0;modes[i];++i)
+			//	AddResolution(modes[i]->w, modes[i]->h, 16);
 			for(i=0;modes[i];++i)
 				AddResolution(modes[i]->w, modes[i]->h, 32);
 		}

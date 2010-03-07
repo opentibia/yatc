@@ -50,7 +50,7 @@ void SpriteGL::addColor(float r, float g, float b)
 
 void SpriteGL::buildGLTexture() {
     //Do not continue if the image isnt loaded
-	if(!getImage())
+	if(!getBasicImage())
 		return;
 
     destroyGLTexture();
@@ -83,18 +83,26 @@ void SpriteGL::buildGLTexture() {
 #endif
 
 
-	SDL_Surface *sfc = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, nextpow(getImage()->w), nextpow(getImage()->h), 32, rmask, gmask, bmask, amask);
+	SDL_Surface *sfc = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, nextpow(getBasicImage()->w), nextpow(getBasicImage()->h), 32, rmask, gmask, bmask, amask);
+	
+	SDL_Rect s = {0,0,getBasicImage()->w,getBasicImage()->h};
+	SDL_Rect d = {0,0,getBasicImage()->w,getBasicImage()->h};
 
-	SDL_Rect s = {0,0,getImage()->w,getImage()->h};
-	SDL_Rect d = {0,0,getImage()->w,getImage()->h};
-
-	SDL_BlitSurface(getImage(), &s, sfc, &d);
+	SDL_BlitSurface(getBasicImage(), &s, sfc, &d);
 
 	SDL_SetAlpha(sfc, SDL_SRCALPHA, 255);
 	SDL_LockSurface(sfc);
 
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &m_texture);
+	
+	/*
+	std::stringstream sbmp;
+	sbmp << "gl_debug_"<<m_texture<<".bmp";
+	std::string fout = yatc_findfile(sbmp.str().c_str(),"w");
+	SDL_SaveBMP(sfc,fout.c_str());
+	*/
+	
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
