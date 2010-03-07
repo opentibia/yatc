@@ -430,12 +430,17 @@ void CreatureUI::loadOutfit()
 	for(uint32_t i = 0; i < m_obj->numsprites ; i++){
 		Sprite* spr;
 		if(m_obj->blendframes > 1){
-			 // if it's a template, then let's just put a NULL in there
-            if((i / (m_obj->height * m_obj->width)) % 2 ) {
-                m_gfx.insert(m_gfx.end(), NULL);
+			// a templated creature!
+			// behold the magic!
+			
+			if((i / (m_obj->height * m_obj->width)) % 2 ) {
+				 // if it's a template, then let's just put a NULL in there
+				 m_gfx.insert(m_gfx.end(), NULL);
                 continue;
             }
             else{
+				// so it's not a template, but regular graphics.
+				// great! let's colorize it using a template.
             	ASSERT(i + m_obj->height * m_obj->width < m_obj->numsprites);
             	ASSERT(m_obj->imageData)
 
@@ -446,6 +451,8 @@ void CreatureUI::loadOutfit()
             }
         }
         else{
+			// it's not templated.
+			// so sad. let's just load regular graphics
             ASSERT(m_obj->imageData)
         	spr = g_engine->createSprite("Tibia.spr", m_obj->imageData[i]);
         }

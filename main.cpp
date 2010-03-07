@@ -522,7 +522,7 @@ int main(int argc, char *argv[])
 		} else
 		{
 		    g_game = new GM_MainMenu();
-            ProtocolGame* protocol = ProtocolConfig::createGameProtocol(850,"","","",false);
+            ProtocolGame* protocol = ProtocolConfig::createGameProtocol(854,"","","",false);
             g_connection = new ConnectionReplay(argv[1], protocol);
             if (argc==3)
             {

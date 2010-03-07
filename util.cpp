@@ -120,7 +120,7 @@ static bool __internal_fileexists(const char* filename){
 static std::vector<std::string > searchpaths;
 
 
-std::string yatc_findfile(const char* filename){
+std::string yatc_findfile(const char* filename, const char* mode){
     for (std::vector<std::string>::iterator it = searchpaths.begin(); it != searchpaths.end(); it++) {
 		std::string fn = (*it + "/" + filename).c_str();
 		#ifndef WIN32
@@ -138,6 +138,40 @@ std::string yatc_findfile(const char* filename){
 			// if the above is false, we probably don't have enough permissions for requested mode
 		}
 	}
+	
+	
+	// if not found anywhere in the path, let's see what we can do with it
+#ifndef WIN32 // if these aren't windows, it's probably a unioxid; if not, we'll port later
+	if (mode[0] == 'w' || mode[0] == 'a') {// if we're trying to access for writing
+		std::string subdir = "/.yatc/";
+#ifdef __APPLE__
+		subdir = "/Library/Application Support/OpenTibia/" PRODUCTSHORT "/";
+#endif
+		
+		std::string outfn = (std::string(getenv("HOME")) + subdir + filename);
+		FILE* f = fopen(outfn.c_str(), mode);
+		if(f)
+			return outfn;
+		fclose(f);
+		printf("Trying to make cfg dir in home, fopen(...,w) was failing: %s\n", strerror(errno));
+		if(yatc_makedirs((std::string(getenv("HOME")) + subdir).c_str(), 0700)){
+			printf("Failed to make cfg dir: %s\n", strerror(errno));
+		}
+		else{
+			f = fopen(outfn.c_str(), mode);
+			if(f)
+				return outfn;
+			fclose(f);
+		}
+		printf("Still failed to write in home: %s\n", strerror(errno));
+	}
+#endif
+	
+	// if we resume here, either we're under windows, or we're not attempting to open for writing
+	
+	
+	
+	
 	FILE *f=fopen(filename, "r");
 	if(f){
 	    fclose(f);

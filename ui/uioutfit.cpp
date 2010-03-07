@@ -235,11 +235,12 @@ void winOutfit_t::onBtnPaint(glictRect *real, glictRect *clipped, glictContainer
 void winOutfit_t::onGfxPaint(glictRect *real, glictRect *clipped, glictContainer *caller) {
     winOutfit_t* wo = (winOutfit_t*)(caller->GetCustomData());
     // TODO (nfries88): Maybe move this into a checkbox callback?
-    int addons = 0;
-    if(wo->chkAddon[0].GetValue() != 0) addons |= 1;
-    if(wo->chkAddon[1].GetValue() != 0) addons |= 2;
-    if(wo->chkAddon[2].GetValue() != 0) addons |= 4;
-    wo->dispCreature->getOutfit().m_addons = addons;
+	uint32_t *addons=&wo->dispCreature->getOutfit().m_addons;
+	
+	for(int i=0;i<2;i++)
+		if(wo->chkAddon[i].GetValue()) 
+			*addons |= 1<<i;
+	
 
     if (wo->dispCreature) {
         wo->dispCreature->Blit((int)real->left+64, (int)real->top+64,2);
