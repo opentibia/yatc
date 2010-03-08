@@ -38,6 +38,8 @@ class SpriteGL : public Sprite
 		void addColor(float r, float g, float b);
         void destroyGLTexture();
         void rebuildSelf();
+	
+		PixelBuffer* createPixelBuffer(int w, int h, int bpp) { return new PixelBufferGL(w,h,bpp); }
 	private:
 		GLuint m_texture;
 		double m_multiplierx, m_multipliery;

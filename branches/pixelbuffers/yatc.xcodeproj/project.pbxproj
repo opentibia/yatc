@@ -94,6 +94,7 @@
 		7FB236670FC08B1600507FE1 /* protocolgame78.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236610FC08B1600507FE1 /* protocolgame78.cpp */; };
 		7FB236680FC08B1600507FE1 /* protocolgame841.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236630FC08B1600507FE1 /* protocolgame841.cpp */; };
 		7FB236690FC08B1600507FE1 /* protocolgame842.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB236650FC08B1600507FE1 /* protocolgame842.cpp */; };
+		7FB7967C114530B9008F0B2B /* pixelbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7967B114530B9008F0B2B /* pixelbuffer.cpp */; };
 		7FD1F3930F1390F60061E357 /* choicegrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F38F0F1390F60061E357 /* choicegrid.cpp */; };
 		7FD1F3940F1390F60061E357 /* stackpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F3910F1390F60061E357 /* stackpanel.cpp */; };
 		7FD1F3B30F1390F60061E357 /* protocolgame84.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FD1F3B10F1390F60061E357 /* protocolgame84.cpp */; };
@@ -307,6 +308,9 @@
 		7FB236640FC08B1600507FE1 /* protocolgame841.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame841.h; sourceTree = "<group>"; };
 		7FB236650FC08B1600507FE1 /* protocolgame842.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocolgame842.cpp; sourceTree = "<group>"; };
 		7FB236660FC08B1600507FE1 /* protocolgame842.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocolgame842.h; sourceTree = "<group>"; };
+		7FB796711145303C008F0B2B /* pixelbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pixelbuffer.h; sourceTree = "<group>"; };
+		7FB7967A114530B9008F0B2B /* pixelbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pixelbuffer.h; sourceTree = "<group>"; };
+		7FB7967B114530B9008F0B2B /* pixelbuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pixelbuffer.cpp; sourceTree = "<group>"; };
 		7FC98C7D112DAC2000D4D92F /* uireadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uireadable.h; sourceTree = "<group>"; };
 		7FD1F38F0F1390F60061E357 /* choicegrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = choicegrid.cpp; sourceTree = "<group>"; };
 		7FD1F3900F1390F60061E357 /* choicegrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = choicegrid.h; sourceTree = "<group>"; };
@@ -422,6 +426,9 @@
 		7FA4FAB80E93D56C0089D560 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7FB7967A114530B9008F0B2B /* pixelbuffer.h */,
+				7FB7967B114530B9008F0B2B /* pixelbuffer.cpp */,
+				7FB796711145303C008F0B2B /* pixelbuffer.h */,
 				7FA4FB640E93D5B30089D560 /* gamecontent */,
 				7FA4FB160E93D5A10089D560 /* net */,
 				7FA4FB3D0E93D5AA0089D560 /* ui */,
@@ -662,6 +669,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = ivucica;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "yatc" */;
 			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
@@ -793,6 +803,7 @@
 				7FAE8BAB111DC16300846B24 /* protocolgame74.cpp in Sources */,
 				7FAE8BAC111DC16300846B24 /* protocolgame76.cpp in Sources */,
 				7FAE8BC3111DC34500846B24 /* macclipboard.m in Sources */,
+				7FB7967C114530B9008F0B2B /* pixelbuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

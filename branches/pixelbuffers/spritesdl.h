@@ -35,6 +35,9 @@ public:
 
 	virtual void Blit(float dx, float dy, float sx, float sy, float w, float h);
 	virtual void Blit(float destx, float desty, float srcx, float srcy, float srcw, float srch, float destw, float desth);
+
+	PixelBuffer* createPixelBuffer(int w, int h, int bpp) { return new PixelBufferSDL(w,h,bpp); }
+
 private:
     void _BlitInternal(float dx, float dy, float sx, float sy, float w, float h);
     friend class Engine;

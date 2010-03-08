@@ -586,4 +586,5 @@ int Console::getHeight()
     for (std::vector<ConsoleEntry>::reverse_iterator it=m_content.rbegin(); it!=m_content.rend(); it++) {
 		height += (*it).getHeight();
 	}
+	return height;
 }

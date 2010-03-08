@@ -40,9 +40,12 @@
 #include <SDL/glSDL.h>
 #endif
 #include "stdinttypes.h"
+#include "pixelbuffer.h"
 
 struct SDL_Surface;
 class oRGBA;
+
+
 class Sprite
 {
 	public:
@@ -51,10 +54,10 @@ class Sprite
 		Sprite(const std::string& filename, int index, int x, int y, int w, int h);
 		virtual ~Sprite();
 
-		virtual float getWidth() const { return m_stretchimage ? m_stretchimage->w : m_image->w; }
-		virtual float getHeight() const { return m_stretchimage ? m_stretchimage->h : m_image->h; }
-		float getBasicWidth() const { return m_image->w; }
-		float getBasicHeight() const { return m_image->h; }
+		virtual float getWidth() const { return m_stretchimage ? m_stretchimage->getW() : m_image->getH(); }
+		virtual float getHeight() const { return m_stretchimage ? m_stretchimage->getH() : m_image->getH(); }
+		float getBasicWidth() const { return m_image->getW(); }
+		float getBasicHeight() const { return m_image->getH(); }
 
 		bool isLoaded() { return m_loaded;}
 
@@ -73,7 +76,7 @@ class Sprite
 		void templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b);
 
 		void Stretch(float neww, float newh, int smooth = -1, bool force = false);
-		void unStretch() { if (m_stretchimage) SDL_FreeSurface(m_stretchimage); m_stretchimage = NULL; }
+		void unStretch() { if (m_stretchimage) delete m_stretchimage; m_stretchimage = NULL; }
 
 		void setAsIcon();// used only once, in main
 
@@ -82,7 +85,6 @@ class Sprite
 
 
         // use functions for direct modification SPARINGLY!
-        virtual SDL_Surface* getSurface() { return m_image; }
         virtual SDL_Surface* lockSurface();
         virtual void unlockSurface();
 
@@ -94,20 +96,25 @@ class Sprite
 
 		void loadSurfaceFromFile(const std::string& filename, int index);
 
-		SDL_Surface* getColoredImage() { return m_stretchimage ? m_stretchimage : ((m_r != 1. || m_g != 1. || m_b != 1.) ? m_coloredimage : m_image); }
-		SDL_Surface* getImage() { return m_stretchimage ? m_stretchimage : m_image; }
-		SDL_Surface* getBasicImage() { return m_image; }
+		PixelBuffer* getColoredImage() { return m_stretchimage ? m_stretchimage : ((m_r != 1. || m_g != 1. || m_b != 1.) ? m_coloredimage : m_image); }
+		PixelBuffer* getImage() { return m_stretchimage ? m_stretchimage : m_image; }
+		PixelBuffer* getBasicImage() { return m_image; }
 		#ifdef USE_OPENGL
 		GLuint getPixelFormat() { return m_pixelformat; }
 		#endif
 
+	
+		virtual PixelBuffer* createPixelBuffer(int _w, int _h, int _bpp) = 0;
+		virtual PixelBuffer* createPixelBuffer(SDL_Surface* original, bool doCopy=true) = 0; 
+	
 		std::string m_filename; int m_index;
 		float m_r, m_g, m_b;
 
 	private:
 
 		bool m_loaded;
-		SDL_Surface *m_image, *m_stretchimage, *m_coloredimage;
+		PixelBuffer *m_image;
+		PixelBuffer *m_stretchimage, *m_coloredimage;
 
 		bool m_smoothstretch;
 		#ifdef USE_OPENGL

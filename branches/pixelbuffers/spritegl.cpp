@@ -83,16 +83,7 @@ void SpriteGL::buildGLTexture() {
 #endif
 
 
-	SDL_Surface *sfc = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, nextpow(getBasicImage()->w), nextpow(getBasicImage()->h), 32, rmask, gmask, bmask, amask);
 	
-	SDL_Rect s = {0,0,getBasicImage()->w,getBasicImage()->h};
-	SDL_Rect d = {0,0,getBasicImage()->w,getBasicImage()->h};
-
-	SDL_BlitSurface(getBasicImage(), &s, sfc, &d);
-
-	SDL_SetAlpha(sfc, SDL_SRCALPHA, 255);
-	SDL_LockSurface(sfc);
-
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &m_texture);
 	
@@ -103,24 +94,25 @@ void SpriteGL::buildGLTexture() {
 	SDL_SaveBMP(sfc,fout.c_str());
 	*/
 	
+	char* pixels = getBasicImage()->lockSelf();
+	
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); //GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	GLint ret = gluBuild2DMipmaps(GL_TEXTURE_2D,
 						GL_RGBA,
-						sfc->w, sfc->h,
+						getBasicImage()->getW(), getBasicImage()->getH(),
 						(getPixelFormat() == GL_NONE ? (DEBUGPRINT(DEBUGPRINT_WARNING, DEBUGPRINT_LEVEL_OBLIGATORY, "[SpriteGL::SpriteGL] Invalid pixelformat\n"), GL_BGRA) : getPixelFormat()),
 						GL_UNSIGNED_BYTE,
-			 			sfc->pixels);
+			 			pixels);
 
 	if(ret != 0){
 		DEBUGPRINT(DEBUGPRINT_ERROR, DEBUGPRINT_LEVEL_OBLIGATORY, "Error [SpriteGL::SpriteGL] Cant build 2DMipmaps: %s\n", gluErrorString(ret));
 	}
 
 	glDisable(GL_TEXTURE_2D);
-	SDL_UnlockSurface(sfc);
-	SDL_FreeSurface(sfc);
-
+	getBasicImage()->unlockSelf();
+	
     m_engineCreationTimestamp = g_engine->m_creationTimestamp;
 }
 

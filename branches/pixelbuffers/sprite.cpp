@@ -117,17 +117,6 @@ Sprite::Sprite(const std::string& filename, int index)
 Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int h)
 {
 
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    uint32_t rmask = 0xff000000;
-    uint32_t gmask = 0x00ff0000;
-    uint32_t bmask = 0x0000ff00;
-    uint32_t amask = 0x000000ff;
-#else
-    uint32_t rmask = 0x000000ff;
-    uint32_t gmask = 0x0000ff00;
-    uint32_t bmask = 0x00ff0000;
-    uint32_t amask = 0xff000000;
-#endif
 
 
 	#ifdef USE_OPENGL
@@ -150,15 +139,11 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 		return;
 	}
 
-	SDL_Surface* ns = SDL_CreateRGBSurface(SDL_HWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
-	SDL_Rect src = {x,y,w,h};
-	SDL_Rect dst = {0,0,w,h};
-	SDL_BlitSurface(m_image, &src, ns, &dst);
-
-	SDL_FreeSurface(m_image);
-	SDL_FreeSurface(m_coloredimage);
-	m_image = ns;
-	m_coloredimage = SDL_CreateRGBSurface(SDL_HWSURFACE, m_image->w, m_image->h, 32, rmask, gmask, bmask, amask);
+	
+	m_image->performCrop(x, y, w, h);
+	
+	m_coloredimage = createPixelBuffer(w,h,32);
+	//SDL_CreateRGBSurface(SDL_HWSURFACE, m_image->w, m_image->h, 32, rmask, gmask, bmask, amask);
 }
 
 
@@ -166,13 +151,13 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 Sprite::~Sprite()
 {
 	if(m_image){
-		SDL_FreeSurface(m_image);
+		delete (m_image);
 	}
 	if(m_stretchimage){
-		SDL_FreeSurface(m_stretchimage);
+		delete (m_stretchimage);
 	}
 	if(m_coloredimage){
-		SDL_FreeSurface(m_coloredimage);
+		delete (m_coloredimage);
 	}
 
 }
@@ -213,7 +198,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	#endif
 
 	if(extension == "bmp"){
-		m_image = SDL_LoadBMP(filename.c_str());
+		m_image = createPixelBuffer(SDL_LoadBMP(filename.c_str()));
 		if(!m_image){
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] SDL_LoadBMP failed on file: %s\n", filename.c_str());
 			return;
@@ -224,7 +209,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		m_loaded = true;
 	}
 	else if(extension == "spr"){
-		uint32_t signature; // TODO (ivucica#3#) signature should be perhaps read during logon?
+		uint32_t signature;
 		uint16_t sprcount;
 		uint32_t where;
 
@@ -253,7 +238,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		yatc_fread(&where, sizeof(where), 1, f);
 
 		// create surface where we'll store data, and fill it with transparency
-		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, 32, 32, 32, rmask, gmask, bmask, amask);
+		m_image = createPixelBuffer(32,32,32); //SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, 32, 32, 32, rmask, gmask, bmask, amask);
 		if(!m_image){
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			goto loadFail;
