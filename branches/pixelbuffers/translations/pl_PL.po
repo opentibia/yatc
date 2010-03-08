@@ -1,0 +1,1230 @@
+# YATC Translation to Polish
+# Copyright (C) 2008 OpenTibia Team
+# This file is distributed under the same license as the YATC package.
+# FightingElf (Dawid Pietrzak) <fightingelf@gmail.com>, 2008.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: YATC 0.2.3SVN\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-16 01:49+0100\n"
+"PO-Revision-Date: 2008-10-24 01:34+0200\n"
+"Last-Translator: FightingElf (Dawid Pietrzak) <fightingelf@gmail.com>\n"
+"Language-Team: FightingElf <fightingelf@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../gm_mainmenu.cpp:399
+msgid ""
+" comes with ABSOLUTELY NO WARRANTY; \n"
+"for details see sections 11 and 12 in file COPYING.\n"
+"This is free software, and you are welcome \n"
+"to redistribute it under certain conditions;\n"
+"see file COPYING for details."
+msgstr ""
+
+#: ../ui/uishop.cpp:220 ../ui/uishop.cpp:256
+msgid " gold"
+msgstr " złota"
+
+#: ../main.cpp:217 ../main.cpp:238 ../main.cpp:457
+msgid "$$PRODUCTSHORT$$ Fatal Error"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:383
+msgid "(in no particular order)"
+msgstr ""
+
+#: ../ui/optionshotkeys.h:274
+msgid "(use object on target)"
+msgstr ""
+
+#: ../ui/optionshotkeys.h:269
+msgid "(use object on yourself)"
+msgstr ""
+
+#: ../ui/optionshotkeys.h:279
+msgid "(use object with crosshairs)"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:98
+msgid "<Observe the battle window>"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:139
+msgid "<Observe the follow button>"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:142
+msgid "<Observe the health bar>"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:82
+msgid "<Observe the quest button>"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:119
+msgid "<The outfit window should be opened now>"
+msgstr ""
+
+#: ../mapui.cpp:841 ../ui/battlewindow.cpp:237 ../ui/uitrade.cpp:105
+msgid "Accept"
+msgstr ""
+
+#: ../ui/charlist.h:91
+msgid "Account Status:"
+msgstr "Status Konta:"
+
+#: ../ui/login.h:141
+msgid "Account name:"
+msgstr "Nazwa konta:"
+
+#: ../ui/login.h:65 ../ui/login.h:146
+msgid "Account number:"
+msgstr "Numer konta:"
+
+#: ../ui/vipwindow.cpp:199
+msgid "Add new VIP"
+msgstr ""
+
+#: ../console.cpp:371 ../mapui.cpp:817 ../ui/battlewindow.cpp:218
+#: ../ui/vipwindow.cpp:295
+msgid "Add to VIP list"
+msgstr ""
+
+#: ../ui/uioutfit.cpp:136
+msgid "Addon "
+msgstr "Dodatek "
+
+#: ../ui/optionsgfxadv.h:211 ../ui/optionsgfxadv.h:345
+msgid "Adjust framerate limit"
+msgstr ""
+
+#: ../ui/optionsgraphics.h:114
+msgid "Advanced"
+msgstr "Pokaż"
+
+#: ../ui/optionsgfxadv.h:76
+#, fuzzy
+msgid "Advanced Graphics Options"
+msgstr "Ustawienia Grafiki"
+
+#: ../ui/optionsgraphics.h:106
+msgid "Advanced settings:"
+msgstr "Zaawansowane:"
+
+#: ../ui/tutorialhints.cpp:122
+msgid "Ah, the all-mighty trade window. This hint is not written yet."
+msgstr ""
+
+#: ../ui/optionsgfxadv.h:129
+msgid "Ambient Light"
+msgstr ""
+
+#: ../ui/uishop.cpp:90
+msgid "Amount:"
+msgstr "Ilość:"
+
+#: ../mapui.cpp:800 ../ui/battlewindow.cpp:203
+msgid "Attack"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:82
+msgid "Auto Chase Off"
+msgstr "Autopościg wyłączony"
+
+#: ../ui/optionsnetwork.h:153
+msgid "Autodetect"
+msgstr "Autodetekcja"
+
+#: ../ui/optionshotkeys.h:88
+#, fuzzy
+msgid "Available hotkeys:"
+msgstr "Dostępne rozdzielczości:"
+
+#: ../ui/optionsgraphics.h:90
+msgid "Available resolutions:"
+msgstr "Dostępne rozdzielczości:"
+
+#: ../ui/skills.cpp:266
+msgid "Axe Fighting"
+msgstr "Walka Toporem"
+
+#: ../ui/sbvlpanel.cpp:49 ../ui/battlewindow.h:69
+msgid "Battle"
+msgstr ""
+
+#: ../ui/optionsgfxadv.h:167
+#, fuzzy
+msgid "Best Light"
+msgstr "Walka Pięściami"
+
+#: ../ui/optionsgfxadv.h:166
+msgid "Better Light"
+msgstr ""
+
+#: ../ui/uishop.cpp:46
+msgid "Buy"
+msgstr "Kup"
+
+#: ../ui/uioutfit.cpp:163 ../ui/uitrade.cpp:172 ../ui/charlist.h:120
+#: ../ui/deathnotification.h:89 ../ui/exitwarning.h:89 ../ui/itemmove.h:111
+#: ../ui/login.h:127 ../ui/optionsconsole.h:142 ../ui/optionsgeneral.h:127
+#: ../ui/optionsgfxadv.h:270 ../ui/optionsgraphics.h:145
+#: ../ui/optionshotkeys.h:206 ../ui/optionsnetwork.h:180
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: ../gm_mainmenu.cpp:578
+#, fuzzy
+msgid "Cannot connect to a login server."
+msgstr "Łączenie z serwerem..."
+
+#: ../ui/skills.cpp:142
+msgid "Cap"
+msgstr "Pojemność"
+
+#: ../ui/minimap.h:123
+msgid "Centre"
+msgstr ""
+
+#: ../ui/optionsui.h:121
+msgid ""
+"Change general\n"
+"game options"
+msgstr ""
+"Zmień ustawienia\n"
+"główne gry"
+
+#: ../ui/optionsui.h:129
+msgid ""
+"Change graphics and\n"
+"performance settings"
+msgstr ""
+"Zmień ustawienia\n"
+"grafiki i wydajności"
+
+#: ../ui/vipwindow.cpp:355
+msgid "Change player in VIP list"
+msgstr ""
+
+#: ../ui/optionsgeneral.h:75
+msgid "Classic Control"
+msgstr "Klasyczne Sterowanie"
+
+#: ../ui/optionshotkeys.h:156
+#, fuzzy
+msgid "Clear Object"
+msgstr "Przesuń Objekty"
+
+#: ../console.cpp:350
+msgid "Clear Window"
+msgstr ""
+
+#: ../console.cpp:335
+#, fuzzy
+msgid "Close"
+msgstr "Konsola"
+
+#: ../ui/skills.cpp:264
+msgid "Club Fighting"
+msgstr "Walka Obuchem"
+
+#: ../gm_mainmenu.cpp:367
+msgid "Compiled on: "
+msgstr ""
+
+#: ../gm_mainmenu.cpp:450 ../gm_mainmenu.cpp:536
+msgid "Connecting"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:537
+#, fuzzy
+msgid "Connecting to the game world. Please wait."
+msgstr "Łączenie z serwerem..."
+
+#: ../ui/optionsui.h:100
+msgid "Console"
+msgstr "Konsola"
+
+#: ../ui/optionsconsole.h:76
+msgid "Console Options"
+msgstr "Opcje Konsoli"
+
+#: ../gm_mainmenu.cpp:390
+msgid "Contributors"
+msgstr ""
+
+#: ../console.cpp:388
+#, fuzzy
+msgid "Copy Message"
+msgstr "Wiadomość Dnia"
+
+#: ../console.cpp:383 ../mapui.cpp:900 ../ui/battlewindow.cpp:269
+msgid "Copy Name"
+msgstr ""
+
+#: ../ui/vipwindow.cpp:224
+msgid "Copy name"
+msgstr ""
+
+#: ../ui/login.h:103
+msgid "Create Account"
+msgstr "Załóż Konto"
+
+#: ../gm_mainmenu.cpp:371
+msgid "Current engine"
+msgstr ""
+
+#: ../ui/optionsgfxadv.h:357
+msgid "Current framerate: "
+msgstr ""
+
+#: ../ui/optionsui.h:137
+msgid "Customise the console"
+msgstr "Dostosuj konsolę"
+
+#: ../gm_mainmenu.cpp:477
+msgid ""
+"Data files in the directory either:\n"
+"* do not belong to same protocol version, or\n"
+"* are modified and with unknown signatures.\n"
+"\n"
+"Either get correct files from a single known\n"
+"client version, or make sure that you have\n"
+"correct signatures in the files, or go to\n"
+"Options->Network and choose the correct\n"
+"protocol."
+msgstr ""
+
+#: ../objects.cpp:273
+msgid "Data files not recognized"
+msgstr ""
+
+#: ../gm_gameworld.cpp:1512
+#, fuzzy
+msgid "Default"
+msgstr "Szczegół"
+
+#: ../ui/uioutfit.cpp:87
+msgid "Detail"
+msgstr "Szczegół"
+
+#: ../mapui.cpp:859
+msgid "Disable Shared Experience"
+msgstr ""
+
+#: ../ui/skills.cpp:267
+msgid "Distance Fighting"
+msgstr "Walka Dystansowa"
+
+#: ../ui/optionsgfxadv.h:177
+msgid "Don't Stretch/Shrink Game Window"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:615 ../ui/optionsui.cpp:226
+msgid ""
+"Due to a technical problem we had to reset\n"
+"the game world"
+msgstr ""
+
+#: ../ui/vipwindow.cpp:185
+#, fuzzy
+msgid "Edit "
+msgstr "Wyjdź z Gry"
+
+#: ../ui/optionshotkeys.h:129
+#, fuzzy
+msgid "Edit Hotkey Object: "
+msgstr "Zmień opisy hotkey'ów"
+
+#: ../ui/optionshotkeys.h:103
+#, fuzzy
+msgid "Edit hotkey text:"
+msgstr "Zmień opisy hotkey'ów"
+
+#: ../ui/optionsui.h:145
+msgid "Edit your hotkey texts"
+msgstr "Zmień opisy hotkey'ów"
+
+#: ../mapui.cpp:879
+msgid "Enable Shared Experience"
+msgstr ""
+
+#: ../ui/optionsui.cpp:341
+msgid "Engine change"
+msgstr "Zmiana silnika"
+
+#: ../ui/mainmenu.cpp:48 ../ui/login.h:49
+msgid "Enter Game"
+msgstr "Wejdź do Gry"
+
+#: ../ui/vipwindow.cpp:400
+msgid "Enter a short description:"
+msgstr ""
+
+#: ../gm_gameworld.cpp:1261 ../gm_mainmenu.cpp:580 ../gm_mainmenu.cpp:587
+#: ../gm_mainmenu.cpp:640
+msgid "Error"
+msgstr "Błąd"
+
+#: ../ui/exitwarning.h:81
+#, fuzzy
+msgid "Exit"
+msgstr "Wyjdź z Gry"
+
+#: ../ui/mainmenu.cpp:93
+msgid "Exit Game"
+msgstr "Wyjdź z Gry"
+
+#: ../ui/skills.cpp:45
+msgid "Experience"
+msgstr "Doświadczenie"
+
+#: ../ui/skills.cpp:269
+msgid "Fishing"
+msgstr "Rybactwo"
+
+#: ../ui/skills.cpp:263
+msgid "Fist Fighting"
+msgstr "Walka Pięściami"
+
+#: ../mapui.cpp:804 ../ui/battlewindow.cpp:207
+msgid "Follow"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:618 ../ui/optionsui.cpp:229
+msgid ""
+"For more information about Tibia visit our\n"
+"website at"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:582
+msgid ""
+"For more information take a look at the threads in the\n"
+"forums at otfans.net."
+msgstr ""
+
+#: ../ui/charlist.h:156
+msgid "Free Account"
+msgstr "Konto Darmowe"
+
+#: ../ui/optionsgraphics.h:84
+msgid "Fullscreen"
+msgstr "Pełny Ekran"
+
+#: ../ui/optionsui.cpp:101
+msgid ""
+"Fullscreen decides whether or not the client will\n"
+"be taking the entire screen.\n"
+"\n"
+"Available resolutions shows detected resolutions on\n"
+"your computer that the client can use while in fullscreen."
+msgstr ""
+"Pełny Ekran Wyświetla klienta zajmując cały\n"
+"dostępny ekran.\n"
+"Dostępne rozdzielczości Pokazują znalezione na\n"
+"Twoim komputerze, dostępne rozdzielczości, które\n"
+"mogą być użyte przez klienta."
+
+#: ../ui/optionsui.h:86
+msgid "General"
+msgstr "Główne"
+
+#: ../ui/optionsgeneral.h:68
+msgid "General Options"
+msgstr "Ustawienia Główne"
+
+#: ../ui/optionsui.h:93
+msgid "Graphics"
+msgstr "Grafika"
+
+#: ../ui/optionsgraphics.h:77
+msgid "Graphics Options"
+msgstr "Ustawienia Grafiki"
+
+#: ../ui/charlist.h:158
+msgid "Gratis Premium Account"
+msgstr "Darmowe Konto Premium"
+
+#: ../gm_mainmenu.cpp:621 ../ui/optionsui.cpp:232
+msgid "Have fun in"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:619 ../ui/optionsui.cpp:230
+msgid "Have fun in Tibia!"
+msgstr ""
+
+#: ../ui/uioutfit.cpp:60
+msgid "Head"
+msgstr "Głowa"
+
+#: ../ui/health.h:78
+msgid "Health"
+msgstr "Życie"
+
+#: ../gm_mainmenu.cpp:416 ../ui/optionsui.cpp:169 ../ui/uiinventory.cpp:247
+#: ../ui/optionsconsole.h:128 ../ui/optionsgeneral.h:113
+#: ../ui/optionsgfxadv.h:256 ../ui/optionsgraphics.h:131
+#: ../ui/optionsnetwork.h:166
+msgid "Help"
+msgstr "Pomoc"
+
+#: ../ui/optionsui.cpp:91
+msgid "Help not done."
+msgstr "Pomoc nie wykonana."
+
+#: ../ui/vipwindow.cpp:216
+msgid "Hide offline VIPs"
+msgstr ""
+
+#: ../ui/skills.cpp:97
+msgid "Hit Points"
+msgstr "Punkty Życia"
+
+#: ../ui/optionshotkeys.h:84
+#, fuzzy
+msgid "Hotkey Options"
+msgstr "Opcje Konsoli"
+
+#: ../ui/optionsui.h:107
+msgid "Hotkeys"
+msgstr "Hotkeye"
+
+#: ../main.cpp:232
+msgid ""
+"If you are a Debian user, you may have forgotten to install\n"
+"the 'tibia-data' or 'yatc-data' package."
+msgstr ""
+
+#: ../ui/login.h:95
+msgid ""
+"If you don't have\n"
+"an account yet:"
+msgstr ""
+"Jeżeli nie masz\n"
+"jeszcze konta:"
+
+#: ../ui/exitwarning.h:60
+msgid ""
+"If you shut down the program, your character might stay in the game.\n"
+"Click on \"Logout\" to ensure that your character leaves the game properly.\n"
+"Click on \"Exit\" if you want to exit the program without logging out your "
+"character."
+msgstr ""
+
+#: ../console.cpp:375 ../mapui.cpp:821 ../ui/battlewindow.cpp:222
+msgid "Ignore"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:622 ../ui/optionsui.cpp:233
+msgid "Important Reminder"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:405 ../ui/mainmenu.cpp:82
+msgid "Info"
+msgstr "O programie"
+
+#: ../gm_gameworld.cpp:1263 ../gm_mainmenu.cpp:642
+msgid "Information"
+msgstr "Informacja"
+
+#: ../ui/uiinventory.cpp:57
+msgid "Inventory"
+msgstr "Ekwipunek"
+
+#: ../mapui.cpp:746 ../mapui.cpp:841 ../ui/battlewindow.cpp:237
+#: ../ui/battlewindow.cpp:247
+#, fuzzy
+msgid "Invitation"
+msgstr "Informacja"
+
+#: ../mapui.cpp:741 ../mapui.cpp:836 ../ui/battlewindow.cpp:232
+#: ../ui/battlewindow.cpp:253
+#, fuzzy
+msgid "Invite to Party"
+msgstr "Ekwipunek"
+
+#: ../mapui.cpp:850 ../mapui.cpp:870 ../mapui.cpp:890
+#, fuzzy
+msgid "Leave Party"
+msgstr "Ekwipunek"
+
+#: ../ui/skills.cpp:60
+msgid "Level"
+msgstr "Poziom"
+
+#: ../main.cpp:453
+msgid "Loading data file failed!"
+msgstr ""
+
+#: ../main.cpp:211 ../main.cpp:454
+msgid ""
+"Loading the data file '$$FILENAME$$' has failed.\n"
+"Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
+msgstr ""
+
+#: ../main.cpp:206
+msgid ""
+"Loading the data file '$$FILENAME$$' has failed.\n"
+"Please place '$$FILENAME$$' in the same folder as $$PRODUCTSHORT$$.\n"
+"If you are a Debian user, you may have forgotten to install\n"
+"the 'tibia-data' or 'yatc-data' package."
+msgstr ""
+
+#: ../ui/sbvlpanel.cpp:68 ../ui/exitwarning.h:72
+msgid "Logout"
+msgstr ""
+
+#: ../mapui.cpp:773 ../ui/itempanel.cpp:170
+msgid "Look"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:132
+msgid ""
+"Looks like you've met a marked player. See the skull? That means that guy "
+"fought \n"
+"with someone. The {white skull} means he just tried to fight with someone a "
+"few \n"
+"minutes ago, and {red skull} means he killed several people."
+msgstr ""
+
+#: ../ui/skills.cpp:190
+msgid "Magic Level"
+msgstr "Poziom Magiczny"
+
+#: ../ui/skills.cpp:112
+msgid "Mana"
+msgstr "Mana"
+
+#: ../gm_mainmenu.cpp:625 ../ui/optionsui.cpp:236
+msgid "Message of the Day"
+msgstr "Wiadomość Dnia"
+
+#: ../console.cpp:367 ../mapui.cpp:813 ../ui/battlewindow.cpp:214
+#, fuzzy
+msgid "Message to"
+msgstr "Wiadomość Dnia"
+
+#: ../ui/vipwindow.cpp:193
+#, fuzzy
+msgid "Message to "
+msgstr "Wiadomość Dnia"
+
+#: ../ui/uishop.cpp:114
+msgid "Money:"
+msgstr "Pieniędzy:"
+
+#: ../ui/optionsui.h:168
+msgid "Motd"
+msgstr "Wyświetl"
+
+#: ../ui/itemmove.h:62
+msgid "Move Objects"
+msgstr "Przesuń Objekty"
+
+#: ../ui/uishop.cpp:35
+msgid "NPC Trade"
+msgstr "Sklep NPC"
+
+#: ../ui/optionsui.h:114
+msgid "Network"
+msgstr "Połączenie"
+
+#: ../ui/mainmenu.cpp:59 ../ui/optionsnetwork.h:73
+msgid "Network Options"
+msgstr "Opcje połączenia"
+
+#: ../ui/optionsgfxadv.h:164
+msgid "No Light"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:89
+msgid ""
+"Now you've got a {bag} to carry stuff in and there's already a {coat}\n"
+"in there. {Drag} the coat from the {bag} to the {armor slot} to wear it."
+msgstr ""
+
+#: ../ui/deathnotification.h:63
+msgid ""
+"OMG! Some creep just killed ya, you noob.\n"
+"But don't be sad, you crying baby. You can just respawn if\n"
+"you give up some of your stuff. \n"
+"\n"
+"Go click that 'Ok' button if you dare and resume your journeys in $"
+"$PRODUCTSHORT$$!"
+msgstr ""
+
+#: ../ui/optionsnetwork.h:115
+msgid "OT Encryption Key"
+msgstr "Klucz kodowania OT"
+
+#: ../ui/uioutfit.cpp:154 ../ui/uishop.cpp:135 ../ui/charlist.h:112
+#: ../ui/deathnotification.h:80 ../ui/itemmove.h:102 ../ui/login.h:118
+#: ../ui/optionsconsole.h:135 ../ui/optionsgeneral.h:120
+#: ../ui/optionsgfxadv.h:263 ../ui/optionsgraphics.h:138
+#: ../ui/optionshotkeys.h:199 ../ui/optionsnetwork.h:173 ../ui/optionsui.h:190
+msgid "Ok"
+msgstr "Ok"
+
+#: ../ui/tutorialhints.cpp:78
+msgid ""
+"Ok; you can also try {clicking} on the {minimap}. For example \n"
+"there's a {marker} on the minimap now, try moving there."
+msgstr ""
+
+#: ../mapui.cpp:785 ../ui/itempanel.cpp:176
+msgid "Open"
+msgstr ""
+
+#: ../ui/optionsui.cpp:121
+msgid ""
+"OpenGL is a 3D hardware-accelerated graphical library.\n"
+"  To make use of it, make sure you have latest graphic card\n"
+"  drivers. Those provided by Microsoft will be insufficient.\n"
+"  Due to SDL-centric design, OpenGL was not given much thought\n"
+"  and is currently not recommended since it will be much slower\n"
+"  on most laptops and perhaps on many desktops.\n"
+msgstr ""
+"OpenGL jest trójwymiarową biblioteką akcelerowaną sprzętowo.\n"
+"  Aby mieć z niej użytek, upewnij się, że posiadasz najnowsze\n"
+"  sterowniki karty graficznej. Sterowniki dostarczane przez Microsoft\n"
+"  niestety będą bezużyteczne ze względu na design SDL-centric.\n"
+"  OpenGL nigdy nie miało mieć użytku i prawdopodobnie będzie\n"
+"  wolniejsze na większości laptopów i zwykłych komputerach.\n"
+
+#: ../ui/mainmenu.cpp:70 ../ui/uiinventory.cpp:236 ../ui/optionsui.h:79
+msgid "Options"
+msgstr "Opcje"
+
+#: ../mapui.cpp:751 ../ui/battlewindow.cpp:259
+msgid "Pass Leadership To"
+msgstr ""
+
+#: ../ui/login.h:80
+msgid "Password:"
+msgstr "Hasło:"
+
+#: ../ui/uioutfit.cpp:98
+msgid ""
+"Pick an outfit and choose colors for parts of\n"
+"your character's avatar.\n"
+"Addons are activated by ticking the appropriate box.\n"
+"To activate particular addon, premium players can\n"
+"solve various quests."
+msgstr ""
+"Wybierz wygląd oraz kolory dla poszczególnych elementów\n"
+"Twojej postaci.\n"
+"Dodatki są włączane przez zaznaczenie prawidłowego pola.\n"
+"Aby aktywować dany addon, gracze premium muszą\n"
+"wykonać kilka zadań."
+
+#: ../ui/vipwindow.cpp:302
+msgid "Please enter a character name:"
+msgstr ""
+
+#: ../ui/uitrade.cpp:226
+msgid ""
+"Please wait for your \n"
+"partner to accept."
+msgstr ""
+
+#: ../ui/charlist.h:161
+msgid "Premium Account"
+msgstr "Konto Premium"
+
+#: ../ui/uishop.cpp:102
+msgid "Price:"
+msgstr "Cena:"
+
+#: ../ui/uioutfit.cpp:69
+msgid "Primary"
+msgstr "Główne"
+
+#: ../gm_mainmenu.cpp:383
+msgid "Programmed by"
+msgstr ""
+
+#: ../ui/optionsnetwork.h:139 ../ui/optionsnetwork.h:140
+#: ../ui/optionsnetwork.h:141 ../ui/optionsnetwork.h:142
+#: ../ui/optionsnetwork.h:143 ../ui/optionsnetwork.h:144
+#: ../ui/optionsnetwork.h:145 ../ui/optionsnetwork.h:146
+#: ../ui/optionsnetwork.h:147 ../ui/optionsnetwork.h:148
+#: ../ui/optionsnetwork.h:149 ../ui/optionsnetwork.h:150
+#: ../ui/optionsnetwork.h:151 ../ui/optionsnetwork.h:152
+msgid "Protocol"
+msgstr "Protokół"
+
+#: ../gm_mainmenu.cpp:487
+msgid "Protocol detection failed"
+msgstr "Detakcja protokołu zawiodła"
+
+#: ../ui/uiinventory.cpp:73
+msgid "Quests"
+msgstr ""
+
+#: ../ui/optionsui.cpp:127
+#, fuzzy
+msgid ""
+"RECOMMENDED: Choose SDL. But, try what works better for you.\n"
+"\n"
+"To apply graphical engine change, you need to restart\n"
+"$$PRODUCTSHORT$$."
+msgstr ""
+"ZALECANE: SDL. Mimo to, prosze sprawdzić, która działa lepiej dla Ciebie!\n"
+"\n"
+"Aby zaakceptować silnik graficzny, musisz zrestartować program.\n"
+
+#: ../ui/uitrade.cpp:113
+msgid "Reject"
+msgstr ""
+
+#: ../ui/vipwindow.cpp:189
+msgid "Remove "
+msgstr ""
+
+#: ../ui/optionsui.cpp:341
+msgid "Restart is required to apply engine change."
+msgstr "Restart wymagany do przełączenia silnika."
+
+#: ../mapui.cpp:746 ../ui/battlewindow.cpp:247
+msgid "Revoke"
+msgstr ""
+
+#: ../ui/optionsui.cpp:117
+msgid ""
+"SDL 1.2 is a 2D software rendering library. It should be\n"
+"  slowest, but since it is the most maintained engine, it runs\n"
+"  at reasonable speed and even faster than OpenGL engine, with\n"
+"  fewer glitches. That can, of course, change anytime.\n"
+msgstr ""
+"SDL 1.2 jest dwuwymiarową biblioteką interpretacyjną. Wolniejsza,\n"
+"  ale ponieważ jest najbardziej utrzymywanym silnikiem graficznym,\n"
+"  działa dopuszczalną prędkością, a nawet czasem szybszą niż\n"
+"  OpenGL, z kilkoma dodatkami. Oczywiście to się może zmienić.\n"
+
+#: ../console.cpp:346
+msgid "Save Window"
+msgstr ""
+
+#: ../ui/uioutfit.cpp:78
+msgid "Secondary"
+msgstr "Poboczny"
+
+#: ../ui/charlist.h:62
+msgid "Select Character"
+msgstr "Wybierz Postać"
+
+#: ../ui/optionshotkeys.h:147
+#, fuzzy
+msgid "Select Object"
+msgstr "Przesuń Objekty"
+
+#: ../ui/vipwindow.cpp:378
+#, fuzzy
+msgid "Select a type:"
+msgstr "Wybierz postać:"
+
+#: ../console.cpp:393
+#, fuzzy
+msgid "Select all"
+msgstr "Wybierz Postać"
+
+#: ../ui/charlist.h:76
+msgid "Select character:"
+msgstr "Wybierz postać:"
+
+#: ../ui/optionsgfxadv.h:84
+#, fuzzy
+msgid "Select graphics engine"
+msgstr "Oferujemy dwa silniki graficzne:\n"
+
+#: ../ui/uishop.cpp:56
+msgid "Sell"
+msgstr "Sprzedaj"
+
+#: ../ui/optionshotkeys.h:121
+msgid "Send automatically"
+msgstr ""
+
+#: ../ui/optionsnetwork.h:77
+msgid "Server address:"
+msgstr "Adres serwera:"
+
+#: ../ui/optionsui.cpp:156
+msgid ""
+"Server name is the IP address or hostname of the\n"
+"login server.\n"
+"\n"
+"Port is the TCP port of the login server.\n"
+"\n"
+"You can also choose if you'd like to access OpenTibia\n"
+"servers, or a proprietary server. To access OpenTibia\n"
+"servers, turn on the OT Encryption Key option."
+msgstr ""
+"Nazwa serwera jest adresem IP serwera lub hostem\n"
+"login serwera.\n"
+"\n"
+"Port jest portem TCP login serwera.\n"
+"\n"
+"Możesz również wybrać, czy chcesz połączyć się z serwerem\n"
+"OpenTibia lub Tibią. Aby wejść na jakikolwiek serwer OT\n"
+"należy włączyć Klucz kodowania OT."
+
+#: ../ui/optionsnetwork.h:94
+msgid "Server port:"
+msgstr "Port serwera:"
+
+#: ../mapui.cpp:826 ../ui/uioutfit.cpp:43
+msgid "Set Outfit"
+msgstr "Zmień Wygląd"
+
+#: ../ui/optionsui.h:153
+msgid ""
+"Set network options,\n"
+"such as server."
+msgstr ""
+"Zmień ustawienia połącze-\n"
+"nia, jak np. serwer."
+
+#: ../ui/itemmove.h:75
+msgid ""
+"Set the number of \n"
+"items you want to move:"
+msgstr ""
+"Wybierz ilość przedmiotów\n"
+"które chcesz przenieść:"
+
+#: ../ui/skills.cpp:268
+msgid "Shielding"
+msgstr "Ochrona Tarczą"
+
+#: ../ui/optionsconsole.h:91
+msgid "Show Event Messages in Console"
+msgstr "Wyświetl w konsoli wydarzenia"
+
+#: ../ui/optionsgeneral.h:88
+msgid "Show Hints"
+msgstr "Pokaż wskazówki"
+
+#: ../ui/optionsconsole.h:85
+msgid "Show Info Messages in Console"
+msgstr "Wyświetl w konsoli informacje"
+
+#: ../ui/optionsconsole.h:109
+msgid "Show Levels in Console"
+msgstr "Wyświetl w konsoli poziomy"
+
+#: ../ui/optionsgeneral.h:94
+msgid "Show Names of Creatures"
+msgstr "Wyświetl nazwy kreatur"
+
+#: ../ui/optionsconsole.h:115
+msgid "Show Private Messages in Game Window"
+msgstr "Wyświetl prywatne wiadomości"
+
+#: ../ui/optionsconsole.h:97
+msgid "Show Status Messages in Console"
+msgstr "Wyświetl w konsoli statusy"
+
+#: ../ui/optionsgeneral.h:100
+msgid "Show Textual Effects"
+msgstr "Wyświetl efekty tekstur"
+
+#: ../ui/optionsconsole.h:103
+msgid "Show Timestamps in Console"
+msgstr "Wyświetl w konsoli godzinę"
+
+#: ../ui/vipwindow.cpp:218
+msgid "Show offline VIPs"
+msgstr ""
+
+#: ../console.cpp:339
+#, fuzzy
+msgid "Show server messages"
+msgstr "Wyświetl w konsoli wydarzenia"
+
+#: ../ui/optionsui.h:175
+msgid ""
+"Show the most recent\n"
+"Message of the Day"
+msgstr ""
+"Pokazuje najświeższą\n"
+"Wiadomość Dnia"
+
+#: ../ui/optionsgfxadv.h:165
+msgid "Simple Light"
+msgstr ""
+
+#: ../ui/skills.cpp:237
+msgid "Skill "
+msgstr "Umiejętność "
+
+#: ../ui/sbvlpanel.cpp:40 ../ui/skills.cpp:31
+msgid "Skills"
+msgstr "Umiejętności"
+
+#: ../ui/tutorialhints.cpp:105
+msgid ""
+"So the {container window} opened. {Drag} whatever's in it into your {bag} "
+"to \n"
+"take it with you. You need to collect three cockroach legs for the NPC!"
+msgstr ""
+
+#: ../gm_gameworld.cpp:823
+msgid "Sorry, not possible"
+msgstr ""
+
+#: ../ui/vipwindow.cpp:203
+msgid "Sort by name"
+msgstr ""
+
+#: ../ui/vipwindow.cpp:211
+msgid "Sort by status"
+msgstr ""
+
+#: ../ui/vipwindow.cpp:207
+msgid "Sort by type"
+msgstr ""
+
+#: ../ui/skills.cpp:127
+msgid "Soul Points"
+msgstr "Punkty Duszy"
+
+#: ../ui/skills.cpp:157
+msgid "Stamina"
+msgstr "Wigor"
+
+#: ../ui/uiinventory.cpp:61
+msgid "Stop"
+msgstr ""
+
+#: ../ui/skills.cpp:265
+msgid "Sword Fighting"
+msgstr "Walka Mieczem"
+
+#: ../ui/tutorialhints.cpp:109
+msgid ""
+"The {shovel}, which is now in your inventory, is used to dig stuff up. "
+"It's \n"
+"very useful for exploring new areas. So go to the east, and you should find "
+"a \n"
+"{loose stone pile}, try {ctrl+clicking} on the {shovel} and then on the "
+"{stones}.\n"
+"When you use an item on another item, it's called extended using."
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:85
+msgid ""
+"There's a {chest} in here. So try {ctrl+clicking} (commonly called \n"
+"'Use') on it to open it."
+msgstr ""
+
+#: ../console.cpp:292 ../mapui.cpp:1025 ../ui/battlewindow.cpp:193
+#: ../ui/vipwindow.cpp:233
+msgid "This functionality is not yet finished"
+msgstr ""
+
+#: ../ui/optionsui.cpp:132
+msgid ""
+"To choose maximum FPS (reducing the CPU and graphics card usage\n"
+"resulting in less power usage, quieter operation and reduced\n"
+"CPU temperature) use the scrollbar below. Note, though, FPS \n"
+"limiting is only approximate."
+msgstr ""
+"Aby wybrać maksymalną ilość FPS (zmniejszając zużycie procesora i\n"
+"karty graficznej oraz prądu z wynikiem zmniejszenia hałasu oraz\n"
+"temperatury procesora) użyj paska niżej. Proszę wziąć pod uwagę,\n"
+"że limit FPS nie jest dokładny (w przybliżeniu)."
+
+#: ../ui/tutorialhints.cpp:93
+msgid ""
+"To lit the {torch}, try {ctrl+clicking} on it. Torches burn out slowly \n"
+"while they're on, so don't forget to {ctrl+click} (use) it when you don't\n"
+"need it. Many things can be ctrl+clicked in this game, so try looking around."
+msgstr ""
+
+#: ../ui/uitrade.cpp:36
+#, fuzzy
+msgid "Trade"
+msgstr "Sklep NPC"
+
+#: ../ui/itempanel.cpp:183
+#, fuzzy
+msgid "Trade with"
+msgstr "Sklep NPC"
+
+#: ../gm_gameworld.cpp:1636
+msgid "Tutorial Hint"
+msgstr ""
+
+#: ../ui/charlist.h:98
+msgid "Unknown"
+msgstr "Nieznany"
+
+#: ../ui/optionsgfxadv.h:213 ../ui/optionsgfxadv.h:347
+msgid "Unlimited"
+msgstr ""
+
+#: ../objects.cpp:265
+msgid ""
+"Unrecognized data files.\n"
+"\n"
+"* Please install a supported version of data files, or override\n"
+"  autodetection manually in configuration.\n"
+"\n"
+"* You may be attempting to use a too new version of data files.\n"
+"  Check if a new version of $$PRODUCTSHORT$$ came out which\n"
+"  supports this version of data files."
+msgstr ""
+
+#: ../mapui.cpp:787 ../ui/itempanel.cpp:179
+msgid "Use"
+msgstr ""
+
+#: ../ui/optionsgfxadv.h:198
+msgid "Use Smooth Stretching"
+msgstr ""
+
+#: ../ui/optionshotkeys.h:183
+msgid "Use on crosshair"
+msgstr ""
+
+#: ../ui/optionshotkeys.h:174
+msgid "Use on target"
+msgstr ""
+
+#: ../ui/optionshotkeys.h:165
+msgid "Use on yourself"
+msgstr ""
+
+#: ../mapui.cpp:782 ../ui/itempanel.cpp:172
+msgid "Use with..."
+msgstr ""
+
+#: ../gm_mainmenu.cpp:373
+msgid "Uses GLICT"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:375
+msgid "Uses OpenGL"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:372
+msgid "Uses SDL"
+msgstr ""
+
+#: ../ui/sbvlpanel.cpp:58 ../ui/vipwindow.cpp:47
+msgid "VIP"
+msgstr ""
+
+#: ../ui/uitrade.cpp:174
+msgid "Wait for a counter offer."
+msgstr ""
+
+#: ../ui/exitwarning.h:51
+msgid "Warning"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:617 ../ui/optionsui.cpp:228
+msgid ""
+"We are sorry for any inconvenience. Of course we\n"
+"work hard to prevent such problems in the future."
+msgstr ""
+
+#: ../ui/optionsui.cpp:116
+msgid "We offer two graphical engines:\n"
+msgstr "Oferujemy dwa silniki graficzne:\n"
+
+#: ../gm_mainmenu.cpp:620 ../ui/optionsui.cpp:231
+msgid "Welcome to"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:75
+msgid "Welcome to $$PRODUCTSHORT$$! Use {arrows} or {mouse} to move around."
+msgstr ""
+
+#: ../gm_mainmenu.cpp:614 ../ui/optionsui.cpp:225
+msgid "Welcome to Tibia!"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:125
+msgid ""
+"Welcome to the village! There are a few more marks on your map now with "
+"important\n"
+"locations and NPCs. You're now supposed to fight until level 8, when you "
+"can \n"
+"choose a vocation and go to the mainland."
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:101
+msgid ""
+"Why fight if you can't profit, right? So when you kill something, just "
+"loot \n"
+"its {body}. Just do a {ctrl+click} on it."
+msgstr ""
+
+#: ../ui/optionsgfxadv.h:187
+msgid "Windows Mouse Pointer"
+msgstr ""
+
+#: ../ui/tutorialhints.cpp:115
+msgid ""
+"With the {rope} you can climb up from dungeons and caves. Find a {rope "
+"spot}, \n"
+"{ctrl+click} on the {rope}, and then on the {rope spot}."
+msgstr ""
+
+#: ../ui/deathnotification.h:52
+msgid "You are dead"
+msgstr ""
+
+#: ../main.cpp:225
+msgid ""
+"You are missing '$$FILENAME$$'.\n"
+"We will launch Tibia Data File Fetcher which should automatically install\n"
+"data files required for $$PRODUCTSHORT$$.\n"
+"\n"
+"You will have to manually restart $$PRODUCTSHORT$$ afterwards.\n"
+"\n"
+msgstr ""
+
+#: ../mapui.cpp:715
+msgid "You can't see a thing."
+msgstr ""
+
+#: ../gm_mainmenu.cpp:451
+msgid "Your character list is being loaded. Please wait."
+msgstr ""
+
+#: ../gm_mainmenu.cpp:379
+msgid "[for info run with GL engine]\n"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:372
+msgid "compiled with"
+msgstr ""
+
+#: ../ui/charlist.h:161
+msgid "days left"
+msgstr "dni pozostało"
+
+#: ../gm_mainmenu.cpp:616 ../ui/optionsui.cpp:227
+msgid "to the state of"
+msgstr ""
+
+#: ../gm_mainmenu.cpp:387
+msgid "with inactive developers"
+msgstr ""
+
+#~ msgid "Entering game"
+#~ msgstr "Wchodzenie do gry"
+
+#~ msgid "Logging in"
+#~ msgstr "Logowanie"
+
+#, fuzzy
+#~ msgid "Show Light Effects"
+#~ msgstr "Wyświetl efekty tekstur"

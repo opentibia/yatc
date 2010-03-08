@@ -1,0 +1,69 @@
+OTSERV code guidelines draft
+
+* ClassLooksLikeThis::functionsLookLikeThis() 
+
+* Local variable names should be short and still make sense
+
+* Use 'const' when possible 
+
+* enumsLookLikeThis_t{
+
+* You can use Player* player, Item* item, Creature* creature, etc 
+
+* Use Tab character, NOT spaces
+
+* Use spaces in the code
+a == (b / 2) + 1 && b == (c % 2) - 3 
+
+* Control staments
+if(a == b){
+	foo(); 
+}
+else{
+	bar(); 
+}
+
+if(a == b)
+	foo(); 
+
+for(i = 1; i < 10; i++){
+	//doing something important here
+}
+
+switch(a){
+case 1:	
+	break;
+case 2:
+	break;
+default:
+	break;
+}
+
+
+int functionName(int param1, void *param2)
+{
+}
+
+
+* For default parameters value
+
+in the .h file
+int functionName(int param1, void *param2 = NULL);
+
+in the .cpp file
+int functionName(int param1, void *param2 /*= NULL*/)
+{
+}
+
+
+* Try to not include itemids in the code, you can "only" use itemids that are in const7x.h
+
+* Do not use literals often, you can use #define, or better use enums
+
+* Try to find in the code a function that fit to your needs to avoid duplicate code, you can change existing functions to make them more powerful
+
+* Avoid include funtions on Game class that are not really Game class related
+
+* Use typedef for your std types
+
+* ....

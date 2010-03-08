@@ -1,0 +1,181 @@
+COMPILING YATC
+==============
+Copyright (C) 2007-2010 OpenTibia Team
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+ 1. Requirements
+ 2. Building on Linux/Unix
+ 3. Building on Windows
+ 4. Devpaks and Debian packages
+ 5. Building without OpenGL support
+ 6. libGLICTd.a versus libGLICT.a
+
+1. Requirements
+===============
+
+- SDL 1.2		http://www.libsdl.org/
+- GMP 4.2		http://gmplib.org/
+- GLICT 		https://glict.svn.sf.net/svnroot/glict/ (svn)
+- SDL_gfx for SDL1.2
+- OpenGL and GLU
+- autoconf 2.61
+- automake 1.10
+
+Please understand that while we have produced builds that run on MacOS X platform, we are currently unable to provide systematic instructions.
+
+2. Building on Linux/Unix
+=========================
+
+0. First follow section 4.2, to make sure you installed all required packages.
+   Also follow section 2.1, to make sure you installed GLICT.
+1. Make directory for yatc. For example "mkdir ~/yatc"
+2. Go to the new directory. For example "cd ~/yatc"
+3. Run "svn co https://opentibia.svn.sourceforge.net/svnroot/opentibia/yatc/trunk ."
+4. Run "./autogen.sh".
+5. Run "./configure"
+6. Run "make"
+7. Run "./yatc" to start the client.
+
+== 2.1. Compiling and installing GLICT ==
+
+GLICT started using autotools recently.
+
+1. Make directory for glict. For example "mkdir ~/glict"
+2. Go to the new directory. For example "cd ~/glict"
+3. Run "svn co https://glict.svn.sf.net/svnroot/glict/trunk/glict/ ."
+4. Run "./autogen.sh"
+5. Run "./configure"
+6. Run "make"
+7. Run "sudo make install"
+
+3. Building on Windows with Code::Blocks
+===================================
+
+You are expected to have Code::Blocks installed. Instructions are based around Windows XP environment, but you can easily adapt them to other OSes, if you turn on your brain. 
+
+When instructed to fetch code from SVN repository, and you don't have a SVN client, you can use the WebDAV client built into the XP. Instructions are in chapter 3.3.
+
+If you have any problems please try to fix them yourself, and then contact Khaos via OTfans PM. If you really cannot find a solution, try contacting Khaos anyway. If you report the problem we can fix these instructions together -- if not, someone else will have the same problem!
+
+We assume you have MinGW installed in C:\MinGW. By default Code::Blocks installs it into C:\Program Files\CodeBlocks\mingw or similar. Adjust the paths accordingly.
+
+PLEASE NOTE.
+These instructions were not tested. Only reason they're here is to replace outdated Dev-Cpp instructions. Building with Dev-Cpp is not supported by the team for about two years now (at the time of writing).
+
+== 3.1. Compiling GLICT ==
+
+1. Fetch the GLICT code from the SVN.
+   (https://glict.svn.sf.net/svnroot/glict/trunk/glict/)
+2. Copy the entire "GLICT/" subfolder to C:\MinGW\include 
+     (you should now have files such as:
+      C:\MinGW\include\GLICT\button.h
+      C:\MinGW\include\GLICT\container.h, ...)
+3. Open GLICT.cbp and click Execute->Compile
+4. Go to the root GLICT folder. 
+5. Find "libGLICT.a". 
+6. Copy it to "C:\MinGW\lib\libGLICT.a"
+
+Alternatively, skip compling GLICT and fetch a nighly binary from:
+ http://ivan.vucica.net/nightly/
+
+== 3.2. Compiling YATC ==
+
+1) First, you'll need devpaks mentioned below. Fetch them and install them.
+ Hint: they are ordinary .tar.bz2 archives. You can easily rename them and unpack them into C:\MinGW with your favorite archiver. Alternatively use packman.exe from Dev-Cpp to install them (just copy it into C:\MinGW and open each devpak with it).
+2) Fetch YATC SVN.
+3) Open the yatc.cbp project file.
+4) Press F9 to compile.
+5) Copy C:\MinGW\bin\SDL.dll, C:\MinGW\bin\SDL_gfx.dll and other stuff you need into YATC's folder. 
+
+You should have YATC.exe built in the directory where YATC.dev was, and it should run correctly. Don't forget to copy Tibia.pic, Tibia.dat and Tibia.spr to YATC's folder!
+
+== 3.3. Fetching SVN using XP's WebDAV client ==
+
+Here are instructions on how to do fetch a Subversion repository without a Subversion client under XP, using the WebDAV client.
+
+1. Go to My Network Places. 
+2. Click on Add a network place. 
+3. Select "Choose another network location". 
+4. Under "Internet or network address", enter SVN repository's URL. You'll get a warning about security certificate being invalid; just ignore it. 
+5. If you want, change the name of the shortcut that'll be created in My Network Places. 
+6. Then make sure that "Open this network place when I click finish" is checked.
+7. Click Finish.
+   The repository's contents will open as a more-or-less regular folder. 
+8. Copy the files you need out of it into a new folder. 
+
+Then, proceed with instructions!
+
+4. Devpaks and Debian packages
+==============================
+
+Here we include links to required Devpaks and Debian packages.
+GLICT is not officially available as Devpak nor as Debian package, but
+compile instructions are included above.
+
+== 4.1. Devpaks
+
+SDL: 		http://devpaks.org/details.php?devpak=200
+SDL_gfx:	http://old.devpaks.org/show.php?devpak=160
+GMP:		http://pekayz.googlepages.com/GMP.DevPak
+GLICT:		http://ivan.vucica.net/nightly/
+
+== 4.2. Debian/Ubuntu packages
+
+Just copypaste this to root commandline (type su and type root password, then 
+punch these lines in):
+
+apt-get install libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake \
+		libgl1-mesa-dev libglu1-mesa-dev
+
+5. Building without OpenGL support
+==================================
+If you are building for a platform that does not support OpenGL such as 
+Windows CE, you may want to use option --disable-opengl when running configure:
+
+ $ ./configure --disable-opengl
+
+Configure script should detect GL's nonexistance automatically, but if it
+does not, that's the way to do it.
+
+Do not forget, your GLICT must also be compiled without OpenGL support; to do
+that, define NO_GL macro. In the Makefile, find the line that begins with 
+CPPFLAGS= and in it, on the end, add -DNO_GL:
+
+ CPPFLAGS=[... stuff...] -DNO_GL
+
+You probably had to do this anyway if you were working with WinCE or similar
+platform, but it's sure worth mentioning in case you're, for a sick and twisted
+reason to complicate yourself the building process, trying to compile it for
+a platform that does have GL, you must not forget this since otherwise it'll
+break badly and you'll be extremely unhappy.
+
+6. libGLICTd.a versus libGLICT.a
+================================
+
+libGLICTd.a is regular GLICT, but compiled with these extra #defines:
+_GLIBCXX_DEBUG
+_GLIBCXX_DEBUG_PEDANTIC
+
+These defines make program execute slower, but it's easier to debug C++ code.
+To build Debug Unix build in Code::Blocks without libGLICTd.a, remove the
+mentioned two defines in Project Options, and in the same place change all
+references to GLICTd into GLICT. It should compile properly then even if you
+don't create a libGLICTd.a.
+
+(This is necessary because these two, although built from same code with
+same compiler, are NOT binary compatible since those modifiers change behaviour
+of G++'s implementation of STL.)
+

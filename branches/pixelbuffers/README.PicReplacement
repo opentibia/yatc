@@ -1,0 +1,22 @@
+
+Originally written on Nov 18th 2008
+
+
+ Greetings!
+
+YATC repository has for quite some time now contained several files
+intended for solving the dependency on proprietary .pic file. These are
+several GIMP files (.xcf) and few Bitmap files (.bmp). These were:
+* yatc.bmp - main menu background
+* inv.bmp - Tibia.pic[1], the "inventory" image in old client 
+  versions. YATC nowhere used this.
+* ui.xcf - replacing user interface elements
+
+Today (Nov18th 2008) I added font2.xcf
+
+* font2.xcf - for replacing Tibia.pic[2]. This is just the plain-old Verdana font, of size 11. producable in GIMP by turning on Kerning, turning off Auto-kerning, turning off Antialiasing, and setting font to Verdana Bold 11. see font2.xcf for example!
+
+Hope someone plugs in on this!
+
+-- ivucica
+

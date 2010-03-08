@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YATCce", "YATCce.vcproj", "{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YATC", "YATC.vcproj", "{D9ED41A4-EEDF-46FB-9AB4-38407DB27892}"
+	ProjectSection(ProjectDependencies) = postProject
+		{214308DE-1919-4566-AE4F-2940734A80B5} = {214308DE-1919-4566-AE4F-2940734A80B5}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLICT", "..\glict\GLICT.vcproj", "{214308DE-1919-4566-AE4F-2940734A80B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Pocket PC 2003 (ARMV4) = Debug|Pocket PC 2003 (ARMV4)
+		Debug|Win32 = Debug|Win32
+		Release|Pocket PC 2003 (ARMV4) = Release|Pocket PC 2003 (ARMV4)
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Debug|Pocket PC 2003 (ARMV4).ActiveCfg = Debug|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Debug|Pocket PC 2003 (ARMV4).Build.0 = Debug|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Debug|Pocket PC 2003 (ARMV4).Deploy.0 = Debug|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Debug|Win32.ActiveCfg = Debug|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Release|Pocket PC 2003 (ARMV4).ActiveCfg = Release|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Release|Pocket PC 2003 (ARMV4).Build.0 = Release|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Release|Pocket PC 2003 (ARMV4).Deploy.0 = Release|Pocket PC 2003 (ARMV4)
+		{D89FBF4C-F2B1-4653-A23D-8CD80CD93E9E}.Release|Win32.ActiveCfg = Release|Pocket PC 2003 (ARMV4)
+		{D9ED41A4-EEDF-46FB-9AB4-38407DB27892}.Debug|Pocket PC 2003 (ARMV4).ActiveCfg = Debug|Win32
+		{D9ED41A4-EEDF-46FB-9AB4-38407DB27892}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D9ED41A4-EEDF-46FB-9AB4-38407DB27892}.Debug|Win32.Build.0 = Debug|Win32
+		{D9ED41A4-EEDF-46FB-9AB4-38407DB27892}.Release|Pocket PC 2003 (ARMV4).ActiveCfg = Release|Win32
+		{D9ED41A4-EEDF-46FB-9AB4-38407DB27892}.Release|Win32.ActiveCfg = Release|Win32
+		{D9ED41A4-EEDF-46FB-9AB4-38407DB27892}.Release|Win32.Build.0 = Release|Win32
+		{214308DE-1919-4566-AE4F-2940734A80B5}.Debug|Pocket PC 2003 (ARMV4).ActiveCfg = Debug|Win32
+		{214308DE-1919-4566-AE4F-2940734A80B5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{214308DE-1919-4566-AE4F-2940734A80B5}.Debug|Win32.Build.0 = Debug|Win32
+		{214308DE-1919-4566-AE4F-2940734A80B5}.Release|Pocket PC 2003 (ARMV4).ActiveCfg = Release|Win32
+		{214308DE-1919-4566-AE4F-2940734A80B5}.Release|Win32.ActiveCfg = Release|Win32
+		{214308DE-1919-4566-AE4F-2940734A80B5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

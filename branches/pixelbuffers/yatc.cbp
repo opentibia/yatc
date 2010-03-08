@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="YATC" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Unix - X11">
+				<Option platforms="Unix;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsunix\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-pg" />
+					<Add option="-g3" />
+					<Add option="-DUSEASSERT" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_GETENV" />
+					<Add option="-D_GLIBCXX_DEBUG" />
+					<Add option="-D_GLIBCXX_DEBUG_PEDANTIC" />
+					<Add option="-DDEBUG_BUILD" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-DSDLTTF_EXPERIMENT" />
+					<Add option="-DUSE_X11_CLIPBOARD" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg -lgmon" />
+					<Add option="-pg" />
+					<Add library="GL" />
+					<Add library="GLU" />
+					<Add library="SDL" />
+					<Add library="SDL_gfx" />
+					<Add library="GLICTd" />
+					<Add library="SDL_ttf" />
+					<Add library="gmp" />
+				</Linker>
+			</Target>
+			<Target title="Release Unix - X11">
+				<Option platforms="Unix;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsunixr\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-DUSE_X11_CLIPBOARD" />
+				</Compiler>
+				<Linker>
+					<Add library="GL" />
+					<Add library="GLU" />
+					<Add library="SDL" />
+					<Add library="SDL_gfx" />
+					<Add library="GLICT" />
+					<Add library="gmp" />
+				</Linker>
+			</Target>
+			<Target title="Release Unix - X11 with glSDL">
+				<Option platforms="Unix;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsunixr\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-DUSE_X11_CLIPBOARD" />
+					<Add option="-D__USE_GLSDL__" />
+				</Compiler>
+				<Linker>
+					<Add library="GL" />
+					<Add library="GLU" />
+					<Add library="SDL" />
+					<Add library="SDL_gfx" />
+					<Add library="GLICT" />
+					<Add library="glSDL" />
+					<Add library="gmp" />
+				</Linker>
+			</Target>
+			<Target title="Debug Windows">
+				<Option platforms="Windows;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objswin\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters='&quot;debugging.bin&quot;' />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g3" />
+					<Add option="-O0" />
+					<Add option="-DUSEASSERT" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-DDEBUG_BUILD" />
+				</Compiler>
+				<Linker>
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-lgmp" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
+					<Add option="-lintl" />
+					<Add option="-g3 -O0" />
+				</Linker>
+			</Target>
+			<Target title="Release Windows">
+				<Option platforms="Windows;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsrelease\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-lgmp" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
+					<Add option="-lintl" />
+				</Linker>
+			</Target>
+			<Target title="Release Windows with glSDL">
+				<Option platforms="Windows;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsrelease\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-D__USE_GLSDL__" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-lgmp" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
+					<Add option="-lintl" />
+					<Add option="-lglSDL" />
+				</Linker>
+			</Target>
+			<Target title="nfries dev">
+				<Option platforms="Windows;" />
+				<Option output="yatc" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objsrelease\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DUSE_OPENGL" />
+					<Add option="-DHAVE_LIBINTL_H" />
+					<Add option="-D__USE_GLSDL__" />
+					<Add option="-DHAVE_TOMMATH=1" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lGLICT" />
+					<Add option="-lopengl32" />
+					<Add option="-lwsock32" />
+					<Add option="-lglu32" />
+					<Add option="-ltommath" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_gfx" />
+					<Add option="-lintl" />
+					<Add option="-lglSDL" />
+				</Linker>
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="Debug Unix - X11;Release Unix - X11;Debug Windows;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-fexpensive-optimizations" />
+			<Add option="-Wall" />
+			<Add option="-DDEBUGLEVEL_BUILDTIME=0" />
+			<Add option="-DHAVE_GMP_H=1" />
+			<Add directory="." />
+		</Compiler>
+		<Unit filename="AUTHORS" />
+		<Unit filename="BUGS" />
+		<Unit filename="COPYING" />
+		<Unit filename="Makefile.am" />
+		<Unit filename="README" />
+		<Unit filename="ROADMAP" />
+		<Unit filename="automap.cpp" />
+		<Unit filename="automap.h" />
+		<Unit filename="bigint.cpp">
+			<Option target="Debug Unix - X11" />
+			<Option target="Debug Windows" />
+			<Option target="Release Windows" />
+			<Option target="Release Windows with glSDL" />
+			<Option target="nfries dev" />
+		</Unit>
+		<Unit filename="bigint.h" />
+		<Unit filename="choicegrid.cpp" />
+		<Unit filename="choicegrid.h" />
+		<Unit filename="clipboard.cpp" />
+		<Unit filename="clipboard.h" />
+		<Unit filename="codeguide.txt" />
+		<Unit filename="confighandler.cpp" />
+		<Unit filename="confighandler.h" />
+		<Unit filename="configure.ac" />
+		<Unit filename="console.cpp" />
+		<Unit filename="console.h" />
+		<Unit filename="creatureui.cpp" />
+		<Unit filename="creatureui.h" />
+		<Unit filename="debugprint.cpp" />
+		<Unit filename="debugprint.h" />
+		<Unit filename="defines.h" />
+		<Unit filename="distanceui.cpp" />
+		<Unit filename="distanceui.h" />
+		<Unit filename="effectui.cpp" />
+		<Unit filename="effectui.h" />
+		<Unit filename="engine.cpp" />
+		<Unit filename="engine.h" />
+		<Unit filename="enginegl.cpp" />
+		<Unit filename="enginegl.h" />
+		<Unit filename="enginesdl.cpp" />
+		<Unit filename="enginesdl.h" />
+		<Unit filename="exchndl2.cxx">
+			<Option target="Debug Windows" />
+			<Option target="Release Windows" />
+			<Option target="Release Windows with glSDL" />
+			<Option target="nfries dev" />
+		</Unit>
+		<Unit filename="fassert.h" />
+		<Unit filename="font.cpp" />
+		<Unit filename="font.h" />
+		<Unit filename="gamecontent\container.cpp" />
+		<Unit filename="gamecontent\container.h" />
+		<Unit filename="gamecontent\creature.cpp" />
+		<Unit filename="gamecontent\creature.h" />
+		<Unit filename="gamecontent\enums.h" />
+		<Unit filename="gamecontent\globalvars.cpp" />
+		<Unit filename="gamecontent\globalvars.h" />
+		<Unit filename="gamecontent\inventory.cpp" />
+		<Unit filename="gamecontent\inventory.h" />
+		<Unit filename="gamecontent\item.cpp" />
+		<Unit filename="gamecontent\item.h" />
+		<Unit filename="gamecontent\itemcontainer.h" />
+		<Unit filename="gamecontent\map.cpp" />
+		<Unit filename="gamecontent\map.h" />
+		<Unit filename="gamecontent\position.h" />
+		<Unit filename="gamecontent\shop.h" />
+		<Unit filename="gamecontent\thing.h" />
+		<Unit filename="gamecontent\viplist.cpp" />
+		<Unit filename="gamecontent\viplist.h" />
+		<Unit filename="gamemode.cpp" />
+		<Unit filename="gamemode.h" />
+		<Unit filename="gm_debug.cpp">
+			<Option target="Debug Unix - X11" />
+			<Option target="Debug Windows" />
+		</Unit>
+		<Unit filename="gm_debug.h">
+			<Option target="Debug Unix - X11" />
+			<Option target="Debug Windows" />
+		</Unit>
+		<Unit filename="gm_gameworld.cpp" />
+		<Unit filename="gm_gameworld.h" />
+		<Unit filename="gm_mainmenu.cpp" />
+		<Unit filename="gm_mainmenu.h">
+			<Option weight="45" />
+		</Unit>
+		<Unit filename="itemui.cpp">
+			<Option compiler="gcc" use="0" buildCommand="$compiler $options $includes -g3 -c $file -o $object" />
+		</Unit>
+		<Unit filename="itemui.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="mapui.cpp" />
+		<Unit filename="mapui.h" />
+		<Unit filename="net\connection.cpp" />
+		<Unit filename="net\connection.h" />
+		<Unit filename="net\connectionreplay.cpp" />
+		<Unit filename="net\connectionreplay.h" />
+		<Unit filename="net\encryption.cpp" />
+		<Unit filename="net\encryption.h" />
+		<Unit filename="net\networkmessage.cpp" />
+		<Unit filename="net\networkmessage.h" />
+		<Unit filename="net\protocolgame.cpp" />
+		<Unit filename="net\protocolgame.h" />
+		<Unit filename="net\protocolgame74.cpp" />
+		<Unit filename="net\protocolgame74.h" />
+		<Unit filename="net\protocolgame76.cpp" />
+		<Unit filename="net\protocolgame76.h" />
+		<Unit filename="net\protocolgame78.cpp" />
+		<Unit filename="net\protocolgame78.h" />
+		<Unit filename="net\protocolgame80.cpp" />
+		<Unit filename="net\protocolgame80.h" />
+		<Unit filename="net\protocolgame81.cpp" />
+		<Unit filename="net\protocolgame81.h" />
+		<Unit filename="net\protocolgame811.cpp" />
+		<Unit filename="net\protocolgame811.h" />
+		<Unit filename="net\protocolgame82.cpp" />
+		<Unit filename="net\protocolgame82.h" />
+		<Unit filename="net\protocolgame821.cpp" />
+		<Unit filename="net\protocolgame821.h" />
+		<Unit filename="net\protocolgame822.cpp" />
+		<Unit filename="net\protocolgame83.cpp" />
+		<Unit filename="net\protocolgame83.h" />
+		<Unit filename="net\protocolgame831.cpp" />
+		<Unit filename="net\protocolgame831.h" />
+		<Unit filename="net\protocolgame84.cpp" />
+		<Unit filename="net\protocolgame84.h" />
+		<Unit filename="net\protocolgame841.cpp" />
+		<Unit filename="net\protocolgame841.h" />
+		<Unit filename="net\protocolgame842.cpp" />
+		<Unit filename="net\protocolgame842.h" />
+		<Unit filename="net\protocolgame85.cpp" />
+		<Unit filename="net\protocolgame85.h" />
+		<Unit filename="net\protocolgame853.cpp" />
+		<Unit filename="net\protocolgame853.h" />
+		<Unit filename="net\protocolgame854.cpp" />
+		<Unit filename="net\protocolgame854.h" />
+		<Unit filename="net\protocollogin.cpp" />
+		<Unit filename="net\protocollogin.h" />
+		<Unit filename="net\rsa.cpp" />
+		<Unit filename="net\rsa.h" />
+		<Unit filename="notifications.cpp" />
+		<Unit filename="notifications.h" />
+		<Unit filename="objects.cpp" />
+		<Unit filename="objects.h" />
+		<Unit filename="options.cpp" />
+		<Unit filename="options.h" />
+		<Unit filename="popup.cpp" />
+		<Unit filename="popup.h" />
+		<Unit filename="product.h" />
+		<Unit filename="release.sh" />
+		<Unit filename="resources.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Debug Windows" />
+			<Option target="Release Windows" />
+			<Option target="Release Windows with glSDL" />
+			<Option target="nfries dev" />
+		</Unit>
+		<Unit filename="skin.cpp" />
+		<Unit filename="skin.h" />
+		<Unit filename="sprdata.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sprdata.h" />
+		<Unit filename="sprite.cpp" />
+		<Unit filename="sprite.h" />
+		<Unit filename="spritegl.cpp" />
+		<Unit filename="spritegl.h" />
+		<Unit filename="spritesdl.cpp" />
+		<Unit filename="spritesdl.h" />
+		<Unit filename="stackpanel.cpp" />
+		<Unit filename="stackpanel.h" />
+		<Unit filename="statusmsg.cpp" />
+		<Unit filename="statusmsg.h" />
+		<Unit filename="thingui.cpp" />
+		<Unit filename="thingui.h" />
+		<Unit filename="ui\battlewindow.cpp" />
+		<Unit filename="ui\battlewindow.h" />
+		<Unit filename="ui\charlist.h" />
+		<Unit filename="ui\checkbox.h" />
+		<Unit filename="ui\deathnotification.h" />
+		<Unit filename="ui\exitwarning.h" />
+		<Unit filename="ui\gmactions.cpp" />
+		<Unit filename="ui\gmactions.h" />
+		<Unit filename="ui\health.h" />
+		<Unit filename="ui\itemmove.h" />
+		<Unit filename="ui\itempanel.cpp" />
+		<Unit filename="ui\itempanel.h" />
+		<Unit filename="ui\login.h" />
+		<Unit filename="ui\mainmenu.cpp" />
+		<Unit filename="ui\mainmenu.h" />
+		<Unit filename="ui\minimap.h" />
+		<Unit filename="ui\optionsconsole.h" />
+		<Unit filename="ui\optionsgeneral.h" />
+		<Unit filename="ui\optionsgfxadv.h" />
+		<Unit filename="ui\optionsgraphics.h" />
+		<Unit filename="ui\optionshotkeys.h" />
+		<Unit filename="ui\optionsnetwork.h" />
+		<Unit filename="ui\optionsui.cpp" />
+		<Unit filename="ui\optionsui.h" />
+		<Unit filename="ui\sbvlpanel.cpp" />
+		<Unit filename="ui\sbvlpanel.h" />
+		<Unit filename="ui\skills.cpp" />
+		<Unit filename="ui\skills.h" />
+		<Unit filename="ui\tutorialhints.cpp" />
+		<Unit filename="ui\tutorialhints.h" />
+		<Unit filename="ui\uicontainer.cpp" />
+		<Unit filename="ui\uicontainer.h" />
+		<Unit filename="ui\uiinventory.cpp" />
+		<Unit filename="ui\uiinventory.h" />
+		<Unit filename="ui\uioutfit.cpp" />
+		<Unit filename="ui\uioutfit.h" />
+		<Unit filename="ui\uireadable.h" />
+		<Unit filename="ui\uishop.cpp" />
+		<Unit filename="ui\uishop.h" />
+		<Unit filename="ui\uitrade.cpp" />
+		<Unit filename="ui\uitrade.h" />
+		<Unit filename="ui\vipwindow.cpp" />
+		<Unit filename="ui\vipwindow.h" />
+		<Unit filename="util.cpp" />
+		<Unit filename="util.h" />
+		<Unit filename="yatc.cfg" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

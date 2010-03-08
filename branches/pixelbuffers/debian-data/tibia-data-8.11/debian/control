@@ -1,0 +1,15 @@
+Source: tibia-data
+Section: non-free/games
+Priority: extra
+Maintainer: Ivan Vucica <ivucica@gmail.com>
+Build-Depends: debhelper (>= 5), autotools-dev
+Standards-Version: 3.7.3
+
+Package: tibia-data
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Data files from Tibia, a 2D "graphical MUD" by Cipsoft
+Suggests: yatc
+ Tibia is an MMORPG developed and operated by a German company Cipsoft.
+ This package contains the data files from the original client, currently
+ used by YATC.
