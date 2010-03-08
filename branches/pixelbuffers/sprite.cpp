@@ -243,12 +243,12 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			goto loadFail;
 		}
-		SDL_LockSurface(m_image);
+		char* pixels = m_image->lockSelf();
 
 		// dont make static since if we change the rendering engine at runtime,
 		//  this may change too
-		Uint32 magenta = SDL_MapRGBA(m_image->format, 255, 0, 255, 255);
-		SDL_FillRect(m_image, NULL, magenta);
+		Uint32 magenta = m_image->mapRGBA(255, 0, 255, 255);
+		m_image->fillRect(magenta);
 
 		// read the data
         if (where) {

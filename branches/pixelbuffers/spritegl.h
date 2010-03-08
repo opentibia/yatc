@@ -40,6 +40,8 @@ class SpriteGL : public Sprite
         void rebuildSelf();
 	
 		PixelBuffer* createPixelBuffer(int w, int h, int bpp) { return new PixelBufferGL(w,h,bpp); }
+	PixelBuffer* createPixelBuffer(SDL_Surface* original, bool doCopy=true) { return new PixelBufferGL(original,doCopy);} 
+	
 	private:
 		GLuint m_texture;
 		double m_multiplierx, m_multipliery;

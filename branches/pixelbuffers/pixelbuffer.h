@@ -50,6 +50,29 @@ public:
 		return NULL; 
 	}
 	
+	virtual uint32_t mapRGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+	{
+		// TODO (ivucica#8#): depends on arch?
+		return a << 24 | b << 16 | g << 8 | r;
+	}
+	
+	
+	virtual void fillRect(uint32_t color, int x=0,int y=0,int w=0,int h=0)
+	{
+		// FIXME does not use x,y,w,h
+		for (int i=0;i<w*h;i++)
+		{
+			
+			for(int j=0;j<bpp;j++)
+			{
+				char *byte=mPixels+i*bpp+j;
+				// FIXME presumes bpp of 32, otherwise uses only red channel
+				*byte = (color >> j * 8) & 0xFF;
+			}
+		}
+		
+	}
+	
 protected:
 	int w,h,bpp;
 	char* mPixels;
@@ -96,6 +119,20 @@ public:
 		
 		mSurface = SDL_CreateRGBSurface(SDL_HWSURFACE, _w, _h, _bpp, rmask, gmask, bmask, amask);
 	}
+	PixelBufferSDL(SDL_Surface* original, bool doCopy)
+	{
+		// when using doCopy, this function is also converting 
+		// to display format this may or may not be what you want to do...
+		
+		if(doCopy)
+			mSurface = SDL_DisplayFormat(original);
+		else 
+			mSurface = original;
+		
+		w = mSurface->w;
+		h = mSurface->h;
+		bpp = mSurface->format->BitsPerPixel;
+	}
 	void performCrop(int x, int y, int w, int h)
 	{
 		
@@ -121,6 +158,16 @@ public:
 		mSurface = ns;
 
 	}
+	
+	uint32_t mapRGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+	{
+		return SDL_MapRGBA(mSurface->format,r,g,b,a);
+	}
+	void fillRect(uint32_t color, int x=0,int y=0,int w=0,int h=0)
+	{
+		// FIXME does not use x,y,w,h
+		SDL_FillRect(mSurface, NULL, color);
+	}
 protected:
 	SDL_Surface *mSurface;
 };
@@ -129,6 +176,7 @@ class PixelBufferGL : public PixelBuffer
 {
 public:
 	PixelBufferGL(int _w,int _h,int _bpp) : PixelBuffer(_w,_h,_bpp) {}
+	PixelBufferGL(SDL_Surface*original,bool doCopy) : PixelBuffer(original,doCopy) {}
 	
 };
 
