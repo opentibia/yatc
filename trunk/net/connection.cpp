@@ -698,6 +698,8 @@ void Connection::executeNetwork()
 							closeConnectionError(ERROR_DECRYPT_FAIL);
 							return;
 						}
+					} else if(!m_cryptoEnable) {
+					    m_inputMessage->setReadPos(2);
 					} else {
                         // this is 8.41 specific
                         // data in unencrypted packets is now including unencrypted length,
