@@ -16,6 +16,10 @@
 		7F3766B910D7942900D2C69A /* protocolgame854.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3766B610D7942900D2C69A /* protocolgame854.cpp */; };
 		7F39F83A0EDEFB5400ED6F10 /* automap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F39F8380EDEFB5400ED6F10 /* automap.cpp */; };
 		7F4EC8770E941D1000A1218E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F4EC8760E941D1000A1218E /* OpenGL.framework */; };
+		7F7E566D11E7342E00856811 /* GLICT.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F37669C10D793C600D2C69A /* GLICT.framework */; };
+		7F7E567011E7343100856811 /* GMP.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F37669E10D793C600D2C69A /* GMP.framework */; };
+		7F7E567411E7343600856811 /* SDL.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F3766A610D793E500D2C69A /* SDL.framework */; };
+		7F7E569C11E7343A00856811 /* SDL_gfx.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 7F3766A410D793E500D2C69A /* SDL_gfx.framework */; };
 		7FA49D430E9695BA0016102F /* yatc.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7FA49D420E9695BA0016102F /* yatc.icns */; };
 		7FA4FAB40E93D5260089D560 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FAB30E93D5260089D560 /* SDLMain.m */; };
 		7FA4FAD60E93D57E0089D560 /* confighandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7FA4FAB90E93D57E0089D560 /* confighandler.cpp */; };
@@ -109,6 +113,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7F7E569C11E7343A00856811 /* SDL_gfx.framework in Copy Frameworks into .app bundle */,
+				7F7E567411E7343600856811 /* SDL.framework in Copy Frameworks into .app bundle */,
+				7F7E567011E7343100856811 /* GMP.framework in Copy Frameworks into .app bundle */,
+				7F7E566D11E7342E00856811 /* GLICT.framework in Copy Frameworks into .app bundle */,
 			);
 			name = "Copy Frameworks into .app bundle";
 			runOnlyForDeploymentPostprocessing = 0;

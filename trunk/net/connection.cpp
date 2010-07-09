@@ -236,7 +236,7 @@ ClientVersion_t ProtocolConfig::detectVersion()
         picSignature == 0x4AE5C3D3)
         return CLIENT_VERSION_853;
 
-    if (datSignature == 0x4b28b89e  &&
+    if (datSignature == 0x4b28b89e || datSignature == 0x4b1e2caa  &&
         sprSignature == 0x4B1E2C87  &&
         picSignature == 0x4AE5C3D3)
         return CLIENT_VERSION_854;
