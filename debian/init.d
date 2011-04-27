@@ -12,22 +12,22 @@
 #
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/sbin/yatc
-NAME=yatc
-DESC=yatc
+DAEMON=/usr/sbin/gldm
+NAME=gldm
+DESC=gldm
 
 test -x $DAEMON || exit 0
 
-LOGDIR=/var/log/yatc
+LOGDIR=/var/log/gldm
 PIDFILE=/var/run/$NAME.pid
 DODTIME=1                   # Time to wait for the server to die, in seconds
                             # If this value is set too low you might not
                             # let some servers to die gracefully and
                             # 'restart' will not work
 
-# Include yatc defaults if available
-if [ -f /etc/default/yatc ] ; then
-	. /etc/default/yatc
+# Include gldm defaults if available
+if [ -f /etc/default/gldm ] ; then
+	. /etc/default/gldm
 fi
 
 set -e

@@ -1,17 +1,15 @@
 This package was debianized by Ivan Vucica <ivucica@gmail.com> on
-Sat, 19 Jan 2008 15:17:04 +0100.
+Sun, 17 Oct 2010 00:37:00 +0200.
 
-It was downloaded from http://sf.net/projects/opentibia/
+It was downloaded from http://sf.net/projects/gldm/
 
 Upstream Author(s): 
 
-    Ivan Vucica <ivucica@gmail.com>
-    mips <mips_act@users.sf.net>
+    Ivan Vucica <ivan@vucica.net>
 
 Copyright: 
 
-    Copyright (c) 2007-2008 Ivan Vucica
-    Copyright (c) 2007-2008 mips_act@users.sf.net
+    Copyright (c) 2009-2010 Ivan Vucica
 
 License:
 
@@ -28,6 +26,6 @@ License:
     On Debian systems, the complete text of the GNU General Public
     License can be found in the file `/usr/share/common-licenses/GPL-2'.
 
-The Debian packaging is (C) 2008, Ivan Vucica <ivucica@gmail.com> and
+The Debian packaging is (C) 2010, Ivan Vucica <ivucica@gmail.com> and
 is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
 
