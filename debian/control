@@ -1,0 +1,16 @@
+Source: gldm
+Section: x11
+Priority: extra
+Maintainer: Ivan Vucica <ivucica@gmail.com>
+Build-Depends: debhelper (>= 5), autotools-dev, libx11-dev, libsdl1.2-dev, libsdl-ttf2.0-dev, libsdl-image1.2-dev, libsdl-gfx1.2-dev
+Standards-Version: 3.8.0
+
+Package: gldm
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: a pretty and extendable login system - Graphical Liberty Display Manager
+ GLDM aims to be a pretty and extendable login interface. Instead of being
+ just the boring old login terminal, it aims to bring neat eyecandy to end
+ users by giving game and graphics programmers an easy way to code just the 
+ presentation, and leave the boring part to the backend.
+

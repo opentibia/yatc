@@ -1,0 +1,2 @@
+?package(yatc):needs="X11" section="Games/Adventure"\
+  title="yatc" command="/usr/games/yatc"
