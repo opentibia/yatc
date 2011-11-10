@@ -6,9 +6,9 @@ svn co http://glict.svn.sf.net/svnroot/glict/trunk/glict/ .
 ./configure
 make
 cd ..
-export CFLAGS="-I`pwd`/GLICT/ -L`pwd`/GLICT/GLICT/"
-export CXXFLAGS="-I`pwd`/GLICT/ -L`pwd`/GLICT/GLICT/"
-export LDFLAGS="-L`pwd`/GLICT/GLICT/"
+export CFLAGS="-I\"`pwd`\"/GLICT/ -L\"`pwd`\"/GLICT/GLICT/"
+export CXXFLAGS="-I\"`pwd`\"/GLICT/ -L\"`pwd`\"/GLICT/GLICT/"
+export LDFLAGS="-L\"`pwd`\"/GLICT/GLICT/"
 
 cat - > autorelease.tmp << EOF
 n
