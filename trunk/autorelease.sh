@@ -1,3 +1,4 @@
+#!/bin/bash
 mkdir GLICT
 cd GLICT
 svn co http://glict.svn.sf.net/svnroot/glict/trunk/glict/ .
