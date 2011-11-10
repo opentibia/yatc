@@ -8,15 +8,15 @@ version=3
 
 # Uncomment to examine a Webpage 
 # <Webpage URL> <string match>
-#http://www.example.com/downloads.php gldm-(.*)\.tar\.gz
+#http://www.example.com/downloads.php yatc-(.*)\.tar\.gz
 
 # Uncomment to examine a Webserver directory
-#http://www.example.com/pub/gldm-(.*)\.tar\.gz
+#http://www.example.com/pub/yatc-(.*)\.tar\.gz
 
 # Uncommment to examine a FTP server
-#ftp://ftp.example.com/pub/gldm-(.*)\.tar\.gz debian uupdate
+#ftp://ftp.example.com/pub/yatc-(.*)\.tar\.gz debian uupdate
 
 # Uncomment to find new files on sourceforge, for debscripts >= 2.9
-# http://sf.net/gldm/gldm-(.*)\.tar\.gz
+# http://sf.net/yatc/yatc-(.*)\.tar\.gz
 
 

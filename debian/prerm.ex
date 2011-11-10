@@ -1,5 +1,5 @@
 #!/bin/sh
-# prerm script for gldm
+# prerm script for yatc
 #
 # see: dh_installdeb(1)
 
