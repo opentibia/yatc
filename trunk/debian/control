@@ -1,16 +1,23 @@
-Source: gldm
-Section: x11
+Source: yatc
+Section: contrib/games
 Priority: extra
 Maintainer: Ivan Vucica <ivucica@gmail.com>
-Build-Depends: debhelper (>= 5), autotools-dev, libx11-dev, libsdl1.2-dev, libsdl-ttf2.0-dev, libsdl-image1.2-dev, libsdl-gfx1.2-dev
+Build-Depends: debhelper (>= 5), autotools-dev, glict-dev
 Standards-Version: 3.8.0
 
-Package: gldm
+Package: yatc
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: a pretty and extendable login system - Graphical Liberty Display Manager
- GLDM aims to be a pretty and extendable login interface. Instead of being
- just the boring old login terminal, it aims to bring neat eyecandy to end
- users by giving game and graphics programmers an easy way to code just the 
- presentation, and leave the boring part to the backend.
-
+Suggests: tibia-data
+Description: Yet Another Tibia Client, a client for a 2D MMORPG
+ YATC, Yet Another Tibia Client, is a client for a 2D MMORPG, developed as a
+ part of the OpenTibia project. It is intended to connect to OpenTibia 
+ Servers, but it is capable of connecting to proprietary server as well. 
+ .
+ Fight monsters in a fantasy world, from rats and orcs to dragons and hydras. 
+ Choose colors character for your avatar. Chat and collaborate wiht other
+ characters. Use magic spells, use magic runes. Weapons range from simple
+ clubs through short swords and maces to fire swords. Shields are also 
+ numerous.
+ .
+ YATC currently uses proprietary graphics from the original game. 

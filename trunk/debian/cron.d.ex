@@ -1,4 +1,4 @@
 #
-# Regular cron jobs for the gldm package
+# Regular cron jobs for the yatc package
 #
-0 4	* * *	root	gldm_maintenance
+0 4	* * *	root	yatc_maintenance

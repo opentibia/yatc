@@ -1,5 +1,5 @@
 #!/bin/sh
-# postinst script for gldm
+# postinst script for yatc
 #
 # see: dh_installdeb(1)
 
