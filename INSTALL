@@ -16,12 +16,27 @@ Copyright (C) 2007-2010 OpenTibia Team
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+ 0. GIT MIGRATION
  1. Requirements
  2. Building on Linux/Unix
  3. Building on Windows
  4. Devpaks and Debian packages
  5. Building without OpenGL support
  6. libGLICTd.a versus libGLICT.a
+
+0. GIT MIGRATION
+================
+Note that YATC and GLICT have moved to Git. Some other dependencies
+may have moved around; it's been many years since this document was
+written.
+
+- YATC can be found at https://github.com/opentibia/yatc/
+- GLICT can be found at https://github.com/ivucica/glict/
+- As a convenience, some of the dependencies for Windows have been
+  archived in the lib branch - https://github.com/opentibia/yatc/tree/lib
+
+The text below has *not* been updated to reflect this and other
+possible changes. Caveat.
 
 1. Requirements
 ===============
