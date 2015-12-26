@@ -1,0 +1,20 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = git@github.com:opentibia/yatc.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[svn-remote "svn"]
+	noMetadata = 1
+	url = https://opentibia.svn.sf.net/svnroot/opentibia
+	fetch = yatc/trunk:refs/remotes/svn/trunk
+	fetch = yatc/lib:refs/remotes/svn/lib
+	branches = yatc/branches/*:refs/remotes/svn/*
+	tags = yatc/tags/*:refs/remotes/svn/tags/*
+[svn]
+	authorsfile = /replace/with/path/to/yatc-authors.txt

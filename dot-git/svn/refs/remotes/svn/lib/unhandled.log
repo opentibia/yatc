@@ -1,0 +1,64 @@
+r3394
+  +file_prop: yatc/lib/GLICT.devpak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/GMP.DevPak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/SDL.devpak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/SDL_gfx.DevPak svn:mime-type application/octet-stream
+r3406
+r3592
+r3593
+  -empty_dir: yatc/lib/GLICT.devpak
+  -empty_dir: yatc/lib/GMP.DevPak
+  -empty_dir: yatc/lib/README.txt
+  -empty_dir: yatc/lib/SDL.devpak
+  -empty_dir: yatc/lib/SDL_gfx.DevPak
+  +file_prop: yatc/lib/fetcher/libcurl-7.14.0_ssl-1sid.DevPak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/fetcher/libjpeg-6b_4-1spec.DevPak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/fetcher/libtiff-3.6.1_2-1spec.DevPak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/fetcher/openssl-0.9.8-1cm.DevPak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/fetcher/zlib-1.2.3-1spec.DevPak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc/GLICT.devpak svn:mergeinfo 
+  +file_prop: yatc/lib/yatc/GLICT.devpak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc/GMP.DevPak svn:mergeinfo 
+  +file_prop: yatc/lib/yatc/GMP.DevPak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc/README.txt svn:mergeinfo 
+  +file_prop: yatc/lib/yatc/SDL.devpak svn:mergeinfo 
+  +file_prop: yatc/lib/yatc/SDL.devpak svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc/SDL_gfx.DevPak svn:mergeinfo 
+  +file_prop: yatc/lib/yatc/SDL_gfx.DevPak svn:mime-type application/octet-stream
+r3594
+  +file_prop: yatc/lib/fetcher-stdio/gzip.exe svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/fetcher-stdio/libiconv-2.dll svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/fetcher-stdio/libintl-2.dll svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/fetcher-stdio/tar.exe svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/fetcher-stdio/wget.exe svn:mime-type application/octet-stream
+r3616
+r3617
+  +file_prop: yatc/lib/packman/Packman.exe svn:mime-type application/octet-stream
+r3635
+r3693
+r3743
+  +file_prop: yatc/lib/yatc/libiconv.devpak svn:mergeinfo 
+  +file_prop: yatc/lib/yatc/libintl.devpak svn:mergeinfo 
+r3792
+r4077
+  +file_prop: yatc/lib/yatc.vc9/bin/SDL.dll svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc.vc9/bin/SDL_gfx.dll svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc.vc9/bin/gmp.dll svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc.vc9/lib/GLICT_mt.lib svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc.vc9/lib/GLICT_mtd.lib svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc.vc9/lib/SDL.lib svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc.vc9/lib/SDL_gfx.lib svn:mime-type application/octet-stream
+  +file_prop: yatc/lib/yatc.vc9/lib/gmp.lib svn:mime-type application/octet-stream
+r4078
+r4723
+  +file_prop: yatc/lib/yatc/SDL_nsr.DevPak svn:mime-type application/octet-stream
+r4879
+r4880
+  +file_prop: yatc/lib/yatc.vc9/lib/SDLmain.lib svn:mime-type application/octet-stream
+r5214
+  -empty_dir: yatc/lib/yatc/GMP.DevPak
+  +file_prop: yatc/lib/yatc/libtommath/lib/libtommath.a svn:mime-type application/octet-stream
+r5325
+  +empty_dir: yatc/lib/yatc/glSDL/lib
+r5333
+  +file_prop: yatc/lib/yatc/glSDL/lib/libglSDL.a svn:mime-type application/octet-stream

@@ -1,0 +1,10 @@
+; This file is used internally by git-svn
+; You should not have to edit it
+[svn-remote "svn"]
+	reposRoot = https://opentibia.svn.sf.net/svnroot/opentibia
+	uuid = c77455bc-2124-0410-8220-ac9e7aafbb94
+	branches-maxRev = 6278
+	tags-maxRev = 6278
+[svn-remote "svnlib"]
+	reposRoot = https://opentibia.svn.sf.net/svnroot/opentibia
+	uuid = c77455bc-2124-0410-8220-ac9e7aafbb94

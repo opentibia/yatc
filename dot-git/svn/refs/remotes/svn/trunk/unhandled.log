@@ -1,0 +1,1005 @@
+r2331
+r2334
+r2335
+r2336
+r2338
+r2339
+r2340
+  +file_prop: yatc/trunk/yatc.png svn:mime-type application/octet-stream
+  +file_prop: yatc/trunk/yatc.xcf svn:mime-type application/octet-stream
+r2342
+r2343
+r2355
+r2356
+r2364
+  +empty_dir: yatc/trunk/tools
+r2369
+r2387
+r2423
+r2460
+  +file_prop: yatc/trunk/yatc.bmp svn:mime-type application/octet-stream
+r2464
+r2465
+  +file_prop: yatc/trunk/font.bmp svn:mime-type application/octet-stream
+r2466
+r2467
+r2468
+  -empty_dir: yatc/trunk/database.cpp
+  -empty_dir: yatc/trunk/database.h
+  -empty_dir: yatc/trunk/enginedx.cpp
+  -empty_dir: yatc/trunk/enginedx.h
+  -empty_dir: yatc/trunk/spritedx.cpp
+  -empty_dir: yatc/trunk/spritedx.h
+r2470
+r2471
+r2473
+r2474
+r2478
+  -empty_dir: yatc/trunk/assert.h
+r2481
+r2482
+r2483
+r2484
+r2485
+r2488
+  -empty_dir: yatc/trunk/container.cpp
+  -empty_dir: yatc/trunk/container.h
+  -empty_dir: yatc/trunk/creature.cpp
+  -empty_dir: yatc/trunk/creature.h
+  -empty_dir: yatc/trunk/inventory.cpp
+  -empty_dir: yatc/trunk/inventory.h
+  -empty_dir: yatc/trunk/item.cpp
+  -empty_dir: yatc/trunk/item.h
+  -empty_dir: yatc/trunk/map.cpp
+  -empty_dir: yatc/trunk/map.h
+  -empty_dir: yatc/trunk/thing.h
+r2489
+r2490
+r2491
+r2494
+r2497
+r2498
+r2499
+r2500
+r2506
+r2514
+r2518
+r2520
+r2530
+r2531
+  +empty_dir: yatc/trunk/ui
+r2533
+r2539
+r2540
+r2552
+r2554
+r2555
+r2556
+r2557
+r2558
+r2560
+r2561
+r2563
+r2564
+r2567
+r2568
+r2580
+r2582
+r2584
+  -empty_dir: yatc/trunk/LICENSE
+  -empty_dir: yatc/trunk/font.bmp
+  +file_prop: yatc/trunk/inv.bmp svn:mime-type application/octet-stream
+  +file_prop: yatc/trunk/ui.xcf svn:mime-type application/octet-stream
+r2591
+r2592
+r2593
+  +file_prop: yatc/trunk/COPYING svn:eol-style native
+  +file_prop: yatc/trunk/ChangeLog svn:eol-style native
+  +file_prop: yatc/trunk/INSTALL svn:eol-style native
+  +file_prop: yatc/trunk/Makefile.am svn:eol-style native
+  +file_prop: yatc/trunk/README svn:eol-style native
+  +file_prop: yatc/trunk/autogen.sh svn:eol-style native
+  +file_prop: yatc/trunk/codeguide.txt svn:eol-style native
+  +file_prop: yatc/trunk/confighandler.cpp svn:eol-style native
+  +file_prop: yatc/trunk/confighandler.h svn:eol-style native
+  +file_prop: yatc/trunk/configure.ac svn:eol-style native
+  +file_prop: yatc/trunk/debugprint.cpp svn:eol-style native
+  +file_prop: yatc/trunk/debugprint.h svn:eol-style native
+  +file_prop: yatc/trunk/defines.h svn:eol-style native
+  +file_prop: yatc/trunk/engine.cpp svn:eol-style native
+  +file_prop: yatc/trunk/engine.h svn:eol-style native
+  +file_prop: yatc/trunk/enginegl.cpp svn:eol-style native
+  +file_prop: yatc/trunk/enginegl.h svn:eol-style native
+  +file_prop: yatc/trunk/enginesdl.cpp svn:eol-style native
+  +file_prop: yatc/trunk/enginesdl.h svn:eol-style native
+  +file_prop: yatc/trunk/fassert.h svn:eol-style native
+  +file_prop: yatc/trunk/font.cpp svn:eol-style native
+  +file_prop: yatc/trunk/font.h svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/container.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/container.h svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/creature.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/creature.h svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/enums.h svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/globalvars.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/globalvars.h svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/inventory.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/inventory.h svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/item.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/item.h svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/map.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/map.h svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/thing.h svn:eol-style native
+  +file_prop: yatc/trunk/gamemode.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gamemode.h svn:eol-style native
+  +file_prop: yatc/trunk/gm_debug.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gm_debug.h svn:eol-style native
+  +file_prop: yatc/trunk/gm_mainmenu.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gm_mainmenu.h svn:eol-style native
+  +file_prop: yatc/trunk/main.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/connection.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/connection.h svn:eol-style native
+  +file_prop: yatc/trunk/net/encryption.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/encryption.h svn:eol-style native
+  +file_prop: yatc/trunk/net/networkmessage.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/networkmessage.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame80.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame80.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocollogin.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocollogin.h svn:eol-style native
+  +file_prop: yatc/trunk/net/rsa.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/rsa.h svn:eol-style native
+  +file_prop: yatc/trunk/notifications.cpp svn:eol-style native
+  +file_prop: yatc/trunk/notifications.h svn:eol-style native
+  +file_prop: yatc/trunk/objects.cpp svn:eol-style native
+  +file_prop: yatc/trunk/objects.h svn:eol-style native
+  +file_prop: yatc/trunk/options.cpp svn:eol-style native
+  +file_prop: yatc/trunk/options.h svn:eol-style native
+  +file_prop: yatc/trunk/sprdata.c svn:eol-style native
+  +file_prop: yatc/trunk/sprdata.h svn:eol-style native
+  +file_prop: yatc/trunk/sprite.cpp svn:eol-style native
+  +file_prop: yatc/trunk/spritegl.cpp svn:eol-style native
+  +file_prop: yatc/trunk/spritegl.h svn:eol-style native
+  +file_prop: yatc/trunk/spritesdl.cpp svn:eol-style native
+  +file_prop: yatc/trunk/spritesdl.h svn:eol-style native
+  +file_prop: yatc/trunk/tools/pictool/Makefile svn:eol-style native
+  +file_prop: yatc/trunk/tools/pictool/README svn:eol-style native
+  +file_prop: yatc/trunk/tools/pictool/main.c svn:eol-style native
+  +file_prop: yatc/trunk/util.cpp svn:eol-style native
+  +file_prop: yatc/trunk/util.h svn:eol-style native
+r2595
+r2601
+r2617
+r2618
+r2620
+  +file_prop: yatc/trunk/tools/pictool/winmain.c svn:eol-style native
+r2630
+  +file_prop: yatc/trunk/gm_gameworld.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gm_gameworld.h svn:eol-style native
+r2632
+r2635
+r2636
+r2637
+r2638
+r2650
+  +file_prop: yatc/trunk/skin.cpp svn:eol-style native
+  +file_prop: yatc/trunk/skin.h svn:eol-style native
+r2651
+r2654
+r2665
+r2671
+r2677
+  +file_prop: yatc/trunk/itemui.cpp svn:eol-style native
+  +file_prop: yatc/trunk/itemui.h svn:eol-style native
+  +file_prop: yatc/trunk/thingui.cpp svn:eol-style native
+  +file_prop: yatc/trunk/thingui.h svn:eol-style native
+r2689
+r2694
+r2695
+r2697
+r2698
+r2699
+  +file_prop: yatc/trunk/creatureui.h svn:eol-style native
+r2702
+r2708
+  +file_prop: yatc/trunk/creatureui.cpp svn:eol-style native
+r2710
+r2714
+r2715
+r2716
+r2731
+r2732
+r2733
+r2737
+r2738
+r2739
+r2742
+r2743
+r2745
+r2746
+  +file_prop: yatc/trunk/wince.h svn:eol-style native
+r2747
+r2751
+r2752
+r2753
+r2756
+r2758
+r2759
+r2775
+r2783
+r2784
+r2787
+r2788
+r2789
+  +file_prop: yatc/trunk/net/protocolgame81.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame81.h svn:eol-style native
+r2810
+  +file_prop: yatc/trunk/yatc.ico svn:mime-type application/octet-stream
+r2811
+r2813
+r2814
+  +file_prop: yatc/trunk/console.cpp svn:eol-style native
+  +file_prop: yatc/trunk/console.h svn:eol-style native
+r2815
+r2817
+r2819
+r2821
+r2833
+r2835
+r2839
+r2840
+r2843
+r2844
+r2862
+r2868
+r2870
+r2871
+r2872
+r2873
+r2874
+r2875
+r2885
+r2913
+  -empty_dir: yatc/trunk/wince.h
+r2914
+r2916
+r2925
+r2926
+r2930
+r2936
+r2937
+r2938
+r2940
+r2944
+r2945
+r2946
+r2949
+  +file_prop: yatc/trunk/ui/skills.h svn:eol-style native
+r2957
+  +file_prop: yatc/trunk/ui/inventory.h svn:eol-style native
+r2969
+r2972
+r2973
+r2991
+  +file_prop: yatc/trunk/mapui.cpp svn:eol-style native
+  +file_prop: yatc/trunk/mapui.h svn:eol-style native
+r3050
+r3059
+r3061
+r3077
+r3089
+  +file_prop: yatc/trunk/net/protocolgame811.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame811.h svn:eol-style native
+r3129
+r3130
+r3131
+r3149
+r3181
+r3183
+  +file_prop: yatc/trunk/product.h svn:eol-style native
+r3191
+r3200
+  +file_prop: yatc/trunk/exchndl.dll svn:mime-type application/octet-stream
+r3201
+r3204
+r3218
+r3219
+r3223
+  +file_prop: yatc/trunk/ui/optionsconsole.h svn:eol-style native
+r3224
+r3230
+r3231
+r3239
+r3241
+r3243
+r3245
+r3246
+r3247
+r3248
+r3282
+  +file_prop: yatc/trunk/net/protocolgame82.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame82.h svn:eol-style native
+r3283
+r3285
+r3290
+r3302
+r3307
+r3309
+  +file_prop: yatc/trunk/ui/health.h svn:eol-style native
+r3317
+r3321
+r3325
+r3326
+r3330
+r3337
+r3339
+r3340
+r3343
+r3349
+r3351
+r3359
+r3360
+r3362
+r3371
+  +file_prop: yatc/trunk/net/protocolgame821.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame821.h svn:eol-style native
+r3372
+r3377
+  +file_prop: yatc/trunk/ui/tutorialhints.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/tutorialhints.h svn:eol-style native
+r3378
+r3379
+r3380
+r3402
+r3404
+r3405
+r3407
+r3408
+r3420
+  +file_prop: yatc/trunk/popup.cpp svn:eol-style native
+  +file_prop: yatc/trunk/popup.h svn:eol-style native
+r3426
+r3432
+r3439
+  +file_prop: yatc/trunk/net/protocolgame822.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame822.cpp svn:mergeinfo 
+  +file_prop: yatc/trunk/net/protocolgame822.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame822.h svn:mergeinfo 
+r3447
+r3448
+r3451
+r3452
+r3453
+r3454
+r3456
+r3457
+r3458
+r3459
+r3460
+r3461
+r3462
+r3463
+r3466
+r3467
+r3468
+r3470
+  +file_prop: yatc/trunk/ui/container.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/inventory.cpp svn:eol-style native
+r3471
+  -empty_dir: yatc/trunk/ui/container.cpp
+  -empty_dir: yatc/trunk/ui/inventory.cpp
+  +file_prop: yatc/trunk/ui/uicontainer.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/uiinventory.cpp svn:eol-style native
+r3472
+r3473
+r3474
+r3475
+  -empty_dir: yatc/trunk/ui/container.h
+  -empty_dir: yatc/trunk/ui/inventory.h
+  +file_prop: yatc/trunk/ui/uicontainer.h svn:mergeinfo 
+  +file_prop: yatc/trunk/ui/uiinventory.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/uiinventory.h svn:mergeinfo 
+r3476
+r3477
+r3478
+  -empty_dir: yatc/trunk/ui/shop.h
+  +file_prop: yatc/trunk/ui/uishop.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/uishop.h svn:mergeinfo 
+r3479
+r3481
+  +file_prop: yatc/trunk/AUTHORS svn:eol-style native
+  +file_prop: yatc/trunk/BUGS svn:eol-style native
+  +file_prop: yatc/trunk/autorelease.sh svn:eol-style native
+  +file_prop: yatc/trunk/bigint.cpp svn:eol-style native
+  +file_prop: yatc/trunk/config.h svn:eol-style native
+  +file_prop: yatc/trunk/distanceui.cpp svn:eol-style native
+  +file_prop: yatc/trunk/distanceui.h svn:eol-style native
+  +file_prop: yatc/trunk/effectui.h svn:eol-style native
+  +file_prop: yatc/trunk/fix-nativeline.sh svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/position.h svn:eol-style native
+  +file_prop: yatc/trunk/mingwbuild.sh svn:eol-style native
+  +file_prop: yatc/trunk/release.sh svn:eol-style native
+  +file_prop: yatc/trunk/stdinttypes.h svn:eol-style native
+  +file_prop: yatc/trunk/tools/sprtool/main.c svn:eol-style native
+  +file_prop: yatc/trunk/tools/sprtool/winmain.c svn:eol-style native
+  +file_prop: yatc/trunk/ui/charlist.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/itemmove.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/login.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/mainmenu.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/options.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/optionsgeneral.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/optionsgfxadv.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/optionsgraphics.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/optionshotkeys.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/optionsnetwork.h svn:eol-style native
+  +file_prop: yatc/trunk/wincebuild.sh svn:eol-style native
+  +file_prop: yatc/trunk/winmain.c svn:eol-style native
+r3482
+r3483
+  +file_prop: yatc/trunk/ui/uioutfit.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/uioutfit.h svn:eol-style native
+r3484
+r3485
+r3486
+r3487
+r3490
+  +file_prop: yatc/trunk/ui/checkbox.h svn:eol-style native
+r3491
+r3492
+r3493
+r3494
+r3495
+r3497
+  +file_prop: yatc/trunk/translations/brazilian.po svn:mergeinfo 
+  +file_prop: yatc/trunk/translations/swedish.po svn:mergeinfo 
+  +file_prop: yatc/trunk/translations/yatc.pot svn:mergeinfo 
+  +file_prop: yatc/trunk/ui/mainmenu.cpp svn:eol-style native
+r3500
+r3501
+r3502
+r3505
+r3506
+r3507
+r3509
+  +file_prop: yatc/trunk/yatc.icns svn:mime-type application/octet-stream
+r3510
+r3511
+r3512
+r3513
+r3515
+  +file_prop: yatc/trunk/net/protocolgame83.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame83.h svn:eol-style native
+r3516
+  +file_prop: yatc/trunk/net/protocolgame831.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame831.cpp svn:mergeinfo 
+  +file_prop: yatc/trunk/net/protocolgame831.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame831.h svn:mergeinfo 
+r3517
+r3518
+r3519
+r3524
+r3526
+r3527
+r3528
+r3529
+r3531
+r3532
+r3533
+  +file_prop: yatc/trunk/ui/gmactions.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/gmactions.h svn:eol-style native
+r3534
+r3535
+r3538
+r3539
+  -empty_dir: yatc/trunk/translations/brazilian.pot
+r3540
+r3542
+r3543
+r3544
+r3545
+r3546
+r3547
+r3548
+r3551
+r3552
+r3553
+r3560
+r3566
+r3567
+r3568
+r3569
+  +file_prop: yatc/trunk/English.lproj/InfoPlist.strings svn:mime-type application/octet-stream
+r3572
+r3579
+r3580
+r3582
+r3586
+r3587
+r3588
+r3589
+r3592
+r3593
+r3594
+  -empty_dir: yatc/trunk/tools/fetcher/fetcher
+  +dir_prop: yatc/trunk/tools/fetcher/wxsmith svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/fetcher/Data_File_FetcherApp.cpp svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/fetcher/Data_File_FetcherApp.h svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/fetcher/Data_File_FetcherMain.cpp svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/fetcher/Data_File_FetcherMain.h svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/fetcher/fetcher.cbp svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/fetcher/resource.rc svn:mergeinfo 
+r3602
+r3604
+r3607
+r3608
+  +file_prop: yatc/trunk/tools/fetcher-stdio/README.txt svn:eol-style native
+  +file_prop: yatc/trunk/tools/fetcher-stdio/fetcher.bat svn:eol-style native
+r3609
+r3612
+r3613
+r3616
+r3631
+r3633
+r3635
+r3636
+r3639
+r3640
+r3652
+r3654
+r3664
+  +file_prop: yatc/trunk/font2.xcf svn:mime-type application/octet-stream
+r3670
+r3671
+r3686
+r3687
+r3692
+r3693
+r3699
+r3700
+r3701
+r3708
+r3709
+r3712
+r3714
+  +file_prop: yatc/trunk/translations/spanish.po svn:mergeinfo 
+r3715
+r3717
+r3718
+r3719
+r3724
+r3725
+r3727
+r3729
+  +file_prop: yatc/trunk/automap.cpp svn:eol-style native
+  +file_prop: yatc/trunk/automap.h svn:eol-style native
+  +file_prop: yatc/trunk/bigint.h svn:eol-style native
+  +file_prop: yatc/trunk/effectui.cpp svn:eol-style native
+  +file_prop: yatc/trunk/mac/SDLMain.h svn:eol-style native
+  +file_prop: yatc/trunk/sprite.h svn:eol-style native
+  +file_prop: yatc/trunk/tools/fetcher/README.txt svn:eol-style native
+  +file_prop: yatc/trunk/tools/file2hex/file2hex.c svn:eol-style native
+  +file_prop: yatc/trunk/tools/pictool/debugscript.bat svn:eol-style native
+  +file_prop: yatc/trunk/translations/build.sh svn:eol-style native
+  +file_prop: yatc/trunk/translations/merge.sh svn:eol-style native
+  +file_prop: yatc/trunk/translations/mergeall.sh svn:eol-style native
+  +file_prop: yatc/trunk/translations/prepare.sh svn:eol-style native
+  +file_prop: yatc/trunk/ui/optionsui.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/uitrade.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/uitrade.h svn:eol-style native
+r3730
+r3731
+  +empty_dir: yatc/trunk/glictsvn
+  +dir_prop: yatc/trunk svn:externals glictsvn%20http://glict.svn.sf.net/svnroot/glict/trunk/%0A
+r3732
+  -empty_dir: yatc/trunk/glictsvn
+r3733
+  +dir_prop: yatc/trunk svn:externals glictsvn%20http://glict.svn.sf.net/svnroot/glict/trunk/glict/%0A
+r3734
+r3735
+r3736
+  -dir_prop: yatc/trunk svn:externals
+r3737
+  -empty_dir: yatc/trunk/ui/options.h
+  +file_prop: yatc/trunk/choicegrid.cpp svn:eol-style native
+  +file_prop: yatc/trunk/choicegrid.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame84.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame84.cpp svn:mergeinfo 
+  +file_prop: yatc/trunk/net/protocolgame84.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame84.h svn:mergeinfo 
+  +file_prop: yatc/trunk/translations/brazilian.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/polish.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/spanish.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/swedish.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/yatc.pot svn:eol-style native
+  +file_prop: yatc/trunk/ui/optionsui.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/optionsui.h svn:mergeinfo 
+r3738
+r3739
+r3741
+r3742
+  -empty_dir: yatc/trunk/yatc.dev
+r3744
+r3745
+r3746
+r3749
+r3787
+  +file_prop: yatc/trunk/tools/pictool/COPYING svn:eol-style native
+  +file_prop: yatc/trunk/tools/pictool/COPYING svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/pictool/picfuncs.c svn:eol-style native
+  +file_prop: yatc/trunk/tools/pictool/picfuncs.c svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/pictool/picfuncs.h svn:eol-style native
+  +file_prop: yatc/trunk/tools/pictool/picfuncs.h svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/wxpictool/COPYING svn:eol-style native
+  +file_prop: yatc/trunk/tools/wxpictool/COPYING svn:mergeinfo 
+  +file_prop: yatc/trunk/tools/wxpictool/README.pictool.txt svn:eol-style native
+  +file_prop: yatc/trunk/tools/wxpictool/README.pictool.txt svn:mergeinfo 
+r3788
+r3789
+  +file_prop: yatc/trunk/stackpanel.cpp svn:eol-style native
+  +file_prop: yatc/trunk/stackpanel.h svn:eol-style native
+r3790
+r3791
+r3793
+r3797
+r3798
+r3813
+r3814
+r3826
+r3827
+r3828
+r3830
+r3831
+r3834
+r3839
+r3840
+r3861
+  -empty_dir: yatc/trunk/yatc.bmp
+r3874
+r3876
+r3950
+r3953
+r3966
+  +file_prop: yatc/trunk/gamecontent/itemcontainer.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/itempanel.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/itemplanel.cpp svn:eol-style native
+r3967
+r3985
+  -empty_dir: yatc/trunk/ui/itemplanel.cpp
+  +file_prop: yatc/trunk/ui/itempanel.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/itempanel.cpp svn:mergeinfo 
+r4000
+r4028
+r4031
+r4032
+r4076
+  +empty_dir: yatc/trunk/yatc.vc9/Debug
+  +empty_dir: yatc/trunk/yatc.vc9/Release
+r4104
+r4105
+r4109
+r4110
+r4124
+r4125
+r4143
+r4144
+r4145
+r4148
+r4181
+r4194
+r4195
+  -empty_dir: yatc/trunk/config.h
+r4211
+r4212
+r4216
+r4219
+r4220
+r4226
+  +file_prop: yatc/trunk/statusmsg.cpp svn:eol-style native
+  +file_prop: yatc/trunk/statusmsg.h svn:eol-style native
+r4227
+r4228
+r4229
+r4233
+r4238
+r4239
+r4242
+r4243
+r4244
+r4249
+r4250
+r4251
+r4252
+r4254
+r4255
+r4259
+r4261
+r4266
+r4267
+r4271
+r4272
+r4275
+r4276
+  +file_prop: yatc/trunk/gamecontent/shop.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame78.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame78.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame841.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame841.h svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame842.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame842.h svn:eol-style native
+  +file_prop: yatc/trunk/tools/fetcher/Data_File_FetcherApp.cpp svn:eol-style native
+  +file_prop: yatc/trunk/tools/fetcher/Data_File_FetcherApp.h svn:eol-style native
+  +file_prop: yatc/trunk/tools/fetcher/Data_File_FetcherMain.cpp svn:eol-style native
+  +file_prop: yatc/trunk/tools/fetcher/Data_File_FetcherMain.h svn:eol-style native
+  +file_prop: yatc/trunk/tools/wxpictool/README.txt svn:eol-style native
+  +file_prop: yatc/trunk/tools/wxpictool/wxPicToolApp.cpp svn:eol-style native
+  +file_prop: yatc/trunk/tools/wxpictool/wxPicToolApp.h svn:eol-style native
+  +file_prop: yatc/trunk/tools/wxpictool/wxPicToolMain.cpp svn:eol-style native
+  +file_prop: yatc/trunk/tools/wxpictool/wxPicToolMain.h svn:eol-style native
+  +file_prop: yatc/trunk/translations/croatian.po svn:eol-style native
+  +file_prop: yatc/trunk/ui/battlewindow.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/battlewindow.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/deathnotification.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/exitwarning.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/minimap.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/sbvlpanel.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/sbvlpanel.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/uicontainer.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/uishop.h svn:eol-style native
+  +file_prop: yatc/trunk/ui/vipwindow.cpp svn:eol-style native
+  +file_prop: yatc/trunk/ui/vipwindow.h svn:eol-style native
+  +file_prop: yatc/trunk/yatc.vc9/readme.txt svn:eol-style native
+r4277
+r4278
+r4279
+r4284
+r4285
+r4286
+r4289
+r4291
+r4293
+r4294
+r4295
+r4299
+r4300
+r4304
+r4306
+r4307
+r4311
+r4313
+r4314
+r4315
+r4319
+r4320
+r4334
+r4337
+r4363
+r4364
+r4365
+r4380
+r4383
+r4390
+r4392
+r4393
+r4394
+r4396
+r4397
+r4398
+r4400
+r4407
+r4429
+r4457
+r4463
+r4464
+r4465
+r4466
+r4467
+r4468
+r4506
+r4509
+r4512
+r4524
+r4534
+r4569
+r4570
+r4573
+r4628
+r4629
+r4630
+  +file_prop: yatc/trunk/net/protocolgame85.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame85.h svn:eol-style native
+r4631
+r4644
+r4660
+r4671
+r4674
+r4721
+r4724
+  +file_prop: yatc/trunk/replay.binary svn:mime-type application/octet-stream
+r4725
+r4726
+r4727
+  +file_prop: yatc/trunk/ui/skills.cpp svn:eol-style native
+r4729
+r4730
+r4732
+r4734
+r4745
+r4749
+  -empty_dir: yatc/trunk/translations/brazilian.po
+  -empty_dir: yatc/trunk/translations/croatian.po
+  -empty_dir: yatc/trunk/translations/polish.po
+  -empty_dir: yatc/trunk/translations/spanish.po
+  -empty_dir: yatc/trunk/translations/swedish.po
+  +file_prop: yatc/trunk/gamecontent/viplist.cpp svn:eol-style native
+  +file_prop: yatc/trunk/gamecontent/viplist.h svn:eol-style native
+  +file_prop: yatc/trunk/translations/es_ES.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/es_ES.po svn:mergeinfo 
+  +file_prop: yatc/trunk/translations/hr_HR.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/pl_PL.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/pt_BR.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/pt_BR.po svn:mergeinfo 
+  +file_prop: yatc/trunk/translations/sv_SE.po svn:eol-style native
+  +file_prop: yatc/trunk/translations/sv_SE.po svn:mergeinfo 
+r4753
+r4754
+r4755
+r4791
+r4792
+r4793
+r4878
+r4881
+r4887
+r4943
+r4948
+r5096
+r5097
+r5099
+r5119
+  +file_prop: yatc/trunk/net/protocolgame853.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame853.h svn:eol-style native
+r5125
+r5152
+r5159
+  +file_prop: yatc/trunk/net/protocolgame854.cpp svn:eol-style native
+  +file_prop: yatc/trunk/net/protocolgame854.h svn:eol-style native
+r5160
+r5161
+r5162
+r5194
+r5214
+r5215
+r5216
+r5218
+r5219
+r5226
+r5227
+r5228
+r5229
+r5230
+r5231
+r5235
+r5236
+r5237
+r5239
+r5240
+r5241
+r5244
+r5245
+r5246
+r5247
+r5248
+r5249
+r5250
+r5251
+r5253
+r5254
+r5255
+r5256
+r5257
+r5258
+r5280
+r5284
+r5285
+r5286
+r5287
+r5288
+r5297
+r5298
+r5299
+r5300
+r5305
+r5306
+r5308
+r5311
+r5314
+r5315
+r5316
+r5317
+r5318
+r5319
+r5321
+r5324
+r5326
+r5332
+r5334
+r5335
+r5336
+r5337
+r5338
+r5339
+r5340
+r5341
+r5342
+r5345
+  -empty_dir: yatc/trunk/yatc.vc9/Debug
+  -empty_dir: yatc/trunk/yatc.vc9/Release
+  +dir_prop: yatc/trunk/yatc.vc9 svn:ignore Debug%0ARelease%0Ayatc.vc9.ncb%0Ayatc.vc9.suo%0Ayatc.vc9.vcproj.gmonaco-PC.gmonaco.user%0A
+r5346
+  +file_prop: yatc/trunk/yatc-dmg-icon.xcf svn:mime-type application/octet-stream
+r5347
+r5348
+r5349
+r5350
+r5351
+r5352
+r5354
+r5355
+r5358
+r5359
+r5360
+r5361
+r5362
+r5363
+r5364
+r5365
+r5366
+r5367
+r5368
+r5369
+r5370
+r5371
+r5372
+r5373
+r5374
+r5375
+r5376
+r5377
+r5379
+r5380
+r5381
+r5382
+r5383
+r5385
+r5386
+r5387
+r5388
+r5390
+r5391
+r5392
+r5393
+r5394
+r5395
+r5397
+r5400
+r5401
+  -empty_dir: yatc/trunk/yatc.xcodeproj/ivucica.mode1v3
+  -empty_dir: yatc/trunk/yatc.xcodeproj/ivucica.pbxuser
+r5450
+r5451
+r5500
+r5504
+r6038
+  -empty_dir: yatc/trunk/debian/emacsen-install.ex
+  -empty_dir: yatc/trunk/debian/emacsen-remove.ex
+  -empty_dir: yatc/trunk/debian/emacsen-startup.ex
+  -empty_dir: yatc/trunk/debian/init.d.ex
+  -empty_dir: yatc/trunk/debian/manpage.sgml.ex
+  -empty_dir: yatc/trunk/debian/manpage.xml.ex
+r6039
+  -empty_dir: yatc/trunk/debian
+r6040
+r6121
+r6122
+r6123
+  -empty_dir: yatc/trunk/debian/init.d
