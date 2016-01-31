@@ -49,7 +49,9 @@ possible changes. Caveat.
 - autoconf 2.61
 - automake 1.10
 
-Please understand that while we have produced builds that run on MacOS X platform, we are currently unable to provide systematic instructions.
+Please understand that while we have produced builds that run on
+MacOS X platform, we are currently unable to provide systematic
+instructions. Partial instructions below.
 
 2. Building on Linux/Unix
 =========================
@@ -193,4 +195,20 @@ don't create a libGLICTd.a.
 (This is necessary because these two, although built from same code with
 same compiler, are NOT binary compatible since those modifiers change behaviour
 of G++'s implementation of STL.)
+
+7. Mac notes
+============
+
+As of El Capitan, approximately:
+
+  - get SDL with Friends from http://thirdcog.eu/apps/frameworks,
+    place them all into ~/Library/Frameworks
+  - install X11, so you get the X11 headers in /opt/X11/include
+    (SDL seems to depend on that)
+  - replace SDL from SDL with Friends with SDL 1.2.15 or newer,
+    binaries at https://www.libsdl.org/download-1.2.php
+  - build GLICT (there’s an xcode project provided), 
+    place GLICT.framework to ~/Library/Frameworks
+  - place Tibia.{spr,dat,pic} into YATC’s SRCROOT.
+  - open YATC’s .xcodeproj, build and enjoy
 
