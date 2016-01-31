@@ -213,7 +213,7 @@ int yatc_makedirs(const char* path, int mode)
 			if(ret)
 			{
 				int mdret;
-				if(mdret=mkdir(tmppath, mode))
+				if((mdret=mkdir(tmppath, mode)))
 				{
 					free(tmppath);
 					return mdret;
@@ -221,6 +221,7 @@ int yatc_makedirs(const char* path, int mode)
 			}
 		}
 	}
+    free(tmppath);
 	return 0;
 }
 #endif

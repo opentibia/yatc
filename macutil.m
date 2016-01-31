@@ -4,9 +4,9 @@ int macutil_NSRunAlertPanel(const char* title, const char* text, const char *btn
 {
 	return 
 	NSRunAlertPanel([NSString stringWithUTF8String:title], 
-					[NSString stringWithUTF8String:text],
+					@"%s",
 					btn1 ? [NSString stringWithUTF8String:btn1] : nil, 
 					btn2 ? [NSString stringWithUTF8String:btn2] : nil,
-					btn3 ? [NSString stringWithUTF8String:btn3] : nil
-					/*, args for a printf-style msg go here */);
+					btn3 ? [NSString stringWithUTF8String:btn3] : nil,
+                    text);
 }

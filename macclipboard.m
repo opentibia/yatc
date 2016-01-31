@@ -8,7 +8,7 @@ char* getPasteboardText()
 {
     NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
     NSString* string = [pasteboard stringForType:NSStringPboardType];
-    const char* cstring = [string cString];
+    const char* cstring = [string UTF8String];
     char* ret = (char*)malloc(strlen(cstring));
     strcpy(ret, cstring);
     return ret;
@@ -17,7 +17,7 @@ char* getPasteboardText()
 void putPasteboardText(const char* text)
 {
     NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
-    NSString* string = [NSString stringWithCString:text];
+    NSString* string = [NSString stringWithUTF8String:text];
     [pasteboard clearContents];
     [pasteboard setString:string forType:NSStringPboardType];
 }
