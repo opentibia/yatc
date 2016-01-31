@@ -352,8 +352,11 @@ GM_Debug::GM_Debug()
 GM_Debug::~GM_Debug()
 {
 	delete background;
-	delete spr;
-	delete map;
+    delete spr;
+    delete map[0];
+    delete map[1];
+    delete map[2];
+    delete map[3];
 	delete thing;
 	delete outfit;
 }
