@@ -833,7 +833,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = "YATC - Yet Another Tibia Client";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -852,7 +851,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = USE_OPENGL;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = "YATC - Yet Another Tibia Client";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
