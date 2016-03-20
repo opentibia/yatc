@@ -57,34 +57,22 @@ bool ConfigHandler::loadConfig(const char* filename)
 		return false;
 	}
 
-	fseek(f,0,SEEK_END);
-	int size = ftell(f);
-	fseek(f, 0, SEEK_SET);
-
-	char* content = new char[size];
-	yatc_fread(content, 1, size, f);
-
 	//bool sector = false;
 	int currentSection = 0;
-
-	char* buffer = strtok(content, "\r\n");
-	while(buffer != 0){
-		buffer[strlen(buffer)] = '\0';
-
-		if(strncmp(buffer, "##", 2) == 0){ //Comment, ignore the line
-			buffer = strtok(content,"\r\n");
-			continue;
+    
+	while(!feof(f)){
+        char read_buffer[2048] = {0};
+        char *buffer = fgets(read_buffer, sizeof read_buffer, f);
+        if (!buffer)
+            break;
+        
+		if(buffer[0] != '#'){ // Not a comment: process it
+            if(!readSection(buffer, currentSection)) { // Attempt to process as a section
+                readKey(buffer, currentSection);
+            }
 		}
-
-		if(!readSection(buffer, currentSection)){
-			readKey(buffer, currentSection);
-		}
-
-		buffer = strtok(0, "\r\n");
 	}
 
-	delete[] content;
-	delete buffer;
 	currentSection = 0;
 
 	if(f)
