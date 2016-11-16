@@ -1,0 +1,118 @@
+We have a development thread on this url:<br>
+<a href="http://otfans.net/showthread.php?t=95075">http://otfans.net/showthread.php?t=95075</a><br>
+<br>
+We used to keep this BBCode in the first post on this thread. Since the first post will be just linking to this web site we'll archive the BBCode here for historical purposes (and backup).<br>
+<br>
+Hello,<br>
+<br>
+I am opening this thread for generic discussion of YATC. I'll be making some announcements in this "first post". Perhaps later we'll request a subforum, but for now, there's no reason.<br>
+<br>
+[size=3]VISIT THE [url=http://sites.google.com/site/yatcclient/]YATC WEBSITE[/url][/size]<br>
+Content from this post will slowly be moved there.<br>
+<br>
+[url=http://otfans.net/showthread.php?p=990412]GET 0.2[/url], IT HAS JUST BEEN RELEASED!<br>
+<br>
+<br>
+[B]YATC and how can you help[/B]<br>
+We're not exactly maintaining all the platforms, compilers and IDE at all times. That means that I use Debian GNU/Linux, and as far as I know mips uses Linux as well. I don't know what Smygflik uses, but I think the same. I use Code::Blocks for development, and it looks like mips uses command line for compiling. Smygflik occasionally runs Dev-Cpp in Windows and test it. I don't even have Windows. [u]Update:[/u] I do have Windows but I don't use them.<br>
+<br>
+If you managed to read through the preceding paragraph you will know that:<br>
+[list][*][i]Developer?[/i] Try monitoring Dev-Cpp project file to see if update is needed. If you add new code or fix existing code, run "svn diff" and send us the patch. Also follow the "User" instructions. We'll give credit where credit is due. <br>
+[*][i]User?[/i] Try compiling with Dev-Cpp or other IDEs or on non-Linux and non-Win32 platforms and send us fixed file(s) if needed. [/list]<br>
+<br>
+[COLOR="Red"][B]YATC Bugtracker[/B][/COLOR]<br>
+<br>
+! ! ! I M P O R T A N T ! ! !<br>
+<br>
+Report bugs through bugtracker!<br>
+<br>
+[url]http://tornado.zrs.hr/~ivucica/otflyspray/[/url]<br>
+<br>
+Please refrain from abuse (spam, fake bugs, etc) -- jokes will not be considered funny (puns are ok, as long as they're within a genuine feature request or bug report).<br>
+<br>
+[B]YATC news[/B]<br>
+0.2 has been released as source tarball, win32 binaries and Debian packaging!<br>
+<br>
+[B]YATC page, unofficial[/B]<br>
+[url]http://ivucica.googlepages.com/yatc[/url]<br>
+<br>
+[B]YATC releases[/B]<br>
+To download and discuss about particular release, click on the link. Do not use those threads for general discussion, only for problems/comments about the mentioned release. For general discussion, please use this thread. <br>
+[url=http://otfans.net/showthread.php?p=855131]Version 0.1[/url]<br>
+[url=http://otfans.net/showthread.php?p=990412]Version 0.2[/url]<br>
+<br>
+[B]YATC on Sourceforge[/B]<br>
+It's under OpenTibia project (a subfolder called YATC) so you maybe have already downloaded it if you're downloading the entire OT repository. Just look for a folder named "yatc".&nbsp; I think this is the SVN repo path (I can't be bothered to check now ;) )<br>
+[url]https://opentibia.svn.sf.net/svnroot/opentibia/yatc/[/url]<br>
+<br>
+[B]YATC Debian Package[/B]<br>
+I made a Debian package for YATC. It's based on latest SVN (at time of writing, as of Jan.19.2008.) but it may be updated in the meantime. It is not based on an official stable release, 0.1! It is based on a development 0.2 version. It is not automatically updated. It does not include data files. Data files are provided as a separate package tibia-data.<br>
+<br>
+As of May 30th 2008, it has been updated for 0.2.<br>
+<br>
+Add this to /etc/apt/sources.list. <br>
+[code]<br>
+deb http://tornado.zrs.hr/~ivucica/debrepository/ binary/<br>
+deb-src http://tornado.zrs.hr/~ivucica/debrepository/ source/<br>
+[/code]<br>
+Note that I may add other software there, too. If you'd like just the Debian package for YATC, without updates, go to [url]http://tornado.zrs.hr/~ivucica/debrepository/binary/[/url]<br>
+<br>
+It can also be installed to Ubuntu, same way as in Debian.<br>
+<br>
+[B]YATC Screenshots[/B]<br>
+[url="http://picasaweb.google.co.uk/ivucica/YATC/photo#5144195422521286402"][img]http://lh5.google.co.uk/ivucica/R2Pae06SXwI/AAAAAAAAAHo/PMXzJwyhqo0/s400/Screenshot-YATC%20v0.1%20-%20fps%3A%208.png[/img][/url]<br>
+<br>
+Revision 2788 - creature colorizer and names ... this is in GNU/Linux, too, don't worry. This also displays a bug we have to fix.<br>
+(THIS IS A VERY OLD SCREENSHOT)<br>
+<br>
+[B]YATC on PocketPC[/b]<br>
+<br>
+[url=http://youtube.com/watch?v=5IuvXZ6Wis8]Watch the new video![/url]<br>
+<br>
+It's "simple"...<br>
+1) Compile SDL using arm-wince-mingw32ce (in remainder: mingw32ce)<br>
+2) Compile GMP using mingw32ce, in invalid.c you must remove #include &lt;signal.h&gt; and raise(SIGFPE)<br>
+3) Compile SDL_gfx using mingw32ce<br>
+4) Compile GLICT using mingw32ce, making sure that in the makefile, CPPFLAGS also includes -DNO_GL<br>
+5) Compile YATC using mingw32ce, making sure that in the makefile, CPPFLAGS and CFLAGS includes -DWINCE and that LIBS includes -loleaut32 -lws2 -lSDL -lGLICT -lSDL_gfx<br>
+<br>
+If I missed anything, I won't apologize!<br>
+<br>
+[B]YATC Features (for now)[/B]<br>
+[list][*] Connect to 8.0-8.11 servers and show MOTD<br>
+[*] Pick characters, enter gameworld<br>
+[*] Duplication of Tibia's main menu UI (as much as possible)<br>
+[*] Reads PIC and SPR files<br>
+[*] Skins<br>
+[*] Item rendering<br>
+[*] Creature rendering <br>
+[*] Moving <br>
+[*] Connection to proprietary servers<br>
+[*] Smooth scrolling [/list]<br>
+<br>
+[B]YATC Additional tools[/B]<br>
+[list]<br>
+[*] PicTool - GPLed command line tool to extract and replace individual images in PIC files[/list]<br>
+<br>
+[B]YATC and connecting to proprietary servers[/B]<br>
+<br>
+The development team does not officially support nor endorse connections to the proprietary servers hosted by Cipsoft GmbH. Here is some information on [URL="http://otfans.net/showthread.php?t=26229"]Cipsoft and third party clients[/URL] - although old, it is pretty certain that it still applies.<br>
+<br>
+[B]YATC and GLICT compile instructions[/B]<br>
+[url]http://opentibia.svn.sf.net/svnroot/opentibia/yatc/trunk/INSTALL[/url]<br>
+<br>
+[B]YATC needs GLICT[/B]<br>
+Here's a [URL="http://tornado.zrs.hr/~ivucica/nightly/project.php?id=5"]nightly build of GLICT DevPak[/URL] as well as a [URL="http://tornado.zrs.hr/~ivucica/nightly/project.php?id=2"]GLICT binary for Debian[/URL] which probably works on other distros, too. It's not a .deb package.<br>
+<br>
+This service is in alpha and there's no warranty it will keep working.<br>
+<br>
+[B]YATC Developers[/B]<br>
+mips - networking<br>
+ivucica - GUI<br>
+smygflik - runs around and distracts honest developers (he made config saver, too)<br>
+nfries88 - helps with bugs, trolls and their kind (namely Dev-Cpp)<br>
+<br>
+[B]YATC Contributors[/B]<br>
+mrauter<br>
+<br>
+[SIZE=1]I'm ivucica if anyone wonders.[/SIZE]<br>

@@ -1,0 +1,20 @@
+YATC has been tested on PocketPC 2003 during 2007. (This has not been done at a later time, and there are no public binary releases.)<br>
+<br>
+<a href="http://youtube.com/watch?v=5IuvXZ6Wis8" target="_blank">Watch the video!</a><br>
+<br>
+<div><img src="https://www.google.com/chart?chc=sites&amp;cht=d&amp;chdp=sites&amp;chl=%5B%5BYouTube+video'%3D20'f%5Cv'a%5C%3D0'10'%3D425'0'dim'%5Cbox1'b%5CF6F6F6'fC%5CF6F6F6'eC%5C0'sk'%5C%5B%22YouTube+Video%22'%5D'a%5CV%5C%3D12'f%5C%5DV%5Cta%5C%3D10'%3D0'%3D426'%3D352'dim'%5C%3D10'%3D10'%3D426'%3D352'vdim'%5Cbox1'b%5Cva%5CF6F6F6'fC%5CC8C8C8'eC%5C'a%5C%5Do%5CLauto'f%5C&amp;sig=3VsYv-XibvEREXh7hdqoFdDk9pA" data-origsrc="5IuvXZ6Wis8" data-type="youtube" data-props="align:left;borderTitle:YouTube Video;showBorder:true;showBorderTitle:true;" width="425" height="355" style="display:block;text-align:left;margin-right:auto;"><br>
+</div>
+<div><br>
+It's "simple"...<br>
+<ol><li>Compile SDL using arm-wince-mingw32ce (in remainder: mingw32ce)</li>
+<li>Compile GMP using mingw32ce, in invalid.c you must remove #include &lt;signal.h&gt; and raise(SIGFPE)</li>
+<li>Compile SDL_gfx using mingw32ce</li>
+<li>Compile GLICT using mingw32ce, making sure that in the makefile, CPPFLAGS also includes -DNO_GL</li>
+<li>Compile <span>YATC</span>
+using mingw32ce, making sure that in the makefile, CPPFLAGS and CFLAGS
+includes -DWINCE and that LIBS includes -loleaut32 -lws2 -lSDL -lGLICT
+-lSDL_gfx</li>
+</ol>
+<br>
+If I missed anything, I won't apologize!<br>
+</div>

@@ -1,0 +1,39 @@
+To make use of automated updates, create file <span style="font-family:courier new,monospace">/etc/apt/sources.list.d/ivucica-repository.list</span>&nbsp;with following contents:<br>
+<span style="font-family:courier new,monospace">deb http://ivan.vucica.net/debrepository/ binary/</span><br style="font-family:courier new,monospace">
+<span style="font-family:courier new,monospace">deb-src http://ivan.vucica.net/debrepository/ source/</span><br style="font-family:courier new,monospace">
+<br>
+<br>
+The repository itself is not signed. Packages are however signed using GPG. Here's the public key signed by Ivan Vucica - put this in a file named "ivucica.key" and do a "gpg --import ivucica.key".<br>
+<font size="1" style="font-family:courier new,monospace">-----BEGIN PGP PUBLIC KEY BLOCK-----<br>
+Version: GnuPG v1.4.6 (GNU/Linux)<br>
+<br>
+mQGiBEeSZ5YRBACIrJYzfuh+mupq8Mk0wpHyekRJuRlX041/D/FdKV2fNd8TsvP7<br>
+CTA+ihGU0DSgnALkAkUPB4JlxfYR1BMUwxXD8JodUGYe1J+GZ2IvmpzGjCzpq373<br>
+Cuqi+aoAUBvNdPPy6xs7SuVYn8dw43Hp89Cyy8tBfNGjYYe2J3FyXUUNiwCguGKv<br>
+XmNkoOyj0QGTFgTQi2K3Qj0EAIfncU/OOmw6+2Y+IgcZtCeHfo4u6LrAW/97XYu0<br>
+Ao1CVN0HLGrVLkq3S4Can4QfVUgSUWnPOahk3T61dvqNhakDRkbMSIP50nWbx3mK<br>
+XSAVcq+Uwm1RzAHGnSoGUuZTP8KeQVFpnoFRNTT8Xx5QHkJDC8jT0qq8ti879eqT<br>
+WRHlA/0QHN6gJ/g0aRGvb5KuJs26Fm87m4rSGx5u/Yr0Mp8OvPTr0SdJFvpK+9FO<br>
+3OEauKTN2A/pasaE+aaVRcM65Q08GQH9myTJneztHbHd0FBXRKnzG/7uiGNKE9JH<br>
+A/dYsqF7FIoXerHudB/awouC9ttozrMNa0FyTtA9tbEug6OXAbQfSXZhbiBWdWNp<br>
+Y2EgPGl2dWNpY2FAZ21haWwuY29tPohgBBMRAgAgBQJHkmeWAhsDBgsJCAcDAgQV<br>
+AggDBBYCAwECHgECF4AACgkQsunNof3e6g+z3QCcDEhTTRDEbN3QO6R4HSAYl7J5<br>
+NVsAnRNbyPcC8GC4VeN5lHpbMxEW5M6JuQINBEeSZ7EQCAC6oriSMa5J8cslK0wO<br>
+LrOjPsbsZ21+4mdU6NIMGuOPqikt5TxBRPS3TQBvqPR+wyy7Mx9i3C5nc4Nb51TS<br>
+scJc7fD6Jb7o6EQMpj5FySWWmRKkY/KjcbtPPVY2uFqAh/l+40+ELe1MJtu8d475<br>
+chIeAtrkNHegsxxZpOm+b3zv0dh0MkGWomSZCMFF+Aa/AjfQPsOaW7ODL8lwVBqz<br>
+B9HJziCMdGWIp3yTR/963Eq5eyL20hTFQnrG/ZBEK+kRO4jXfYq66D0/qWlS0SJ9<br>
++mGEvDa+UnvUldbV80d3r+UcB+ciUMrcSmVIdrbmGy+gLZefqqfyz6axNsPd6/ej<br>
+DoQPAAQLB/0U2/xJus/kEuPUESzQGwWTu5InT+ZxpXjRr5BQrH8TVe3dbgkRHVgE<br>
+gCY7Mn3CHjXDcD7zl2GqU+hVnok/OrYUIg5xSypht7NNsoA347t0OXeCIK0LhuRn<br>
+5qBA4mLjL2rHqEUfTfWctOLWeLVDXYiMJy++5Ohtjta3ImVOwbkuOIrUbep5Fnmw<br>
+yQJgQorJJdaxOXeJf56dZ8rCcLIz7z4BcT7sDM+WlKNnp8GWmR/+XIHIWBOHYOpL<br>
+AYNCEI4FGSheJoE94j5HB33pxYBmHiar9byZXxk/RfzZmqbTAajFQbusVN8KxDwv<br>
+2LJ3iKS6bY8RnyK/dfhm5wl4oRivoTP1iEkEGBECAAkFAkeSZ7ECGwwACgkQsunN<br>
+of3e6g9fwACffRM4WdrLrYeCDLMb8Uvxr3Pt3+sAn39b7uhuD7wkVPgtQoSmCI+S<br>
+pJA3<br>
+=uTuE<br>
+-----END PGP PUBLIC KEY BLOCK-----</font><br style="font-family:courier new,monospace">
+<br style="font-family:courier new,monospace">
+<br style="font-family:courier new,monospace">
+Of course you cannot trust me, but I intend to have my GPG key signed by a Debian developer.<br>
