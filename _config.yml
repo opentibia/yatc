@@ -1,0 +1,5 @@
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+encoding: utf-8
+url: https://yatc.vucica.net/
