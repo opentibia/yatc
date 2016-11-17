@@ -3,5 +3,3 @@ highlighter: rouge
 permalink: pretty
 encoding: utf-8
 url: https://yatc.vucica.net/
-source: site
-destination: site/_site
