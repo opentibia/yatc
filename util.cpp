@@ -32,6 +32,7 @@
 #ifndef WIN32
 	#include <sys/stat.h> // mkdir
 	#include <errno.h>
+	#include <unistd.h> // access
 #endif
 #include "util.h"
 
