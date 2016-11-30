@@ -3,10 +3,15 @@
 cc_binary(
     name = "yatc",
     srcs = [
-        "main.cpp"
-    ],
+    ] + glob([
+        "*.cpp", "*.h",
+        "gamecontent/*.cpp", "gamecontent/*.h",
+        "net/*.cpp", "net/*.h",
+        "ui/*.cpp", "ui/*.h",
+    ]),
     deps = [
         "@libsdl12//:sdl",
+        "@libsdlgfx//:sdlgfx",
         "@glict//glict/GLICT",
     ]
 )
