@@ -1,1 +1,4 @@
 bazel-*
+SDL*.tar.gz
+SDL-1.2.15/
+SDL_gfx-2.0.24/
