@@ -1,0 +1,17 @@
+# -*-Python-*-
+
+cc_library(
+    name = "sdlgfx",
+    srcs = [
+        "SDL_framerate.c",
+        "SDL_gfxPrimitives.c",
+        "SDL_imageFilter.c",
+        "SDL_rotozoom.c",
+    ],
+    hdrs = [
+        "SDL_framerate.h",
+    ],
+    deps = [
+        "@libsdl12//:sdl",
+    ],
+)

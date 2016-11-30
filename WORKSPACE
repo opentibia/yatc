@@ -17,6 +17,15 @@ new_http_archive(
     strip_prefix = "SDL-1.2.15/",
 )
 
+new_http_archive(
+    name = "libsdlgfx",
+    url = "http://www.ferzkopp.net/Software/SDL_gfx-2.0/SDL_gfx-2.0.24.tar.gz",
+    sha256 = "30ad38c3e17586e5212ce4a43955adf26463e69a24bb241f152493da28d59118",
+    type = "tar.gz",
+    build_file = "BUILD.libsdlgfx",
+    strip_prefix = "SDL_gfx-2.0.24",
+)
+
 # For work on libsdl rules only.
 new_local_repository(
     name = "libsdl12_local",
