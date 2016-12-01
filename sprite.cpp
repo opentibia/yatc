@@ -421,9 +421,11 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 		printf("!m_image\n");
 		return;
 	}
+	#ifdef USE_OPENGL
 	if(dynamic_cast<EngineGL*>(g_engine))
 		// gl engine is crashing on SDL_UnlockSurface.
 		return;
+	#endif
 	templatespr->lockSurface();
 	if(SDL_MUSTLOCK(m_image)) SDL_LockSurface(m_image);
 	for(int i=0; i < m_image->h; i++){
