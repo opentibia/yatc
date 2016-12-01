@@ -5,6 +5,7 @@ cc_library(
     srcs = [
         "SDL_framerate.c",
         "SDL_gfxPrimitives.c",
+        "SDL_gfxBlitFunc.c",
         "SDL_imageFilter.c",
         "SDL_rotozoom.c",
     ] + glob(["*.h"]),
@@ -16,6 +17,7 @@ cc_library(
         "@libsdl12//:sdl",
     ],
     visibility = ["//visibility:public"],
+    linkstatic = 1,
 )
 
 genrule(
