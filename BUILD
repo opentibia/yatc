@@ -29,5 +29,6 @@ cc_binary(
     linkopts = [
         "-ldl",
         "-lalsaplayer",
+        "-pthread",
     ],
 )
