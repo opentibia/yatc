@@ -9,6 +9,9 @@ cc_library(
         "SDL_rotozoom.c",
     ] + glob(["*.h"]),
     hdrs = ["SDL/" + i for i in glob(["*.h"])],
+    includes = [
+        ".", "SDL",
+    ],
     deps = [
         "@libsdl12//:sdl",
     ],
