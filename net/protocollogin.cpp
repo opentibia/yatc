@@ -180,7 +180,7 @@ void ProtocolLogin::sendSystemConfiguration(NetworkMessage &output)
     // FIXME (ivucica#1#): this sends thomac's configuration.
     // this can easily be detected.
     // we need to figure out remaining bytes and real detection
-    char hardware_spec[] = {
+    unsigned char hardware_spec[] = {
         0x2C, // unknown
         'U', 'S', 'A', // USA - locale
         0xFE, 0x1F, // 8190 - RAM
