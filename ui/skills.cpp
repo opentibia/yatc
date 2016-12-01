@@ -18,6 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <iomanip>
 #include "skills.h"
 #include "sbvlpanel.h"
 #include "../skin.h"

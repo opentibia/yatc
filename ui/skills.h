@@ -18,13 +18,12 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifndef __SKILLS_H
-#define __SKILLS_H
+#ifndef __UI_SKILLS_H
+#define __UI_SKILLS_H
 
 #include <GLICT/window.h>
 #include <GLICT/progressbar.h>
 #include <sstream>
-#include <iomanip>
 #include "../engine.h"
 #include "../gamecontent/globalvars.h"
 #include "../util.h"
