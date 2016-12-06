@@ -512,4 +512,9 @@ cc_binary(
         "-lalsaplayer",
         "-pthread",
     ],
+    data = [
+        "@tibia854//:Tibia.pic",
+        "@tibia854//:Tibia.dat",
+        "@tibia854//:Tibia.spr",
+    ],
 )

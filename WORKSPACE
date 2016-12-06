@@ -35,4 +35,13 @@ new_local_repository(
 
 x11_repository()
 
-
+new_http_archive(
+    name = "tibia854",
+    url = "https://remeresmapeditor.com/rmedl.php?file=tibia854.tgz",
+    sha256 = "3d897c233226586d86f5a33941ac3b62b3aa001b8e563c574a4a860320d7a865",
+    type = "tar.gz",
+    strip_prefix = "Tibia/",
+    build_file_content = (
+        "exports_files(['Tibia.pic', 'Tibia.spr', 'Tibia.dat'])"
+    )
+)
