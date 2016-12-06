@@ -351,6 +351,9 @@ void yatc_fopen_init(char *cmdline) {
 				printf("Also adding Mac bundle resource path %s\n", tmp2.c_str());
 				searchpaths.insert(searchpaths.end(), tmp2);
 #endif
+				std::string tmp3 = std::string(tmp) + "yatc.runfiles/tibia854/";
+				printf("Also adding Bazel runfiles path %s\n", tmp3.c_str());
+				searchpaths.insert(searchpaths.end(), tmp3);
 				delete[] tmp;
 				break;
 			}
