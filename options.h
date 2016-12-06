@@ -22,8 +22,8 @@
 #define __OPTIONS_H
 
 #include <string>
-#include "net/connection.h"
 #include "gamecontent/enums.h"
+#include "net/enum.h"
 
 enum enginelist_t {
 	ENGINE_SDL = 0, // software renderer
