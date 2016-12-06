@@ -23,7 +23,7 @@
 #include "engine.h" // used to create engine specific sprites
 #include "util.h"
 #include "options.h"
-#include "net/connection.h"
+#include "net/protocolconfig.h"
 #include "product.h"
 
 #ifdef HAVE_CONFIG_H
