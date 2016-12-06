@@ -22,8 +22,8 @@
 #define __GLOBALVARS_H__
 
 #include "../fassert.h"
-#include "map.h"
 #include "enums.h"
+#include "position.h"
 
 class GlobalVariables{
 public:

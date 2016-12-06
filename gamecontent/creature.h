@@ -27,7 +27,7 @@
 #include "../creatureui.h"
 #include "thing.h"
 #include "enums.h"
-#include "map.h"
+#include "position.h"
 
 class Tile;
 
