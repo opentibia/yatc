@@ -298,6 +298,9 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="mapui.cpp" />
 		<Unit filename="mapui.h" />
+		<Unit filename="net\enum.h" />
+		<Unit filename="net\protocolconfig.cpp" />
+		<Unit filename="net\protocolconfig.h" />
 		<Unit filename="net\connection.cpp" />
 		<Unit filename="net\connection.h" />
 		<Unit filename="net\connectionreplay.cpp" />
