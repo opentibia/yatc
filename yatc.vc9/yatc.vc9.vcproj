@@ -256,6 +256,14 @@
 				Filter="h;hpp;hxx;hm;inl;inc;xsd"
 				>
 				<File
+					RelativePath="..\net\enum.h"
+					>
+				</File>
+				<File
+					RelativePath="..\net\protocolconfig.h"
+					>
+				</File>
+				<File
 					RelativePath="..\net\connection.h"
 					>
 				</File>
@@ -356,6 +364,10 @@
 				Name="Source Files"
 				Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 				>
+				<File
+					RelativePath="..\net\protocolconfig.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\net\connection.cpp"
 					>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
@@ -312,6 +312,10 @@
 			<Filter
 				Name="net"
 				>
+				<File
+					RelativePath=".\net\protocolconfig.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\net\connection.cpp"
 					>
@@ -642,6 +646,14 @@
 			<Filter
 				Name="net"
 				>
+				<File
+					RelativePath=".\net\enum.h"
+					>
+				</File>
+				<File
+					RelativePath=".\net\protocolconfig.h"
+					>
+				</File>
 				<File
 					RelativePath=".\net\connection.h"
 					>
