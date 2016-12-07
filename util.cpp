@@ -293,6 +293,18 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 #endif
 }
 
+static std::string path_to_binary("");
+const std::string& yatc_path_to_binary() {
+  // WARNING: Do not append a slash after return value of this function.
+  // A slash will be added as needed.
+  // Empty value may be exactly what you need to avoid breakage.
+
+  // TODO(ivucica): This will return a relative path, and will currently
+  // NOT work if the path is not available through argv[0].
+  return path_to_binary;
+}
+
+
 #ifndef DESTDIRS
 	#ifndef __APPLE__
 		#define DESTDIRS ""
@@ -346,6 +358,7 @@ void yatc_fopen_init(char *cmdline) {
 				tmp[i+1]=0;
 				searchpaths.insert(searchpaths.end(), std::string(tmp));
 				printf("Adding extra path %s\n", tmp);
+				path_to_binary = std::string(tmp);
 #ifdef __APPLE__
 				std::string tmp2 = std::string(tmp) + "../Resources/";
 				printf("Also adding Mac bundle resource path %s\n", tmp2.c_str());

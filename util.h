@@ -66,5 +66,6 @@ inline std::string yatc_itoa(int val)
 #define ECORR16(var) var = SDL_SwapLE16(var)
 #define ECORR32(var) var = SDL_SwapLE32(var)
 
+const std::string& yatc_path_to_binary();
 
 #endif
