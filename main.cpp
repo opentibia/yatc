@@ -436,11 +436,14 @@ int main(int argc, char *argv[])
     }
     setlocale( LC_ALL, "");//options.lang.c_str() );
     setlocale( LC_NUMERIC, "C");
-    bindtextdomain( "yatc", "./translations" ); // bindtextdomain( "hello", "/usr/share/locale" );
+    #if !BAZEL_BUILD
+    bindtextdomain( "yatc", "./translations" );
+    #else
+    bindtextdomain( "yatc", (yatc_path_to_binary() + "yatc.runfiles/yatc/translations").c_str());
+    #endif
     textdomain( "yatc" );
     bind_textdomain_codeset("yatc","windows-1252");
 #endif
-
 
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Checking graphics files existence...\n");
 	checkFiles();

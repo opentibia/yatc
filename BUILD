@@ -445,6 +445,9 @@ cc_library(
         "//gamecontent:viplist",
         "//gamecontent:creature_hdr",
     ],
+    defines = [
+        "HAVE_LIBINTL_H=1",
+    ],
     linkstatic = 1,
 )
 cc_binary(
@@ -505,7 +508,8 @@ cc_binary(
         ":confighandler",
     ],
     defines = [
-        "HAVE_LIBINTL_H",
+        "HAVE_LIBINTL_H=1",
+        "BAZEL_BUILD=1",
     ],
     linkopts = [
         "-ldl",
@@ -516,5 +520,12 @@ cc_binary(
         "@tibia854//:Tibia.pic",
         "@tibia854//:Tibia.dat",
         "@tibia854//:Tibia.spr",
+
+        "//translations:hr_HR/LC_MESSAGES/yatc.mo",
+        "//translations:pt_BR/LC_MESSAGES/yatc.mo",
+        "//translations:es_ES/LC_MESSAGES/yatc.mo",
+        "//translations:pl_PL/LC_MESSAGES/yatc.mo",
+        "//translations:pt_BR/LC_MESSAGES/yatc.mo",
+        "//translations:sv_SE/LC_MESSAGES/yatc.mo",
     ],
 )
