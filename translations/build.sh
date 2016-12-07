@@ -7,9 +7,11 @@
 #mkdir -p langid/LC_MESSAGES
 #msgfmt -c -v -o langid/LC_MESSAGES/yatc.mo filename.po
 
-
+SRCDIR=$(realpath "$(dirname "${0}")")
+OUTDIR=${1:-./}
+echo $SRCDIR to $OUTDIR
 for i in hr_HR pt_BR pl_PL sv_SE es_ES; do
 	echo $i
-	mkdir -p $i/LC_MESSAGES
-	msgfmt -c -v -o $i/LC_MESSAGES/yatc.mo $i.po
+	mkdir -p ${OUTDIR}$i/LC_MESSAGES
+	msgfmt -c -v -o ${OUTDIR}$i/LC_MESSAGES/yatc.mo ${SRCDIR}/$i.po
 done
