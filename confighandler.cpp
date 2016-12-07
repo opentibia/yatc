@@ -67,6 +67,8 @@ bool ConfigHandler::loadConfig(const char* filename)
             break;
         
 		if(buffer[0] != '#'){ // Not a comment: process it
+		  while(buffer[strlen(buffer)-1] == '\n' || buffer[strlen(buffer)-1] == '\r')
+		    buffer[strlen(buffer)-1] = '\0';
             if(!readSection(buffer, currentSection)) { // Attempt to process as a section
                 readKey(buffer, currentSection);
             }
@@ -139,11 +141,10 @@ void ConfigHandler::readKey(const char* buffer, int currentSection)
 
 		int eq  = str.find_first_of("=");
 		std::string keyname = str.substr(0, eq);
-		int len = str.size() - eq - 2;
-		std::string value = str.substr(eq + 2, len-1);
+		int len = str.size() - eq - 2 - 1;
+		std::string value = str.substr(eq + 2, len);
 
         value = str_replace("<br>", "\n", value);
-
 		Key* key = new Key(keyname, value);
 		section->keys.push_back(key);
 	}
