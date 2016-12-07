@@ -21,4 +21,5 @@ genrule(
         #"./build.sh $(@D)",
         "$(location //translations:build.sh) $(@D)/",
     ]),
+    visibility = ["//visibility:public"],
 )
