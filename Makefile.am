@@ -33,6 +33,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		statusmsg.cpp clipboard.cpp \
 		\
 		net/connectionreplay.cpp net/connection.cpp net/networkmessage.cpp \
+		net/protocolconfig.cpp \
 		net/protocolgame80.cpp net/protocolgame81.cpp net/protocolgame811.cpp \
 		net/protocolgame82.cpp net/protocolgame821.cpp net/protocolgame822.cpp \
 		net/protocolgame83.cpp net/protocolgame831.cpp net/protocolgame84.cpp \
@@ -63,6 +64,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		macutil.h \
 		\
 		net/connectionreplay.h \
+		net/protocolconfig.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h net/protocolgame811.h net/protocolgame82.h \
 		net/protocolgame821.h net/protocolgame822.h net/protocolgame83.h \
