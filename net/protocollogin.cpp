@@ -18,6 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include <stdio.h> // printf; TODO: remove me
 #include <stdlib.h> // srand, rand
 #include <time.h> // time
 
