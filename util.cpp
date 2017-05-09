@@ -59,7 +59,7 @@ std::string str_replace(const std::string& what, const std::string& with, const 
 
 
 void NativeGUIError(const char* text, const char *title) {
-	#ifdef __APPLE__
+	#if defined(__APPLE__) || defined(CLI_ONLY)
 	printf("NativeGUIError('%s','%s');\n", text, title);
 	#endif
 	#ifdef WIN32
