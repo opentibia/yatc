@@ -21,7 +21,7 @@
 #include "distanceui.h"
 #include "debugprint.h"
 #include "fassert.h"
-#include "math.h"
+#include <math.h>
 
 extern uint32_t g_frameTime;
 
