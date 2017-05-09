@@ -267,6 +267,7 @@ void ProtocolConfig::createLoginConnection(const std::string& accountname, const
 
 ProtocolGame* ProtocolConfig::createGameProtocol(int version, const std::string&accountname, const std::string&password, const std::string&name, bool isGM)
 {
+#if !defined(LOGIN_ONLY)
     ProtocolGame* protocol;
     switch(version){
     case CLIENT_VERSION_740:
@@ -326,6 +327,9 @@ ProtocolGame* ProtocolConfig::createGameProtocol(int version, const std::string&
 		break;
 	}
 	return protocol;
+#else
+	return NULL;
+#endif
 }
 
 ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountname, const std::string& password, const std::string& name, bool isGM)
