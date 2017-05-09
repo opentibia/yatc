@@ -19,7 +19,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "protocolconfig.h"
-#include "util.h"
+#include "../util.h"
 #include "protocolgame.h"
 #include "rsa.h"
 
