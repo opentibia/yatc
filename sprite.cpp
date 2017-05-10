@@ -151,8 +151,8 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 	}
 
 	SDL_Surface* ns = SDL_CreateRGBSurface(SDL_HWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
-	SDL_Rect src = {x,y,w,h};
-	SDL_Rect dst = {0,0,w,h};
+	SDL_Rect src = {(Sint16)x,(Sint16)y,(Uint16)w,(Uint16)h};
+	SDL_Rect dst = {0,0,(Uint16)w,(Uint16)h};
 	SDL_BlitSurface(m_image, &src, ns, &dst);
 
 	SDL_FreeSurface(m_image);

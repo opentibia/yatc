@@ -99,7 +99,7 @@ void EngineSDL::drawLightmap(vertex* lightmap, int type, int width, int height, 
 void EngineSDL::drawRectangle(float x, float y, float width, float height, oRGBA color)
 {
 	static const SDL_VideoInfo* vi = SDL_GetVideoInfo();
-	SDL_Rect r={(int)x,(int)y,(int)width,(int)height};
+	SDL_Rect r={(Sint16)x,(Sint16)y,(Uint16)width,(Uint16)height};
 	if(color.a != 255) {
 	    // draw with alpha channel
 	    // NOTE (nfries88): for some reason this always seems to exceed by 1, making the screen look like a grid when it's dark.
@@ -116,22 +116,22 @@ void EngineSDL::drawRectangleLines(float x, float y, float width, float height, 
 	const SDL_VideoInfo* vi = SDL_GetVideoInfo();
 	int col = SDL_MapRGBA(vi->vfmt, (int)(color.r), (int)(color.g), (int)(color.b), (int)(color.a));
 	{
-		SDL_Rect rect = {(int)x, (int)y, (int)thickness, (int)height};
+		SDL_Rect rect = {(Sint16)x, (Sint16)y, (Uint16)thickness, (Uint16)height};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 
 	{
-		SDL_Rect rect = {(int)(x+width-thickness), (int)y, (int)thickness, (int)height};
+		SDL_Rect rect = {(Sint16)(x+width-thickness), (Sint16)y, (Uint16)thickness, (Uint16)height};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 
 	{
-		SDL_Rect rect = {(int)x, (int)y, (int)width, (int)thickness};
+		SDL_Rect rect = {(Sint16)x, (Sint16)y, (Uint16)width, (Uint16)thickness};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 
 	{
-		SDL_Rect rect = {(int)x, (int)(y+height-thickness), (int)width, (int)thickness};
+		SDL_Rect rect = {(Sint16)x, (Sint16)(y+height-thickness), (Uint16)width, (Uint16)thickness};
 		SDL_FillRect(m_screen, &rect, col);
 	}
 }
@@ -171,6 +171,6 @@ void EngineSDL::doResize(int& w, int& h)
 
 
 void EngineSDL::clipper_func(float left, float right, float top, float bottom) {
-    SDL_Rect r = {left,top, right-left, bottom-top};
+    SDL_Rect r = {(Sint16)left, (Sint16)top, (Uint16)(right-left), (Uint16)(bottom-top)};
     SDL_SetClipRect(((EngineSDL*)g_engine)->m_screen, &r);
 }

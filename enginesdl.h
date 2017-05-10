@@ -49,7 +49,7 @@ class EngineSDL : public Engine
 		}
 
         void setClipping(int left, int top, int width, int height) {
-            SDL_Rect r = {left, top, width, height};
+            SDL_Rect r = {Sint16(left), Sint16(top), Uint16(width), Uint16(height)};
             SDL_SetClipRect(m_screen, &r);
         }
 		void resetClipping() {

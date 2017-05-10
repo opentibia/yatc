@@ -57,8 +57,8 @@ void SpriteSDL::_BlitInternal(float dx, float dy, float sx, float sy, float w, f
 	}
 
 	// code is like this because of dx5.0 ... see docs/html/sdlrect.html in SDL documentation for more info
-	SDL_Rect src = {(int)sx,(int)sy,(int)(w),(int)(h)};
-	SDL_Rect dst = {(int)dx,(int)dy,(int)(w),(int)(h)};
+	SDL_Rect src = {(Sint16)sx,(Sint16)sy,(Uint16)(w),(Uint16)(h)};
+	SDL_Rect dst = {(Sint16)dx,(Sint16)dy,(Uint16)(w),(Uint16)(h)};
 	while(SDL_BlitSurface(getColoredImage(), &src, g_engine->m_screen, &dst) == -2){
 		while(SDL_LockSurface(getColoredImage()) < 0 ){
 				SDL_Delay(10);
