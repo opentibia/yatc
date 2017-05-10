@@ -33,6 +33,24 @@ new_local_repository(
     path = __workspace_dir__ + "/SDL-1.2.15/",
 )
 
+# libtommath
+#new_git_repository(
+#    remote = "https://github.com/libtom/libtommath",
+#    tag = "v1.0",
+new_local_repository(
+    path = __workspace_dir__ + "/vendor/github.com/libtom/libtommath",
+    name = "tommath",
+    build_file_content = "\n".join([
+        "cc_library(",
+        "  name='tommath',",
+        "  srcs=glob(['*.c']),",
+        "  hdrs=glob(['*.h']),",
+        "  visibility=['//visibility:public'],",
+        "  copts=['-isystem external/tommath'],",
+        ")",
+    ]),
+)
+
 x11_repository()
 
 new_http_archive(

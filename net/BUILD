@@ -18,7 +18,12 @@ cc_library(
         "//:stdinttypes",
         "//:fassert",
         "//:debugprint",
+        "@tommath//:tommath",
     ],
+    defines = [
+        "HAVE_TOMMATH=1",
+    ],
+    copts = ["-isystem external/tommath"],
     linkstatic = 1,
 )
 
@@ -37,6 +42,7 @@ cc_library(
         "//:stdinttypes",
         "//:notifications",
     ],
+    copts = ["-isystem external/tommath"],
     linkstatic = 1,
 )
 cc_library(
@@ -56,6 +62,7 @@ cc_library(
         "//:notifications",
         "//gamecontent:viplist",
     ],
+    copts = ["-isystem external/tommath"],
     linkstatic = 1,
 )
 cc_library(
@@ -77,6 +84,7 @@ cc_library(
         "//:util",
         ":encryption",
     ],
+    copts = ["-isystem external/tommath"],
     linkstatic = 1,
 )
 cc_library(
@@ -285,6 +293,7 @@ cc_library(
     # TODO(ivucica): move this target into net/BUILD
     name = "net",
     srcs = glob(["*.cpp"], exclude = [
+        "rsa.cpp",
         "protocolconfig.cpp",
         "protocollogin.cpp",
         "protocolgame.cpp",
@@ -307,6 +316,7 @@ cc_library(
         "protocolgame854.cpp",
     ]),
     hdrs = glob(["*.h"], exclude = [
+        "rsa.h",
         "protocolconfig.h",
         "protocollogin.h",
         "protocolgame.h",
@@ -340,9 +350,10 @@ cc_library(
         "//gamecontent:viplist",
         "//:util",
         "//:notifications",
-        "//:bigint",
+        ":rsa",
         ":protocolconfig",
     ],
+    copts = ["-isystem external/tommath"],
     linkstatic = 1,
 )
 cc_library(

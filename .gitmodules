@@ -1,3 +1,6 @@
 [submodule "vendor/github.com/ivucica/glict"]
 	path = vendor/github.com/ivucica/glict
 	url = https://github.com/ivucica/glict
+[submodule "vendor/github.com/libtom/libtommath"]
+	path = vendor/github.com/libtom/libtommath
+	url = https://github.com/libtom/libtommath
