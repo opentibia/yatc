@@ -1,5 +1,10 @@
 # -*-Python-*-
 
+config_setting(
+    name = "darwin",
+    values = {"host_cpu": "darwin"}
+)
+
 cc_library(
     name = "sdlgfx",
     srcs = [
@@ -9,9 +14,12 @@ cc_library(
         "SDL_imageFilter.c",
         "SDL_rotozoom.c",
     ] + glob(["*.h"]),
-    hdrs = ["SDL/" + i for i in glob(["*.h"])],
+    hdrs = select({
+      "//conditions:default": ["SDL/" + i for i in glob(["*.h"])],
+      ":darwin": ["SDL_gfx/" + i for i in glob(["*.h"])],
+    }),
     includes = [
-        ".", "SDL",
+        ".", "SDL", "SDL_gfx",
     ],
     deps = [
         "@libsdl12//:sdl",
@@ -28,6 +36,18 @@ genrule(
         "mkdir -p $(@D)/SDL",
         "for i in $(SRCS) ; do",
         "    cp \"$$i\" \"$(@D)/SDL/$$(basename \"$${i}\")\"",
+        "done",
+    ]),
+)
+
+genrule(
+    name = "sdlgfxheaders_mac",
+    srcs = glob(["*.h"]),
+    outs = ["SDL_gfx/" + i for i in glob(["*.h"])],
+    cmd = "\n".join([
+        "mkdir -p $(@D)/SDL",
+        "for i in $(SRCS) ; do",
+        "    cp \"$$i\" \"$(@D)/SDL_gfx/$$(basename \"$${i}\")\"",
         "done",
     ]),
 )

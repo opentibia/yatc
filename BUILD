@@ -4,6 +4,11 @@ package(
     default_visibility = ["//visibility:public"],
 )
 
+config_setting(
+    name = "darwin",
+    values = {"host_cpu": "darwin"}
+)
+
 cc_library(
     name = "creatureui_hdr",
     hdrs = [
@@ -76,6 +81,25 @@ cc_library(
     linkstatic = 1,
     deps = [
         "@libsdl12//:sdl",
+    ] + select({
+        ":darwin": [":macutil"],
+    }),
+)
+
+cc_library(
+    name = "macutil",
+    srcs = ["objcmacutil.m.c"],
+    copts = [
+        "-x", "objective-c",
+    ],
+    hdrs = ["macutil.h"],
+)
+
+cc_library(
+    name = "macclipboard",
+    srcs = ["objcmacclipboard.m.c"],
+    copts = [
+        "-x", "objective-c",
     ],
 )
 
@@ -447,9 +471,10 @@ cc_library(
         "//net:protocolgame.h",
     ],
     hdrs = glob(["ui/*.h"]),
-    defines = [
-        "HAVE_LIBINTL_H=1",
-    ],
+    defines = select({
+        "//conditions:default": ["HAVE_LIBINTL_H=1"],
+        ":darwin": [],
+    }),
     linkstatic = 1,
     deps = [
         ":defines",
@@ -467,6 +492,30 @@ cc_library(
         "@libsdl12//:sdl",  # due to gamemode.h
         "@libsdlgfx//:sdlgfx",
     ],
+)
+
+# objc_library() is only intended for use with iOS. This is most
+# unfortunate.
+# We'll instead append .c to the inputs, then use Clang with the
+# -x objective-c option.
+genrule(
+    name = "objectivec-as-c-hack",
+    srcs = glob([
+        "macutil.m",
+        "macclipboard.m",
+        ]),
+    outs = ["objc" + i + ".c" for i in glob([
+        "macutil.m",
+        "macclipboard.m",
+        ])],
+    cmd = "\n".join([
+        "for i in $(SRCS)",
+        "do",
+        " mkdir -p \"$$(dirname \"$(@D)/objc$${i}\")\"",
+        " cp -v \"$$i\" \"$(@D)/objc$${i}.c\"",
+        "done",
+    ]),
+    visibility = ["//visibility:public"],
 )
 
 cc_binary(
@@ -518,25 +567,34 @@ cc_binary(
             "confighandler.h",
         ],
     ),
-    data = [
-        "//translations:es_ES/LC_MESSAGES/yatc.mo",
-        "//translations:hr_HR/LC_MESSAGES/yatc.mo",
-        "//translations:pl_PL/LC_MESSAGES/yatc.mo",
-        "//translations:pt_BR/LC_MESSAGES/yatc.mo",
-        "//translations:sv_SE/LC_MESSAGES/yatc.mo",
+    data = select({
+        "//conditions:default": [
+          "//translations:es_ES/LC_MESSAGES/yatc.mo",
+          "//translations:hr_HR/LC_MESSAGES/yatc.mo",
+          "//translations:pl_PL/LC_MESSAGES/yatc.mo",
+          "//translations:pt_BR/LC_MESSAGES/yatc.mo",
+          "//translations:sv_SE/LC_MESSAGES/yatc.mo",
+        ],
+        ":darwin": [],
+    }) + [
         "@tibia854//:Tibia.dat",
         "@tibia854//:Tibia.pic",
         "@tibia854//:Tibia.spr",
     ],
-    defines = [
-        "HAVE_LIBINTL_H=1",
-        "BAZEL_BUILD=1",
-    ],
-    linkopts = [
-        "-ldl",
-        "-lalsaplayer",
-        "-pthread",
-    ],
+    defines = select({
+        "//conditions:default": ["HAVE_LIBINTL_H=1", "BAZEL_BUILD=1"],
+        ":darwin": ["BAZEL_BUILD=1"],
+    }),
+    linkopts = select({
+        "//conditions:default": [
+            "-ldl",
+            "-lalsaplayer",
+            "-pthread",
+        ],
+        ":darwin": [
+            "-framework Cocoa",
+        ],
+    }),
     deps = [
         ":confighandler",
         ":creatureui",
@@ -558,5 +616,10 @@ cc_binary(
         "@glict//glict/GLICT",
         "@libsdl12//:sdl",
         "@libsdlgfx//:sdlgfx",
-    ],
+    ] + select({
+        ":darwin": [
+            "@libsdl12//:sdlmain",
+            ":macclipboard",
+        ],
+    }),
 )
