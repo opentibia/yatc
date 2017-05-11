@@ -6,7 +6,7 @@ package(
 
 config_setting(
     name = "darwin",
-    values = {"host_cpu": "darwin"}
+    values = {"host_cpu": "darwin"},
 )
 
 cc_library(
@@ -83,23 +83,26 @@ cc_library(
         "@libsdl12//:sdl",
     ] + select({
         ":darwin": [":macutil"],
+        "//conditions:default": [],
     }),
 )
 
 cc_library(
     name = "macutil",
     srcs = ["objcmacutil.m.c"],
-    copts = [
-        "-x", "objective-c",
-    ],
     hdrs = ["macutil.h"],
+    copts = [
+        "-x",
+        "objective-c",
+    ],
 )
 
 cc_library(
     name = "macclipboard",
     srcs = ["objcmacclipboard.m.c"],
     copts = [
-        "-x", "objective-c",
+        "-x",
+        "objective-c",
     ],
 )
 
@@ -503,11 +506,11 @@ genrule(
     srcs = glob([
         "macutil.m",
         "macclipboard.m",
-        ]),
+    ]),
     outs = ["objc" + i + ".c" for i in glob([
         "macutil.m",
         "macclipboard.m",
-        ])],
+    ])],
     cmd = "\n".join([
         "for i in $(SRCS)",
         "do",
@@ -569,11 +572,11 @@ cc_binary(
     ),
     data = select({
         "//conditions:default": [
-          "//translations:es_ES/LC_MESSAGES/yatc.mo",
-          "//translations:hr_HR/LC_MESSAGES/yatc.mo",
-          "//translations:pl_PL/LC_MESSAGES/yatc.mo",
-          "//translations:pt_BR/LC_MESSAGES/yatc.mo",
-          "//translations:sv_SE/LC_MESSAGES/yatc.mo",
+            "//translations:es_ES/LC_MESSAGES/yatc.mo",
+            "//translations:hr_HR/LC_MESSAGES/yatc.mo",
+            "//translations:pl_PL/LC_MESSAGES/yatc.mo",
+            "//translations:pt_BR/LC_MESSAGES/yatc.mo",
+            "//translations:sv_SE/LC_MESSAGES/yatc.mo",
         ],
         ":darwin": [],
     }) + [
@@ -582,7 +585,10 @@ cc_binary(
         "@tibia854//:Tibia.spr",
     ],
     defines = select({
-        "//conditions:default": ["HAVE_LIBINTL_H=1", "BAZEL_BUILD=1"],
+        "//conditions:default": [
+            "HAVE_LIBINTL_H=1",
+            "BAZEL_BUILD=1",
+        ],
         ":darwin": ["BAZEL_BUILD=1"],
     }),
     linkopts = select({
@@ -621,5 +627,6 @@ cc_binary(
             "@libsdl12//:sdlmain",
             ":macclipboard",
         ],
+        "//conditions:default": [],
     }),
 )
