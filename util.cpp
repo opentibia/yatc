@@ -33,6 +33,7 @@
 	#include <sys/stat.h> // mkdir
 	#include <errno.h>
 	#include <unistd.h> // access
+	#include <libgen.h> // basename
 #endif
 #include "util.h"
 
@@ -364,9 +365,11 @@ void yatc_fopen_init(char *cmdline) {
 				printf("Also adding Mac bundle resource path %s\n", tmp2.c_str());
 				searchpaths.insert(searchpaths.end(), tmp2);
 #endif
-				std::string tmp3 = std::string(tmp) + "yatc.runfiles/tibia854/";
+#if BAZEL_BUILD
+				std::string tmp3 = std::string(tmp) + basename(cmdline) + ".runfiles/tibia854/";
 				printf("Also adding Bazel runfiles path %s\n", tmp3.c_str());
 				searchpaths.insert(searchpaths.end(), tmp3);
+#endif
 				delete[] tmp;
 				break;
 			}
