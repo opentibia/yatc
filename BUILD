@@ -524,6 +524,26 @@ genrule(
 cc_binary(
     name = "yatc",
     srcs = [
+        "main.cpp",
+    ],
+    deps = [
+        ":yatc_lib",
+        ":creatureui",
+        ":distanceui",
+        ":effectui",
+        ":thingui",
+    ] + select({
+        ":darwin": [
+            "@libsdl12//:sdlmain",
+            ":macclipboard",
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+cc_library(
+    name = "yatc_lib",
+    srcs = [
     ] + glob(
         [
             "*.c",
@@ -533,6 +553,7 @@ cc_binary(
             "gamecontent/*.h",
         ],
         exclude = [
+            "main.cpp",
             "enginegl.cpp",
             "spritegl.cpp",
             "winmain.c",
@@ -603,10 +624,7 @@ cc_binary(
     }),
     deps = [
         ":confighandler",
-        ":creatureui",
         ":defines",
-        ":distanceui",
-        ":effectui",
         ":engine",
         ":enginesdl",
         ":gamemode",
@@ -616,17 +634,11 @@ cc_binary(
         ":sprite",
         ":spritesdl",
         ":stdinttypes",
-        ":thingui",
         "//gamecontent:globalvars",
         "//net",
         "@glict//glict/GLICT",
         "@libsdl12//:sdl",
         "@libsdlgfx//:sdlgfx",
-    ] + select({
-        ":darwin": [
-            "@libsdl12//:sdlmain",
-            ":macclipboard",
-        ],
-        "//conditions:default": [],
-    }),
+    ],
 )
+
