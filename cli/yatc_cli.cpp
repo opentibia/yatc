@@ -22,6 +22,7 @@
 #include <iostream>
 #include "../net/connection.h"
 #include "../net/protocolconfig.h"
+#include "../util.h"
 
 std::string g_recordfilename="debugrecord.rec";
 
@@ -29,7 +30,8 @@ float g_frameTime = 0;
 float g_frameDiff = 0;
 Connection *g_connection = NULL;
 
-int main(int argc, const char ** argv) {
+int main(int argc, char ** argv) {
+  yatc_fopen_init(argv[0]);
   ClientVersion_t proto = CLIENT_VERSION_854;
   std::cout << "Warning: In case of crash after this line check you put Tibia.{dat,spr,pic} in CWD." << std::endl << std::flush;
   ProtocolConfig::getInstance().setServerType(SERVER_OTSERV);
