@@ -170,7 +170,7 @@ void Notifications::openMessageWindow(WindowMessage_t type, const std::string& m
 void Notifications::openWaitingList(const std::string& message, int time) {
   std::stringstream message2;
   message2 << message << std::endl << std::endl << "Retry in " << time << "seconds";
-  std::cout << "Waiting list: " << message2 << std::endl;
+  std::cout << "Waiting list: " << message2.str() << std::endl;
 }
 
 void Notifications::onTextMessage(MessageType_t type, const std::string& message)
