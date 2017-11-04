@@ -4,3 +4,6 @@
 [submodule "vendor/github.com/libtom/libtommath"]
 	path = vendor/github.com/libtom/libtommath
 	url = https://github.com/libtom/libtommath
+[submodule "vendor/github.com/ivucica/rules_tibia"]
+	path = vendor/github.com/ivucica/rules_tibia
+	url = https://github.com/ivucica/rules_tibia

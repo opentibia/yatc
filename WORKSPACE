@@ -2,6 +2,14 @@
 workspace(name="yatc")
 
 local_repository(
+    name = "rules_tibia",
+    path = __workspace_dir__ + "/vendor/github.com/ivucica/rules_tibia",
+)
+
+load("@rules_tibia//:tibia_data.bzl", "tibia_data_repository")
+tibia_data_repository(version=854)
+
+local_repository(
     name = "glict",
     path = __workspace_dir__ + "/vendor/github.com/ivucica/glict",
 )
@@ -53,16 +61,3 @@ new_local_repository(
 
 x11_repository()
 
-new_http_archive(
-    name = "tibia854",
-    url = (
-        "https://remeresmapeditor.com/rmedl.php?file=tibia854.tgz&" +
-        "agent=bazel_rule_building_yatc"
-    ),
-    sha256 = "3d897c233226586d86f5a33941ac3b62b3aa001b8e563c574a4a860320d7a865",
-    type = "tar.gz",
-    strip_prefix = "Tibia/",
-    build_file_content = (
-        "exports_files(['Tibia.pic', 'Tibia.spr', 'Tibia.dat'])"
-    )
-)
