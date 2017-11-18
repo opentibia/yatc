@@ -80,7 +80,7 @@ cc_library(
     ],
     linkstatic = 1,
     deps = [
-        "@libsdl12//:sdl",
+        "@rules_libsdl12//:libsdl12",
     ] + select({
         ":darwin": [":macutil"],
         "//conditions:default": [],
@@ -124,7 +124,7 @@ cc_library(
         ":spritesdl",
         ":util",
         "@glict//glict/GLICT",
-        "@libsdl12//:sdl",
+        "@rules_libsdl12//:libsdl12",
     ],
 )
 
@@ -188,7 +188,7 @@ cc_library(
         ":fassert",
         ":sprite_hdr",
         "@glict//glict/GLICT",
-        "@libsdl12//:sdl",
+        "@rules_libsdl12//:libsdl12",
     ],
 )
 
@@ -268,7 +268,7 @@ cc_library(
         ":debugprint",
         ":sprdata",
         ":stdinttypes",
-        "@libsdl12//:sdl",
+        "@rules_libsdl12//:libsdl12",
     ],
 )
 
@@ -312,6 +312,9 @@ cc_library(
     hdrs = [
         "sprdata.h",
         "stdinttypes.h",
+    ],
+    deps = [
+        "@rules_libsdl12//:libsdl12",
     ],
 )
 
@@ -361,7 +364,7 @@ cc_library(
         ":engine",
         ":options",
         "@glict//glict/GLICT",
-        "@libsdl12//:sdl",
+        "@rules_libsdl12//:libsdl12",
         "@libsdlgfx//:sdlgfx",
     ],
 )
@@ -434,7 +437,7 @@ cc_library(
     linkstatic = 1,
     deps = [
         ":ui",
-        "@libsdl12//:sdl",
+        "@rules_libsdl12//:libsdl12",
     ],
 )
 
@@ -496,7 +499,7 @@ cc_library(
         "//gamecontent:shop",
         "//gamecontent:viplist",
         "@glict//glict/GLICT",
-        "@libsdl12//:sdl",  # due to gamemode.h
+        "@rules_libsdl12//:libsdl12",  # due to gamemode.h
         "@libsdlgfx//:sdlgfx",
     ],
 )
@@ -538,7 +541,7 @@ cc_binary(
         ":thingui",
     ] + select({
         ":darwin": [
-            "@libsdl12//:sdlmain",
+            "@rules_libsdl12//:libsd12-main",
             ":macclipboard",
         ],
         "//conditions:default": [],
@@ -616,16 +619,6 @@ cc_library(
         ],
         ":darwin": ["BAZEL_BUILD=1"],
     }),
-    linkopts = select({
-        "//conditions:default": [
-            "-ldl",
-            "-lalsaplayer",
-            "-pthread",
-        ],
-        ":darwin": [
-            "-framework Cocoa",
-        ],
-    }),
     deps = [
         ":confighandler",
         ":defines",
@@ -641,7 +634,7 @@ cc_library(
         "//gamecontent:globalvars",
         "//net",
         "@glict//glict/GLICT",
-        "@libsdl12//:sdl",
+        "@rules_libsdl12//:libsdl12",
         "@libsdlgfx//:sdlgfx",
     ],
 )

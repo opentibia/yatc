@@ -7,3 +7,6 @@
 [submodule "vendor/github.com/ivucica/rules_tibia"]
 	path = vendor/github.com/ivucica/rules_tibia
 	url = https://github.com/ivucica/rules_tibia
+[submodule "vendor/github.com/ivucica/rules_libsdl12"]
+	path = vendor/github.com/ivucica/rules_libsdl12
+	url = https://github.com/ivucica/rules_libsdl12
