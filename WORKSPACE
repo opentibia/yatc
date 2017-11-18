@@ -14,16 +14,13 @@ local_repository(
     path = __workspace_dir__ + "/vendor/github.com/ivucica/glict",
 )
 
-load("@glict//:x11-helper.bzl", "x11_repository")
-
-new_http_archive(
-    name = "libsdl12",
-    url = "http://www.libsdl.org/release/SDL-1.2.15.tar.gz",
-    sha256 = "d6d316a793e5e348155f0dd93b979798933fb98aa1edebcc108829d6474aad00",
-    type = "tar.gz",
-    build_file = "@glict//:BUILD.libsdl12",
-    strip_prefix = "SDL-1.2.15/",
+local_repository(
+    name = "rules_libsdl12",
+    path = __workspace_dir__ + "/vendor/github.com/ivucica/rules_libsdl12",
 )
+
+load("@rules_libsdl12//:libsdl12.bzl", "libsdl12_repositories")
+libsdl12_repositories()
 
 new_http_archive(
     name = "libsdlgfx",
@@ -32,13 +29,6 @@ new_http_archive(
     type = "tar.gz",
     build_file = "BUILD.libsdlgfx",
     strip_prefix = "SDL_gfx-2.0.24",
-)
-
-# For work on libsdl rules only.
-new_local_repository(
-    name = "libsdl12_local",
-    build_file = "BUILD.libsdl12",
-    path = __workspace_dir__ + "/SDL-1.2.15/",
 )
 
 # libtommath
@@ -59,5 +49,4 @@ new_local_repository(
     ]),
 )
 
-x11_repository()
 
