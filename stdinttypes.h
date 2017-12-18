@@ -1,7 +1,7 @@
 #ifndef __STDINTTYPES_H
 #define __STDINTTYPES_H
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1911 // Visual Studio 2017 15.3.0's MSVC++ 14.1
 #include <stdint.h>
 #else
 #include <SDL/SDL.h>

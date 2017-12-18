@@ -34,6 +34,7 @@
 #include "../util.h"
 
 #include <sstream>
+#include <algorithm>
 
 class winOptionsGraphicsAdvanced_t {
 public:
@@ -165,7 +166,7 @@ public:
 			btnsLight[1] = btnLightEffects.addItem(gettext("Simple Light"), NULL, (void*)1);
 			btnsLight[2] = btnLightEffects.addItem(gettext("Better Light"), NULL, (void*)2);
 			btnsLight[3] = btnLightEffects.addItem(gettext("Best Light"), NULL, (void*)3);
-			btnLightEffects.setSelected(btnsLight[max(min(3, options.showlighteffects), 0)]);
+			btnLightEffects.setSelected(btnsLight[std::max(std::min(3, options.showlighteffects), 0)]);
 		}
 
 		// "Don't Stretch/Shrink Game Window"

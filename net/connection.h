@@ -33,8 +33,12 @@
 #define socketret_t int
 #define opt_t char
 #define optlen_t int
+#ifndef CONNECT_WOULD_BLOCK
 #define CONNECT_WOULD_BLOCK WSAEWOULDBLOCK
+#endif
+#ifndef EWOULDBLOCK
 #define EWOULDBLOCK WSAEWOULDBLOCK
+#endif
 
 #else
 
