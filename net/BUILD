@@ -23,7 +23,11 @@ cc_library(
     defines = [
         "HAVE_TOMMATH=1",
     ],
-    copts = ["-isystem external/tommath"],
+    copts = select({
+        "//conditions:default": ["-isystem external/tommath"],
+	"//:windows": ["-I external/tommath"],
+	"//:windows_msvc": ["-I external/tommath"],
+    }),
     linkstatic = 1,
 )
 
@@ -42,7 +46,11 @@ cc_library(
         "//:stdinttypes",
         "//:notifications",
     ],
-    copts = ["-isystem external/tommath"],
+    copts = select({
+        "//conditions:default": ["-isystem external/tommath"],
+	"//:windows": ["-I external/tommath"],
+	"//:windows_msvc": ["-I external/tommath"],
+    }),
     linkstatic = 1,
 )
 cc_library(
@@ -62,7 +70,11 @@ cc_library(
         "//:notifications",
         "//gamecontent:viplist",
     ],
-    copts = ["-isystem external/tommath"],
+    copts = select({
+        "//conditions:default": ["-isystem external/tommath"],
+	"//:windows": ["-I external/tommath"],
+	"//:windows_msvc": ["-I external/tommath"],
+    }),
     linkstatic = 1,
 )
 cc_library(
@@ -84,7 +96,11 @@ cc_library(
         "//:util",
         ":encryption",
     ],
-    copts = ["-isystem external/tommath"],
+    copts = select({
+        "//conditions:default": ["-isystem external/tommath"],
+	"//:windows": ["-I external/tommath"],
+	"//:windows_msvc": ["-I external/tommath"],
+    }),
     linkstatic = 1,
 )
 cc_library(
@@ -353,7 +369,11 @@ cc_library(
         ":rsa",
         ":protocolconfig",
     ],
-    copts = ["-isystem external/tommath"],
+    copts = select({
+        "//conditions:default": ["-isystem external/tommath"],
+	"//:windows": ["-I external/tommath"],
+	"//:windows_msvc": ["-I external/tommath"],
+    }),
     linkstatic = 1,
 )
 cc_library(
