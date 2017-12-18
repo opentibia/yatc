@@ -23,11 +23,7 @@
 
 #include <string>
 #include <map>
-#if !defined(_MSC_VER)
-#include <stdint.h>
-#else
-#include <SDL/SDL_config.h> // sdl conveniently gives us stdints under msvc
-#endif
+#include "stdinttypes.h"
 class VipEntry
 {
     public:

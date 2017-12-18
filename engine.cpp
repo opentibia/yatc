@@ -29,6 +29,7 @@
 #include <GLICT/types.h>
 #include <sstream>
 #include <cmath>
+#include <algorithm>
 #include "util.h"
 #include "defines.h"
 #include "engine.h"
