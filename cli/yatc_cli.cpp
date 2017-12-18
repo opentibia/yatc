@@ -24,6 +24,10 @@
 #include "../net/protocolconfig.h"
 #include "../util.h"
 
+#if BAZEL_BUILD && WIN32
+#include <SDL/SDL.h> // Give SDL a chance to rename main() for sake of SDL_main.
+#endif
+
 std::string g_recordfilename="debugrecord.rec";
 
 float g_frameTime = 0;
