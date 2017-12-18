@@ -7,6 +7,25 @@ package(
 config_setting(
     name = "darwin",
     values = {"host_cpu": "darwin"},
+    visibility = [":__subpackages__"],
+)
+
+config_setting(
+    name = "windows",
+    values = {"host_cpu": "x64_windows"},
+    visibility = [":__subpackages__"],
+)
+
+config_setting(
+    name = "windows_msys",
+    values = {"host_cpu": "x64_windows_msys"},
+    visibility = [":__subpackages__"],
+)
+
+config_setting(
+    name = "windows_msvc",
+    values = {"host_cpu": "x64_windows_msvc"},
+    visibility = [":__subpackages__"],
 )
 
 cc_library(
@@ -84,6 +103,16 @@ cc_library(
     ] + select({
         ":darwin": [":macutil"],
         "//conditions:default": [],
+    }),
+    defines = select({
+        "//conditions:default": [
+            "HAVE_LIBINTL_H=1",
+            "BAZEL_BUILD=1",
+        ],
+        ":darwin": ["BAZEL_BUILD=1"],
+        ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows_msys": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
     }),
 )
 
@@ -484,6 +513,9 @@ cc_library(
     defines = select({
         "//conditions:default": ["HAVE_LIBINTL_H=1"],
         ":darwin": [],
+        ":windows": [],
+        ":windows_msys": [],
+        ":windows_msvc": [],
     }),
     linkstatic = 1,
     deps = [
@@ -618,6 +650,16 @@ cc_library(
             "BAZEL_BUILD=1",
         ],
         ":darwin": ["BAZEL_BUILD=1"],
+        ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows_msys": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
+    }),
+    linkopts = select({
+        "//conditions:default": [],
+        ":darwin": [],
+        ":windows": ["-DEFAULTLIB:ws2_32.lib", "-DEFAULTLIB:shell32.lib"],
+        ":windows_msys": ["",],
+        ":windows_msvc": ["-DEFAULTLIB:ws2_32.lib", "-DEFAULTLIB:shell32.lib"],
     }),
     deps = [
         ":confighandler",
@@ -635,6 +677,7 @@ cc_library(
         "//net",
         "@glict//glict/GLICT",
         "@rules_libsdl12//:libsdl12",
+        "@rules_libsdl12//:libsdl12-main",
         "@libsdlgfx//:sdlgfx",
     ],
 )
