@@ -1,0 +1,18 @@
+# -*-Python-*-
+
+cc_library(
+    name = "picfuncs",
+    srcs = ["picfuncs.c", "picfuncs.h",],
+    deps = ["@libsdl12//:sdl"],
+)
+
+# This is a CLI tool which uses SDL. Thus it must be built with -c dbg to make
+# Bazel pass SUBSYSTEM:CONSOLE according to rules_libsdl12 as of when this text
+# was written.
+cc_binary(
+    name = "pictool",
+    srcs = ["main.c"], # in place of winmain.c, just using sdlmain
+    deps = [":picfuncs", "@libsdl12//:sdl", "//:sprdata", "@libsdl12//:sdlmain"],
+    defines = ["BAZEL_BUILD=1"],
+)
+

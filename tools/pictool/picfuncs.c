@@ -26,7 +26,9 @@
 #include <stdlib.h>
 #include <SDL/SDL.h>
 #include <errno.h>
+#if !_MSC_VER
 #include <unistd.h>
+#endif
 
 #include "../../sprdata.h"
 #include "picfuncs.h"

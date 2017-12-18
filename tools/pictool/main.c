@@ -27,8 +27,13 @@
 #include <stdlib.h>
 #include <SDL/SDL.h>
 
+#if !BAZEL_BUILD
 #include "../../sprdata.h"
 #include "picfuncs.h"
+#else
+#include "sprdata.h"
+#include "tools/pictool/picfuncs.h"
+#endif
 
 #pragma pack(1)
 typedef struct {
