@@ -1,0 +1,12 @@
+# -*-Python-*-
+
+# This is a CLI tool which uses SDL. Thus it must be built with -c dbg to make
+# Bazel pass SUBSYSTEM:CONSOLE according to rules_libsdl12 as of when this text
+# was written.
+cc_binary(
+    name = "sprtool",
+    srcs = ["main.c"], # in place of winmain.c, just using sdlmain
+    deps = ["@libsdl12//:sdl", "//:sprdata", "@libsdl12//:sdlmain"],
+    defines = ["BAZEL_BUILD=1"],
+)
+
