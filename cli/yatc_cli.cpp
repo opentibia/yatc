@@ -30,8 +30,8 @@
 
 std::string g_recordfilename="debugrecord.rec";
 
-float g_frameTime = 0;
-float g_frameDiff = 0;
+unsigned int g_frameTime = 0;
+unsigned int g_frameDiff = 0;
 Connection *g_connection = NULL;
 
 int main(int argc, char ** argv) {
