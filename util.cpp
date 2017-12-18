@@ -287,6 +287,49 @@ FILE *yatc_fopen(const char* filename, const char* mode) {
 	}
 	#endif
 
+#if BAZEL_BUILD && WIN32
+	// Try opening the bazel runfiles manifest file. But only if we are not already trying to do so.
+	if (strcmp(filename, "MANIFEST")) {
+		// This file should be in exe_name.exe.runfiles/MANIFEST.
+		FILE * manif = yatc_fopen("MANIFEST", "r");
+		if (manif) {
+			char wanted_fn[2048] = { 0 };
+			strcpy(wanted_fn, "tibia854/");
+			strncat(wanted_fn, filename, 2048 - 1 - sizeof("tibia854/"));
+			wanted_fn[2048 - 1] = 0;
+
+			char line[2048 + 1] = { 0 };
+			while(fgets(line, 2048, manif) != NULL)
+			{
+				char * space = strchr(line, ' ');
+				if (space && *space == ' ')
+				{
+					*space = 0;
+					char * left = line;
+					char * right = space+1;
+					if (strcmp(left, wanted_fn) == NULL)
+					{
+						for(char * p = right; *p; p++)
+						{
+							if (*p == '/')
+							{
+								*p = '\\';
+							}
+							if (*p == '\n' || *p == '\r')
+							{
+								*p = 0;
+							}
+						}
+						fclose(manif);
+						return fopen(right, mode);
+					}
+				}
+			}
+			fclose(manif);
+		}
+	}
+#endif
+
 	// if we resume here, either we're under windows, or we're not attempting to open for writing
 
 
@@ -366,9 +409,16 @@ void yatc_fopen_init(char *cmdline) {
 				searchpaths.insert(searchpaths.end(), tmp2);
 #endif
 #if BAZEL_BUILD
+#if !WIN32
 				std::string tmp3 = std::string(tmp) + basename(cmdline) + ".runfiles/tibia854/";
 				printf("Also adding Bazel runfiles path %s\n", tmp3.c_str());
 				searchpaths.insert(searchpaths.end(), tmp3);
+#else
+				// Adding so MANIFEST file can be found.
+				std::string tmp3 = std::string(cmdline) + ".runfiles";
+				printf("Also adding Bazel runfiles path %s\n", tmp3.c_str());
+				searchpaths.insert(searchpaths.end(), tmp3);
+#endif
 #endif
 				delete[] tmp;
 				break;
