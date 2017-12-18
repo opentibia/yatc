@@ -2,7 +2,12 @@
 
 cc_library(
     name = "yatc_cli_lib",
-    defines = ["CLI_ONLY=1", "LOGIN_ONLY=1", "HAVE_TOMMATH=1", "BAZEL_BUILD=1"],
+    defines = ["CLI_ONLY=1", "LOGIN_ONLY=1", "HAVE_TOMMATH=1", "BAZEL_BUILD=1"] + select({
+        "//conditions:default": [],
+        "//:windows": ["WIN32=1",],
+        "//:windows_msys": ["WIN32=1",],
+        "//:windows_msvc": ["WIN32=1",],
+    }),
     srcs = [
         "creatureui.cpp", "//:creatureui.h",
         "thingui.cpp", "//:thingui.h",
@@ -60,7 +65,11 @@ cc_library(
         ":protocolgamehdrs",
         "yatc_cli.cpp",
     ],
-    copts = ["-isystem external/tommath"],
+    copts = select({
+        "//conditions:default": ["-isystem external/tommath"],
+	"//:windows": ["-I external/tommath"],
+	"//:windows_msvc": ["-I external/tommath"],
+    }),
     deps = [
         "//:debugprint",
         "//:fassert",
@@ -73,14 +82,23 @@ cc_library(
             "@libsdl12//:sdlmain",
             "//:macclipboard",
             "//:macutil",
+            "@libsdl12//:sdl", # util.h is pulling in SDL/SDL_endian.h
         ],
-        "//conditions:default": [],
+        "//conditions:default": [
+            "@libsdl12//:sdl", # util.h is pulling in SDL/SDL_endian.h
+	    "@libsdl12//:sdlmain", # and because of that we pull in SDL_main too
+        ],
     }),
     data = [
         "@tibia854//:Tibia.dat",
         "@tibia854//:Tibia.pic",
         "@tibia854//:Tibia.spr",
     ],
+    linkopts = select({
+        "//conditions:default": [],
+	"//:windows": ["-DEFAULTLIB:ws2_32", "-DEFAULTLIB:shell32"],
+	"//:windows_msvc": ["-DEFAULTLIB:ws2_32", "-DEFAULTLIB:shell32"],
+    }),
 )
 cc_binary(
     name = "yatc_cli",
