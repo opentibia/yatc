@@ -184,6 +184,9 @@ cc_library(
     hdrs = [
         "viplist.h",
     ],
+    deps = [
+        "//:stdinttypes",
+    ],
     linkstatic = 1,
 )
 cc_library(
