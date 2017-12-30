@@ -573,7 +573,7 @@ cc_binary(
         ":thingui",
     ] + select({
         ":darwin": [
-            "@rules_libsdl12//:libsd12-main",
+            "@rules_libsdl12//:libsdl12-main",
             ":macclipboard",
         ],
         "//conditions:default": [],
