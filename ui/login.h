@@ -70,7 +70,7 @@ public:
 		txtUsername.SetPos(128,15 - 1);
 		txtUsername.SetWidth(216-134);
 		txtUsername.SetHeight(46-33 + 2);
-		txtUsername.SetPassProtectCharacter('*');
+		txtUsername.SetPassProtectCharacter(128+('u'-96)); // circular *, just under 'u' which is at column ('u'-96)
 		txtUsername.SetAllowedChars("0123456789");
 		txtUsername.SetPrevious(!options.ui_compat ? (glictContainer*)&txtPassword : (glictContainer*)&btnCancel);
 		txtUsername.SetNext(&txtPassword);
@@ -85,7 +85,7 @@ public:
 		txtPassword.SetPos(128,45-1);
 		txtPassword.SetWidth(216-134);
 		txtPassword.SetHeight(46-33+2);
-		txtPassword.SetPassProtectCharacter('*');
+		txtPassword.SetPassProtectCharacter(128+('u'-96));
 		txtPassword.SetAllowedChars(" !\"#$%/()=?*'+<>[]{}`~\\|;:_,.-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 		txtPassword.SetPrevious(&txtUsername);
 		txtPassword.SetNext(!options.ui_compat ? (glictContainer*)&txtUsername : (glictContainer*)&btnCreateAc);
