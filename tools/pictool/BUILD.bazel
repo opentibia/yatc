@@ -3,7 +3,8 @@
 cc_library(
     name = "picfuncs",
     srcs = ["picfuncs.c", "picfuncs.h",],
-    deps = ["@libsdl12//:sdl"],
+    deps = ["@libsdl12//:sdl", "//:sprdata"],
+    defines = ["BAZEL_BUILD=1"],
 )
 
 # This is a CLI tool which uses SDL. Thus it must be built with -c dbg to make
