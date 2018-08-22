@@ -306,8 +306,12 @@ cc_library(
 
 cc_library(
     name = "sprdata",
+    srcs = [
+        "sprdata.c",
+    ],
     hdrs = [
         "sprdata.h",
+        "stdinttypes.h",
     ],
 )
 
