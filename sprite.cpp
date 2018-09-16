@@ -379,7 +379,6 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(m_image->format, 0xFF, 0, 0xFF)); // magenta is transparent
 
-
 	{
 		SDL_Surface *ns=SDL_DisplayFormatAlpha(m_image);
 		if (ns) {

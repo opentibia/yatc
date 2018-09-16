@@ -108,6 +108,7 @@ cc_library(
         "//conditions:default": [
             "HAVE_LIBINTL_H=1",
             "BAZEL_BUILD=1",
+            "USE_OPENGL=1"
         ],
         ":darwin": ["BAZEL_BUILD=1"],
         ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
@@ -151,6 +152,7 @@ cc_library(
         ":options",
         ":sprite_hdr",
         ":spritesdl",
+        ":spritegl",
         ":util",
         "@glict//glict/GLICT",
         "@rules_libsdl12//:libsdl12",
@@ -204,12 +206,36 @@ cc_library(
 )
 
 cc_library(
+    name = "enginegl_hdr",
+    hdrs = [
+        "enginegl.h",
+        "spritegl.h",
+    ],
+    deps = [
+        ":sprite_hdr",
+    ],
+    defines = select({
+        "//conditions:default": [
+            "HAVE_LIBINTL_H=1",
+            "BAZEL_BUILD=1",
+            "USE_OPENGL=1"
+        ],
+        ":darwin": ["BAZEL_BUILD=1"],
+        ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows_msys": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
+    }),
+)
+
+cc_library(
     name = "engine_hdr",
     hdrs = [
         "engine.h",
-        "enginesdl.h",  # TODO(ivucica): Move to separate target?
         "font.h",  # Here to avoid cyclic dep.
-        "spritesdl.h",  # TODO(ivucica): Move to separate target?
+        "enginesdl.h", # Here to avoid cyclic dep.
+        "spritesdl.h", # Here to avoid cyclic dep.
+        "enginegl.h", # Here to avoid cyclic dep.
+        "spritegl.h", # Here to avoid cyclic dep.
     ],
     deps = [
         ":debugprint",
@@ -399,6 +425,42 @@ cc_library(
 )
 
 cc_library(
+    name = "enginegl",
+    srcs = [
+        "enginegl.cpp",
+    ],
+    hdrs = [
+        "enginegl.h",
+    ],
+    linkstatic = 1,
+    deps = [
+        ":engine",
+        ":options",
+        "@glict//glict/GLICT",
+        "@rules_libsdl12//:libsdl12",
+        "@libsdlgfx//:sdlgfx",
+    ],
+)
+
+cc_library(
+    name = "spritegl",
+    srcs = [
+        "spritegl.cpp",
+    ],
+    hdrs = [
+        "spritegl.h",
+    ],
+    linkstatic = 1,
+    deps = [
+        ":engine_hdr",
+        ":enginegl_hdr",
+        ":options",
+        "@libsdl12//:sdl",
+    ],
+)
+
+
+cc_library(
     name = "notifications",
     srcs = [
         "automap.h",
@@ -490,6 +552,7 @@ cc_library(
         "skin.h",
         "engine.h",
         "spritesdl.h",
+        "spritegl.h",
         "font.h",
         "fassert.h",
         "enginesdl.h",
@@ -505,11 +568,15 @@ cc_library(
     ],
     hdrs = glob(["ui/*.h"]),
     defines = select({
-        "//conditions:default": ["HAVE_LIBINTL_H=1"],
-        ":darwin": [],
-        ":windows": [],
-        ":windows_msys": [],
-        ":windows_msvc": [],
+        "//conditions:default": [
+            "HAVE_LIBINTL_H=1",
+            "BAZEL_BUILD=1",
+            "USE_OPENGL=1"
+        ],
+        ":darwin": ["BAZEL_BUILD=1"],
+        ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows_msys": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
     }),
     linkstatic = 1,
     deps = [
@@ -574,7 +641,12 @@ cc_binary(
             "@rules_libsdl12//:libsdl12-main",
             ":macclipboard",
         ],
-        "//conditions:default": [],
+        ":windows": [],
+        ":windows_msys": [],
+        ":windows_msvc": [],
+        "//conditions:default": [
+            ":enginegl",
+        ],
     }),
 )
 
@@ -609,6 +681,8 @@ cc_library(
             "font.h",
             "enginesdl.cpp",
             "enginesdl.h",
+            "enginegl.cpp",
+            "enginegl.h",
             "effectui.cpp",
             "effectui.h",
             "distanceui.cpp",
@@ -618,6 +692,8 @@ cc_library(
             "product.h",
             "spritesdl.cpp",
             "spritesdl.h",
+            "spritegl.cpp",
+            "spritegl.h",
             "options.cpp",
             "options.h",
             "notifications.cpp",
@@ -646,6 +722,7 @@ cc_library(
         "//conditions:default": [
             "HAVE_LIBINTL_H=1",
             "BAZEL_BUILD=1",
+            "USE_OPENGL=1"
         ],
         ":darwin": ["BAZEL_BUILD=1"],
         ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
@@ -653,7 +730,7 @@ cc_library(
         ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
     }),
     linkopts = select({
-        "//conditions:default": [],
+        "//conditions:default": ["-lGLU"],
         ":darwin": [],
         ":windows": ["-DEFAULTLIB:ws2_32.lib", "-DEFAULTLIB:shell32.lib"],
         ":windows_msys": ["",],
@@ -664,12 +741,14 @@ cc_library(
         ":defines",
         ":engine",
         ":enginesdl",
+        ":enginegl",
         ":gamemode",
         ":notifications",
         ":options",
         ":sprdata",
         ":sprite",
         ":spritesdl",
+        ":spritegl",
         ":stdinttypes",
         "//gamecontent:globalvars",
         "//net",
