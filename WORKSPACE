@@ -72,3 +72,10 @@ new_local_repository(
 )
 
 
+
+local_repository(
+    name = "bazelregistry_sdl2",
+    path = __workspace_dir__ + "/vendor/github.com/bazelregistry/sdl2",
+)
+
+

@@ -10,3 +10,6 @@
 [submodule "vendor/github.com/ivucica/rules_libsdl12"]
 	path = vendor/github.com/ivucica/rules_libsdl12
 	url = https://github.com/ivucica/rules_libsdl12
+[submodule "vendor/github.com/bazelregistry/sdl2"]
+	path = vendor/github.com/bazelregistry/sdl2
+	url = https://github.com/bazelregistry/sdl2

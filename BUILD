@@ -28,6 +28,32 @@ config_setting(
     visibility = [":__subpackages__"],
 )
 
+config_setting(
+    name = "use_sdl12",
+    values = {
+      "define": "USE_SDL12=1"
+    },
+    visibility = [":__subpackages__"],
+)
+
+config_setting(
+    name = "use_sdl2",
+    values = {
+      "define": "USE_SDL2=1",
+    },
+    visibility = [":__subpackages__"],
+)
+
+alias(
+    name = "sdl",
+    actual = select({
+      "//:use_sdl12": "@rules_libsdl12//:libsdl12",
+      "//:use_sdl2": "@bazelregistry_sdl2//:SDL2",
+
+      "//conditions:default": "@rules_libsdl12//:libsdl12",
+    })
+)
+
 cc_library(
     name = "creatureui_hdr",
     hdrs = [
@@ -99,7 +125,7 @@ cc_library(
     ],
     linkstatic = 1,
     deps = [
-        "@rules_libsdl12//:libsdl12",
+        "//:sdl",
     ] + select({
         ":darwin": [":macutil"],
         "//conditions:default": [],
