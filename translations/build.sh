@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Until we come up with proper automake based way to build these,
 # I'll just screw around with this hackish method
 # -- ivucica

@@ -1,6 +1,8 @@
 # -*-Python-*-
 workspace(name="yatc")
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 local_repository(
     name = "rules_tibia",
     path = __workspace_dir__ + "/vendor/github.com/ivucica/rules_tibia",
@@ -27,7 +29,7 @@ new_http_archive(
     url = "http://www.ferzkopp.net/Software/SDL_gfx-2.0/SDL_gfx-2.0.24.tar.gz",
     sha256 = "30ad38c3e17586e5212ce4a43955adf26463e69a24bb241f152493da28d59118",
     type = "tar.gz",
-    build_file = "BUILD.libsdlgfx",
+    build_file = "@//:BUILD.libsdlgfx",
     strip_prefix = "SDL_gfx-2.0.24",
 )
 
@@ -71,4 +73,8 @@ new_local_repository(
     ]),
 )
 
+local_repository(
+    name = "bazelregistry_sdl2",
+    path = __workspace_dir__ + "/vendor/github.com/bazelregistry/sdl2",
+)
 

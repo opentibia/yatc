@@ -379,7 +379,6 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 
 	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(m_image->format, 0xFF, 0, 0xFF)); // magenta is transparent
 
-
 	{
 		SDL_Surface *ns=SDL_DisplayFormatAlpha(m_image);
 		if (ns) {
@@ -422,9 +421,9 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 		return;
 	}
 	#ifdef USE_OPENGL
-	if(dynamic_cast<EngineGL*>(g_engine))
+	//	if(dynamic_cast<EngineGL*>(g_engine))
 		// gl engine is crashing on SDL_UnlockSurface.
-		return;
+	//	return;
 	#endif
 	templatespr->lockSurface();
 	if(SDL_MUSTLOCK(m_image)) SDL_LockSurface(m_image);

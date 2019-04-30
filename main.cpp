@@ -433,16 +433,37 @@ int main(int argc, char *argv[])
         std::string l("LANG=");
         l+=options.lang;
         putenv((char*)l.c_str());
+        std::string l2("LANGUAGE=");
+        l2+=options.lang;
+        putenv((char*)l2.c_str());
     }
-    setlocale( LC_ALL, "");//options.lang.c_str() );
-    setlocale( LC_NUMERIC, "C");
+
+    // Set default locale, e.g. from environment.
+    void * locale_result = setlocale(LC_ALL, "");
+    if (locale_result == NULL)
+    {
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Failed to set locale to default.");
+    }
+
+    // Numbers should use default locale, always, to avoid sscanf() and similar problems.
+    setlocale(LC_NUMERIC, "C");
+
+    // Determine translation path. On Bazel builds, it's in runfiles.
     #if !BAZEL_BUILD
-    bindtextdomain( "yatc", "./translations" );
+    std::string translations_path("./translations");
     #else
-    bindtextdomain( "yatc", (yatc_path_to_binary() + "yatc.runfiles/yatc/translations").c_str());
+    std::string translations_path(yatc_path_to_binary() + "yatc.runfiles/yatc/translations");
     #endif
-    textdomain( "yatc" );
-    bind_textdomain_codeset("yatc","windows-1252");
+
+    DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Binding path for text domain 'yatc' to %s...\n", translations_path.c_str());
+    // Text domain 'yatc' will be found at this path.
+    bindtextdomain("yatc", translations_path.c_str());
+
+    // Activate text domain 'yatc'.
+    textdomain("yatc");
+
+    // Convert text in this domain to windows-1252 (encoding of the font in pic file).
+    bind_textdomain_codeset("yatc", "windows-1252");
 #endif
 
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Checking graphics files existence...\n");

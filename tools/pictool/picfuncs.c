@@ -30,7 +30,11 @@
 #include <unistd.h>
 #endif
 
+#if !BAZEL_BUILD
 #include "../../sprdata.h"
+#else
+#include "sprdata.h"
+#endif
 #include "picfuncs.h"
 
 #pragma pack(1)
