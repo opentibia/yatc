@@ -24,7 +24,7 @@ local_repository(
 load("@rules_libsdl12//:libsdl12.bzl", "libsdl12_repositories")
 libsdl12_repositories()
 
-new_http_archive(
+http_archive(
     name = "libsdlgfx",
     url = "http://www.ferzkopp.net/Software/SDL_gfx-2.0/SDL_gfx-2.0.24.tar.gz",
     sha256 = "30ad38c3e17586e5212ce4a43955adf26463e69a24bb241f152493da28d59118",
