@@ -18,6 +18,7 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
+#include "../debugprint.h"
 #include "protocolconfig.h"
 #include "../util.h"
 #include "protocolgame.h"
@@ -267,7 +268,7 @@ void ProtocolConfig::createLoginConnection(const std::string& accountname, const
 
 ProtocolGame* ProtocolConfig::createGameProtocol(int version, const std::string&accountname, const std::string&password, const std::string&name, bool isGM)
 {
-#if !defined(LOGIN_ONLY)
+#if !LOGIN_ONLY
     ProtocolGame* protocol;
     switch(version){
     case CLIENT_VERSION_740:
@@ -323,11 +324,14 @@ ProtocolGame* ProtocolConfig::createGameProtocol(int version, const std::string&
 		protocol = new ProtocolGame854(accountname, password, name, isGM);
 		break;
 	default:
+                DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "createGameProtocol: Unknown protocol version passed\n");
 		return NULL;
 		break;
 	}
 	return protocol;
 #else
+        DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "createGameProtocol: cannot do this, LOGIN_ONLY has been #defined\n");
+
 	return NULL;
 #endif
 }
@@ -336,11 +340,19 @@ ProtocolGame* ProtocolConfig::createGameConnection(const std::string& accountnam
 {
 	ASSERT(g_connection == NULL);
 
+        DEBUGPRINT(DEBUGPRINT_LEVEL_USEFUL, DEBUGPRINT_NORMAL, "createGameConnection: creating a game protocol\n");
+
 	ProtocolGame* protocol = createGameProtocol(getInstance().m_clientVersion,accountname,password,name,isGM);
-	if (protocol == NULL)
-        return NULL;
+	if (protocol == NULL) {
+                DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "createGameConnection: protocol returned from createGameProtocol is null\n");
+                return NULL;
+        }
+
+        DEBUGPRINT(DEBUGPRINT_LEVEL_USEFUL, DEBUGPRINT_NORMAL, "createGameConnection: creating crypto object\n");
 
 	EncXTEA* crypto = new EncXTEA;
+
+        DEBUGPRINT(DEBUGPRINT_LEVEL_USEFUL, DEBUGPRINT_NORMAL, "createGameConnection: creating a game connection\n");
 
 	g_connection = new Connection(getInstance().m_host, getInstance().m_port, crypto, protocol);
 

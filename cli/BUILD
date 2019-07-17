@@ -1,12 +1,22 @@
 # -*-Python-*-
 
+config_setting(
+  name = "login_only",
+  define_values = {
+    "LOGIN_ONLY": "1",
+  },
+)
+
 cc_library(
     name = "yatc_cli_lib",
-    defines = ["CLI_ONLY=1", "LOGIN_ONLY=1", "HAVE_TOMMATH=1", "BAZEL_BUILD=1"] + select({
+    defines = ["CLI_ONLY=1", "HAVE_TOMMATH=1", "BAZEL_BUILD=1"] + select({
         "//conditions:default": [],
         "//:windows": ["WIN32=1",],
         "//:windows_msys": ["WIN32=1",],
         "//:windows_msvc": ["WIN32=1",],
+    }) + select({
+        "//conditions:default": ["LOGIN_ONLY=0"],
+        ":login_only": ["LOGIN_ONLY=1"],
     }),
     srcs = [
         "creatureui.cpp", "//:creatureui.h",
@@ -60,8 +70,6 @@ cc_library(
         "//:product.h",
         "//:macutil.h",
 
-        "//:debugprint.cpp",
-
         ":protocolgamehdrs",
         "yatc_cli.cpp",
     ],
@@ -87,6 +95,11 @@ cc_library(
         "//conditions:default": [
             "@libsdl12//:sdl", # util.h is pulling in SDL/SDL_endian.h
 	    "@libsdl12//:sdlmain", # and because of that we pull in SDL_main too
+        ],
+    }) + select({
+        ":login_only": [],
+        "//conditions:default": [
+          "//net:protocols", # FIXME: This is pulling in REALLY a lot, incl chunks/all of glict. And yet it doesn't build.
         ],
     }),
     data = [

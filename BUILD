@@ -44,6 +44,13 @@ config_setting(
     visibility = [":__subpackages__"],
 )
 
+config_setting(
+    name = "debug_build",
+    values = {
+      "compilation_mode": "dbg",
+    },
+)
+
 alias(
     name = "sdl",
     actual = select({
@@ -373,9 +380,23 @@ cc_library(
 
 cc_library(
     name = "debugprint",
+    srcs = [
+        "debugprint.cpp",
+    ],
     hdrs = [
         "debugprint.h",
     ],
+    deps = [
+        ":util",
+    ],
+    defines = select({
+        "//conditions:default": [
+            "DEBUGPRINT_LEVEL=0",
+        ],
+        ":debug_build": [
+            "DEBUGPRINT_LEVEL=3",
+        ],
+    }),
 )
 
 cc_library(

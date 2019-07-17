@@ -35,12 +35,18 @@ extern std::string g_recordfilename;
 #include "../debugprint.h"
 #include "../util.h"
 
+static CharacterList_t chosenGameworldCharacter;
+static int connStep = 0;
+
 void Notifications::openCharactersList(const std::list<CharacterList_t>& list, int premDays)
 {
   std::cout << "character list" << std::endl;
   for (std::list<CharacterList_t>::const_iterator it = list.begin(); it != list.end(); it++)
     {
-      std::cout << it->name << " (" << it->world << ")" << std::endl; 
+      if (it == list.begin()) // choose first character as the one we connect to in the next step
+        chosenGameworldCharacter = *it;
+
+      std::cout << it->name << " (" << it->world << ")" << std::endl;
     }
 }
 
@@ -54,7 +60,38 @@ void Notifications::onConnectionError(int message)
       Inventory::getInstance().clear();
       Map::getInstance().clear();
       std::cout << "disconnected" << std::endl;
-      exit(0);
+
+      switch (connStep)
+        {
+          case 0:
+            {
+              ClientVersion_t proto = ProtocolConfig::detectVersion();
+              ASSERT(proto);
+
+              uint32_t ipnum = chosenGameworldCharacter.ip;
+              std::stringstream ips;
+              std::string ip;
+              ips << (ipnum & 0xFF) << "." << ((ipnum & 0xFF00) >> 8) << "." << ((ipnum & 0xFF0000) >> 16) << "." << ((ipnum & 0xFF000000) >> 24);
+              ip = ips.str();
+
+              delete g_connection;
+              g_connection = NULL;
+              std::cout << "connecting to " << ip << ":" << chosenGameworldCharacter.port << std::endl;
+
+              ProtocolConfig::getInstance().setServer(ip, chosenGameworldCharacter.port);
+              ProtocolConfig::createGameConnection("1", "1", chosenGameworldCharacter.name, false /* isgm*/);
+
+              connStep++;
+            }
+          break;
+
+          case 1:
+          exit(0);
+          break;
+          default:
+          std::cout << "unknown connstep " << connStep << std::endl;
+          exit(1);
+        }
     }
   else
     {
