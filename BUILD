@@ -506,6 +506,16 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "notifications_hdr",
+    hdrs = [
+        "notifications.h",
+    ],
+    deps = [
+        "//net:enum_hdr",
+        "//net:connection_hdr",
+    ],
+)
 
 cc_library(
     name = "notifications",
