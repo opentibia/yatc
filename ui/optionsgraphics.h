@@ -239,7 +239,7 @@ public:
 
 		std::stringstream s;
 
-		s << w << "*" << h << ", " << bpp << " bit";
+		s << w << "*" << h << ", " << bpp << " Bits";
 
 		glictPanel *res = new glictPanel;
 		resdata_t *data = new resdata_t(w,h,bpp,this);
