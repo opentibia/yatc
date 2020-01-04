@@ -636,7 +636,9 @@ void GM_MainMenu::openMOTD(int motdnum, const std::string& text)
 
 	winStatus.SetCaption(gettext("Message of the Day"));
 	winStatus.SetMessage(displayText);
-	winStatus.SetWidth(glictFontSize(displayText.c_str(), "system") + 2*10); // 10 = size of text margin
+	winStatus.SetWidth(MAX(
+		glictFontSize(gettext("Message of the Day"), "system"),
+		glictFontSize(displayText.c_str(), "system")) + 2*10); // 10 = size of text margin
 	winStatus.SetHeight(glictFontNumberOfLines(displayText.c_str())*12 + 50);
     winStatus.SetEnabled(true);
 	winStatus.Focus(NULL);
