@@ -1,4 +1,5 @@
-# -*-Python-*-
+# -*- mode: python; -*-
+# vim: set syntax=python:
 
 package(
     default_visibility = ["//visibility:public"],
@@ -706,6 +707,18 @@ cc_binary(
         ],
     }),
 )
+
+# TODO(ivucica): Enable and use once bazelbuild/bazel#8273 is resolved.
+#load("@bazel_tools//src:main/res/win_res.bzl", "windows_resources")
+#windows_resources(
+    #name = "yatc_resources",
+    #rc_files = [
+        #"resources.rc",
+    #],
+    #resources = [
+        #":yatc.ico",
+    #],
+#)
 
 cc_library(
     name = "yatc_lib",
