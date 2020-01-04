@@ -454,6 +454,18 @@ void GM_MainMenu::login(const std::string& username, const std::string& password
 	#else
 	#warning For nicer msgboxes get GLICT APIREV 85+.
 	#endif
+	#if (GLICT_APIREV >= 2020010401)
+	winStatus.SetButtonCaption(gettext("Ok"));
+	winStatus.SetButtonFont("minifont", 8);
+	winStatus.EnableSeparator(&g_skin.chk, 2, 6, 8, .1, .1, .1, 1.0);
+	winStatus.SetButtonHeight(20);
+	winStatus.SetButtonMarginY(5);
+	winStatus.SetButtonMarginX(5);
+	winStatus.SetButtonAlignment(GLICT_VALIGN_RIGHT);
+	#else
+	#warning For nicer msgboxes get GLICT APIREV 2020010401+.
+	#endif
+
     winStatus.SetWidth(glictFontSize(text.c_str(), "system") + 2*10); // 10 = size of text margin
 	winStatus.SetHeight(glictFontNumberOfLines(text.c_str())*12 + 50);
 	winStatus.SetEnabled(false);

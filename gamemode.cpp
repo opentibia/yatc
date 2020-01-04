@@ -62,6 +62,17 @@ void GameMode::msgBox (const char* mbox, const char* title, glictContainer* focu
 	#else
 	#warning For nicer msgboxes get GLICT APIREV 85+.
 	#endif
+	#if (GLICT_APIREV >= 2020010401)
+	mb->SetButtonCaption(gettext("Ok"));
+	mb->SetButtonFont("minifont", 8);
+	mb->EnableSeparator(&g_skin.chk, 2, 6, 8, .1, .1, .1, 1.0);
+	mb->SetButtonHeight(18);
+	mb->SetButtonMarginY(5);
+	mb->SetButtonMarginX(5);
+	mb->SetButtonAlignment(GLICT_VALIGN_RIGHT);
+	#else
+	#warning For nicer msgboxes get GLICT APIREV 2020010401+.
+	#endif
 
 	mb->GetSize(&s);
 
