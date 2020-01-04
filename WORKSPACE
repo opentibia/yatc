@@ -78,3 +78,6 @@ local_repository(
     path = __workspace_dir__ + "/vendor/github.com/bazelregistry/sdl2",
 )
 
+# Toolchains for Resource Compilation (.rc files on Windows).
+#load("@bazel_tools//src/main/res:local_config_winsdk.bzl", "local_config_winsdk")
+#local_config_winsdk()
