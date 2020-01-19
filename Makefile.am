@@ -65,6 +65,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		\
 		net/connectionreplay.h \
 		net/protocolconfig.h \
+		net/enum.h \
 		net/connection.h net/networkmessage.h net/protocolgame80.h \
 		net/protocolgame81.h net/protocolgame811.h net/protocolgame82.h \
 		net/protocolgame821.h net/protocolgame822.h net/protocolgame83.h \
