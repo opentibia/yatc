@@ -123,6 +123,12 @@ static std::vector<std::string > searchpaths;
 
 
 std::string yatc_findfile(const char* filename, const char* mode){
+    if(!strcmp(filename, "Tibia.pic")) {
+        std::string yatcpic = yatc_findfile("YATC.pic", mode);
+        if (yatcpic != "")
+             return yatcpic;
+    }
+
     for (std::vector<std::string>::iterator it = searchpaths.begin(); it != searchpaths.end(); it++) {
 		std::string fn = (*it + "/" + filename).c_str();
 		#ifndef WIN32
@@ -229,6 +235,12 @@ int yatc_makedirs(const char* path, int mode)
 #endif
 
 FILE *yatc_fopen(const char* filename, const char* mode) {
+         if (!strcmp(filename, "Tibia.pic")) {
+                 FILE *f = yatc_fopen("YATC.pic", mode);
+                 if (f != NULL)
+                         return f;
+         }
+
 #ifdef WINCE
 	/* ugly as hell, but WINCE's fopen does not use current working dir
 	 * in its path ... it's also probably faster than using the
