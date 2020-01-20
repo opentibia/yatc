@@ -539,6 +539,8 @@ bool Objects::load780plus(const char* filename)
 	fclose(fp);
 	m_datLoaded = true;
 
+	asJSON(std::cout);
+
 	return true;
 }
 
@@ -1000,4 +1002,18 @@ ObjectType* Objects::getEffectType(uint16_t id)
 ObjectType* Objects::getDistanceType(uint16_t id)
 {
 	return m_distance.getElement(id);
+}
+
+void Objects::asJSON(std::ostream &o) {
+	o << "{" << std::endl;
+	o << "\t'items': {" << std::endl;
+	//for (std::vector<ObjectType*>::iterator it = m_item.begin(); it != m_item.end(); it++) {
+	for (int i = 0; i < m_item.size(); i++) {
+		ObjectType *oType = m_item.getElement(i);
+		o << "\t\t'id': " << oType->id << "," << std::endl;
+		o << "\t\t'width': " << oType->width << "," << std::endl;
+		o << "\t\t'height': " << oType->height << "" << std::endl;
+	}
+	o << "\t}" << std::endl;
+	o << "}" << std::endl;
 }
