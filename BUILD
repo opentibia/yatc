@@ -832,12 +832,12 @@ cc_library(
 
 genrule(
   name = "yatcpic",
-  srcs = ["@tibia854//:Tibia.pic", "yatc.png", "inv.bmp"],
+  srcs = ["@tibia854//:Tibia.pic", "yatc.bmp", "inv.bmp"],
   outs = ["YATC.pic"],
   tools = ["//tools/pictool:pictool"],
   cmd = "; ".join([
     "cp \"$(location @tibia854//:Tibia.pic)\" \"$@\"",
-    #"$(location //tools/pictool:pictool) $(location YATC.pic) 0 $(location yatc.png) --topic", # No support for reading png.
+    "$(location //tools/pictool:pictool) $(location YATC.pic) 0 $(location yatc.bmp) --topic", # No support for reading png.
     "$(location //tools/pictool:pictool) $(location YATC.pic) 1 $(location inv.bmp) --topic",
   ]),
 )
