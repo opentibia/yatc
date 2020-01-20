@@ -27,6 +27,8 @@
 #include <string.h>
 #include <vector>
 
+#include <iostream>
+
 template<typename A>
 class Array{
 public:
@@ -169,6 +171,8 @@ protected:
 	Array<ObjectType*> m_outfit;
 	Array<ObjectType*> m_effect;
 	Array<ObjectType*> m_distance;
+
+	void asJSON(std::ostream &o) ;
 };
 
 #endif
