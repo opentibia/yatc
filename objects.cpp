@@ -26,6 +26,8 @@
 #include "net/protocolconfig.h"
 #include "product.h"
 
+#include <fstream>
+
 #ifdef HAVE_CONFIG_H
 	#include "config.h"
 #endif
@@ -539,7 +541,10 @@ bool Objects::load780plus(const char* filename)
 	fclose(fp);
 	m_datLoaded = true;
 
-	asJSON(std::cout);
+	std::ofstream outFile;
+	outFile.open("/tmp/Tibia.dat.json");
+	asJSON(outFile);
+	outFile.close();
 
 	return true;
 }
@@ -1006,14 +1011,39 @@ ObjectType* Objects::getDistanceType(uint16_t id)
 
 void Objects::asJSON(std::ostream &o) {
 	o << "{" << std::endl;
-	o << "\t'items': {" << std::endl;
+	o << "\t'items': [" << std::endl;
 	//for (std::vector<ObjectType*>::iterator it = m_item.begin(); it != m_item.end(); it++) {
-	for (int i = 0; i < m_item.size(); i++) {
+	for (int i = 100; i < m_item.size(); i++) {
 		ObjectType *oType = m_item.getElement(i);
-		o << "\t\t'id': " << oType->id << "," << std::endl;
-		o << "\t\t'width': " << oType->width << "," << std::endl;
-		o << "\t\t'height': " << oType->height << "" << std::endl;
+		if (oType == NULL) continue;
+		o << "\t\t{" << std::endl;
+		o << "\t\t\t'id': " << oType->id << "," << std::endl;
+		o << "\t\t\t'width': " << oType->width << "," << std::endl;
+		o << "\t\t\t'height': " << oType->height << "," << std::endl;
+		if((oType->width > 1) || (oType->height > 1)){
+			o << "\t\t\t'renderSize' : " << oType->rendersize << "," << std::endl;
+		}
+
+		o << "\t\t\t'blendFrames': " << oType->blendframes << "," << std::endl;
+		o << "\t\t\t'xDiv': " << oType->xdiv << "," << std::endl;
+		o << "\t\t\t'yDiv': " << oType->ydiv << "," << std::endl;
+		o << "\t\t\t'zDiv': " << oType->zdiv << "," << std::endl;
+		o << "\t\t\t'animCount': " << oType->animcount << "," << std::endl;
+		o << "\t\t\t'numSprites': " << oType->numsprites << "," << std::endl;
+		o << "\t\t\t'sprites': [" << std::endl;
+		for(unsigned int i = 0; i < oType->numsprites; i++) {
+			o << "\t\t\t\t" << oType->imageData[i];
+			if (i < oType->numsprites - 1)
+				o << ",";
+			o << std::endl;
+		}
+		o << "\t\t\t]" << std::endl;
+
+		if (i < m_item.size()-1)
+			o << "\t\t}," << std::endl;
+		else
+			o << "\t\t}" << std::endl;
 	}
-	o << "\t}" << std::endl;
+	o << "\t]" << std::endl;
 	o << "}" << std::endl;
 }
