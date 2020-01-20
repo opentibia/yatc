@@ -15,5 +15,6 @@ cc_binary(
     srcs = ["main.c"], # in place of winmain.c, just using sdlmain
     deps = [":picfuncs", "@libsdl12//:sdl", "//:sprdata", "@libsdl12//:sdlmain"],
     defines = ["BAZEL_BUILD=1"],
+    visibility = ["//visibility:public"],
 )
 

@@ -787,6 +787,7 @@ cc_library(
         "@tibia854//:Tibia.dat",
         "@tibia854//:Tibia.pic",
         "@tibia854//:Tibia.spr",
+        #":YATC.pic",
     ],
     defines = select({
         "//conditions:default": [
@@ -829,3 +830,14 @@ cc_library(
     ],
 )
 
+genrule(
+  name = "yatcpic",
+  srcs = ["@tibia854//:Tibia.pic", "yatc.png", "inv.bmp"],
+  outs = ["YATC.pic"],
+  tools = ["//tools/pictool:pictool"],
+  cmd = "; ".join([
+    "cp \"$(location @tibia854//:Tibia.pic)\" \"$@\"",
+    "$(location //tools/pictool:pictool) $(location YATC.pic) 0 $(location yatc.png) --topic",
+    "$(location //tools/pictool:pictool) $(location YATC.pic) 1 $(location inv.bmp) --topic",
+  ]),
+)
