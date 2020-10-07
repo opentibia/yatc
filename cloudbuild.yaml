@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/cloud-marketplace-containers/google/bazel:3.3.1'
+  entrypoint: '/bin/bash'
+  args: ['-c', 'apt update && apt install --yes gettext clang gcc bzip2 libx11-dev libxext-dev libxrandr-dev libxrender-dev libgl-dev libglu-dev libasound-dev libalsaplayer-dev && bazel build --google_default_credentials --remote_http_cache=https://storage.googleapis.com/ivucica-bazelremotecache-2020 //:yatc //:yatcpic && pwd && ls -al && mkdir -p yatc-build && cp -Rav bazel-bin/{yatc,YATC.pic,yatc.runfiles} yatc-build && tar cvvfj yatc-build.tar.bz2 yatc-build']
+artifacts:
+  objects:
+    location: gs://your_cloud_storage_bucket_for_cloudbuild/
+    paths: ['yatc-build/yatc', 'yatc-build/YATC.pic', 'yatc-build.tar.bz2']
