@@ -455,7 +455,6 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 
 			putPixel(j, i, SDL_MapRGB(m_image->format, ro, go, bo), m_image);
 		}
-		printf("\n");
 	}
 	if(SDL_MUSTLOCK(m_image)) SDL_UnlockSurface(m_image);
 	templatespr->unlockSurface();
