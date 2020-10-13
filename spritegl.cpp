@@ -65,7 +65,6 @@ void SpriteGL::buildGLTexture() {
 
 	//Stretch(nextpow(this->getWidth()), nextpow(this->getHeight()), true);
 	//printf("Stretch %p\n", this);
-    printf(".");
 	m_multiplierx = 1.;
 	m_multipliery = 1.;
 
