@@ -539,7 +539,7 @@ bool Objects::load780plus(const char* filename)
 	fclose(fp);
 	m_datLoaded = true;
 
-	asJSON(std::cout);
+	//asJSON(std::cout);
 
 	return true;
 }
