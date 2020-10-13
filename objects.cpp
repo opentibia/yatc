@@ -1006,14 +1006,21 @@ ObjectType* Objects::getDistanceType(uint16_t id)
 
 void Objects::asJSON(std::ostream &o) {
 	o << "{" << std::endl;
-	o << "\t'items': {" << std::endl;
+	o << "\t'items': [" << std::endl;
 	//for (std::vector<ObjectType*>::iterator it = m_item.begin(); it != m_item.end(); it++) {
 	for (int i = 0; i < m_item.size(); i++) {
 		ObjectType *oType = m_item.getElement(i);
-		o << "\t\t'id': " << oType->id << "," << std::endl;
-		o << "\t\t'width': " << oType->width << "," << std::endl;
-		o << "\t\t'height': " << oType->height << "" << std::endl;
+		if (!oType) {
+			o << "\t\t{ '_item_is_null': '" << i << "' }," << std::endl;
+			continue;
+		}
+		o << "\t\t{\n" << std::endl;
+		o << "\t\t\t'id': " << oType->id << "," << std::endl;
+		o << "\t\t\t'width': " << oType->width << "," << std::endl;
+		o << "\t\t\t'height': " << oType->height << "" << std::endl;
+		o << "\t\t},\n" << std::endl;
 	}
-	o << "\t}" << std::endl;
+	o << "\t\t{}\n" << std::endl; // so we don't have to remove the comma
+	o << "\t]" << std::endl;
 	o << "}" << std::endl;
 }
