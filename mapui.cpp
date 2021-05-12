@@ -191,6 +191,9 @@ void MapUI::renderMap()
     // reset light map
     memset((void*)lightmap, 0, sizeof(vertex) * m_vpw * m_vph);
     int initValue = (pos.z <= 7 ? (255 - GlobalVariables::getWorldLightLevel()) : 255);
+    float ambientBrightness = ((float)initValue) / 255.0f;
+
+
     oRGBA initColor = (pos.z <= 7 ? (makeLightColor((uint16_t)GlobalVariables::getWorldLightColor())) : oRGBA(0, 0, 0, 255));
     //oRGBA initColor = oRGBA(0, 0, 0, 255);
 	Tile::EffectList::iterator effectIt;
@@ -200,11 +203,12 @@ void MapUI::renderMap()
     {
         for (int j = 0; j < m_vph; j++)
         {
-			lightmap[(j * m_vpw) + i].alpha = initColor.a;
+          lightmap[(j * m_vpw) + i].alpha = /*initColor.a * ambientBrightness*/ 255.0 * ambientBrightness;
+          // lightmap[(j * m_vpw) + i].alpha = /*initColor.a * ambientBrightness*/ 255;
 			lightmap[(j * m_vpw) + i].blended = 1;
-			lightmap[(j * m_vpw) + i].r = initColor.r;
-			lightmap[(j * m_vpw) + i].g = initColor.g;
-			lightmap[(j * m_vpw) + i].b = initColor.b;
+			lightmap[(j * m_vpw) + i].r = initColor.r * ambientBrightness;
+			lightmap[(j * m_vpw) + i].g = initColor.g * ambientBrightness;
+			lightmap[(j * m_vpw) + i].b = initColor.b * ambientBrightness;
         }
     }
 
