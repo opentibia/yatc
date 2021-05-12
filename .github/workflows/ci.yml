@@ -1,10 +1,33 @@
-name: Bazel CI
+name: C/C++ and Bazel CI
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  cpp:
+    runs-on: ubuntu-latest
 
+    steps:
+    - uses: actions/checkout@v1
+    #- name: Checkout submodules
+    #  uses: textbook/git-checkout-submodule-action@2.0.0
+    - name: Checkout submdoules
+      run: git submodule init && git submodule update
+    - name: install deps
+      run: sudo apt-get update && sudo apt-get install libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev
+    - name: install glict
+      run: cd vendor/github.com/ivucica/glict/glict && ./autogen.sh && ./configure && make && sudo make install
+    - name: autogen
+      run: ./autogen.sh
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+    #- name: make distcheck
+    #  run: make distcheck
+
+  bazel:
     runs-on: ubuntu-latest
     
     steps:
