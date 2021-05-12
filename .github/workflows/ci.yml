@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v1
     #- name: Checkout submodules
     #  uses: textbook/git-checkout-submodule-action@2.0.0
-    - name: Checkout submdoules
+    - name: Checkout submodules
       run: git submodule init && git submodule update
     - name: install deps
       run: sudo apt-get update && sudo apt-get install libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev
