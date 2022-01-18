@@ -45,11 +45,12 @@ public:
 	static bool canReprotBugs() { return m_canReportBugs;}
 	static void setCanReportBugs(bool v){ m_canReportBugs = v;}
 
-	static uint32_t getWorldLightLevel() { return m_worldLightLevel;}
-	static void setWorldLightLevel(uint32_t v) { m_worldLightLevel = v; }
+	static uint8_t getWorldLightLevel() { return m_worldLightLevel;}
+	static float getWorldLightLevelScaled() { return m_worldLightLevel / 255.f;}
+	static void setWorldLightLevel(uint8_t v) { m_worldLightLevel = v; }
 
-	static uint32_t getWorldLightColor() { return m_worldLightColor;}
-	static void setWorldLightColor(uint32_t v) { m_worldLightColor = v; }
+	static uint8_t getWorldLightColor() { return m_worldLightColor;}
+	static void setWorldLightColor(uint8_t v) { m_worldLightColor = v; }
 
 	static uint8_t getGMAction(uint32_t i){ ASSERT(i < 32); return m_GMActions[i]; }
 	static void setGMAction(uint32_t i, uint8_t v){ ASSERT(i < 32); m_GMActions[i] = v; }
@@ -79,8 +80,8 @@ protected:
 	static uint32_t m_attackId;
 	static uint32_t m_followId;
 
-	static uint32_t m_worldLightColor;
-	static uint32_t m_worldLightLevel;
+	static uint8_t m_worldLightColor;
+	static uint8_t m_worldLightLevel;
 
 	static uint8_t m_GMActions[32];
 
@@ -95,4 +96,3 @@ protected:
 };
 
 #endif
-

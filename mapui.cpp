@@ -45,7 +45,7 @@ extern Engine* g_engine;
 #include "options.h"
 #include "gamecontent/creature.h"
 
-inline oRGBA makeLightColor(uint16_t lightColor){
+inline oRGBA makeLightColor(uint8_t lightColor){
     // NOTE (nfries88): this works for colors sent from the server, but colors from .dat are mysteriously 16-bit rather than 8-bit... who knows
         // also, ripped this from minimap code. Surprisingly, works.
     oRGBA color;
