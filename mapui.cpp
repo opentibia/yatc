@@ -190,11 +190,12 @@ void MapUI::renderMap()
 
     // reset light map
     memset((void*)lightmap, 0, sizeof(vertex) * m_vpw * m_vph);
-    int initValue = (pos.z <= 7 ? (255 - GlobalVariables::getWorldLightLevel()) : 255);
-    float ambientBrightness = ((float)initValue) / 255.0f;
+    float ambientBrightness = 1.0 - GlobalVariables::getWorldLightLevelScaled();
+    if (pos.z <= 7) {
+      ambientBrightness = 0;
+    }
 
-
-    oRGBA initColor = (pos.z <= 7 ? (makeLightColor((uint16_t)GlobalVariables::getWorldLightColor())) : oRGBA(0, 0, 0, 255));
+    oRGBA initColor = (pos.z <= 7 ? (makeLightColor(GlobalVariables::getWorldLightColor())) : oRGBA(0, 0, 0, 255));
     //oRGBA initColor = oRGBA(0, 0, 0, 255);
 	Tile::EffectList::iterator effectIt;
 
@@ -203,12 +204,20 @@ void MapUI::renderMap()
     {
         for (int j = 0; j < m_vph; j++)
         {
-          lightmap[(j * m_vpw) + i].alpha = /*initColor.a * ambientBrightness*/ 255.0 * ambientBrightness;
+          // The lower the ambientBrightness, the darker the base color is.
+          // The higher the ambientBrightness, the more tinted is the base environment using the base color. (e.g. with 216 = red, at 255, it will be very red.)
+          // Later, lamps can color it in other colors.
+
+          // Without addressing how the lights are rendered, we can't easily do this in SDL.
+          // We can simulate this to an extent by lowering the alpha to 128.0 during full daylight: at 255, we'd create an impenetrable fog-of-war
+          // during daytime and not just during the night.
+
+          lightmap[(j * m_vpw) + i].alpha = ambientBrightness; // 128.0 + (128.0 * ambientBrightness);
           // lightmap[(j * m_vpw) + i].alpha = /*initColor.a * ambientBrightness*/ 255;
 			lightmap[(j * m_vpw) + i].blended = 1;
-			lightmap[(j * m_vpw) + i].r = initColor.r * ambientBrightness;
-			lightmap[(j * m_vpw) + i].g = initColor.g * ambientBrightness;
-			lightmap[(j * m_vpw) + i].b = initColor.b * ambientBrightness;
+			lightmap[(j * m_vpw) + i].r = initColor.r * (1-ambientBrightness);
+			lightmap[(j * m_vpw) + i].g = initColor.g * (1-ambientBrightness);
+			lightmap[(j * m_vpw) + i].b = initColor.b * (1-ambientBrightness);
         }
     }
 
