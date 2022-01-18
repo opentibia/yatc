@@ -121,6 +121,8 @@ void EngineGL::drawLightmap(vertex* lightmap, int type, int width, int height, f
 	if (type == 3){
 		glDisable(GL_TEXTURE_2D);
 
+                glBlendFunc(GL_DST_COLOR, GL_ZERO);
+
 		for (int y = 0; y < height - 1; ++y){
 			glBegin(GL_TRIANGLE_STRIP);
 			for (int x = 0; x < width; ++x){
@@ -132,6 +134,8 @@ void EngineGL::drawLightmap(vertex* lightmap, int type, int width, int height, f
 			}
 			glEnd();
 		}
+
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	else{
 		Engine::drawLightmap(lightmap, type, width, height, scale);

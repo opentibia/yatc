@@ -393,7 +393,19 @@ void Engine::drawLightmap(vertex* lightmap, int type, int width, int height, flo
         for (int j = 0; j < height; ++j){
             index = (j * width) + i;
             if(type == 1 && m_light != NULL){
-                int n = std::floor(8 - (8 * (lightmap[index].alpha / 255.0f)));
+                //int n = std::floor(8-(8 * ((lightmap[index].alpha) / 255.0f)));
+                //std::cout << "basic light: " << n << " (from " << ((int)(lightmap[index].alpha)) << "/" << lightmap[index].blended << ")" << std::endl;
+
+                // Raw lightmap alpha:
+                float grayscale = 255.0f - lightmap[index].alpha;
+
+                // Scaled lightmap alpha (matching the mapui.cpp calculation):
+                //float grayscale = 255.0f - ((lightmap[index].alpha - 128.0f) * 255.0f / 128.0f);
+
+                // Averaging:
+                //float grayscale = ((lightmap[index].r + lightmap[index].g + lightmap[index].b) / 3.0); // * 240.0f / 255.0 + 25; // bias toward light
+
+                int n = std::floor(8 * (grayscale / 255.0f));
                 if (n >= 0 && n < 8)
                     m_light->Blit(lightmap[index].x, lightmap[index].y, 32 * n, 0, 32, 32, scaledSize, scaledSize);
             }
