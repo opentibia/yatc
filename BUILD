@@ -894,6 +894,10 @@ cc_library(
             "//translations:sv_SE/LC_MESSAGES/yatc.mo",
         ],
         ":darwin": [],
+        ":windows": [],
+        ":windows_msys": [],
+        ":windows_msvc": [],
+
     }) + [
         "@tibia854//:Tibia.dat",
         "@tibia854//:Tibia.pic",
