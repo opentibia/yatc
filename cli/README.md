@@ -13,3 +13,23 @@ not been eliminated.
 
 The client is just for experimentation, and thus no care was taken to make it
 autoconf'igurable.
+
+It can be build with either `make` or:
+
+```
+bazel build --define LOGIN_ONLY=1 :yatc_cli
+```
+
+`LOGIN_ONLY` is required at this time. Gameworld connections are not supported
+at this time.
+
+## dat2json
+
+This is also the directory where, at this time, it made the most sense to place
+dat2json. It can be built with either `make` or:
+
+```
+bazel build --define LOGIN_ONLY=1 //cli:dat2json_cli
+```
+
+`LOGIN_ONLY` is required at this time.

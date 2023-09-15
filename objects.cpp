@@ -20,11 +20,18 @@
 
 #include <iostream>
 #include "objects.h"
+#ifndef CLI_ONLY
 #include "engine.h" // used to create engine specific sprites
+#else
+#include <map>
+#include "fassert.h"
+#endif
 #include "util.h"
 #include "options.h"
 #include "net/protocolconfig.h"
 #include "product.h"
+
+#include <fstream>
 
 #ifdef HAVE_CONFIG_H
 	#include "config.h"
@@ -110,7 +117,9 @@ void ObjectType::loadGfx()
 
     if (m_gfx.size() != numsprites) { // graphics not loaded yet?
         for(uint32_t i = 0; i < numsprites; i++){
+#ifndef CLI_ONLY
             m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", imageData[i]));
+#endif
         }
     }
 
@@ -1006,21 +1015,45 @@ ObjectType* Objects::getDistanceType(uint16_t id)
 
 void Objects::asJSON(std::ostream &o) {
 	o << "{" << std::endl;
-	o << "\t'items': [" << std::endl;
+	o << "\t\"items\": [" << std::endl;
+	bool first = true;
 	//for (std::vector<ObjectType*>::iterator it = m_item.begin(); it != m_item.end(); it++) {
-	for (int i = 0; i < m_item.size(); i++) {
+	for (int i = 100; i < m_item.size(); i++) {
 		ObjectType *oType = m_item.getElement(i);
-		if (!oType) {
-			o << "\t\t{ '_item_is_null': '" << i << "' }," << std::endl;
-			continue;
+		if (oType == NULL) continue;
+
+		if (first)
+			o << "\t\t{" << std::endl;
+		else
+			o << "," << std::endl << "\t\t{" << std::endl;
+		first = false;
+
+		o << "\t\t\t\"id\": " << oType->id << "," << std::endl;
+		o << "\t\t\t\"width\": " << oType->width << "," << std::endl;
+		o << "\t\t\t\"height\": " << oType->height << "," << std::endl;
+		if((oType->width > 1) || (oType->height > 1)){
+			o << "\t\t\t\"renderSize\" : " << oType->rendersize << "," << std::endl;
 		}
-		o << "\t\t{\n" << std::endl;
-		o << "\t\t\t'id': " << oType->id << "," << std::endl;
-		o << "\t\t\t'width': " << oType->width << "," << std::endl;
-		o << "\t\t\t'height': " << oType->height << "" << std::endl;
-		o << "\t\t},\n" << std::endl;
+
+		o << "\t\t\t\"blendFrames\": " << oType->blendframes << "," << std::endl;
+		o << "\t\t\t\"xDiv\": " << oType->xdiv << "," << std::endl;
+		o << "\t\t\t\"yDiv\": " << oType->ydiv << "," << std::endl;
+		o << "\t\t\t\"zDiv\": " << oType->zdiv << "," << std::endl;
+		o << "\t\t\t\"animCount\": " << oType->animcount << "," << std::endl;
+		o << "\t\t\t\"numSprites\": " << oType->numsprites << "," << std::endl;
+		o << "\t\t\t\"sprites\": [" << std::endl;
+		for(unsigned int i = 0; i < oType->numsprites; i++) {
+			o << "\t\t\t\t" << oType->imageData[i];
+			if (i < oType->numsprites - 1)
+				o << ",";
+			o << std::endl;
+		}
+		o << "\t\t\t]" << std::endl;
+
+		//o << "\t\t\t, \"_comment\": \"" << i << " out of " << m_item.size() << "\"" << std::endl;
+		o << "\t\t}";
 	}
-	o << "\t\t{}\n" << std::endl; // so we don't have to remove the comma
+	o << std::endl;
 	o << "\t]" << std::endl;
 	o << "}" << std::endl;
 }

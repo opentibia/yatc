@@ -172,7 +172,9 @@ protected:
 	Array<ObjectType*> m_effect;
 	Array<ObjectType*> m_distance;
 
-	void asJSON(std::ostream &o) ;
+public:
+	// Public for use in dat2json_cli
+	void asJSON(std::ostream &o);
 };
 
 #endif
