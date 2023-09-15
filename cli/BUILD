@@ -168,7 +168,7 @@ filegroup(
 
 cc_library(
     name = "dat2json_cli_lib",
-    defines = ["CLI_ONLY=1", "BAZEL_BUILD=1"] + select({
+    defines = ["CLI_ONLY=1", "HAVE_TOMMATH=1", "BAZEL_BUILD=1"] + select({
         "//conditions:default": [],
         "//:windows": ["WIN32=1",],
         "//:windows_msys": ["WIN32=1",],
@@ -178,7 +178,8 @@ cc_library(
         "creatureui.cpp", "//:creatureui.h",
         "thingui.cpp", "//:thingui.h",
         "effectui.cpp", "//:effectui.h",
-        "objects.cpp", "//:objects.h",
+        #"objects.cpp",
+        "//:objects.h",
         "distanceui.cpp", "//:distanceui.h",
         "itemui.cpp", "//:itemui.h",
         "notifications.cpp", "//:notifications.h",
@@ -218,15 +219,23 @@ cc_library(
         "//net:protocolgame.h",
         "//net:protocollogin.h",
         "//net:protocollogin.cpp",
-        #"//net:rsa.h",
-        #"//net:rsa.cpp",
+        "//net:rsa.h",
+        "//net:rsa.cpp",
 
         "//:util.cpp",
         "//:util.h",
         "//:product.h",
         "//:macutil.h",
 
+        "//gamecontent:item.cpp",
+        "//gamecontent:viplist.cpp",
+        "//:objects.cpp",
+        "//:options.cpp", "//:options.h", "//:confighandler.h", "//:confighandler.cpp",
+        "//:bigint.h",
+        "//:bigint.cpp",
+
         ":protocolgamehdrs",
+	":protocolgamesrcs", # why?
         "dat2json_cli.cpp",
     ],
     deps = [
@@ -255,6 +264,8 @@ cc_library(
     }),
     data = [
         "@tibia854//:Tibia.dat",
+        "@tibia854//:Tibia.spr",
+        "@tibia854//:Tibia.pic",
     ],
     copts = select({
         "//conditions:default": ["-isystem external/tommath"],
