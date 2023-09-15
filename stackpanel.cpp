@@ -32,7 +32,20 @@ yatcStackPanel::~yatcStackPanel()
 {
 }
 
-
+/**
+ * @brief Overrides the default implementation for a glictList allowing dragging
+ * of children along the Y axis.
+ *
+ * The children are expected to be special yatcStackPanelWindow objects.
+ *
+ * @param evt event being dispatched to the stack panel
+ * @param wparam mouse position
+ * @param lparam unused
+ * @param returnvalue unused for handled events; passed to glictList::CastEvent
+ *                    as-is
+ *
+ * @return whether the event was handled
+ */
 bool yatcStackPanel::CastEvent(glictEvents evt, void* wparam, long lparam, void* returnvalue)
 {
 #if (GLICT_APIREV>=95)
