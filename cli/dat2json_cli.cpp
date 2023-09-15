@@ -37,11 +37,17 @@ unsigned int g_frameDiff = 0;
 Connection *g_connection = NULL;
 
 int main(int argc, char** argv) {
+    yatc_fopen_init(argv[0]);
+    ClientVersion_t proto = CLIENT_VERSION_854;
     auto i = Objects::getInstance();
     if (argc != 3) {
         fprintf(stderr, "usage: %s datfile jsonfile\n", argv[0]);
         return 1;
     }
+    std::cout << "Warning: In case of crash after this line check you put Tibia.{dat,spr,pic} in CWD." << std::endl << std::flush;
+    ProtocolConfig::getInstance().setServerType(SERVER_OTSERV);
+    ProtocolConfig::getInstance().setVersion(CLIENT_OS_WIN, proto);
+    ProtocolConfig::getInstance().setVersionOverride(CLIENT_VERSION_AUTO);
     i->loadDat(argv[1]);
     
     std::ofstream outFile;
