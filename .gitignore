@@ -5,6 +5,7 @@ SDL_gfx-2.0.24/
 *.o
 yatc
 yatc_cli
+dat2json_cli
 Tibia.pic
 Tibia.dat
 Tibia.spr

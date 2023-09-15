@@ -20,7 +20,12 @@
 
 #include <iostream>
 #include "objects.h"
+#ifndef CLI_ONLY
 #include "engine.h" // used to create engine specific sprites
+#else
+#include <map>
+#include "fassert.h"
+#endif
 #include "util.h"
 #include "options.h"
 #include "net/protocolconfig.h"
@@ -112,7 +117,9 @@ void ObjectType::loadGfx()
 
     if (m_gfx.size() != numsprites) { // graphics not loaded yet?
         for(uint32_t i = 0; i < numsprites; i++){
+#ifndef CLI_ONLY
             m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", imageData[i]));
+#endif
         }
     }
 
@@ -540,11 +547,6 @@ bool Objects::load780plus(const char* filename)
 
 	fclose(fp);
 	m_datLoaded = true;
-
-	std::ofstream outFile;
-	outFile.open("/tmp/Tibia.dat.json");
-	asJSON(outFile);
-	outFile.close();
 
 	return true;
 }

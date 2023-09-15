@@ -165,3 +165,113 @@ filegroup(
         "//net:protocolgame854.cpp",
     ],
 )
+
+cc_library(
+    name = "dat2json_cli_lib",
+    defines = ["CLI_ONLY=1", "BAZEL_BUILD=1"] + select({
+        "//conditions:default": [],
+        "//:windows": ["WIN32=1",],
+        "//:windows_msys": ["WIN32=1",],
+        "//:windows_msvc": ["WIN32=1",],
+    }),
+    srcs = [
+        "creatureui.cpp", "//:creatureui.h",
+        "thingui.cpp", "//:thingui.h",
+        "effectui.cpp", "//:effectui.h",
+        "objects.cpp", "//:objects.h",
+        "distanceui.cpp", "//:distanceui.h",
+        "itemui.cpp", "//:itemui.h",
+        "notifications.cpp", "//:notifications.h",
+        
+        "//gamecontent:inventory.cpp",
+        "//gamecontent:globalvars.cpp",
+        "//gamecontent:creature.cpp",
+        "//gamecontent:map.cpp",
+        "//gamecontent:container.cpp",
+
+        "//:stdinttypes.h",
+        "//:sprite.h",
+        "//:defines.h",
+
+        "//gamecontent:creature.h",
+        "//gamecontent:thing.h",
+        "//gamecontent:enums.h",
+        "//gamecontent:position.h",
+        "//gamecontent:globalvars.h",
+        "//gamecontent:container.h",
+        "//gamecontent:itemcontainer.h",
+        "//gamecontent:shop.h",
+        "//gamecontent:inventory.h",
+        "//gamecontent:map.h",
+        "//gamecontent:item.h",
+        "//gamecontent:viplist.h",
+
+        "//net:encryption.cpp",
+        "//net:networkmessage.cpp",
+        "//net:connection.cpp",
+
+        "//net:connection.h",
+        "//net:networkmessage.h",
+        "//net:encryption.h",
+        "//net:protocolconfig.h",
+        "//net:protocolconfig.cpp",
+        "//net:protocolgame.h",
+        "//net:protocollogin.h",
+        "//net:protocollogin.cpp",
+        #"//net:rsa.h",
+        #"//net:rsa.cpp",
+
+        "//:util.cpp",
+        "//:util.h",
+        "//:product.h",
+        "//:macutil.h",
+
+        ":protocolgamehdrs",
+        "dat2json_cli.cpp",
+    ],
+    deps = [
+        "//:debugprint",
+        "//:fassert",
+        
+        "//net:enum_hdr",
+        "@tommath//:tommath",
+        #"//:yatc_lib", # We could pull in far less stuff. See Makefile.
+    ] + select({
+        "//:darwin": [
+            "@libsdl12//:sdlmain",
+            "//:macclipboard",
+            "//:macutil",
+            "@libsdl12//:sdl", # util.h is pulling in SDL/SDL_endian.h
+        ],
+        "//conditions:default": [
+            "@libsdl12//:sdl", # util.h is pulling in SDL/SDL_endian.h
+	    "@libsdl12//:sdlmain", # and because of that we pull in SDL_main too
+        ],
+    }) + select({
+        ":login_only": [],
+        "//conditions:default": [
+          "//net:protocols", # FIXME: This is pulling in REALLY a lot, incl chunks/all of glict. And yet it doesn't build.
+        ],
+    }),
+    data = [
+        "@tibia854//:Tibia.dat",
+    ],
+    copts = select({
+        "//conditions:default": ["-isystem external/tommath"],
+	"//:windows": ["-I external/tommath"],
+	"//:windows_msvc": ["-I external/tommath"],
+    }),
+    linkopts = select({
+        "//conditions:default": [],
+	"//:windows": ["-DEFAULTLIB:ws2_32", "-DEFAULTLIB:shell32"],
+	"//:windows_msvc": ["-DEFAULTLIB:ws2_32", "-DEFAULTLIB:shell32"],
+    }),
+)
+
+cc_binary(
+    name = "dat2json_cli",
+    deps = [
+        ":dat2json_cli_lib",
+    ],
+)
+
