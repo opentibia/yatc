@@ -212,3 +212,36 @@ As of El Capitan, approximately:
   - place Tibia.{spr,dat,pic} into YATC’s SRCROOT.
   - open YATC’s .xcodeproj, build and enjoy
 
+8. Bazel notes
+==============
+
+You will need to install `bazel-3.3.1` package. As of 2023, this is done as
+follows on Debian:
+
+sudo apt install apt-transport-https curl gnupg -y
+curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor >bazel-archive-keyring.gpg
+sudo mv bazel-archive-keyring.gpg /usr/share/keyrings
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+
+You will have to grab submodules defined in this repo using:
+
+git submodule init && git submodule update
+
+Some libraries are grabbed from the system -- particularly so SDL 1.2 can be
+built (rules being defined in one of the submodules initialized above):
+
+*   `libx11-dev`
+*   `libxext-dev`
+*   `libxrandr-dev`
+*   `libxrender-dev`
+
+Besides X11, other dependencies include:
+
+*   `libgl-dev`
+*   `libglu-dev`
+*   `libasound-dev`
+*   `libalsaplayer-dev`
+
+Please check vendor/github.com/ivucica/rules_libsdl12/README.md for more
+detailed information.
+
