@@ -95,6 +95,13 @@ load("@hedron_compile_commands//:workspace_setup.bzl", "hedron_compile_commands_
 hedron_compile_commands_setup()
 # To refresh C++ flags, run bazel run @hedron_compile_commands//:refresh_all
 
+# To move to a newer googletest, we need to pass in --std=c++14, like so:
+# https://stackoverflow.com/a/43388168
+http_archive(
+  name = "com_google_googletest",
+  urls = ["https://github.com/google/googletest/archive/4219e7254cb8c473f57f6065bd13d1520d7b708f.zip"],
+  strip_prefix = "googletest-4219e7254cb8c473f57f6065bd13d1520d7b708f",
+)
 
 # Toolchains for Resource Compilation (.rc files on Windows).
 #load("@bazel_tools//src/main/res:local_config_winsdk.bzl", "local_config_winsdk")

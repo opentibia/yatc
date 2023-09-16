@@ -169,6 +169,16 @@ cc_library(
     }),
 )
 
+cc_test(
+  name = "util_test",
+  size = "small",
+  srcs = ["util_test.cpp"],
+  deps = [
+      "@com_google_googletest//:gtest_main",
+      ":util",
+  ],
+)
+
 cc_library(
     name = "macutil",
     srcs = ["objcmacutil.m.c"],
@@ -873,7 +883,7 @@ cc_library(
             "gamemode.h",
             "confighandler.cpp",
             "confighandler.h",
-        ],
+        ] + glob(["*_test.cpp"]),
     ),
     data = select({
         "//conditions:default": [
@@ -954,6 +964,7 @@ refresh_compile_commands(
       #"//:my_output_1": "--important_flag1 --important_flag2=true",
       #"//:my_output_2": "",
       "//:yatc": "",
+      "//:util_test": "",
     },
     # No need to add flags already in .bazelrc. They're automatically picked up.
     # If you don't need flags, a list of targets is also okay, as is a single target string.
