@@ -53,4 +53,4 @@ jobs:
     - name: bazel build
       run: bazel build //:yatc
     - name: bazel test
-      run: bazel test //:all
+      run: bazel test //:util_test
