@@ -29,7 +29,7 @@ jobs:
 
   bazel:
     runs-on: ubuntu-latest
-    
+
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
@@ -49,6 +49,8 @@ jobs:
     - name: Checkout submodules
       run: git submodule init && git submodule update
     - name: install deps
-      run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev 
+      run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel build
       run: bazel build //:yatc
+    - name: bazel test
+      run: bazel test //:all
