@@ -113,6 +113,24 @@ cc_library(
         #":engine",
     ],
 )
+cc_library(
+    name = "itemui_clionly",
+    defines = ["CLI_ONLY=1"],
+    srcs = [
+        "itemui.cpp",
+    ],
+    hdrs = [
+        "itemui.h",
+    ],
+    linkstatic = 1,
+    deps = [
+        ":thingui",
+        ":objects_clionly",
+        #":sprite_hdr",
+        #":defines",
+        #":engine",
+    ],
+)
 
 cc_library(
     name = "fassert",
@@ -285,7 +303,33 @@ cc_library(
     name = "objects",
     srcs = [
         "objects.cpp",
+	"options.cpp",
         "options.h",
+	"confighandler.cpp",
+	"confighandler.h",
+    ],
+    hdrs = [
+        "objects.h",
+    ],
+    linkstatic = 1,
+    deps = [
+        "engine_hdr",
+        ":stdinttypes",
+        ":util",
+        "//gamecontent:enums",  # due to options.h
+        "//net:enum_hdr",
+        "//net:protocolconfig_hdr",
+    ],
+)
+cc_library(
+    name = "objects_clionly",
+    defines = ["CLI_ONLY=1"],
+    srcs = [
+        "objects.cpp",
+	"options.cpp",
+        "options.h",
+	"confighandler.cpp",
+	"confighandler.h",
     ],
     hdrs = [
         "objects.h",
@@ -564,6 +608,63 @@ cc_library(
     deps = [
         "//gamecontent:enums",
         "//gamecontent:inventory",
+        "//net:enum_hdr",
+        "//net:connection_hdr",
+        "//gamecontent:map_hdr",
+        "//gamecontent:globalvars",
+        #":gamemode",
+        "//gamecontent:container_hdr",
+        "//gamecontent:shop",
+        "//gamecontent:creature_hdr",
+    ],
+)
+cc_library(
+    name = "notifications_clionly",
+    defines = ["CLI_ONLY=1"],
+    srcs = [
+        "automap.h",
+        "choicegrid.h",
+        "console.h",
+        "gamemode.h",
+        "gm_gameworld.h",
+        "mapui.h",
+        "notifications.cpp",
+        "popup.h",
+        "skin.h",
+        "stackpanel.h",
+        "statusmsg.h",
+        "ui/battlewindow.h",
+        "ui/checkbox.h",
+        "ui/deathnotification.h",
+        "ui/exitwarning.h",
+        "ui/health.h",
+        "ui/itemmove.h",
+        "ui/itempanel.h",
+        "ui/minimap.h",
+        "ui/optionsconsole.h",
+        "ui/optionsgeneral.h",
+        "ui/optionsgfxadv.h",
+        "ui/optionsgraphics.h",
+        "ui/optionshotkeys.h",
+        "ui/optionsnetwork.h",
+        "ui/optionsui.h",
+        "ui/sbvlpanel.h",
+        "ui/skills.h",
+        "ui/uicontainer.h",
+        "ui/uiinventory.h",
+        "ui/uioutfit.h",
+        "ui/uireadable.h",
+        "ui/uishop.h",
+        "ui/uitrade.h",
+        "ui/vipwindow.h",
+    ],
+    hdrs = [
+        "notifications.h",
+    ],
+    linkstatic = 1,
+    deps = [
+        "//gamecontent:enums",
+        "//gamecontent:inventory_clionly",
         "//net:enum_hdr",
         "//net:connection_hdr",
         "//gamecontent:map_hdr",

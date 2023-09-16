@@ -47,6 +47,21 @@ cc_library(
     linkstatic = 1,
 )
 cc_library(
+    name = "item_clionly",
+    defines = ["CLI_ONLY=1"],
+    srcs = [
+        "item.cpp",
+    ],
+    hdrs = [
+        "item.h",
+    ],
+    deps = [
+        "//:itemui_clionly",
+	":thing",
+    ],
+    linkstatic = 1,
+)
+cc_library(
     name = "creature",
     srcs = [
         "creature.cpp",
@@ -99,11 +114,11 @@ cc_library(
     name = "map_hdr",
     hdrs = [
         "map.h",
+        "//:effectui.h",
+        "//:distanceui.h",
     ],
     deps = [
         ":position",
-        "//:effectui",
-        "//:distanceui",
     ],
 )
 cc_library(
@@ -167,6 +182,22 @@ cc_library(
         ":enums",
         ":itemcontainer",
         ":item",
+    ],
+    linkstatic = 1,
+)
+cc_library(
+    name = "inventory_clionly",
+    srcs = [
+        "inventory.cpp",
+    ],
+    hdrs = [
+        "inventory.h",
+    ],
+    deps = [
+        "//:stdinttypes",
+        ":enums",
+        ":itemcontainer",
+        ":item_clionly",
     ],
     linkstatic = 1,
 )

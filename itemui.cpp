@@ -205,6 +205,7 @@ void ItemUI::BlitItem(int x, int y, uint8_t count, ObjectType* obj, float scale,
 
 void ItemUI::BlitCount(int x, int y, uint8_t count, float scale) const
 {
+#if !defined(CLI_ONLY)
 	std::string cntText = yatc_itoa(count);
 
 	// calculate position for count
@@ -212,4 +213,5 @@ void ItemUI::BlitCount(int x, int y, uint8_t count, float scale) const
 	y += int(32.f * scale) - 12;
 
 	g_engine->drawText(cntText.c_str(), "gamefont", x, y, TEXTCOLOR_WHITE);
+#endif
 }

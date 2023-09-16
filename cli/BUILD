@@ -22,7 +22,8 @@ cc_library(
         "creatureui.cpp", "//:creatureui.h",
         "thingui.cpp", "//:thingui.h",
         "effectui.cpp", "//:effectui.h",
-        "objects.cpp", "//:objects.h",
+        #"objects.cpp",
+	"//:objects.h",
         "distanceui.cpp", "//:distanceui.h",
         "itemui.cpp", "//:itemui.h",
         "notifications.cpp", "//:notifications.h",
@@ -71,6 +72,10 @@ cc_library(
         "//:macutil.h",
 
         ":protocolgamehdrs",
+    ] + select({
+        "//conditions:default": [":protocolgamesrcs"],
+	"login_only": []
+    }) + [
         "yatc_cli.cpp",
     ],
     copts = select({
@@ -99,7 +104,7 @@ cc_library(
     }) + select({
         ":login_only": [],
         "//conditions:default": [
-          "//net:protocols", # FIXME: This is pulling in REALLY a lot, incl chunks/all of glict. And yet it doesn't build.
+          "//net:protocols_clionly", # FIXME: This is pulling in REALLY a lot, incl chunks/all of glict. And yet it doesn't build. (Slightly better after _clionly, at least it builds at expense of duplicating quite a few rules))
         ],
     }),
     data = [
@@ -259,7 +264,7 @@ cc_library(
     }) + select({
         ":login_only": [],
         "//conditions:default": [
-          "//net:protocols", # FIXME: This is pulling in REALLY a lot, incl chunks/all of glict. And yet it doesn't build.
+          "//net:protocols_clionly", # FIXME: This is pulling in REALLY a lot, incl chunks/all of glict. And yet it doesn't build. (Slightly better after _clionly, at least it builds at expense of duplicating quite a few rules))
         ],
     }),
     data = [
