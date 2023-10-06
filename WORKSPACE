@@ -106,3 +106,19 @@ http_archive(
 # Toolchains for Resource Compilation (.rc files on Windows).
 #load("@bazel_tools//src/main/res:local_config_winsdk.bzl", "local_config_winsdk")
 #local_config_winsdk()
+
+# Toolchains for remote execution via buildbuddy.
+http_archive(
+    name = "io_buildbuddy_buildbuddy_toolchain",
+    sha256 = "1cab6ef3ae9b4211ab9d57826edd4bbc34e5b9e5cb1927c97f0788d8e7ad0442",
+    strip_prefix = "buildbuddy-toolchain-b043878a82f266fd78369b794a105b57dc0b2600",
+    urls = ["https://github.com/buildbuddy-io/buildbuddy-toolchain/archive/b043878a82f266fd78369b794a105b57dc0b2600.tar.gz"],
+)
+
+load("@io_buildbuddy_buildbuddy_toolchain//:deps.bzl", "buildbuddy_deps")
+
+buildbuddy_deps()
+
+load("@io_buildbuddy_buildbuddy_toolchain//:rules.bzl", "buildbuddy")
+
+buildbuddy(name = "buildbuddy_toolchain")
