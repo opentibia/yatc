@@ -1,0 +1,22 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "This defines some queries using the VSCode extension for a GitHub Issues\nnotebook."
+  },
+  {
+    "kind": 2,
+    "language": "github-issues",
+    "value": "$yatc=repo:opentibia/yatc"
+  },
+  {
+    "kind": 2,
+    "language": "github-issues",
+    "value": "$yatc is:open"
+  },
+  {
+    "kind": 2,
+    "language": "github-issues",
+    "value": "$yatc is:open assignee:@me"
+  }
+]
