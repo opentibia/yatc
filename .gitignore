@@ -39,3 +39,4 @@ yatc.ico.png
 /compile_commands.json
 # Ignore the directory in which `clangd` stores its local index.
 /.cache/
+bazelisk-windows-amd64.exe
