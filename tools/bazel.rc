@@ -1,3 +1,6 @@
+# Cut a stamped release.
+build:release -c opt --stamp --workspace_status_command="$PWD/stamp.sh"
+
 # Use buildbuddy by passing --config=remote.
 # This should be fine for this open source project.
 build:remote --remote_executor=grpcs://remote.buildbuddy.io
