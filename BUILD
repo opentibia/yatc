@@ -221,7 +221,10 @@ cc_test(
 
 cc_library(
     name = "macutil",
-    srcs = ["objcmacutil.m.c"],
+    srcs = select({
+        "//conditions:default": [],
+        ":darwin": ["objcmacutil.m.c"],
+    }),
     hdrs = ["macutil.h"],
     copts = [
         "-x",
@@ -231,7 +234,10 @@ cc_library(
 
 cc_library(
     name = "macclipboard",
-    srcs = ["objcmacclipboard.m.c"],
+    srcs = select({
+        "//conditions:default": [],
+        ":darwin": ["objcmacclipboard.m.c"],
+    }),
     copts = [
         "-x",
         "objective-c",
