@@ -78,7 +78,8 @@ gl_deps = select({
         # both hdrs and dev are needed
         "@libgl-dev//:hdrs",
         "@libgl-dev//:libgl-dev",
-        "@libgl1//:libs",
+        #"@libgl1//:libs",
+        "@libgl1//:libGL",
     ],
 })
 
@@ -88,7 +89,8 @@ glu_deps = select({
         # both hdrs and dev are needed
         "@libglu1-mesa-dev//:hdrs",
         "@libglu1-mesa-dev//:libglu1-mesa-dev",
-        "@libglu1-mesa//:libs",
+        #"@libglu1-mesa//:libs",
+        "@libglu1-mesa//:libGLU",
     ],
 })
 
