@@ -54,3 +54,29 @@ jobs:
       run: bazel build //:yatc
     - name: bazel test
       run: bazel test //:util_test
+
+  bazel-buildbuddy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v1
+
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v2.0.0
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - name: Checkout submodules
+      run: git submodule init && git submodule update
+    - name: rbe bazel build
+      run: bazel build --config=remote //:yatc
+    - name: rbe bazel test
+      run: bazel test --config=remote //:util_test
