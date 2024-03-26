@@ -9,4 +9,15 @@ actions:
         branches:
           - "*"
     bazel_commands:
-      - "test --config=remote //..." # <-- main modification for rules_libsdl12: --config=remote as a default for buildbuddy.yaml
+      - "test --config=remote //:util_test" # <-- main modification here: --config=remote as a default for buildbuddy.yaml; also currently testing even //:all is broken (because it tries to compile macclipboard.m), much less //...
+
+  - name: "Build main binary"
+    triggers:
+      push:
+        branches:
+          - "master" # <-- replace "main" with your main branch name
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "build --config=remote :yatc"
