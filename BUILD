@@ -219,6 +219,7 @@ cc_test(
         ":util",
         "@com_google_googletest//:gtest_main",
     ],
+    linkopts = ["-ldl"],
 )
 
 cc_library(
