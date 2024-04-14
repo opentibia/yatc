@@ -101,6 +101,7 @@ http_archive(
   name = "com_google_googletest",
   urls = ["https://github.com/google/googletest/archive/4219e7254cb8c473f57f6065bd13d1520d7b708f.zip"],
   strip_prefix = "googletest-4219e7254cb8c473f57f6065bd13d1520d7b708f",
+  sha256 = "21bf1f707ef089d576396cdb39d1c4069bce3df69cfab04f7e196ccf130a4884",
 )
 
 # Toolchains for Resource Compilation (.rc files on Windows).
