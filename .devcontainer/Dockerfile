@@ -1,5 +1,5 @@
 # You can pick any Debian/Ubuntu-based image. 😊
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-bullseye
+FROM mcr.microsoft.com/vscode/devcontainers/base:1.0.9-ubuntu-20.04
 
 # Options for setup script
 ARG INSTALL_ZSH="true"
