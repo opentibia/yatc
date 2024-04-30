@@ -25,3 +25,7 @@ RUN curl -fSsL -o /usr/local/bin/bazelisk https://github.com/bazelbuild/bazelisk
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends gettext clang gcc bzip2 libx11-dev libxext-dev libxrandr-dev libxrender-dev libgl-dev libglu-dev libasound-dev libalsaplayer-dev patch clangd \
     && apt-get -y install --no-install-recommends libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev
+
+# Pretend Bazelisk is Bazel for sake of VSCode extensions that might be tricky
+# to reconfigure to understand Bazelisk is a decent intermediary.
+RUN ln -s /usr/local/bin/bazelisk /usr/local/bin/bazel
