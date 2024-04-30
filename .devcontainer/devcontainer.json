@@ -5,8 +5,8 @@
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {
-			"BAZELISK_VERSION": "v1.18.0",
-			"BAZELISK_DOWNLOAD_SHA": "4cb534c52cdd47a6223d4596d530e7c9c785438ab3b0a49ff347e991c210b2cd"
+			"BAZELISK_VERSION": "v1.19.0",
+			"BAZELISK_DOWNLOAD_SHA": "d28b588ac0916abd6bf02defb5433f6eddf7cba35ffa808eabb65a44aab226f7"
 		}
 	},
 	"customizations": {
