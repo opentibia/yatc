@@ -25,6 +25,8 @@
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {
+			"BUILDIFIER_VERSION": "v7.1.1",  # TODO: 6.1.2
+			"BUILDIFIER_DOWNLOAD_SHA": "54b7f2ce8f22761cfad264416e912056ae9c8645f59eb6583b846b4864a1ee83",  # TODO: 6.1.2
 			"BAZELISK_VERSION": "v1.19.0",
 			"BAZELISK_DOWNLOAD_SHA": "d28b588ac0916abd6bf02defb5433f6eddf7cba35ffa808eabb65a44aab226f7"
 		}
