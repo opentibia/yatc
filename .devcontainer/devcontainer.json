@@ -13,12 +13,20 @@
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
 			"settings": {
-				"bazel.executable": "bazelisk"
+				"bazel.executable": "bazelisk",
+				"bsv.bazel.buildFlags": [
+					// "--config=remote"
+				],
+				"bsv.cc.compdb.targets": [
+					"//:yatc"
+				]
 			},
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"BazelBuild.vscode-bazel",
-				"StackBuild.bazel-stack-vscode"
+				"StackBuild.bazel-stack-vscode",
+				"StackBuild.bazel-stack-vscode-cc"
+
 			]
 		}
 	},
