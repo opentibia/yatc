@@ -40,3 +40,11 @@ build:remotecache --remote_executor=grpcs://remote.buildbuddy.io
 #build:remotecache --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
 
 try-import %workspace%/.bazelrc.buildbuddysecrets
+
+# In devcontainer: use our custom-configured c++ toolchain valid inside the 20.04 devcontainer.
+build:devcontainer --crosstool_top=//.devcontainer/bazel-toolchains:clang_suite
+# Use --cpu as a differentiator.
+build:devcontainer --cpu=k8
+# Use the default Bazel C++ toolchain to build the tools used during the
+# build.
+build:devcontainer --host_crosstool_top=@bazel_tools//tools/cpp:toolchain

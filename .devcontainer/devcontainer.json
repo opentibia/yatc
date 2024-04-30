@@ -13,9 +13,12 @@
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
 			"settings": {
+				"bazel.commandLine.commandArgs": [
+					"--config=devcontainer"
+				],
 				"bazel.executable": "bazelisk",
 				"bsv.bazel.buildFlags": [
-					// "--config=remote"
+					"--config=devcontainer"
 				],
 				"bsv.cc.compdb.targets": [
 					"//:yatc"
