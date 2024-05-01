@@ -47,6 +47,8 @@
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"BazelBuild.vscode-bazel",
+				"llvm-vs-code-extensions.vscode-clangd",
+				"ms-vscode.cpptools",
 				"StackBuild.bazel-stack-vscode",
 				"StackBuild.bazel-stack-vscode-cc"
 			]
