@@ -1,5 +1,25 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.233.0/containers/bazel
+//
+// sudo apt install podman containers-storage
+// npm set prefix ~/.npm
+// npm install -g @devcontainers/cli
+// ~/.npm/bin/devcontainer up --docker-path=/usr/bin/podman --workspace-folder .
+//
+// For vscode, needs settings change to use podman instead of docker.
+//
+// Note how podman is rootless and runs in ~/.local. container-storage allows use of
+// overlay graph driver (see podman info, line graphDriverName, should be overlay
+// instead of vfs). May need wipe with podman system reset before it's used after
+// installing containers-storage.
+//
+// Sadly, it may still be preferable to:
+//  apt install docker.io; usermod -aG docker $USER; newgrp docker.
+// due to permissions issues. For some reason, vscode implementation freezes, then
+// upon window reload has 'root' as owner of /root and /workspaces and fails. Folders
+// are also created with uid 1000, but then uid is changed to local uid (e.g. 501).
+// Fixing with sudo chown $(id -u -n) /root && sudo chown -R $(id -u -n) /workspaces
+// in postCreateCommand nor postAttachCommand did not help.
 {
 	"name": "Bazel (Community)",
 	"build": {
