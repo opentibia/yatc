@@ -29,3 +29,5 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # Pretend Bazelisk is Bazel for sake of VSCode extensions that might be tricky
 # to reconfigure to understand Bazelisk is a decent intermediary.
 RUN ln -s /usr/local/bin/bazelisk /usr/local/bin/bazel
+
+RUN mkdir -p /root && chown ${USERNAME} /root
