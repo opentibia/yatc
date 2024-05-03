@@ -22,6 +22,10 @@ build:remote --remote_cache=grpcs://remote.buildbuddy.io
 build:remote --remote_timeout=3600
 build:remote --remote_executor=grpcs://remote.buildbuddy.io
 
+# build:remote --build_metadata=REPO_URL=https://github.com/ivucica/glict
+# build:remote --build_metadata=VISIBILITY=PUBLIC  # default for unauthenticated, could be put into buildbuddysecrets if authenticated
+build:remote --workspace_status_command=$(pwd)/workspace_status.sh
+
 # readonly:
 #build:remote --noremote_upload_local_results # Uploads logs & artifacts without writing to cache
 # toplevel:
@@ -36,6 +40,11 @@ build:remotecache --bes_backend=grpcs://remote.buildbuddy.io
 build:remotecache --remote_cache=grpcs://remote.buildbuddy.io
 build:remotecache --remote_timeout=3600
 build:remotecache --remote_executor=grpcs://remote.buildbuddy.io
+
+# build:remotecache --build_metadata=REPO_URL=https://github.com/ivucica/glict
+# build:remotecache --build_metadata=VISIBILITY=PUBLIC  # default for unauthenticated, could be put into buildbuddysecrets if authenticated
+build:remotecache --workspace_status_command=$(pwd)/workspace_status.sh
+
 
 # readonly:
 #build:remotecache --noremote_upload_local_results # Uploads logs & artifacts without writing to cache
