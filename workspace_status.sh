@@ -47,3 +47,6 @@ echo "BUILDBUDDY_LINKS [GitHub]($repo_url)"
 # ROLE: if set to CI, treat as a CI build
 # TEST_GROUPS: group test prefixes together, e.g. //foo/bar,//foo/baz
 # BRANCH_NAME: pulled from GITHUB_REF, GITHUB_HEAD_REF, GIT_BRANCH, CI_COMMIT_BRANCH etc
+
+# Also: print out whatever is in stamp.sh.
+. stamp.sh
