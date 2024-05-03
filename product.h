@@ -19,7 +19,17 @@
 //////////////////////////////////////////////////////////////////////
 
 #ifndef PRODUCTNAME
-#define PRODUCTVERSION "0.3.3SVN"
+
+#define PRODUCTVERSION_BASE "0.3.3SVN"
+
+#ifdef STAMPED_FOR_RELEASE
+#include "stamp.h"
+#define PRODUCTVERSION PRODUCTVERSION_BASE " " __YATC_STAMP_STABLE_VERSION
+#else
+#define PRODUCTVERSION PRODUCTVERSION_BASE
+#endif
+
+
 #define PRODUCTSHORT "YATC"
 #define PRODUCTLONG "YATC - Yet Another Tibia Client"
 #define PRODUCTNAME PRODUCTSHORT " v" PRODUCTVERSION
@@ -31,6 +41,14 @@
 #endif
 #if !defined(__TIME__)
 #define __TIME__ ""
+#endif
+
+#if (defined(__YATC_STAMP_FORMATTED_DATE))
+#define PRODUCTDATE __YATC_STAMP_FORMATTED_DATE
+#define PRODUCTTIME ""
+#else
+#define PRODUCTDATE __DATE__
+#define PRODUCTTIME __TIME__
 #endif
 
 #endif

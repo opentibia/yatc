@@ -1,5 +1,5 @@
 # Cut a stamped release.
-build:release -c opt --stamp --workspace_status_command="$PWD/stamp.sh"
+build:release -c opt --define STAMPED_FOR_RELEASE=1 --stamp --workspace_status_command="$PWD/stamp.sh"
 
 # Use buildbuddy by passing --config=remote.
 # This should be fine for this open source project.

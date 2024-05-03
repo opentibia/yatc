@@ -38,6 +38,15 @@ config_setting(
 )
 
 config_setting(
+    name = "stamped",
+    values = {
+        # --config=release has -c opt (compilation_mode opt) plus explicitly STAMPED_FOR_RELEASE
+        "define": "STAMPED_FOR_RELEASE=1",
+        "compilation_mode": "opt",
+    },
+)
+
+config_setting(
     name = "use_sdl2",
     values = {
         "define": "USE_SDL2=1",
@@ -889,6 +898,13 @@ cc_binary(
         "//conditions:default": [
             ":enginegl",
         ],
+    }) + select({
+        ":stamped": ["//:gnu_build_id.ldscript"],
+        "//conditions:default": [],
+    }),
+    linkopts = select({
+        ":stamped": ["-Wl,@$(location //:gnu_build_id.ldscript)"],
+        "//conditions:default": [],
     }),
 )
 
@@ -956,8 +972,13 @@ cc_library(
             "gamemode.h",
             "confighandler.cpp",
             "confighandler.h",
+            "stamp.cpp",
+            "stamp.h",
         ] + glob(["*_test.cpp"]),
-    ),
+    ) + select({
+        "//conditions:default": [],
+        ":stamped": ["stamp.cpp", "stamp.h"],
+    }),
     data = select({
         "//conditions:default": [
             "//translations:es_ES/LC_MESSAGES/yatc.mo",
@@ -973,28 +994,33 @@ cc_library(
         "@tibia854//:Tibia.spr",
         #":YATC.pic",
     ],
-    defines = select({
+    defines = [
+        "BAZEL_BUILD=1",
+    ] + select({
         "//conditions:default": [
             "HAVE_LIBINTL_H=1",
-            "BAZEL_BUILD=1",
             "USE_OPENGL=1",
         ],
-        ":darwin": ["BAZEL_BUILD=1"],
+        ":darwin": [
+	],
         ":windows": [
             "WIN32=1",
-            "BAZEL_BUILD=1",
         ],
         ":windows_msys": [
             "WIN32=1",
-            "BAZEL_BUILD=1",
         ],
         ":windows_msvc": [
             "WIN32=1",
-            "BAZEL_BUILD=1",
         ],
+    }) + select({
+	"//conditions:default": [],
+	":stamped": ["STAMPED_FOR_RELEASE=1"],
     }),
     linkopts = select({
-        "//conditions:default": ["-lGLU"],
+        "//conditions:default": [
+            "-lGLU",
+            # from _envoy_stamped_linkopts
+        ],
         ":darwin": [],
         ":windows": [
             "-DEFAULTLIB:ws2_32.lib",
@@ -1006,6 +1032,10 @@ cc_library(
             "-DEFAULTLIB:shell32.lib",
         ],
         ":linux_deps_bin": [],  # added via deps
+    }),
+    linkstamp = select({
+        ":stamped": "stamp.cpp",
+        "//conditions:default": None,
     }),
     deps = [
         ":confighandler",
@@ -1064,4 +1094,88 @@ refresh_compile_commands(
     # Wildcard patterns, like //... for everything, *are* allowed here, just like a build.
     # As are additional targets (+) and subtractions (-), like in bazel query https://docs.bazel.build/versions/main/query.html#expressions
     # And if you're working on a header-only library, specify a test or binary target that compiles it.
+
+    # Easy rebuild with some flags (e.g. doing a release, and doing a keep-going):
+    # ~/bazelisk-linux-amd64 run --config=release -k :refresh_compile_commands -- -k --config=release
+)
+
+
+# from envoy:
+# ===========
+# including: https://raw.githubusercontent.com/envoyproxy/envoy/808a436ebe9c682bac81181c3ad45efd9bb24b71/bazel/volatile_env.sh
+# replacing: BUILD_SCM_REVISION with BUILD_SCM_VERSION
+sh_library(
+    name = "volatile_env",
+    srcs = ["volatile_env.sh"],
+)
+
+# Stamp derived from tree hash + dirty status if `BAZEL_VOLATILE_DIRTY`
+# is set, otherwise the git commit
+genrule(
+    name = "volatile-scm-hash",
+    outs = ["volatile-scm-hash.txt"],
+    cmd = """
+    grep BUILD_SCM_HASH bazel-out/volatile-status.txt > $@
+    """,
+    stamp = 1,
+    tags = ["no-remote-exec"],
+)
+
+genrule(
+    name = "gnu_build_id",
+    outs = ["gnu_build_id.ldscript"],
+    cmd = """
+      echo --build-id=0x$$(
+          grep -E "^BUILD_SCM_VERSION" bazel-out/volatile-status.txt \
+        | sed 's/^BUILD_SCM_VERSION //') \
+        > $@
+    """,
+    # Undocumented attr to depend on workspace status files.
+    # https://github.com/bazelbuild/bazel/issues/4942
+    stamp = 1,
+)
+
+# For macOS, which doesn't have GNU ld's `--build-id` flag.
+genrule(
+    name = "raw_build_id",
+    outs = ["raw_build_id.ldscript"],
+    cmd = """
+      grep -E "^BUILD_SCM_VERSION" bazel-out/volatile-status.txt \
+    | sed 's/^BUILD_SCM_VERSION //' \
+    | tr -d '\\n' \\
+    > $@
+    """,
+    # Undocumented attr to depend on workspace status files.
+    # https://github.com/bazelbuild/bazel/issues/4942
+    stamp = 1,
+)
+
+# ==============
+# end from envoy
+
+genrule(
+    name = "stamp_cpp",
+    outs = ["stamp.cpp"],
+    cmd = """
+echo "#include <string>" > $@
+echo "#include \\\"stamp.h\\\"" >> $@
+awk '{ print "std::string __yatc_stamp_" $$1 " = __YATC_STAMP_" $$1 ";"; }' bazel-out/volatile-status.txt >> $@
+awk '{ print "std::string __yatc_stamp_" $$1 " = __YATC_STAMP_" $$1 ";"; }' bazel-out/stable-status.txt >> $@
+    """,
+    stamp=1,
+)
+genrule(
+    name = "stamp_h",
+    outs = ["stamp.h"],
+    cmd = """
+echo "#include <string>" > $@
+echo "#ifndef __YATC_STAMP_H" >> $@
+echo "#define __YATC_STAMP_H" >> $@
+awk '{ print "extern std::string __yatc_stamp_" $$1 ";"; }' bazel-out/volatile-status.txt >> $@
+awk '{ print "extern std::string __yatc_stamp_" $$1 ";"; }' bazel-out/stable-status.txt >> $@
+sed -E 's/^([^ ]*) (.*)$$/#define __YATC_STAMP_\\1 "\\2"/' bazel-out/volatile-status.txt >> $@
+sed -E 's/^([^ ]*) (.*)$$/#define __YATC_STAMP_\\1 "\\2"/' bazel-out/stable-status.txt >> $@
+echo "#endif" >> $@
+    """,
+    stamp=1,
 )
