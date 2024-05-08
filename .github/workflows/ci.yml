@@ -180,3 +180,10 @@ jobs:
 
     - name: rbe bazel test
       run: bazel test --config=remote //:util_test
+      # Temporarily allow errors. This is known to fail at this time due to insufficient
+      # number of binary packages installed by the rules_libsdl12.
+      continue-on-error: true
+
+    - name: print ldd
+      run: ldd bazel-bin/util_test
+      continue-on-error: true
