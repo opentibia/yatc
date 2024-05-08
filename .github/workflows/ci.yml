@@ -57,7 +57,7 @@ jobs:
     - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
       name: List the state of node modules
       continue-on-error: true
-      run: echo "Stub action: merely printing a notice that there was a cache miss"
+      run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
 
     - name: Checkout submodules
@@ -96,7 +96,7 @@ jobs:
     - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
       name: List the state of node modules
       continue-on-error: true
-      run: echo "Stub action: merely printing a notice that there was a cache miss"
+      run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
 
     - name: Checkout submodules
