@@ -2,6 +2,9 @@ name: C/C++ and Bazel CI
 
 on: [push, pull_request]
 
+# Not using 'inputs' here, since we take no inputs at this time -- just the 'github' context.
+run-name: Run CI with ${{ github.ref_name }} by @${{ github.actor }}
+
 jobs:
   cpp:
     runs-on: ubuntu-latest
@@ -37,14 +40,25 @@ jobs:
 
     # Caches and restores the bazel build directory.
     - name: Cache bazel build results
-      uses: actions/cache@v2.0.0
+      uses: actions/cache@v3
       env:
         cache-name: bazel-cache
       with:
         path: ~/.cache/bazel
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
         restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
           ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: List the state of node modules
+      continue-on-error: true
+      # More useful with e.g. npm.
+      run: echo "Stub action: merely printing a notice that there was a cache miss"
 
     - name: Checkout submodules
       run: git submodule init && git submodule update
@@ -65,14 +79,25 @@ jobs:
 
     # Caches and restores the bazel build directory.
     - name: Cache bazel build results
-      uses: actions/cache@v2.0.0
+      uses: actions/cache@v3
       env:
         cache-name: bazel-cache
       with:
         path: ~/.cache/bazel
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
         restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
           ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: List the state of node modules
+      continue-on-error: true
+      # More useful with e.g. npm.
+      run: echo "Stub action: merely printing a notice that there was a cache miss"
 
     - name: Checkout submodules
       run: git submodule init && git submodule update
