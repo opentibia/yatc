@@ -1,0 +1,164 @@
+name: Bazel CI
+
+on:
+  workflow_call:
+
+# Not using 'inputs' here, since we take no inputs at this time -- just the 'github' context.
+# Note: on type workflow_run commit message would be github.event.workflow_run.head_commit.message
+# https://stackoverflow.com/a/63619526
+# Available data: https://stackoverflow.com/a/75715955
+run-name: "@${{github.actor}} Bazel CI on ${{ github.ref_name }} - ${{ github.event.head_commit.message }}"
+
+jobs:
+
+  bazel_build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v3
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: List the state of node modules
+      continue-on-error: true
+      run: echo Stub action merely printing a notice that there was a cache miss
+      # More useful with e.g. npm.
+
+    - name: install deps without prebuilt SDL (bazel)
+      run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
+    - name: bazel build
+      run: bazel build //:yatc
+
+  bazel_test:
+    runs-on: ubuntu-latest
+
+    needs: [bazel_build]
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v3
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: List the state of node modules
+      continue-on-error: true
+      run: echo Stub action merely printing a notice that there was a cache miss
+      # More useful with e.g. npm.
+
+    - name: install deps without prebuilt SDL (bazel)
+      run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
+    - name: bazel test
+      run: bazel test //:util_test
+
+  bazel_build_buildbuddy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v3
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: List the state of node modules
+      continue-on-error: true
+      run: echo Stub action merely printing a notice that there was a cache miss
+      # More useful with e.g. npm.
+
+    - name: rbe bazel build
+      run: bazel build --config=remote //:yatc
+
+  bazel_test_buildbuddy:
+    runs-on: ubuntu-latest
+
+    needs: [bazel_build_buildbuddy]
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v3
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: List the state of node modules
+      continue-on-error: true
+      run: echo Stub action merely printing a notice that there was a cache miss
+      # More useful with e.g. npm.
+
+    - name: rbe bazel test
+      run: bazel test --config=remote //:util_test
+      # Temporarily allow errors. This is known to fail at this time due to insufficient
+      # number of binary packages installed by the rules_libsdl12.
+      continue-on-error: true
+
+    - name: print ldd
+      run: ldd bazel-bin/util_test
+      continue-on-error: true
