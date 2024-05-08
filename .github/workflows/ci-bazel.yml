@@ -38,7 +38,7 @@ jobs:
           ${{ runner.os }}-${{ env.cache-name }}-master
 
     - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
-      name: List the state of node modules
+      name: Print a stub message when there is a cache miss
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
@@ -76,7 +76,7 @@ jobs:
           ${{ runner.os }}-${{ env.cache-name }}-master
 
     - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
-      name: List the state of node modules
+      name: Print a stub message when there is a cache miss
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
@@ -112,7 +112,7 @@ jobs:
           ${{ runner.os }}-${{ env.cache-name }}-master
 
     - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
-      name: List the state of node modules
+      name: Print a stub message when there is a cache miss
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
@@ -148,7 +148,7 @@ jobs:
           ${{ runner.os }}-${{ env.cache-name }}-master
 
     - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
-      name: List the state of node modules
+      name: Print a stub message when there is a cache miss
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
