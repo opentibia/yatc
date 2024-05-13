@@ -2,6 +2,9 @@ name: Bazel CI
 
 on:
   workflow_call:
+    secrets:
+      BUILDBUDDY_ORG_API_KEY:
+        required: false
 
 # Not using 'inputs' here, since we take no inputs at this time -- just the 'github' context.
 # Note: on type workflow_run commit message would be github.event.workflow_run.head_commit.message
