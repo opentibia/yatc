@@ -118,7 +118,7 @@ jobs:
       # More useful with e.g. npm.
 
     - name: rbe bazel build
-      run: bazel build --config=remote --build_metadata=ROLE=CI //:yatc
+      run: bazel build --config=remote --build_metadata=ROLE=CI --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_ORG_API_KEY }} //:yatc
 
   bazel_test_buildbuddy:
     runs-on: ubuntu-latest
@@ -154,7 +154,7 @@ jobs:
       # More useful with e.g. npm.
 
     - name: rbe bazel test
-      run: bazel test --config=remote --build_metadata=ROLE=CI //:util_test
+      run: bazel test --config=remote --build_metadata=ROLE=CI --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_ORG_API_KEY }} //:util_test
       # Temporarily allow errors. This is known to fail at this time due to insufficient
       # number of binary packages installed by the rules_libsdl12.
       continue-on-error: true
