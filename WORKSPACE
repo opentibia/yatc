@@ -8,8 +8,8 @@ local_repository(
     path = __workspace_dir__ + "/vendor/github.com/ivucica/rules_tibia",
 )
 
-load("@rules_tibia//:tibia_data.bzl", "tibia_data_repository")
-tibia_data_repository(version=854)
+load("@rules_tibia//:tibia_data.bzl", "tibia_data_repositories")
+tibia_data_repositories()
 
 local_repository(
     name = "glict",
