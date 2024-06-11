@@ -9,6 +9,7 @@ actions:
         branches:
           - "*"
     bazel_commands:
+      - "run --config=remote :checkout_modules"
       - "test --config=remote //:util_test" # <-- main modification here: --config=remote as a default for buildbuddy.yaml; also currently testing even //:all is broken (because it tries to compile macclipboard.m), much less //...
 
   - name: "Build main binary"
@@ -20,4 +21,5 @@ actions:
         branches:
           - "*"
     bazel_commands:
+      - "run --config=remote :checkout_modules"
       - "build --config=remote :yatc"

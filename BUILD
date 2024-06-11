@@ -1153,6 +1153,11 @@ genrule(
 # ==============
 # end from envoy
 
+sh_binary(
+    name = "checkout_modules",
+    srcs = ["_checkout_modules.sh"],
+)
+
 genrule(
     name = "stamp_cpp",
     outs = ["stamp.cpp"],
