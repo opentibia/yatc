@@ -231,6 +231,16 @@ cc_test(
     linkopts = ["-ldl"],
 )
 
+cc_test(
+    # This test intentionally links nothing except gtest.
+    name = "minimal_test",
+    size = "small",
+    srcs = ["minimal_test.cpp"],
+    deps = [
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
 cc_library(
     name = "macutil",
     srcs = select({
