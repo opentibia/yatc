@@ -50,7 +50,8 @@
 				"llvm-vs-code-extensions.vscode-clangd",
 				"ms-vscode.cpptools",
 				"StackBuild.bazel-stack-vscode",
-				"StackBuild.bazel-stack-vscode-cc"
+				"StackBuild.bazel-stack-vscode-cc",
+				"bjob.vsc-bazel-tools"
 			]
 		}
 	},
