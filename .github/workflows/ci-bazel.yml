@@ -101,7 +101,7 @@ jobs:
       uses: actions/upload-artifact@v4
       if: always()  # Run even if the previous step fails
       with:
-        name: junit-test-results
+        name: junit-test-results-regular-${{ matrix.name }}
         path: 'bazel-testlogs/**/test.xml'
         # TODO: bazel-testlogs/name-of-test has also:
         # * test.outputs/
@@ -111,12 +111,12 @@ jobs:
         # * test.cache_status
         # but they might not be worth uploading at this time.
 
-        # retention-days: 3650d  # For now, don't delete explicitly, or 10yr.
+        retention-days: 90  # Maximum is 90d, default is repo settings.
     - name: Upload test log
       uses: actions/upload-artifact@v4
       if: always()  # Run even if the previous step fails
       with:
-        name: junit-test-results
+        name: junit-test-logs-regular-${{ matrix.name }}
         path: 'bazel-testlogs/**/test.log'
 
   bazel_build_buildbuddy:
@@ -207,7 +207,7 @@ jobs:
       uses: actions/upload-artifact@v4
       if: always()  # Run even if the previous step fails
       with:
-        name: junit-test-results
+        name: junit-test-results-buildbuddy-${{ matrix.name }}
         path: 'bazel-testlogs/**/test.xml'
         # TODO: bazel-testlogs/name-of-test has also:
         # * test.outputs/
@@ -217,12 +217,12 @@ jobs:
         # * test.cache_status
         # but they might not be worth uploading at this time.
 
-        # retention-days: 3650d  # For now, don't delete explicitly, or 10yr.
+        retention-days: 90  # Maximum and default is 90d but can be shortened.
     - name: Upload test log
       uses: actions/upload-artifact@v4
       if: always()  # Run even if the previous step fails
       with:
-        name: junit-test-results
+        name: junit-test-logs-buildbuddy-${{ matrix.name }}
         path: 'bazel-testlogs/**/test.log'
 
     - name: print ldd
