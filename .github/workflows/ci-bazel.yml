@@ -97,6 +97,27 @@ jobs:
       run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel test
       run: bazel test ${{ matrix.bazel_target }}
+    - name: Upload test report
+      uses: actions/upload-artifact@v4
+      if: always()  # Run even if the previous step fails
+      with:
+        name: junit-test-results
+        path: 'bazel-testlogs/**/test.xml'
+        # TODO: bazel-testlogs/name-of-test has also:
+        # * test.outputs/
+        # * test.outputs_manifest/
+        # * test.log
+        # * test.raw_splitlogs/
+        # * test.cache_status
+        # but they might not be worth uploading at this time.
+
+        # retention-days: 3650d  # For now, don't delete explicitly, or 10yr.
+    - name: Upload test log
+      uses: actions/upload-artifact@v4
+      if: always()  # Run even if the previous step fails
+      with:
+        name: junit-test-results
+        path: 'bazel-testlogs/**/test.log'
 
   bazel_build_buildbuddy:
     runs-on: ubuntu-latest
@@ -181,6 +202,28 @@ jobs:
       continue-on-error: true
       env:
         BUILDBUDDY_ORG_API_KEY: ${{ secrets.BUILDBUDDY_ORG_API_KEY }}
+
+    - name: Upload test report
+      uses: actions/upload-artifact@v4
+      if: always()  # Run even if the previous step fails
+      with:
+        name: junit-test-results
+        path: 'bazel-testlogs/**/test.xml'
+        # TODO: bazel-testlogs/name-of-test has also:
+        # * test.outputs/
+        # * test.outputs_manifest/
+        # * test.log
+        # * test.raw_splitlogs/
+        # * test.cache_status
+        # but they might not be worth uploading at this time.
+
+        # retention-days: 3650d  # For now, don't delete explicitly, or 10yr.
+    - name: Upload test log
+      uses: actions/upload-artifact@v4
+      if: always()  # Run even if the previous step fails
+      with:
+        name: junit-test-results
+        path: 'bazel-testlogs/**/test.log'
 
     - name: print ldd
       run: ldd bazel-bin/util_test
