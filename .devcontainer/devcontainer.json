@@ -42,12 +42,17 @@
 				],
 				"bsv.cc.compdb.targets": [
 					"//:yatc"
-				]
+				],
+				// Microsoft C/C++ extension should have a disabled IntelliSense engine to avoid conflicts with Clangd.
+				"C_Cpp.intelliSenseEngine": "disabled"
 			},
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"BazelBuild.vscode-bazel",
+				// LLVM Clangd. Good integration with Clang / LLVM, but poor parsing of Doxygen docstrings.
 				"llvm-vs-code-extensions.vscode-clangd",
+				// C/C++ extension. IntelliSense has good parsing of Doxygen docstrings, but otherwise Clangd is more
+				// likely to fit our use case (due to need for Bazel integration via compile_commands.json).
 				"ms-vscode.cpptools",
 				"StackBuild.bazel-stack-vscode",
 				"StackBuild.bazel-stack-vscode-cc",
