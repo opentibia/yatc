@@ -119,6 +119,16 @@ jobs:
         name: junit-test-logs-regular-${{ matrix.name }}
         path: 'bazel-testlogs/**/test.log'
 
+    # This fails unless there's write permission in the token. Hence the attempt
+    # to run as triggered by these workflows in another job, which might then
+    # work on pull requests as well. This needs further investigation.
+    - name: Publish Test Report
+    uses: mikepenz/action-junit-report@v4
+    if: success() || failure() # always run even if the previous step fails
+    with:
+      commit: ${{github.event.workflow_run.head_sha}}  # remove if we don't use separate workflow
+      report_paths: 'bazel-testlogs/**/test.xml'
+    continue-on-error: true
   bazel_build_buildbuddy:
     runs-on: ubuntu-latest
 
@@ -227,4 +237,15 @@ jobs:
 
     - name: print ldd
       run: ldd bazel-bin/util_test
+      continue-on-error: true
+
+    # This fails unless there's write permission in the token. Hence the attempt
+    # to run as triggered by these workflows in another job, which might then
+    # work on pull requests as well. This needs further investigation.
+    - name: Publish Test Report
+      uses: mikepenz/action-junit-report@v4
+      if: success() || failure() # always run even if the previous step fails
+      with:
+        commit: ${{github.event.workflow_run.head_sha}}  # remove if we don't use separate workflow
+        report_paths: 'bazel-testlogs/**/test.xml'
       continue-on-error: true
