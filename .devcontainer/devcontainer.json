@@ -53,6 +53,8 @@
 				"llvm-vs-code-extensions.vscode-clangd",
 				// C/C++ extension. IntelliSense has good parsing of Doxygen docstrings, but otherwise Clangd is more
 				// likely to fit our use case (due to need for Bazel integration via compile_commands.json).
+				// See more about doxygen support in C/C++ extension:
+				// https://devblogs.microsoft.com/cppblog/visual-studio-code-c-extension-july-2020-update-doxygen-comments-and-logpoints/
 				"ms-vscode.cpptools",
 				"StackBuild.bazel-stack-vscode",
 				"StackBuild.bazel-stack-vscode-cc",
