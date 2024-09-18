@@ -151,7 +151,7 @@ cc_library(
         ":objects",
         #":sprite_hdr",
         #":defines",
-        #":engine",
+        ":engine", # to pull in GLICT, so we don't get header complaints about GLICT/fonts.h; affects only compile_commands.json, not build. note, however, we do depend on engine hdr here.
     ] + glu_deps,
 )
 
@@ -285,6 +285,7 @@ cc_library(
         ":spritesdl",
         ":util",
         "@glict//glict/GLICT",
+        "@glict//glict/GLICT:glict_sys_headers",  # does not affect build, but affects compile_commands.json
         "@libglu1-mesa-dev//:libglu1-mesa-dev",
         "@rules_libsdl12//:libsdl12",
     ],
