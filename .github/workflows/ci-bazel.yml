@@ -128,6 +128,10 @@ jobs:
       with:
         commit: ${{github.event.workflow_run.head_sha}}  # remove if we don't use separate workflow
         report_paths: 'bazel-testlogs/**/test.xml'
+        include_passed: true
+        detailed_summary: true
+        annotate_notice: true
+        follow_symlink: true
     continue-on-error: true
   bazel_build_buildbuddy:
     runs-on: ubuntu-latest
@@ -248,4 +252,8 @@ jobs:
       with:
         commit: ${{github.event.workflow_run.head_sha}}  # remove if we don't use separate workflow
         report_paths: 'bazel-testlogs/**/test.xml'
+        include_passed: true
+        detailed_summary: true
+        annotate_notice: true
+        follow_symlink: true
       continue-on-error: true
