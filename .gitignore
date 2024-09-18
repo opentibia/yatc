@@ -41,3 +41,4 @@ yatc.ico.png
 /.cache/
 bazelisk-windows-amd64.exe
 /vendor/github.com/ivucica/rules_libsdl12.deb
+/.clangd/index
