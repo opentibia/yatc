@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Download Test Report
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v6
         with:
           name: junit-test-results-${{ matrix.place }}-${{ matrix.short_name }}
           workflow: ${{ github.event.workflow.id }}
