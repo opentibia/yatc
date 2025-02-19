@@ -1,7 +1,7 @@
 name: Bazel CI test report
 on:
   workflow_run:
-    workflows: [ C/C++ and Bazel CI ]
+    workflows: [ "C/C++ and Bazel CI" ]
     types: [ completed ]
 
 permissions:
