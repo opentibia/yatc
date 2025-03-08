@@ -406,9 +406,15 @@ void yatc_fopen_init(char *cmdline) {
 				break;
 		}
 	}
+
 	if (cmdline) {
 		for (int i = strlen(cmdline)-1; i >= 0; i--) {
-			if (cmdline[i] == '/') {
+			if (cmdline[i] == '/'
+			#if WIN32
+			|| cmdline[i] == '\\' // Windows
+			#endif
+			) {
+
 				char *tmp = new char[i+2];
 				memcpy(tmp, cmdline, i+1);
 				tmp[i+1]=0;
@@ -429,6 +435,10 @@ void yatc_fopen_init(char *cmdline) {
 				// Adding so MANIFEST file can be found.
 				std::string tmp3 = std::string(cmdline) + ".runfiles";
 				printf("Also adding Bazel runfiles path %s\n", tmp3.c_str());
+				searchpaths.insert(searchpaths.end(), tmp3);
+				// Also adding if .exe was missing from the exe name when launching.
+				tmp3 = std::string(cmdline) + ".exe.runfiles";
+				printf("Also adding Bazel runfiles path %s with extra .exe suffix in case binary was started without .exe\n", tmp3.c_str());
 				searchpaths.insert(searchpaths.end(), tmp3);
 #endif
 #endif

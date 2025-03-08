@@ -417,7 +417,7 @@ int main(int argc, char *argv[])
 		" Review LICENSE in " PRODUCTSHORT " distribution for details.\n");
 
 
-    yatc_fopen_init(argv[0]);
+	yatc_fopen_init(argv[0]);
 
 
 
