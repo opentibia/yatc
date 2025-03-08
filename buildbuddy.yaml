@@ -1,0 +1,27 @@
+# "This config is equivalent to the default config that we use if you do not have a buildbuddy.yaml file at the root of your repo."
+actions:
+  - name: "Test all targets"
+    container_image: "ubuntu-20.04" # <-- we use .deb binaries from 20.04 as our dependencies
+    triggers:
+      push:
+        branches:
+          - "master" # <-- replace "main" with your main branch name
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "run --config=remote :checkout_modules"
+      - "test --config=remote //:util_test" # <-- main modification here: --config=remote as a default for buildbuddy.yaml; also currently testing even //:all is broken (because it tries to compile macclipboard.m), much less //...
+
+  - name: "Build main binary"
+    container_image: "ubuntu-20.04" # <-- we use .deb binaries from 20.04 as our dependencies
+    triggers:
+      push:
+        branches:
+          - "master" # <-- replace "main" with your main branch name
+      pull_request:
+        branches:
+          - "*"
+    bazel_commands:
+      - "run --config=remote :checkout_modules"
+      - "build --config=remote :yatc"

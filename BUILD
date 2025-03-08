@@ -32,15 +32,24 @@ config_setting(
 config_setting(
     name = "use_sdl12",
     values = {
-      "define": "USE_SDL12=1"
+        "define": "USE_SDL12=1",
     },
     visibility = [":__subpackages__"],
 )
 
 config_setting(
+    name = "stamped",
+    values = {
+        # --config=release has -c opt (compilation_mode opt) plus explicitly STAMPED_FOR_RELEASE
+        "define": "STAMPED_FOR_RELEASE=1",
+        "compilation_mode": "opt",
+    },
+)
+
+config_setting(
     name = "use_sdl2",
     values = {
-      "define": "USE_SDL2=1",
+        "define": "USE_SDL2=1",
     },
     visibility = [":__subpackages__"],
 )
@@ -48,19 +57,51 @@ config_setting(
 config_setting(
     name = "debug_build",
     values = {
-      "compilation_mode": "dbg",
+        "compilation_mode": "dbg",
     },
 )
 
 alias(
     name = "sdl",
     actual = select({
-      "//:use_sdl12": "@rules_libsdl12//:libsdl12",
-      "//:use_sdl2": "@bazelregistry_sdl2//:SDL2",
-
-      "//conditions:default": "@rules_libsdl12//:libsdl12",
-    })
+        "//:use_sdl12": "@rules_libsdl12//:libsdl12",
+        "//:use_sdl2": "@bazelregistry_sdl2//:SDL2",
+        "//conditions:default": "@rules_libsdl12//:libsdl12",
+    }),
 )
+
+# With --define libsdl12_linux_deps_bin=true, a prebuilt set of x64 binary
+# packages for dependencies will be used. Useful for remote builds where local
+# headers and libs will not be installed.
+#
+# Ideally libsdl12 itself would offer us a way to link against the correct
+# libraries such as libGL without having to pass this.
+config_setting(
+    name = "linux_deps_bin",
+    values = {"define": "libsdl12_linux_deps_bin=true"},
+)
+
+gl_deps = select({
+    "//conditions:default": [],
+    ":linux_deps_bin": [
+        # both hdrs and dev are needed
+        "@libgl-dev//:hdrs",
+        "@libgl-dev//:libgl-dev",
+        #"@libgl1//:libs",
+        "@libgl1//:libGL",
+    ],
+})
+
+glu_deps = select({
+    "//conditions:default": [],
+    ":linux_deps_bin": [
+        # both hdrs and dev are needed
+        "@libglu1-mesa-dev//:hdrs",
+        "@libglu1-mesa-dev//:libglu1-mesa-dev",
+        #"@libglu1-mesa//:libs",
+        "@libglu1-mesa//:libGLU",
+    ],
+})
 
 cc_library(
     name = "creatureui_hdr",
@@ -110,18 +151,19 @@ cc_library(
         ":objects",
         #":sprite_hdr",
         #":defines",
-        #":engine",
-    ],
+        ":engine", # to pull in GLICT, so we don't get header complaints about GLICT/fonts.h; affects only compile_commands.json, not build. note, however, we do depend on engine hdr here.
+    ] + glu_deps,
 )
+
 cc_library(
     name = "itemui_clionly",
-    defines = ["CLI_ONLY=1"],
     srcs = [
         "itemui.cpp",
     ],
     hdrs = [
         "itemui.h",
     ],
+    defines = ["CLI_ONLY=1"],
     linkstatic = 1,
     deps = [
         ":thingui",
@@ -149,6 +191,26 @@ cc_library(
         "product.h",
         "util.h",
     ],
+    defines = select({
+        "//conditions:default": [
+            "HAVE_LIBINTL_H=1",
+            "BAZEL_BUILD=1",
+            "USE_OPENGL=1",
+        ],
+        ":darwin": ["BAZEL_BUILD=1"],
+        ":windows": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
+        ":windows_msys": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
+        ":windows_msvc": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
+    }),
     linkstatic = 1,
     deps = [
         "//:sdl",
@@ -156,32 +218,35 @@ cc_library(
         ":darwin": [":macutil"],
         "//conditions:default": [],
     }),
-    defines = select({
-        "//conditions:default": [
-            "HAVE_LIBINTL_H=1",
-            "BAZEL_BUILD=1",
-            "USE_OPENGL=1"
-        ],
-        ":darwin": ["BAZEL_BUILD=1"],
-        ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
-        ":windows_msys": ["WIN32=1", "BAZEL_BUILD=1",],
-        ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
-    }),
 )
 
 cc_test(
-  name = "util_test",
-  size = "small",
-  srcs = ["util_test.cpp"],
-  deps = [
-      "@com_google_googletest//:gtest_main",
-      ":util",
-  ],
+    name = "util_test",
+    size = "small",
+    srcs = ["util_test.cpp"],
+    deps = [
+        ":util",
+        "@com_google_googletest//:gtest_main",
+    ],
+    linkopts = ["-ldl"],
+)
+
+cc_test(
+    # This test intentionally links nothing except gtest.
+    name = "minimal_test",
+    size = "small",
+    srcs = ["minimal_test.cpp"],
+    deps = [
+        "@com_google_googletest//:gtest_main",
+    ],
 )
 
 cc_library(
     name = "macutil",
-    srcs = ["objcmacutil.m.c"],
+    srcs = select({
+        "//conditions:default": [],
+        ":darwin": ["objcmacutil.m.c"],
+    }),
     hdrs = ["macutil.h"],
     copts = [
         "-x",
@@ -191,7 +256,10 @@ cc_library(
 
 cc_library(
     name = "macclipboard",
-    srcs = ["objcmacclipboard.m.c"],
+    srcs = select({
+        "//conditions:default": [],
+        ":darwin": ["objcmacclipboard.m.c"],
+    }),
     copts = [
         "-x",
         "objective-c",
@@ -213,10 +281,12 @@ cc_library(
         ":font",
         ":options",
         ":sprite_hdr",
-        ":spritesdl",
         ":spritegl",
+        ":spritesdl",
         ":util",
         "@glict//glict/GLICT",
+        "@glict//glict/GLICT:glict_sys_headers",  # does not affect build, but affects compile_commands.json
+        "@libglu1-mesa-dev//:libglu1-mesa-dev",
         "@rules_libsdl12//:libsdl12",
     ],
 )
@@ -264,7 +334,7 @@ cc_library(
     deps = [
         ":engine_hdr",
         ":sprite_hdr",
-    ],
+    ] + glu_deps,
 )
 
 cc_library(
@@ -273,31 +343,40 @@ cc_library(
         "enginegl.h",
         "spritegl.h",
     ],
-    deps = [
-        ":sprite_hdr",
-    ],
     defines = select({
         "//conditions:default": [
             "HAVE_LIBINTL_H=1",
             "BAZEL_BUILD=1",
-            "USE_OPENGL=1"
+            "USE_OPENGL=1",
         ],
         ":darwin": ["BAZEL_BUILD=1"],
-        ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
-        ":windows_msys": ["WIN32=1", "BAZEL_BUILD=1",],
-        ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
+        ":windows_msys": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
+        ":windows_msvc": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
     }),
+    deps = [
+        ":sprite_hdr",
+    ],
 )
 
 cc_library(
     name = "engine_hdr",
     hdrs = [
         "engine.h",
+        "enginegl.h",  # Here to avoid cyclic dep.
+        "enginesdl.h",  # Here to avoid cyclic dep.
         "font.h",  # Here to avoid cyclic dep.
-        "enginesdl.h", # Here to avoid cyclic dep.
-        "spritesdl.h", # Here to avoid cyclic dep.
-        "enginegl.h", # Here to avoid cyclic dep.
-        "spritegl.h", # Here to avoid cyclic dep.
+        "spritegl.h",  # Here to avoid cyclic dep.
+        "spritesdl.h",  # Here to avoid cyclic dep.
     ],
     deps = [
         ":debugprint",
@@ -312,11 +391,11 @@ cc_library(
 cc_library(
     name = "objects",
     srcs = [
+        "confighandler.cpp",
+        "confighandler.h",
         "objects.cpp",
-	"options.cpp",
+        "options.cpp",
         "options.h",
-	"confighandler.cpp",
-	"confighandler.h",
     ],
     hdrs = [
         "objects.h",
@@ -329,21 +408,22 @@ cc_library(
         "//gamecontent:enums",  # due to options.h
         "//net:enum_hdr",
         "//net:protocolconfig_hdr",
-    ],
+    ] + glu_deps,
 )
+
 cc_library(
     name = "objects_clionly",
-    defines = ["CLI_ONLY=1"],
     srcs = [
+        "confighandler.cpp",
+        "confighandler.h",
         "objects.cpp",
-	"options.cpp",
+        "options.cpp",
         "options.h",
-	"confighandler.cpp",
-	"confighandler.h",
     ],
     hdrs = [
         "objects.h",
     ],
+    defines = ["CLI_ONLY=1"],
     linkstatic = 1,
     deps = [
         "engine_hdr",
@@ -399,7 +479,10 @@ cc_library(
         ":objects",
         ":thingui",
         "//gamecontent:position",
-    ],
+    ] + select({
+        "//conditions:default": [],
+        ":linux_deps_bin": ["@libgl1//:libs"],
+    }),
 )
 
 cc_library(
@@ -412,7 +495,7 @@ cc_library(
         ":sprdata",
         ":stdinttypes",
         "@rules_libsdl12//:libsdl12",
-    ],
+    ] + gl_deps + glu_deps,
 )
 
 cc_library(
@@ -441,9 +524,6 @@ cc_library(
     hdrs = [
         "debugprint.h",
     ],
-    deps = [
-        ":util",
-    ],
     defines = select({
         "//conditions:default": [
             "DEBUGPRINT_LEVEL=0",
@@ -452,6 +532,9 @@ cc_library(
             "DEBUGPRINT_LEVEL=3",
         ],
     }),
+    deps = [
+        ":util",
+    ] + gl_deps,
 )
 
 cc_library(
@@ -521,9 +604,9 @@ cc_library(
         ":engine",
         ":options",
         "@glict//glict/GLICT",
-        "@rules_libsdl12//:libsdl12",
         "@libsdlgfx//:sdlgfx",
-    ],
+        "@rules_libsdl12//:libsdl12",
+    ] + glu_deps,
 )
 
 cc_library(
@@ -539,8 +622,8 @@ cc_library(
         ":engine",
         ":options",
         "@glict//glict/GLICT",
-        "@rules_libsdl12//:libsdl12",
         "@libsdlgfx//:sdlgfx",
+        "@rules_libsdl12//:libsdl12",
     ],
 )
 
@@ -567,8 +650,8 @@ cc_library(
         "notifications.h",
     ],
     deps = [
-        "//net:enum_hdr",
         "//net:connection_hdr",
+        "//net:enum_hdr",
     ],
 )
 
@@ -628,9 +711,9 @@ cc_library(
         "//gamecontent:creature_hdr",
     ],
 )
+
 cc_library(
     name = "notifications_clionly",
-    defines = ["CLI_ONLY=1"],
     srcs = [
         "automap.h",
         "choicegrid.h",
@@ -671,6 +754,7 @@ cc_library(
     hdrs = [
         "notifications.h",
     ],
+    defines = ["CLI_ONLY=1"],
     linkstatic = 1,
     deps = [
         "//gamecontent:enums",
@@ -716,36 +800,45 @@ cc_library(
     # TODO(ivucica): move to ui/BUILD
     name = "ui",
     srcs = glob(["ui/*.cpp"]) + [
-        "gm_gameworld.h",
-        "gamemode.h",
-        "skin.h",
-        "engine.h",
-        "spritesdl.h",
-        "spritegl.h",
-        "font.h",
-        "fassert.h",
-        "enginesdl.h",
-        "options.h",
-        "choicegrid.h",
-        "mapui.h",
-        "popup.h",
-        "stackpanel.h",
         "automap.h",
-        "statusmsg.h",
-        "console.h",
+        "choicegrid.h",
         "clipboard.h",
+        "console.h",
+        "engine.h",
+        "enginesdl.h",
+        "fassert.h",
+        "font.h",
+        "gamemode.h",
+        "gm_gameworld.h",
+        "mapui.h",
+        "options.h",
+        "popup.h",
+        "skin.h",
+        "spritegl.h",
+        "spritesdl.h",
+        "stackpanel.h",
+        "statusmsg.h",
     ],
     hdrs = glob(["ui/*.h"]),
     defines = select({
         "//conditions:default": [
             "HAVE_LIBINTL_H=1",
             "BAZEL_BUILD=1",
-            "USE_OPENGL=1"
+            "USE_OPENGL=1",
         ],
         ":darwin": ["BAZEL_BUILD=1"],
-        ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
-        ":windows_msys": ["WIN32=1", "BAZEL_BUILD=1",],
-        ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":windows": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
+        ":windows_msys": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
+        ":windows_msvc": [
+            "WIN32=1",
+            "BAZEL_BUILD=1",
+        ],
     }),
     linkstatic = 1,
     deps = [
@@ -760,14 +853,14 @@ cc_library(
         "//gamecontent:map",
         "//gamecontent:shop",
         "//gamecontent:viplist",
-        "//net:protocolgame",
-        "//net:protocolconfig_hdr",
         "//net:connection_hdr",
         "//net:enum_hdr",
+        "//net:protocolconfig_hdr",
+        "//net:protocolgame",
         "@glict//glict/GLICT",
-        "@rules_libsdl12//:libsdl12",  # due to gamemode.h
         "@libsdlgfx//:sdlgfx",
-    ],
+        "@rules_libsdl12//:libsdl12",  # due to gamemode.h
+    ] + gl_deps,
 )
 
 # objc_library() is only intended for use with iOS. This is most
@@ -800,15 +893,15 @@ cc_binary(
         "main.cpp",
     ],
     deps = [
-        ":yatc_lib",
         ":creatureui",
         ":distanceui",
         ":effectui",
         ":thingui",
+        ":yatc_lib",
     ] + select({
         ":darwin": [
-            "@rules_libsdl12//:libsdl12-main",
             ":macclipboard",
+            "@rules_libsdl12//:libsdl12-main",
         ],
         ":windows": [],
         ":windows_msys": [],
@@ -816,19 +909,26 @@ cc_binary(
         "//conditions:default": [
             ":enginegl",
         ],
+    }) + select({
+        ":stamped": ["//:gnu_build_id.ldscript"],
+        "//conditions:default": [],
+    }),
+    linkopts = select({
+        ":stamped": ["-Wl,@$(location //:gnu_build_id.ldscript)"],
+        "//conditions:default": [],
     }),
 )
 
 # TODO(ivucica): Enable and use once bazelbuild/bazel#8273 is resolved.
 #load("@bazel_tools//src:main/res/win_res.bzl", "windows_resources")
 #windows_resources(
-    #name = "yatc_resources",
-    #rc_files = [
-        #"resources.rc",
-    #],
-    #resources = [
-        #":yatc.ico",
-    #],
+#name = "yatc_resources",
+#rc_files = [
+#"resources.rc",
+#],
+#resources = [
+#":yatc.ico",
+#],
 #)
 
 cc_library(
@@ -883,8 +983,13 @@ cc_library(
             "gamemode.h",
             "confighandler.cpp",
             "confighandler.h",
+            "stamp.cpp",
+            "stamp.h",
         ] + glob(["*_test.cpp"]),
-    ),
+    ) + select({
+        "//conditions:default": [],
+        ":stamped": ["stamp.cpp", "stamp.h"],
+    }),
     data = select({
         "//conditions:default": [
             "//translations:es_ES/LC_MESSAGES/yatc.mo",
@@ -904,57 +1009,86 @@ cc_library(
         "@tibia854//:Tibia.spr",
         #":YATC.pic",
     ],
-    defines = select({
+    defines = [
+        "BAZEL_BUILD=1",
+    ] + select({
         "//conditions:default": [
             "HAVE_LIBINTL_H=1",
-            "BAZEL_BUILD=1",
-            "USE_OPENGL=1"
+            "USE_OPENGL=1",
         ],
-        ":darwin": ["BAZEL_BUILD=1"],
-        ":windows": ["WIN32=1", "BAZEL_BUILD=1",],
-        ":windows_msys": ["WIN32=1", "BAZEL_BUILD=1",],
-        ":windows_msvc": ["WIN32=1", "BAZEL_BUILD=1",],
+        ":darwin": [
+	],
+        ":windows": [
+            "WIN32=1",
+        ],
+        ":windows_msys": [
+            "WIN32=1",
+        ],
+        ":windows_msvc": [
+            "WIN32=1",
+        ],
+    }) + select({
+	"//conditions:default": [],
+	":stamped": ["STAMPED_FOR_RELEASE=1"],
     }),
     linkopts = select({
-        "//conditions:default": ["-lGLU"],
+        "//conditions:default": [
+            "-lGLU",
+            # from _envoy_stamped_linkopts
+        ],
         ":darwin": [],
-        ":windows": ["-DEFAULTLIB:ws2_32.lib", "-DEFAULTLIB:shell32.lib"],
-        ":windows_msys": ["",],
-        ":windows_msvc": ["-DEFAULTLIB:ws2_32.lib", "-DEFAULTLIB:shell32.lib"],
+        ":windows": [
+            "-DEFAULTLIB:ws2_32.lib",
+            "-DEFAULTLIB:shell32.lib",
+        ],
+        ":windows_msys": [""],
+        ":windows_msvc": [
+            "-DEFAULTLIB:ws2_32.lib",
+            "-DEFAULTLIB:shell32.lib",
+        ],
+        ":linux_deps_bin": [],  # added via deps
+    }),
+    linkstamp = select({
+        ":stamped": "stamp.cpp",
+        "//conditions:default": None,
     }),
     deps = [
         ":confighandler",
         ":defines",
         ":engine",
-        ":enginesdl",
         ":enginegl",
+        ":enginesdl",
         ":gamemode",
         ":notifications",
         ":options",
         ":sprdata",
         ":sprite",
-        ":spritesdl",
         ":spritegl",
+        ":spritesdl",
         ":stdinttypes",
         "//gamecontent:globalvars",
         "//net",
         "@glict//glict/GLICT",
+        "@libsdlgfx//:sdlgfx",
         "@rules_libsdl12//:libsdl12",
         "@rules_libsdl12//:libsdl12-main",
-        "@libsdlgfx//:sdlgfx",
-    ],
+    ] + gl_deps + glu_deps,
 )
 
 genrule(
-  name = "yatcpic",
-  srcs = ["@tibia854//:Tibia.pic", "yatc.bmp", "inv.bmp"],
-  outs = ["YATC.pic"],
-  tools = ["//tools/pictool:pictool"],
-  cmd = "; ".join([
-    "cp \"$(location @tibia854//:Tibia.pic)\" \"$@\"",
-    "$(location //tools/pictool:pictool) $(location YATC.pic) 0 $(location yatc.bmp) --topic", # No support for reading png.
-    "$(location //tools/pictool:pictool) $(location YATC.pic) 1 $(location inv.bmp) --topic",
-  ]),
+    name = "yatcpic",
+    srcs = [
+        "@tibia854//:Tibia.pic",
+        "yatc.bmp",
+        "inv.bmp",
+    ],
+    outs = ["YATC.pic"],
+    cmd = "; ".join([
+        "cp \"$(location @tibia854//:Tibia.pic)\" \"$@\"",
+        "$(location //tools/pictool:pictool) $(location YATC.pic) 0 $(location yatc.bmp) --topic",  # No support for reading png.
+        "$(location //tools/pictool:pictool) $(location YATC.pic) 1 $(location inv.bmp) --topic",
+    ]),
+    tools = ["//tools/pictool"],
 )
 
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
@@ -965,14 +1099,103 @@ refresh_compile_commands(
     # Specify the targets of interest.
     # For example, specify a dict of targets and any flags required to build.
     targets = {
-      #"//:my_output_1": "--important_flag1 --important_flag2=true",
-      #"//:my_output_2": "",
-      "//:yatc": "",
-      "//:util_test": "",
+        #"//:my_output_1": "--important_flag1 --important_flag2=true",
+        #"//:my_output_2": "",
+        "//:yatc": "",
+        "//:util_test": "",
     },
     # No need to add flags already in .bazelrc. They're automatically picked up.
     # If you don't need flags, a list of targets is also okay, as is a single target string.
     # Wildcard patterns, like //... for everything, *are* allowed here, just like a build.
-      # As are additional targets (+) and subtractions (-), like in bazel query https://docs.bazel.build/versions/main/query.html#expressions
+    # As are additional targets (+) and subtractions (-), like in bazel query https://docs.bazel.build/versions/main/query.html#expressions
     # And if you're working on a header-only library, specify a test or binary target that compiles it.
+
+    # Easy rebuild with some flags (e.g. doing a release, and doing a keep-going):
+    # ~/bazelisk-linux-amd64 run --config=release -k :refresh_compile_commands -- -k --config=release
+)
+
+
+# from envoy:
+# ===========
+# including: https://raw.githubusercontent.com/envoyproxy/envoy/808a436ebe9c682bac81181c3ad45efd9bb24b71/bazel/volatile_env.sh
+# replacing: BUILD_SCM_REVISION with BUILD_SCM_VERSION
+sh_library(
+    name = "volatile_env",
+    srcs = ["volatile_env.sh"],
+)
+
+# Stamp derived from tree hash + dirty status if `BAZEL_VOLATILE_DIRTY`
+# is set, otherwise the git commit
+genrule(
+    name = "volatile-scm-hash",
+    outs = ["volatile-scm-hash.txt"],
+    cmd = """
+    grep BUILD_SCM_HASH bazel-out/volatile-status.txt > $@
+    """,
+    stamp = 1,
+    tags = ["no-remote-exec"],
+)
+
+genrule(
+    name = "gnu_build_id",
+    outs = ["gnu_build_id.ldscript"],
+    cmd = """
+      echo --build-id=0x$$(
+          grep -E "^BUILD_SCM_VERSION" bazel-out/volatile-status.txt \
+        | sed 's/^BUILD_SCM_VERSION //') \
+        > $@
+    """,
+    # Undocumented attr to depend on workspace status files.
+    # https://github.com/bazelbuild/bazel/issues/4942
+    stamp = 1,
+)
+
+# For macOS, which doesn't have GNU ld's `--build-id` flag.
+genrule(
+    name = "raw_build_id",
+    outs = ["raw_build_id.ldscript"],
+    cmd = """
+      grep -E "^BUILD_SCM_VERSION" bazel-out/volatile-status.txt \
+    | sed 's/^BUILD_SCM_VERSION //' \
+    | tr -d '\\n' \\
+    > $@
+    """,
+    # Undocumented attr to depend on workspace status files.
+    # https://github.com/bazelbuild/bazel/issues/4942
+    stamp = 1,
+)
+
+# ==============
+# end from envoy
+
+sh_binary(
+    name = "checkout_modules",
+    srcs = ["_checkout_modules.sh"],
+)
+
+genrule(
+    name = "stamp_cpp",
+    outs = ["stamp.cpp"],
+    cmd = """
+echo "#include <string>" > $@
+echo "#include \\\"stamp.h\\\"" >> $@
+awk '{ print "std::string __yatc_stamp_" $$1 " = __YATC_STAMP_" $$1 ";"; }' bazel-out/volatile-status.txt >> $@
+awk '{ print "std::string __yatc_stamp_" $$1 " = __YATC_STAMP_" $$1 ";"; }' bazel-out/stable-status.txt >> $@
+    """,
+    stamp=1,
+)
+genrule(
+    name = "stamp_h",
+    outs = ["stamp.h"],
+    cmd = """
+echo "#include <string>" > $@
+echo "#ifndef __YATC_STAMP_H" >> $@
+echo "#define __YATC_STAMP_H" >> $@
+awk '{ print "extern std::string __yatc_stamp_" $$1 ";"; }' bazel-out/volatile-status.txt >> $@
+awk '{ print "extern std::string __yatc_stamp_" $$1 ";"; }' bazel-out/stable-status.txt >> $@
+sed -E 's/^([^ ]*) (.*)$$/#define __YATC_STAMP_\\1 "\\2"/' bazel-out/volatile-status.txt >> $@
+sed -E 's/^([^ ]*) (.*)$$/#define __YATC_STAMP_\\1 "\\2"/' bazel-out/stable-status.txt >> $@
+echo "#endif" >> $@
+    """,
+    stamp=1,
 )

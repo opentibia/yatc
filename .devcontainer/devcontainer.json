@@ -1,29 +1,73 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.233.0/containers/bazel
+//
+// sudo apt install podman containers-storage
+// npm set prefix ~/.npm
+// npm install -g @devcontainers/cli
+// ~/.npm/bin/devcontainer up --docker-path=/usr/bin/podman --workspace-folder .
+//
+// For vscode, needs settings change to use podman instead of docker.
+//
+// Note how podman is rootless and runs in ~/.local. container-storage allows use of
+// overlay graph driver (see podman info, line graphDriverName, should be overlay
+// instead of vfs). May need wipe with podman system reset before it's used after
+// installing containers-storage.
+//
+// Sadly, it may still be preferable to:
+//  apt install docker.io; usermod -aG docker $USER; newgrp docker.
+// due to permissions issues. For some reason, vscode implementation freezes, then
+// upon window reload has 'root' as owner of /root and /workspaces and fails. Folders
+// are also created with uid 1000, but then uid is changed to local uid (e.g. 501).
+// Fixing with sudo chown $(id -u -n) /root && sudo chown -R $(id -u -n) /workspaces
+// in postCreateCommand nor postAttachCommand did not help.
 {
 	"name": "Bazel (Community)",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {
-			"BAZELISK_VERSION": "v1.18.0",
-			"BAZELISK_DOWNLOAD_SHA": "4cb534c52cdd47a6223d4596d530e7c9c785438ab3b0a49ff347e991c210b2cd"
+			"BUILDIFIER_VERSION": "v7.1.1",  # TODO: 6.1.2
+			"BUILDIFIER_DOWNLOAD_SHA": "54b7f2ce8f22761cfad264416e912056ae9c8645f59eb6583b846b4864a1ee83",  # TODO: 6.1.2
+			"BAZELISK_VERSION": "v1.19.0",
+			"BAZELISK_DOWNLOAD_SHA": "d28b588ac0916abd6bf02defb5433f6eddf7cba35ffa808eabb65a44aab226f7"
 		}
 	},
 	"customizations": {
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
-			"settings": {},
+			"settings": {
+				"bazel.commandLine.commandArgs": [
+					"--config=devcontainer"
+				],
+				"bazel.executable": "bazelisk",
+				"bsv.bazel.buildFlags": [
+					"--config=devcontainer"
+				],
+				"bsv.cc.compdb.targets": [
+					"//:yatc"
+				],
+				// Microsoft C/C++ extension should have a disabled IntelliSense engine to avoid conflicts with Clangd.
+				"C_Cpp.intelliSenseEngine": "disabled"
+			},
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"devondcarew.bazel-code",
-				"BazelBuild.vscode-bazel"
+				"BazelBuild.vscode-bazel",
+				// LLVM Clangd. Good integration with Clang / LLVM, but poor parsing of Doxygen docstrings.
+				"llvm-vs-code-extensions.vscode-clangd",
+				// C/C++ extension. IntelliSense has good parsing of Doxygen docstrings, but otherwise Clangd is more
+				// likely to fit our use case (due to need for Bazel integration via compile_commands.json).
+				// See more about doxygen support in C/C++ extension:
+				// https://devblogs.microsoft.com/cppblog/visual-studio-code-c-extension-july-2020-update-doxygen-comments-and-logpoints/
+				"ms-vscode.cpptools",
+				"StackBuild.bazel-stack-vscode",
+				"StackBuild.bazel-stack-vscode-cc",
+				"bjob.vsc-bazel-tools"
 			]
 		}
 	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "sudo apt update && sudo apt install --yes gettext clang gcc bzip2 libx11-dev libxext-dev libxrandr-dev libxrender-dev libgl-dev libglu-dev libasound-dev libalsaplayer-dev patch && sudo apt install --yes libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev && git submodule update --init",
+	"postCreateCommand": "sudo apt update && sudo apt install --yes gettext clang gcc bzip2 libx11-dev libxext-dev libxrandr-dev libxrender-dev libgl-dev libglu-dev libasound-dev libalsaplayer-dev patch clangd && sudo apt install --yes libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev && git submodule update --init && sudo ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel",
 	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
 	// "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.

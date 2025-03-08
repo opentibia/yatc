@@ -1,5 +1,5 @@
 # You can pick any Debian/Ubuntu-based image. 😊
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-bullseye
+FROM mcr.microsoft.com/vscode/devcontainers/base:1.0.9-ubuntu-20.04
 
 # Options for setup script
 ARG INSTALL_ZSH="true"
@@ -15,12 +15,29 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 
 # Install Bazel
-ARG BAZELISK_VERSION=v1.18.0
+ARG BAZELISK_VERSION=v1.19.0
 ARG BAZELISK_DOWNLOAD_SHA=dev-mode
 RUN curl -fSsL -o /usr/local/bin/bazelisk https://github.com/bazelbuild/bazelisk/releases/download/${BAZELISK_VERSION}/bazelisk-linux-amd64 \
     && ([ "${BAZELISK_DOWNLOAD_SHA}" = "dev-mode" ] || echo "${BAZELISK_DOWNLOAD_SHA} */usr/local/bin/bazelisk" | sha256sum --check - ) \
     && chmod 0755 /usr/local/bin/bazelisk
 
+# Install Buildifier
+ARG BUILDIFIER_VERSION=v7.1.1
+# TODO: 6.1.2
+ARG BUILDIFIER_DOWNLOAD_SHA=dev-mode
+RUN curl -fSsL -o /usr/local/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/${BUILDIFIER_VERSION}/buildifier-linux-amd64 \
+    && ([ "${BUILDIFIER_DOWNLOAD_SHA}" = "dev-mode" ] || echo "${BUILDIFIER_DOWNLOAD_SHA} */usr/local/bin/buildifier" | sha256sum --check - ) \
+    && chmod 0755 /usr/local/bin/buildifier
+
 # [Optional] Uncomment this section to install additional OS packages.
-# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-#     && apt-get -y install --no-install-recommends <your-package-list-here>
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends gettext clang gcc bzip2 libx11-dev libxext-dev libxrandr-dev libxrender-dev libgl-dev libglu-dev libasound-dev libalsaplayer-dev patch clangd \
+    && apt-get -y install --no-install-recommends libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev
+
+# Pretend Bazelisk is Bazel for sake of VSCode extensions that might be tricky
+# to reconfigure to understand Bazelisk is a decent intermediary.
+RUN ln -s /usr/local/bin/bazelisk /usr/local/bin/bazel
+
+# There may be an expectation that /root exists and is usable by the current user.
+RUN mkdir -p /root && chown ${USERNAME} /root
+

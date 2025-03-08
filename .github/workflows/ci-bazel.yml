@@ -1,0 +1,259 @@
+name: Bazel CI
+
+on:
+  workflow_call:
+    secrets:
+      BUILDBUDDY_ORG_API_KEY:
+        required: false
+
+# Not using 'inputs' here, since we take no inputs at this time -- just the 'github' context.
+# Note: on type workflow_run commit message would be github.event.workflow_run.head_commit.message
+# https://stackoverflow.com/a/63619526
+# Available data: https://stackoverflow.com/a/75715955
+run-name: "@${{github.actor}} Bazel CI on ${{ github.ref_name }} - ${{ github.event.head_commit.message }}"
+
+jobs:
+
+  bazel_build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v4
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: Print a stub message when there is a cache miss
+      continue-on-error: true
+      run: echo Stub action merely printing a notice that there was a cache miss
+      # More useful with e.g. npm.
+
+    - name: install deps without prebuilt SDL (bazel)
+      run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
+    - name: bazel build
+      run: bazel build //:yatc
+
+  bazel_test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: minimal test
+            bazel_target: //:minimal_test
+          - name: util test
+            bazel_target: //:util_test
+
+    needs: [bazel_build]
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v4
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: Print a stub message when there is a cache miss
+      continue-on-error: true
+      run: echo Stub action merely printing a notice that there was a cache miss
+      # More useful with e.g. npm.
+
+    - name: install deps without prebuilt SDL (bazel)
+      run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
+    - name: bazel test
+      run: bazel test ${{ matrix.bazel_target }}
+    - name: Upload test report
+      uses: actions/upload-artifact@v4
+      if: always()  # Run even if the previous step fails
+      with:
+        name: junit-test-results-regular-${{ matrix.name }}
+        path: 'bazel-testlogs/**/test.xml'
+        # TODO: bazel-testlogs/name-of-test has also:
+        # * test.outputs/
+        # * test.outputs_manifest/
+        # * test.log
+        # * test.raw_splitlogs/
+        # * test.cache_status
+        # but they might not be worth uploading at this time.
+
+        retention-days: 90  # Maximum is 90d, default is repo settings.
+    - name: Upload test log
+      uses: actions/upload-artifact@v4
+      if: always()  # Run even if the previous step fails
+      with:
+        name: junit-test-logs-regular-${{ matrix.name }}
+        path: 'bazel-testlogs/**/test.log'
+
+    # This fails unless there's write permission in the token. Hence the attempt
+    # to run as triggered by these workflows in another job, which might then
+    # work on pull requests as well. This needs further investigation.
+    - name: Publish Test Report
+      uses: mikepenz/action-junit-report@v4
+      if: success() || failure() # always run even if the previous step fails
+      with:
+        commit: ${{github.event.workflow_run.head_sha}}  # remove if we don't use separate workflow
+        report_paths: 'bazel-testlogs/**/test.xml'
+        include_passed: true
+        detailed_summary: true
+        annotate_notice: true
+        follow_symlink: true
+    continue-on-error: true
+  bazel_build_buildbuddy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v4
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: Print a stub message when there is a cache miss
+      continue-on-error: true
+      run: echo Stub action merely printing a notice that there was a cache miss
+      # More useful with e.g. npm.
+
+    - name: rbe bazel build
+      run: bazel build --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} //:yatc
+
+  bazel_test_buildbuddy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: minimal test
+            bazel_target: //:minimal_test
+          - name: util test
+            bazel_target: //:util_test
+
+    needs: [bazel_build_buildbuddy]
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
+    # the rest of the steps
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    # Caches and restores the bazel build directory.
+    - name: Cache bazel build results
+      uses: actions/cache@v4
+      env:
+        cache-name: bazel-cache
+      with:
+        path: ~/.cache/bazel
+        key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+        restore-keys: |
+          bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          bazel-${{ runner.os }}-${{ env.cache-name }}-master
+          bazel-${{ runner.os }}-${{ env.cache-name }}-
+          bazel-${{ runner.os }}-
+          ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          ${{ runner.os }}-${{ env.cache-name }}-master
+
+    - if: ${{ steps.bazel-cache.outputs.cache-hit != 'true' }}
+      name: Print a stub message when there is a cache miss
+      continue-on-error: true
+      run: echo Stub action merely printing a notice that there was a cache miss
+      # More useful with e.g. npm.
+
+    - name: rbe bazel test
+      run: bazel test --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} ${{ matrix.bazel_target }}
+      # Temporarily allow errors. This is known to fail at this time due to insufficient
+      # number of binary packages installed by the rules_libsdl12.
+      continue-on-error: true
+      env:
+        BUILDBUDDY_ORG_API_KEY: ${{ secrets.BUILDBUDDY_ORG_API_KEY }}
+
+    - name: Upload test report
+      uses: actions/upload-artifact@v4
+      if: always()  # Run even if the previous step fails
+      with:
+        name: junit-test-results-buildbuddy-${{ matrix.name }}
+        path: 'bazel-testlogs/**/test.xml'
+        # TODO: bazel-testlogs/name-of-test has also:
+        # * test.outputs/
+        # * test.outputs_manifest/
+        # * test.log
+        # * test.raw_splitlogs/
+        # * test.cache_status
+        # but they might not be worth uploading at this time.
+
+        retention-days: 90  # Maximum and default is 90d but can be shortened.
+    - name: Upload test log
+      uses: actions/upload-artifact@v4
+      if: always()  # Run even if the previous step fails
+      with:
+        name: junit-test-logs-buildbuddy-${{ matrix.name }}
+        path: 'bazel-testlogs/**/test.log'
+
+    - name: print ldd
+      run: ldd bazel-bin/util_test
+      continue-on-error: true
+
+    # This fails unless there's write permission in the token. Hence the attempt
+    # to run as triggered by these workflows in another job, which might then
+    # work on pull requests as well. This needs further investigation.
+    - name: Publish Test Report
+      uses: mikepenz/action-junit-report@v4
+      if: success() || failure() # always run even if the previous step fails
+      with:
+        commit: ${{github.event.workflow_run.head_sha}}  # remove if we don't use separate workflow
+        report_paths: 'bazel-testlogs/**/test.xml'
+        include_passed: true
+        detailed_summary: true
+        annotate_notice: true
+        follow_symlink: true
+      continue-on-error: true

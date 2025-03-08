@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // Yet Another Tibia Client
 //////////////////////////////////////////////////////////////////////
-//
+// Minimal test to verify the test system itself works.
 //////////////////////////////////////////////////////////////////////
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -18,37 +18,23 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //////////////////////////////////////////////////////////////////////
 
-#ifndef PRODUCTNAME
+#include <string>
+#include <gtest/gtest.h>
 
-#define PRODUCTVERSION_BASE "0.3.3SVN"
+// Demonstrate some basic assertions.
+TEST(StrReplaceTest, BasicAssertions) {
+  auto haystack = std::string("hello world");
+  auto needle = std::string("hello");
+  auto replace = std::string("hi");
 
-#ifdef STAMPED_FOR_RELEASE
-#include "stamp.h"
-#define PRODUCTVERSION PRODUCTVERSION_BASE " " __YATC_STAMP_STABLE_VERSION
-#else
-#define PRODUCTVERSION PRODUCTVERSION_BASE
-#endif
+  auto got =
+      haystack.replace(haystack.find(needle), needle.size(), replace);
+  auto want = "hi world";
 
+  EXPECT_STREQ(got.c_str(), want);
+}
 
-#define PRODUCTSHORT "YATC"
-#define PRODUCTLONG "YATC - Yet Another Tibia Client"
-#define PRODUCTNAME PRODUCTSHORT " v" PRODUCTVERSION
-#define PRODUCTLONGNAME PRODUCTLONG " version " PRODUCTVERSION
-
-
-#if !defined(__DATE__)
-#define __DATE__ "unknown"
-#endif
-#if !defined(__TIME__)
-#define __TIME__ ""
-#endif
-
-#if (defined(__YATC_STAMP_FORMATTED_DATE))
-#define PRODUCTDATE __YATC_STAMP_FORMATTED_DATE
-#define PRODUCTTIME ""
-#else
-#define PRODUCTDATE __DATE__
-#define PRODUCTTIME __TIME__
-#endif
-
-#endif
+TEST(EqualityTest, BasicAssertions) {
+  // Expect equality.
+  EXPECT_EQ(7 * 6, 42);
+}

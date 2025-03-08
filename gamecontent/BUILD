@@ -3,14 +3,15 @@
 package(
     default_visibility = ["//visibility:public"],
 )
+
 cc_library(
     name = "container_hdr",
     hdrs = [
         "container.h",
-
         "itemcontainer.h",
     ],
 )
+
 cc_library(
     name = "container",
     srcs = [
@@ -19,19 +20,21 @@ cc_library(
     hdrs = [
         "container.h",
     ],
+    linkstatic = 1,
     deps = [
-        ":itemcontainer",
         ":item",
+        ":itemcontainer",
         "//:notifications",
     ],
-    linkstatic = 1,
 )
+
 cc_library(
     name = "itemcontainer",
     hdrs = [
         "itemcontainer.h",
     ],
 )
+
 cc_library(
     name = "item",
     srcs = [
@@ -40,27 +43,29 @@ cc_library(
     hdrs = [
         "item.h",
     ],
-    deps = [
-        "//:itemui",
-        ":thing",
-    ],
     linkstatic = 1,
+    deps = [
+        ":thing",
+        "//:itemui",
+    ],
 )
+
 cc_library(
     name = "item_clionly",
-    defines = ["CLI_ONLY=1"],
     srcs = [
         "item.cpp",
     ],
     hdrs = [
         "item.h",
     ],
-    deps = [
-        "//:itemui_clionly",
-	":thing",
-    ],
+    defines = ["CLI_ONLY=1"],
     linkstatic = 1,
+    deps = [
+        ":thing",
+        "//:itemui_clionly",
+    ],
 )
+
 cc_library(
     name = "creature",
     srcs = [
@@ -69,26 +74,28 @@ cc_library(
     hdrs = [
         "creature.h",
     ],
+    linkstatic = 1,
     deps = [
-        "@libsdl12//:sdl",
+        ":enums",
+        ":globalvars",
+        ":position",
+        ":thing",
         "//:creatureui",
-        "//:thingui",
+        "//:fassert",
+        "//:objects",
         "//:sprite_hdr",
         "//:stdinttypes",
-        "//:objects",
-        ":thing",
-        ":enums",
-        ":position",
-        "//:fassert",
-        ":globalvars",
+        "//:thingui",
+        "@libsdl12//:sdl",
     ],
-    linkstatic = 1,
 )
+
 cc_library(
     name = "creature_hdr",
     hdrs = [
         "creature.h",
     ],
+    linkstatic = 1,
     deps = [
         #"@libsdl12//:sdl",
         "//:creatureui_hdr",
@@ -102,25 +109,27 @@ cc_library(
         #"//:fassert",
         ":globalvars",
     ],
-    linkstatic = 1,
 )
+
 cc_library(
     name = "thing",
     hdrs = [
         "thing.h",
     ],
 )
+
 cc_library(
     name = "map_hdr",
     hdrs = [
         "map.h",
-        "//:effectui.h",
         "//:distanceui.h",
+        "//:effectui.h",
     ],
     deps = [
         ":position",
     ],
 )
+
 cc_library(
     name = "map",
     srcs = [
@@ -129,16 +138,17 @@ cc_library(
     hdrs = [
         "map.h",
     ],
+    linkstatic = 1,
     deps = [
-        "//:effectui",
-        "//:distanceui",
-        ":position",
-        ":item",
         ":creature",
+        ":item",
+        ":position",
+        "//:distanceui",
+        "//:effectui",
         "//:notifications",
     ],
-    linkstatic = 1,
 )
+
 cc_library(
     name = "enums",
     hdrs = [
@@ -148,12 +158,14 @@ cc_library(
         "//:stdinttypes",
     ],
 )
+
 cc_library(
     name = "position",
     hdrs = [
         "position.h",
     ],
 )
+
 cc_library(
     name = "globalvars",
     srcs = [
@@ -162,13 +174,14 @@ cc_library(
     hdrs = [
         "globalvars.h",
     ],
+    linkstatic = 1,
     deps = [
-        "//:fassert",
         ":enums",
         ":position",
+        "//:fassert",
     ],
-    linkstatic = 1,
 )
+
 cc_library(
     name = "inventory",
     srcs = [
@@ -177,14 +190,15 @@ cc_library(
     hdrs = [
         "inventory.h",
     ],
-    deps = [
-        "//:stdinttypes",
-        ":enums",
-        ":itemcontainer",
-        ":item",
-    ],
     linkstatic = 1,
+    deps = [
+        ":enums",
+        ":item",
+        ":itemcontainer",
+        "//:stdinttypes",
+    ],
 )
+
 cc_library(
     name = "inventory_clionly",
     srcs = [
@@ -193,20 +207,22 @@ cc_library(
     hdrs = [
         "inventory.h",
     ],
-    deps = [
-        "//:stdinttypes",
-        ":enums",
-        ":itemcontainer",
-        ":item_clionly",
-    ],
     linkstatic = 1,
+    deps = [
+        ":enums",
+        ":item_clionly",
+        ":itemcontainer",
+        "//:stdinttypes",
+    ],
 )
+
 cc_library(
     name = "shop",
     hdrs = [
         "shop.h",
     ],
 )
+
 cc_library(
     name = "viplist",
     srcs = [
@@ -215,11 +231,12 @@ cc_library(
     hdrs = [
         "viplist.h",
     ],
+    linkstatic = 1,
     deps = [
         "//:stdinttypes",
     ],
-    linkstatic = 1,
 )
+
 cc_library(
     name = "gamecontent",
     srcs = [
@@ -227,15 +244,15 @@ cc_library(
     hdrs = [
         "thing.h",
     ],
+    linkstatic = 1,
     deps = [
         ":container",
         ":creature",
-        ":itemcontainer",
-        ":item",
-        ":map",
         ":globalvars",
+        ":item",
+        ":itemcontainer",
+        ":map",
         ":shop",
         ":viplist",
     ],
-    linkstatic = 1,
 )

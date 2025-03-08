@@ -364,7 +364,7 @@ void GM_MainMenu::pnlMainMenu_btnAbout_OnClick(glictPos* relmousepos, glictConta
 
 	txt << PRODUCTLONG << "\n"
 		<< PRODUCTVERSION << "\n"
-		<< gettext("Compiled on: ") << __DATE__ << " " << __TIME__ << "\n"
+		<< gettext("Compiled on: ") << PRODUCTDATE << " " << PRODUCTTIME << "\n"
 		<< "\n"
 		<< c <<" 2007-2010 OpenTibia Team\n"
 		<< "\n"

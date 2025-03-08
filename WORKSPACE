@@ -1,6 +1,8 @@
 # -*-Python-*-
 workspace(name="yatc")
 
+load(":vendoring.bzl", "vendored_git_repository", "new_vendored_git_repository")
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 local_repository(
@@ -8,8 +10,8 @@ local_repository(
     path = __workspace_dir__ + "/vendor/github.com/ivucica/rules_tibia",
 )
 
-load("@rules_tibia//:tibia_data.bzl", "tibia_data_repository")
-tibia_data_repository(version=854)
+load("@rules_tibia//:tibia_data.bzl", "tibia_data_repositories")
+tibia_data_repositories()
 
 local_repository(
     name = "glict",
@@ -101,6 +103,7 @@ http_archive(
   name = "com_google_googletest",
   urls = ["https://github.com/google/googletest/archive/4219e7254cb8c473f57f6065bd13d1520d7b708f.zip"],
   strip_prefix = "googletest-4219e7254cb8c473f57f6065bd13d1520d7b708f",
+  sha256 = "21bf1f707ef089d576396cdb39d1c4069bce3df69cfab04f7e196ccf130a4884",
 )
 
 # Toolchains for Resource Compilation (.rc files on Windows).
@@ -119,6 +122,6 @@ load("@io_buildbuddy_buildbuddy_toolchain//:deps.bzl", "buildbuddy_deps")
 
 buildbuddy_deps()
 
-load("@io_buildbuddy_buildbuddy_toolchain//:rules.bzl", "buildbuddy")
+load("@io_buildbuddy_buildbuddy_toolchain//:rules.bzl", "buildbuddy", "UBUNTU20_04_IMAGE")
 
-buildbuddy(name = "buildbuddy_toolchain")
+buildbuddy(name = "buildbuddy_toolchain", container_image = UBUNTU20_04_IMAGE)

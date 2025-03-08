@@ -40,3 +40,5 @@ yatc.ico.png
 # Ignore the directory in which `clangd` stores its local index.
 /.cache/
 bazelisk-windows-amd64.exe
+/vendor/github.com/ivucica/rules_libsdl12.deb
+/.clangd/index
