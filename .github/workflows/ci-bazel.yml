@@ -80,6 +80,7 @@ jobs:
         repository-cache: true
 
     - name: install deps without prebuilt SDL (bazel)
+      if: startsWith(matrix.runs_on, 'ubuntu')
       run: sudo apt-get update && sudo apt-get -y install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel build
       run: bazelisk --output_user_root=${{ matrix.cache_path }} build //:yatc
@@ -151,6 +152,7 @@ jobs:
         repository-cache: true
 
     - name: install deps without prebuilt SDL (bazel)
+      if: startsWith(matrix.runs_on, 'ubuntu')
       run: sudo apt-get update && sudo apt-get -y install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel test
       run: bazelisk --output_user_root=${{ matrix.cache_path }} test ${{ matrix.bazel_target }}
