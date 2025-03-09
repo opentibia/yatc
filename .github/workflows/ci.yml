@@ -15,6 +15,8 @@ jobs:
 
     # needs: [jobs, we, want, to, run, first]
     steps:
+    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
     - uses: actions/checkout@v4
@@ -22,13 +24,13 @@ jobs:
         submodules: true
 
     - name: install deps with prebuilt SDL (no bazel)
-      run: sudo apt-get update && sudo apt-get install libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev
+      run: sudo apt-get update && sudo apt-get -y install libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev dos2unix
     - name: install glict
-      run: cd vendor/github.com/ivucica/glict/glict && ./autogen.sh && ./configure && make && sudo make install
+      run: cd vendor/github.com/ivucica/glict/glict && dos2unix autogen.sh && chmod +x autogen.sh && ./autogen.sh && chmod +x configure ./configure && make && sudo make install
     - name: autogen
-      run: ./autogen.sh
+      run: chmod +x autogen.sh && ./autogen.sh
     - name: configure
-      run: ./configure
+      run: chmod +x configure && ./configure
     - name: make
       run: make
     - name: make check
