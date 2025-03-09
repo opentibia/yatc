@@ -95,8 +95,7 @@ jobs:
           - name: util test
             bazel_target: //:util_test
 
-          - name: ubuntu
-            runs_on: ubuntu-latest
+          - runs_on: ubuntu-latest
             cache_path: ~/.cache/bazel
             shell: bash
           # For future use.
@@ -104,8 +103,7 @@ jobs:
           # (See _install_msys.ps1.)
           # Envvars *might* need to be set up as well to find the installed MSVC.
           # (See bazel.bat.)
-          - name: windows-msvc
-            runs_on: windows-latest
+          - runs_on: windows-latest
             cache_path: ~/_bazel_output_user_root
             shell: bash
 
