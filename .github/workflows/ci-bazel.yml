@@ -12,6 +12,13 @@ on:
 # Available data: https://stackoverflow.com/a/75715955
 run-name: "@${{github.actor}} Bazel CI on ${{ github.ref_name }} - ${{ github.event.head_commit.message }}"
 
+#defaults:
+#  run:
+#    # Even on Windows, use bash. If a "run" statement supports pwsh/powershell,
+#    # it can specify it itself.
+#    shell: bash
+#    # This however does not fix the issues we see.
+
 jobs:
 
   bazel_build:
@@ -27,13 +34,15 @@ jobs:
           # (See _install_msys.ps1.)
           # Envvars *might* need to be set up as well to find the installed MSVC.
           # (See bazel.bat.)
-          #- name: windows-msvc
-          #  runs_on: windows-latest
-          #  cache_path: ~/_bazel_output_user_root
+          - name: windows-msvc
+            runs_on: windows-latest
+            cache_path: ~/_bazel_output_user_root
 
     runs-on: ${{ matrix.runs_on }}
 
     steps:
+    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
     - uses: actions/checkout@v4
@@ -61,11 +70,19 @@ jobs:
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
+    - uses: bazel-contrib/setup-bazel@0.14.0
+      with:
+        # Avoid downloading Bazel every time.
+        bazelisk-cache: true
+        # Store build cache per workflow.
+        disk-cache: ${{ github.workflow }}
+        # Share repository cache between workflows.
+        repository-cache: true
 
     - name: install deps without prebuilt SDL (bazel)
-      run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
+      run: sudo apt-get update && sudo apt-get -y install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel build
-      run: bazel --output_user_root=${{ matrix.cache_path }} build //:yatc
+      run: bazelisk --output_user_root=${{ matrix.cache_path }} build //:yatc
 
   bazel_test:
     strategy:
@@ -80,19 +97,23 @@ jobs:
           - name: ubuntu
             runs_on: ubuntu-latest
             cache_path: ~/.cache/bazel
+            shell: bash
           # For future use.
           # Bazel will need bash installed (e.g. from MSYS2) to run on Windows.
           # (See _install_msys.ps1.)
           # Envvars *might* need to be set up as well to find the installed MSVC.
           # (See bazel.bat.)
-          #- name: windows-msvc
-          #  runs_on: windows-latest
-          #  cache_path: ~/_bazel_output_user_root
+          - name: windows-msvc
+            runs_on: windows-latest
+            cache_path: ~/_bazel_output_user_root
+            shell: bash
 
     runs-on: ${{ matrix.runs_on }}
 
     needs: [bazel_build]
     steps:
+    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
     - uses: actions/checkout@v4
@@ -120,11 +141,19 @@ jobs:
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
+    - uses: bazel-contrib/setup-bazel@0.14.0
+      with:
+        # Avoid downloading Bazel every time.
+        bazelisk-cache: true
+        # Store build cache per workflow.
+        disk-cache: ${{ github.workflow }}
+        # Share repository cache between workflows.
+        repository-cache: true
 
     - name: install deps without prebuilt SDL (bazel)
-      run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
+      run: sudo apt-get update && sudo apt-get -y install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel test
-      run: bazel --output_user_root=${{ matrix.cache_path }} test ${{ matrix.bazel_target }}
+      run: bazelisk --output_user_root=${{ matrix.cache_path }} test ${{ matrix.bazel_target }}
     - name: Upload test report
       uses: actions/upload-artifact@v4
       if: always()  # Run even if the previous step fails
@@ -165,6 +194,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
     - uses: actions/checkout@v4
@@ -191,9 +222,17 @@ jobs:
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
-
+    - uses: bazel-contrib/setup-bazel@0.14.0
+      with:
+        # Avoid downloading Bazel every time.
+        bazelisk-cache: true
+        # Store build cache per workflow.
+        disk-cache: ${{ github.workflow }}
+        # Share repository cache between workflows.
+        repository-cache: true
+    
     - name: rbe bazel build
-      run: bazel build --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} //:yatc
+      run: bazelisk build --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} //:yatc
 
   bazel_test_buildbuddy:
     runs-on: ubuntu-latest
@@ -209,6 +248,8 @@ jobs:
 
     needs: [bazel_build_buildbuddy]
     steps:
+    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
     - uses: actions/checkout@v4
@@ -236,9 +277,17 @@ jobs:
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
+    - uses: bazel-contrib/setup-bazel@0.14.0
+      with:
+        # Avoid downloading Bazel every time.
+        bazelisk-cache: true
+        # Store build cache per workflow.
+        disk-cache: ${{ github.workflow }}
+        # Share repository cache between workflows.
+        repository-cache: true
 
     - name: rbe bazel test
-      run: bazel test --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} ${{ matrix.bazel_target }}
+      run: bazelisk test --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} ${{ matrix.bazel_target }}
       # Temporarily allow errors. This is known to fail at this time due to insufficient
       # number of binary packages installed by the rules_libsdl12.
       continue-on-error: true
