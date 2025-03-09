@@ -26,7 +26,7 @@ jobs:
     - name: install deps with prebuilt SDL (no bazel)
       run: sudo apt-get update && sudo apt-get -y install libsdl1.2-dev libsdl-gfx1.2-dev libgmp3-dev autoconf automake libgl1-mesa-dev libglu1-mesa-dev dos2unix
     - name: install glict
-      run: cd vendor/github.com/ivucica/glict/glict && dos2unix autogen.sh && chmod +x autogen.sh && ./autogen.sh && chmod +x configure ./configure && make && sudo make install
+      run: cd vendor/github.com/ivucica/glict/glict && dos2unix autogen.sh && chmod +x autogen.sh && ./autogen.sh && chmod +x configure && ./configure && make && sudo make install
     - name: autogen
       run: chmod +x autogen.sh && ./autogen.sh
     - name: configure
