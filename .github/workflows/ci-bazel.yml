@@ -15,7 +15,23 @@ run-name: "@${{github.actor}} Bazel CI on ${{ github.ref_name }} - ${{ github.ev
 jobs:
 
   bazel_build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: ubuntu
+            runs_on: ubuntu-latest
+            cache_path: ~/.cache/bazel
+          # For future use.
+          # Bazel will need bash installed (e.g. from MSYS2) to run on Windows.
+          # (See _install_msys.ps1.)
+          # Envvars *might* need to be set up as well to find the installed MSVC.
+          # (See bazel.bat.)
+          #- name: windows-msvc
+          #  runs_on: windows-latest
+          #  cache_path: ~/_bazel_output_user_root
+
+    runs-on: ${{ matrix.runs_on }}
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
@@ -30,7 +46,7 @@ jobs:
       env:
         cache-name: bazel-cache
       with:
-        path: ~/.cache/bazel
+        path: ${{ matrix.cache_path }}
         key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
         restore-keys: |
           bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
@@ -49,11 +65,9 @@ jobs:
     - name: install deps without prebuilt SDL (bazel)
       run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel build
-      run: bazel build //:yatc
+      run: bazel --output_user_root=${{ matrix.cache_path }} build //:yatc
 
   bazel_test:
-    runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
       matrix:
@@ -62,6 +76,20 @@ jobs:
             bazel_target: //:minimal_test
           - name: util test
             bazel_target: //:util_test
+
+          - name: ubuntu
+            runs_on: ubuntu-latest
+            cache_path: ~/.cache/bazel
+          # For future use.
+          # Bazel will need bash installed (e.g. from MSYS2) to run on Windows.
+          # (See _install_msys.ps1.)
+          # Envvars *might* need to be set up as well to find the installed MSVC.
+          # (See bazel.bat.)
+          #- name: windows-msvc
+          #  runs_on: windows-latest
+          #  cache_path: ~/_bazel_output_user_root
+
+    runs-on: ${{ matrix.runs_on }}
 
     needs: [bazel_build]
     steps:
@@ -77,7 +105,7 @@ jobs:
       env:
         cache-name: bazel-cache
       with:
-        path: ~/.cache/bazel
+        path: ${{ matrix.cache_path }}
         key: bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
         restore-keys: |
           bazel-${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
@@ -96,7 +124,7 @@ jobs:
     - name: install deps without prebuilt SDL (bazel)
       run: sudo apt-get update && sudo apt-get install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel test
-      run: bazel test ${{ matrix.bazel_target }}
+      run: bazel --output_user_root=${{ matrix.cache_path }} test ${{ matrix.bazel_target }}
     - name: Upload test report
       uses: actions/upload-artifact@v4
       if: always()  # Run even if the previous step fails
