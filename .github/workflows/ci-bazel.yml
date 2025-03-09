@@ -109,7 +109,9 @@ jobs:
             cache_path: ~/_bazel_output_user_root
             shell: bash
 
-    runs-on: ${{ matrix.runs_on }}
+    # Sometimes we see empty string.
+    # Default to ubuntu-latest, but allow matrix to override it.
+    runs-on: if(equals(matrix.runs_on, ''), 'ubuntu-latest', ${{ matrix.runs_on }})
 
     needs: [bazel_build]
     steps:
