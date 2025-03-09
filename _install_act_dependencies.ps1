@@ -6,3 +6,4 @@
 winget install -e --id OpenJS.NodeJS
 winget install nektos.act
 winget install GnuWin32.Gzip
+winget install pwsh  # Code should try both 'powershell' and 'pwsh', but for some actions it does not.
