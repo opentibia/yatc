@@ -28,7 +28,7 @@ jobs:
     - name: install glict
       run: cd vendor/github.com/ivucica/glict/glict && dos2unix autogen.sh && chmod +x autogen.sh && ./autogen.sh && chmod +x configure && ./configure && make && sudo make install
     - name: autogen
-      run: chmod +x autogen.sh && ./autogen.sh
+      run: dos2unix autogen.sh && chmod +x autogen.sh && ./autogen.sh
     - name: configure
       run: chmod +x configure && ./configure
     - name: make
