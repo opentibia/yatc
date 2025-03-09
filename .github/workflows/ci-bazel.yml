@@ -90,26 +90,29 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: minimal test
+          - name: minimal test ubuntu-latest
             bazel_target: //:minimal_test
-          - name: util test
-            bazel_target: //:util_test
-
-          - runs_on: ubuntu-latest
+            runs_on: ubuntu-latest
             cache_path: ~/.cache/bazel
             shell: bash
-          # For future use.
-          # Bazel will need bash installed (e.g. from MSYS2) to run on Windows.
-          # (See _install_msys.ps1.)
-          # Envvars *might* need to be set up as well to find the installed MSVC.
-          # (See bazel.bat.)
-          - runs_on: windows-latest
+          - name: util test ubuntu-latest
+            bazel_target: //:util_test
+            runs_on: ubuntu-latest
+            cache_path: ~/.cache/bazel
+            shell: bash
+          
+          - name: minimal test windows-latest
+            bazel_target: //:minimal_test
+            runs_on: windows-latest
+            cache_path: ~/_bazel_output_user_root
+            shell: bash
+          - name: util test windows-latest
+            bazel_target: //:util_test
+            runs_on: windows-latest
             cache_path: ~/_bazel_output_user_root
             shell: bash
 
-    # Sometimes we see empty string.
-    # Default to ubuntu-latest, but allow matrix to override it.
-    runs-on: if(equals(matrix.runs_on, ''), 'ubuntu-latest', ${{ matrix.runs_on }})
+    runs-on: ${{ matrix.runs_on }}
 
     needs: [bazel_build]
     steps:
