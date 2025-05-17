@@ -102,6 +102,13 @@ echo
 # alias bazel=bazelisk-linux-amd64___v1.19.0
 # JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ PATH=/usr/lib/jvm/java-8-openjdk-amd64/bin:$PATH bazel build //kythe/web/ui
 # cp -Rav kythe/web/ui/resources/public/* bazel-bin/kythe/web/ui/resources/public
+
+echo cd ~/projects/kythe/kythe
+echo git checkout v0.0.60
+echo alias bazel=bazelisk-linux-amd64___v1.19.0
+echo JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/ PATH=/usr/lib/jvm/java-8-openjdk-amd64/bin:$PATH bazel build //kythe/web/ui
+echo cp -Rav kythe/web/ui/resources/public/* bazel-bin/kythe/web/ui/resources/public
+
 echo /opt/kythe/tools/http_server --listen localhost:8080 --serving_table $TAB --public_resources ~/projects/kythe/kythe/bazel-bin/kythe/web/ui/resources/public
 
 # more: https://groups.google.com/g/kythe/c/5qAqMQG47cI
