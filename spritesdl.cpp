@@ -59,13 +59,13 @@ void SpriteSDL::_BlitInternal(float dx, float dy, float sx, float sy, float w, f
 	// code is like this because of dx5.0 ... see docs/html/sdlrect.html in SDL documentation for more info
 	SDL_Rect src = {(Sint16)sx,(Sint16)sy,(Uint16)(w),(Uint16)(h)};
 	SDL_Rect dst = {(Sint16)dx,(Sint16)dy,(Uint16)(w),(Uint16)(h)};
-	while(SDL_BlitSurface(getColoredImage(), &src, g_engine->m_screen, &dst) == -2){
-		while(SDL_LockSurface(getColoredImage()) < 0 ){
+	while(SDL_BlitSurface(static_cast<SDLSurfaceStorage*>(getColoredImage().get())->getSurface(), &src, static_cast<SDLSurfaceStorage*>(g_engine->m_screen.get())->getSurface(), &dst) == -2){
+		while(SDL_LockSurface(static_cast<SDLSurfaceStorage*>(getColoredImage().get())->getSurface()) < 0 ){
 				SDL_Delay(10);
 		}
 		loadSurfaceFromFile(m_filename, m_index);
 
-		SDL_UnlockSurface(getColoredImage());
+		SDL_UnlockSurface(static_cast<SDLSurfaceStorage*>(getColoredImage().get())->getSurface());
 	}
 }
 
@@ -78,9 +78,9 @@ void SpriteSDL::Blit(float dx, float dy, float sx, float sy, float w, float h, f
     double lambdaw = destw / w;
     double lambdah = desth / h;
 
-    double neww = getBasicImage()->w * lambdaw;
-    double newh = getBasicImage()->h * lambdah;
-    if(getImage()->w != neww || getImage()->h != newh) {
+    double neww = getBasicImage()->getWidth() * lambdaw;
+    double newh = getBasicImage()->getHeight() * lambdaw;
+    if(getImage()->getWidth() != neww || getImage()->getHeight() != newh) {
 		Stretch(neww, newh, options.smoothstretch);
 		oldw = neww;
 		oldh = newh;
