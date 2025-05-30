@@ -82,12 +82,12 @@ void SpriteGL::buildGLTexture() {
 #endif
 
 
-	SDL_Surface *sfc = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, nextpow(getBasicImage()->w), nextpow(getBasicImage()->h), 32, rmask, gmask, bmask, amask);
+	SDL_Surface *sfc = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, nextpow(getBasicImage()->getWidth()), nextpow(getBasicImage()->getHeight()), 32, rmask, gmask, bmask, amask);
 	
-	SDL_Rect s = {0,0,uint16_t(getBasicImage()->w),uint16_t(getBasicImage()->h)};
-	SDL_Rect d = {0,0,uint16_t(getBasicImage()->w),uint16_t(getBasicImage()->h)};
+	SDL_Rect s = {0,0,uint16_t(getBasicImage()->getWidth()),uint16_t(getBasicImage()->getHeight())};
+	SDL_Rect d = {0,0,uint16_t(getBasicImage()->getWidth()),uint16_t(getBasicImage()->getHeight())};
 
-	SDL_BlitSurface(getBasicImage(), &s, sfc, &d);
+	SDL_BlitSurface(static_cast<SDLSurfaceStorage*>(getBasicImage().get())->getSurface(), &s, sfc, &d);
 
 	SDL_SetAlpha(sfc, SDL_SRCALPHA, 255);
 	SDL_LockSurface(sfc);
@@ -186,4 +186,3 @@ void SpriteGL::destroyGLTexture()
 	}
 }
 #endif
-
