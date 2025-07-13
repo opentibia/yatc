@@ -7,7 +7,9 @@ version: 2
 updates:
   # Enable version updates for Git submodules.
   # docs: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates
-  - package-ecosystem: "gitsubmodules"
+  # docs: https://docs.github.com/en/code-security/dependabot/ecosystems-supported-by-dependabot/supported-ecosystems-and-repositories
+  # docs: https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference#package-ecosystem-
+  - package-ecosystem: "gitsubmodule"
     # https://stackoverflow.com/a/75078947 should be / (where .git and .gitsubmodules is)
     directory: "/"
     allow:
