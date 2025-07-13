@@ -121,6 +121,10 @@ jobs:
 
     runs-on: ${{ matrix.runs_on }}
 
+    permissions:
+      contents: read
+      checks: write
+
     needs: [bazel_build]
     steps:
     - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
@@ -261,6 +265,10 @@ jobs:
 
   bazel_test_buildbuddy:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      checks: write
 
     strategy:
       fail-fast: false
