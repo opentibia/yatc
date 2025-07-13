@@ -1,0 +1,29 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  # Enable version updates for Git submodules.
+  # docs: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates
+  - package-ecosystem: "gitsubmodules"
+    # https://stackoverflow.com/a/75078947 should be / (where .git and .gitsubmodules is)
+    directory: "/"
+    allow:
+      # https://stackoverflow.com/a/75078947 should be submodule paths
+      - dependency-name: "/vendor/github.com/ivucica/glict"
+      - dependency-name: "/vendor/github.com/ivucica/rules_libsdl12"
+      - dependency-name: "/vendor/github.com/ivucica/rules_tibia"
+    target-branch: "master"
+    schedule:
+      interval: "daily"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    # Workflow files stored in the default location of `.github/workflows`
+    # You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
