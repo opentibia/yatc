@@ -21,6 +21,14 @@ RUN curl -fSsL -o /usr/local/bin/bazelisk https://github.com/bazelbuild/bazelisk
     && ([ "${BAZELISK_DOWNLOAD_SHA}" = "dev-mode" ] || echo "${BAZELISK_DOWNLOAD_SHA} */usr/local/bin/bazelisk" | sha256sum --check - ) \
     && chmod 0755 /usr/local/bin/bazelisk
 
+# Install Buildifier
+ARG BUILDIFIER_VERSION=v7.1.1
+# TODO: 6.1.2
+ARG BUILDIFIER_DOWNLOAD_SHA=dev-mode
+RUN curl -fSsL -o /usr/local/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/${BUILDIFIER_VERSION}/buildifier-linux-amd64 \
+    && ([ "${BUILDIFIER_DOWNLOAD_SHA}" = "dev-mode" ] || echo "${BUILDIFIER_DOWNLOAD_SHA} */usr/local/bin/buildifier" | sha256sum --check - ) \
+    && chmod 0755 /usr/local/bin/buildifier
+
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends gettext clang gcc bzip2 libx11-dev libxext-dev libxrandr-dev libxrender-dev libgl-dev libglu-dev libasound-dev libalsaplayer-dev patch clangd \
@@ -30,4 +38,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # to reconfigure to understand Bazelisk is a decent intermediary.
 RUN ln -s /usr/local/bin/bazelisk /usr/local/bin/bazel
 
+# There may be an expectation that /root exists and is usable by the current user.
 RUN mkdir -p /root && chown ${USERNAME} /root
+

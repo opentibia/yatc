@@ -48,9 +48,9 @@ bool MiniMapArea::save()
 {
 	std::stringstream x, y, z, minimapfnss;
 	//get the name of the file
-	x << setw(3) << setfill('0') << m_basepos.x / 256;
-    y << setw(3) << setfill('0') << m_basepos.y / 256;
-    z << setw(2) << setfill('0') << m_basepos.z;
+    x << std::setw(3) << std::setfill('0') << m_basepos.x / 256;
+    y << std::setw(3) << std::setfill('0') << m_basepos.y / 256;
+    z << std::setw(2) << std::setfill('0') << m_basepos.z;
     minimapfnss << x.str() << y.str() << z.str() << ".map";
     FILE* f = yatc_fopen(minimapfnss.str().c_str(), "wb");
     if(!f){
@@ -78,9 +78,9 @@ bool MiniMapArea::load()
 {
 	//get the name of the file
 	std::stringstream x, y, z, minimapfnss;
-	x << setw(3) << setfill('0') << m_basepos.x / 256;
-    y << setw(3) << setfill('0') << m_basepos.y / 256;
-    z << setw(2) << setfill('0') << m_basepos.z;
+    x << std::setw(3) << std::setfill('0') << m_basepos.x / 256;
+    y << std::setw(3) << std::setfill('0') << m_basepos.y / 256;
+    z << std::setw(2) << std::setfill('0') << m_basepos.z;
     minimapfnss << x.str() << y.str() << z.str() << ".map";
     FILE* f = yatc_fopen(minimapfnss.str().c_str(), "rb");
     if(!f){

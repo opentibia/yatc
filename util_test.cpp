@@ -20,7 +20,7 @@
 
 #include <string>
 #include <gtest/gtest.h>
-#include "util.h" 
+#include "util.h"
 
 // Demonstrate some basic assertions.
 TEST(StrReplaceTest, BasicAssertions) {
@@ -31,6 +31,9 @@ TEST(StrReplaceTest, BasicAssertions) {
   auto want = "hi world";
 
   EXPECT_STREQ(got.c_str(), want);
+}
+
+TEST(EqualityTest, BasicAssertions) {
   // Expect equality.
-  //EXPECT_EQ(7 * 6, 42);
+  EXPECT_EQ(7 * 6, 42);
 }
