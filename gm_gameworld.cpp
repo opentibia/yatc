@@ -347,7 +347,7 @@ GM_Gameworld::~GM_Gameworld ()
 	Objects::getInstance()->unloadDat();
 	Objects::destroyInstance();
 
-
+	// TODO: remove, let's not re-load .dat once unloaded.
 	if(!Objects::getInstance()->loadDat("Tibia.dat")){
         NativeGUIError("Tibia.dat suddenly disappeared during client's runtime.", "What?!");
     }

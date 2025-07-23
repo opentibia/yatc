@@ -11,16 +11,25 @@ protected:
     GM_Gameworld* gameworld;
 
     void SetUp() override {
-        gameworld = new GM_Gameworld();
-    
+        gameworld = NULL; g_game = NULL; // precaution in case previous attempt failed
+
+        char * cmdline = "./gm_gameworld_test"; // ideally we'd get argv[0] et al; or as backup, TEST_TARGET; but we can't get former easily, and latter might not be populated if test is directly run 
+        yatc_fopen_init(cmdline); // needed so data files can be found in .runfiles
+
         Objects::getInstance()->loadDat("Tibia.dat"); // TODO: should not try to present winOutfit_t and thus require loading outift and dat!
+
+        gameworld = new GM_Gameworld();   
+        g_game = gameworld; 
     }
 
-    void TearDown() override {
-        Objects::getInstance()->unloadDat();
-        Objects::destroyInstance();
+    void TearDown() override {        
+        if (Objects::getInstance()) {
+            Objects::getInstance()->unloadDat();
+            Objects::destroyInstance();
+        }
         // TODO: unload gfx?
         delete gameworld;
+        g_game = NULL;
     }
 };
 

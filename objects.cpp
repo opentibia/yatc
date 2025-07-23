@@ -116,6 +116,10 @@ void ObjectType::loadGfx()
     ASSERT(imageData)
 
     if (m_gfx.size() != numsprites) { // graphics not loaded yet?
+#ifndef CLI_ONLY
+		ASSERT(g_engine) // g_engine must be set. it may not be set in case of tests; what should we load then? 
+		if (!g_engine) throw std::runtime_error("No g_engine in ObjectType::loadGfx");
+#endif
         for(uint32_t i = 0; i < numsprites; i++){
 #ifndef CLI_ONLY
             m_gfx.insert(m_gfx.end(), g_engine->createSprite("Tibia.spr", imageData[i]));
