@@ -1461,8 +1461,7 @@ cc_test(
         "@tibia854//:Tibia.dat",
         "@tibia854//:Tibia.pic",
         "@tibia854//:Tibia.spr",
-    ],
-    defines = ["USE_SDL12=1"],
+    ]
 )
 
 platform(
