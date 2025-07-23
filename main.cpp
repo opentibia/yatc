@@ -23,7 +23,7 @@
 
 #include <SDL/SDL_syswm.h>
 
-unsigned int MAXFPS=50;
+extern unsigned int MAXFPS;
 
 #if !defined(WIN32) && !defined(__APPLE__)
 #include <signal.h>
@@ -71,6 +71,7 @@ unsigned int MAXFPS=50;
 #include "skin.h"
 #include "spritesdl.h" // to load icon
 #include "product.h"
+#include "cursorutil.h"
 
 #include "clipboard.h"
 
@@ -81,17 +82,17 @@ unsigned int MAXFPS=50;
 #include "gamecontent/creature.h"
 #include "gamecontent/map.h"
 #include "gamecontent/inventory.h"
-bool g_running = false;
+extern bool g_running;
 //uint32_t keymods = 0;
 
-Connection* g_connection = NULL;
-uint32_t g_frameTime = 0;
-uint32_t g_frameDiff = 0;
+extern Connection* g_connection;
+extern uint32_t g_frameTime;
+extern uint32_t g_frameDiff;
 
-int g_frames;
-FPSmanager g_fpsmgr; // for sdl_gfx's fps management functions
-yatcClipboard g_clipboard;
-std::string g_recordfilename="debugrecord.rec";
+extern int g_frames;
+extern FPSmanager g_fpsmgr; // for sdl_gfx's fps management functions
+extern yatcClipboard g_clipboard;
+extern std::string g_recordfilename;
 
 extern float g_replayspeed;
 
@@ -99,7 +100,7 @@ extern float g_replayspeed;
 //              So I'll make my own cruddy implementation. :D
 //              This is apple's "command" key and microsoft's "windows" key.
 // false is down, true is up
-bool superkey_state = false;
+extern bool superkey_state;
 
 
 void onKeyDown(const SDL_Event& event)
@@ -282,17 +283,6 @@ void setIcon()
 	delete s;
 	//delete st;
 }
-
-void resetDefaultCursor()
-{
-    static SDL_Cursor* defaultcursor = NULL;
-    if (!defaultcursor)
-        defaultcursor = SDL_GetCursor();
-    else
-        SDL_SetCursor(defaultcursor);
-
-}
-
 
 #if !defined(WIN32) && !defined(__APPLE__)
 #ifdef _GLIBCXX_DEBUG

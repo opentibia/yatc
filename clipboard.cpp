@@ -37,6 +37,8 @@ bool callback_called = false;
 
 #include "clipboard.h"
 
+yatcClipboard g_clipboard;
+
 yatcClipboard::yatcClipboard()
 {
 	#if defined(__USE_INTERNAL_CLIPBOARD) || defined(USE_X11_CLIPBOARD)

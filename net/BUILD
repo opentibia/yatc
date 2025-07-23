@@ -657,6 +657,46 @@ cc_library(
     }),
     linkstatic = 1,
 )
+
+cc_library(
+    name = "connection",
+    srcs = [
+        "connection.cpp",
+        "rsa.h",
+    ],
+    hdrs = [
+        "connection.h",
+        "encryption.h"
+    ],
+    deps = [
+        "//:fassert",
+        ":enum_hdr",
+        ":protocolconfig_hdr",
+        "//:sdl",
+        "//:stdinttypes",
+        "//:notifications",
+        "//:bigint",
+        ":networkmessage",
+    ],
+    linkstatic = 1,
+)
+
+cc_library(
+    name = "networkmessage",
+    srcs = [
+        "networkmessage.cpp",
+    ],
+    hdrs = [
+        "networkmessage.h",
+    ],
+    deps = [
+        "//:fassert",
+        "//:stdinttypes",
+        "//gamecontent:map",
+    ],
+    linkstatic = 1,
+)
+
 cc_library(
     name = "connection_hdr",
     hdrs = [

@@ -231,6 +231,7 @@ bool ProtocolGame83::internalSetOutfit(NetworkMessage& msg, Outfit_t& outfit)
 	outfit.m_looktype = looktype;
 	if(outfit.m_looktype != 0){
 		if(!Objects::getInstance()->getOutfitType(outfit.m_looktype)){
+			// likely .dat not loaded
 			return false;
 		}
 		MSG_READ_U8(head);

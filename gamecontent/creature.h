@@ -138,7 +138,7 @@ public:
 	    delete m_instance;
 	    m_instance = NULL;
 	}
-	void loadGfx();
+	bool loadGfx();
 	void unloadGfx();
 	void clear();
 

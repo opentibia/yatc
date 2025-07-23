@@ -52,8 +52,6 @@ extern bool g_running;
 extern bool superkey_state;
 
 
-void resetDefaultCursor();
-
 GM_MainMenu::GM_MainMenu()
 {
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting main menu...\n");

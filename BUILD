@@ -220,6 +220,20 @@ cc_library(
     }),
 )
 
+cc_library(
+    name = "cursorutil",
+    srcs = ["cursorutil.cpp"],
+    hdrs = ["cursorutil.h"],
+    deps = ["//:sdl"],
+)
+
+cc_library(
+    name = "cursorutil_clionly",
+    srcs = ["cursorutil.cpp"],
+    hdrs = ["cursorutil.h"],
+    defines = {"CLI_ONLY": "1"},
+)
+
 cc_test(
     name = "util_test",
     size = "small",
@@ -276,6 +290,7 @@ cc_library(
     ],
     linkstatic = 1,
     deps = [
+        ":cursorutil",
         ":debugprint",
         ":defines",
         ":font",
@@ -287,6 +302,7 @@ cc_library(
         "@glict//glict/GLICT",
         "@libglu1-mesa-dev//:libglu1-mesa-dev",
         "@rules_libsdl12//:libsdl12",
+        "@libsdlgfx//:sdlgfx",
     ],
 )
 
@@ -779,6 +795,7 @@ cc_library(
     ],
     linkstatic = 1,
     deps = [
+        "//gamecontent:enums",
         ":ui",
         "@rules_libsdl12//:libsdl12",
     ],
@@ -801,7 +818,6 @@ cc_library(
     srcs = glob(["ui/*.cpp"]) + [
         "automap.h",
         "choicegrid.h",
-        "clipboard.h",
         "console.h",
         "engine.h",
         "enginesdl.h",
@@ -841,6 +857,7 @@ cc_library(
     }),
     linkstatic = 1,
     deps = [
+        ":clipboard",
         ":defines",
         ":sprite_hdr",
         ":util",
@@ -892,6 +909,7 @@ cc_binary(
         "main.cpp",
     ],
     deps = [
+        ":cursorutil",
         ":creatureui",
         ":distanceui",
         ":effectui",
@@ -899,7 +917,6 @@ cc_binary(
         ":yatc_lib",
     ] + select({
         ":darwin": [
-            ":macclipboard",
             "@rules_libsdl12//:libsdl12-main",
         ],
         ":windows": [],
@@ -929,6 +946,214 @@ cc_binary(
 #":yatc.ico",
 #],
 #)
+
+cc_library(
+    name = "gm_gameworld_hdr",
+    hdrs = [
+        "gm_gameworld.h",
+        "gamemode.h",
+        "ui/optionsui.h", # pulled in by gamemode.h
+        "ui/optionsconsole.h", # pulled in by gamemode.h
+        "ui/checkbox.h", # pulled in by gamemode.h
+        "ui/optionsgeneral.h", # pulled in by gamemode.h
+        "ui/optionsgfxadv.h", # pulled in by gamemode.h
+        "ui/optionsgraphics.h", # pulled in by gamemode.h
+        "ui/optionshotkeys.h", # pulled in by gamemode.h
+        "//gamecontent:item.h", # pulled in by gamemode.h -> ui/optionshotkeys.h
+        "itemui.h", # pulled in by gamecontent/item.h
+        "ui/optionsnetwork.h",  # pulled in by gamemode.h
+        "//gamecontent:enums.h", # pulled in by gamemode.h
+    ],
+    deps = [
+        "//:sdl",
+        ":stdinttypes",
+    ],
+)
+
+cc_library(
+    name = "console",
+    srcs = [
+        "console.cpp",
+    ],
+    hdrs = [
+        "console.h"
+    ],
+    deps = [
+        "@glict//glict/GLICT",
+        ":clipboard",
+        ":popup",
+        ":skin",
+        ":sdl",
+        ":choicegrid", # pulled in by gamemode.h
+        "//net:connection", # pulled in by optionsnetwork.h
+        "//net:protocolconfig",  # pulled in by optionsnetwork.h
+    ],
+    linkstatic = 1,
+)
+cc_library(
+    name = "popup",
+    srcs = [
+        "popup.cpp",
+    ],
+    hdrs = [
+        "popup.h"
+    ],
+    deps = [
+        "@glict//glict/GLICT",
+        ":skin",
+    ],
+    linkstatic = 1,
+)
+
+cc_library(
+    name = "skin",
+    srcs = [
+        "skin.cpp",
+    ],
+    hdrs = [
+        "skin.h",
+    ],
+    linkstatic = 1,
+    deps = [
+        "@glict//glict/GLICT",
+        ":sprite",
+    ],
+)
+
+cc_library(
+    name = "stackpanel",
+    srcs = [
+        "stackpanel.cpp",
+    ],
+    hdrs = [
+        "stackpanel.h",
+    ],
+    linkstatic = 1,
+    deps = [
+        "@glict//glict/GLICT",
+        ":skin",
+        ":gm_gameworld_hdr",
+        ":choicegrid",
+        "//net:connection", # pulled in by gm_gameworld_hdr,
+    ],
+)
+
+cc_library(
+    name = "mapui",
+    srcs = [
+        "mapui.cpp",
+    ],
+    hdrs = [
+        "mapui.h",
+    ],
+    deps = [
+        ":gm_gameworld_hdr",
+    
+        "@glict//glict/GLICT", # pulled in by ui/optionsconsole.h
+        ":skin", # pulled in by optionsconsole.h
+        ":choicegrid",
+        "//net:connection", # pulled in by optionsnetwork.h
+        "//net:protocolgame",
+    ],
+    linkstatic = 1,
+)
+
+cc_library(
+    name = "automap",
+    deps = ["//:sdl", ":stdinttypes", ":sprite"],
+    srcs = ["automap.cpp"],
+    hdrs = ["automap.h", "//gamecontent:position.h"],
+    linkstatic = 1,
+)
+
+cc_library(
+    name = "statusmsg",
+    srcs = ["statusmsg.cpp", "//gamecontent:globalvars.h", "//gamecontent:position.h"],
+    hdrs = ["statusmsg.h", "//gamecontent:enums.h"],
+    deps = [":stdinttypes", ":engine_hdr"],
+    linkstatic = 1,
+)
+
+cc_library(
+    name = "gm_gameworld",
+    srcs = [
+        "gm_gameworld.cpp",
+    ],
+    hdrs = [
+        "gm_gameworld.h",
+    ],
+    deps = [
+        ":gamemode",
+        ":gm_mainmenu",
+        ":engine",
+        ":console",
+        ":sdl",
+        ":stackpanel",
+        ":gm_gameworld_hdr",
+        ":mapui",
+        ":statusmsg",
+        ":clipboard",
+    ],
+    linkstatic = 1,
+)
+cc_library(
+    name = "gm_mainmenu",
+    srcs = [
+        "gm_mainmenu.cpp",
+    ],
+    hdrs = [
+        "gm_mainmenu.h",
+    ],
+    deps = [
+        ":gamemode",
+        ":gm_debug",
+        ":engine",
+        ":sdl",
+        "//net:protocols",
+        "//net:protocolconfig",
+    ],
+    linkstatic = 1,
+)
+cc_library(
+    name = "gm_debug",
+    srcs = [
+        "gm_debug.cpp",
+    ],
+    hdrs = [
+        "gm_debug.h",
+    ],
+    deps = [
+        ":automap",
+        ":choicegrid",
+        ":gamemode",
+        ":engine",
+        ":sdl",
+        "//net:protocollogin",
+        "//net:protocols",
+    ],
+    linkstatic = 1,
+)
+
+cc_library(
+    name = "clipboard",
+    srcs = ["clipboard.cpp"],
+    hdrs = ["clipboard.h"],
+    deps = [
+    ] + select({
+        ":darwin": [
+            ":macclipboard",
+        ],
+        "//conditions:default": [],
+    }),
+    linkstatic = 1,
+)
+cc_library(
+    name = "choicegrid",
+    deps = ["@glict//glict/GLICT",],
+    srcs = ["choicegrid.cpp"],
+    hdrs = ["choicegrid.h"],
+    linkstatic = 1,
+)
 
 cc_library(
     name = "yatc_lib",
@@ -980,6 +1205,20 @@ cc_library(
             "notifications.h",
             "gamemode.cpp",
             "gamemode.h",
+            "gm_gameworld.cpp",
+            "gm_gameworld.h",
+            "gm_mainmenu.cpp",
+            "gm_mainmenu.h",
+            "gm_debug.cpp",
+            "gm_debug.h",
+            "choicegrid.cpp",
+            "choicegrid.h",
+            "popup.cpp",
+            "popup.h",
+            "console.cpp",
+            "console.h",
+            "skin.cpp",
+            "skin.h",
             "confighandler.cpp",
             "confighandler.h",
             "stamp.cpp",
@@ -1054,6 +1293,9 @@ cc_library(
         ":enginegl",
         ":enginesdl",
         ":gamemode",
+        ":gm_gameworld",
+        ":gm_mainmenu",
+        ":gm_debug",
         ":notifications",
         ":options",
         ":sprdata",
@@ -1193,4 +1435,34 @@ sed -E 's/^([^ ]*) (.*)$$/#define __YATC_STAMP_\\1 "\\2"/' bazel-out/stable-stat
 echo "#endif" >> $@
     """,
     stamp=1,
+)
+
+cc_test(
+    name = "gm_gameworld_test",
+    size = "small",
+    srcs = ["gm_gameworld_test.cpp"],
+    deps = [
+        ":cursorutil",
+        ":engine",
+        "//gamecontent:map",
+        "//gamecontent:creature",
+        "//gamecontent:globalvars",
+        "//net:connection",  # indirect
+        "//gamecontent:container",  # indirect
+        ":gm_gameworld",  # under test
+        "@com_google_googletest//:gtest_main",
+    ],
+    data = [
+        "@tibia854//:Tibia.dat",
+        "@tibia854//:Tibia.pic",
+        "@tibia854//:Tibia.spr",
+    ]
+)
+
+platform(
+    name = "linux_x86_64",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
 )

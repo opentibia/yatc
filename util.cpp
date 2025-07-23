@@ -46,6 +46,13 @@
 #include "macutil.h"
 #include "product.h"
 
+unsigned int MAXFPS=50;
+bool g_running = false;
+int g_frames = 0;
+uint32_t g_frameTime = 0;
+uint32_t g_frameDiff = 0;
+std::string g_recordfilename="debugrecord.rec";
+bool superkey_state = false;
 
 #define WINCE_INSTALLDIR "/Storage Card/YATC/"
 
@@ -62,7 +69,17 @@ std::string str_replace(const std::string& what, const std::string& with, const 
 void NativeGUIError(const char* text, const char *title) {
 	#if defined(__APPLE__) || defined(CLI_ONLY)
 	printf("NativeGUIError('%s','%s');\n", text, title);
+	
+	#if defined(CLI_ONLY)
+	return;
 	#endif
+	#endif
+
+	if (!(getenv("BAZEL_TEST") == NULL || getenv("BAZEL_TEST")[0] == '\0')) {
+		fprintf(stderr, "NativeGUIError('%s','%s');\n", text, title);
+		return;
+	}
+	
 	#ifdef WIN32
 		#ifndef WINCE
 			MessageBoxA(HWND_DESKTOP, text, title, MB_ICONSTOP);

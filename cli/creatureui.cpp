@@ -141,13 +141,15 @@ void CreatureUI::advanceWalk(int groundspeed)
 		m_walkState = 1;
 }
 
-void CreatureUI::loadOutfit()
+bool CreatureUI::loadOutfit()
 {
+	return true;
 }
 
 bool CreatureUI::isLoaded() const {
   return true;
 }
 
-void CreatureUI::setupObject() {
+bool CreatureUI::setupObject() {
+	return true;
 }

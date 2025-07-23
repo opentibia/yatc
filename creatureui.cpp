@@ -414,16 +414,17 @@ void CreatureUI::advanceWalk(int groundspeed)
 		m_walkState = 1;
 }
 
-void CreatureUI::loadOutfit()
+bool CreatureUI::loadOutfit()
 {
     Creature* n = (Creature*)this;
 
     unloadGfx();
 
-    setupObject();
+    if (!setupObject())
+		return false;
 
     if (!m_obj)
-        return;
+        return false;
 
 	Outfit_t outfit = n->getOutfit();
 
@@ -458,6 +459,7 @@ void CreatureUI::loadOutfit()
         }
 		m_gfx.insert(m_gfx.end(), spr);
 	}
+	return true;
 }
 
 bool CreatureUI::isLoaded() const {
@@ -474,7 +476,7 @@ bool CreatureUI::isLoaded() const {
     return true;
 }
 
-void CreatureUI::setupObject() {
+bool CreatureUI::setupObject() {
     Creature* n = (Creature*)this;
 	Outfit_t outfit = n->getOutfit();
     m_startTime = g_frameTime;
@@ -485,17 +487,23 @@ void CreatureUI::setupObject() {
         }
         else if(outfit.m_looktype == 0 && outfit.m_lookitem != 0){
             m_obj = Objects::getInstance()->getItemType(outfit.m_lookitem);
+			if (!m_obj) {
+				printf("Could not load outfit of itemtype %d\n", outfit.m_lookitem);
+				return false;
+			}
         }
         else{
             m_obj = Objects::getInstance()->getOutfitType(outfit.m_looktype);
-        }
-        if (!m_obj) {
-            printf("Could not load outfit of type %d\n", outfit.m_looktype);
-            return;
+			if (!m_obj) {
+				printf("Could not load outfit of type %d\n", outfit.m_looktype);
+				return false;
+			}
         }
         if (!m_obj->isGfxLoaded()) {
             m_obj->loadGfx();
         }
+		return true;
 	}
 	if(!m_obj)printf("FAILED to create outfit.\n");
+	return false;
 }

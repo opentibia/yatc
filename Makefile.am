@@ -30,7 +30,7 @@ yatc_SOURCES = $(MAYBE_OPENGL) debugprint.cpp enginesdl.cpp gm_mainmenu.cpp \
 		skin.cpp thingui.cpp itemui.cpp creatureui.cpp effectui.cpp \
 		distanceui.cpp mapui.cpp console.cpp popup.cpp \
 		bigint.cpp automap.cpp choicegrid.cpp stackpanel.cpp \
-		statusmsg.cpp clipboard.cpp \
+		statusmsg.cpp clipboard.cpp cursorutil.cpp \
 		\
 		net/connectionreplay.cpp net/connection.cpp net/networkmessage.cpp \
 		net/protocolconfig.cpp \
@@ -60,7 +60,7 @@ EXTRA_DIST = debugprint.h enginesdl.h gm_mainmenu.h objects.h spritegl.h \
 		skin.h thingui.h itemui.h creatureui.h console.h effectui.h \
 		distanceui.h mapui.h \
 		bigint.h fassert.h stdinttypes.h popup.h automap.h \
-		choicegrid.h stackpanel.h statusmsg.h clipboard.h \
+		choicegrid.h stackpanel.h statusmsg.h clipboard.h cursorutil.h \
 		macutil.h \
 		\
 		net/connectionreplay.h \

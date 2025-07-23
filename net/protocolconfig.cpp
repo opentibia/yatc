@@ -61,6 +61,7 @@ uint32_t ProtocolConfig::readSignature(const char* fn) {
 	uint32_t sig;
 	FILE*f=yatc_fopen(fn,"rb");
 	ASSERTFRIENDLY(f,"Could not find a data file although we found it in the past.");
+	if (!f) return 0; // in case asserts are disabled
 	yatc_fread(&sig, 4, 1, f);
 	fclose(f);
 	return sig;

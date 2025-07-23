@@ -487,7 +487,7 @@ int ConsoleEntry::paintEntry(float x, float y, float width /*= -1*/)
 	return glictFontNumberOfLines(m_text.c_str())* (12 * linecount);
 }
 
-std::string ConsoleEntry::getFullText()
+std::string ConsoleEntry::getFullText() const
 {
 	std::stringstream ss;
 	if(options.timestamps) {

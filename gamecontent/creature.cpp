@@ -188,13 +188,15 @@ void Creatures::unloadGfx()
 
 }
 
-void Creatures::loadGfx()
+bool Creatures::loadGfx()
 {
     for(uint32_t i = 0; i < CREATURES_ARRAY; ++i){
         if (!m_creaturesArray[i].m_id)
             continue;
         m_creaturesArray[i].setupObject();
         if(!m_creaturesArray[i].isLoaded())
-            m_creaturesArray[i].loadOutfit();
+            if (!m_creaturesArray[i].loadOutfit())
+			    return false;
     }
+	return true;
 }

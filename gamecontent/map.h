@@ -89,9 +89,9 @@ public:
     PublicMessage(TextColor_t color, const std::string& text, const std::string& sender, const Position& pos, bool showName, int linecount, MSG_RANGE range);
 
 	uint32_t getStartTime(){ return m_startTime;}
-	TextColor_t getColor() { return m_color;}
-	const std::string& getText() { return m_text;}
-	const std::string& getSender() { return m_sender; }
+	TextColor_t getColor() const { return m_color; }
+	const std::string& getText() const { return m_text; }
+	const std::string& getSender() const { return m_sender; }
 	const Position& getPosition() { return m_pos;}
 	bool shouldShowName(){ return m_showName; }
     int getLinecount() { return m_linecount;}

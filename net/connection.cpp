@@ -43,6 +43,7 @@
 #endif
 
 extern std::string g_recordfilename;
+Connection* g_connection = NULL;
 
 //****************************************************
 

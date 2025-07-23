@@ -32,7 +32,7 @@ public:
 	~CreatureUI();
 	virtual void Blit(int x, int y, float scale = 1., int map_x = 0, int map_y = 0) const;
 
-	void loadOutfit();
+	bool loadOutfit();
 	void drawInfo(int x, int y, float scale, bool visible) const;
 	void drawName(int x, int y, float scale, bool visible) const;
 	void drawSkullsShields(int x, int y, float scale) const;
@@ -52,7 +52,7 @@ public:
 
 	int getSize() const { return (m_obj != NULL)?(MAX(m_obj->width, m_obj->height)):(1); }
 protected:
-	void setupObject();
+	bool setupObject();
 
 private:
 	ObjectType *m_obj;

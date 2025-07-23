@@ -275,6 +275,9 @@ winSkills_t::winSkills_t()
 
 void winSkills_t::updateSelf()
 {
+    if (!g_engine) // not running under GUI, it seems
+        return;
+
     std::stringstream s("");
 
     // FIXME (ivucica#4#) insert comma after every three characters

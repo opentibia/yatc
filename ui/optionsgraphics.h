@@ -189,6 +189,9 @@ public:
 		SDL_Rect **modes;
 		int i,j;
 
+		if (!g_engine)
+		  return;
+
 		/* Get available fullscreen/hardware modes */
 		modes=SDL_ListModes(NULL, g_engine->m_videoflags | SDL_FULLSCREEN);
 

@@ -36,11 +36,19 @@
 #include "font.h"
 #include "options.h"
 #include "product.h"
+#include "cursorutil.h"
 Engine* g_engine;
 extern int g_frames;
 int ptrx, ptry;
 
 void resetDefaultCursor();
+
+#ifdef __APPLE__
+	#include <SDL_gfx/SDL_framerate.h>
+#else
+	#include <SDL/SDL_framerate.h>
+#endif
+FPSmanager g_fpsmgr; // for sdl_gfx's fps management functions
 
 // first we'll define all the C-style callbacks we'll use elsewhere
 void Engine::draw_rectangle(float left, float right, float top, float bottom, GLICTCOLORCONST glictColor &col)

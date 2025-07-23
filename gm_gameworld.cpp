@@ -59,8 +59,6 @@ extern uint32_t g_frameTime;
 int g_lastmousebutton=SDL_BUTTON_LEFT;
 extern uint32_t g_frameDiff;
 
-void resetDefaultCursor();
-
 extern int g_lastmousebutton;
 
 extern bool superkey_state;
@@ -129,7 +127,10 @@ GM_Gameworld::GM_Gameworld() : pnlMap(&m_automap)
 	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Starting gameworld...\n");
 
 	// we don't load it at startup now, so...
-	Objects::getInstance()->loadDat("Tibia.dat");
+	if (!Objects::getInstance()->loadDat("Tibia.dat")) {
+		// cannot abort a constructor any other sensible way, but we also cannot proceed
+		throw std::runtime_error("data file not loadable, cannot start gameworld");
+	}
 
 	m_protocol = (ProtocolGame*)g_connection->getProtocol();
 

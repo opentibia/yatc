@@ -105,8 +105,9 @@ class ConsoleEntry {
 		}
 		int paintEntry(float x, float y, float width = -1);
 		int getHeight();
-		const std::string& getSpeaker(){ return m_speaker; }
-		std::string getFullText();
+		const std::string& getSpeaker() const { return m_speaker; }
+		std::string getFullText() const;
+		TextColor_t getColor() const { return m_color; }
 	private:
 		std::string m_text, m_speaker;
 		TextColor_t m_color;
@@ -135,6 +136,9 @@ class Console {
 		void dumpText();
 
 		int getHeight();
+
+		// Returns the last entry in the console (for tests).
+		const ConsoleEntry& getLastEntry() const { return m_content.back(); }
 	private:
 		std::vector <ConsoleEntry> m_content;
 		std::string m_speakername;

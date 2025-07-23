@@ -29,6 +29,9 @@
 #else
     #define VOIDP2INT(x) ((int)(x))
 #endif
+
+extern unsigned int MAXFPS;
+
 std::string str_replace(const std::string& what, const std::string& with, const std::string &s);
 void NativeGUIError(const char* text, const char *title);
 bool fileexists(const char* filename);

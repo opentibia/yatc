@@ -215,8 +215,12 @@ winOutfit_t::winOutfit_t() {
 
     printf("Configured outfit. LOADING GFX.\n");
     uint32_t ticks = SDL_GetTicks();
-    dispCreature->loadOutfit();
-    printf("Loaded creature in %d ticks\n", SDL_GetTicks() - ticks);
+    if(dispCreature->loadOutfit())
+        printf("Loaded creature for winOutfit_t in %d ticks\n", SDL_GetTicks() - ticks);
+    else {
+        fprintf(stderr, "Failed to load creature for winOutfit_t in %d ticks\n", SDL_GetTicks() - ticks);
+        throw std::runtime_error("Failed to load creature for winOutfit_t"); // too harsh? will it cause harsh uncaught crashes?
+    }
 }
 winOutfit_t::~winOutfit_t(){
     Creatures::getInstance().removeCreature(0xFFFFFF00);
