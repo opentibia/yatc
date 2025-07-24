@@ -140,6 +140,8 @@ static std::vector<std::string > searchpaths;
 
 
 std::string yatc_findfile(const char* filename, const char* mode){
+// TODO: is there something similar to fnmatch (see dunst/src/settings.c) that we can use for path search?
+// TODO: use XDG_CONFIG_DIRS (homedir and global versions)
     if(!strcmp(filename, "Tibia.pic")) {
         std::string yatcpic = yatc_findfile("YATC.pic", mode);
         if (yatcpic != "")
