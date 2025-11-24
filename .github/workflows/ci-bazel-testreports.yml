@@ -18,21 +18,25 @@ jobs:
           - name: minimal-regular
             place: regular
             short_name: minimal
+            os: " ubuntu-latest"
           - name: util-regular
             place: regular
             short_name: util
+            os: " ubuntu-latest"
           - name: minimal-buildbuddy
             place: buildbuddy
             short_name: minimal
+            os: ""
           - name: util-buildbuddy
             place: buildbuddy
             short_name: util
+            os: ""
 
     steps:
       - name: Download Test Report
         uses: dawidd6/action-download-artifact@v6
         with:
-          name: junit-test-results-${{ matrix.place }}-${{ matrix.short_name }} test
+          name: junit-test-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
           workflow: ${{ github.event.workflow.id }}
           run_id: ${{ github.event.workflow_run.id }}
       - name: Publish Test Report
