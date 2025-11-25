@@ -949,6 +949,31 @@ cc_binary(
 #)
 
 cc_library(
+    name = "gm_mainmenu_hdr",
+    hdrs = [
+        "gm_mainmenu.h",
+        "gamemode.h",
+
+        # taken from below, from gm_gameworld_hdr
+        "ui/optionsui.h", # pulled in by gamemode.h
+        "ui/optionsconsole.h", # pulled in by gamemode.h
+        "ui/checkbox.h", # pulled in by gamemode.h
+        "ui/optionsgeneral.h", # pulled in by gamemode.h
+        "ui/optionsgfxadv.h", # pulled in by gamemode.h
+        "ui/optionsgraphics.h", # pulled in by gamemode.h
+        "ui/optionshotkeys.h", # pulled in by gamemode.h
+        "//gamecontent:item.h", # pulled in by gamemode.h -> ui/optionshotkeys.h
+        "itemui.h", # pulled in by gamecontent/item.h
+        "ui/optionsnetwork.h",  # pulled in by gamemode.h
+        "//gamecontent:enums.h", # pulled in by gamemode.h
+    ],
+    deps = [
+        "//:sdl",
+        ":stdinttypes",
+    ],
+)
+
+cc_library(
     name = "gm_gameworld_hdr",
     hdrs = [
         "gm_gameworld.h",
@@ -1085,7 +1110,7 @@ cc_library(
     ],
     deps = [
         ":gamemode",
-        ":gm_mainmenu",
+        ":gm_mainmenu_hdr",
         ":engine",
         ":console",
         ":sdl",
@@ -1108,6 +1133,7 @@ cc_library(
     deps = [
         ":gamemode",
         ":gm_debug",
+        ":gm_gameworld",
         ":engine",
         ":sdl",
         "//net:protocols",
