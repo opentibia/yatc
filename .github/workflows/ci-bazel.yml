@@ -6,6 +6,12 @@ on:
       BUILDBUDDY_ORG_API_KEY:
         required: false
 
+# Set some global arguments, e.g. whether to enable or disable coverage
+# collection:
+env:
+  ENABLE_BAZEL_COVERAGE: true
+# End arguments section.
+
 # Not using 'inputs' here, since we take no inputs at this time -- just the 'github' context.
 # Note: on type workflow_run commit message would be github.event.workflow_run.head_commit.message
 # https://stackoverflow.com/a/63619526
@@ -161,6 +167,9 @@ jobs:
       run: sudo apt-get update && sudo apt-get -y install autoconf automake libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libasound-dev libalsaplayer-dev
     - name: bazel test
       run: bazelisk --output_user_root=${{ matrix.cache_path }} test ${{ matrix.bazel_target }}
+    - name: bazel coverage
+      if: ${{ env.ENABLE_BAZEL_COVERAGE == 'true' }}
+      run: bazelisk --output_user_root=${{ matrix.cache_path }} coverage ${{ matrix.bazel_target }}
     - name: Upload test report
       uses: actions/upload-artifact@v4
       if: always()  # Run even if the previous step fails
@@ -174,6 +183,14 @@ jobs:
         # * test.raw_splitlogs/
         # * test.cache_status
         # but they might not be worth uploading at this time.
+
+        retention-days: 90  # Maximum is 90d, default is repo settings.
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      if: ${{ always() && env.ENABLE_BAZEL_COVERAGE == 'true' }}  # Run even if the previous step fails
+      with:
+        name: lcov-coverage-results-regular-${{ matrix.name }}
+        path: 'bazel-testlogs/**/coverage.dat'
 
         retention-days: 90  # Maximum is 90d, default is repo settings.
     - name: Upload test log
@@ -303,6 +320,13 @@ jobs:
       env:
         BUILDBUDDY_ORG_API_KEY: ${{ secrets.BUILDBUDDY_ORG_API_KEY }}
 
+    - name: rbe bazel coverage
+      if: ${{ env.ENABLE_BAZEL_COVERAGE == 'true' }}
+      run: bazelisk coverage --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} ${{ matrix.bazel_target }}
+      continue-on-error: true
+      env:
+        BUILDBUDDY_ORG_API_KEY: ${{ secrets.BUILDBUDDY_ORG_API_KEY }}
+
     - name: Upload test report
       uses: actions/upload-artifact@v4
       if: always()  # Run even if the previous step fails
@@ -316,6 +340,14 @@ jobs:
         # * test.raw_splitlogs/
         # * test.cache_status
         # but they might not be worth uploading at this time.
+
+        retention-days: 90  # Maximum and default is 90d but can be shortened.
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      if: ${{ always() && env.ENABLE_BAZEL_COVERAGE == 'true' }}  # Run even if the previous step fails
+      with:
+        name: lcov-coverage-results-buildbuddy-${{ matrix.name }}
+        path: 'bazel-testlogs/**/coverage.dat'
 
         retention-days: 90  # Maximum and default is 90d but can be shortened.
     - name: Upload test log

@@ -1,11 +1,18 @@
 name: Bazel CI test report
 on:
   workflow_run:
+    # Trigger after ci.yml completes; this means that ci-bazel.yml (invoked by it) has also completed.
     workflows: [ "C/C\\+\\+ and Bazel CI" ]
     types: [ completed ]
 
 permissions:
   checks: write
+
+# Set some global arguments, e.g. whether to enable or disable coverage
+# collection:
+env:
+  ENABLE_BAZEL_COVERAGE: true  # TODO: This should be set only in the ci-bazel.yml (which is included from ci.yml) and passed here.
+# End arguments section.
 
 jobs:
   checks:
@@ -47,3 +54,60 @@ jobs:
           commit: ${{github.event.workflow_run.head_sha}}  # remove if we don't use separate workflow
           # some_file.zip/minimal_test/test.xml
           report_paths: '**/test.xml'
+
+      - name: Download lcov Coverage Report
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          name: lcov-coverage-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
+          workflow: ${{ github.event.workflow.id }}
+          run_id: ${{ github.event.workflow_run.id }}
+      - name: Convert lcov to Cobertura XML
+        # Script to use: https://raw.githubusercontent.com/eriwen/lcov-to-cobertura-xml/85f51dfd646fadf534ce2bd636befeec37148ff9/lcov_cobertura/lcov_cobertura.py
+        # Readme gives these examples:
+        #   python lcov_cobertura.py lcov-file.dat
+        #   -b/--base-dir - (Optional) Directory where source files are located. Defaults to the current directory
+        #   -e/--excludes - (Optional) Comma-separated list of regexes of packages to exclude
+        #   -o/--output - (Optional) Path to store cobertura xml file. Defaults to ./coverage.xml
+        #   -d/--demangle - (Optional) Demangle C++ function names. Requires c++filt
+        #   python lcov_cobertura.py lcov-file.dat --base-dir src/dir --excludes test.lib --output build/coverage.xml --demangle
+        # and also mentions installing via pip (lcov_cobertura, same name for binary)
+        # Requires Python 3.8+.
+        # Last version for Python 2.x was 1.6.
+
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+        run: |
+          pip install lcov_cobertura
+          find bazel-out/ -name 'coverage.dat' -exec lcov_cobertura {} --output {}.xml \;
+
+      - name: Upload Cobertura Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cobertura-coverage-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
+          path: 'bazel-testlogs/**/coverage.xml'
+        if: always()  # Run even if the previous step fails
+
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: bazel-testlogs/**/coverage.xml
+          badge: true
+          #fail_below_min: true
+          fail_below_min: false  # Flippable once we have builds clearly passing this.
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '60 80'
+      - name: Post coverage report as comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          header: coverage
+          path: code-coverage-results.md
+      - name: Add coverage report to job summary
+        run: |
+          cat code-coverage-results.md >> "$GITHUB_STEP_SUMMARY"
