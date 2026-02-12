@@ -8,6 +8,12 @@ on: [push, pull_request]
 # Available data: https://stackoverflow.com/a/75715955
 run-name: "@${{github.actor}} CI on ${{ github.ref_name }} - ${{ github.event.head_commit.message }}"
 
+# Set some global arguments, e.g. whether to enable or disable coverage
+# collection:
+env:
+  ENABLE_BAZEL_COVERAGE: true  # TODO: This should be set only in the ci-bazel.yml (which is included from ci.yml) and passed here.
+# End arguments section.
+
 jobs:
 
   cpp:

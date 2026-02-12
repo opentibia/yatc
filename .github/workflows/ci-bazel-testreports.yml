@@ -63,6 +63,7 @@ jobs:
           name: lcov-coverage-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
           workflow: ${{ github.event.workflow.id }}
           run_id: ${{ github.event.workflow_run.id }}
+
       - name: Install Python for lcov to Cobertura conversion run
         uses: actions/setup-python@v4
         # Run only if coverage is enabled.
