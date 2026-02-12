@@ -42,6 +42,7 @@ class SpriteGL : public Sprite
 		GLuint m_texture;
 		double m_multiplierx, m_multipliery;
 		uint32_t m_engineCreationTimestamp;
+		std::shared_ptr<RGBAStorage> m_image;
 };
 
 #endif
