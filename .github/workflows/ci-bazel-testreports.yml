@@ -3,7 +3,8 @@ on:
   workflow_run:
     # Trigger after ci.yml completes; this means that ci-bazel.yml (invoked by it) has also completed.
     workflows: [ "C/C\\+\\+ and Bazel CI" ]
-    types: [ completed ]
+    # Both completed and failed workflow runs trigger this, since we want to collect test reports even if the build or tests fail.
+    types: [ completed, failed ]
 
 permissions:
   checks: write
