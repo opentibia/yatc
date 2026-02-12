@@ -242,7 +242,14 @@ cc_test(
         ":util",
         "@com_google_googletest//:gtest_main",
     ],
-    linkopts = ["-ldl"],
+    linkopts = select({
+        ":windows_msvc": [
+            "/DEFAULTLIB:shell32.lib",  # openurl() needs ShellExecute
+            "/SUBSYSTEM:CONSOLE",  # ensure gtest main resolves to main(), not WinMain
+        ],
+        ":windows_msys": ["-lshell32"],
+        "//conditions:default": ["-ldl"],
+    }),
 )
 
 cc_test(
