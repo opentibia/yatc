@@ -3,8 +3,8 @@ on:
   workflow_run:
     # Trigger after ci.yml completes; this means that ci-bazel.yml (invoked by it) has also completed.
     workflows: [ "C/C\\+\\+ and Bazel CI" ]
-    # Both completed and failed workflow runs trigger this, since we want to collect test reports even if the build or tests fail.
-    types: [ completed, failed ]
+    # This should trigger on both completed and failed runs by passing just [ completed ]. TODO: confirm
+    types: [ completed ]
 
 permissions:
   checks: write
@@ -95,7 +95,7 @@ jobs:
           chmod +x lcov_cobertura.py
 
           # TODO: change to output coverage.xml, not coverage.dat.xml, and update the rest of the workflow accordingly.
-          if command -v python3 &> /dev/null then 
+          if command -v python3 &> /dev/null ; then 
             find bazel-testlogs/ -name 'coverage.dat' -exec python3 lcov_cobertura.py {} --output {}.xml \;  
           else
             find bazel-testlogs/ -name 'coverage.dat' -exec python lcov_cobertura.py {} --output {}.xml \;
