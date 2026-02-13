@@ -58,8 +58,8 @@ jobs:
 
       - name: Download lcov Coverage Report
         uses: dawidd6/action-download-artifact@v6
-        # Run only if coverage is enabled.
-        if: env.ENABLE_BAZEL_COVERAGE == 'true'
+        # Run only if coverage is enabled and not on Windows artifacts.
+        if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows')
         with:
           name: lcov-coverage-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
           workflow: ${{ github.event.workflow.id }}
@@ -67,13 +67,13 @@ jobs:
 
       - name: Install Python for lcov to Cobertura conversion run
         uses: actions/setup-python@v4
-        # Run only if coverage is enabled.
-        if: env.ENABLE_BAZEL_COVERAGE == 'true'
+        # Run only if coverage is enabled and not on Windows artifacts.
+        if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows')
         with:
           python-version: '3.11'
 
       - name: Convert lcov to Cobertura XML
-        if: env.ENABLE_BAZEL_COVERAGE == 'true' # Run only if coverage is enabled.
+        if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run only if coverage is enabled and not on Windows artifacts.
 
         # Script to use: https://raw.githubusercontent.com/eriwen/lcov-to-cobertura-xml/85f51dfd646fadf534ce2bd636befeec37148ff9/lcov_cobertura/lcov_cobertura.py
         # Readme gives these examples:
@@ -106,11 +106,11 @@ jobs:
         with:
           name: cobertura-coverage-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
           path: 'bazel-testlogs/**/coverage.dat.xml'
-        if: always() && env.ENABLE_BAZEL_COVERAGE == 'true' # Run even if the previous step fails
+        if: always() && env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run even if the previous step fails
 
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
-        if: env.ENABLE_BAZEL_COVERAGE == 'true' # Run only if coverage is enabled.
+        if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run only if coverage is enabled and not on Windows artifacts.
         with:
           filename: bazel-testlogs/**/coverage.dat.xml
           badge: true
@@ -124,12 +124,12 @@ jobs:
           thresholds: '60 80'
       - name: Post coverage report as comment
         uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request' && env.ENABLE_BAZEL_COVERAGE == 'true' # Run only on PRs and if coverage is enabled.
+        if: github.event_name == 'pull_request' && env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run only on PRs and if coverage is enabled and not on Windows artifacts.
         with:
           recreate: true
           header: coverage
           path: code-coverage-results.md
       - name: Add coverage report to job summary
-        if: env.ENABLE_BAZEL_COVERAGE == 'true' # Run only if coverage is enabled.
+        if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run only if coverage is enabled and not on Windows artifacts.
         run: |
           cat code-coverage-results.md >> "$GITHUB_STEP_SUMMARY"
