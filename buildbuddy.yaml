@@ -9,8 +9,10 @@ actions:
       pull_request:
         branches:
           - "*"
+    run:
+      - "bash ./checkout_modules.sh"  # https://www.buildbuddy.io/docs/workflows-config hopefully this can now be run directly
     bazel_commands:
-      - "run --config=remote :checkout_modules"
+      #- "run --config=remote :checkout_modules"
       - "test --config=remote //:util_test" # <-- main modification here: --config=remote as a default for buildbuddy.yaml; also currently testing even //:all is broken (because it tries to compile macclipboard.m), much less //...
 
   - name: "Build main binary"
@@ -22,6 +24,8 @@ actions:
       pull_request:
         branches:
           - "*"
+    run:
+      - "bash ./checkout_modules.sh"
     bazel_commands:
-      - "run --config=remote :checkout_modules"
+      # - "run --config=remote :checkout_modules"
       - "build --config=remote :yatc"
