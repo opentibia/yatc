@@ -28,6 +28,10 @@ stamp-h1
 config.status
 configure
 yatc.ico.png
+config.guess
+config.sub
+ltmain.sh
+_codeql_detected_source_root
 # Ignore buildbuddy secrets file.
 .bazelrc.buildbuddysecrets
 .secrets
