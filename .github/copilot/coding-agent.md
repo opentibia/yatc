@@ -5,6 +5,11 @@ agent to build and test this repository correctly.
 
 ## Network allowlist
 
+This only applies if coding-agent environment is used. If run locally, this
+almost certainly does not apply. Other agent environments (Gemini-CLI or
+Copilot in VS Code) will not hit this problem, so you have to be confident
+this is the cause (e.g. DNS errors).
+
 The following hosts must be added to the Copilot coding-agent network allowlist
 at **https://github.com/opentibia/yatc/settings/copilot/coding_agent/allowlist**:
 
@@ -14,6 +19,25 @@ at **https://github.com/opentibia/yatc/settings/copilot/coding_agent/allowlist**
 | `github.com` | `git submodule update --init` clones vendored submodules; `bazel` fetches `googletest`, `buildbuddy-toolchain`, and `hedronvision/bazel-compile-commands-extractor` |
 | `www.libsdl.org` | `bazel` fetches SDL 1.2.15 (used by all build targets that depend on SDL) |
 | `www.ferzkopp.net` | `bazel` fetches SDL_gfx 2.0.24 (used by `//:yatc` and other graphical targets; **not** required for `//:util_test` or `//:minimal_test`) |
+
+You will have to ask the user to do this, but only do so if you see DNS
+resolution errors.
+
+### Certificate errors
+
+The certificates inside Bazel _might_ be problematic. Only if you see trust
+errors, you should try to use the system certificate store. You will need to
+determine the correct system certificate store which Bazel might not be using,
+and then pass it as an additional argument to `bazelisk` (and therefore `bazel`)
+command:
+
+```
+--host_jvm_args="-Djavax.net.ssl.trustStore=/usr/lib/jvm/temurin-17-jdk-amd64/lib/security/cacerts"
+```
+
+Again, you don't need to do this unless you actually observe failures in
+Bazel downloading the files. This is also specific to sandboxing in the
+remote coding-agent environment.
 
 ## Setup steps before building or testing
 
@@ -32,6 +56,9 @@ Bazel cannot even load the workspace and will fail with:
 No WORKSPACE file found in .../external/rules_tibia
 ```
 
+You don't need to do this unless `rules_libsdl12`, `rules_tibia` or similar
+are empty (e.g. the above error `No WORKSPACE file found` or other indicators).
+
 ## Building and testing
 
 ```bash
@@ -48,6 +75,17 @@ limited):
 
 ```bash
 bazelisk --output_user_root=/tmp/bazel_out test //:util_test
+```
+
+Because of the sheer amount of code that needs to be built, you are very
+strongly encouraged to use Remote Build Execution / RBE -- use `--config=remote`.
+You may review available configs in #file:tools/bazel.rc
+([tools/bazel.rc](tools/bazel.rc)) or #file:.bazelrc ([.bazelrc](.bazelrc)).
+
+For example, instead of using the above command to run the tests, use:
+
+```
+bazelisk test --config=remote //:util_test
 ```
 
 ## System dependencies (Linux)
