@@ -322,7 +322,7 @@ jobs:
 
     - name: rbe bazel coverage
       if: ${{ env.ENABLE_BAZEL_COVERAGE == 'true' && runner.os != 'Windows' }}
-      run: bazelisk coverage --config=remote --noenable_runfiles --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} ${{ matrix.bazel_target }}
+      run: bazelisk coverage --config=remote --build_runfile_links --enable_runfiles --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} ${{ matrix.bazel_target }}
       continue-on-error: true
       env:
         BUILDBUDDY_ORG_API_KEY: ${{ secrets.BUILDBUDDY_ORG_API_KEY }}
