@@ -21,7 +21,7 @@ jobs:
 
     # needs: [jobs, we, want, to, run, first]
     steps:
-    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+    - uses: actions/setup-node@v6  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps

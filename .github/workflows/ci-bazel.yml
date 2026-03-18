@@ -47,7 +47,7 @@ jobs:
     runs-on: ${{ matrix.runs_on }}
 
     steps:
-    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+    - uses: actions/setup-node@v6  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
@@ -127,7 +127,7 @@ jobs:
 
     needs: [bazel_build]
     steps:
-    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+    - uses: actions/setup-node@v6  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
@@ -222,7 +222,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+    - uses: actions/setup-node@v6  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
@@ -281,7 +281,7 @@ jobs:
 
     needs: [bazel_build_buildbuddy]
     steps:
-    - uses: actions/setup-node@v4  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
+    - uses: actions/setup-node@v6  # for local execution with act, when using windows-latest with -P windows-latest=-self-hosted; needed for some actions like cache@v4
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
