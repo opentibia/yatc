@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: Download Test Report
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v19
         with:
           name: junit-test-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
           workflow: ${{ github.event.workflow.id }}
@@ -57,7 +57,7 @@ jobs:
           report_paths: '**/test.xml'
 
       - name: Download lcov Coverage Report
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v19
         # Run only if coverage is enabled and not on Windows artifacts.
         if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows')
         with:
