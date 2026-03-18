@@ -77,7 +77,7 @@ jobs:
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
-    - uses: bazel-contrib/setup-bazel@0.14.0
+    - uses: bazel-contrib/setup-bazel@0.18.0
       with:
         # Avoid downloading Bazel every time.
         bazelisk-cache: true
@@ -157,7 +157,7 @@ jobs:
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
-    - uses: bazel-contrib/setup-bazel@0.14.0
+    - uses: bazel-contrib/setup-bazel@0.18.0
       with:
         # Avoid downloading Bazel every time.
         bazelisk-cache: true
@@ -251,7 +251,7 @@ jobs:
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
-    - uses: bazel-contrib/setup-bazel@0.14.0
+    - uses: bazel-contrib/setup-bazel@0.18.0
       with:
         # Avoid downloading Bazel every time.
         bazelisk-cache: true
@@ -311,7 +311,7 @@ jobs:
       continue-on-error: true
       run: echo Stub action merely printing a notice that there was a cache miss
       # More useful with e.g. npm.
-    - uses: bazel-contrib/setup-bazel@0.14.0
+    - uses: bazel-contrib/setup-bazel@0.18.0
       with:
         # Avoid downloading Bazel every time.
         bazelisk-cache: true
