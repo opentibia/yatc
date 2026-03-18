@@ -57,7 +57,7 @@ jobs:
 
     # Caches and restores the bazel build directory.
     - name: Cache bazel build results
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: bazel-cache
       env:
         cache-name: bazel-cache
@@ -137,7 +137,7 @@ jobs:
 
     # Caches and restores the bazel build directory.
     - name: Cache bazel build results
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: bazel-cache
       env:
         cache-name: bazel-cache
@@ -231,7 +231,7 @@ jobs:
         submodules: true
     # Caches and restores the bazel build directory.
     - name: Cache bazel build results
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: bazel-cache
       env:
         cache-name: bazel-cache
@@ -291,7 +291,7 @@ jobs:
 
     # Caches and restores the bazel build directory.
     - name: Cache bazel build results
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: bazel-cache
       env:
         cache-name: bazel-cache
