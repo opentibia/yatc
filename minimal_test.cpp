@@ -20,15 +20,34 @@
 
 #include <string>
 #include <gtest/gtest.h>
+#include "util.h"
+
+#ifdef _WIN32
+// It appears that rules_libsdl12 may be setting /SUBSYSTEM:WINDOWS as a
+// transitive linkopt on Windows non-debug builds, which would cause the CRT
+// to require WinMain rather than main. This WinMain shim delegates to main()
+// so that gtest_main works correctly even when SUBSYSTEM:WINDOWS is forced.
+// TODO: The proper fix is for rules_libsdl12 to expose a console-subsystem
+// variant target that unit tests can link against without inheriting the
+// SUBSYSTEM:WINDOWS linkopt. Until then, this shim is required.
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <stdlib.h>  // provides __argc/__argv with correct dllimport linkage
+// Forward-declare main() which is provided by gtest_main.
+int main(int argc, char** argv);
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+                   PSTR lpCmdLine, int nCmdShow) {
+    (void)hInstance; (void)hPrevInstance; (void)lpCmdLine; (void)nCmdShow;
+    return main(__argc, __argv);
+}
+#endif
 
 // Demonstrate some basic assertions.
 TEST(StrReplaceTest, BasicAssertions) {
-  auto haystack = std::string("hello world");
-  auto needle = std::string("hello");
-  auto replace = std::string("hi");
-
-  auto got =
-      haystack.replace(haystack.find(needle), needle.size(), replace);
+  auto got = str_replace(
+      std::string("hello"),
+      std::string("hi"),
+      std::string("hello world"));
   auto want = "hi world";
 
   EXPECT_STREQ(got.c_str(), want);

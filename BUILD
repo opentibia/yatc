@@ -268,13 +268,36 @@ cc_test(
 )
 
 cc_test(
-    # This test intentionally links nothing except gtest.
     name = "minimal_test",
     size = "small",
     srcs = ["minimal_test.cpp"],
     deps = [
+        ":util",
         "@com_google_googletest//:gtest_main",
     ],
+    linkopts = select({
+        # TODO: It is unclear why the CI runner reports host_cpu=x64_windows
+        # rather than x64_windows_msvc even when using MSVC. This may be a
+        # Bazel version- or toolchain-configuration-specific behaviour. Until
+        # this is understood and validated, keep :windows and :windows_msvc
+        # cases in sync so that either selector covers the MSVC toolchain.
+        ":windows": [
+            "/DEFAULTLIB:shell32.lib",  # openurl() needs ShellExecute
+            "/SUBSYSTEM:CONSOLE",  # ensure gtest main resolves to main(), not WinMain
+            # TODO: /SUBSYSTEM:CONSOLE is currently overridden by the transitive
+            # /SUBSYSTEM:WINDOWS linkopt that rules_libsdl12 injects for all
+            # non-debug Windows builds. Fix this by adding a console-subsystem
+            # variant target in rules_libsdl12 that unit tests can link against
+            # instead of the full SDL library (which forces SUBSYSTEM:WINDOWS).
+        ],
+        ":windows_msvc": [
+            "/DEFAULTLIB:shell32.lib",  # openurl() needs ShellExecute
+            "/SUBSYSTEM:CONSOLE",  # ensure gtest main resolves to main(), not WinMain
+            # TODO: same as :windows case above -- see comment there.
+        ],
+        ":windows_msys": ["-lshell32"],
+        "//conditions:default": ["-ldl"],
+    }),
 )
 
 cc_library(
