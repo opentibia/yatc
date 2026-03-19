@@ -112,7 +112,7 @@ jobs:
         uses: irongut/CodeCoverageSummary@v1.3.0
         if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run only if coverage is enabled and not on Windows artifacts.
         with:
-          filename: ./**/coverage.dat.xml
+          filename: ./*/coverage.dat.xml
           badge: true
           #fail_below_min: true
           fail_below_min: false  # Flippable once we have builds clearly passing this.
