@@ -95,7 +95,7 @@ jobs:
           LCOV_COBERTURA_SCRIPT=$(python3 -c "import importlib.util; print(importlib.util.find_spec('lcov_cobertura.lcov_cobertura').origin)")
 
           # TODO: change to output coverage.xml, not coverage.dat.xml, and update the rest of the workflow accordingly.
-          # Skip empty coverage.dat files (e.g. from targets with no project source files like minimal_test),
+          # Skip empty coverage.dat files (e.g. from a target that instruments no workspace sources),
           # since lcov_cobertura would produce an empty <packages/> XML that CodeCoverageSummary cannot parse.
           find ./ -name 'coverage.dat' -not -empty -exec python3 "$LCOV_COBERTURA_SCRIPT" {} --output {}.xml \;
 
@@ -104,8 +104,8 @@ jobs:
         with:
           name: cobertura-coverage-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
           path: './**/coverage.dat.xml'
-          # No XML is produced when all coverage.dat files were empty (e.g. minimal_test has no project
-          # sources), so tolerate the case where there are no files to upload.
+          # No XML is produced when all coverage.dat files were empty (e.g. a target that instruments
+          # no workspace sources), so tolerate the case where there are no files to upload.
           if-no-files-found: warn
         if: always() && env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run even if the previous step fails
 
@@ -113,7 +113,7 @@ jobs:
         id: check_cobertura
         if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows')
         run: |
-          # Empty coverage.dat files (e.g. from minimal_test which has no project sources) are skipped
+          # Empty coverage.dat files (e.g. a target that instruments no workspace sources) are skipped
           # by the conversion step, so there may be no XML to summarise.
           if find ./ -name 'coverage.dat.xml' | grep -q .; then
             echo "found=true" >> "$GITHUB_OUTPUT"
