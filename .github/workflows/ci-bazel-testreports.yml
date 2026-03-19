@@ -104,6 +104,9 @@ jobs:
         with:
           name: cobertura-coverage-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
           path: './**/coverage.dat.xml'
+          # No XML is produced when all coverage.dat files were empty (e.g. minimal_test has no project
+          # sources), so tolerate the case where there are no files to upload.
+          if-no-files-found: warn
         if: always() && env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run even if the previous step fails
 
       - name: Check for Cobertura XML files
