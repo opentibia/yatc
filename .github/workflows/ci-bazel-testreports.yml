@@ -98,7 +98,7 @@ jobs:
           find ./ -name 'coverage.dat' -exec python3 "$LCOV_COBERTURA_SCRIPT" {} --output {}.xml \;
 
       - name: Upload Cobertura Coverage Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cobertura-coverage-results-${{ matrix.place }}-${{ matrix.short_name }} test${{ matrix.os }}
           path: './**/coverage.dat.xml'
