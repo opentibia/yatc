@@ -51,7 +51,7 @@ jobs:
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: true
 
@@ -131,7 +131,7 @@ jobs:
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: true
 
@@ -226,7 +226,7 @@ jobs:
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: true
     # Caches and restores the bazel build directory.
@@ -285,7 +285,7 @@ jobs:
 
     # Checks-out your repository under $GITHUB_WORKSPACE, which is the CWD for
     # the rest of the steps
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         submodules: true
 
