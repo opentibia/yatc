@@ -175,7 +175,7 @@ jobs:
       if: ${{ env.ENABLE_BAZEL_COVERAGE == 'true' && !startsWith(matrix.runs_on, 'windows') }}
       run: bazelisk --output_user_root=${{ matrix.cache_path }} coverage ${{ matrix.bazel_target }}
     - name: Upload test report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: always()  # Run even if the previous step fails
       with:
         name: junit-test-results-regular-${{ matrix.name }}
@@ -190,7 +190,7 @@ jobs:
 
         retention-days: 90  # Maximum is 90d, default is repo settings.
     - name: Upload coverage report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: ${{ always() && env.ENABLE_BAZEL_COVERAGE == 'true' && !startsWith(matrix.runs_on, 'windows') }}  # Run even if the previous step fails
       with:
         name: lcov-coverage-results-regular-${{ matrix.name }}
@@ -198,7 +198,7 @@ jobs:
 
         retention-days: 90  # Maximum is 90d, default is repo settings.
     - name: Upload test log
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: always()  # Run even if the previous step fails
       with:
         name: junit-test-logs-regular-${{ matrix.name }}
@@ -336,7 +336,7 @@ jobs:
     #    BUILDBUDDY_ORG_API_KEY: ${{ secrets.BUILDBUDDY_ORG_API_KEY }}
 
     - name: Upload test report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: always()  # Run even if the previous step fails
       with:
         name: junit-test-results-buildbuddy-${{ matrix.name }}
@@ -351,7 +351,7 @@ jobs:
 
         retention-days: 90  # Maximum and default is 90d but can be shortened.
     #- name: Upload coverage report
-    #  uses: actions/upload-artifact@v4
+    #  uses: actions/upload-artifact@v7
     #  if: ${{ always() && env.ENABLE_BAZEL_COVERAGE == 'true' && runner.os != 'Windows' }}  # Run even if the previous step fails
     #  with:
     #    name: lcov-coverage-results-buildbuddy-${{ matrix.name }}
@@ -359,7 +359,7 @@ jobs:
 
     #    retention-days: 90  # Maximum and default is 90d but can be shortened.
     - name: Upload test log
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: always()  # Run even if the previous step fails
       with:
         name: junit-test-logs-buildbuddy-${{ matrix.name }}
