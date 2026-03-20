@@ -119,7 +119,7 @@ jobs:
           output: both
           thresholds: '60 80'
       - name: Post coverage report as comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         if: github.event_name == 'pull_request' && env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows') # Run only on PRs and if coverage is enabled and not on Windows artifacts.
         with:
           recreate: true
