@@ -138,7 +138,7 @@ Engine::Engine()
 
 	m_video_bpp = options.bpp;
 
-	m_screen = NULL;
+	m_screen = nullptr;
 
 	initFont(&m_sysfont, "system");
 	initFont(&m_minifont, "minifont");
@@ -146,9 +146,9 @@ Engine::Engine()
 	initFont(&m_gamefont, "gamefont");
 
 	m_fps = 0.;
-    m_ui = NULL;
-	m_light = NULL;
-    m_cursorBasic = m_cursorUse = NULL;
+    m_ui = nullptr;
+	m_light = nullptr;
+    m_cursorBasic = m_cursorUse = nullptr;
 
     // remember default cursor
     resetDefaultCursor();
