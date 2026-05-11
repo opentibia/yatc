@@ -66,7 +66,7 @@ jobs:
           run_id: ${{ github.event.workflow_run.id }}
 
       - name: Install Python for lcov to Cobertura conversion run
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         # Run only if coverage is enabled and not on Windows artifacts.
         if: env.ENABLE_BAZEL_COVERAGE == 'true' && !contains(matrix.os, 'windows')
         with:
