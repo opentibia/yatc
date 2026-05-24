@@ -74,9 +74,9 @@ Sprite::Sprite(int w, int h, const oRGBA& c)
     #ifdef USE_OPENGL
 	m_pixelformat = GL_NONE;
 	#endif
-	m_image = NULL;
-	m_stretchimage = NULL;
-	m_coloredimage = NULL;
+	m_image = nullptr;
+	m_stretchimage = nullptr;
+	m_coloredimage = nullptr;
 	m_loaded = false;
 	m_smoothstretch = 0;
     m_r = 1.f;
@@ -99,9 +99,9 @@ Sprite::Sprite(const std::string& filename, int index)
 	#ifdef USE_OPENGL
 	m_pixelformat = GL_NONE;
 	#endif
-	m_image = NULL;
-	m_stretchimage = NULL;
-	m_coloredimage = NULL;
+	m_image = nullptr;
+	m_stretchimage = nullptr;
+	m_coloredimage = nullptr;
 	m_loaded = false;
 	m_smoothstretch = 0;
     m_filename = filename;
@@ -134,9 +134,9 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 	m_pixelformat = GL_NONE;
 	#endif
 
-	m_image = NULL;
-	m_stretchimage = NULL;
-	m_coloredimage = NULL;
+	m_image = nullptr;
+	m_stretchimage = nullptr;
+	m_coloredimage = nullptr;
 	m_loaded = false;
 	m_smoothstretch = 1;
 	m_r = 1.f;
@@ -153,12 +153,12 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 	SDL_Surface* ns = SDL_CreateRGBSurface(SDL_HWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
 	SDL_Rect src = {(Sint16)x,(Sint16)y,(Uint16)w,(Uint16)h};
 	SDL_Rect dst = {0,0,(Uint16)w,(Uint16)h};
-	SDL_BlitSurface(m_image, &src, ns, &dst);
+	SDL_BlitSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface(), &src, ns, &dst);
 
-	SDL_FreeSurface(m_image);
-	SDL_FreeSurface(m_coloredimage);
-	m_image = ns;
-	m_coloredimage = SDL_CreateRGBSurface(SDL_HWSURFACE, m_image->w, m_image->h, 32, rmask, gmask, bmask, amask);
+	SDL_FreeSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
+	SDL_FreeSurface(static_cast<SDLSurfaceStorage*>(m_coloredimage.get())->getSurface());
+	m_image = std::make_shared<SDLSurfaceStorage>(ns);
+	m_coloredimage = std::make_shared<SDLSurfaceStorage>(SDL_CreateRGBSurface(SDL_HWSURFACE, m_image->getWidth(), m_image->getHeight(), 32, rmask, gmask, bmask, amask));
 }
 
 
@@ -166,13 +166,13 @@ Sprite::Sprite(const std::string& filename, int index, int x, int y, int w, int 
 Sprite::~Sprite()
 {
 	if(m_image){
-		SDL_FreeSurface(m_image);
+		SDL_FreeSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
 	}
 	if(m_stretchimage){
-		SDL_FreeSurface(m_stretchimage);
+		SDL_FreeSurface(static_cast<SDLSurfaceStorage*>(m_stretchimage.get())->getSurface());
 	}
 	if(m_coloredimage){
-		SDL_FreeSurface(m_coloredimage);
+		SDL_FreeSurface(static_cast<SDLSurfaceStorage*>(m_coloredimage.get())->getSurface());
 	}
 
 }
@@ -213,7 +213,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	#endif
 
 	if(extension == "bmp"){
-		m_image = SDL_LoadBMP(filename.c_str());
+		m_image = std::make_shared<SDLSurfaceStorage>(SDL_LoadBMP(filename.c_str()));
 		if(!m_image){
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] SDL_LoadBMP failed on file: %s\n", filename.c_str());
 			return;
@@ -253,36 +253,37 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		yatc_fread(&where, sizeof(where), 1, f);
 
 		// create surface where we'll store data, and fill it with transparency
-		m_image = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, 32, 32, 32, rmask, gmask, bmask, amask);
-		if(!m_image){
+		SDL_Surface* surface = SDL_CreateRGBSurface(SDL_SWSURFACE | SDL_SRCALPHA, 32, 32, 32, rmask, gmask, bmask, amask);
+		if(!surface){
 			DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY,DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Cant create SDL Surface.\n");
 			goto loadFail;
 		}
-		SDL_LockSurface(m_image);
+		SDL_LockSurface(surface);
 
 		// dont make static since if we change the rendering engine at runtime,
 		//  this may change too
-		Uint32 magenta = SDL_MapRGBA(m_image->format, 255, 0, 255, 255);
-		SDL_FillRect(m_image, NULL, magenta);
+		Uint32 magenta = SDL_MapRGBA(surface->format, 255, 0, 255, 255);
+		SDL_FillRect(surface, NULL, magenta);
 
 		// read the data
         if (where) {
             fseek(f, where, SEEK_SET);
 
             fgetc(f); fgetc(f); fgetc(f); // FIXME (ivucica#4#) zerocoolz says this should be colorkey, according to http://otfans.net/showpost.php?p=840634&postcount=134
-            if (readSprData(f, m_image, 0, 0)) {
+            if (readSprData(f, surface, 0, 0)) {
                 // error happened
                 DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_ERROR, "[Sprite::loadSurfaceFromFile] Problem in readSprData()\n");
-                SDL_FreeSurface(m_image);
-                m_image = NULL;
+                SDL_FreeSurface(surface);
+                m_image = nullptr;
                 fclose(f);
                 goto loadFail;
             }
         }
 		fclose(f);
-		SDL_UnlockSurface(m_image);
-		SDL_UpdateRect(m_image, 0, 0, 32, 32);
+		SDL_UnlockSurface(surface);
+		SDL_UpdateRect(surface, 0, 0, 32, 32);
 
+		m_image = std::make_shared<SDLSurfaceStorage>(surface);
 		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
 		#endif
@@ -345,7 +346,7 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 		}
 
 		fclose(f);
-		m_image = s;
+		m_image = std::make_shared<SDLSurfaceStorage>(s);
 		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
 		#endif
@@ -360,11 +361,11 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
         Uint32 color = SDL_MapRGB(s->format, (int)r, (int)g, (int)b);
 		SDL_FillRect(s, NULL, color);
 
+		m_image = std::make_shared<SDLSurfaceStorage>(s);
 		#ifdef USE_OPENGL
 		m_pixelformat = GL_RGBA;
 		#endif
-        m_image = s;
-		m_loaded = true;
+        m_loaded = true;
 
 	}
 	else{
@@ -375,15 +376,15 @@ void Sprite::loadSurfaceFromFile(const std::string& filename, int index) {
 	m_filename = filename;
 	m_index = index;
 
-	m_coloredimage = SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->w, m_image->h, 32, rmask, gmask, bmask, amask);
+	m_coloredimage = std::make_shared<SDLSurfaceStorage>(SDL_CreateRGBSurface(SDL_SWSURFACE, m_image->getWidth(), m_image->getHeight(), 32, rmask, gmask, bmask, amask));
 
-	SDL_SetColorKey(m_image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(m_image->format, 0xFF, 0, 0xFF)); // magenta is transparent
+	SDL_SetColorKey(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface(), SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface()->format, 0xFF, 0, 0xFF)); // magenta is transparent
 
 	{
-		SDL_Surface *ns=SDL_DisplayFormatAlpha(m_image);
+		SDL_Surface *ns=SDL_DisplayFormatAlpha(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
 		if (ns) {
-			SDL_FreeSurface(m_image);
-			m_image=ns;
+			SDL_FreeSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
+			m_image = std::make_shared<SDLSurfaceStorage>(ns);
 		}
 	}
 
@@ -426,16 +427,16 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 	//	return;
 	#endif
 	templatespr->lockSurface();
-	if(SDL_MUSTLOCK(m_image)) SDL_LockSurface(m_image);
-	for(int i=0; i < m_image->h; i++){
-		for(int j=0; j < m_image->w; j++){
-			uint32_t pixel = getPixel(j,i,m_image);
-			uint32_t templatepixel = getPixel(j,i,templatespr->getBasicImage());
+	if(SDL_MUSTLOCK(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface())) SDL_LockSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
+	for(int i=0; i < m_image->getHeight(); i++){
+		for(int j=0; j < m_image->getWidth(); j++){
+			uint32_t pixel = getPixel(j,i,static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
+			uint32_t templatepixel = getPixel(j,i,static_cast<SDLSurfaceStorage*>(templatespr->getBasicImage().get())->getSurface());
 			uint8_t rt, gt, bt; // rgb template
 			uint8_t ro, go, bo; // rgb original
 
-			SDL_GetRGB(templatepixel, templatespr->getBasicImage()->format, &rt, &gt, &bt);
-			SDL_GetRGB(pixel, m_image->format, &ro, &go, &bo);
+			SDL_GetRGB(templatepixel, static_cast<SDLSurfaceStorage*>(templatespr->getBasicImage().get())->getSurface()->format, &rt, &gt, &bt);
+			SDL_GetRGB(pixel, static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface()->format, &ro, &go, &bo);
 
 			if(rt && gt && !bt){ // yellow == head
 				templatedColorizePixel(head, ro, go, bo);
@@ -453,10 +454,10 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 				continue; // if nothing changed, skip the change of pixel
 			}
 
-			putPixel(j, i, SDL_MapRGB(m_image->format, ro, go, bo), m_image);
+			putPixel(j, i, SDL_MapRGB(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface()->format, ro, go, bo), static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
 		}
 	}
-	if(SDL_MUSTLOCK(m_image)) SDL_UnlockSurface(m_image);
+	if(SDL_MUSTLOCK(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface())) SDL_UnlockSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
 	templatespr->unlockSurface();
 
     rebuildSelf();
@@ -465,7 +466,7 @@ void Sprite::templatedColorize(Sprite* templatespr, uint8_t head, uint8_t body, 
 void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
 {
 	if (!img)
-		img = m_image;
+		img = static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface();
 
 	if (!img->pixels) {
         //DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_WARNING, "Trying to write a pixel into a NIL array - %d, %d on a %dx%d image\n", x, y, img->w, img->h);
@@ -511,7 +512,7 @@ void Sprite::putPixel(int x, int y, uint32_t pixel, SDL_Surface *img)
 uint32_t Sprite::getPixel(int x, int y, SDL_Surface *img)
 {
 	if (!img)
-        img = m_image;
+        img = static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface();
 	int bpp = img->format->BytesPerPixel;
 
     if (!img->pixels) {
@@ -551,16 +552,16 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
 {
 	SDL_Surface* img;
 	if(m_stretchimage && !force){
-		if(fabs(m_stretchimage->w - w) < 2.f && fabs(m_stretchimage->h - h) < 2.f){
+		if(fabs(m_stretchimage->getWidth() - w) < 2.f && fabs(m_stretchimage->getHeight() - h) < 2.f){
 			return;
 		}
 	}
 
     if(m_r == 1.f && m_g == 1.f && m_b == 1.f){
-        img = m_image;
+        img = static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface();
     }
     else{
-        img = m_coloredimage;
+        img = static_cast<SDLSurfaceStorage*>(m_coloredimage.get())->getSurface();
     }
 
     if(smooth == -1){
@@ -573,14 +574,14 @@ void Sprite::Stretch (float w, float h, int smooth, bool force)
 
 	unStretch();
 
-	if (w == m_image->w && h == m_image->h)
+	if (w == m_image->getWidth() && h == m_image->getHeight())
         return;
-    if (m_stretchimage &&  w == m_stretchimage->w && h == m_stretchimage->h)
+    if (m_stretchimage &&  w == m_stretchimage->getWidth() && h == m_stretchimage->getHeight())
         return;
 
 //    DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "Stretching to %g %g\n", w, h);
 
-	m_stretchimage = zoomSurface(img, w/img->w, h/img->h, smooth);
+	m_stretchimage = std::make_shared<SDLSurfaceStorage>(zoomSurface(img, w/img->w, h/img->h, smooth));
 
 //	DEBUGPRINT(DEBUGPRINT_LEVEL_OBLIGATORY, DEBUGPRINT_NORMAL, "New size: %d %d\n", m_stretchimage->w, m_stretchimage->h);
 
@@ -597,29 +598,29 @@ void Sprite::addColor(float r, float g, float b)
 	if(r == m_r && g == m_g && b == m_b){
 		return;
 	}
-	SDL_LockSurface(m_image);
-	SDL_LockSurface(m_coloredimage);
+	SDL_LockSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
+	SDL_LockSurface(static_cast<SDLSurfaceStorage*>(m_coloredimage.get())->getSurface());
 
-	for(register int i = 0; i < m_image->w; i++){
-		for(register int j =0; j < m_image->h; j++){
+	for(register int i = 0; i < m_image->getWidth(); i++){
+		for(register int j =0; j < m_image->getHeight(); j++){
 		    if (!getBasicImage()) {
 		        printf("I don't have an image!\n");
 		    }
-		    if (!getBasicImage()->pixels) {
+		    if (!static_cast<SDLSurfaceStorage*>(getBasicImage().get())->getSurface()->pixels) {
 		        printf("I don't have image's pixels!\n");
 		    }
-			SDL_GetRGBA(getPixel(i,j, getBasicImage()), getBasicImage()->format, &ro, &go, &bo, &ao);
+			SDL_GetRGBA(getPixel(i,j, static_cast<SDLSurfaceStorage*>(getBasicImage().get())->getSurface()), static_cast<SDLSurfaceStorage*>(getBasicImage().get())->getSurface()->format, &ro, &go, &bo, &ao);
 
 			if(ao){
-				putPixel(i, j, SDL_MapRGBA(m_coloredimage->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), m_coloredimage);
+				putPixel(i, j, SDL_MapRGBA(static_cast<SDLSurfaceStorage*>(m_coloredimage.get())->getSurface()->format, (uint8_t)(ro*r), (uint8_t)(go*g), (uint8_t)(bo*b), ao), static_cast<SDLSurfaceStorage*>(m_coloredimage.get())->getSurface());
 			}
 		}
 	}
 
-	SDL_UnlockSurface(m_image);
-	SDL_UnlockSurface(m_coloredimage);
+	SDL_UnlockSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
+	SDL_UnlockSurface(static_cast<SDLSurfaceStorage*>(m_coloredimage.get())->getSurface());
 	m_r = r; m_g = g; m_b = b;
-	Stretch(getImage()->w, getImage()->h, -1, true);
+	Stretch(getImage()->getWidth(), getImage()->getHeight(),m_smoothstretch,1);
 }
 
 void Sprite::setAsIcon()
@@ -633,7 +634,7 @@ void Sprite::setAsIcon()
 		NativeGUIError(s.str().c_str(), "Error");
 	}
 
-	SDL_WM_SetIcon(m_image, NULL);
+	SDL_WM_SetIcon(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface(), NULL);
 }
 
 
@@ -659,7 +660,7 @@ SDL_Cursor* Sprite::createCursor(int topx, int topy, int w, int h, int hot_x, in
         uint32_t pv;
         uint8_t r,g,b,a;
 
-        SDL_GetRGBA(pv=getPixel(topx+col, topy+row, m_image), m_image->format, &r, &g, &b, &a);
+        SDL_GetRGBA(pv=getPixel(topx+col, topy+row, static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface()), static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface()->format, &r, &g, &b, &a);
 
         if(a == 0){
             // transparent
@@ -683,18 +684,18 @@ SDL_Cursor* Sprite::createCursor(int topx, int topy, int w, int h, int hot_x, in
 }
 
 
-SDL_Surface* Sprite::lockSurface()
+std::shared_ptr<RGBAStorage> Sprite::lockSurface()
 {
 	//printf("LOCK %p\n", m_image);
-    if(SDL_MUSTLOCK(m_image)) 
-		if(SDL_LockSurface(m_image)==-1)
-			return NULL;
+    if(SDL_MUSTLOCK(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface())) 
+		if(SDL_LockSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface())==-1)
+			return nullptr;
     return m_image;
 }
 void Sprite::unlockSurface()
 {
 	//printf("UNLOCK %p\n", m_image);
-    if(SDL_MUSTLOCK(m_image)) SDL_UnlockSurface(m_image);
+    if(SDL_MUSTLOCK(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface())) SDL_UnlockSurface(static_cast<SDLSurfaceStorage*>(m_image.get())->getSurface());
     Stretch(getWidth(), getHeight(),m_smoothstretch,1); // when unlocking
     rebuildSelf();
 }
