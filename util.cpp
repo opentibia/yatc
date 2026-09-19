@@ -407,6 +407,7 @@ void yatc_fopen_init(char *cmdline) {
 		"/usr/share/games/yatc-data/:"
 		"/usr/share/games/tibia/:"
 	#endif
+                "data/:"
 		DESTDIRS;
 
 	lp = searchpath;

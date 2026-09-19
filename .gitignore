@@ -47,5 +47,6 @@ _codeql_detected_source_root
 bazelisk-windows-amd64.exe
 /vendor/github.com/ivucica/rules_libsdl12.deb
 /.clangd/index
+.dirstamp
 .env
 /data
