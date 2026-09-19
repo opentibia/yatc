@@ -22,6 +22,25 @@ build:remote --remote_cache=grpcs://remote.buildbuddy.io
 build:remote --remote_timeout=3600
 build:remote --remote_executor=grpcs://remote.buildbuddy.io
 
+# Cannot use in 6.5.0:
+# ERROR: /home/ivucica/projects/yatc/BUILD:650:11: //:enginegl depends on @libsdlgfx//:sdlgfx in repository @libsdlgfx which failed to fetch. no such package '@libsdlgfx//': com.google.devtools.build.lib.remote.common.CacheNotFoundException: Missing digest: 1111111111111111111111111111111111111111111111111111111111111111/1
+# build:remote --experimental_remote_downloader=grpcs://remote.buildbuddy.io
+
+# Not in 6.5.0 (ERROR: --unix_digest_hash_attribute_name=user.git_hash :: Unrecognized option: --unix_digest_hash_attribute_name=user.git_hash):
+# build:remote --unix_digest_hash_attribute_name=user.git_hash
+# build:remote --digest_function=SHA1
+# Otherwise:
+# git ls-files -s | while read -r mode hash stage file; do
+#     # Ensure the file actually exists locally before stamping it
+#     if [ -f "$file" ]; then
+#         setfattr -n user.git_hash -v "$hash" "$file"
+#     fi
+# done
+#
+# This should work too (blankline between attrs and the next # file is needed):
+# git ls-files -s | awk '{print "# file: " $4 "\nuser.git_hash=\"" $2 "\"\n"}' | setfattr --restore=-
+
+
 # build:remote --build_metadata=REPO_URL=https://github.com/ivucica/glict
 # build:remote --build_metadata=VISIBILITY=PUBLIC  # default for unauthenticated, could be put into buildbuddysecrets if authenticated
 build:remote --workspace_status_command=$(pwd)/workspace_status.sh
@@ -40,6 +59,11 @@ build:remotecache --bes_backend=grpcs://remote.buildbuddy.io
 build:remotecache --remote_cache=grpcs://remote.buildbuddy.io
 build:remotecache --remote_timeout=3600
 build:remotecache --remote_executor=grpcs://remote.buildbuddy.io
+# Cannot use in 6.5.0:
+# build:remotecache --experimental_remote_downloader=grpcs://remote.buildbuddy.io
+# Not in 6.5.0:
+# build:remotecache --unix_digest_hash_attribute_name=user.git_hash
+# build:remotecache --digest_function=SHA1
 
 # build:remotecache --build_metadata=REPO_URL=https://github.com/ivucica/glict
 # build:remotecache --build_metadata=VISIBILITY=PUBLIC  # default for unauthenticated, could be put into buildbuddysecrets if authenticated
