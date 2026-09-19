@@ -1,11 +1,10 @@
 stages:
   download_and_unpack:
-    cmd: ( test -e tibia854.tgz || curl -L 
-      https://replace-with-valid-source/tibia854.tgz -o tibia854.tar.gz
-      ) &&    mkdir -p data/ &&    tar -zxvf tibia854.tgz -C data/ 
-      --strip-components=1 Tibia/Tibia.dat Tibia/Tibia.pic Tibia/Tibia.spr &&    rm tibia854.tgz
+    cmd:
+      mkdir -p data/ && tar -zxvf tibia854.tgz -C data/
+      --strip-components=1 Tibia/Tibia.dat Tibia/Tibia.pic Tibia/Tibia.spr
     deps:
-    - https://replace-with-valid-source/tibia854.tgz
+    - tibia854.tgz
     outs:
     - data/Tibia.dat
     - data/Tibia.pic
