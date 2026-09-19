@@ -1,0 +1,12 @@
+md5: 720dab6fa3f6f925ec3c5d0242556b19
+frozen: true
+deps:
+- checksum: '"556974a7-16c881e"'
+  size: 23889950
+  hash: md5
+  path: https://replace-with-valid-source/tibia854.tgz
+outs:
+- md5: 56ff43253707395b7f81a6196dc480e4
+  size: 23889950
+  hash: md5
+  path: tibia854.tgz

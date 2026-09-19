@@ -1,0 +1,26 @@
+schema: '2.0'
+stages:
+  download_and_unpack:
+    cmd: ( test -e tibia854.tgz || curl -L 
+      https://replace-with-valid-source/tibia854.tgz -o tibia854.tar.gz
+      ) &&    mkdir -p data/ &&    tar -zxvf tibia854.tgz -C data/ 
+      --strip-components=1 Tibia/Tibia.dat Tibia/Tibia.pic Tibia/Tibia.spr &&    
+      rm tibia854.tgz
+    deps:
+    - path: https://replace-with-valid-source/tibia854.tgz
+      hash: md5
+      checksum: '"556974a7-16c881e"'
+      size: 23889950
+    outs:
+    - path: data/Tibia.dat
+      hash: md5
+      md5: 650b35cfa6848515fb900a75023ae7d5
+      size: 263002
+    - path: data/Tibia.pic
+      hash: md5
+      md5: 15b3ffafc1ef47d6cc01ba153c6f2c9f
+      size: 1917657
+    - path: data/Tibia.spr
+      hash: md5
+      md5: eadfc3745b2cc005d7ee4d5e063edd8a
+      size: 38656726
