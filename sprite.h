@@ -34,6 +34,8 @@
 #endif
 
 #include <string>
+#include <memory>
+#include "rgba_storage.h"
 #ifndef __USE_GLSDL__
 #include <SDL/SDL.h>
 #else
@@ -51,10 +53,10 @@ class Sprite
 		Sprite(const std::string& filename, int index, int x, int y, int w, int h);
 		virtual ~Sprite();
 
-		virtual float getWidth() const { return m_stretchimage ? m_stretchimage->w : m_image->w; }
-		virtual float getHeight() const { return m_stretchimage ? m_stretchimage->h : m_image->h; }
-		float getBasicWidth() const { return m_image->w; }
-		float getBasicHeight() const { return m_image->h; }
+		virtual float getWidth() const { return m_stretchimage ? m_stretchimage->getWidth() : m_image->getWidth(); }
+		virtual float getHeight() const { return m_stretchimage ? m_stretchimage->getHeight() : m_image->getHeight(); }
+		float getBasicWidth() const { return m_image->getWidth(); }
+		float getBasicHeight() const { return m_image->getHeight(); }
 
 		bool isLoaded() { return m_loaded;}
 
@@ -73,7 +75,7 @@ class Sprite
 		void templatedColorizePixel(uint8_t color, uint8_t &r, uint8_t &g, uint8_t &b);
 
 		void Stretch(float neww, float newh, int smooth = -1, bool force = false);
-		void unStretch() { if (m_stretchimage) SDL_FreeSurface(m_stretchimage); m_stretchimage = NULL; }
+		void unStretch() { if (m_stretchimage) m_stretchimage.reset(); m_stretchimage = nullptr; }
 
 		void setAsIcon();// used only once, in main
 
@@ -82,21 +84,21 @@ class Sprite
 
 
         // use functions for direct modification SPARINGLY!
-        virtual SDL_Surface* getSurface() { return m_image; }
-        virtual SDL_Surface* lockSurface();
+        virtual std::shared_ptr<RGBAStorage> getSurface() { return m_image; }
+        virtual std::shared_ptr<RGBAStorage> lockSurface();
         virtual void unlockSurface();
 
-        void putPixel(int x, int y, uint32_t pixel, SDL_Surface *img = NULL);
-		uint32_t getPixel(int x, int y, SDL_Surface *img = NULL);
+        void putPixel(int x, int y, uint32_t pixel, std::shared_ptr<RGBAStorage> img = nullptr);
+		uint32_t getPixel(int x, int y, std::shared_ptr<RGBAStorage> img = nullptr);
 
 	protected:
 		Sprite(const Sprite& original);
 
 		void loadSurfaceFromFile(const std::string& filename, int index);
 
-		SDL_Surface* getColoredImage() { return m_stretchimage ? m_stretchimage : ((m_r != 1. || m_g != 1. || m_b != 1.) ? m_coloredimage : m_image); }
-		SDL_Surface* getImage() { return m_stretchimage ? m_stretchimage : m_image; }
-		SDL_Surface* getBasicImage() { return m_image; }
+		std::shared_ptr<RGBAStorage> getColoredImage() { return m_stretchimage ? m_stretchimage : ((m_r != 1. || m_g != 1. || m_b != 1.) ? m_coloredimage : m_image); }
+		std::shared_ptr<RGBAStorage> getImage() { return m_stretchimage ? m_stretchimage : m_image; }
+		std::shared_ptr<RGBAStorage> getBasicImage() { return m_image; }
 		#ifdef USE_OPENGL
 		GLuint getPixelFormat() { return m_pixelformat; }
 		#endif
@@ -107,7 +109,7 @@ class Sprite
 	private:
 
 		bool m_loaded;
-		SDL_Surface *m_image, *m_stretchimage, *m_coloredimage;
+		std::shared_ptr<RGBAStorage> m_image, m_stretchimage, m_coloredimage;
 
 		bool m_smoothstretch;
 		#ifdef USE_OPENGL
