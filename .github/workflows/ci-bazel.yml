@@ -261,7 +261,13 @@ jobs:
         repository-cache: true
     
     - name: rbe bazel build
-      run: bazelisk build --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} //:yatc
+      env:
+        BUILDBUDDY_ORG_API_KEY: ${{ secrets.BUILDBUDDY_ORG_API_KEY }}
+      run: |
+        : "${BUILDBUDDY_ORG_API_KEY:?BuildBuddy API key is unavailable (secrets are not provided to fork or Dependabot pull requests)}"
+        bazelisk build --config=remote --build_metadata=ROLE=CI \
+          "--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}" \
+          "--bes_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}" //:yatc
 
   bazel_test_buildbuddy:
     runs-on: ubuntu-latest
@@ -321,7 +327,11 @@ jobs:
         repository-cache: true
 
     - name: rbe bazel test
-      run: bazelisk test --config=remote --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} ${{ matrix.bazel_target }}
+      run: |
+        : "${BUILDBUDDY_ORG_API_KEY:?BuildBuddy API key is unavailable (secrets are not provided to fork or Dependabot pull requests)}"
+        bazelisk test --config=remote --build_metadata=ROLE=CI \
+          "--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}" \
+          "--bes_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}" ${{ matrix.bazel_target }}
       # Temporarily allow errors. This is known to fail at this time due to insufficient
       # number of binary packages installed by the rules_libsdl12.
       continue-on-error: true
@@ -330,7 +340,7 @@ jobs:
 
     #- name: rbe bazel coverage
     #  if: ${{ env.ENABLE_BAZEL_COVERAGE == 'true' && runner.os != 'Windows' }}
-    #  run: bazelisk coverage --config=remote --build_runfile_links --enable_runfiles --build_metadata=ROLE=CI ${BUILDBUDDY_ORG_API_KEY:+--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}} ${{ matrix.bazel_target }}
+    #  run: bazelisk coverage --config=remote --build_runfile_links --enable_runfiles --build_metadata=ROLE=CI "--remote_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}" "--bes_header=x-buildbuddy-api-key=${BUILDBUDDY_ORG_API_KEY}" ${{ matrix.bazel_target }}
     #  continue-on-error: true
     #  env:
     #    BUILDBUDDY_ORG_API_KEY: ${{ secrets.BUILDBUDDY_ORG_API_KEY }}
